@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "current_batch": "B00",
+  "history": [],
+  "tasks": [
+    {
+      "id": "B00-T01",
+      "title": "建立开发基线 小步执行规范和自动开发日志",
+      "batch": "B00",
+      "status": "in_progress",
+      "depends_on": [],
+      "requirements": [],
+      "acceptance": [
+        "D01至D15已采纳，doc目录成为标准文件入口，原需求正文与HTML同步",
+        "AGENTS指向需求 技术 设计 测试 工作流程和近期步骤，限制后续每轮一个可验收任务",
+        "只详细展开B01三个任务，远期目标未伪装成已完成或可直接执行任务",
+        "开发日志工具从单一账本自动生成TODO DONE STATUS，完成必须保存真实验证说明和产物指纹",
+        "日志工具测试和文档一致性检查通过，形成可审查的小步提交"
+      ],
+      "history": [
+        {
+          "at": "2026-10-31T15:12:51Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "开始建立已获授权的开发规范和日志工具；本轮不启动产品核心实现",
+          "validation": [],
+          "artifacts": []
+        }
+      ]
+    },
+    {
+      "id": "B01-T01",
+      "title": "建立可重复构建的Rust CLI最小骨架",
+      "batch": "B01",
+      "status": "todo",
+      "depends_on": [
+        "B00-T01"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "提交最小Cargo workspace 单一CLI crate 工具链锁定记录及Cargo.lock",
+        "noetome --help和--version成功，未知参数返回非零且不创建项目文件",
+        "cargo fmt --all --check cargo check --workspace cargo test --workspace和针对性CLI用例通过",
+        "记录Windows实际构建环境，尚未引入SQLite Python sidecar GUI或真实模型调用"
+      ],
+      "history": []
+    },
+    {
+      "id": "B01-T02",
+      "title": "实现空项目初始化和只读检查",
+      "batch": "B01",
+      "status": "todo",
+      "depends_on": [
+        "B01-T01"
+      ],
+      "requirements": [
+        "FR-01",
+        "FR-35"
+      ],
+      "acceptance": [
+        "init在明确的新目录创建项目配置和带schema_version的SQLite基础表",
+        "project inspect输出项目ID和实际初始化状态，重复inspect不改变文件内容",
+        "已有项目 目标非空 不可写或初始化中断均给出明确错误且不覆盖用户内容",
+        "临时目录中的初始化 只读检查 重复执行和失败恢复用例通过，不包含文档解析"
+      ],
+      "history": []
+    },
+    {
+      "id": "B01-T03",
+      "title": "导入一份UTF8文本并建立来源覆盖清单",
+      "batch": "B01",
+      "status": "todo",
+      "depends_on": [
+        "B01-T02"
+      ],
+      "requirements": [
+        "FR-01",
+        "FR-02",
+        "FR-04"
+      ],
+      "acceptance": [
+        "source add只支持首批UTF8 Markdown和TXT，保存原始内容指纹 来源版本及原文件引用策略",
+        "建立确定性的来源单元和normalized UTF8定位，报告计数可与fixture人工清单对账",
+        "重复内容不重复导入，同名变化产生新版本；原文件内容保持不变",
+        "无效UTF8 空文件 不支持格式和读取失败有明确状态，不伪称PDF或AI抽取成功",
+        "离线fixture及去重 版本 定位用例通过；只记录来源处置状态，不宣称知识已经生成"
+      ],
+      "history": []
+    }
+  ]
+}
