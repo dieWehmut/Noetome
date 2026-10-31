@@ -88,25 +88,192 @@
       ]
     },
     {
-      "id": "B01-T01",
-      "title": "建立可重复构建的Rust CLI最小骨架",
+      "id": "B01-T00",
+      "title": "冻结V1完整架构 技术契约和自动执行蓝图",
       "batch": "B01",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B00-T01"
       ],
       "requirements": [],
       "acceptance": [
-        "提交最小Cargo workspace 单一CLI crate 工具链锁定记录及Cargo.lock",
-        "noetome --help和--version成功，未知参数返回非零且不创建项目文件",
-        "cargo fmt --all --check cargo check --workspace cargo test --workspace和针对性CLI用例通过",
-        "记录Windows实际构建环境，尚未引入SQLite Python sidecar GUI或真实模型调用"
+        "全项目技术方案和数据接口明确，关键失败恢复与发布保护可审查",
+        "V1全部功能非功能验收映射到小任务与阶段门禁，未来任务无需重新设计架构",
+        "AGENTS与开发工具支持按依赖自动选取和记录工作，不能把未验证内容算完成",
+        "文档一致性 SQL约束 任务依赖和日志测试实际通过，分步提交并推送"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-10-31T15:56:47Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "根据用户最新要求冻结全项目架构与完整小任务执行方案；仅建设工程蓝图和验证工具",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-10-31T16:46:47Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "冻结V1全架构 数据算法与运行发布协议；建立18批64项全计划 需求追溯及继续项目自动执行流程；补当前一键自动测试。产品代码尚未实现，真实API 学科质量 实机与24小时验收留到已定义门禁。工具已分步提交22def71及本轮自动测试提交。",
+          "validation": [
+            "Windows运行python scripts/autotest.py全通过：39项单元/关系测试，包括10项SQLite蓝图迁移及关系测试；日志66记录有效、64任务无环并覆盖40FR/40AC/17NFR。",
+            "48份Markdown的760个本地链接通过；PRD HTML重新生成一致、Python语法、SQLite蓝图建表及完整性、git diff --check通过。未声称执行尚不存在的产品测试。",
+            "三路独立审查后修复配置字段/状态、批次回退与前跳、真实Win32测试归属、WDIO统计、FR32候选编辑及测试路径一致性；用户的旧docs文件删除保留且不纳入提交。"
+          ],
+          "artifacts": [
+            {
+              "path": "AGENTS.md",
+              "sha256": "f17e706fb420afa45ae636ad238f7c92341ba36a596bc5445150d8a4e1f7e00f"
+            },
+            {
+              "path": "doc/technical/ARCHITECTURE.md",
+              "sha256": "e339e6d2f084d9e0f5f93bdc632ab3cd4945eef26d320cd02dbdb586b89c0d84"
+            },
+            {
+              "path": "doc/technical/DATA_CONTRACTS.md",
+              "sha256": "23c4c69df01ed99feb3896fe9fdf279e77288ab32036c8c11184247bcca17ed2"
+            },
+            {
+              "path": "doc/technical/schema.sql",
+              "sha256": "aeda528b5a8ea25e502ce13a91486fa53cb5271effef9286d692bf550a2fca1d"
+            },
+            {
+              "path": "doc/technical/PUBLICATION.md",
+              "sha256": "18d8c07aa6b2c779aa027baf68992f563ab87764bdd12d75db2a277c3d14295f"
+            },
+            {
+              "path": "doc/technical/UI_AUTOMATION.md",
+              "sha256": "1ee0335d5909564088c9145d13a3e15e2df61e4b0e1ec8dbebc6cbacf8a5c138"
+            },
+            {
+              "path": "doc/execution/ROADMAP.md",
+              "sha256": "08ac355f4369e4852224394d7dd6b13a934b9e6dc7351df13ba1d84747be6f63"
+            },
+            {
+              "path": "doc/execution/HANDOFF.md",
+              "sha256": "8ccb9eaca4158c966679c5432e68b81c7a69186d5b8573deb216961c88398208"
+            },
+            {
+              "path": "doc/execution/AUTOMATED_TESTING.md",
+              "sha256": "b33c075ab511a6f3ed25b8cbdc98a75d1e762a5fdf9cacb3ce975d50bf8c45a9"
+            },
+            {
+              "path": "doc/execution/TRACEABILITY.md",
+              "sha256": "190a63d0294744d531ddb4a5012827e8f47c9863ddaea6e027bab141d2853a68"
+            },
+            {
+              "path": "scripts/autotest.py",
+              "sha256": "75d0268e44d99a36eb705afb73c207545a6471d9f9a5bfb3f033684fa60a71da"
+            },
+            {
+              "path": "scripts/verify.py",
+              "sha256": "d187e1e889df15f873d1e53979b38de5eedd03bff6fecde3b6720ab769f9ec18"
+            },
+            {
+              "path": "tests/test_schema_blueprint.py",
+              "sha256": "2f13742b0db9ebc661d03e052bbf6c57d423ac4231510f2e53ccb27e3ce60028"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B01-T01",
+      "title": "建立可重复构建的Rust CLI骨架",
+      "batch": "B01",
+      "status": "todo",
+      "depends_on": [
+        "B01-T00"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "--help/--version退出0；未知参数退出2且不创建文件；Windows重复构建通过。",
+        "Cargo.lock与rust-toolchain.toml入库，工具链版本记录可复现。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/STACK.md",
+        "doc/technical/ARCHITECTURE.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "核查Windows MSVC链接工具与已安装Rust；按STACK锁定实际可用补丁版本并记录来源。",
+        "只创建workspace和CLI crate，增加clap帮助/版本/无效参数处理。",
+        "用独立进程在临时目录断言退出码、stderr与无文件副作用。"
+      ],
+      "outputs": [
+        "Cargo.toml",
+        "Cargo.lock",
+        "rust-toolchain.toml",
+        "crates/noetome-cli/src/main.rs",
+        "crates/noetome-cli/tests/cli_smoke.rs"
+      ],
+      "non_goals": [
+        "仅CLI骨架；依赖按调用点引入，不安装全部后续技术栈。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-cli",
+            "--test",
+            "cli_smoke"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
     },
     {
       "id": "B01-T02",
-      "title": "实现空项目初始化和只读检查",
+      "title": "空项目初始化与只读检查",
       "batch": "B01",
       "status": "todo",
       "depends_on": [
@@ -117,16 +284,90 @@
         "FR-35"
       ],
       "acceptance": [
-        "init在明确的新目录创建项目配置和带schema_version的SQLite基础表",
-        "project inspect输出项目ID和实际初始化状态，重复inspect不改变文件内容",
-        "已有项目 目标非空 不可写或初始化中断均给出明确错误且不覆盖用户内容",
-        "临时目录中的初始化 只读检查 重复执行和失败恢复用例通过，不包含文档解析"
+        "空项目可重新打开；inspect连续运行不修改配置/DB内容。",
+        "任何失败不覆盖未知文件；初始化残留可诊断且只清理本次创建内容。"
       ],
-      "history": []
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/CONFIG.md",
+        "doc/technical/ARCHITECTURE.md"
+      ],
+      "steps": [
+        "增加core/store最小边界与schema0初始化；Project配置和数据库ID一致。",
+        "实现project init/inspect，init只接受新的空目标，临时写入后完成标记。",
+        "对非空目录、重复初始化、只读inspect和中断遗留写进程级用例。"
+      ],
+      "outputs": [
+        "crates/noetome-cli/src/project.rs",
+        "crates/noetome-cli/tests/project_init.rs",
+        "crates/noetome-store/src/lib.rs"
+      ],
+      "non_goals": [
+        "不导入资料，不创建完整处理流水线。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-14"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-cli",
+            "--test",
+            "project_init"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
     },
     {
       "id": "B01-T03",
-      "title": "导入一份UTF8文本并建立来源覆盖清单",
+      "title": "文本来源版本和覆盖清单",
       "batch": "B01",
       "status": "todo",
       "depends_on": [
@@ -135,16 +376,5670 @@
       "requirements": [
         "FR-01",
         "FR-02",
-        "FR-04"
+        "FR-04",
+        "FR-06"
       ],
       "acceptance": [
-        "source add只支持首批UTF8 Markdown和TXT，保存原始内容指纹 来源版本及原文件引用策略",
-        "建立确定性的来源单元和normalized UTF8定位，报告计数可与fixture人工清单对账",
-        "重复内容不重复导入，同名变化产生新版本；原文件内容保持不变",
-        "无效UTF8 空文件 不支持格式和读取失败有明确状态，不伪称PDF或AI抽取成功",
-        "离线fixture及去重 版本 定位用例通过；只记录来源处置状态，不宣称知识已经生成"
+        "完整输入区间可对账；duplicate不膨胀；原始文件指纹不变。",
+        "来源pending不是知识完成；无法完整读取时不得制造伪raw hash。"
       ],
-      "history": []
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/KNOWLEDGE_PIPELINE.md"
+      ],
+      "steps": [
+        "实现UTF8 MD/TXT读取、raw SHA256、规范化快照与字节/行定位；加入自有中文fixture。",
+        "实现source add/list，按内容复用版本，同路径变化建立新版本。",
+        "规范化BOM/换行/空白账本；显式记录空文件、错误编码、不支持格式和读取失败。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/text_source.rs",
+        "crates/noetome-core/tests/text_source.rs",
+        "tests/fixtures/text/case.json"
+      ],
+      "non_goals": [
+        "仅MD/TXT；无PDF/模型抽取。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-03",
+        "AC-04",
+        "AC-38"
+      ],
+      "quality": [
+        "NFR-01"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "text_source"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B02-T01",
+      "title": "完整Schema迁移与领域契约",
+      "batch": "B02",
+      "status": "todo",
+      "depends_on": [
+        "B01-T03"
+      ],
+      "requirements": [
+        "FR-08",
+        "FR-09",
+        "FR-17",
+        "FR-35"
+      ],
+      "acceptance": [
+        "迁移成功后integrity_check与foreign_key_check正常，失败保留可恢复旧库。",
+        "不存在身份按标题重新生成、悬空证据或同计划双canonical位置。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/ARCHITECTURE.md"
+      ],
+      "steps": [
+        "将schema.sql转换为编号迁移001，schema0迁移前备份，初始化新schema1。",
+        "实现ULID、revision、typed value、Source/Concept/Claim/Atom/Plan序列化与外键校验。",
+        "加入迁移前后重开、损坏/未来版本拒绝写入、无效引用与唯一位置测试。",
+        "按DATA/CONFIG/MODEL/RUNTIME字段生成四份Draft2020-12 JSON Schema；Rust验证合法/非法fixture，禁止只写type=object空schema。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/contracts.rs",
+        "crates/noetome-core/tests/contracts.rs",
+        "crates/noetome-store/migrations/001_full.sql",
+        "crates/noetome-store/tests/migrations.rs",
+        "schemas/ir.schema.json",
+        "schemas/config.schema.json",
+        "schemas/model-candidate.schema.json",
+        "schemas/ipc.schema.json"
+      ],
+      "non_goals": [
+        "创建完整契约，不实现所有领域算法。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-17"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "contracts"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "migration",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-store",
+            "--test",
+            "migrations"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B02-T02",
+      "title": "持久Job与检查点恢复",
+      "batch": "B02",
+      "status": "todo",
+      "depends_on": [
+        "B02-T01"
+      ],
+      "requirements": [
+        "FR-35",
+        "FR-36"
+      ],
+      "acceptance": [
+        "断点恢复跳过已成功job；失败隔离不污染下游；任务取消与暂停状态明确。",
+        "完成以DB状态和输出验收为准，非线程退出即成功。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/RUNTIME_PROTOCOL.md",
+        "doc/technical/DATA_CONTRACTS.md"
+      ],
+      "steps": [
+        "实现Run/Job状态、依赖就绪选择、事务claim和owner lease。",
+        "实现结果CAS提交与checkpoint，只有已提交artifact可消费；重启识别过期lease。",
+        "注入claim后/结果前/结果提交后崩溃，验证无重复领域revision。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/scheduler.rs",
+        "crates/noetome-core/tests/scheduler.rs",
+        "crates/noetome-store/src/jobs.rs",
+        "crates/noetome-store/tests/durable_scheduler.rs"
+      ],
+      "non_goals": [
+        "暂用本地fake job；不外调模型。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-26"
+      ],
+      "quality": [
+        "NFR-08"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "scheduler"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "durable-lease",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-store",
+            "--test",
+            "durable_scheduler"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B02-T03",
+      "title": "Windows worker与统一IPC",
+      "batch": "B02",
+      "status": "todo",
+      "depends_on": [
+        "B02-T02"
+      ],
+      "requirements": [
+        "FR-35",
+        "FR-39",
+        "FR-40"
+      ],
+      "acceptance": [
+        "同项目仅一个DB写者；未授权pipe客户端被拒；请求取消可恢复。",
+        "GUI未来复用同一接口；暂停2秒内停止发新job。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/RUNTIME_PROTOCOL.md",
+        "doc/technical/ARCHITECTURE.md"
+      ],
+      "steps": [
+        "实现当前用户ACL的命名管道请求/响应/event分页与worker单实例锁。",
+        "CLI连接或按需启动worker；关闭客户端不等于取消；按协议处理pause/resume/cancel。",
+        "加入两个客户端、错误版本、畸形frame、worker退出和事件重放用例。"
+      ],
+      "outputs": [
+        "crates/noetome-cli/src/worker.rs",
+        "crates/noetome-cli/tests/worker_ipc.rs"
+      ],
+      "non_goals": [
+        "不增加Windows服务、自启动或远程控制端口。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-12",
+        "NFR-13",
+        "NFR-15"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-cli",
+            "--test",
+            "worker_ipc"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B02-T04",
+      "title": "并发预算预留与未知费用",
+      "batch": "B02",
+      "status": "todo",
+      "depends_on": [
+        "B02-T03"
+      ],
+      "requirements": [
+        "FR-38"
+      ],
+      "acceptance": [
+        "并发合计不得越过配置硬限额；unknown请求不自动释放或立即重发。",
+        "预留/实际/未知用量各可查询；缺少额度不开始付费调用。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/RUNTIME_PROTOCOL.md",
+        "doc/technical/CONFIG.md",
+        "doc/technical/DATA_CONTRACTS.md"
+      ],
+      "steps": [
+        "实现请求前事务预算reserve，提交usage结算、取消可释放条件、unknown保守持有。",
+        "并发上限、token限制、金额价格版本分别处理；价格未知不显示伪金额。",
+        "模拟并发即将超额、超时未知结果、重启、取消在途与预算加额。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/budget.rs",
+        "crates/noetome-core/tests/budget.rs"
+      ],
+      "non_goals": [
+        "验证用确定性fake请求，不产生费用。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-30"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "budget"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B03-T01",
+      "title": "载入并验证完整IR fixture",
+      "batch": "B03",
+      "status": "todo",
+      "depends_on": [
+        "B02-T04"
+      ],
+      "requirements": [
+        "FR-09",
+        "FR-26"
+      ],
+      "acceptance": [
+        "合法fixture形成不可变快照；损坏fixture逐项输出定位问题。",
+        "验证成功只证明契约，不记为真实抽取准确。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/KNOWLEDGE_PIPELINE.md"
+      ],
+      "steps": [
+        "创建含定义、对比、条件、证据的自有小fixture；producer明确fixture。",
+        "装载KnowledgeSnapshot并核对SourceVersion/hash/span/Claim/Atom全部引用。",
+        "拒绝重复ID、悬空证据、非法值类型和未经映射必要原子。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/ir_fixture.rs",
+        "crates/noetome-core/tests/ir_fixture.rs",
+        "tests/fixtures/compiler/ir.json"
+      ],
+      "non_goals": [
+        "不调用模型修复坏fixture。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "ir_fixture"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B03-T02",
+      "title": "确定性NotePlan与规范位置",
+      "batch": "B03",
+      "status": "todo",
+      "depends_on": [
+        "B03-T01"
+      ],
+      "requirements": [
+        "FR-15",
+        "FR-17",
+        "FR-18"
+      ],
+      "acceptance": [
+        "一个概念只有一处完整解释；所有required atoms分配到表达节点。",
+        "链接在渲染前已解析，不靠猜文件名。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/KNOWLEDGE_PIPELINE.md"
+      ],
+      "steps": [
+        "载入结构化NotePlan，绑定snapshot revision；建立concept canonical placement。",
+        "实现段落/列表/对照表节点和semantic link，解析目标ID到路径/标题。",
+        "为双canonical、无归属required atom、重复heading、循环embed设置失败fixture。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/plan.rs",
+        "crates/noetome-core/tests/fixture_plan.rs",
+        "tests/fixtures/compiler/note-plan.json"
+      ],
+      "non_goals": [
+        "规划由fixture给定；不宣称AI自主规划。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-17"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "fixture_plan"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B03-T03",
+      "title": "Markdown编译与内容映射",
+      "batch": "B03",
+      "status": "todo",
+      "depends_on": [
+        "B03-T02"
+      ],
+      "requirements": [
+        "FR-21",
+        "FR-25",
+        "FR-26"
+      ],
+      "acceptance": [
+        "至少两篇笔记、一张表和跨笔记标题链接可生成；正文没有来源脚注负担。",
+        "atom映射对应实际语义节点与输出范围，不允许仅填ID掩盖内容丢失。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "实现段落、列表、Markdown表格与标题链接编译，渲染UTF8 byte range映射。",
+        "把每个节点/原子/条件映射到输出位置；文件顺序、换行与资源名确定。",
+        "同输入重复编译比较字节；特殊字符和表格别名使用golden fixture。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/render.rs",
+        "crates/noetome-core/tests/render.rs",
+        "tests/fixtures/compiler/expected.md"
+      ],
+      "non_goals": [
+        "无自由模型Markdown；未实现的节点类型明确失败。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-19",
+        "AC-20"
+      ],
+      "quality": [
+        "NFR-04",
+        "NFR-05"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "render"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B03-T04",
+      "title": "独立校验与新目录临时发布",
+      "batch": "B03",
+      "status": "todo",
+      "depends_on": [
+        "B03-T03"
+      ],
+      "requirements": [
+        "FR-27",
+        "FR-28",
+        "FR-33"
+      ],
+      "acceptance": [
+        "成功运行给真实四维fixture报告和新Vault；失败无成功Release。",
+        "未知目录/输入目录/越界/junction/Windows保留名均拒绝。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/PUBLICATION.md",
+        "doc/technical/DATA_CONTRACTS.md"
+      ],
+      "steps": [
+        "独立检查coverage、required atoms、链接、路径、输出指纹与映射区间。",
+        "fixture run只允许新的临时输出目录，保存staged/verified/published状态和manifest。",
+        "注入写盘失败/数据库提交失败，重启显示recovery_required不报完成。"
+      ],
+      "outputs": [
+        "crates/noetome-cli/src/fixture_compile.rs",
+        "crates/noetome-cli/tests/fixture_compile.rs"
+      ],
+      "non_goals": [
+        "本任务只发布新临时目录，生产增量发布依赖B11。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-27"
+      ],
+      "quality": [
+        "NFR-05",
+        "NFR-08",
+        "NFR-14"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-cli",
+            "--test",
+            "fixture_compile"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B04-T01",
+      "title": "Python解析侧车协议",
+      "batch": "B04",
+      "status": "todo",
+      "depends_on": [
+        "B03-T04"
+      ],
+      "requirements": [
+        "FR-02",
+        "FR-36"
+      ],
+      "acceptance": [
+        "JSON协议与日志分离；取消能回收子进程；Core不信任sidecar成功标记。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/RUNTIME_PROTOCOL.md",
+        "doc/technical/STACK.md"
+      ],
+      "steps": [
+        "建立uv项目和锁文件；实现版本化stdin/stdout协议，stderr日志，限制frame与资源大小。",
+        "Rust子进程适配器仅传授权源路径/输出根；校验返回路径、hash和request_id。",
+        "用stub覆盖超时、超大响应、stderr噪声、退出中断和恶意相对路径。"
+      ],
+      "outputs": [
+        "sidecar/parser/pyproject.toml",
+        "sidecar/parser/uv.lock",
+        "sidecar/parser/src/noetome_parser/__main__.py",
+        "sidecar/parser/tests/test_protocol.py"
+      ],
+      "non_goals": [
+        "先stub协议，不声称解析PDF。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-14",
+        "NFR-15"
+      ],
+      "checks": [
+        {
+          "name": "parser",
+          "argv": [
+            "uv",
+            "run",
+            "--locked",
+            "--project",
+            "sidecar/parser",
+            "python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "sidecar/parser/tests",
+            "-p",
+            "test_protocol.py",
+            "-v"
+          ],
+          "timeout_s": 1800,
+          "min_tests": 1
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B04-T02",
+      "title": "文本PDF结构与图像清单",
+      "batch": "B04",
+      "status": "todo",
+      "depends_on": [
+        "B04-T01"
+      ],
+      "requirements": [
+        "FR-02",
+        "FR-04",
+        "FR-22"
+      ],
+      "acceptance": [
+        "页码和bbox可回到原资料；每页所有检测图像有处置状态。",
+        "空文本PDF转needs_ocr，不以零字解析成功计覆盖。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/STACK.md"
+      ],
+      "steps": [
+        "用pdfplumber抽取页/词/表格和PDFium渲染区域，建立坐标规范化和阅读顺序。",
+        "枚举每页图片/图形区域及figure inventory，保留原区域和caption关系。",
+        "验证横排/双栏/旋转页/表格/无文字页，保存能力与疑难项。"
+      ],
+      "outputs": [
+        "sidecar/parser/src/noetome_parser/pdf.py",
+        "sidecar/parser/tests/test_pdf_text.py",
+        "tests/fixtures/pdf/manifest.json"
+      ],
+      "non_goals": [
+        "不猜测图内精确曲线数据。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-01"
+      ],
+      "checks": [
+        {
+          "name": "parser",
+          "argv": [
+            "uv",
+            "run",
+            "--locked",
+            "--project",
+            "sidecar/parser",
+            "python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "sidecar/parser/tests",
+            "-p",
+            "test_pdf_text.py",
+            "-v"
+          ],
+          "timeout_s": 1800,
+          "min_tests": 1
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B04-T03",
+      "title": "扫描PDF OCR与不确定区域",
+      "batch": "B04",
+      "status": "todo",
+      "depends_on": [
+        "B04-T02"
+      ],
+      "requirements": [
+        "FR-03",
+        "FR-24"
+      ],
+      "acceptance": [
+        "原图永不丢失；低置信字符不能自动宣告语义已核验。",
+        "无OCR依赖或语言包输出明确blocked_capability，非成功空解析。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/STACK.md"
+      ],
+      "steps": [
+        "按配置dpi渲染扫描页并调用Tesseract中文/英文，记录原图和OCR token bbox。",
+        "按阈值标记低置信/公式疑似区域，保留原区域供核验。",
+        "加入倾斜扫描、混排、负号/下标模糊、空白页和缺少语言包用例。"
+      ],
+      "outputs": [
+        "sidecar/parser/src/noetome_parser/ocr.py",
+        "sidecar/parser/tests/test_ocr.py"
+      ],
+      "non_goals": [
+        "通用OCR不是公式识别权威；不承诺原始TeX逐字恢复。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-16"
+      ],
+      "quality": [
+        "NFR-06"
+      ],
+      "checks": [
+        {
+          "name": "parser",
+          "argv": [
+            "uv",
+            "run",
+            "--locked",
+            "--project",
+            "sidecar/parser",
+            "python",
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "sidecar/parser/tests",
+            "-p",
+            "test_ocr.py",
+            "-v"
+          ],
+          "timeout_s": 1800,
+          "min_tests": 1
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B04-T04",
+      "title": "解析版本与异常资料隔离",
+      "batch": "B04",
+      "status": "todo",
+      "depends_on": [
+        "B04-T03"
+      ],
+      "requirements": [
+        "FR-01",
+        "FR-02",
+        "FR-03",
+        "FR-04",
+        "FR-06"
+      ],
+      "acceptance": [
+        "一个失败来源不阻断其他授权来源登记；未覆盖页保持failed/needs_review。",
+        "重定位必须hash匹配，不能只按同文件名接回证据。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/KNOWLEDGE_PIPELINE.md"
+      ],
+      "steps": [
+        "Core接入PDF解析产物并生成SourceVersion/Span/Asset。",
+        "记录解析器版本、缓存键和失败页；重新解析只替换新revision。",
+        "测试加密/损坏/读取中变更/巨型页限额/源文件失踪，验证失败项可定位。"
+      ],
+      "outputs": [
+        "crates/noetome-adapters/src/pdf_ingest.rs",
+        "crates/noetome-adapters/tests/pdf_ingest.rs"
+      ],
+      "non_goals": [
+        "不将坏页静默排除来达到覆盖100%。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-04",
+        "AC-38"
+      ],
+      "quality": [
+        "NFR-01"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-adapters",
+            "--test",
+            "pdf_ingest"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B05-T01",
+      "title": "API网关与能力探测",
+      "batch": "B05",
+      "status": "todo",
+      "depends_on": [
+        "B04-T04"
+      ],
+      "requirements": [
+        "FR-11",
+        "FR-37"
+      ],
+      "acceptance": [
+        "不把所有兼容端点假定为相同能力；不支持结构化输出则阻断该能力。",
+        "请求数据外发与网络检索权限独立，fake与remote producer可区分。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/MODEL_CONTRACTS.md",
+        "doc/technical/CONFIG.md",
+        "doc/technical/STACK.md"
+      ],
+      "steps": [
+        "实现reqwest Chat Completions接口、endpoint allowlist、model能力配置与probe。",
+        "本地HTTP stub测试JSON schema能力、普通JSON降级、上下文不足、未知model。",
+        "记录协议版本和probe结果，路由只选满足任务能力的已配置模型。"
+      ],
+      "outputs": [
+        "crates/noetome-adapters/src/provider.rs",
+        "crates/noetome-adapters/tests/provider.rs"
+      ],
+      "non_goals": [
+        "本步不需要真实密钥；真实canary是B18门禁。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-31"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-adapters",
+            "--test",
+            "provider"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B05-T02",
+      "title": "结构化候选校验与有界重试",
+      "batch": "B05",
+      "status": "todo",
+      "depends_on": [
+        "B05-T01"
+      ],
+      "requirements": [
+        "FR-36",
+        "FR-37",
+        "FR-38"
+      ],
+      "acceptance": [
+        "畸形响应、模型拒绝、截断和恶意工具指令不污染IR。",
+        "重试保留每次attempt；unknown结果遵守预算与幂等恢复规则。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/MODEL_CONTRACTS.md",
+        "doc/technical/RUNTIME_PROTOCOL.md"
+      ],
+      "steps": [
+        "实现固定任务kind envelope、严格JSON解析、长度和schema边界，未知字段策略按契约。",
+        "区分429/5xx/输入错误/超时unknown/结构错误；有界退避与预算绑定。",
+        "模型输出只进候选区，通过独立validator才可形成领域revision。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/model_jobs.rs",
+        "crates/noetome-core/tests/model_jobs.rs"
+      ],
+      "non_goals": [
+        "不让模型拥有文件写入、shell或发布工具。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-29",
+        "AC-35"
+      ],
+      "quality": [
+        "NFR-15"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "model_jobs"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B05-T03",
+      "title": "密钥存储与审计脱敏",
+      "batch": "B05",
+      "status": "todo",
+      "depends_on": [
+        "B05-T02"
+      ],
+      "requirements": [
+        "FR-06",
+        "FR-40"
+      ],
+      "acceptance": [
+        "日志/DB配置/导出不含密钥；错配credential_ref为blocked_config。",
+        "诊断包保留错误码、request_id和版本信息以定位问题。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/CONFIG.md",
+        "doc/technical/RUNTIME_PROTOCOL.md"
+      ],
+      "steps": [
+        "实现系统凭据库credential_ref和仅显式开发模式的环境变量入口（不落盘），配置只保存引用。",
+        "统一日志field allowlist，过滤authorization、token、原始教材与敏感endpoint query。",
+        "构建导出诊断包，模拟异常链与请求日志并扫描敏感标记。"
+      ],
+      "outputs": [
+        "crates/noetome-adapters/src/secrets.rs",
+        "crates/noetome-adapters/tests/secrets.rs"
+      ],
+      "non_goals": [
+        "不添加项目内明文密钥文件或自动上传诊断。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-35"
+      ],
+      "quality": [
+        "NFR-15",
+        "NFR-17"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-adapters",
+            "--test",
+            "secrets"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B06-T01",
+      "title": "章节目录与抽取窗口",
+      "batch": "B06",
+      "status": "todo",
+      "depends_on": [
+        "B05-T03"
+      ],
+      "requirements": [
+        "FR-02",
+        "FR-04",
+        "FR-07"
+      ],
+      "acceptance": [
+        "原始来源全部进入清单；窗口重叠不重复计算source/atom。",
+        "上下文不足明确拆分，不能静默截断必要表格和条件。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/MODEL_CONTRACTS.md"
+      ],
+      "steps": [
+        "实现文档章节树、段落/表格/图注关联与内容token预算窗口。",
+        "窗口保留source span identity，跨页/跨窗口关系由引用重接。",
+        "建立章节分散、附录、重复页眉和重叠窗口fixture。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/segmentation.rs",
+        "crates/noetome-core/tests/segmentation.rs"
+      ],
+      "non_goals": [
+        "本步只准备可追溯输入，不用标题相同判概念相同。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-02"
+      ],
+      "quality": [
+        "NFR-01"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "segmentation"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B06-T02",
+      "title": "水平与相关性筛选账本",
+      "batch": "B06",
+      "status": "todo",
+      "depends_on": [
+        "B06-T01"
+      ],
+      "requirements": [
+        "FR-04",
+        "FR-05",
+        "FR-11"
+      ],
+      "acceptance": [
+        "不确定项保留待核验；排除有可审计依据；必要先修知识不随高水平设置删除。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/CONFIG.md",
+        "doc/technical/MODEL_CONTRACTS.md"
+      ],
+      "steps": [
+        "将用户目标/水平编译为scope，构建前提依赖保留规则。",
+        "候选筛选只有include/exclude/needs_review并保存理由与source定位。",
+        "验证基础前提、无关轶事、重复表述、习题独有知识和不确定项。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/relevance.rs",
+        "crates/noetome-core/tests/relevance.rs"
+      ],
+      "non_goals": [
+        "风格简洁不参与原子删除；不实现习题产品。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-10"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "relevance"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B06-T03",
+      "title": "单来源Concept Claim Atom抽取",
+      "batch": "B06",
+      "status": "todo",
+      "depends_on": [
+        "B06-T02"
+      ],
+      "requirements": [
+        "FR-08",
+        "FR-09",
+        "FR-11",
+        "FR-26"
+      ],
+      "acceptance": [
+        "必要事实与条件分开建模但不可失去关联；来源quote与span绑定。",
+        "无证据解释保持unverified，不由模型自评分提升为verified。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/MODEL_CONTRACTS.md",
+        "doc/technical/DATA_CONTRACTS.md"
+      ],
+      "steps": [
+        "按固定prompt kind对章节提取概念、typed claims、qualifiers、units和来源quote。",
+        "将候选转换为不可变revision，冲突或缺证据返回问题，不直接落成已核验。",
+        "以fake已知输出覆盖定义、规则、反例、公式和表格单元语义。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/extraction.rs",
+        "crates/noetome-core/tests/extraction.rs"
+      ],
+      "non_goals": [
+        "真实质量留B18测量；本步通过不证明98%召回。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-02",
+        "NFR-03",
+        "NFR-04"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "extraction"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B06-T04",
+      "title": "证据独立校验与覆盖闭环",
+      "batch": "B06",
+      "status": "todo",
+      "depends_on": [
+        "B06-T03"
+      ],
+      "requirements": [
+        "FR-04",
+        "FR-09",
+        "FR-26",
+        "FR-28"
+      ],
+      "acceptance": [
+        "全source清单能对账不等于全知识覆盖；报告区分两者。",
+        "已发布实质原子必须有可定位证据或明确推导链。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/DATA_CONTRACTS.md"
+      ],
+      "steps": [
+        "实现quote/locator包含关系、单位/条件完整、必要原子映射的独立验证器。",
+        "对来源未处置与知识缺口分别计数，生成可以修复的issue。",
+        "使用故意错页/错数/丢条件/漏图fixture验证拒绝与修复路径。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/evidence.rs",
+        "crates/noetome-core/tests/evidence.rs"
+      ],
+      "non_goals": [
+        "不以LLM同一轮自审替代独立golden。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-01",
+        "NFR-02",
+        "NFR-03",
+        "NFR-04"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "evidence"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B07-T01",
+      "title": "多来源章节粗对齐与实体消歧",
+      "batch": "B07",
+      "status": "todo",
+      "depends_on": [
+        "B06-T04"
+      ],
+      "requirements": [
+        "FR-07",
+        "FR-08"
+      ],
+      "acceptance": [
+        "互补来源定位均保留；章节标题不同仍能形成候选；歧义保留不同ID。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/DATA_CONTRACTS.md"
+      ],
+      "steps": [
+        "章节关键词/别名/证据候选召回，模型只裁定候选，不强合并同名。",
+        "维护全局concept catalog与别名、缩写及领域context。",
+        "三份来源中正文/图注/附录同知识及同缩写异义的fixture验证。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/alignment.rs",
+        "crates/noetome-core/tests/alignment.rs"
+      ],
+      "non_goals": [
+        "不引入向量数据库/图数据库；SQLite FTS5候选召回。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-01",
+        "AC-02",
+        "AC-07"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "alignment"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B07-T02",
+      "title": "可撤销实体归并",
+      "batch": "B07",
+      "status": "todo",
+      "depends_on": [
+        "B07-T01"
+      ],
+      "requirements": [
+        "FR-08",
+        "FR-29"
+      ],
+      "acceptance": [
+        "撤销后旧证据与发布历史可查；不复用被误合并概念ID。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/KNOWLEDGE_PIPELINE.md"
+      ],
+      "steps": [
+        "实现merge事件、identity redirect、撤销与alias复原；不删除原身份。",
+        "引用通过snapshot映射解析，撤销标记受影响plans/artifacts dirty。",
+        "测试链式合并、拒绝环、误合并撤销和历史快照回放。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/identity.rs",
+        "crates/noetome-core/tests/identity.rs"
+      ],
+      "non_goals": [
+        "不通过批量改标题模拟身份迁移。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-08"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "identity"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B07-T03",
+      "title": "条件化冲突与互补协调",
+      "batch": "B07",
+      "status": "todo",
+      "depends_on": [
+        "B07-T02"
+      ],
+      "requirements": [
+        "FR-09",
+        "FR-10",
+        "FR-31"
+      ],
+      "acceptance": [
+        "同条件矛盾成为显式issue；不同条件可共存；未决事实不伪称唯一结论。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/MODEL_CONTRACTS.md"
+      ],
+      "steps": [
+        "对同subject/predicate归组，以qualifier指纹区分互补/条件差异/真冲突/OCR错误/缺证据。",
+        "保留历史与现行观点和证据权重依据，不用简单多数票判真。",
+        "为组织/时期/实验条件差异及同条件矛盾建立case集。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/reconcile.rs",
+        "crates/noetome-core/tests/reconcile.rs"
+      ],
+      "non_goals": [
+        "不在冲突处理时自动联网扩张研究范围。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-05",
+        "AC-06"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "reconcile"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B07-T04",
+      "title": "多源融合端到端回归",
+      "batch": "B07",
+      "status": "todo",
+      "depends_on": [
+        "B07-T03"
+      ],
+      "requirements": [
+        "FR-01",
+        "FR-07",
+        "FR-08",
+        "FR-09",
+        "FR-10"
+      ],
+      "acceptance": [
+        "互补事实不丢，重复事实不膨胀，来源撤除保留历史依据并标影响。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/standards/TESTING.md"
+      ],
+      "steps": [
+        "建立三源自有固定gold与多源合并期待值，逐原子核对而非字数对比。",
+        "执行来源→抽取候选→融合→IR验证，覆盖换版与删除来源影响。",
+        "保存各producer、未决问题和coverage报告，回归单来源流程。"
+      ],
+      "outputs": [
+        "crates/noetome-core/tests/multisource.rs",
+        "tests/fixtures/multisource/gold.json"
+      ],
+      "non_goals": [
+        "固定gold工程回归不冒充真实语料统计。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-01",
+        "AC-04",
+        "AC-38"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "multisource"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B08-T01",
+      "title": "教材式自适应规划与结构模板",
+      "batch": "B08",
+      "status": "todo",
+      "depends_on": [
+        "B07-T04"
+      ],
+      "requirements": [
+        "FR-15",
+        "FR-16",
+        "FR-19"
+      ],
+      "acceptance": [
+        "规划所有required atoms；目录与章节锁冲突产生候选而非覆盖。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/MODEL_CONTRACTS.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "根据领域概念依赖生成目录/笔记/章节计划；读取现有结构锁约束。",
+        "同类型同层级采用模板slot，篇幅按语义边界不设武断字数切割。",
+        "验证章节包含、无循环目录、前提顺序、导航与复习入口。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/planning.rs",
+        "crates/noetome-core/tests/planning.rs"
+      ],
+      "non_goals": [
+        "不实现全功能教学课程或PPT。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-23"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "planning"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B08-T02",
+      "title": "唯一解释位置与提升迁移",
+      "batch": "B08",
+      "status": "todo",
+      "depends_on": [
+        "B08-T01"
+      ],
+      "requirements": [
+        "FR-17",
+        "FR-18",
+        "FR-29"
+      ],
+      "acceptance": [
+        "迁移后本轮发布范围断链0；同概念不产生第二份完整解释。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/KNOWLEDGE_PIPELINE.md"
+      ],
+      "steps": [
+        "实现canonical选择、同源embed与短上下文分类；完整解释唯一。",
+        "实现章节提升独立笔记，ID不变但path/heading映射换revision。",
+        "重编译所有依赖链接，验证重名中文标题、表格alias和embed循环。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/placement.rs",
+        "crates/noetome-core/tests/placement.rs"
+      ],
+      "non_goals": [
+        "不删除旧人工内容；发布更新仍等B11保护。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-17",
+        "AC-18",
+        "AC-19"
+      ],
+      "quality": [
+        "NFR-05"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "placement"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B08-T03",
+      "title": "风格配置与主动表格规划",
+      "batch": "B08",
+      "status": "todo",
+      "depends_on": [
+        "B08-T02"
+      ],
+      "requirements": [
+        "FR-20",
+        "FR-21",
+        "FR-23"
+      ],
+      "acceptance": [
+        "极简不降低信息完整性；无图文本也能主动成表；风格样例无反向导入。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/CONFIG.md",
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "实现style fingerprint与经过选择的Vault风格样例解析，仅提取表现特征。",
+        "expression planner从同属性对象识别对照表，保留单位/例外/未知值。",
+        "同IR编译极简/详细比较必要原子集合与节点语义映射。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/expression.rs",
+        "crates/noetome-core/tests/expression.rs"
+      ],
+      "non_goals": [
+        "不扫描用户未选取的Vault，不以摘要替换必要知识。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-09",
+        "AC-11"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "expression"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B08-T04",
+      "title": "写作缺口反馈与局部重编译",
+      "batch": "B08",
+      "status": "todo",
+      "depends_on": [
+        "B08-T03"
+      ],
+      "requirements": [
+        "FR-14",
+        "FR-21",
+        "FR-29"
+      ],
+      "acceptance": [
+        "IR修订传播到全部受影响表达；无关节点指纹不变；循环有终止证据。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/MODEL_CONTRACTS.md",
+        "doc/technical/RUNTIME_PROTOCOL.md"
+      ],
+      "steps": [
+        "表达节点发现参数/条件缺失时生成结构化Gap，定位IR依赖。",
+        "按上限补证修订IR→失效相关Plan/Render→重新验证，不手补Markdown。",
+        "测试编表发现缺参、反馈重复无进展、达到轮次上限的needs_review。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/feedback.rs",
+        "crates/noetome-core/tests/feedback.rs"
+      ],
+      "non_goals": [
+        "本步补证只用已授权来源，联网补证在B12。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-25",
+        "AC-34"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "feedback"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B09-T01",
+      "title": "原图 SVG与语义回退",
+      "batch": "B09",
+      "status": "todo",
+      "depends_on": [
+        "B08-T04"
+      ],
+      "requirements": [
+        "FR-22",
+        "FR-23"
+      ],
+      "acceptance": [
+        "每幅图有处理结果；关键图未通过语义校验则回退或阻断；资源自包含。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "对figure inventory逐项制定native/SVG/original/excluded候选与理由。",
+        "实现受限SVG AST生成/净化，禁止script外部URL，保留关键视觉关系映射。",
+        "当关系无法证明等价时自动回退原图；曲线无数据不数值重建。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/assets.rs",
+        "crates/noetome-core/tests/assets.rs"
+      ],
+      "non_goals": [
+        "禁止为了美观伪造曲线数据或丢空间关系。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-13",
+        "AC-14"
+      ],
+      "quality": [
+        "NFR-06",
+        "NFR-15"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "assets"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B09-T02",
+      "title": "主动流程图与表图一致性",
+      "batch": "B09",
+      "status": "todo",
+      "depends_on": [
+        "B09-T01"
+      ],
+      "requirements": [
+        "FR-21",
+        "FR-23",
+        "FR-25"
+      ],
+      "acceptance": [
+        "无原图输入也能生成正确流程图；每个必要步骤/条件在输出可定位。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "由typed过程节点/边/条件生成Mermaid或SVG，选择规则固定。",
+        "校验edge方向、分支条件、循环与对应原子；图无法表达时回退编号过程。",
+        "正文保留关键导航链接，不依靠Mermaid内部链接形成知识图谱。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/diagrams.rs",
+        "crates/noetome-core/tests/diagrams.rs"
+      ],
+      "non_goals": [
+        "不以通用图像生成替代可检验结构图。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-12"
+      ],
+      "quality": [
+        "NFR-06"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "diagrams"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B09-T03",
+      "title": "公式与化学表达验证",
+      "batch": "B09",
+      "status": "todo",
+      "depends_on": [
+        "B09-T02"
+      ],
+      "requirements": [
+        "FR-03",
+        "FR-24"
+      ],
+      "acceptance": [
+        "可用源码原样留存；OCR可疑项保留图像且不能算验证通过。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "保存原始TeX与来源，区分源码保真和扫描语义重建。",
+        "实现MathJax兼容白名单与复杂表达原区域fallback；化学式单位结构不丢。",
+        "负号/上下标/矩阵/分式/化学计量模糊处生成核验issue。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/formula.rs",
+        "crates/noetome-core/tests/formula.rs"
+      ],
+      "non_goals": [
+        "不承诺任意LaTeX宏包，非结构识别模型不能自称数学核验器。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-15",
+        "AC-16"
+      ],
+      "quality": [
+        "NFR-06"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "formula"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B09-T04",
+      "title": "完整Obsidian编译器规则",
+      "batch": "B09",
+      "status": "todo",
+      "depends_on": [
+        "B09-T03"
+      ],
+      "requirements": [
+        "FR-18",
+        "FR-19",
+        "FR-25"
+      ],
+      "acceptance": [
+        "本轮范围内部链接唯一有效，文件自包含；禁用危险HTML/外部图片自动加载。",
+        "静态通过与实际Obsidian运行分开记录，B18完成实机验证。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/standards/DESIGN.md",
+        "doc/standards/TESTING.md"
+      ],
+      "steps": [
+        "补齐Properties/callouts/块ID/嵌入、Markdown转义、资源路径与文件名规范。",
+        "所有render node类型走同一mapping与validator；构建无社区插件基准Vault。",
+        "静态测试重名、中文路径、table alias、MathJax、Mermaid与SVG输出。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/obsidian.rs",
+        "crates/noetome-core/tests/obsidian.rs",
+        "tests/fixtures/obsidian/manifest.json"
+      ],
+      "non_goals": [
+        "当前不宣称所有Obsidian版本已测试。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-19",
+        "AC-40"
+      ],
+      "quality": [
+        "NFR-05",
+        "NFR-06",
+        "NFR-16"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "obsidian"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B10-T01",
+      "title": "依赖图与增量失效传播",
+      "batch": "B10",
+      "status": "todo",
+      "depends_on": [
+        "B09-T04"
+      ],
+      "requirements": [
+        "FR-06",
+        "FR-29"
+      ],
+      "acceptance": [
+        "无关笔记字节指纹不变；必要依赖全部重算；旧快照可追溯。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/KNOWLEDGE_PIPELINE.md"
+      ],
+      "steps": [
+        "建立source→evidence→claim→atom→plan→artifact dependency edges与revision输入指纹。",
+        "变化只标记相关节点dirty；策略/风格/解析器升级分别影响相应层。",
+        "验证新增、换版、移除、身份撤销和无变化重跑。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/incremental.rs",
+        "crates/noetome-core/tests/incremental.rs"
+      ],
+      "non_goals": [
+        "不通过整库重写假装增量实现。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-04",
+        "AC-08",
+        "AC-25",
+        "AC-38"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "incremental"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B10-T02",
+      "title": "托管基线与外部编辑检测",
+      "batch": "B10",
+      "status": "todo",
+      "depends_on": [
+        "B10-T01"
+      ],
+      "requirements": [
+        "FR-30",
+        "FR-34"
+      ],
+      "acceptance": [
+        "所有人工差异被发现，未知内容默认nonmanaged且不删除。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/PUBLICATION.md",
+        "doc/technical/DATA_CONTRACTS.md"
+      ],
+      "steps": [
+        "建立上次published base与current disk扫描；记录managed ownership与未知文件。",
+        "通知仅作唤醒，发布前重新hash；检测文件删除/改名/附件更改。",
+        "3000note模拟集覆盖200人工改动、非托管文件和.obsidian。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/ownership.rs",
+        "crates/noetome-core/tests/ownership.rs"
+      ],
+      "non_goals": [
+        "不接管旧Vault；不以mtime作为编辑判据。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-21",
+        "AC-37"
+      ],
+      "quality": [
+        "NFR-07",
+        "NFR-11"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "ownership"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B10-T03",
+      "title": "结构锁与候选ChangeSet",
+      "batch": "B10",
+      "status": "todo",
+      "depends_on": [
+        "B10-T02"
+      ],
+      "requirements": [
+        "FR-16",
+        "FR-30",
+        "FR-31",
+        "FR-32"
+      ],
+      "acceptance": [
+        "自动模式也不能覆盖人工内容；目录/章节锁在规划和发布两处检查。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/PUBLICATION.md",
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/CONFIG.md"
+      ],
+      "steps": [
+        "实现项目/目录/笔记/章节/内容锁优先级，人工修改提升保护。",
+        "生成三方base/current/candidate差异，逐文件增加修改移动删除操作与依赖闭包。",
+        "冲突受锁定部分隔离为候选，不阻断不依赖该内容的其他job。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/changeset.rs",
+        "crates/noetome-core/tests/changeset.rs"
+      ],
+      "non_goals": [
+        "不尝试自动语义合并人工段落。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-21",
+        "AC-23",
+        "AC-24"
+      ],
+      "quality": [
+        "NFR-07"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "changeset"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B10-T04",
+      "title": "审批绑定与过期失效",
+      "batch": "B10",
+      "status": "todo",
+      "depends_on": [
+        "B10-T03"
+      ],
+      "requirements": [
+        "FR-30",
+        "FR-31",
+        "FR-32"
+      ],
+      "acceptance": [
+        "过期审批不能进入发布；拒绝保存候选历史；任何批量接受仍逐项校验。",
+        "编辑候选不能绕过IR和证据校验；局部采纳仍满足依赖闭包。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/PUBLICATION.md",
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/RUNTIME_PROTOCOL.md"
+      ],
+      "steps": [
+        "approval绑定changeSet revision+base/current/candidate hashes+policy/lock revisions。",
+        "CLI/API批准拒绝与撤销；确认前后任何输入变化使审批失效。",
+        "支持有限结构化候选编辑，生成新candidate revision、旧审批失效，新增人工陈述按DATA重新建立证据与映射，重验后再批准。",
+        "模拟审批后人工再次编辑、候选重生成、部分接受依赖闭包冲突。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/approvals.rs",
+        "crates/noetome-core/tests/approvals.rs"
+      ],
+      "non_goals": [
+        "无skip-safety或force-overwrite开关。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-22",
+        "AC-24"
+      ],
+      "quality": [
+        "NFR-07"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "approvals"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B11-T01",
+      "title": "发布准备与持久journal",
+      "batch": "B11",
+      "status": "todo",
+      "depends_on": [
+        "B10-T04"
+      ],
+      "requirements": [
+        "FR-33"
+      ],
+      "acceptance": [
+        "staging验证失败不会进入apply；journal可明确区分未执行/已执行/未知操作。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/PUBLICATION.md",
+        "doc/technical/DATA_CONTRACTS.md"
+      ],
+      "steps": [
+        "建立同卷隐藏staging与可回滚备份，DB intent/文件manifest持久顺序按规范。",
+        "发布前检查全部路径、资源、hash、审批、可用空间与同卷约束。",
+        "逐journal步骤故障注入，未完成preflight不修改可见文件。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/publish_prepare.rs",
+        "crates/noetome-core/tests/publish_prepare.rs",
+        "crates/noetome-store/src/publication_journal.rs",
+        "crates/noetome-store/tests/publication_journal.rs"
+      ],
+      "non_goals": [
+        "不声称整Vault跨文件原子替换。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-08",
+        "NFR-14"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "publish_prepare"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "journal-persistence",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-store",
+            "--test",
+            "publication_journal"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B11-T02",
+      "title": "Windows并发编辑保护与应用",
+      "batch": "B11",
+      "status": "todo",
+      "depends_on": [
+        "B11-T01"
+      ],
+      "requirements": [
+        "FR-30",
+        "FR-32",
+        "FR-33",
+        "FR-34"
+      ],
+      "acceptance": [
+        "竞争修改在文件锁/CAS路径被拒绝或导致阻断；非托管内容零变化。",
+        "任一步失败不报Release成功。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/PUBLICATION.md",
+        "doc/technical/RUNTIME_PROTOCOL.md"
+      ],
+      "steps": [
+        "按排序获取Windows文件保护句柄，拒绝共享写/删除，重读hash后应用。",
+        "文件占用或新建冲突转blocked，无权限降级路径；每步持久journal。",
+        "独立进程在审批后、CAS后、replace附近改文件，验证无未批准覆盖。",
+        "Core只保留状态机；实际Win32句柄与no-replace安装放adapters，使用真实NTFS文件和外部进程竞争测试，禁止fake端口替代。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/publish_apply.rs",
+        "crates/noetome-core/tests/publish_apply.rs",
+        "crates/noetome-adapters/src/windows_publication.rs",
+        "crates/noetome-adapters/tests/windows_publication.rs"
+      ],
+      "non_goals": [
+        "没有不锁文件的兼容回退；不支持目标文件系统则明确拒绝。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-21",
+        "AC-22",
+        "AC-27",
+        "AC-37"
+      ],
+      "quality": [
+        "NFR-07",
+        "NFR-08"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "publish_apply"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "windows-handle-race",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-adapters",
+            "--test",
+            "windows_publication"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B11-T03",
+      "title": "中断恢复与受保护回滚",
+      "batch": "B11",
+      "status": "todo",
+      "depends_on": [
+        "B11-T02"
+      ],
+      "requirements": [
+        "FR-30",
+        "FR-33",
+        "FR-35"
+      ],
+      "acceptance": [
+        "恢复不抹掉崩溃后的人工编辑；回滚经同一保护管线。",
+        "一致新版本/一致旧版本/明确recovery_required三种状态可区分。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/PUBLICATION.md",
+        "doc/technical/DATA_CONTRACTS.md"
+      ],
+      "steps": [
+        "恢复时根据journal+真实文件hash判定继续/补偿/needs_review，操作幂等。",
+        "rollback作为新ChangeSet重新检查当前编辑和审批，旧Release只读。",
+        "注入多文件中断、DB提交失败、备份丢失、用户在崩溃后改文件。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/recovery.rs",
+        "crates/noetome-core/tests/recovery.rs"
+      ],
+      "non_goals": [
+        "禁止发现部分发布便自动全库覆盖回滚。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-26",
+        "AC-27",
+        "AC-28"
+      ],
+      "quality": [
+        "NFR-07",
+        "NFR-08"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "recovery"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B11-T04",
+      "title": "生产发布故障矩阵总验收",
+      "batch": "B11",
+      "status": "todo",
+      "depends_on": [
+        "B11-T03"
+      ],
+      "requirements": [
+        "FR-30",
+        "FR-31",
+        "FR-32",
+        "FR-33",
+        "FR-34",
+        "FR-35"
+      ],
+      "acceptance": [
+        "所有killpoints不出现错误成功或未批准覆盖；故障后可以解释当前状态。",
+        "真实Windows adapters故障套件至少一例实际运行且覆盖全部matrix killpoints；Linux skip或core mock不合格。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/PUBLICATION.md",
+        "doc/standards/TESTING.md"
+      ],
+      "steps": [
+        "建立逐操作killpoint harness，重复重启与磁盘/文件占用故障。",
+        "覆盖新建修改重命名删除附件及非托管哨兵，核对整组一致性。",
+        "只有该套通过后开放受管理新Vault增量发布能力。"
+      ],
+      "outputs": [
+        "crates/noetome-core/tests/publication_faults.rs",
+        "tests/fixtures/publication/matrix.json",
+        "crates/noetome-adapters/tests/publication_faults.rs"
+      ],
+      "non_goals": [
+        "本任务不授权操作用户尚未选择的真实Vault。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-21",
+        "AC-22",
+        "AC-24",
+        "AC-26",
+        "AC-27",
+        "AC-28",
+        "AC-37"
+      ],
+      "quality": [
+        "NFR-07",
+        "NFR-08"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "publication_faults"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "real-process-faults",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-adapters",
+            "--test",
+            "publication_faults"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B12-T01",
+      "title": "批准范围与有界研究队列",
+      "batch": "B12",
+      "status": "todo",
+      "depends_on": [
+        "B11-T04"
+      ],
+      "requirements": [
+        "FR-11",
+        "FR-12",
+        "FR-13"
+      ],
+      "acceptance": [
+        "未批准主题不自动展开；核心未完成不能被候选队列空掩盖。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/CONFIG.md",
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/MODEL_CONTRACTS.md"
+      ],
+      "steps": [
+        "实现研究scope/depth/style独立参数、目标和candidate topic状态。",
+        "run只处理启动时批准目标，新主题留候选；hops/queries/pages/round预算固定。",
+        "测试无进展终止、范围外候选、研究关闭和预算耗尽。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/research_scope.rs",
+        "crates/noetome-core/tests/research_scope.rs"
+      ],
+      "non_goals": [
+        "不做无限自主爬网。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-31",
+        "AC-32",
+        "AC-33"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "research_scope"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B12-T02",
+      "title": "Brave检索与安全网页证据",
+      "batch": "B12",
+      "status": "todo",
+      "depends_on": [
+        "B12-T01"
+      ],
+      "requirements": [
+        "FR-06",
+        "FR-11",
+        "FR-12",
+        "FR-13"
+      ],
+      "acceptance": [
+        "联网权限与API模型权限分开；每个研究事实对应获取过的页面证据。",
+        "无检索密钥为blocked_config；外部页面内容不能改变工具权限。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/MODEL_CONTRACTS.md",
+        "doc/technical/CONFIG.md",
+        "doc/technical/STACK.md"
+      ],
+      "steps": [
+        "实现Brave Search适配、URL去重、HTTPS请求限额与SSRF/重定向复查。",
+        "读取实际页面提取文本、hash和定位；搜索摘要只用于发现。",
+        "本地网络stub测试私网地址/凭据URL/巨响应/恶意文本/缺密钥/robots限制。"
+      ],
+      "outputs": [
+        "crates/noetome-adapters/src/research_fetch.rs",
+        "crates/noetome-adapters/tests/research_fetch.rs"
+      ],
+      "non_goals": [
+        "不抓取需绕过付费墙/登录的内容；不发送用户全部源文档作搜索词。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-31",
+        "AC-32",
+        "AC-35"
+      ],
+      "quality": [
+        "NFR-15"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-adapters",
+            "--test",
+            "research_fetch"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B12-T03",
+      "title": "研究补证与知识闭环",
+      "batch": "B12",
+      "status": "todo",
+      "depends_on": [
+        "B12-T02"
+      ],
+      "requirements": [
+        "FR-10",
+        "FR-12",
+        "FR-13",
+        "FR-14"
+      ],
+      "acceptance": [
+        "来源驱动和体系驱动两模式共用IR；预算停止显示部分完成。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/KNOWLEDGE_PIPELINE.md",
+        "doc/technical/MODEL_CONTRACTS.md"
+      ],
+      "steps": [
+        "研究命中进入相同Source/Claim/Atom校验，证据等级与时效写入模型。",
+        "补证修订IR并重新检查受影响内容；新增相关题目仍放结题候选。",
+        "混合fake研究→冲突→补证→规划→报告，测试循环和预算停止。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/research_compile.rs",
+        "crates/noetome-core/tests/research_compile.rs"
+      ],
+      "non_goals": [
+        "不因网上找到多数相同结论便删除原资料观点。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-06",
+        "AC-32",
+        "AC-34"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "research_compile"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B13-T01",
+      "title": "四维报告与可定位问题",
+      "batch": "B13",
+      "status": "todo",
+      "depends_on": [
+        "B12-T03"
+      ],
+      "requirements": [
+        "FR-26",
+        "FR-28",
+        "FR-31",
+        "FR-39",
+        "FR-40"
+      ],
+      "acceptance": [
+        "候选未批准不计失败；核心失败仍阻断完成；预算耗尽不报完成。",
+        "正文清爽但不隐藏知识不确定性；来源在应用追溯可定位。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "实现source coverage/knowledge/quality/research四维聚合和完成判定。",
+        "JSON/Markdown报告列出included/excluded/failed/unverified/candidates与严重度。",
+        "按段落打开trace/issue，保留生成及证据版本和真实进度分母。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/report.rs",
+        "crates/noetome-core/tests/report.rs"
+      ],
+      "non_goals": [
+        "进度未知则显示计数不伪造百分比。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-20",
+        "AC-33"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "report"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B13-T02",
+      "title": "可移植导出与来源重定位",
+      "batch": "B13",
+      "status": "todo",
+      "depends_on": [
+        "B13-T01"
+      ],
+      "requirements": [
+        "FR-06",
+        "FR-26",
+        "FR-27"
+      ],
+      "acceptance": [
+        "无数据库仍可读Vault；索引可恢复trace；缺资料明示不接错文件。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/PUBLICATION.md",
+        "doc/technical/CONFIG.md"
+      ],
+      "steps": [
+        "导出Vault及相邻portable index、可选许可来源副本，凭据和私有缓存排除。",
+        "导入索引时校验版本/路径/hash，来源重定位需内容一致。",
+        "验证迁移后阅读、追溯、缺源提示、恶意zip路径与改动Vault检测。"
+      ],
+      "outputs": [
+        "crates/noetome-core/src/portability.rs",
+        "crates/noetome-core/tests/portability.rs"
+      ],
+      "non_goals": [
+        "不自动分享/上传导出包。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-20",
+        "AC-36"
+      ],
+      "quality": [
+        "NFR-14",
+        "NFR-15",
+        "NFR-17"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-core",
+            "--test",
+            "portability"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B13-T03",
+      "title": "备份迁移与安全清理",
+      "batch": "B13",
+      "status": "todo",
+      "depends_on": [
+        "B13-T02"
+      ],
+      "requirements": [
+        "FR-06",
+        "FR-33",
+        "FR-40"
+      ],
+      "acceptance": [
+        "可回到迁移前一致状态；被历史证据/发布引用内容不被GC。",
+        "用户来源/非托管Vault文件永不进入缓存清理范围。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/PUBLICATION.md",
+        "doc/technical/CONFIG.md"
+      ],
+      "steps": [
+        "实现schema迁移前备份与完整性检查，旧版本未来版本读写策略明确。",
+        "GC只删除引用计数为0且超保留期的自有缓存，先生成dry-run清单。",
+        "测试历史Release/证据/审批备份保留、损坏库诊断和中断清理。"
+      ],
+      "outputs": [
+        "crates/noetome-store/src/maintenance.rs",
+        "crates/noetome-store/tests/maintenance.rs"
+      ],
+      "non_goals": [
+        "不实现任意项目文件清理器。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-08",
+        "NFR-17"
+      ],
+      "checks": [
+        {
+          "name": "format",
+          "argv": [
+            "cargo",
+            "fmt",
+            "--all",
+            "--check"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "build",
+          "argv": [
+            "cargo",
+            "check",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "regression",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "--workspace"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "behavior",
+          "argv": [
+            "cargo",
+            "test",
+            "--locked",
+            "-p",
+            "noetome-store",
+            "--test",
+            "maintenance"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B14-T01",
+      "title": "Tauri桌面壳与配置表单",
+      "batch": "B14",
+      "status": "todo",
+      "depends_on": [
+        "B13-T03"
+      ],
+      "requirements": [
+        "FR-37",
+        "FR-38"
+      ],
+      "acceptance": [
+        "桌面不直接写SQLite或Vault；错误配置无法启动付费任务；字段错误可访问。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/ARCHITECTURE.md",
+        "doc/technical/RUNTIME_PROTOCOL.md",
+        "doc/technical/CONFIG.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "建立Tauri2 React19 TS5 Vite Vitest pnpm锁文件，限制capabilities/CSP。；package scripts固定typecheck、test、test:ci、build，后续补test:e2e。",
+        "定义纯UI状态与typed IPC client，配置表单与Core schema共享校验。",
+        "实现缺密钥/错误预算/外发范围状态，不把secret值传入日志或React持久状态。",
+        "用json-schema-to-typescript 15从B02已提交Schema生成TS类型，跨语言fixture往返，生成后类型检查；不另写一套UI业务schema。"
+      ],
+      "outputs": [
+        "apps/desktop/package.json",
+        "apps/desktop/pnpm-lock.yaml",
+        "apps/desktop/src/App.tsx",
+        "apps/desktop/src/tests/config.test.tsx",
+        "apps/desktop/scripts/generate-types.mjs",
+        "apps/desktop/src/generated/protocol.ts"
+      ],
+      "non_goals": [
+        "无第二套编译器，无云同步与账户系统。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-15"
+      ],
+      "checks": [
+        {
+          "name": "types",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "exec",
+            "tsc",
+            "--noEmit"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "ui-tests",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "test",
+            "--run",
+            "src/tests/config.test.tsx"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "ui-build",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "build"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B14-T02",
+      "title": "项目与来源管理界面",
+      "batch": "B14",
+      "status": "todo",
+      "depends_on": [
+        "B14-T01"
+      ],
+      "requirements": [
+        "FR-01",
+        "FR-02",
+        "FR-03",
+        "FR-04",
+        "FR-06"
+      ],
+      "acceptance": [
+        "使用者可定位失败来源并重试；删除动作不抹历史证据。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/CONFIG.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "实现新建/打开项目、选择资料、导入状态、版本/缺页/缺源清单。",
+        "对source add/remove影响以Core返回的依赖列表呈现。",
+        "用fake IPC验证重复导入、换版、失败重试和空项目。"
+      ],
+      "outputs": [
+        "apps/desktop/src/pages/Sources.tsx",
+        "apps/desktop/src/tests/sources.test.tsx"
+      ],
+      "non_goals": [
+        "不拖入未选择目录的其他私人资料。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-03",
+        "AC-04",
+        "AC-38"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "types",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "exec",
+            "tsc",
+            "--noEmit"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "ui-tests",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "test",
+            "--run",
+            "src/tests/sources.test.tsx"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "ui-build",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "build"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B14-T03",
+      "title": "任务监控与后台生命周期",
+      "batch": "B14",
+      "status": "todo",
+      "depends_on": [
+        "B14-T02"
+      ],
+      "requirements": [
+        "FR-28",
+        "FR-35",
+        "FR-38",
+        "FR-39"
+      ],
+      "acceptance": [
+        "常规操作立即反馈；不将关窗口当取消，不将线程退出当完成。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/RUNTIME_PROTOCOL.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "实现job状态/四维完成/预算预留在途/issue计数的分页事件订阅。",
+        "窗口关闭提示继续后台或暂停；关闭后重开从持久cursor恢复。",
+        "测试断线重连、暂停中在途、取消安全落盘和worker崩溃。"
+      ],
+      "outputs": [
+        "apps/desktop/src/pages/Run.tsx",
+        "apps/desktop/src/tests/run.test.tsx"
+      ],
+      "non_goals": [
+        "不依赖前端计时器维持任务。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-26",
+        "AC-30",
+        "AC-33"
+      ],
+      "quality": [
+        "NFR-12",
+        "NFR-13"
+      ],
+      "checks": [
+        {
+          "name": "types",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "exec",
+            "tsc",
+            "--noEmit"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "ui-tests",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "test",
+            "--run",
+            "src/tests/run.test.tsx"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "ui-build",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "build"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B14-T04",
+      "title": "笔记预览与证据定位",
+      "batch": "B14",
+      "status": "todo",
+      "depends_on": [
+        "B14-T03"
+      ],
+      "requirements": [
+        "FR-22",
+        "FR-24",
+        "FR-26"
+      ],
+      "acceptance": [
+        "预览与trace映射同一release/snapshot；没有来源时明确提示。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "实现隔离预览，关闭script/远程资源；分页加载笔记与issue。",
+        "选中生成节点打开来源页/区域与Claim条件，不在正文塞来源编号。",
+        "针对无源、旧revision、坏链接、恶意SVG与数学图表展示做UI用例。"
+      ],
+      "outputs": [
+        "apps/desktop/src/pages/Preview.tsx",
+        "apps/desktop/src/tests/preview.test.tsx"
+      ],
+      "non_goals": [
+        "只做证据必要阅读功能，不扩张成完整PDF阅读器。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-20"
+      ],
+      "quality": [
+        "NFR-04",
+        "NFR-15"
+      ],
+      "checks": [
+        {
+          "name": "types",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "exec",
+            "tsc",
+            "--noEmit"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "ui-tests",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "test",
+            "--run",
+            "src/tests/preview.test.tsx"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "ui-build",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "build"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B15-T01",
+      "title": "差异审批与结构锁界面",
+      "batch": "B15",
+      "status": "todo",
+      "depends_on": [
+        "B14-T04"
+      ],
+      "requirements": [
+        "FR-16",
+        "FR-30",
+        "FR-31",
+        "FR-32",
+        "FR-33"
+      ],
+      "acceptance": [
+        "提交审批使用revision/fingerprint，不用旧界面状态直接发布。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/PUBLICATION.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "实现base/current/candidate并排差异、变更影响和三级问题。",
+        "提供锁定、批准、拒绝与过期审批刷新，批量只限依赖闭包。；提供结构化候选文字/表格值编辑，编辑后明确需重验并使旧审批失效。",
+        "验证自动模式人工冲突仍必须审批，外部编辑后UI与Core同步失效。"
+      ],
+      "outputs": [
+        "apps/desktop/src/pages/Changes.tsx",
+        "apps/desktop/src/tests/changes.test.tsx"
+      ],
+      "non_goals": [
+        "不可在界面隐藏安全问题或添加强行覆盖。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-21",
+        "AC-22",
+        "AC-23",
+        "AC-24",
+        "AC-28"
+      ],
+      "quality": [
+        "NFR-07"
+      ],
+      "checks": [
+        {
+          "name": "types",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "exec",
+            "tsc",
+            "--noEmit"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "ui-tests",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "test",
+            "--run",
+            "src/tests/changes.test.tsx"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "ui-build",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "build"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B15-T02",
+      "title": "风格研究与导出工作流",
+      "batch": "B15",
+      "status": "todo",
+      "depends_on": [
+        "B15-T01"
+      ],
+      "requirements": [
+        "FR-05",
+        "FR-12",
+        "FR-13",
+        "FR-20",
+        "FR-27",
+        "FR-40"
+      ],
+      "acceptance": [
+        "风格改动只影响表现层；候选选择不静默扩大本run范围；导出无密钥。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/CONFIG.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "实现水平/目标/深度/风格独立编辑、选取风格参考和重编译预览。",
+        "展示待批准主题候选、范围与限额，下一run才纳入新增目标。",
+        "实现导出与诊断包预览，明确来源复制策略。"
+      ],
+      "outputs": [
+        "apps/desktop/src/pages/Settings.tsx",
+        "apps/desktop/src/tests/settings.test.tsx"
+      ],
+      "non_goals": [
+        "不增加PPT、习题与跨库知识导入功能。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-09",
+        "AC-32",
+        "AC-36"
+      ],
+      "quality": [],
+      "checks": [
+        {
+          "name": "types",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "exec",
+            "tsc",
+            "--noEmit"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "ui-tests",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "test",
+            "--run",
+            "src/tests/settings.test.tsx"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "ui-build",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "build"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B15-T03",
+      "title": "桌面端到端与可访问性",
+      "batch": "B15",
+      "status": "todo",
+      "depends_on": [
+        "B15-T02"
+      ],
+      "requirements": [
+        "FR-19",
+        "FR-28",
+        "FR-39"
+      ],
+      "acceptance": [
+        "核心流程键盘可完成，500%缩放不要求但100–200%无关键遮挡。",
+        "真实桌面smoke作为打包门禁，组件测试不冒称真实Windows自动化。",
+        "真实Core/worker/sidecar与桌面自动smoke通过；组件mock和桌面E2E结果分开，普通流程不要求用户手工点击验收。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/standards/DESIGN.md",
+        "doc/standards/TESTING.md",
+        "doc/technical/UI_AUTOMATION.md"
+      ],
+      "steps": [
+        "补齐键盘导航、焦点、缩放、空态/错误态/加载态与危险操作文案。",
+        "建立fake IPC组件全旅程，再按UI_AUTOMATION实现tauri-driver真实Windows桌面E2E；test:e2e自行构建debug二进制、启动受控driver/本地API stub并在finally回收进程。",
+        "验证大量笔记/差异分页、事件风暴合并和P95反馈harness。"
+      ],
+      "outputs": [
+        "apps/desktop/src/tests/journey.test.tsx",
+        "apps/desktop/src/tests/accessibility.test.tsx",
+        "apps/desktop/test/e2e/smoke.spec.ts",
+        "apps/desktop/wdio.conf.ts"
+      ],
+      "non_goals": [
+        "不为视觉装饰引入新架构或大型UI框架。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-11",
+        "NFR-12"
+      ],
+      "checks": [
+        {
+          "name": "types",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "exec",
+            "tsc",
+            "--noEmit"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "ui-tests",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "test",
+            "--run",
+            "src/tests/journey.test.tsx",
+            "src/tests/accessibility.test.tsx"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 1
+        },
+        {
+          "name": "ui-build",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "build"
+          ],
+          "timeout_s": 600,
+          "min_tests": 0
+        },
+        {
+          "name": "desktop-e2e",
+          "argv": [
+            "pnpm",
+            "--dir",
+            "apps/desktop",
+            "test:e2e"
+          ],
+          "timeout_s": 1800,
+          "min_tests": 1
+        }
+      ]
+    },
+    {
+      "id": "B16-T01",
+      "title": "持续集成与版本依赖检查",
+      "batch": "B16",
+      "status": "todo",
+      "depends_on": [
+        "B15-T03"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "新clone按锁文件构建，CI无需私有凭据；门禁不默认跳过真实未运行项。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/STACK.md",
+        "doc/standards/RELEASE.md"
+      ],
+      "steps": [
+        "建立Windows CI的Rust/Python/前端锁定安装和针对性测试矩阵。",
+        "增加文档/plan/devlog/SQL检查与许可证/依赖审计，上传失败诊断artifact。",
+        "编写release_gate.py，缺失真实证据/空测试/跳过检查都返回非零。",
+        "按三个内部检查点分步commit：先证据schema与坏例测试，再实现9种gate及退出码，最后接CI并生成真实engineering报告；全部通过才完成本任务。"
+      ],
+      "outputs": [
+        ".github/workflows/ci.yml",
+        "scripts/release_gate.py",
+        "tests/test_release_gate.py",
+        "release/evidence/engineering.json"
+      ],
+      "non_goals": [
+        "不自动发布GitHub Release或公开仓库。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-15",
+        "NFR-17"
+      ],
+      "checks": [
+        {
+          "name": "gate",
+          "argv": [
+            "{python}",
+            "scripts/release_gate.py",
+            "check",
+            "engineering"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B16-T02",
+      "title": "Windows安装包与离线运行资产",
+      "batch": "B16",
+      "status": "todo",
+      "depends_on": [
+        "B16-T01"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "安装产物可验证内容hash/来源/许可证；卸载不删除用户项目和Vault。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/STACK.md",
+        "doc/standards/RELEASE.md"
+      ],
+      "steps": [
+        "按固定打包策略构建Rust worker、Python侧车与选定OCR语言资产，生成SBOM/hash。",
+        "配置Tauri NSIS安装/卸载，项目数据与程序目录分离，长路径和空格路径验证。",
+        "区分内部未签名与正式签名发行，不自动下载未固定来源二进制。"
+      ],
+      "outputs": [
+        "apps/desktop/src-tauri/tauri.conf.json",
+        "scripts/package.ps1",
+        "release/dependency-manifest.json",
+        "release/evidence/package.json"
+      ],
+      "non_goals": [
+        "缺签名证书仅阻断签名发行，不伪造签名或关闭系统安全设置。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-14",
+        "NFR-15",
+        "NFR-17"
+      ],
+      "checks": [
+        {
+          "name": "gate",
+          "argv": [
+            "{python}",
+            "scripts/release_gate.py",
+            "check",
+            "package"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B16-T03",
+      "title": "干净Windows安装与真实桌面smoke",
+      "batch": "B16",
+      "status": "todo",
+      "depends_on": [
+        "B16-T02"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "最低目标和当前测试环境记录真实版本；无Python/Rust开发环境也能运行。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/standards/RELEASE.md",
+        "doc/standards/TESTING.md"
+      ],
+      "steps": [
+        "在干净Windows11目标环境验证无开发工具可安装运行、升级/卸载。",
+        "Agent按UI_AUTOMATION在真实安装产物上自动执行CLI/worker/sidecar/桌面导入→编译→审批发布→重新打开，保存报告和失败截图，用户不需要敲命令。",
+        "形成环境、包hash、命令、截图定位和实际结果报告；失败建立复现。"
+      ],
+      "outputs": [
+        "release/evidence/install.json",
+        "release/evidence/desktop-smoke.json"
+      ],
+      "non_goals": [
+        "模拟UI/源码运行不能代替安装包验证。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-12",
+        "NFR-14",
+        "NFR-17"
+      ],
+      "checks": [
+        {
+          "name": "gate",
+          "argv": [
+            "{python}",
+            "scripts/release_gate.py",
+            "check",
+            "install"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B17-T01",
+      "title": "独立金标准与正式基准harness",
+      "batch": "B17",
+      "status": "todo",
+      "depends_on": [
+        "B16-T03"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "指标按PRD口径，有明确分母、逐项判定和置信限制；未审阅gold不可过关。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/standards/TESTING.md",
+        "doc/standards/RELEASE.md"
+      ],
+      "steps": [
+        "建立自有/授权基准manifest，至少200人工审阅原子、关键图公式与多源冲突。",
+        "gold与被测抽取器分离，记录审阅者/版本/纳入排除理由；不可从同轮模型结果自动造gold。",
+        "实现逐项recall/accuracy/trace/visual计量与报告schema，坏gold/小样本拒绝统计成功。"
+      ],
+      "outputs": [
+        "tests/benchmarks/manifest.json",
+        "scripts/benchmark.py",
+        "tests/test_benchmark.py",
+        "release/evidence/benchmark-harness.json"
+      ],
+      "non_goals": [
+        "授权语料或独立审阅不足时记录缺口，不篡造专家审阅。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-01",
+        "NFR-02",
+        "NFR-03",
+        "NFR-04",
+        "NFR-06"
+      ],
+      "checks": [
+        {
+          "name": "gate",
+          "argv": [
+            "{python}",
+            "scripts/release_gate.py",
+            "check",
+            "benchmark-harness"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B17-T02",
+      "title": "容量与交互性能实测",
+      "batch": "B17",
+      "status": "todo",
+      "depends_on": [
+        "B17-T01"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "规模达到PRD基线且报告清楚fake边界；P95≤2秒、暂停2秒内停发。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/standards/RELEASE.md",
+        "doc/technical/RUNTIME_PROTOCOL.md"
+      ],
+      "steps": [
+        "建立1000页/10000原子/1000输出与3000笔记含200人工编辑基准。",
+        "分离离线fake调度/编译容量与真实模型内容质量，用固定机器记录CPU/RAM/disk。",
+        "测常规操作P95、内存增长、扫描分页、暂停停止调度时间。"
+      ],
+      "outputs": [
+        "release/evidence/capacity.json",
+        "release/evidence/interaction.json"
+      ],
+      "non_goals": [
+        "不缩小输入后仍声称达到NFR容量。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [],
+      "quality": [
+        "NFR-10",
+        "NFR-11",
+        "NFR-12",
+        "NFR-13"
+      ],
+      "checks": [
+        {
+          "name": "gate",
+          "argv": [
+            "{python}",
+            "scripts/release_gate.py",
+            "check",
+            "capacity"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B17-T03",
+      "title": "24小时混合长任务和睡眠恢复",
+      "batch": "B17",
+      "status": "todo",
+      "depends_on": [
+        "B17-T01"
+      ],
+      "requirements": [
+        "FR-35",
+        "FR-36"
+      ],
+      "acceptance": [
+        "实际awake_workload_seconds≥86400且墙钟≥86400，睡眠时长另计；加速或挂起跨日不替代24小时工作负载。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/RUNTIME_PROTOCOL.md",
+        "doc/technical/PUBLICATION.md",
+        "doc/standards/RELEASE.md"
+      ],
+      "steps": [
+        "运行固定seed混合解析/本地API stub/编译/发布工作负载满24小时。",
+        "中间执行睡眠恢复、网络超时、429与killpoint，记录时间序列资源与DB完整性。",
+        "核对无重复发布、无未知预算释放、无无界资源增长及无不可恢复损坏。"
+      ],
+      "outputs": [
+        "release/evidence/soak.json",
+        "scripts/soak.py"
+      ],
+      "non_goals": [
+        "不默认用真实收费模型做24小时烧机。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-39"
+      ],
+      "quality": [
+        "NFR-08",
+        "NFR-09",
+        "NFR-13"
+      ],
+      "checks": [
+        {
+          "name": "gate",
+          "argv": [
+            "{python}",
+            "scripts/release_gate.py",
+            "check",
+            "soak"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B18-T01",
+      "title": "真实Provider与内容质量验收",
+      "batch": "B18",
+      "status": "todo",
+      "depends_on": [
+        "B17-T03"
+      ],
+      "requirements": [
+        "FR-11",
+        "FR-12",
+        "FR-37"
+      ],
+      "acceptance": [
+        "必要原子召回≥98%、关键100%、准确≥98%、实质原子映射100%、严重事实错误零未处置。",
+        "缺密钥/预算/真实审阅证据均阻断该门禁，不能用mock替代。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/technical/MODEL_CONTRACTS.md",
+        "doc/standards/RELEASE.md",
+        "doc/standards/TESTING.md"
+      ],
+      "steps": [
+        "使用已配置凭据、明确预算和授权语料执行provider canary并固化能力报告。",
+        "跑真实来源驱动与批准范围研究流程，独立对比gold并复查关键原子/条件/视觉。",
+        "生成实际召回准确追溯结果、失败清单、模型/参数/花费；不达标先修复而非改阈值。"
+      ],
+      "outputs": [
+        "release/evidence/provider.json",
+        "release/evidence/quality.json",
+        "release/evidence/research.json"
+      ],
+      "non_goals": [
+        "不保证任意用户自选模型均达到相同质量。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-31",
+        "AC-32",
+        "AC-34"
+      ],
+      "quality": [
+        "NFR-01",
+        "NFR-02",
+        "NFR-03",
+        "NFR-04",
+        "NFR-06"
+      ],
+      "checks": [
+        {
+          "name": "gate",
+          "argv": [
+            "{python}",
+            "scripts/release_gate.py",
+            "check",
+            "real-quality"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B18-T02",
+      "title": "真实Obsidian兼容性验收",
+      "batch": "B18",
+      "status": "todo",
+      "depends_on": [
+        "B17-T02",
+        "B17-T03"
+      ],
+      "requirements": [
+        "FR-18",
+        "FR-25"
+      ],
+      "acceptance": [
+        "关键图表公式可读、导航目标正确、本轮链接100%；两个版本均有真实证据。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/standards/RELEASE.md",
+        "doc/standards/DESIGN.md"
+      ],
+      "steps": [
+        "在无社区插件环境打开基准Vault，记录最低支持与当前稳定Obsidian准确版本。",
+        "逐项检查中文路径/重名heading/块与表格别名/Properties/MathJax/Mermaid/SVG。",
+        "保存可复现用例与截图证据；失败修编译器或采用已定等价回退后重测，不得删PRD必需语法、最低/当前两版本门禁。"
+      ],
+      "outputs": [
+        "release/evidence/obsidian.json"
+      ],
+      "non_goals": [
+        "HTML/静态parser通过不替代Obsidian实机。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-19",
+        "AC-40"
+      ],
+      "quality": [
+        "NFR-05",
+        "NFR-06",
+        "NFR-16"
+      ],
+      "checks": [
+        {
+          "name": "gate",
+          "argv": [
+            "{python}",
+            "scripts/release_gate.py",
+            "check",
+            "obsidian"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 0
+        }
+      ]
+    },
+    {
+      "id": "B18-T03",
+      "title": "V1完整验收与交付封版",
+      "batch": "B18",
+      "status": "todo",
+      "depends_on": [
+        "B18-T01",
+        "B18-T02"
+      ],
+      "requirements": [
+        "FR-01",
+        "FR-02",
+        "FR-03",
+        "FR-04",
+        "FR-05",
+        "FR-06",
+        "FR-07",
+        "FR-08",
+        "FR-09",
+        "FR-10",
+        "FR-11",
+        "FR-12",
+        "FR-13",
+        "FR-14",
+        "FR-15",
+        "FR-16",
+        "FR-17",
+        "FR-18",
+        "FR-19",
+        "FR-20",
+        "FR-21",
+        "FR-22",
+        "FR-23",
+        "FR-24",
+        "FR-25",
+        "FR-26",
+        "FR-27",
+        "FR-28",
+        "FR-29",
+        "FR-30",
+        "FR-31",
+        "FR-32",
+        "FR-33",
+        "FR-34",
+        "FR-35",
+        "FR-36",
+        "FR-37",
+        "FR-38",
+        "FR-39",
+        "FR-40"
+      ],
+      "acceptance": [
+        "40 FR / 40 AC / 17 NFR有可核验的适用证据，所有硬门禁passed且无严重未处置问题。",
+        "未达标称开发构建，不标个人可用V1；不把扩展功能追加为无尽发布前提。",
+        "user_experience_acceptance包含同一candidate与用户真实结论；用户只验体验和必要知识，不读代码或手动跑测试。"
+      ],
+      "history": [],
+      "plan_version": 1,
+      "specs": [
+        "doc/standards/RELEASE.md",
+        "doc/standards/TESTING.md"
+      ],
+      "steps": [
+        "汇总全部FR/AC/NFR证据，复查人工保护、发布恢复、真实质量与安装版本一致。",
+        "冻结版本/lockfiles/SBOM/配置迁移说明/用户手册，生成release manifest与校验和。",
+        "执行全套release gate，清楚列出已实现V1、已知限制、P1扩展边界；提交推送供交付。",
+        "Agent先完成全部技术门禁，再展示同一候选的可阅读样例和3项体验操作，记录用户真实最终试用结论；不得替用户填写accepted。"
+      ],
+      "outputs": [
+        "release/manifest.json",
+        "doc/USER_GUIDE.md",
+        "release/evidence/acceptance.json"
+      ],
+      "non_goals": [
+        "不擅自公开发布、开源或增加P1范围。"
+      ],
+      "failure_policy": [
+        "先保留最小复现与实际错误；同一根因最多连续修复3轮，每轮只改变一个可检验假设。",
+        "若仍失败，按 FAILURE_PLAYBOOK 分类记录阻塞与解除条件；不能删除失败用例、降低门槛或将未运行结果记为通过。"
+      ],
+      "scenarios": [
+        "AC-01",
+        "AC-02",
+        "AC-03",
+        "AC-04",
+        "AC-05",
+        "AC-06",
+        "AC-07",
+        "AC-08",
+        "AC-09",
+        "AC-10",
+        "AC-11",
+        "AC-12",
+        "AC-13",
+        "AC-14",
+        "AC-15",
+        "AC-16",
+        "AC-17",
+        "AC-18",
+        "AC-19",
+        "AC-20",
+        "AC-21",
+        "AC-22",
+        "AC-23",
+        "AC-24",
+        "AC-25",
+        "AC-26",
+        "AC-27",
+        "AC-28",
+        "AC-29",
+        "AC-30",
+        "AC-31",
+        "AC-32",
+        "AC-33",
+        "AC-34",
+        "AC-35",
+        "AC-36",
+        "AC-37",
+        "AC-38",
+        "AC-39",
+        "AC-40"
+      ],
+      "quality": [
+        "NFR-01",
+        "NFR-02",
+        "NFR-03",
+        "NFR-04",
+        "NFR-05",
+        "NFR-06",
+        "NFR-07",
+        "NFR-08",
+        "NFR-09",
+        "NFR-10",
+        "NFR-11",
+        "NFR-12",
+        "NFR-13",
+        "NFR-14",
+        "NFR-15",
+        "NFR-16",
+        "NFR-17"
+      ],
+      "checks": [
+        {
+          "name": "gate",
+          "argv": [
+            "{python}",
+            "scripts/release_gate.py",
+            "check",
+            "release"
+          ],
+          "timeout_s": 1200,
+          "min_tests": 0
+        }
+      ]
     }
   ]
 }

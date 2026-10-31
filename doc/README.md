@@ -1,31 +1,26 @@
-# 开发标准文件入口
+# Noetome开发标准入口
 
-本目录是 Noetome 的需求、技术、设计和执行标准入口。用户已经采纳原需求文档 D01 至 D15 的建议；按已定基线小步执行，不重复询问相同默认策略。
+用户已采纳默认建议，并要求预先固定全项目方案后交给执行Agent。V1按完整蓝图实现，状态不在标准文档重复维护。
 
-## 开始一轮工作
+| 文件 | 权威内容 |
+| --- | --- |
+| [PRD](requirements/PRD.md) | 40 FR、40 AC、17 NFR与产品边界 |
+| [DECISIONS](requirements/DECISIONS.md) | 已接受建议、架构与范围决定 |
+| [ARCHITECTURE](technical/ARCHITECTURE.md) | 模块、工作区、数据流和实施边界 |
+| [STACK](technical/STACK.md) | 固定技术选型、版本锁定和官方依据 |
+| [DATA_CONTRACTS](technical/DATA_CONTRACTS.md) / [schema.sql](technical/schema.sql) | 实体、引用、版本与SQLite结构基线 |
+| [RUNTIME_PROTOCOL](technical/RUNTIME_PROTOCOL.md) | CLI/IPC、状态机、预算、恢复 |
+| [KNOWLEDGE_PIPELINE](technical/KNOWLEDGE_PIPELINE.md) | 筛选、抽取、融合、规划、表达、研究算法 |
+| [MODEL_CONTRACTS](technical/MODEL_CONTRACTS.md) | 模型候选、prompt任务、适配与检索 |
+| [PUBLICATION](technical/PUBLICATION.md) | 人工保护、审批CAS、发布journal和回滚 |
+| [CONFIG](technical/CONFIG.md) | 全配置类型、默认值及校验 |
+| [DESIGN](standards/DESIGN.md) | 交互、视觉、笔记格式和状态表达 |
+| [TESTING](standards/TESTING.md) / [RELEASE](standards/RELEASE.md) | 工程验证与真实质量、安装、长期运行门禁 |
+| [ROADMAP](execution/ROADMAP.md) / [TRACEABILITY](execution/TRACEABILITY.md) | 64项全计划及需求关联 |
+| [NEXT_STEPS](execution/NEXT_STEPS.md) / [HANDOFF](execution/HANDOFF.md) | 下一项和可直接给执行Agent的指令 |
+| [WORKFLOW](standards/WORKFLOW.md) / [FAILURE_PLAYBOOK](execution/FAILURE_PLAYBOOK.md) | 执行、日志、验证、提交及失败恢复 |
+| [AUTOMATED_TESTING](execution/AUTOMATED_TESTING.md) / [UI_AUTOMATION](technical/UI_AUTOMATION.md) | 一键测试、真实桌面自动化和最少人验安排 |
 
-1. 阅读根目录 [AGENTS.md](../AGENTS.md)。
-2. 阅读 [当前状态](../dev-log/STATUS.md) 和 [待办事项](../dev-log/TODO.md)，以账本状态为准。
-3. 在 [近期步骤](execution/NEXT_STEPS.md) 中找到本轮任务，只读与它相关的需求和标准。
-4. 按 [工作流程](standards/WORKFLOW.md) 记录开始、实现、验证、完成及提交。
+先读根[AGENTS](../AGENTS.md)，再看[当前状态](../dev-log/STATUS.md)，用plan next/show只加载当前任务上下文。[账本](../dev-log/tasks.json)为任务定义和状态唯一来源，[完成历史](../dev-log/DONE.md)与[待办](../dev-log/TODO.md)自动生成。
 
-## 标准文件地图
-
-| 文件 | 负责什么 | 何时更新 |
-| --- | --- | --- |
-| [产品需求](requirements/PRD.md) | 40组功能及完整产品验收边界 | 产品行为或验收范围变化 |
-| [决策基线](requirements/DECISIONS.md) | D01至D15已采纳建议及执行解释 | 有依据的新决定或实验结果 |
-| [架构规范](technical/ARCHITECTURE.md) | 模块边界、技术方向和阶段约束 | 跨模块接口或责任变化 |
-| [数据契约](technical/DATA_CONTRACTS.md) | 当前最小实体、身份、来源和版本语义 | 增加持久字段、Schema或接口 |
-| [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
-| [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
-| [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |
-| [阶段路线](execution/ROADMAP.md) | 后续阶段目标及进入条件 | 阶段验收后滚动修订 |
-| [近期步骤](execution/NEXT_STEPS.md) | 下一批最多3个可执行任务卡 | 当前批次完成后展开下一批 |
-| [任务模板](templates/TASK.md) | 新任务卡的必填内容 | 工作卡结构变化 |
-
-状态不在这些文件中重复手工维护。[任务账本](../dev-log/tasks.json) 是事实来源，[已完成事项](../dev-log/DONE.md) 和其他日志视图由工具生成。计划里的“预期结果”不等于已实现能力。
-
-`requirements/PRD.html` 是由 Markdown 生成的阅读版；只修改 Markdown 后重新构建。其他标准文件以 Markdown 为准。旧 `docs` 路径仅保留迁移入口。
-
-遇到标准冲突时：当前用户指令优先，其次已采纳产品需求与决策；技术和设计负责具体实现；近期步骤缩小本轮范围，不得取消产品硬约束。将实质冲突写入日志并修正文档，不暗中选择方便的一边。
+Markdown为标准源；PRD.html由build_prd生成。SQL是待产品实现采用并迁移的结构基线，不代表已有Rust数据库功能。所有产品测试命令在其对应任务实现后才执行，不把本轮文档校验称为产品验收。

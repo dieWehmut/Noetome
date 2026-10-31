@@ -54,3 +54,26 @@ python scripts/devlog.py check
 账本先落盘，视图随后刷新。如果报告“账本已安全更新，但视图刷新失败”，状态事件已经保存；应修复磁盘或权限问题后运行 `render`，不要重复提交同一个状态变更。生成视图不是跨文件事务，因此中断后可能暂时过期，但 `check` 会检出差异。未经恢复和检查，不把日志状态作为提交通过依据。
 
 新增任务、修改任务标题或验收条件属于计划变更，应在本轮规划文档和 Git 差异中审查。状态和完成证据通过工具维护。任何自动化仅可记录实际执行结果，不得把提交成功、文件存在或模型自行判断直接等同于验收通过。
+
+## 完整计划与实际验证（plan_version 1）
+
+64个产品任务附带specs、steps、outputs、checks、non_goals、failure_policy、scenarios和quality。任务定义与状态共用tasks.json，plan工具生成18批任务卡和FR/AC/NFR追溯表；生成视图禁止手改。
+
+```text
+python scripts/plan.py next
+python scripts/plan.py show B01-T01
+python scripts/plan.py render
+python scripts/plan.py check
+python scripts/verify.py B01-T01
+python scripts/devlog.py complete B01-T01 --note "实际成果" --validation "行为验收结果" --artifact crates/noetome-cli/src/main.rs --report .artifacts/verification/B01-T01.json
+```
+
+plan next只读返回resume/start/batch/blocked/complete，不自动改状态。verify实际执行卡片checks，缺命令、缺产物、退出非零、针对性测试数不足或验证期间源码变化都会失败。完成计划任务必须提供对应报告，并复查当前源码与任务定义；不能拿旧报告完成新代码。历史治理任务兼容旧完成方式。
+
+源码指纹覆盖Git可见文件及删除，排除账本、派生日志、.artifacts和dev-log/evidence，避免状态写入自引用。正式release/evidence必须跟踪，不在排除范围内。报告只保留命令、结果、数量和哈希，不持久保存可能含教材正文的控制台输出。完整验证摘要随完成事件保存在账本，原报告可留本地.artifacts。
+
+此机制防止误用证据，不防执行者蓄意篡改报告。科学判断、真实环境和性能证据仍按TESTING/RELEASE审阅。禁止以工具完成记录代替这些验收。
+
+一键入口：`python scripts/autotest.py`检查当前治理工具，`python scripts/autotest.py --task <ID>`增加指定任务的实际检查。用户说“继续这个项目”后由Agent自动执行，不要求用户运行这些命令。
+
+更早批次存在回归时可使用 `batch <较早批次> --repair --note "原因"`；前提是没有in_progress且目标已有非done任务（先按依赖reopen）。它保存历史，只允许后退，不能越过未完成批次向前跳。正常前进仍要求当前批次全部完成。

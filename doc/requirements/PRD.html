@@ -63,9 +63,9 @@ blockquote { margin:16px 0; }
   a { color:inherit; }
 }
 </style></head><body><div class="layout"><nav class="navigation" aria-label="文档目录"><strong>Noetome 需求文档</strong><button type="button" class="print-button" onclick="window.print()">打印文档</button><a href="#section_8">1 文档约定与需求依据</a><a href="#section_51">2 产品目标与范围</a><a href="#section_81">3 核心概念与产品原则</a><a href="#section_113">4 用户旅程与任务状态</a><a href="#section_151">5 项目配置与默认策略</a><a href="#section_179">6 资料导入与知识筛选</a><a href="#section_229">7 多源知识建模与研究</a><a href="#section_297">8 笔记结构与知识关联</a><a href="#section_341">9 个性化写作与主动视觉表达</a><a href="#section_407">10 来源追溯与结果交付</a><a href="#section_433">11 增量维护与人工控制</a><a href="#section_489">12 长任务执行与模型接入</a><a href="#section_541">13 逻辑数据模型与一致性要求</a><a href="#section_603">14 页面与交互需求</a><a href="#section_632">15 非功能需求与质量指标</a><a href="#section_687">16 验收场景与测试数据</a><a href="#section_753">17 实施拆分与依赖</a><a href="#section_798">18 已采纳决策与风险</a><a href="#section_837">19 贯穿示例</a><a href="#section_889">20 来源与变更管理</a></nav><main><h1 id="section_0">Noetome 产品需求文档</h1>
-<p>版本 1.1　日期 2026年10月31日　状态 开发基线已采纳</p>
+<p>版本 1.2　日期 2026年11月1日　状态 开发基线与完整工程蓝图已采纳</p>
 <p>Noetome 面向需要深入学习一个学科的个人用户，将多份电子资料整合为结构统一、风格可选、知识相互关联的 Obsidian 知识库，并支持长期增量维护。系统先建立可追溯的知识模型，再规划笔记和表达形式；最终文件可独立阅读和编辑。产品的首要交付是可靠的知识整理闭环，包括资料覆盖、多源融合、主动图表表达、质量核验和人工编辑保护。</p>
-<p>本文供产品负责人、设计、开发及测试共同评审和拆分任务使用。正文规定产品行为、业务边界、数据约束和验收方法；具体算法、数据库物理结构和技术选型在后续技术设计中确定。</p>
+<p>本文供产品负责人、设计、开发及测试共同评审和拆分任务使用。正文规定产品行为、业务边界、数据约束和验收方法；具体算法、数据库结构、技术选型及64项执行任务已在<a href="../README.md">完整标准入口</a>固定，产品功能尚待实现。</p>
 <h2 id="section_8">1 文档约定与需求依据</h2>
 <h3 id="section_10">1.1 依据与确认等级</h3>
 <p>需求依据为用户提供的<a href="https://chatgpt.com/share/6ae5f83b-e938-83ee-8810-28c30b0431bf">设计AI知识库软件分享对话</a>。引用位置按用户发言顺序标识：U1 为最初产品设想，U2 为认同章节粗对齐、原子知识与统一知识模型，U3 为双模式和默认深入，U4 为知识模型解释与命名讨论，U5 为需求追问，U6 为17项回答及对第二、三轮建议的明确接受，U7 为主动生成图表的补充，U8 为项目名候选。</p>
@@ -635,13 +635,13 @@ blockquote { margin:16px 0; }
 <tr><td>EP-10 独立评测</td><td>第15至16章</td><td>M0</td><td>金标准、用例、内容与兼容性报告</td></tr>
 </tbody></table></div>
 <p>建议各工作包采用独立分支、小步提交；先稳定共享数据契约，避免并行开发各自定义知识 ID 或完成状态。合并前运行相关测试和基准，完整检查通过后推送。PRD 变更同步更新需求编号、验收用例和默认策略。</p>
-<h3 id="section_788">17.3 后续技术设计交付</h3>
+<h3 id="section_788">17.3 已定义的技术设计交付</h3>
 <p class="list-item" style="margin-left:0.0em"><span class="marker">1.</span>Knowledge IR 设计：实体、关系、身份归并、条件表达、证据及版本迁移。</p>
 <p class="list-item" style="margin-left:0.0em"><span class="marker">2.</span>笔记和表达规划设计：结构规范、唯一位置、图表决策、覆盖约束与回退。</p>
 <p class="list-item" style="margin-left:0.0em"><span class="marker">3.</span>增量执行和发布设计：依赖失效、检查点、预算、审批失效、文件一致性及回滚。</p>
 <p class="list-item" style="margin-left:0.0em"><span class="marker">4.</span>Provider 和解析器契约：能力检测、错误分类、外部进程边界、数据权限及资源限制。</p>
 <p class="list-item" style="margin-left:0.0em"><span class="marker">5.</span>验证与评测设计：金标准、采样方法、语义核对、Obsidian实机兼容与故障注入。</p>
-<p>按已采纳建议，以 Rust 核心和 CLI、SQLite、本阶段之后接入的 Python PDF 解析侧车，以及后置的 Tauri 和 React TypeScript 桌面前端作为工程方向。具体实现边界见<a href="../technical/ARCHITECTURE.md">架构规范</a>。库版本、格式覆盖、安装体积、运行资源和许可证须在引入时核查，不能把候选工具的宣传能力直接写成已交付能力。</p>
+<p>以上设计已在<a href="../technical/ARCHITECTURE.md">架构规范</a>及关联文件中展开。Rust核心和CLI、SQLite、Python PDF侧车、Tauri与React TypeScript桌面端的库及主系列见<a href="../technical/STACK.md">技术选型</a>，全部小任务见<a href="../execution/ROADMAP.md">执行路线</a>。依赖引入时锁定实际兼容版本；格式覆盖、安装体积、资源与许可证须核查，不把方案或工具宣传写成已交付能力。</p>
 <h2 id="section_798">18 已采纳决策与风险</h2>
 <h3 id="section_800">18.1 决策基线</h3>
 <p>用户已明确要求这些事项全部采用下表建议。表内节点表示补充实测数据或执行后续评审的时间点，不表示默认策略未获同意。详细执行解释见<a href="DECISIONS.md">决策基线</a>。</p>

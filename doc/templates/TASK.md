@@ -1,30 +1,36 @@
-# 小任务卡模板
+# 任务定义模板
 
-任务编号：Bxx-Txx
+任务定义写入 `dev-log/tasks.json`，不要手工创建派生卡。新增后运行plan render与devlog render，检查全量依赖和追溯。状态和历史由devlog工具维护。
 
-单一可见结果：用一句话说明完成后用户或测试能观察到什么。
+```json
+{
+  "id": "Bxx-Txx",
+  "title": "一个可观察结果",
+  "batch": "Bxx",
+  "status": "todo",
+  "depends_on": ["前置任务ID"],
+  "requirements": ["FR-01"],
+  "acceptance": ["给定输入时可直接检查的结果"],
+  "history": [],
+  "plan_version": 1,
+  "specs": ["doc/technical/DATA_CONTRACTS.md"],
+  "steps": ["读现有实现", "实现单一行为", "验证成功与失败路径"],
+  "outputs": ["仓库内具体文件路径"],
+  "non_goals": ["本任务不扩张的范围"],
+  "failure_policy": ["保留最小复现，最多3轮有效修复，仍失败则block"],
+  "scenarios": ["AC-03"],
+  "quality": ["NFR-01"],
+  "checks": [
+    {
+      "name": "behavior",
+      "argv": ["cargo", "test", "--locked", "-p", "noetome-core", "--test", "source"],
+      "timeout_s": 1200,
+      "min_tests": 1
+    }
+  ]
+}
+```
 
-依赖：列出已完成的任务ID及必要环境。
+checks是argv数组，不拼接shell字符串；当前Python用 `{python}` 占位。针对性Rust测试使用确切integration test target，避免过滤器拼错后“0 tests”通过。Python/Vitest也必须设min_tests。发行gate不是单元测试计数，以RELEASE规定证据校验为准。
 
-关联需求：只写本任务实际覆盖的FR或NFR；部分实现必须注明范围。
-
-## 范围
-
-- 本轮做什么，最多一个能力或一个明确问题。
-- 本轮不引入的相邻功能。
-- 预期修改的目录或模块，不提前建立无用空结构。
-
-## 顺序
-
-1. 确定最小接口和行为。
-2. 实现必要逻辑与错误处理。
-3. 用有区分力的样例验证。
-4. 更新规范、日志，审查提交并推送。
-
-## 验收
-
-写明输入、动作、预期结果、错误情况、数据不变量及实际验证命令。不要使用“基本可用”“功能完善”作为唯一标准。
-
-## 停止与交接
-
-说明达到何种结果本轮结束，以及下一步入口。发生阻塞时写解除条件；不把未实施的计划填入完成记录。
+outputs必须是本任务结束时存在的真实文件，不用目录/通配符/日志本身。specs是已存在的标准路径。修改定义后旧verify报告失效。
