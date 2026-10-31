@@ -1,6 +1,8 @@
 """Regression tests for bounded selection and evidence bound to actual sources."""
 import copy
+from contextlib import ExitStack, redirect_stdout, redirect_stderr
 import hashlib
+import io
 import json
 from pathlib import Path
 import subprocess
@@ -21,6 +23,10 @@ def task(ident='B01-T01', deps=(), batch='B01'):
 
 class PlanVerifyTests(unittest.TestCase):
     def setUp(self):
+        capture = ExitStack()
+        capture.enter_context(redirect_stdout(io.StringIO()))
+        capture.enter_context(redirect_stderr(io.StringIO()))
+        self.addCleanup(capture.close)
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
@@ -120,6 +126,8 @@ class PlanVerifyTests(unittest.TestCase):
         self.assertEqual(verify.test_count('test result: ok. 2 passed; 0 failed; 5 ignored\n'), 2)
         self.assertEqual(verify.test_count(' Test Files 3 passed\n      Tests 12 passed (12)\n'), 12)
         self.assertEqual(verify.test_count('Ran 0 tests in 0.0s'), 0)
+        self.assertEqual(verify.test_count('[wry 0.12.1 windows #0-0] 3 passing (244ms)'), 3)
+        self.assertEqual(verify.test_count('\x1b[32m3 passing\x1b[0m (244ms)'), 3)
 
     def test_missing_executable_and_timeout_fail(self):
         self.task['checks'][0]['argv'] = ['this-executable-does-not-exist-noetome']

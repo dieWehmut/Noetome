@@ -159,6 +159,35 @@ class DevlogTests(unittest.TestCase):
         self.assertEqual(data["current_batch"], "B01")
         self.assertEqual(data["history"][-1]["to_batch"], "B01")
 
+    def test_repair_can_return_to_reopened_earlier_batch_without_skipping_forward_gate(self):
+        self.change("start")
+        self.complete()
+        self.change("start", "B")
+        self.complete("B")
+        devlog.change_batch(self.root, "B01", "Normal progress")
+        self.change("reopen", "B")
+        self.change("reopen", "A")
+        devlog.change_batch(self.root, "B00", "Repair regression found later", repair=True)
+        with self.assertRaisesRegex(devlog.DevlogError, "只允许退回"):
+            devlog.change_batch(self.root, "B01", "Cannot skip forward", repair=True)
+        self.change("start", "A")
+        data, _ = devlog.load(self.root)
+        self.assertEqual(data["current_batch"], "B00")
+        self.assertEqual(data["tasks"][2]["status"], "todo")
+        self.assertTrue(data["history"][-1]["repair"])
+
+    def test_normal_batch_cannot_skip_unfinished_middle_batch(self):
+        self.data['tasks'].append(task('D', batch='B02'))
+        self.ledger.write_text(json.dumps(self.data), encoding='utf-8')
+        devlog.render(self.root)
+        self.change('start')
+        self.complete()
+        self.change('start', 'B')
+        self.complete('B')
+        with self.assertRaisesRegex(devlog.DevlogError, '最早未完成'):
+            devlog.change_batch(self.root, 'B02', 'Skip B01')
+        devlog.change_batch(self.root, 'B01', 'Next batch')
+
 
 if __name__ == "__main__":
     unittest.main()

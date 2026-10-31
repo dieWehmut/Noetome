@@ -39,10 +39,12 @@ def tree_hash(root):
 
 
 def test_count(output):
+    output = re.sub(r'\x1b\[[0-?]*[ -/]*[@-~]', '', output)
     counts = [int(n) for n in re.findall(r"test result: ok\. (\d+) passed", output)]
     counts += [int(n) for n in re.findall(r"Ran (\d+) tests? in", output)]
     # Vitest summary contains a single aggregate Tests line; not Test Files.
     counts += [int(n) for n in re.findall(r"(?m)^\s*Tests\s+(\d+) passed", output)]
+    counts += [int(n) for n in re.findall(r"(?m)^\s*(?:\[[^\]\r\n]+\]\s*)?(\d+) passing\b", output)]
     return sum(counts)
 
 

@@ -340,15 +340,22 @@ def change_task(root, action, ident, note, validation=(), artifacts=(), report=N
     return f"{ident} 已更新为{LABELS[target]}，历史与视图已记录"
 
 
-def change_batch(root, batch, note):
+def change_batch(root, batch, note, repair=False):
     require(nonempty(note), "切换批次必须提供 --note")
     with writer_lock(root):
         data, _ = load(root)
         current = data["current_batch"]
         require(batch != current, "目标已是当前批次")
         require(any(task["batch"] == batch for task in data["tasks"]), "目标批次没有任务")
-        require(all(task["status"] == "done" for task in data["tasks"] if task["batch"] == current), "当前批次仍有未完成或阻塞任务")
-        data.setdefault("history", []).append({"at": now(), "action": "batch", "from_batch": current, "to_batch": batch, "note": note.strip()})
+        if repair:
+            require(batch < current, "--repair只允许退回更早批次，不能跳过前进门禁")
+            require(not any(task["status"] == "in_progress" for task in data["tasks"]), "退回修复前需先阻塞当前活动任务")
+            require(any(task["batch"] == batch and task["status"] != "done" for task in data["tasks"]), "目标批次没有待修复任务，请先按依赖重新打开")
+        else:
+            require(all(task["status"] == "done" for task in data["tasks"] if task["batch"] == current), "当前批次仍有未完成或阻塞任务")
+            remaining = sorted({task["batch"] for task in data["tasks"] if task["status"] != "done"})
+            require(remaining and batch == remaining[0], "只能进入最早未完成批次，不能跳过中间批次")
+        data.setdefault("history", []).append({"at": now(), "action": "batch", "from_batch": current, "to_batch": batch, "note": note.strip(), "repair": repair})
         data["current_batch"] = batch
         commit(root, data)
     return f"当前批次已切换为 {batch}"
@@ -366,6 +373,8 @@ def main(argv=None):
             command.add_argument("--validation", action="append", required=True)
             command.add_argument("--artifact", action="append", required=True)
             command.add_argument("--report", help="计划任务的自动验证报告路径")
+        if name == "batch":
+            command.add_argument("--repair", action="store_true", help="保留当前未完成任务，退回已重新打开的更早批次修复")
     commands.add_parser("check")
     commands.add_parser("render")
     args = parser.parse_args(argv)
@@ -376,7 +385,7 @@ def main(argv=None):
         elif args.command == "render":
             result = render(root)
         elif args.command == "batch":
-            result = change_batch(root, args.id, args.note)
+            result = change_batch(root, args.id, args.note, args.repair)
         else:
             result = change_task(root, args.command, args.id, args.note,
                                  getattr(args, "validation", ()), getattr(args, "artifact", ()), getattr(args, "report", None))
