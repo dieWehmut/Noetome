@@ -305,7 +305,7 @@ def collect_artifacts(root, paths):
     return result
 
 
-def change_task(root, action, ident, note, validation=(), artifacts=()):
+def change_task(root, action, ident, note, validation=(), artifacts=(), report=None):
     require(nonempty(note), "必须提供 --note 说明")
     with writer_lock(root):
         data, _ = load(root)
@@ -322,12 +322,18 @@ def change_task(root, action, ident, note, validation=(), artifacts=()):
             require(not any(ident in item["depends_on"] and item["status"] in {"done", "in_progress"} for item in data["tasks"]),
                     "需先重新打开或阻塞依赖此任务的已完成及进行中任务")
         evidence = []
+        verification = None
         if action == "complete":
             require(bool(validation) and all(nonempty(item) for item in validation), "完成必须提供 --validation 验证说明")
             require(bool(artifacts), "完成必须提供 --artifact 文件路径")
             evidence = collect_artifacts(root, artifacts)
+            if "plan_version" in task:
+                from verify import require_report
+                verification = require_report(root, task, report)
         event = {"at": now(), "action": action, "from_status": task["status"], "to_status": target,
                  "note": note.strip(), "validation": list(validation), "artifacts": evidence}
+        if verification is not None:
+            event["verification"] = verification
         task["history"].append(event)
         task["status"] = target
         commit(root, data)
@@ -359,6 +365,7 @@ def main(argv=None):
         if name == "complete":
             command.add_argument("--validation", action="append", required=True)
             command.add_argument("--artifact", action="append", required=True)
+            command.add_argument("--report", help="计划任务的自动验证报告路径")
     commands.add_parser("check")
     commands.add_parser("render")
     args = parser.parse_args(argv)
@@ -372,7 +379,7 @@ def main(argv=None):
             result = change_batch(root, args.id, args.note)
         else:
             result = change_task(root, args.command, args.id, args.note,
-                                 getattr(args, "validation", ()), getattr(args, "artifact", ()))
+                                 getattr(args, "validation", ()), getattr(args, "artifact", ()), getattr(args, "report", None))
         print(result)
         return 0
     except (DevlogError, OSError) as exc:
