@@ -82,7 +82,9 @@ def html_inline(text):
             continue
         if token.startswith("[") and "](" in token and token.endswith(")"):
             label, url = token[1:-1].split("](", 1)
-            if not re.match(r"^(?:https?://|#)", url):
+            local_link = (not re.match(r"^[A-Za-z][A-Za-z0-9+.-]*:", url)
+                          and not url.startswith(("/", "\\")) and "\\" not in url)
+            if not (re.match(r"^(?:https?://|#)", url) or local_link):
                 parts.append(html.escape(label))
             else:
                 parts.append('<a href="' + html.escape(url, quote=True) + '">' + html.escape(label) + '</a>')
@@ -233,15 +235,15 @@ def build_html(source: Path, output: Path, add_contents=True):
               '<title>Noetome 详细需求文档</title><style>' + HTML_CSS + '</style></head><body>'
               '<div class="layout">' + navigation + '<main>' + "\n".join(body) + '</main></div></body></html>')
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(result, encoding="utf-8")
+    output.write_text(result, encoding="utf-8", newline="\n")
     print(f"Created {output} ({output.stat().st_size:,} bytes)")
     print(f"Source: {len(lines)} lines; {len(entries)} main sections")
 
 if __name__ == "__main__":
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--source", type=Path, default=root / "docs" / "Noetome-PRD-v1.0.md")
-    parser.add_argument("--output", type=Path, default=root / "docs" / "Noetome-PRD-v1.0.html")
+    parser.add_argument("--source", type=Path, default=root / "doc" / "requirements" / "PRD.md")
+    parser.add_argument("--output", type=Path, default=root / "doc" / "requirements" / "PRD.html")
     parser.add_argument("--format", choices=("html",), default="html")
     parser.add_argument("--no-toc", action="store_true")
     args = parser.parse_args()

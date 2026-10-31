@@ -2,14 +2,17 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-当前仓库处于需求评审阶段，尚未实现产品。
+当前仓库已建立开发基线和自动日志工具，产品代码尚未实现。
 
-## 需求文档
+## 开始开发
 
-- [详细需求文档 Markdown](docs/Noetome-PRD-v1.0.md)：内容源文件，包含20章、40组功能需求、17项非功能要求和40个验收场景。
-- [离线阅读版 HTML](docs/Noetome-PRD-v1.0.html)：使用浏览器打开，支持目录导航和打印。
+- [开发指引](AGENTS.md)：每轮工作规则及标准路径。
+- [标准文件入口](doc/README.md)：需求、技术、设计、测试和执行规范。
+- [近期开发步骤](doc/execution/NEXT_STEPS.md)：仅展开下一批3项，每轮推进一项。
+- [当前状态](dev-log/STATUS.md)、[待办事项](dev-log/TODO.md)、[已完成事项](dev-log/DONE.md)：由任务账本自动生成。
+- [详细需求](doc/requirements/PRD.md)及[HTML阅读版](doc/requirements/PRD.html)。
 
-文档明确区分用户已确认要求、建议基线和待决策项。优先评审第18章，再按第17章拆分实施任务。
+原待决策事项已按建议采纳，详见[决策基线](doc/requirements/DECISIONS.md)。目前先做CLI与本地小闭环，后续逐步接入PDF、模型和桌面界面。
 
 ## 更新阅读版
 
@@ -19,4 +22,14 @@
 python scripts/build_prd.py --format html
 ```
 
-构建脚本只使用 Python 标准库。生成后需检查目录导航、表格、代码示例和全文完整性，并将 Markdown 与 HTML 一同提交。
+构建和日志脚本只使用Python标准库。使用可用Python解释器，改PRD后检查生成内容，再将源文档与HTML一同提交。
+
+## 日志和检查
+
+```text
+python scripts/devlog.py render
+python scripts/devlog.py check
+python -m unittest discover -s tests -p "test_*.py"
+```
+
+开发时通过start、complete、block、reopen维护状态和证据，工具自动刷新三份清单。具体命令见[日志规则](dev-log/README.md)。不要手动把计划写成已完成。

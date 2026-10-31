@@ -1,13 +1,21 @@
 {
   "schema_version": 1,
-  "current_batch": "B00",
-  "history": [],
+  "current_batch": "B01",
+  "history": [
+    {
+      "at": "2026-10-31T15:29:47Z",
+      "action": "batch",
+      "from_batch": "B00",
+      "to_batch": "B01",
+      "note": "B00开发规范和日志基础已验收；B01三项已规划为todo，尚未启动产品代码开发"
+    }
+  ],
   "tasks": [
     {
       "id": "B00-T01",
       "title": "建立开发基线 小步执行规范和自动开发日志",
       "batch": "B00",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "requirements": [],
       "acceptance": [
@@ -26,6 +34,56 @@
           "note": "开始建立已获授权的开发规范和日志工具；本轮不启动产品核心实现",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-10-31T15:29:47Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "已建立doc开发标准与AGENTS，采纳D01至D15，完成日志工具并只展开下一批三个小任务；未实现Rust PDF或模型产品功能。日志工具提交c46ee4e，既有需求提交见BASELINE。",
+          "validation": [
+            "Windows上运行python -m unittest discover -s tests -p test_*.py -v，12项测试全部通过，覆盖依赖 单活动任务 完成证据 历史 并发锁 原子写入和时区。",
+            "静态核对19份Markdown的60个本地链接，Python语法检查 HTML重新生成一致性及安全相对链接检查通过；未执行浏览器视觉检查。",
+            "独立审查通过：近期三步与数据契约一致，B01最小导入和B02完整Run已分开；git diff --check通过。"
+          ],
+          "artifacts": [
+            {
+              "path": "AGENTS.md",
+              "sha256": "b31aa065e75ed25e9063c742fbfbcec9a38645c53b6d46f9eae8548e2cc8e94d"
+            },
+            {
+              "path": "doc/README.md",
+              "sha256": "59d008daa1a8f2b02cca686b4357b3355072f7a611f20b4e1553969c33ff8089"
+            },
+            {
+              "path": "doc/requirements/PRD.md",
+              "sha256": "d1d54e8d1f76073b3f0540f23de5204230b9df3d99e9c7f35b819a1c0db654b2"
+            },
+            {
+              "path": "doc/requirements/DECISIONS.md",
+              "sha256": "836983f9f7b7db885351d9f9d8d35df90535690592bd808ab905da35f4b4ee45"
+            },
+            {
+              "path": "doc/execution/NEXT_STEPS.md",
+              "sha256": "971cf90ea2170fd9cbe12a1c18e68344df5e432fd4590df53a0c9cc42fafa2de"
+            },
+            {
+              "path": "doc/execution/ROADMAP.md",
+              "sha256": "b020ca48f83bbceb18862c973eb8a53e31981f4368c7a8e385eddbc947600df1"
+            },
+            {
+              "path": "doc/technical/DATA_CONTRACTS.md",
+              "sha256": "38251ed2d419d79cd9f10382612527e07f4aa5393e339daf18282226e5556dd8"
+            },
+            {
+              "path": "scripts/devlog.py",
+              "sha256": "1465d47663873a18733899ce5a1dac7ec31c8aed47e754d071922e8baca00646"
+            },
+            {
+              "path": "tests/test_devlog.py",
+              "sha256": "cdada1a5c72446f352ec0512f0282587067815090f2bb214089c7ca445f649ca"
+            }
+          ]
         }
       ]
     },
