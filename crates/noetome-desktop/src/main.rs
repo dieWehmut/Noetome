@@ -7,7 +7,13 @@ use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use serde::Serialize;
-use tauri::Manager;
+use tauri::menu::{Menu, MenuItem};
+use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
+use tauri::{Manager, WindowEvent};
+
+const MAIN_TRAY_ID: &str = "noetome-main-tray";
+const TRAY_SHOW_ID: &str = "noetome-tray-show";
+const TRAY_EXIT_ID: &str = "noetome-tray-exit";
 
 #[derive(Serialize)]
 struct RuntimeInfo {
@@ -81,6 +87,10 @@ fn append_startup_log(path: &Path, message: &str) -> io::Result<()> {
 }
 
 fn report_startup_error(message: &str, log_dir: Option<PathBuf>) {
+    report_desktop_error("Noetome 启动失败", message, log_dir);
+}
+
+fn report_desktop_error(title: &str, message: &str, log_dir: Option<PathBuf>) {
     eprintln!("{message}");
     let log_status = match log_dir {
         Some(directory) => {
@@ -96,13 +106,91 @@ fn report_startup_error(message: &str, log_dir: Option<PathBuf>) {
 
     #[cfg(target_os = "windows")]
     rfd::MessageDialog::new()
-        .set_title("Noetome 启动失败")
+        .set_title(title)
         .set_level(rfd::MessageLevel::Error)
         .set_buttons(rfd::MessageButtons::Ok)
         .set_description(format!(
             "{message}\n\n请从 Windows 开始菜单或资源管理器重新打开 Noetome。若仍失败，请保留此弹窗的完整文字。\n\n{log_status}"
         ))
         .show();
+}
+
+fn restore_main_window(app: &tauri::AppHandle) {
+    let result = app
+        .get_webview_window("main")
+        .ok_or_else(|| "主窗口不存在。".to_owned())
+        .and_then(|window| {
+            window
+                .show()
+                .and_then(|_| window.unminimize())
+                .and_then(|_| window.set_focus())
+                .map_err(|error| error.to_string())
+        });
+    if let Err(error) = result {
+        report_desktop_error(
+            "Noetome 窗口恢复失败",
+            &format!(
+                "DESKTOP_WINDOW_RESTORE_FAILED：无法从托盘恢复 Noetome 窗口。\n原因：{error}\n请通过托盘菜单退出后重新打开应用。"
+            ),
+            app.path().app_log_dir().ok(),
+        );
+    }
+}
+
+fn install_tray(app: &tauri::AppHandle) -> Result<(), String> {
+    let icon = app
+        .default_window_icon()
+        .cloned()
+        .ok_or_else(|| "应用图标不可用。".to_owned())?;
+    let show = MenuItem::with_id(app, TRAY_SHOW_ID, "显示窗口", true, None::<&str>)
+        .map_err(|error| error.to_string())?;
+    let exit = MenuItem::with_id(app, TRAY_EXIT_ID, "退出", true, None::<&str>)
+        .map_err(|error| error.to_string())?;
+    let menu = Menu::with_items(app, &[&show, &exit]).map_err(|error| error.to_string())?;
+    TrayIconBuilder::with_id(MAIN_TRAY_ID)
+        .icon(icon)
+        .tooltip("Noetome — 点击显示窗口")
+        .menu(&menu)
+        .show_menu_on_left_click(false)
+        .on_menu_event(|app, event| match event.id.as_ref() {
+            TRAY_SHOW_ID => restore_main_window(app),
+            TRAY_EXIT_ID => app.exit(0),
+            _ => {}
+        })
+        .on_tray_icon_event(|tray, event| {
+            if matches!(
+                event,
+                TrayIconEvent::Click {
+                    button: MouseButton::Left,
+                    button_state: MouseButtonState::Up,
+                    ..
+                }
+            ) {
+                restore_main_window(tray.app_handle());
+            }
+        })
+        .build(app)
+        .map_err(|error| error.to_string())?;
+    Ok(())
+}
+
+fn minimize_to_tray(window: &tauri::Window, event: &WindowEvent) {
+    // Windows emits Resized for WM_SIZE on minimize. Query the native state so
+    // ordinary resizing and maximizing keep the window visible. Never hide a
+    // window until its restore affordance has been successfully registered.
+    if window.label() == "main"
+        && matches!(event, WindowEvent::Resized(_))
+        && window.app_handle().tray_by_id(MAIN_TRAY_ID).is_some()
+        && window.is_minimized().unwrap_or(false)
+    {
+        if let Err(error) = window.hide() {
+            report_desktop_error(
+                "Noetome 托盘操作失败",
+                &format!("DESKTOP_TRAY_HIDE_FAILED：无法将 Noetome 隐藏到托盘。\n原因：{error}"),
+                window.app_handle().path().app_log_dir().ok(),
+            );
+        }
+    }
 }
 
 fn main() {
@@ -123,6 +211,7 @@ fn main() {
 
     let app = match tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![runtime_info, cli_preview])
+        .on_window_event(minimize_to_tray)
         .setup(move |app| {
             for window in &windows {
                 if let Err(error) = tauri::WebviewWindowBuilder::from_config(app, window)
@@ -140,8 +229,17 @@ fn main() {
                         app.path().app_log_dir().ok(),
                     );
                     app.handle().exit(1);
-                    break;
+                    return Ok(());
                 }
+            }
+            if let Err(error) = install_tray(app.handle()) {
+                report_startup_error(
+                    &format!(
+                        "DESKTOP_TRAY_UNAVAILABLE：无法创建 Noetome 托盘图标。\n原因：{error}\n应用已停止启动，窗口不会被隐藏到不可恢复的状态。"
+                    ),
+                    app.path().app_log_dir().ok(),
+                );
+                app.handle().exit(1);
             }
             Ok(())
         })
