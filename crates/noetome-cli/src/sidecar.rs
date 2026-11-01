@@ -76,6 +76,7 @@ pub struct SidecarError {
     pub message: String,
     pub diagnostics: Vec<u8>,
     pub pid: Option<u32>,
+    pub native_exit_code: Option<u32>,
     pub violations: Vec<ProtocolViolation>,
     pub response: Option<SidecarResponse>,
 }
@@ -87,6 +88,7 @@ impl SidecarError {
             message: message.into(),
             diagnostics: Vec::new(),
             pid: None,
+            native_exit_code: None,
             violations: Vec::new(),
             response: None,
         }
@@ -108,56 +110,14 @@ pub fn run_sidecar(
     limits: SidecarLimits,
     cancel: &AtomicBool,
 ) -> Result<VerifiedResponse, SidecarError> {
-    #[cfg(not(windows))]
-    return Err(SidecarError::new(
-        "SIDECAR_UNSUPPORTED_PLATFORM",
-        "The contained process host currently requires Windows 10 or later.",
-    ));
-    check_limits(&limits)?;
-    if cancel.load(Ordering::Acquire) {
-        return Err(SidecarError::new(
-            "SIDECAR_CANCELLED",
-            "Cancelled before reading the selected input.",
-        ));
-    }
-    let input_path = checked_path(selected_input)?;
-    let root_path = checked_path(new_workspace)?;
-    if root_path.starts_with(&input_path) || input_path.starts_with(&root_path) {
-        return Err(SidecarError::new(
-            "SIDECAR_WORKSPACE_CONFLICT",
-            "Input and workspace overlap.",
-        ));
-    }
-    if path_exists(&root_path)? {
-        return Err(SidecarError::new(
-            "SIDECAR_WORKSPACE_CONFLICT",
-            "The requested workspace already exists; its contents were preserved.",
-        ));
-    }
-    let input_parent = input_path.parent().ok_or_else(|| {
-        SidecarError::new("SIDECAR_INPUT_INVALID", "Input has no parent directory.")
-    })?;
-    let _input_dirs = guard_chain(input_parent)?;
-    let input = open_input(&input_path)?;
-    let input_identity = identity(&input)?;
-    let raw = bounded_read(
-        &input,
-        limits.max_input_bytes,
-        "SIDECAR_INPUT_LIMIT",
-        cancel,
-    )?;
-    ensure_identity(&input_path, &input_identity, "SIDECAR_INPUT_INVALID")?;
-    check_cancel(cancel)?;
+    let snapshot = InputSnapshot::acquire(selected_input, new_workspace, &limits, cancel)?;
+    let raw = &snapshot.raw;
     let request = SidecarRequest {
         schema_version: 1,
         protocol: "noetome-parser-single-v1".into(),
         request_id: Uuid::new_v4().to_string(),
         operation: Operation::InspectBytes,
-        input: InputFingerprint {
-            relative_path: "input/raw.bin".into(),
-            byte_length: raw.len() as u64,
-            sha256: digest(&raw),
-        },
+        input: snapshot.fingerprint(),
         workspace: WorkspacePolicy {
             artifact_directory: "artifacts".into(),
         },
@@ -176,7 +136,13 @@ pub fn run_sidecar(
         ));
     }
     check_cancel(cancel)?;
-    let workspace = Workspace::create(root_path, &request, &request_bytes, &raw, cancel)?;
+    let workspace = Workspace::create(
+        snapshot.workspace_path.clone(),
+        &request.request_id,
+        &request_bytes,
+        raw,
+        cancel,
+    )?;
     workspace.verify(cancel)?;
     let output =
         crate::sidecar_process::execute(adapter, &request_bytes, &workspace.root, &limits, cancel)?;
@@ -200,15 +166,15 @@ pub fn run_sidecar(
     let verification = (|| {
         check_cancel(cancel)?;
         workspace.verify(cancel)?;
-        ensure_identity(&input_path, &input_identity, "SIDECAR_INPUT_INVALID")?;
+        snapshot.verify(cancel)?;
         let (artifact_bytes, artifact_guards) =
-            workspace.read_artifacts(&response, &limits, cancel)?;
+            workspace.read_artifacts(&response.artifacts, &limits, cancel)?;
         check_cancel(cancel)?;
         let violations = crate::sidecar_model::validate_response(
             &request,
             &response,
             &adapter.expected,
-            &raw,
+            raw,
             &artifact_bytes,
             &limits,
         );
@@ -234,7 +200,7 @@ pub fn run_sidecar(
             })?;
         }
         workspace.verify(cancel)?;
-        workspace.verify_artifact_inventory(&response)?;
+        workspace.verify_artifact_inventory(&response.artifacts)?;
         check_cancel(cancel)?;
         if response.status != ResponseStatus::Complete {
             let mut error = SidecarError::new(
@@ -262,7 +228,88 @@ pub fn run_sidecar(
     })
 }
 
-fn check_cancel(cancel: &AtomicBool) -> Result<(), SidecarError> {
+// Shared acquisition keeps the selected file and every ancestor guard alive
+// through protocol-specific verification and final result persistence.
+pub(crate) struct InputSnapshot {
+    pub(crate) raw: Vec<u8>,
+    pub(crate) workspace_path: PathBuf,
+    input_path: PathBuf,
+    input_identity: Handle,
+    _input_dirs: Vec<(PathBuf, Handle)>,
+    _input: File,
+}
+
+impl InputSnapshot {
+    pub(crate) fn acquire(
+        selected_input: &Path,
+        new_workspace: &Path,
+        limits: &SidecarLimits,
+        cancel: &AtomicBool,
+    ) -> Result<Self, SidecarError> {
+        #[cfg(not(windows))]
+        return Err(SidecarError::new(
+            "SIDECAR_UNSUPPORTED_PLATFORM",
+            "The contained process host currently requires Windows 10 or later.",
+        ));
+        check_limits(limits)?;
+        check_cancel(cancel)?;
+        let input_path = checked_path(selected_input)?;
+        let workspace_path = checked_path(new_workspace)?;
+        if workspace_path.starts_with(&input_path) || input_path.starts_with(&workspace_path) {
+            return Err(SidecarError::new(
+                "SIDECAR_WORKSPACE_CONFLICT",
+                "Input and workspace overlap.",
+            ));
+        }
+        if path_exists(&workspace_path)? {
+            return Err(SidecarError::new(
+                "SIDECAR_WORKSPACE_CONFLICT",
+                "The requested workspace already exists; its contents were preserved.",
+            ));
+        }
+        let input_parent = input_path.parent().ok_or_else(|| {
+            SidecarError::new("SIDECAR_INPUT_INVALID", "Input has no parent directory.")
+        })?;
+        let input_dirs = guard_chain(input_parent)?;
+        let input = open_input(&input_path)?;
+        let input_identity = identity(&input)?;
+        let raw = bounded_read(
+            &input,
+            limits.max_input_bytes,
+            "SIDECAR_INPUT_LIMIT",
+            cancel,
+        )?;
+        ensure_identity(&input_path, &input_identity, "SIDECAR_INPUT_INVALID")?;
+        check_cancel(cancel)?;
+        Ok(Self {
+            raw,
+            workspace_path,
+            input_path,
+            input_identity,
+            _input_dirs: input_dirs,
+            _input: input,
+        })
+    }
+
+    pub(crate) fn fingerprint(&self) -> InputFingerprint {
+        InputFingerprint {
+            relative_path: "input/raw.bin".into(),
+            byte_length: self.raw.len() as u64,
+            sha256: digest(&self.raw),
+        }
+    }
+
+    pub(crate) fn verify(&self, cancel: &AtomicBool) -> Result<(), SidecarError> {
+        check_cancel(cancel)?;
+        ensure_identity(
+            &self.input_path,
+            &self.input_identity,
+            "SIDECAR_INPUT_INVALID",
+        )
+    }
+}
+
+pub(crate) fn check_cancel(cancel: &AtomicBool) -> Result<(), SidecarError> {
     if cancel.load(Ordering::Acquire) {
         Err(SidecarError::new(
             "SIDECAR_CANCELLED",
@@ -273,7 +320,7 @@ fn check_cancel(cancel: &AtomicBool) -> Result<(), SidecarError> {
     }
 }
 
-fn check_limits(limits: &SidecarLimits) -> Result<(), SidecarError> {
+pub(crate) fn check_limits(limits: &SidecarLimits) -> Result<(), SidecarError> {
     let ceiling = SidecarLimits::default();
     if limits.max_input_bytes > ceiling.max_input_bytes
         || limits.max_request_bytes > ceiling.max_request_bytes
@@ -300,7 +347,7 @@ fn io_failure(code: &'static str, error: impl fmt::Display) -> SidecarError {
     SidecarError::new(code, error.to_string())
 }
 
-fn checked_path(path: &Path) -> Result<PathBuf, SidecarError> {
+pub(crate) fn checked_path(path: &Path) -> Result<PathBuf, SidecarError> {
     let path =
         crate::project::check_components(path).map_err(|e| io_failure("SIDECAR_UNSAFE_PATH", e))?;
     if path.as_os_str().to_string_lossy().encode_utf16().count() > 1024 {
@@ -427,11 +474,11 @@ fn bounded_read(
     Ok(bytes)
 }
 
-fn digest(bytes: &[u8]) -> String {
+pub(crate) fn digest(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
 }
 
-struct OwnedFile {
+pub(crate) struct OwnedFile {
     path: PathBuf,
     file: File,
     identity: Handle,
@@ -440,6 +487,14 @@ struct OwnedFile {
 }
 impl OwnedFile {
     fn create(path: PathBuf, bytes: &[u8], cancel: &AtomicBool) -> Result<Self, SidecarError> {
+        Self::create_with_rename(path, bytes, cancel, false)
+    }
+    fn create_with_rename(
+        path: PathBuf,
+        bytes: &[u8],
+        cancel: &AtomicBool,
+        rename: bool,
+    ) -> Result<Self, SidecarError> {
         check_cancel(cancel)?;
         let mut options = OpenOptions::new();
         options.read(true).write(true).create_new(true);
@@ -449,6 +504,9 @@ impl OwnedFile {
             // The retained Host handle permits child reads but excludes child
             // writes and deletion. It is never given to the child HANDLE_LIST.
             options.share_mode(1).custom_flags(0x00200000);
+            if rename {
+                options.access_mode(0xc0010000); // GENERIC_READ | GENERIC_WRITE | DELETE
+            }
         }
         let mut file = options
             .open(&path)
@@ -472,7 +530,7 @@ impl OwnedFile {
         result.verify(cancel)?;
         Ok(result)
     }
-    fn verify(&self, cancel: &AtomicBool) -> Result<(), SidecarError> {
+    pub(crate) fn verify(&self, cancel: &AtomicBool) -> Result<(), SidecarError> {
         check_cancel(cancel)?;
         ensure_identity(&self.path, &self.identity, "SIDECAR_WORKSPACE_CONFLICT")?;
         if noetome_sidecar_platform::file_link_count(&self.file)
@@ -501,15 +559,16 @@ impl OwnedFile {
     }
 }
 
-struct Workspace {
-    root: PathBuf,
+pub(crate) struct Workspace {
+    pub(crate) root: PathBuf,
     dirs: Vec<(PathBuf, Handle)>,
     files: Vec<OwnedFile>,
+    report: Option<OwnedFile>,
 }
 impl Workspace {
-    fn create(
+    pub(crate) fn create(
         root: PathBuf,
-        request: &SidecarRequest,
+        request_id: &str,
         request_bytes: &[u8],
         raw: &[u8],
         cancel: &AtomicBool,
@@ -525,27 +584,39 @@ impl Workspace {
             fs::create_dir(&directory).map_err(|e| io_failure("SIDECAR_WORKSPACE_CONFLICT", e))?;
             dirs.push((directory.clone(), guard_directory(&directory)?));
         }
-        let owner = serde_json::to_vec(
-            &serde_json::json!({ "schema_version":1, "request_id":request.request_id }),
-        )
-        .map_err(|e| io_failure("SIDECAR_PROTOCOL_INVALID", e))?;
+        let owner =
+            serde_json::to_vec(&serde_json::json!({ "schema_version":1, "request_id":request_id }))
+                .map_err(|e| io_failure("SIDECAR_PROTOCOL_INVALID", e))?;
         let files = vec![
             OwnedFile::create(root.join(".owner.json"), &owner, cancel)?,
             OwnedFile::create(root.join("request.json"), request_bytes, cancel)?,
             OwnedFile::create(root.join("input/raw.bin"), raw, cancel)?,
         ];
-        Ok(Self { root, dirs, files })
+        Ok(Self {
+            root,
+            dirs,
+            files,
+            report: None,
+        })
     }
-    fn verify(&self, cancel: &AtomicBool) -> Result<(), SidecarError> {
+    pub(crate) fn verify(&self, cancel: &AtomicBool) -> Result<(), SidecarError> {
         check_cancel(cancel)?;
         for (path, handle) in &self.dirs {
             ensure_identity(path, handle, "SIDECAR_WORKSPACE_CONFLICT")?;
         }
-        exact_names(
-            &self.root,
-            &[".owner.json", "request.json", "input", "artifacts"],
-            "SIDECAR_WORKSPACE_CONFLICT",
-        )?;
+        let mut names = vec![".owner.json", "request.json", "input", "artifacts"];
+        if let Some(report) = &self.report {
+            names.push(
+                report
+                    .path
+                    .file_name()
+                    .and_then(|name| name.to_str())
+                    .ok_or_else(|| {
+                        SidecarError::new("SIDECAR_WORKSPACE_CONFLICT", "Report path is invalid.")
+                    })?,
+            );
+        }
+        exact_names(&self.root, &names, "SIDECAR_WORKSPACE_CONFLICT")?;
         exact_names(
             &self.root.join("input"),
             &["raw.bin"],
@@ -554,23 +625,63 @@ impl Workspace {
         for file in &self.files {
             file.verify(cancel)?;
         }
+        if let Some(report) = &self.report {
+            report.verify(cancel)?;
+        }
         Ok(())
     }
-    fn read_artifacts(
+
+    pub(crate) fn prepare_report(
+        &mut self,
+        bytes: &[u8],
+        cancel: &AtomicBool,
+    ) -> Result<(), SidecarError> {
+        self.verify(cancel)?;
+        if self.report.is_some() {
+            return Err(SidecarError::new(
+                "SIDECAR_WORKSPACE_CONFLICT",
+                "A Host report already exists.",
+            ));
+        }
+        self.report = Some(OwnedFile::create_with_rename(
+            self.root.join(".parse.pending.json"),
+            bytes,
+            cancel,
+            true,
+        )?);
+        self.verify(cancel)
+    }
+
+    pub(crate) fn publish_report(&mut self, cancel: &AtomicBool) -> Result<(), SidecarError> {
+        check_cancel(cancel)?;
+        let report = self.report.as_mut().ok_or_else(|| {
+            SidecarError::new(
+                "SIDECAR_WORKSPACE_CONFLICT",
+                "No pending Host report exists.",
+            )
+        })?;
+        let destination = self.root.join("parse.json");
+        noetome_sidecar_platform::rename_file_no_replace(&report.file, &destination)
+            .map_err(|error| io_failure("SIDECAR_WORKSPACE_CONFLICT", error))?;
+        report.path = destination;
+        Ok(())
+    }
+
+    pub(crate) fn read_artifacts(
         &self,
-        response: &SidecarResponse,
+        artifacts: &[Artifact],
         limits: &SidecarLimits,
         cancel: &AtomicBool,
     ) -> Result<(BTreeMap<String, Vec<u8>>, Vec<OwnedFile>), SidecarError> {
         check_cancel(cancel)?;
-        if response.artifacts.len() > limits.max_artifacts as usize {
+        if artifacts.len() > limits.max_artifacts as usize {
             return Err(SidecarError::new(
                 "SIDECAR_RESOURCE_INVALID",
                 "Resource inventory exceeds the configured file count.",
             ));
         }
         let mut folds = BTreeSet::new();
-        for artifact in &response.artifacts {
+        for artifact in artifacts {
             check_cancel(cancel)?;
             let id = &artifact.artifact_id;
             let extension = match artifact.kind {
@@ -593,11 +704,11 @@ impl Workspace {
             }
             checked_path(&self.root.join(&artifact.relative_path))?;
         }
-        self.verify_artifact_inventory(response)?;
+        self.verify_artifact_inventory(artifacts)?;
         let mut bytes = BTreeMap::new();
         let mut guards = Vec::new();
         let mut total = 0u64;
-        for artifact in &response.artifacts {
+        for artifact in artifacts {
             check_cancel(cancel)?;
             let path = self.root.join(&artifact.relative_path);
             let file = open_input(&path).map_err(|e| io_failure("SIDECAR_RESOURCE_INVALID", e))?;
@@ -665,9 +776,11 @@ impl Workspace {
         Ok((bytes, guards))
     }
 
-    fn verify_artifact_inventory(&self, response: &SidecarResponse) -> Result<(), SidecarError> {
-        let names: Vec<&str> = response
-            .artifacts
+    pub(crate) fn verify_artifact_inventory(
+        &self,
+        artifacts: &[Artifact],
+    ) -> Result<(), SidecarError> {
+        let names: Vec<&str> = artifacts
             .iter()
             .map(|a| a.relative_path.strip_prefix("artifacts/").unwrap_or(""))
             .collect();
@@ -852,7 +965,8 @@ mod tests {
         let root = sandbox.0.join("snapshot-workspace");
         let bytes = serde_json::to_vec(&request).unwrap();
         let cancel = AtomicBool::new(false);
-        let workspace = Workspace::create(root.clone(), &request, &bytes, b"abc", &cancel).unwrap();
+        let workspace =
+            Workspace::create(root.clone(), &request.request_id, &bytes, b"abc", &cancel).unwrap();
         assert_eq!(fs::read(root.join("input/raw.bin")).unwrap(), b"abc");
         assert!(fs::write(root.join("input/raw.bin"), b"changed").is_err());
         assert!(fs::rename(root.join("input"), root.join("moved-input")).is_err());

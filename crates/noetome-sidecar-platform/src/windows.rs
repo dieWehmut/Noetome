@@ -1,10 +1,10 @@
 //! The only unsafe module: Win32 buffer/handle ownership is checked at each call.
 
-use std::ffi::OsStr;
+use std::ffi::{OsStr, OsString};
 use std::fs::{File, OpenOptions};
 use std::io;
-use std::mem::size_of;
-use std::os::windows::ffi::OsStrExt;
+use std::mem::{offset_of, size_of};
+use std::os::windows::ffi::{OsStrExt, OsStringExt};
 use std::os::windows::fs::OpenOptionsExt;
 use std::os::windows::io::{AsRawHandle, FromRawHandle, OwnedHandle};
 use std::ptr::{null, null_mut};
@@ -16,7 +16,9 @@ use windows_sys::Win32::Foundation::{
 };
 use windows_sys::Win32::Security::SECURITY_ATTRIBUTES;
 use windows_sys::Win32::Storage::FileSystem::{
-    BY_HANDLE_FILE_INFORMATION, GetFileInformationByHandle,
+    BY_HANDLE_FILE_INFORMATION, FILE_ATTRIBUTE_DIRECTORY, FILE_ATTRIBUTE_REPARSE_POINT,
+    FILE_FLAG_BACKUP_SEMANTICS, FILE_FLAG_OPEN_REPARSE_POINT, FILE_RENAME_INFO, FileRenameInfo,
+    GetFileInformationByHandle, GetFinalPathNameByHandleW, SetFileInformationByHandle,
 };
 use windows_sys::Win32::System::IO::CancelSynchronousIo;
 use windows_sys::Win32::System::JobObjects::{
@@ -484,6 +486,209 @@ pub(crate) fn file_link_count(file: &File) -> io::Result<u32> {
     // ownership transfer; caller keeps its existing identity/read guard.
     checked(unsafe { GetFileInformationByHandle(file.as_raw_handle(), &mut info) })?;
     Ok(info.nNumberOfLinks)
+}
+
+pub(crate) fn file_identity(file: &File) -> io::Result<(u32, u32, u32)> {
+    let mut info: BY_HANDLE_FILE_INFORMATION = Default::default();
+    // SAFETY: the borrowed live File owns its handle and info has the exact
+    // writable Win32 output type for the duration of this synchronous call.
+    checked(unsafe { GetFileInformationByHandle(file.as_raw_handle(), &mut info) })?;
+    Ok((
+        info.dwVolumeSerialNumber,
+        info.nFileIndexHigh,
+        info.nFileIndexLow,
+    ))
+}
+
+fn final_file_path(file: &File) -> io::Result<std::path::PathBuf> {
+    // A finite buffer includes the terminating NUL at the Win32 maximum path
+    // size. The returned count excludes NUL on success and may not exceed it.
+    let mut buffer = vec![0u16; 32768];
+    // SAFETY: File remains live and buffer is writable for exactly its reported
+    // u16 capacity. Zero flags request the normalized DOS-style final path.
+    let length = unsafe {
+        GetFinalPathNameByHandleW(
+            file.as_raw_handle(),
+            buffer.as_mut_ptr(),
+            buffer.len() as u32,
+            0,
+        )
+    };
+    if length == 0 {
+        return Err(os_error());
+    }
+    if length as usize >= buffer.len() {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidData,
+            "native file path exceeds bounded buffer",
+        ));
+    }
+    Ok(OsString::from_wide(&buffer[..length as usize]).into())
+}
+
+fn ordinary_directory(path: &std::path::Path) -> io::Result<File> {
+    let directory = OpenOptions::new()
+        .access_mode(0xa0) // FILE_TRAVERSE | FILE_READ_ATTRIBUTES; child entries remain writable.
+        .share_mode(3) // Readers/writers allowed; deletion/renaming is denied.
+        .custom_flags(FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT)
+        .open(path)?;
+    let mut info: BY_HANDLE_FILE_INFORMATION = Default::default();
+    // SAFETY: the owned directory handle and exact native output remain live.
+    checked(unsafe { GetFileInformationByHandle(directory.as_raw_handle(), &mut info) })?;
+    if info.dwFileAttributes & (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_REPARSE_POINT)
+        != FILE_ATTRIBUTE_DIRECTORY
+    {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication parent must be an ordinary directory",
+        ));
+    }
+    Ok(directory)
+}
+
+fn publication_directory_chain(path: &std::path::Path) -> io::Result<Vec<File>> {
+    let components: Vec<_> = path
+        .ancestors()
+        .filter(|entry| entry.is_absolute())
+        .collect();
+    // Walk from the volume root so each parent is already held against rename
+    // before resolving its child. Reject junctions at every resolved component.
+    components
+        .into_iter()
+        .rev()
+        .map(ordinary_directory)
+        .collect()
+}
+
+pub(crate) fn rename_file_no_replace(file: &File, target: &std::path::Path) -> io::Result<()> {
+    if !target.is_absolute() {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication target must be absolute",
+        ));
+    }
+    let name = target.file_name().ok_or_else(|| {
+        io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication target needs one file name",
+        )
+    })?;
+    let name = wide(name)?;
+    let plain = &name[..name.len() - 1];
+    if plain.is_empty()
+        || plain
+            .iter()
+            .any(|&ch| matches!(ch, 34 | 42 | 47 | 58 | 60 | 62 | 63 | 92 | 124))
+        || plain.last().is_some_and(|&ch| ch == 32 || ch == 46)
+    {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication target must be a plain file name without streams",
+        ));
+    }
+    let parent = target.parent().ok_or_else(|| {
+        io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication target needs a parent",
+        )
+    })?;
+    let original_path = final_file_path(file)?;
+    let original_parent = original_path.parent().ok_or_else(|| {
+        io::Error::new(
+            io::ErrorKind::InvalidData,
+            "opened file has no ordinary parent",
+        )
+    })?;
+    let source_directories = publication_directory_chain(original_parent)?;
+    let target_directories = publication_directory_chain(parent)?;
+    let source_directory = source_directories.last().ok_or_else(|| {
+        io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication source has no parent guard",
+        )
+    })?;
+    let target_directory = target_directories.last().ok_or_else(|| {
+        io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication target has no parent guard",
+        )
+    })?;
+    if file_identity(source_directory)? != file_identity(target_directory)? {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication cannot move a file outside its current directory",
+        ));
+    }
+    let mut info: BY_HANDLE_FILE_INFORMATION = Default::default();
+    // SAFETY: the source File owns a live handle and the output has exact layout.
+    checked(unsafe { GetFileInformationByHandle(file.as_raw_handle(), &mut info) })?;
+    if info.dwFileAttributes & (FILE_ATTRIBUTE_DIRECTORY | FILE_ATTRIBUTE_REPARSE_POINT) != 0
+        || info.nNumberOfLinks != 1
+    {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication requires one ordinary singly linked file",
+        ));
+    }
+    let name = wide(target.as_os_str())?;
+    if name.len() > 32768 {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication path exceeds native bounded buffer",
+        ));
+    }
+    let name_bytes = (name.len() - 1)
+        .checked_mul(size_of::<u16>())
+        .ok_or_else(|| {
+            io::Error::new(
+                io::ErrorKind::InvalidInput,
+                "publication name length overflow",
+            )
+        })?;
+    let buffer_bytes = offset_of!(FILE_RENAME_INFO, FileName)
+        .checked_add(name.len() * size_of::<u16>())
+        .ok_or_else(|| {
+            io::Error::new(
+                io::ErrorKind::InvalidInput,
+                "publication buffer length overflow",
+            )
+        })?
+        .max(size_of::<FILE_RENAME_INFO>());
+    let buffer_length = u32::try_from(buffer_bytes).map_err(|_| {
+        io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "publication buffer exceeds Win32 byte limit",
+        )
+    })?;
+    // Vec<u64> provides the native pointer alignment on supported Windows x64;
+    // retain enough zeroed bytes for the header, variable name and final NUL.
+    let mut storage = vec![0u64; buffer_bytes.div_ceil(size_of::<u64>())];
+    let rename = storage.as_mut_ptr().cast::<FILE_RENAME_INFO>();
+    // SAFETY: aligned, fully initialized storage is large enough for the exact
+    // native header and the flexible WCHAR tail. The source File, all guarded
+    // ancestors, and the buffer remain live through the synchronous call. The
+    // false ReplaceIfExists flag makes collision rejection atomic in the OS.
+    unsafe {
+        (*rename).Anonymous.ReplaceIfExists = false;
+        (*rename).RootDirectory = null_mut();
+        (*rename).FileNameLength = u32::try_from(name_bytes).map_err(|_| {
+            io::Error::new(
+                io::ErrorKind::InvalidInput,
+                "publication name exceeds Win32 byte limit",
+            )
+        })?;
+        std::ptr::copy_nonoverlapping(
+            name.as_ptr(),
+            std::ptr::addr_of_mut!((*rename).FileName).cast::<u16>(),
+            name.len(),
+        );
+        checked(SetFileInformationByHandle(
+            file.as_raw_handle(),
+            FileRenameInfo,
+            rename.cast(),
+            buffer_length,
+        ))
+    }
 }
 pub(crate) fn crash_test_flags() -> (u32, Result<u32, i32>) {
     use windows_sys::Win32::System::Diagnostics::Debug::GetErrorMode;

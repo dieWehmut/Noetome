@@ -11,6 +11,8 @@ mod fixture_knowledge;
 mod fixture_model;
 mod fixture_plan;
 mod fixture_render;
+mod pdf_model;
+pub mod pdf_parse;
 pub mod project;
 pub mod sidecar;
 mod sidecar_model;
@@ -30,6 +32,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome project <init|inspect> <路径>
       noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
       noetome source inspect <项目路径> <import-id>
+      noetome source parse-pdf <PDF文件> <全新测试输出根> --python <绝对解释器路径> [--timeout-ms <0..30000>]
       noetome case verify <fixture目录>
       noetome case compile <fixture目录> <尚不存在的测试输出根>
 
@@ -40,11 +43,12 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   project inspect <路径>  只读检查已有项目
   source import           登记单份UTF8文本、不可变版本及完整位置清单
   source inspect          只读核对导入记录和真实快照
+  source parse-pdf        解析选定的文本PDF，保存物理页、区域及原始证据报告
   case verify             只读校验明确fixture的来源、IR、计划与独立预期
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
 
 不传参数时显示帮助；project --help 或 source --help 查看命令说明。
-当前来源由用户明确选取，fixture知识与计划由作者声明；自动抽取及PDF解析尚未实现。
+当前来源由用户明确选取，fixture知识与计划由作者声明；文本PDF可独立解析，项目登记和自动知识抽取尚未实现。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -59,19 +63,24 @@ inspect：核对配置和 SQLite 状态，只读查看，不执行迁移或修�
 init建立空项目；来源登记通过source import，知识生成尚未实现。
 ";
 
-pub const SOURCE_HELP: &str = "Noetome 文本来源命令
+pub const SOURCE_HELP: &str = "Noetome 来源命令
 
 用法：noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
       noetome source inspect <项目路径> <import-id>
+      noetome source parse-pdf <PDF文件> <全新测试输出根> --python <绝对解释器路径> [--timeout-ms <0..30000>]
 
 import：只读选取的UTF8文件（最多64 MiB），保存原始/规范快照、来源版本和完整Span清单。
 初次写入将Schema1空项目升级为Schema2，保持项目身份和创建时间；已有版本保留。
 相同内容提示复用；显式source-id只在该来源身份内换版，不按名称合并。
 inspect：使用导入结果的import-id只读核对持久记录、快照与位置，不迁移或修复。
+parse-pdf：只读单份PDF（最多64 MiB），调用锁定Python文本解析器，输出根须尚不存在。
+保存parse.json、原始PDF、完整已确认物理页清单、区域正文和资源指纹；显示页号为物理索引加1。
+全页可靠文本通过才ready/退出0；扫描、空白、复杂结构或部分页失败为需复核/退出3。
+Python环境安装步骤见sidecars/pdf_parser/README.md；配置/协议错误退出2，默认超时30秒。
 结果为JSON；知识状态仍为pending。UTF8无效或文件未能完整读取会记录真实失败并返回非零。
 以 - 开头的路径可在动词后加 -- 分隔符；中文和空格路径须作为单独参数。
 项目写入中断保留标记、候选与备份；请检查旧目录并用新的测试项目重试。
-source导入不生成IR或Vault；已审阅fixture通过case compile输出临时Vault。PDF和模型抽取尚未实现。
+source导入不生成IR或Vault；已审阅fixture通过case compile输出临时Vault。PDF项目登记和模型抽取尚未实现。
 ";
 
 pub const CASE_HELP: &str = "Noetome fixture契约校验
@@ -99,6 +108,12 @@ pub enum CliCommand {
     ProjectInit(PathBuf),
     ProjectInspect(PathBuf),
     SourceHelp,
+    SourceParsePdf {
+        file: PathBuf,
+        output: PathBuf,
+        python: PathBuf,
+        timeout_ms: u64,
+    },
     SourceImport {
         project: PathBuf,
         file: PathBuf,
@@ -196,7 +211,7 @@ fn case_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
 fn source_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     if args.is_empty()
         || matches!(args,[help] if help == "--help" || help == "-h")
-        || matches!(args,[verb,help] if (verb == "import" || verb == "inspect") && (help == "--help" || help == "-h"))
+        || matches!(args,[verb,help] if (verb == "import" || verb == "inspect" || verb == "parse-pdf") && (help == "--help" || help == "-h"))
     {
         return Ok(CliCommand::SourceHelp);
     }
@@ -209,6 +224,44 @@ fn source_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     let valid_path = |path: &OsString| {
         !path.is_empty() && (separator || path.as_encoded_bytes().first() != Some(&b'-'))
     };
+    if verb == "parse-pdf" {
+        let [file, output, options @ ..] = tail else {
+            return Err(INVALID_ARGUMENT);
+        };
+        if !valid_path(file) || !valid_path(output) {
+            return Err(INVALID_ARGUMENT);
+        }
+        let mut python = None;
+        let mut timeout = None;
+        let mut options = options;
+        while let [flag, value, rest @ ..] = options {
+            if flag == "--python" && python.is_none() && !value.is_empty() {
+                python = Some(PathBuf::from(value));
+            } else if flag == "--timeout-ms" && timeout.is_none() {
+                let value = value.to_str().ok_or(INVALID_ARGUMENT)?;
+                if value.is_empty() || !value.bytes().all(|byte| byte.is_ascii_digit()) {
+                    return Err(INVALID_ARGUMENT);
+                }
+                let value: u64 = value.parse().map_err(|_| INVALID_ARGUMENT)?;
+                if value > 30000 {
+                    return Err(INVALID_ARGUMENT);
+                }
+                timeout = Some(value);
+            } else {
+                return Err(INVALID_ARGUMENT);
+            }
+            options = rest;
+        }
+        if !options.is_empty() {
+            return Err(INVALID_ARGUMENT);
+        }
+        return Ok(CliCommand::SourceParsePdf {
+            file: file.into(),
+            output: output.into(),
+            python: python.ok_or(INVALID_ARGUMENT)?,
+            timeout_ms: timeout.unwrap_or(30000),
+        });
+    }
     match tail {
         [project, file] if verb == "import" && valid_path(project) && valid_path(file) => {
             Ok(CliCommand::SourceImport {

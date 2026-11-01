@@ -150,6 +150,22 @@ pub fn file_link_count(file: &File) -> io::Result<u32> {
     }
 }
 
+/// Atomically renames an opened ordinary file within its current directory,
+/// rejecting an existing target. The file must have been opened with DELETE
+/// access. Its handle remains open and continues to identify the published file.
+/// Callers must finish cancellable verification before invoking this commit.
+pub fn rename_file_no_replace(file: &File, target: &Path) -> io::Result<()> {
+    #[cfg(windows)]
+    {
+        windows::rename_file_no_replace(file, target)
+    }
+    #[cfg(not(windows))]
+    {
+        let _ = (file, target);
+        Err(unavailable())
+    }
+}
+
 /// Configures only this process for an intentional headless crash test.
 /// Call inside the private helper before inducing the crash; Host startup does
 /// not invoke this function. It does not modify machine or user WER settings.
@@ -426,6 +442,162 @@ mod tests {
             file_link_count(&File::open(path).unwrap()).expect("native link count"),
             1
         );
+    }
+    fn publication_sandbox() -> PathBuf {
+        let parent =
+            Path::new(env!("CARGO_MANIFEST_DIR")).join("../../.artifacts/B03-T02-publication");
+        std::fs::create_dir_all(&parent).unwrap();
+        let root = parent.join(format!(
+            "{}-{}",
+            std::process::id(),
+            SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .unwrap()
+                .as_nanos()
+        ));
+        std::fs::create_dir(&root).unwrap();
+        root.canonicalize().unwrap()
+    }
+    fn pending_report(root: &Path) -> (File, PathBuf) {
+        use std::os::windows::fs::OpenOptionsExt;
+        let path = root.join(".parse.pending.json");
+        let mut file = std::fs::OpenOptions::new()
+            .read(true)
+            .write(true)
+            .access_mode(0xc0010000) // GENERIC_READ | GENERIC_WRITE | DELETE
+            .share_mode(1)
+            .custom_flags(0x00200000) // OPEN_REPARSE_POINT
+            .create_new(true)
+            .open(&path)
+            .unwrap();
+        file.write_all(b"{\"status\":\"ready\"}\n").unwrap();
+        file.sync_all().unwrap();
+        (file, path)
+    }
+    #[test]
+    fn report_publication_retains_actual_file_identity_and_read_guard() {
+        let root = publication_sandbox();
+        let (file, source) = pending_report(&root);
+        let identity = windows::file_identity(&file).unwrap();
+        let target = root.join("parse.json");
+        rename_file_no_replace(&file, &target).expect("same-directory atomic publication");
+        assert!(!source.exists());
+        let published = File::open(&target).unwrap();
+        assert_eq!(windows::file_identity(&published).unwrap(), identity);
+        assert_eq!(windows::file_identity(&file).unwrap(), identity);
+        assert_eq!(file_link_count(&file).unwrap(), 1);
+        assert_eq!(std::fs::read(&target).unwrap(), b"{\"status\":\"ready\"}\n");
+        assert!(
+            std::fs::OpenOptions::new()
+                .write(true)
+                .open(&target)
+                .is_err()
+        );
+        assert!(std::fs::remove_file(&target).is_err());
+    }
+    #[test]
+    fn report_publication_rejects_existing_target_without_replacing_bytes() {
+        let root = publication_sandbox();
+        let (file, source) = pending_report(&root);
+        let identity = windows::file_identity(&file).unwrap();
+        let target = root.join("parse.json");
+        std::fs::write(&target, b"human protected file").unwrap();
+        assert_eq!(
+            rename_file_no_replace(&file, &target).unwrap_err().kind(),
+            io::ErrorKind::AlreadyExists
+        );
+        assert_eq!(std::fs::read(&target).unwrap(), b"human protected file");
+        assert_eq!(std::fs::read(&source).unwrap(), b"{\"status\":\"ready\"}\n");
+        assert_eq!(windows::file_identity(&file).unwrap(), identity);
+        assert_eq!(
+            windows::file_identity(&File::open(&source).unwrap()).unwrap(),
+            identity
+        );
+    }
+    #[test]
+    fn report_publication_rejects_cross_directory_and_relative_targets() {
+        let root = publication_sandbox();
+        let (file, source) = pending_report(&root);
+        let other = root.join("other");
+        std::fs::create_dir(&other).unwrap();
+        for target in [
+            other.join("parse.json"),
+            PathBuf::from("parse.json"),
+            root.join("parse.json:stream"),
+        ] {
+            assert_eq!(
+                rename_file_no_replace(&file, &target).unwrap_err().kind(),
+                io::ErrorKind::InvalidInput
+            );
+            assert!(source.exists());
+            assert_eq!(std::fs::read(&source).unwrap(), b"{\"status\":\"ready\"}\n");
+        }
+        assert!(!other.join("parse.json").exists());
+    }
+    #[test]
+    fn report_publication_requires_the_original_handle_delete_access() {
+        use std::os::windows::fs::OpenOptionsExt;
+        let root = publication_sandbox();
+        let source = root.join(".parse.pending.json");
+        let mut file = std::fs::OpenOptions::new()
+            .read(true)
+            .write(true)
+            .share_mode(1)
+            .create_new(true)
+            .open(&source)
+            .unwrap();
+        file.write_all(b"no DELETE access").unwrap();
+        file.sync_all().unwrap();
+        let identity = windows::file_identity(&file).unwrap();
+        let target = root.join("parse.json");
+        assert_eq!(
+            rename_file_no_replace(&file, &target).unwrap_err().kind(),
+            io::ErrorKind::PermissionDenied
+        );
+        assert!(!target.exists());
+        assert_eq!(std::fs::read(&source).unwrap(), b"no DELETE access");
+        assert_eq!(windows::file_identity(&file).unwrap(), identity);
+    }
+    #[test]
+    fn report_publication_rejects_an_actual_linked_candidate() {
+        let root = publication_sandbox();
+        let (file, source) = pending_report(&root);
+        let alias = root.join("candidate-alias.json");
+        std::fs::hard_link(&source, &alias).unwrap();
+        assert_eq!(file_link_count(&file).unwrap(), 2);
+        let target = root.join("parse.json");
+        assert_eq!(
+            rename_file_no_replace(&file, &target).unwrap_err().kind(),
+            io::ErrorKind::InvalidInput
+        );
+        assert!(!target.exists());
+        assert_eq!(std::fs::read(&source).unwrap(), b"{\"status\":\"ready\"}\n");
+        assert_eq!(std::fs::read(&alias).unwrap(), b"{\"status\":\"ready\"}\n");
+    }
+    #[test]
+    fn report_publication_rejects_an_actual_parent_junction() {
+        let root = publication_sandbox();
+        let (file, source) = pending_report(&root);
+        let alias = root.join("parent-alias");
+        let created = std::process::Command::new("cmd")
+            .args(["/c", "mklink", "/J"])
+            .arg(&alias)
+            .arg(&root)
+            .output()
+            .unwrap();
+        assert!(
+            created.status.success(),
+            "controlled junction creation failed: {}",
+            String::from_utf8_lossy(&created.stderr)
+        );
+        let target = alias.join("parse.json");
+        assert_eq!(
+            rename_file_no_replace(&file, &target).unwrap_err().kind(),
+            io::ErrorKind::InvalidInput
+        );
+        assert!(!root.join("parse.json").exists());
+        assert!(source.exists());
+        assert_eq!(std::fs::read(&source).unwrap(), b"{\"status\":\"ready\"}\n");
     }
     #[test]
     fn failed_suspended_preparation_reaps_actual_root_before_resume() {

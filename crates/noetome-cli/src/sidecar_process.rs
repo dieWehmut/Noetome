@@ -26,6 +26,24 @@ pub(crate) fn execute(
     limits: &SidecarLimits,
     cancel: &AtomicBool,
 ) -> Result<ProcessOutput, SidecarError> {
+    execute_command(
+        &adapter.program,
+        &adapter.args,
+        request,
+        workspace,
+        limits,
+        cancel,
+    )
+}
+
+pub(crate) fn execute_command(
+    program: &Path,
+    args: &[std::ffi::OsString],
+    request: &[u8],
+    workspace: &Path,
+    limits: &SidecarLimits,
+    cancel: &AtomicBool,
+) -> Result<ProcessOutput, SidecarError> {
     if request.len() > limits.max_request_bytes {
         return Err(SidecarError::new(
             "SIDECAR_REQUEST_LIMIT",
@@ -62,8 +80,8 @@ pub(crate) fn execute(
         stderr,
     } = JobProcess::spawn_with_cleanup_timeout(
         &SpawnSpec {
-            executable: &adapter.program,
-            args: &adapter.args,
+            executable: program,
+            args,
             cwd: workspace,
             environment: &environment,
         },
@@ -160,10 +178,12 @@ pub(crate) fn execute(
         };
         if failure.is_none() {
             if let Some(exit) = root.filter(|exit| exit.code != 0) {
-                failure = Some(SidecarError::new(
+                let mut error = SidecarError::new(
                     "SIDECAR_EXIT_NONZERO",
                     format!("Child exited with native code {}.", exit.code),
-                ));
+                );
+                error.native_exit_code = Some(exit.code);
+                failure = Some(error);
             } else if let Some(error) = worker_error(&workers) {
                 failure = Some(SidecarError::new("SIDECAR_PIPE_FAILED", error));
             } else if let Some(error) = join_issue {

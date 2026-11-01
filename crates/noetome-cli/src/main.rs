@@ -2,7 +2,7 @@ use std::env;
 use std::io::{self, Write};
 use std::process::ExitCode;
 
-use noetome_cli::{CliCommand, fixture, fixture_compile, project, source};
+use noetome_cli::{CliCommand, fixture, fixture_compile, pdf_parse, project, source};
 
 fn main() -> ExitCode {
     // Keep OS-native arguments: malformed Unicode is an input error, not a panic.
@@ -93,6 +93,43 @@ fn main() -> ExitCode {
                 Err(error) => {
                     let _ = writeln!(io::stderr().lock(), "{error}");
                     return ExitCode::from(error.exit_code());
+                }
+            }
+        }
+        CliCommand::SourceParsePdf {
+            file,
+            output,
+            python,
+            timeout_ms,
+        } => {
+            let adapter = match pdf_parse::default_adapter() {
+                Ok(path) => path,
+                Err(error) => {
+                    let _ = writeln!(io::stderr().lock(), "{error}");
+                    return ExitCode::from(pdf_parse::error_exit_code(&error));
+                }
+            };
+            let parser = pdf_parse::PdfParserSpec { python, adapter };
+            let mut limits = pdf_parse::PdfLimits::default();
+            limits.transport.timeout = std::time::Duration::from_millis(timeout_ms);
+            match pdf_parse::parse_pdf(
+                &parser,
+                &file,
+                &output,
+                limits,
+                &std::sync::atomic::AtomicBool::new(false),
+            ) {
+                Ok(result) => {
+                    result_code = result.exit_code;
+                    if let Some(failure) = &result.report.failure {
+                        let _ =
+                            writeln!(io::stderr().lock(), "{}：{}", failure.code, failure.message);
+                    }
+                    result.json
+                }
+                Err(error) => {
+                    let _ = writeln!(io::stderr().lock(), "{error}");
+                    return ExitCode::from(pdf_parse::error_exit_code(&error));
                 }
             }
         }
