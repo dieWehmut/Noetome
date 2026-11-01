@@ -151,6 +151,10 @@ pub(crate) struct LoadedCase {
 }
 
 impl LoadedCase {
+    pub(crate) fn root(&self) -> &Path {
+        &self.root
+    }
+
     pub(crate) fn check_unchanged(&self) -> Result<(), ProjectError> {
         project::check_components(&self.root)?;
         let current = same_file::Handle::from_path(&self.root)

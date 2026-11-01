@@ -2,7 +2,7 @@ use std::env;
 use std::io::{self, Write};
 use std::process::ExitCode;
 
-use noetome_cli::{CliCommand, fixture, project, source};
+use noetome_cli::{CliCommand, fixture, fixture_compile, project, source};
 
 fn main() -> ExitCode {
     // Keep OS-native arguments: malformed Unicode is an input error, not a panic.
@@ -21,6 +21,24 @@ fn main() -> ExitCode {
         CliCommand::ProjectHelp => noetome_cli::PROJECT_HELP.to_owned(),
         CliCommand::SourceHelp => noetome_cli::SOURCE_HELP.to_owned(),
         CliCommand::CaseHelp => noetome_cli::CASE_HELP.to_owned(),
+        CliCommand::CaseCompile { case, output } => {
+            match fixture_compile::compile(&case, &output) {
+                Ok(result) => {
+                    if result.failed {
+                        let _ = writeln!(
+                            io::stderr().lock(),
+                            "CASE_COMPILATION_FAILED：fixture编译未完成，请查看JSON问题及保留的阶段现场。已有目标不自动接管。"
+                        );
+                        result_code = 3;
+                    }
+                    result.json
+                }
+                Err(error) => {
+                    let _ = writeln!(io::stderr().lock(), "{error}");
+                    return ExitCode::from(error.exit_code());
+                }
+            }
+        }
         CliCommand::CaseVerify(path) => match fixture::verify(&path) {
             Ok(output) => {
                 if output.failed {
