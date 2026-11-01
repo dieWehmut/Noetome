@@ -11,6 +11,9 @@ use tauri::menu::{Menu, MenuItem};
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{Manager, WindowEvent};
 
+mod preferences;
+use preferences::{CloseBehavior, PreferencesState};
+
 const MAIN_TRAY_ID: &str = "noetome-main-tray";
 const TRAY_SHOW_ID: &str = "noetome-tray-show";
 const TRAY_EXIT_ID: &str = "noetome-tray-exit";
@@ -43,6 +46,19 @@ fn cli_preview(option: &str) -> Result<String, String> {
         _ => return Err(noetome_cli::INVALID_ARGUMENT.to_owned()),
     };
     noetome_cli::render(&[OsString::from(flag)]).map_err(str::to_owned)
+}
+
+#[tauri::command]
+fn get_close_behavior(state: tauri::State<'_, PreferencesState>) -> Result<String, String> {
+    state.get()
+}
+
+#[tauri::command]
+fn set_close_behavior(
+    behavior: String,
+    state: tauri::State<'_, PreferencesState>,
+) -> Result<String, String> {
+    state.set(&behavior)
 }
 
 fn prepare_profile(path: &Path) -> Result<(), String> {
@@ -174,15 +190,30 @@ fn install_tray(app: &tauri::AppHandle) -> Result<(), String> {
     Ok(())
 }
 
-fn minimize_to_tray(window: &tauri::Window, event: &WindowEvent) {
-    // Windows emits Resized for WM_SIZE on minimize. Query the native state so
-    // ordinary resizing and maximizing keep the window visible. Never hide a
-    // window until its restore affordance has been successfully registered.
-    if window.label() == "main"
-        && matches!(event, WindowEvent::Resized(_))
-        && window.app_handle().tray_by_id(MAIN_TRAY_ID).is_some()
-        && window.is_minimized().unwrap_or(false)
-    {
+fn handle_window_event(window: &tauri::Window, event: &WindowEvent) {
+    // Standard minimize/resize events remain native Windows taskbar behavior.
+    // Only a user-requested close follows the persisted close preference.
+    if window.label() != "main" {
+        return;
+    }
+    if let WindowEvent::CloseRequested { api, .. } = event {
+        let behavior = window
+            .app_handle()
+            .try_state::<PreferencesState>()
+            .map(|state| state.effective())
+            .unwrap_or(CloseBehavior::HideToTray);
+        if behavior == CloseBehavior::Exit {
+            return;
+        }
+        api.prevent_close();
+        if window.app_handle().tray_by_id(MAIN_TRAY_ID).is_none() {
+            report_desktop_error(
+                "Noetome 托盘操作失败",
+                "DESKTOP_TRAY_UNAVAILABLE：托盘图标不可用，窗口已保留显示；请重新打开应用。",
+                window.app_handle().path().app_log_dir().ok(),
+            );
+            return;
+        }
         if let Err(error) = window.hide() {
             report_desktop_error(
                 "Noetome 托盘操作失败",
@@ -210,9 +241,14 @@ fn main() {
     }
 
     let app = match tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![runtime_info, cli_preview])
-        .on_window_event(minimize_to_tray)
+        .invoke_handler(tauri::generate_handler![runtime_info, cli_preview, get_close_behavior, set_close_behavior])
+        .on_window_event(handle_window_event)
         .setup(move |app| {
+            let preferences = match app.path().app_local_data_dir() {
+                Ok(directory) => PreferencesState::load(directory),
+                Err(error) => PreferencesState::unavailable(error.to_string()),
+            };
+            app.manage(preferences);
             for window in &windows {
                 if let Err(error) = tauri::WebviewWindowBuilder::from_config(app, window)
                     .and_then(|builder| builder.build())
