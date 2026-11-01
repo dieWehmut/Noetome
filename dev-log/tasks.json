@@ -714,7 +714,7 @@
       "id": "B03-T01",
       "title": "用fake子进程验证有界单请求parser sidecar协议",
       "batch": "B03",
-      "status": "todo",
+      "status": "in_progress",
       "depends_on": [
         "B02-T03"
       ],
@@ -732,7 +732,17 @@
         "fake helper仅在测试入口启用并明确producer=fake，不依赖PDF/OCR/模型库、网络或下载；普通CLI和项目登记不能接受fake解析结果，不宣称操作系统级沙盒或真实PDF解析已通过。",
         "先真实行为红再实现，完成定向进程断言与适用Rust/Python/日志检查；保存协议、稳定错误码、Windows环境、可复现命令和实际数量，更新相关标准后审查提交推送。验收后停止，不自动start B03-T02。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-01T10:24:08Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "在独立托管工作区冻结严格sidecar协议及Windows进程树宿主；先真实进程负例红，再实现有界管道/取消/资源复核。只本项，不接PDF解析或项目登记。",
+          "validation": [],
+          "artifacts": []
+        }
+      ]
     },
     {
       "id": "B03-T02",
