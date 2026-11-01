@@ -1,0 +1,34 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+warning: method `persist_report` is never used
+   --> crates\noetome-cli\src\sidecar.rs:582:19
+    |
+532 | impl Workspace {
+    | -------------- method in this implementation
+...
+582 |     pub(crate) fn persist_report(&mut self, bytes: &[u8], cancel: &AtomicBool) -> Result<(), SidecarError> {
+    |                   ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.97s
+     Running unittests src\lib.rs (D:\Noetome\target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 1 test
+test pdf_model::tests::sub_tolerance_partial_clipping_still_requires_review ... FAILED
+
+failures:
+
+---- pdf_model::tests::sub_tolerance_partial_clipping_still_requires_review stdout ----
+
+thread 'pdf_model::tests::sub_tolerance_partial_clipping_still_requires_review' (138424) panicked at crates\noetome-cli\src\pdf_model.rs:528:9:
+missing PDF_PAGE_STATE: []
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pdf_model::tests::sub_tolerance_partial_clipping_still_requires_review
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 229 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

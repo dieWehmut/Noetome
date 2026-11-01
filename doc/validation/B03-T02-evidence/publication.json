@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "task": "B03-T02",
+  "subtask": "opened-file-report-publication",
+  "recorded_at": "2026-11-01T12:24:39.401288+00:00",
+  "platform": {
+    "os": "Windows",
+    "version": "10.0.26200",
+    "machine": "AMD64",
+    "pointer_bits": 64,
+    "filesystem_tested": "NTFS on C:"
+  },
+  "source_files": [
+    {
+      "path": "crates/noetome-sidecar-platform/src/lib.rs",
+      "sha256": "12cd3e042162f7d13637e2ab73721594dabbf41f54cd34852c6bbefaf26ba48a",
+      "byte_length": 21560
+    },
+    {
+      "path": "crates/noetome-sidecar-platform/src/windows.rs",
+      "sha256": "cfe06b23fabe0320d7bd080068c4ffb85f6b60a70a60d15505861ebfefb3560c",
+      "byte_length": 32655
+    }
+  ],
+  "api": {
+    "name": "rename_file_no_replace",
+    "input": "borrowed open File and absolute same-directory target Path",
+    "file_access_mode": "0xc0010000 (GENERIC_READ|GENERIC_WRITE|DELETE)",
+    "file_share_mode": 1,
+    "native_class": "FileRenameInfo",
+    "replace_if_exists": false,
+    "root_directory": "NULL; absolute target after retained ancestor guards",
+    "commit": "single synchronous SetFileInformationByHandle result, no source-handle close/reopen",
+    "non_windows": "Unsupported"
+  },
+  "logs": [
+    {
+      "path": ".artifacts/B03-T02-publication/red.log",
+      "sha256": "f4216820b9c13d46b23ce2ed61cd06f672965e92776d2a78940f730fc0654568",
+      "byte_length": 2026,
+      "exit_code": 101,
+      "observation": "setup failure: OpenOptions create_new requires read/write booleans"
+    },
+    {
+      "path": ".artifacts/B03-T02-publication/red-with-setup-fixed.log",
+      "sha256": "b077caef6798d001e0b9df3f29de673b2e075db1f856a60b06df03f95e2c0ae0",
+      "byte_length": 1217,
+      "exit_code": 101,
+      "observation": "valid implementation red: 2 passed, 1 Unsupported failure"
+    },
+    {
+      "path": ".artifacts/B03-T02-publication/first-native.log",
+      "sha256": "94ae6bcd90650af5ad8ccf6cc1ac6dfdb4d8c573b22d41a10919cb967c942803",
+      "byte_length": 1482,
+      "exit_code": 101,
+      "observation": "compile repair: import OsStringExt"
+    },
+    {
+      "path": ".artifacts/B03-T02-publication/first-native-with-compile-fixed.log",
+      "sha256": "2630b814b6c8b817bc35ead604892de59c65945f938fc28b445e21c16370342c",
+      "byte_length": 1526,
+      "exit_code": 101,
+      "observation": "native relative RootDirectory ERROR_INVALID_PARAMETER 87: 1 passed, 2 failed"
+    },
+    {
+      "path": ".artifacts/B03-T02-publication/native-directory-access.log",
+      "sha256": "1f80ab98ce51e57dc2d955454be1a6928919bc42ce90cd72574009cf379b088d",
+      "byte_length": 1525,
+      "exit_code": 101,
+      "observation": "same native87 with FILE_TRAVERSE|FILE_READ_ATTRIBUTES"
+    },
+    {
+      "path": ".artifacts/B03-T02-publication/native-absolute-target.log",
+      "sha256": "8409b4bf34cf07ca38691012c3b8aa90e9219f23f8f897b23adaeaf7af559f91",
+      "byte_length": 694,
+      "exit_code": 0,
+      "observation": "3 native tests passed using absolute target and RootDirectory=NULL"
+    },
+    {
+      "path": ".artifacts/B03-T02-publication/green.log",
+      "sha256": "25681105d5fc69f681deda81a58dffd05182f3c24a2c14292b55040a84be2d04",
+      "byte_length": 850,
+      "exit_code": 0,
+      "observation": "5 native tests passed; ancestor guards and permissions/hardlink probes"
+    },
+    {
+      "path": ".artifacts/B03-T02-publication/green-with-junction.log",
+      "sha256": "238b95fc9f060b088ec887dbbf1020bb608cd07fe7723d7e3668d0fffb9e28f3",
+      "byte_length": 923,
+      "exit_code": 0,
+      "observation": "6 native tests passed, 0 failed, 0 ignored; actual controlled parent junction"
+    },
+    {
+      "path": ".artifacts/B03-T02-publication/check.log",
+      "sha256": "e30a98a582e9ecc8094f976461c10a40ee39bfdcb59cd49342e6c4170e381721",
+      "byte_length": 243,
+      "exit_code": 0,
+      "observation": "cargo check -p noetome-sidecar-platform --locked --offline"
+    },
+    {
+      "path": ".artifacts/B03-T02-publication/fmt-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0,
+      "exit_code": 0,
+      "observation": "cargo fmt -p noetome-sidecar-platform -- --check"
+    }
+  ],
+  "official_sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_rename_info",
+      "path": ".artifacts/B03-T02-publication/FILE_RENAME_INFO.html",
+      "status": 200,
+      "byte_length": 51578,
+      "sha256": "f37019fe163f43eaea11dec851109f551a7c5a368226d425c5b7048592b49950"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-setfileinformationbyhandle",
+      "path": ".artifacts/B03-T02-publication/SetFileInformationByHandle.html",
+      "status": 200,
+      "byte_length": 59364,
+      "sha256": "5d4cc061dfe08d96248aac88c81c9e737416a93185db88aa821d3c7014bfbe21"
+    }
+  ],
+  "unrun": [
+    "whole workspace regression belongs to Root",
+    "non-Windows, UNC, other filesystems and other CPU architectures"
+  ],
+  "limitations": [
+    "Source nlink and identity checks are preconditions, not an atomic filesystem transaction that proves all possible future metadata changes.",
+    "Native success commits the report name; this operation does not promise automatic power-loss recovery."
+  ]
+}

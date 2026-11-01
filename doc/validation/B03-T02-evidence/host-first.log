@@ -1,0 +1,37 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.92s
+     Running tests\pdf_parse.rs (D:\Noetome\target\debug\deps\pdf_parse-bc66d1b2bccfb7fc.exe)
+authored_fixture_bytes_and_expected_are_frozen ... ok
+
+thread 'main' (25632) panicked at crates\noetome-cli\tests\pdf_parse.rs:520:39:
+N01: rotation/UserUnit differs
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+all_fifteen_real_cli_cases_match_author_manifest ... FAILED
+
+thread 'main' (25632) panicked at crates\noetome-cli\tests\pdf_parse.rs:573:49:
+called `Result::unwrap()` on an `Err` value: "rotation/UserUnit differs"
+real_result_page_text_geometry_and_resource_mutations_fail_core ... FAILED
+
+thread 'main' (25632) panicked at crates\noetome-cli\tests\pdf_parse.rs:573:49:
+called `Result::unwrap()` on an `Err` value: "rotation/UserUnit differs"
+self_consistent_parser_position_forgery_fails_independent_author_expected ... FAILED
+real_cli_argument_existing_root_and_timeout_failures_preserve_inputs ... ok
+failure missing input: SIDECAR_INPUT_INVALID
+failure input: SIDECAR_INPUT_LIMIT
+real_host_read_policy_and_adapter_failures_are_bounded ... ok
+
+thread 'main' (25632) panicked at crates\noetome-cli\tests\pdf_parse.rs:880:5:
+assertion failed: error.code.contains("TIMEOUT")
+actual_python_timeout_and_cancel_after_handshake_end_process ... FAILED
+real_parser_resource_inventory_addition_is_rejected ... ok
+failure real locked file: SIDECAR_INPUT_INVALID
+
+thread 'main' (25632) panicked at crates\noetome-cli\tests\pdf_parse.rs:800:23:
+actual hardlinked input returned a ready report
+actual_windows_locked_and_hardlinked_input_is_rejected ... FAILED
+PDF evidence: real_cli_calls=6, direct_host_calls=14, real_result_core_mutations=0
+PDF tests: 4 passed; 5 failed
+error: test failed, to rerun pass `-p noetome-cli --test pdf_parse`
+
+Caused by:
+  process didn't exit successfully: `D:\Noetome\target\debug\deps\pdf_parse-bc66d1b2bccfb7fc.exe` (exit code: 1)

@@ -792,7 +792,7 @@
       "id": "B03-T02",
       "title": "解析单份真实文本PDF并验证完整物理页与区域定位",
       "batch": "B03",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B03-T01"
       ],
@@ -822,6 +822,54 @@
           "note": "在现有干净托管工作区启动单份真实文本PDF解析；先核查唯一Python解析器并冻结显式PDF协议/坐标，作者预期与CLI真红先行。只向新测试根输出，不登记项目，不启动T03。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-01T12:33:57Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "交付单份真实PDF CLI与严格v2页/字形/正文/坐标验证、锁定唯一pdfplumber adapter和15份冻结作者样例；修复部分页聚合、runtime退出码及取消后ready报告矛盾，按打开句柄原子发布最终报告。仅新测试根输出，不登记项目，不启动T03。",
+          "validation": [
+            "本轮Windows x64/Cargo1.98.1、CPython3.12.14实际fmt与locked/offline workspace check/test均退出0，361项Rust零失败零忽略；Python日志unittest12项通过，devlog check和git diff --check通过。PDF target10组实测22普通CLI/18Host/22变造（20Core拒绝、2独立golden拒绝）；15PDF=5ready/8needs_review/2failed，21确认页=13parsed/7review/1failed；原SHA/全文/UTF8/窄bbox/idx+1及原文件外部哨兵核对通过。adapter17项独立试验、模型22项和新增6项native发布测试通过；8包及27许可证哈希核对通过，Poppler49命令/22显示页/11作者窗口独立核查。runtime3.12.7 native2映射CLI2、交付前/后实际取消独立复验并永久回归通过；review无未关闭阻断。全矩阵输入541629B、资源153962B、总4326ms/单次209..426ms，仅有限样例，不证明OCR/科学/1000页/24小时/跨平台/安装。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B03-T02.md",
+              "sha256": "734d2f03af7590ea358b0e2f778936acaca85757b94a68ff5e70b9c628042f17"
+            },
+            {
+              "path": "doc/validation/B03-T02.json",
+              "sha256": "d7cd1dceb75c2b78afd89ccac05b49ea41ff91480ab54f29666eb2bc38faaef9"
+            },
+            {
+              "path": "doc/technical/PDF_PARSE_PROTOCOL.md",
+              "sha256": "81d057de547e3f0c495597f0c7121b76a7aae9b5f737c1d8420228ac222a3588"
+            },
+            {
+              "path": "crates/noetome-cli/src/pdf_parse.rs",
+              "sha256": "293392c7f50a63caf16f58a1a4369b2ae8a5470ef7dba962d3bb207df60e475c"
+            },
+            {
+              "path": "crates/noetome-cli/src/pdf_model.rs",
+              "sha256": "ddc6773a38ffe64d013f475275ef32a928e1a01872e053d5300cb738c9372049"
+            },
+            {
+              "path": "crates/noetome-cli/tests/pdf_parse.rs",
+              "sha256": "d40c11a79e28954e8a96a4e502c496d58c5dde2b81ef0948725939c96536e21a"
+            },
+            {
+              "path": "sidecars/pdf_parser/adapter.py",
+              "sha256": "92e7799ba34e5112e4142c7ae8b22bbf04826b38b90e7418655551aa32455642"
+            },
+            {
+              "path": "sidecars/pdf_parser/runtime-lock.json",
+              "sha256": "23bf5d51eb3607766d0c3a8a8f70f7aae499ff1219ff4c4610437d73ca492b36"
+            },
+            {
+              "path": "fixtures/pdf-text-v1/expected.json",
+              "sha256": "b9ee562d3b180754cdde8aca5de76cb79baf877204ed5384bd35652c63caca77"
+            }
+          ]
         }
       ]
     },

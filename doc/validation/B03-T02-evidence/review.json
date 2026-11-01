@@ -1,0 +1,402 @@
+{
+  "schema_version": 1,
+  "reviewed_at_utc": "2026-11-01T12:26:02.207864+00:00",
+  "scope": "B03-T02 independent source and selected behavior boundary review; production/log/Git not modified by reviewer",
+  "unresolved_blockers": [],
+  "findings": [
+    {
+      "id": "R1",
+      "status": "fixed_and_independently_retested",
+      "problem": "Actual adapter runtime mismatch exited native 2 but CLI mapped it to 3",
+      "red": "runtime-mismatch-9cae776c1f2144ff9b75db0acd416530",
+      "green": "runtime-fixed-95266675a2f84af5bad15ad38c8e001b",
+      "current_source": "pdf_parse.rs error_exit_code preserves observed native_exit_code; sidecar_process.rs assigns native code from process observation"
+    },
+    {
+      "id": "R2",
+      "status": "fixed_and_independently_retested",
+      "problem": "Cancellation after complete parse.json write returned cancelled while leaving ready/passed/failure-null published report",
+      "red": "cancel-report-b60ef77bbaaf4702b06b647c3ac15164",
+      "green": [
+        "cancel-pending-green-598947eb7b9b417b96295362cf062a5e",
+        "cancel-late-green-5b2c233ec7334048b3a69c73464c99bf"
+      ],
+      "current_source": "pdf_parse.rs prepares .parse.pending.json then verifies all resources and publishes with native no-replace rename as delivery point"
+    }
+  ],
+  "new_target_artifacts": {
+    "exe": "D:\\Noetome\\target\\debug\\noetome.exe",
+    "exe_sha256": "e320f282506a32c223494ca91d1152d785244f7764ae6ba71bebce04988eecee",
+    "rlib": "D:\\Noetome\\target\\debug\\deps\\libnoetome_cli-12c37b3173703310.rlib",
+    "rlib_sha256": "b54b2deb671fa6d0c8494d7fff7824702ae3a6b29381a2cc7c80303c2220832f"
+  },
+  "source_fingerprints": [
+    {
+      "relative_path": "crates/noetome-cli/src/pdf_model.rs",
+      "sha256": "ddc6773a38ffe64d013f475275ef32a928e1a01872e053d5300cb738c9372049"
+    },
+    {
+      "relative_path": "crates/noetome-cli/src/pdf_parse.rs",
+      "sha256": "90bcf45a801eb5b7908f202fda5d4e685ba5e537fcde935022bf77e610c2cc0f"
+    },
+    {
+      "relative_path": "crates/noetome-cli/src/sidecar.rs",
+      "sha256": "e15bd6095a4b10f71e0b7b6a61e0540536f174d9b5275ffa75cab2a605d49d9c"
+    },
+    {
+      "relative_path": "crates/noetome-cli/src/sidecar_process.rs",
+      "sha256": "e0a1f206f87d77f87b25afa38e3b90c3e242bc28a862fe58db123c393c328930"
+    },
+    {
+      "relative_path": "crates/noetome-cli/src/lib.rs",
+      "sha256": "119b317821ce9888aab84a2d7946bad54deb35f704fb5ba7eec658604ff7604a"
+    },
+    {
+      "relative_path": "crates/noetome-cli/src/main.rs",
+      "sha256": "5cb21acceb65cc9f9a798f029ef7d621eeb851dab5cca102c98496b7c1987ded"
+    },
+    {
+      "relative_path": "crates/noetome-sidecar-platform/src/windows.rs",
+      "sha256": "cfe06b23fabe0320d7bd080068c4ffb85f6b60a70a60d15505861ebfefb3560c"
+    },
+    {
+      "relative_path": "sidecars/pdf_parser/adapter.py",
+      "sha256": "92e7799ba34e5112e4142c7ae8b22bbf04826b38b90e7418655551aa32455642"
+    },
+    {
+      "relative_path": "sidecars/pdf_parser/runtime-lock.json",
+      "sha256": "23bf5d51eb3607766d0c3a8a8f70f7aae499ff1219ff4c4610437d73ca492b36"
+    },
+    {
+      "relative_path": "doc/technical/PDF_PARSE_PROTOCOL.md",
+      "sha256": "81d057de547e3f0c495597f0c7121b76a7aae9b5f737c1d8420228ac222a3588"
+    },
+    {
+      "relative_path": "doc/execution/B03-T02_PLAN.md",
+      "sha256": "1b0877b443e9d9c26ccebd56f78c9a1a3d647e4d15353f79e1dce9c13af3ba50"
+    },
+    {
+      "relative_path": "fixtures/pdf-text-v1/expected.json",
+      "sha256": "b9ee562d3b180754cdde8aca5de76cb79baf877204ed5384bd35652c63caca77"
+    },
+    {
+      "relative_path": "fixtures/pdf-text-v1/freeze.json",
+      "sha256": "180545a35a96341aa295650e7918320e3337ea292bd243e50b0fa357ee6d18d9"
+    }
+  ],
+  "harness_fingerprints": [
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/cancel_pending.exe",
+      "sha256": "74984f0ab82c2c9ffc3a796adc68bc9ee49601a429b240b158baee622dff5363"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/cancel_pending.pdb",
+      "sha256": "1d1ed1cd4071420f148233f80bff586834720703cbf35626a8441656d41e1ae2"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/cancel_pending.rs",
+      "sha256": "1cf4d6c3af2ea4eca6093729d10e7fbec2061be8cc9b3441de6c6e9e78986cf0"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/cancel_report.exe",
+      "sha256": "3b42c638a89c31ff6d9eb8af17e982349c0d7e74f4e8ad203a2331298f58cc33"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/cancel_report.pdb",
+      "sha256": "b3bfa2d265a818c6b6012638da485f4e87b7ea16f8b44e6aa183c7f3a6dc6e1a"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/cancel_report.rs",
+      "sha256": "440ab3e59b51090c6dd66bdf31253e29d6bf12bbf5696e316338aec0a16b105b"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/cancel_report_after_fix.exe",
+      "sha256": "e216cd0f385e7c15a82ca7bdc58fadf5dba2c24aca58360238633b2fc2218afc"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/cancel_report_after_fix.pdb",
+      "sha256": "a6155773490e0257b7c96b379f228becf696d78b55fed06dcf1f2e7000bb09bc"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/delayed_real.py",
+      "sha256": "9ce684ab993e90579fe39ffe89a81f9d24d400e95f714952ef0cb151d224b2fe"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/forged_report.py",
+      "sha256": "6c2c4178938b8ecbb95859756465e83aa85dd9b72e40b4c655a1c02febadf5fb"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/host_probe.exe",
+      "sha256": "c2a43b6216156830f939f6b2a318b9d5361da3417e2d371864e451e45754ad93"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/host_probe.pdb",
+      "sha256": "a957d69a07ffdc89126a2a1b1d96c42bfc3d5b06397e6aa2763939f82668618d"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/host_probe.rs",
+      "sha256": "6df13b39849ed8699c452eaa1c9a2f882bd6eeb18f83d0b2071072bb2e9e4864"
+    },
+    {
+      "relative_path": ".artifacts/B03-T02-review/harness/mapped_input.py",
+      "sha256": "280e8ea9b2e5cbc5300db9a7a92d4afb44ff82a00639337042a992a9fe0b5b33"
+    }
+  ],
+  "normal_cli": {
+    "command": [
+      "D:\\Noetome\\target\\debug\\noetome.exe",
+      "source",
+      "parse-pdf",
+      "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\fixtures\\pdf-text-v1\\single-column.pdf",
+      "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B03-T02-review\\normal-final-ab6b015b96a24b12bc0367f664a54b8f\\output",
+      "--python",
+      "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe"
+    ],
+    "result": {
+      "exit_code": 0,
+      "stdout_equals_saved_report": true,
+      "status": "ready",
+      "validation_status": "passed",
+      "page_count": 1,
+      "displayed_physical_page": 1,
+      "input_sha_before": "faebbe43a9cd81450304873e6ad5cdce3f9a90c6bac1f7b13076e0552fc15e4e",
+      "input_sha_after": "faebbe43a9cd81450304873e6ad5cdce3f9a90c6bac1f7b13076e0552fc15e4e",
+      "pending_exists": false
+    }
+  },
+  "runs": {
+    "runtime_red": {
+      "directory": ".artifacts/B03-T02-review/runtime-mismatch-9cae776c1f2144ff9b75db0acd416530",
+      "evidence": [
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-mismatch-9cae776c1f2144ff9b75db0acd416530/exit.txt",
+          "bytes": 1,
+          "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-mismatch-9cae776c1f2144ff9b75db0acd416530/stdout.json",
+          "bytes": 1991,
+          "sha256": "500b9b6b1f5f0b8d43d064a792c2f46e9a3b6e4b48f73120a63490b4942b9250"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-mismatch-9cae776c1f2144ff9b75db0acd416530/stderr.txt",
+          "bytes": 57,
+          "sha256": "07e2ced662120fdd264388132d9b24f1c70ed6d39d93f94fd0cb66e0f21d9170"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-mismatch-9cae776c1f2144ff9b75db0acd416530/output/parse.json",
+          "bytes": 1991,
+          "sha256": "500b9b6b1f5f0b8d43d064a792c2f46e9a3b6e4b48f73120a63490b4942b9250"
+        }
+      ]
+    },
+    "cancel_red": {
+      "directory": ".artifacts/B03-T02-review/cancel-report-b60ef77bbaaf4702b06b647c3ac15164",
+      "evidence": [
+        {
+          "relative_path": ".artifacts/B03-T02-review/cancel-report-b60ef77bbaaf4702b06b647c3ac15164/result.txt",
+          "bytes": 145,
+          "sha256": "af432e4d4f7642a3bf834056b98151b19de2db1a8b5491814eecbdf442c09610"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/cancel-report-b60ef77bbaaf4702b06b647c3ac15164/output/parse.json",
+          "bytes": 7582,
+          "sha256": "8d77e594ee0feb406155808af2d9769078aa206e2fc902f4b893a1781553080b"
+        }
+      ]
+    },
+    "normal_no_cancel_control": {
+      "directory": ".artifacts/B03-T02-review/cancel-report-5eb918319a6743d19ea5dfe7f55a36e7",
+      "evidence": [
+        {
+          "relative_path": ".artifacts/B03-T02-review/cancel-report-5eb918319a6743d19ea5dfe7f55a36e7/result.txt",
+          "bytes": 153,
+          "sha256": "ce1ecc784abb9cee615225910aabde903b9d37afe1433b8cf6b34baca133dddd"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/cancel-report-5eb918319a6743d19ea5dfe7f55a36e7/output/parse.json",
+          "bytes": 7584,
+          "sha256": "ec78047db65f0786b00d9932be84e73e744dd98944535eade293ecc5fc6ae337"
+        }
+      ]
+    },
+    "forged_report_rejected": {
+      "directory": ".artifacts/B03-T02-review/forged-report-36b982232ca94d0499c0aff7742946e9",
+      "evidence": [
+        {
+          "relative_path": ".artifacts/B03-T02-review/forged-report-36b982232ca94d0499c0aff7742946e9/result.txt",
+          "bytes": 80,
+          "sha256": "f667a475d57c98894ca6b34e370310ba179f5c729fe9dba832d0e47cecf71430"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/forged-report-36b982232ca94d0499c0aff7742946e9/output/parse.json",
+          "bytes": 25,
+          "sha256": "e3ddde89b270782abe5bf49620295ae67a554ceed8a7bbdfeb2125a7cfc00ecf"
+        }
+      ]
+    },
+    "writable_mapping_rejected": {
+      "directory": ".artifacts/B03-T02-review/mapped-input-9c8b2f056bbc4f03a0696280ff8896a8",
+      "evidence": [
+        {
+          "relative_path": ".artifacts/B03-T02-review/mapped-input-9c8b2f056bbc4f03a0696280ff8896a8/result.json",
+          "bytes": 1069,
+          "sha256": "7be7a00ad08312b9da7008206cbeddbf106ba63aea2ac3c4880db831c48f3326"
+        }
+      ]
+    },
+    "setup_old_target_not_green": {
+      "directory": ".artifacts/B03-T02-review/runtime-fixed-f8ba5bff7ed342429b42ecad83c683de",
+      "evidence": [
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-fixed-f8ba5bff7ed342429b42ecad83c683de/exit.txt",
+          "bytes": 1,
+          "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-fixed-f8ba5bff7ed342429b42ecad83c683de/stdout.json",
+          "bytes": 1992,
+          "sha256": "488492cead5730dc1b584d88835b56f7075d1f4310d0c3245fde7f493a078ae1"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-fixed-f8ba5bff7ed342429b42ecad83c683de/stderr.txt",
+          "bytes": 57,
+          "sha256": "07e2ced662120fdd264388132d9b24f1c70ed6d39d93f94fd0cb66e0f21d9170"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-fixed-f8ba5bff7ed342429b42ecad83c683de/output/parse.json",
+          "bytes": 1992,
+          "sha256": "488492cead5730dc1b584d88835b56f7075d1f4310d0c3245fde7f493a078ae1"
+        }
+      ]
+    },
+    "runtime_green": {
+      "directory": ".artifacts/B03-T02-review/runtime-fixed-95266675a2f84af5bad15ad38c8e001b",
+      "evidence": [
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-fixed-95266675a2f84af5bad15ad38c8e001b/exit.txt",
+          "bytes": 1,
+          "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-fixed-95266675a2f84af5bad15ad38c8e001b/stdout.json",
+          "bytes": 2039,
+          "sha256": "9fced76fcd504a7606431502fb02685e9f97e54e6d5b40148bdacd96ba54309e"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-fixed-95266675a2f84af5bad15ad38c8e001b/stderr.txt",
+          "bytes": 57,
+          "sha256": "07e2ced662120fdd264388132d9b24f1c70ed6d39d93f94fd0cb66e0f21d9170"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/runtime-fixed-95266675a2f84af5bad15ad38c8e001b/output/parse.json",
+          "bytes": 2039,
+          "sha256": "9fced76fcd504a7606431502fb02685e9f97e54e6d5b40148bdacd96ba54309e"
+        }
+      ]
+    },
+    "pre_delivery_cancel_green": {
+      "directory": ".artifacts/B03-T02-review/cancel-pending-green-598947eb7b9b417b96295362cf062a5e",
+      "evidence": [
+        {
+          "relative_path": ".artifacts/B03-T02-review/cancel-pending-green-598947eb7b9b417b96295362cf062a5e/result.txt",
+          "bytes": 77,
+          "sha256": "bb767282c7b05aee8fe6c4ed2a8586a4d20780eebce9fd374d366e75fe6d5054"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/cancel-pending-green-598947eb7b9b417b96295362cf062a5e/exit.txt",
+          "bytes": 1,
+          "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/cancel-pending-green-598947eb7b9b417b96295362cf062a5e/output/.parse.pending.json",
+          "bytes": 7772,
+          "sha256": "e65ed3ff922f7fbc2129b17a2f0e490eb705b32b2721557d22add0c74b6c7f50"
+        }
+      ]
+    },
+    "post_delivery_cancel_green": {
+      "directory": ".artifacts/B03-T02-review/cancel-late-green-5b2c233ec7334048b3a69c73464c99bf",
+      "evidence": [
+        {
+          "relative_path": ".artifacts/B03-T02-review/cancel-late-green-5b2c233ec7334048b3a69c73464c99bf/result.txt",
+          "bytes": 151,
+          "sha256": "dd969efa310125cc2c7faecbdae517f105f8dd858efcbab4318c9d71a4b2a377"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/cancel-late-green-5b2c233ec7334048b3a69c73464c99bf/exit.txt",
+          "bytes": 1,
+          "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/cancel-late-green-5b2c233ec7334048b3a69c73464c99bf/output/parse.json",
+          "bytes": 7773,
+          "sha256": "0db2d5c7694f9a54ea8d3e5fe585e8fb294c86a94bdfeb3c1caf2110577b617c"
+        }
+      ]
+    },
+    "normal_final": {
+      "directory": ".artifacts/B03-T02-review/normal-final-ab6b015b96a24b12bc0367f664a54b8f",
+      "evidence": [
+        {
+          "relative_path": ".artifacts/B03-T02-review/normal-final-ab6b015b96a24b12bc0367f664a54b8f/exit.txt",
+          "bytes": 1,
+          "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/normal-final-ab6b015b96a24b12bc0367f664a54b8f/stdout.json",
+          "bytes": 7757,
+          "sha256": "ad232ab8539a8b52eb67fee040ea4bf1be1b8a081709a39f8cfda9ae7a861e39"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/normal-final-ab6b015b96a24b12bc0367f664a54b8f/stderr.txt",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "relative_path": ".artifacts/B03-T02-review/normal-final-ab6b015b96a24b12bc0367f664a54b8f/output/parse.json",
+          "bytes": 7757,
+          "sha256": "ad232ab8539a8b52eb67fee040ea4bf1be1b8a081709a39f8cfda9ae7a861e39"
+        }
+      ]
+    }
+  },
+  "calls_in_this_review": {
+    "real_cli": 4,
+    "direct_host": 6,
+    "notes": "Includes one old-target setup rerun not counted green and one writable-mapping rejection before sidecar process creation; original raw-after-EOF-only padded control never triggered cancellation."
+  },
+  "compile_commands": [
+    "rustc --edition 2024 .artifacts/B03-T02-review/harness/cancel_pending.rs --extern noetome_cli=<latest D:/Noetome/target/debug/deps/libnoetome_cli-*.rlib> --extern serde_json=<D:/Noetome/target/debug/deps/libserde_json-*.rlib> -L dependency=D:/Noetome/target/debug/deps -o .artifacts/B03-T02-review/harness/cancel_pending.exe",
+    "rustc --edition 2024 .artifacts/B03-T02-review/harness/cancel_report.rs --extern noetome_cli=<same new rlib> --extern serde_json=<same serde_json rlib> -L dependency=D:/Noetome/target/debug/deps -o .artifacts/B03-T02-review/harness/cancel_report_after_fix.exe"
+  ],
+  "tested_boundary_evidence": [
+    "Old Python3.12.7 actual native config failure red/green",
+    "Actual pre-delivery cancellation red/green and post-delivery late cancel success",
+    "Actual child-forged parse.json rejects workspace takeover and preserves its bytes",
+    "Actual pre-existing native writable memory mapping rejects selected input before snapshot/sidecar",
+    "New-target real N01 CLI stdout exactly equals committed parse.json and original PDF SHA stays fixed"
+  ],
+  "source_reviewed": [
+    "strict DTO naming/required null/unknown and duplicate fields",
+    "complete bidirectional page and glyph inventories",
+    "primitive-to-derived geometry, region, line order, exclusion, UTF8 artifact/range and review state checks",
+    "raw geometry and per-page decoding failure null behavior",
+    "global policies checked before emitted files",
+    "runtime/producer identity and selected execution paths",
+    "retained final resource file identities and root inventories",
+    "native report rename alignment, no-overwrite and no post-delivery cancellation failure"
+  ],
+  "not_run": [
+    "full Cargo workspace suite",
+    "full15-PDF fixture suite or all Rust/Python model/adapter tests",
+    "independent Poppler images/manual author position validation",
+    "new subprocess-grandchild tree matrix",
+    "1000-page/24-hour/scientific quality/production Vault/OS sandbox/packaged distribution tests"
+  ],
+  "limitations": [
+    "Source review is not evidence of arbitrary parser primitive scientific correctness. Author expected data was read and fingerprinted, never regenerated or changed.",
+    "Unknown-root and mapped-input directed probes ran on the earlier library; current code path was source-reviewed and the final targeted green probes used only D:/Noetome/target artifacts.",
+    "A setup attempt accidentally used historical workspace target/debug binaries after an ambiguous build path. It remained old behavior, was preserved, and was superseded with explicit D:/Noetome/target reruns."
+  ]
+}

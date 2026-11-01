@@ -295,7 +295,7 @@ Release 保存 `release_id`、`run_id`、IR 与计划版本、渲染器版本、
 
 ## 9 扩展顺序
 
-B03-T01 新增[独立 sidecar v1 契约](SIDECAR_PROTOCOL.md)，包括严格 request/response、producer/能力、完整 input_bytes 分区、资源清单、partial/failed 及有界进程错误。它不写来源或编译数据库，不新增 Source/Version/Span 身份，不扩大旧 UTF8 与 fixture 契约。真实 PDF locator 在后续版本单独定义和验证。
+B03-T01新增[独立sidecar v1契约](SIDECAR_PROTOCOL.md)，包括严格request/response、producer/能力、完整input_bytes分区、资源清单、partial/failed及有界进程错误。B03-T02的[PDF v2契约](PDF_PARSE_PROTOCOL.md)单独定义物理页索引、原始MediaBox/CropBox/Rotate/UserUnit、字形证据、CropBox局部pt区域、逐页UTF8正文和Host报告Schema1；它不写来源或编译数据库，不新增Source/Version/Span身份，不扩大旧UTF8与fixture契约。项目PDF持久化仍需B03-T03显式Schema迁移，不能把原PDF或页文本塞进Schema2的normalized快照。
 
 | 后续能力 | 到该阶段再引入的契约 |
 | --- | --- |

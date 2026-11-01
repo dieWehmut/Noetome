@@ -1,0 +1,34 @@
+authored_fixture_bytes_and_expected_are_frozen ... ok
+all_fifteen_real_cli_cases_match_author_manifest ... ok
+mutation missing-page: ["PDF_PAGE_MANIFEST"]
+mutation wrong-page-index: ["PDF_PAGE_MANIFEST"]
+mutation wrong-region-page: ["PDF_REGION"]
+mutation invented-printed-label: ["PDF_PAGE_MANIFEST"]
+mutation within-page-wrong-bbox: ["PDF_REGION"]
+mutation out-of-bounds-bbox: ["PDF_REGION"]
+mutation zero-bbox: ["PDF_REGION"]
+mutation missing-glyph-reference: ["PDF_REGION"]
+mutation wrong-utf8-range: ["PDF_REGION"]
+mutation raw-offset-disguised-as-text: ["PDF_REGION"]
+mutation wrong-artifact-reference: ["PDF_REGION"]
+mutation path-escape: ["PDF_ARTIFACT_MANIFEST", "PDF_ARTIFACT_MANIFEST", "PDF_INVENTORY"]
+mutation incorrect-resource-sha: ["PDF_ARTIFACT_INTEGRITY", "PDF_INVENTORY"]
+mutation physical-resource-byte-change: ["PDF_ARTIFACT_INTEGRITY", "PDF_TEXT"]
+mutation synced-missing-body: ["PDF_TEXT", "PDF_REGION", "PDF_REGION"]
+mutation synced-wrong-reading-order: ["PDF_TEXT"]
+mutation utf8-boundary-cut: ["PDF_TEXT", "PDF_REGION", "PDF_REGION", "PDF_REGION", "PDF_REGION"]
+real_result_page_text_geometry_and_resource_mutations_fail_core ... ok
+self_consistent_parser_position_forgery_fails_independent_author_expected ... ok
+real_cli_argument_existing_root_and_timeout_failures_preserve_inputs ... ok
+failure missing input: SIDECAR_INPUT_INVALID
+failure input: SIDECAR_INPUT_LIMIT
+real_host_read_policy_and_adapter_failures_are_bounded ... ok
+actual Python timeout: pid=135008, creation_time=134380096811760137, native_exit=Some(1)
+actual Python cancel: pid=125176, creation_time=134380096819362040, native_exit=Some(1)
+actual_python_timeout_and_cancel_after_handshake_end_process ... ok
+real_parser_resource_inventory_addition_is_rejected ... ok
+failure real locked file: SIDECAR_INPUT_INVALID
+actual_windows_locked_input_and_hardlinked_boundaries_are_checked ... ok
+actual_report_publication_cancel_boundary_preserves_pending_evidence ... ok
+PDF evidence: real_cli_calls=22, direct_host_calls=18, real_result_core_mutations=22
+PDF tests: 10 passed; 0 failed

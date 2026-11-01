@@ -1,0 +1,131 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+warning: unused import: `BTreeSet`
+ --> crates\noetome-cli\src\pdf_model.rs:3:34
+  |
+3 | use std::collections::{BTreeMap, BTreeSet};
+  |                                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `Ordering`
+ --> crates\noetome-cli\src\pdf_model.rs:4:37
+  |
+4 | use std::sync::atomic::{AtomicBool, Ordering};
+  |                                     ^^^^^^^^
+
+warning: fields `transport` and `policy` are never read
+  --> crates\noetome-cli\src\pdf_model.rs:85:28
+   |
+85 | pub struct PdfLimits { pub transport: SidecarLimits, pub policy: PdfPolicy }
+   |            ---------       ^^^^^^^^^                     ^^^^^^
+   |            |
+   |            fields in this struct
+   |
+   = note: `PdfLimits` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib test) generated 3 warnings (run `cargo fix --lib -p noetome-cli --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.72s
+     Running unittests src\lib.rs (D:\Noetome\target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 14 tests
+test pdf_model::tests::literal_crop_userunit_unicode_requires_exact_independent_output ... FAILED
+test pdf_model::tests::resource_manifest_integrity_inventory_shape_and_cancellation_are_preserved ... FAILED
+test pdf_model::tests::no_inventory_failed_document_is_legal_but_explicitly_incomplete ... FAILED
+test pdf_model::tests::missing_pages_wrong_physical_order_and_printed_labels_are_rejected ... FAILED
+test pdf_model::tests::line_order_coverage_and_utf8_ranges_cannot_be_refreshed_away ... FAILED
+test pdf_model::tests::changed_bbox_inside_page_is_still_rejected ... FAILED
+test pdf_model::tests::actual_text_must_match_the_complete_recomputed_bytes ... FAILED
+test pdf_model::tests::partial_crop_and_visual_objects_require_review_and_a_local_issue ... FAILED
+test pdf_model::tests::excluded_glyphs_are_preserved_and_exactly_accounted ... FAILED
+test pdf_model::tests::decode_failure_retains_the_physical_page_without_fabricated_content ... FAILED
+test pdf_model::tests::all_four_rotations_use_raw_nonzero_origins_asymmetric_crop_and_userunit ... FAILED
+test pdf_model::tests::every_locked_runtime_component_and_parser_identity_are_required ... FAILED
+test pdf_model::tests::every_nullable_field_is_required_and_explicit_null_is_accepted ... ok
+test pdf_model::tests::wire_rejects_unknown_fields_duplicate_keys_objects_as_arrays_and_enum_maps ... ok
+
+failures:
+
+---- pdf_model::tests::literal_crop_userunit_unicode_requires_exact_independent_output stdout ----
+
+thread 'pdf_model::tests::literal_crop_userunit_unicode_requires_exact_independent_output' (139988) panicked at crates\noetome-cli\src\pdf_model.rs:221:9:
+assertion failed: check(&response).is_empty()
+
+---- pdf_model::tests::resource_manifest_integrity_inventory_shape_and_cancellation_are_preserved stdout ----
+
+thread 'pdf_model::tests::resource_manifest_integrity_inventory_shape_and_cancellation_are_preserved' (70032) panicked at crates\noetome-cli\src\pdf_model.rs:203:9:
+missing PDF_ARTIFACT_INTEGRITY: [ProtocolViolation { rule_id: "PDF_UNIMPLEMENTED", object_refs: [], message: "PDF Core validation is not implemented." }]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- pdf_model::tests::no_inventory_failed_document_is_legal_but_explicitly_incomplete stdout ----
+
+thread 'pdf_model::tests::no_inventory_failed_document_is_legal_but_explicitly_incomplete' (10280) panicked at crates\noetome-cli\src\pdf_model.rs:395:9:
+assertion `left == right` failed
+  left: ["PDF_UNIMPLEMENTED"]
+ right: ["PDF_REPORTED_INCOMPLETE"]
+
+---- pdf_model::tests::missing_pages_wrong_physical_order_and_printed_labels_are_rejected stdout ----
+
+thread 'pdf_model::tests::missing_pages_wrong_physical_order_and_printed_labels_are_rejected' (19988) panicked at crates\noetome-cli\src\pdf_model.rs:203:9:
+missing PDF_PAGE_MANIFEST: [ProtocolViolation { rule_id: "PDF_UNIMPLEMENTED", object_refs: [], message: "PDF Core validation is not implemented." }]
+
+---- pdf_model::tests::line_order_coverage_and_utf8_ranges_cannot_be_refreshed_away stdout ----
+
+thread 'pdf_model::tests::line_order_coverage_and_utf8_ranges_cannot_be_refreshed_away' (51832) panicked at crates\noetome-cli\src\pdf_model.rs:203:9:
+missing PDF_REGION: [ProtocolViolation { rule_id: "PDF_UNIMPLEMENTED", object_refs: [], message: "PDF Core validation is not implemented." }]
+
+---- pdf_model::tests::changed_bbox_inside_page_is_still_rejected stdout ----
+
+thread 'pdf_model::tests::changed_bbox_inside_page_is_still_rejected' (124572) panicked at crates\noetome-cli\src\pdf_model.rs:203:9:
+missing PDF_REGION: [ProtocolViolation { rule_id: "PDF_UNIMPLEMENTED", object_refs: [], message: "PDF Core validation is not implemented." }]
+
+---- pdf_model::tests::actual_text_must_match_the_complete_recomputed_bytes stdout ----
+
+thread 'pdf_model::tests::actual_text_must_match_the_complete_recomputed_bytes' (58872) panicked at crates\noetome-cli\src\pdf_model.rs:203:9:
+missing PDF_TEXT: [ProtocolViolation { rule_id: "PDF_UNIMPLEMENTED", object_refs: [], message: "PDF Core validation is not implemented." }]
+
+---- pdf_model::tests::partial_crop_and_visual_objects_require_review_and_a_local_issue stdout ----
+
+thread 'pdf_model::tests::partial_crop_and_visual_objects_require_review_and_a_local_issue' (80784) panicked at crates\noetome-cli\src\pdf_model.rs:203:9:
+missing PDF_PAGE_STATE: [ProtocolViolation { rule_id: "PDF_UNIMPLEMENTED", object_refs: [], message: "PDF Core validation is not implemented." }]
+
+---- pdf_model::tests::excluded_glyphs_are_preserved_and_exactly_accounted stdout ----
+
+thread 'pdf_model::tests::excluded_glyphs_are_preserved_and_exactly_accounted' (74740) panicked at crates\noetome-cli\src\pdf_model.rs:352:9:
+assertion failed: run(&request, &response, &bytes).is_empty()
+
+---- pdf_model::tests::decode_failure_retains_the_physical_page_without_fabricated_content stdout ----
+
+thread 'pdf_model::tests::decode_failure_retains_the_physical_page_without_fabricated_content' (13996) panicked at crates\noetome-cli\src\pdf_model.rs:387:9:
+assertion `left == right` failed: [ProtocolViolation { rule_id: "PDF_UNIMPLEMENTED", object_refs: [], message: "PDF Core validation is not implemented." }]
+  left: ["PDF_UNIMPLEMENTED"]
+ right: ["PDF_REPORTED_INCOMPLETE"]
+
+---- pdf_model::tests::all_four_rotations_use_raw_nonzero_origins_asymmetric_crop_and_userunit stdout ----
+
+thread 'pdf_model::tests::all_four_rotations_use_raw_nonzero_origins_asymmetric_crop_and_userunit' (34504) panicked at crates\noetome-cli\src\pdf_model.rs:343:13:
+rotation 0
+
+---- pdf_model::tests::every_locked_runtime_component_and_parser_identity_are_required stdout ----
+
+thread 'pdf_model::tests::every_locked_runtime_component_and_parser_identity_are_required' (70140) panicked at crates\noetome-cli\src\pdf_model.rs:203:9:
+missing PDF_ADAPTER: [ProtocolViolation { rule_id: "PDF_UNIMPLEMENTED", object_refs: [], message: "PDF Core validation is not implemented." }]
+
+
+failures:
+    pdf_model::tests::actual_text_must_match_the_complete_recomputed_bytes
+    pdf_model::tests::all_four_rotations_use_raw_nonzero_origins_asymmetric_crop_and_userunit
+    pdf_model::tests::changed_bbox_inside_page_is_still_rejected
+    pdf_model::tests::decode_failure_retains_the_physical_page_without_fabricated_content
+    pdf_model::tests::every_locked_runtime_component_and_parser_identity_are_required
+    pdf_model::tests::excluded_glyphs_are_preserved_and_exactly_accounted
+    pdf_model::tests::line_order_coverage_and_utf8_ranges_cannot_be_refreshed_away
+    pdf_model::tests::literal_crop_userunit_unicode_requires_exact_independent_output
+    pdf_model::tests::missing_pages_wrong_physical_order_and_printed_labels_are_rejected
+    pdf_model::tests::no_inventory_failed_document_is_legal_but_explicitly_incomplete
+    pdf_model::tests::partial_crop_and_visual_objects_require_review_and_a_local_issue
+    pdf_model::tests::resource_manifest_integrity_inventory_shape_and_cancellation_are_preserved
+
+test result: FAILED. 2 passed; 12 failed; 0 ignored; 0 measured; 209 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

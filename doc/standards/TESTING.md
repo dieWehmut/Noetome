@@ -126,6 +126,14 @@ B03-T01 使用无 libtest stdout 横幅的 harness=false 测试 target 和私有
 
 真实 PDF 样例分别覆盖文本、扫描、表格、公式和图片；每类记录支持、失败和需要人工复核的结果。扫描失败不能以保留空白文本宣布来源覆盖完成。
 
+### B03-T02 真实PDF独立验收
+
+B03-T02固定[15份作者PDF](../../fixtures/pdf-text-v1/AUTHORING.md)和独立expected，原始SHA与字面正文/几何在待测adapter调用前冻结。真实CLI逐项核对完整页清单、字形、全部UTF8正文/SHA、半开范围、窄区域窗口和显示索引加1。Poppler回看与作者墨迹窗口独立于解析器；UserUnit2的Poppler默认渲染忽略物理缩放，这个限制必须保留，不能将原生144DPI当作其pt尺度证明。
+
+`tests/pdf_parse.rs`消费明确`NOETOME_TEST_PDF_PYTHON`，生产CLI使用显式`--python`；可通过`NOETOME_TEST_PDF_MISMATCH_PYTHON`对实际不同运行时作配置负例，否则用明确测试wrapper调用真实adapter并变造其锁。该环境变量只属于测试target。正文/位置篡改分别由Core原始字形重算和独立作者预期裁定；Core不能单靠自洽primitive确认PDF科学真实性。原始input显式只读硬链接可保留，资源及本轮快照须单链接。取消/超时实测抓取native PID及创建时间后等待实际退出，不能只靠timer猜测。
+
+报告另需实际复现交付前取消、已存在正式报告保护、不覆盖原子改名和交付后取消的边界。完整workspace回归继续包含既有sidecar v1、MD/TXT、fixture及桌面测试；它们不能代替真实PDF矩阵，也不证明非ASCII字体、全部复杂结构、OCR、1000页、24小时、模型或科学准确率。
+
 ### 模型 API 与研究
 
 默认用 mock provider 重放已审阅响应，覆盖非法 JSON、空响应、限流、超时、未知计费和能力不足。真实 API 冒烟测试单独、显式启用，设置预算，不进入普通离线回归。

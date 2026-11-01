@@ -18,6 +18,7 @@
 | [架构规范](technical/ARCHITECTURE.md) | 模块边界、技术方向和阶段约束 | 跨模块接口或责任变化 |
 | [数据契约](technical/DATA_CONTRACTS.md) | 当前最小实体、身份、来源和版本语义 | 增加持久字段、Schema或接口 |
 | [Sidecar v1](technical/SIDECAR_PROTOCOL.md) | 单请求、进程生命周期和原始字节资源契约 | 修改sidecar协议或平台边界 |
+| [PDF v2](technical/PDF_PARSE_PROTOCOL.md) | 单份真实文本PDF的页、字形、区域、正文与报告发布 | 修改PDF解析契约、坐标或有限支持 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
 | [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |

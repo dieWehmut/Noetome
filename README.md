@@ -2,7 +2,9 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、明确标为fixture的IR与NotePlan契约校验和临时Vault编译，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖、独立预期和实际笔记，再保存Run、Release及双报告。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture业务尚未接入桌面；PDF解析与模型抽取仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、独立文本PDF解析、明确标为fixture的IR与NotePlan契约校验和临时Vault编译，以及帮助和版本命令。文本来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；PDF解析在全新测试根保存原始字节、物理页、区域正文与验证报告，项目登记仍待下一任务。fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖、独立预期和实际笔记，再保存Run、Release及双报告。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture业务尚未接入桌面；模型抽取仍未实现。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+
+单份PDF入口为`noetome source parse-pdf <PDF文件> <尚不存在的测试输出根> --python <绝对解释器路径> [--timeout-ms <0..30000>]`。按[解析器环境说明](sidecars/pdf_parser/README.md)准备锁定Python和八包依赖；调用不安装依赖。全部页可靠文本通过才返回0，需复核或解析未完成返回3；扫描、空白、视觉结构和不可靠阅读顺序保留真实页证据。详细契约见[PDF v2](doc/technical/PDF_PARSE_PROTOCOL.md)。
 
 ## 开始开发
 

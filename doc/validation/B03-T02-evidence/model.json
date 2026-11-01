@@ -1,0 +1,26 @@
+{
+  "source": "crates/noetome-cli/src/pdf_model.rs",
+  "sha256": "ddc6773a38ffe64d013f475275ef32a928e1a01872e053d5300cb738c9372049",
+  "targeted_command": "./scripts/cargo_local.ps1 test -p noetome-cli --lib pdf_model --locked --offline",
+  "tests_passed": 22,
+  "tests_failed": 0,
+  "red_logs": [
+    "red.log",
+    "clipping-red.log",
+    "transport-red.log"
+  ],
+  "green_log": "green.log",
+  "observations": [
+    "12 actual stub behavior failures; strict DTO tests already passed",
+    "sub-tolerance clipping red then exact primitive clipping review fix",
+    "public transport policy relaxation red then default-cap enforcement fix",
+    "single-file rustfmt --check and git diff --check passed",
+    "warning in green log is unfinished Root Workspace.persist_report wiring"
+  ],
+  "not_run": [
+    "whole workspace test/check",
+    "real Python adapter CLI",
+    "Poppler/author fixture comparison",
+    "independent code review"
+  ]
+}

@@ -1,0 +1,478 @@
+{
+  "scope": "Python adapter only; no Host/CLI/workspace suite claimed",
+  "runtime": {
+    "python": "3.12.14",
+    "pdfplumber": "0.11.9",
+    "pdfminer": "20251230",
+    "pypdfium2": "5.14.0",
+    "pillow": "12.3.0",
+    "cryptography": "50.0.2",
+    "cffi": "2.1.1",
+    "pycparser": "3.11",
+    "charset_normalizer": "3.5.2"
+  },
+  "fresh_tests": {
+    "strict_request": {
+      "tests": 11,
+      "process_calls": 13,
+      "failures": 0,
+      "errors": 0
+    },
+    "real_fixtures_and_limits": {
+      "tests": 4,
+      "process_calls": 21,
+      "failures": 0,
+      "errors": 0
+    },
+    "no_pdf_safety": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0
+    }
+  },
+  "matrix": [
+    {
+      "case_id": "N01",
+      "file": "single-column.pdf",
+      "raw_sha256": "faebbe43a9cd81450304873e6ad5cdce3f9a90c6bac1f7b13076e0552fc15e4e",
+      "status": "complete",
+      "pages": 1,
+      "page_statuses": [
+        "parsed"
+      ],
+      "glyph_count": 81,
+      "region_count": 4,
+      "artifact_bytes": 12954,
+      "elapsed_seconds": 0.23051170026883483,
+      "issue_codes": []
+    },
+    {
+      "case_id": "N02",
+      "file": "multi-page-single-column.pdf",
+      "raw_sha256": "7ca556bf05274726f5f1adde564c74b1104a471d6aa027285563240b7a8e2a22",
+      "status": "complete",
+      "pages": 3,
+      "page_statuses": [
+        "parsed",
+        "parsed",
+        "parsed"
+      ],
+      "glyph_count": 273,
+      "region_count": 12,
+      "artifact_bytes": 43526,
+      "elapsed_seconds": 0.2028715000487864,
+      "issue_codes": []
+    },
+    {
+      "case_id": "E01",
+      "file": "scan-only.pdf",
+      "raw_sha256": "bfe0195e9bfc65b19c844094c1d3110d79bb48f6f38c57e0dfe9bc08aeacc749",
+      "status": "partial",
+      "pages": 1,
+      "page_statuses": [
+        "needs_review"
+      ],
+      "glyph_count": 0,
+      "region_count": 0,
+      "artifact_bytes": 433,
+      "elapsed_seconds": 0.20279129967093468,
+      "issue_codes": [
+        "PDF_EMPTY_TEXT_REVIEW",
+        "PDF_VISUAL_REVIEW"
+      ]
+    },
+    {
+      "case_id": "E02",
+      "file": "blank.pdf",
+      "raw_sha256": "37187032ade21762843b086edbe2ae922652791807987d5aef6cd5ce9ac0b9ce",
+      "status": "partial",
+      "pages": 1,
+      "page_statuses": [
+        "needs_review"
+      ],
+      "glyph_count": 0,
+      "region_count": 0,
+      "artifact_bytes": 430,
+      "elapsed_seconds": 0.21626870008185506,
+      "issue_codes": [
+        "PDF_EMPTY_TEXT_REVIEW"
+      ]
+    },
+    {
+      "case_id": "E03",
+      "file": "damaged.pdf",
+      "raw_sha256": "42beb6c1a05d86d633aeab8acaef2960db65e026a61e1adccf7efbe8cddf2f7e",
+      "status": "failed",
+      "pages": null,
+      "page_statuses": [],
+      "glyph_count": 0,
+      "region_count": 0,
+      "artifact_bytes": 0,
+      "elapsed_seconds": 0.24514270015060902,
+      "issue_codes": [
+        "PDF_DOCUMENT_DECODE"
+      ]
+    },
+    {
+      "case_id": "E04",
+      "file": "encrypted.pdf",
+      "raw_sha256": "d22b593d978dfeb9aa186a319b6b2601b3ead30c3e0ae3644abc41966c9eb5b9",
+      "status": "failed",
+      "pages": null,
+      "page_statuses": [],
+      "glyph_count": 0,
+      "region_count": 0,
+      "artifact_bytes": 0,
+      "elapsed_seconds": 0.1622915999032557,
+      "issue_codes": [
+        "PDF_ENCRYPTED"
+      ]
+    },
+    {
+      "case_id": "C01",
+      "file": "table.pdf",
+      "raw_sha256": "bba658ed4cf5ce359c2e57a1af4e89717b7384eb788d0590e1a3631352ba4ece",
+      "status": "partial",
+      "pages": 1,
+      "page_statuses": [
+        "needs_review"
+      ],
+      "glyph_count": 78,
+      "region_count": 5,
+      "artifact_bytes": 11667,
+      "elapsed_seconds": 0.1574542000889778,
+      "issue_codes": [
+        "PDF_READING_ORDER_REVIEW",
+        "PDF_VISUAL_REVIEW"
+      ]
+    },
+    {
+      "case_id": "C02",
+      "file": "formula.pdf",
+      "raw_sha256": "285c735a379eb6a67d6c9015894e873e6fc284549a91c3aa5b65ce16096bdfcd",
+      "status": "partial",
+      "pages": 1,
+      "page_statuses": [
+        "needs_review"
+      ],
+      "glyph_count": 55,
+      "region_count": 4,
+      "artifact_bytes": 9025,
+      "elapsed_seconds": 0.15251100016757846,
+      "issue_codes": [
+        "PDF_VISUAL_REVIEW"
+      ]
+    },
+    {
+      "case_id": "C03",
+      "file": "image.pdf",
+      "raw_sha256": "ef6f50b4ac174ce9b7f584aae3e6c91790cacf72df9f8f8f7c2a8bb2aa80fc7c",
+      "status": "partial",
+      "pages": 1,
+      "page_statuses": [
+        "needs_review"
+      ],
+      "glyph_count": 40,
+      "region_count": 2,
+      "artifact_bytes": 6610,
+      "elapsed_seconds": 0.14896100014448166,
+      "issue_codes": [
+        "PDF_VISUAL_REVIEW"
+      ]
+    },
+    {
+      "case_id": "C04",
+      "file": "two-columns.pdf",
+      "raw_sha256": "d3f503289cf24459efe1ecd2f69c4211deb64ffb144cad421b3999db66e1d89d",
+      "status": "partial",
+      "pages": 1,
+      "page_statuses": [
+        "needs_review"
+      ],
+      "glyph_count": 82,
+      "region_count": 4,
+      "artifact_bytes": 12645,
+      "elapsed_seconds": 0.15451060002669692,
+      "issue_codes": [
+        "PDF_READING_ORDER_REVIEW"
+      ]
+    },
+    {
+      "case_id": "P01",
+      "file": "rotation-upright.pdf",
+      "raw_sha256": "39b92ca5e20b576766ddb74116a8136d0a5e74f8de672dff14281db86161f637",
+      "status": "complete",
+      "pages": 4,
+      "page_statuses": [
+        "parsed",
+        "parsed",
+        "parsed",
+        "parsed"
+      ],
+      "glyph_count": 143,
+      "region_count": 8,
+      "artifact_bytes": 23216,
+      "elapsed_seconds": 0.17486719973385334,
+      "issue_codes": []
+    },
+    {
+      "case_id": "P02",
+      "file": "crop-origin.pdf",
+      "raw_sha256": "fe9b512d2010cb6caa019f7b2f85dbbdf2e764630b8aba54d894af6db32b6d39",
+      "status": "complete",
+      "pages": 2,
+      "page_statuses": [
+        "parsed",
+        "parsed"
+      ],
+      "glyph_count": 62,
+      "region_count": 4,
+      "artifact_bytes": 10206,
+      "elapsed_seconds": 0.1985205002129078,
+      "issue_codes": []
+    },
+    {
+      "case_id": "P03",
+      "file": "rotation-vertical.pdf",
+      "raw_sha256": "6e872f5aa01b3a19b4c66fa25cab90c07b8e8233a5bbf52a9ed2664b46a13f0c",
+      "status": "partial",
+      "pages": 1,
+      "page_statuses": [
+        "needs_review"
+      ],
+      "glyph_count": 43,
+      "region_count": 24,
+      "artifact_bytes": 6866,
+      "elapsed_seconds": 0.19407870015129447,
+      "issue_codes": [
+        "PDF_READING_ORDER_REVIEW"
+      ]
+    },
+    {
+      "case_id": "P04",
+      "file": "userunit-two.pdf",
+      "raw_sha256": "543298134ce39f8b9726622753a9a51c91cc10b4aa7dcbc9cb203fc8a6f54d18",
+      "status": "complete",
+      "pages": 1,
+      "page_statuses": [
+        "parsed"
+      ],
+      "glyph_count": 13,
+      "region_count": 1,
+      "artifact_bytes": 2363,
+      "elapsed_seconds": 0.1955828000791371,
+      "issue_codes": []
+    },
+    {
+      "case_id": "F01",
+      "file": "mixed-page-failure.pdf",
+      "raw_sha256": "7833ef38de97d61a1ca775583887ac6b8f5c76aac8158498c500ec8ba5e72b32",
+      "status": "partial",
+      "pages": 3,
+      "page_statuses": [
+        "parsed",
+        "failed",
+        "parsed"
+      ],
+      "glyph_count": 85,
+      "region_count": 4,
+      "artifact_bytes": 14021,
+      "elapsed_seconds": 0.24166249996051192,
+      "issue_codes": [
+        "PDF_PAGE_DECODE"
+      ]
+    }
+  ],
+  "license_files": [
+    {
+      "path": "licenses/pdfplumber/LICENSE.txt",
+      "sha256": "0d48994da4d1321e395b5e64a724ed4dec63fb96b88ac5b88fc014771e690821",
+      "byte_length": 1086,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pdfminer-six/LICENSE",
+      "sha256": "f01e5d699a33766b5caf4a5099f2856aba4f3f75ea1df05dc0572b34b4bea8f2",
+      "byte_length": 1093,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/LICENSES/Apache-2.0.txt",
+      "sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+      "byte_length": 11560,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/LICENSES/BSD-3-Clause.txt",
+      "sha256": "ad9a9e823df025f42389c1812eae28019f657d1ed7b3a4ebfd5010b0736a0da4",
+      "byte_length": 1485,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/LICENSES/CC-BY-4.0.txt",
+      "sha256": "f1b1748301cd4274f46733c218d510929661b4990855de5fc645dacd69c4371c",
+      "byte_length": 14844,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/abseil.txt",
+      "sha256": "f54fff0b905df5b3464527c652a30e903b172d6dcab4d89b5e6f105d5e4a4603",
+      "byte_length": 11564,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/agg23.txt",
+      "sha256": "c110d3ea2ad77467ce0dcff7d3337e6c8be8049a5103f4b9bd5fd911a77972e5",
+      "byte_length": 725,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/fast_float.txt",
+      "sha256": "bf1b57355feca8fce77ee95f48002f8d4789fb71b30ec7599c06cda4901fbb2b",
+      "byte_length": 1106,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/freetype.txt",
+      "sha256": "f4b133e25df1f86ad3ffea453aa0e613f0474f34778dbbb3e437e7b2724937d8",
+      "byte_length": 6741,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/icu.txt",
+      "sha256": "93679f4389d53b6835d89843f251844fb9bc455b35bab036d3c8e7abe497a47a",
+      "byte_length": 28286,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/lcms.txt",
+      "sha256": "7312b68c5b25e9bf2b828706fb4e29588f22705112f411fd42e1f7d84c3d139a",
+      "byte_length": 1353,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/libjpeg_turbo.ijg",
+      "sha256": "db16a04128171879c60708d171b88d97345a2dd20f9bfc173680a4497c73f704",
+      "byte_length": 13059,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/libjpeg_turbo.md",
+      "sha256": "be2b2b5ab168bce87bc3e31f2a5c5adba4b7f6e9e51d618e958d1d46972ebd95",
+      "byte_length": 5755,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/libopenjpeg.txt",
+      "sha256": "c5ab0890a737c2dfa7ba675036554f6d17741d98629b0c2a145354d00617e6b2",
+      "byte_length": 1794,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/libpng.txt",
+      "sha256": "452390433ba0f88aa3e2b122c647741b72a0c117cd6ed7a329b49785aecb5511",
+      "byte_length": 5479,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/llvm-libc.txt",
+      "sha256": "3b6226c32e168c83b891d8d6f0d3c29c2116dc3ef93dc93c307b54f279ecf383",
+      "byte_length": 15418,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/pdfium-binaries.txt",
+      "sha256": "8854f4388f1ca13b3ad9baa42e95f5546b4c0b17109c159256d3eca7be39b09b",
+      "byte_length": 1184,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/pdfium.txt",
+      "sha256": "961eacd9633fff6d051db7208b755e9210e30efac7adec3e6a6d52798f0ccf0e",
+      "byte_length": 12818,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/simdutf.txt",
+      "sha256": "c172a0ba936ff31230febb5dad869e25cb7c1a07480c7a381be8cf011bb52719",
+      "byte_length": 1077,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pypdfium2/data/windows_x64/BUILD_LICENSES/zlib.txt",
+      "sha256": "33fd641c9f3b0e0be64bc78fea9e94807674cdd70c48477599226cb8956565fe",
+      "byte_length": 1332,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pillow/LICENSE",
+      "sha256": "4f7866a74802c6326f81faff59a56546b6aec2b10b91973e0e9308de95e79857",
+      "byte_length": 78016,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/cryptography/LICENSE",
+      "sha256": "3e0c7c091a948b82533ba98fd7cbb40432d6f1a9acbf85f5922d2f99a93ae6bb",
+      "byte_length": 197,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/cryptography/LICENSE.APACHE",
+      "sha256": "aac73b3148f6d1d7111dbca32099f68d26c644c6813ae1e4f05f6579aa2663fe",
+      "byte_length": 11360,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/cryptography/LICENSE.BSD",
+      "sha256": "602c4c7482de6479dd2e9793cda275e5e63d773dacd1eca689232ab7008fb4fb",
+      "byte_length": 1532,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/cffi/LICENSE",
+      "sha256": "5ba24ddc57067f9249add644c3afc41a5d6dc37e23433ef759d95df370b0af63",
+      "byte_length": 1123,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/pycparser/LICENSE",
+      "sha256": "0a9e78156ae8b96caf1b4f11ac2df424b83de29736f9e757630548a6272fdf90",
+      "byte_length": 1543,
+      "matches_lock": true
+    },
+    {
+      "path": "licenses/charset-normalizer/LICENSE",
+      "sha256": "18577485d3704f1a479ded8e573c0976cfed315fd2fd17983fa988da4c2f70d1",
+      "byte_length": 1092,
+      "matches_lock": true
+    }
+  ],
+  "source_fingerprints": [
+    {
+      "path": "sidecars/pdf_parser/adapter.py",
+      "sha256": "92e7799ba34e5112e4142c7ae8b22bbf04826b38b90e7418655551aa32455642",
+      "byte_length": 22114
+    },
+    {
+      "path": "sidecars/pdf_parser/requirements.txt",
+      "sha256": "c9dc5454bb8abcb4f790b6fdbe91ba34167a1697b30df5e3258cdb9e94ae4c89",
+      "byte_length": 232
+    },
+    {
+      "path": "sidecars/pdf_parser/runtime-lock.json",
+      "sha256": "23bf5d51eb3607766d0c3a8a8f70f7aae499ff1219ff4c4610437d73ca492b36",
+      "byte_length": 11482
+    },
+    {
+      "path": "sidecars/pdf_parser/README.md",
+      "sha256": "7a4e0f163141f95c88c4f1d8d88c26adf63008132222abe8448a0f65b00e5adf",
+      "byte_length": 6356
+    }
+  ],
+  "unrun_by_adapter_agent": [
+    "Host/Core/CLI and complete workspace suite (Root ownership)",
+    "Independent Poppler visual review (Root/fixture ownership)",
+    "CPU/RSS/1000-page/24-hour/cross-platform/scientific quality tests"
+  ],
+  "upstream_license_trailing_whitespace": "cffi, Pillow and pycparser original LICENSE bytes retained; Root notified about a local Git whitespace attribute exception if needed"
+}

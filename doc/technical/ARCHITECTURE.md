@@ -9,7 +9,7 @@
 | 领域 | 采用方向 | 当前边界 |
 | --- | --- | --- |
 | 核心与命令行 | Rust core 与 CLI | 先建立可单独执行和测试的核心，不依赖 GUI |
-| 资料解析 | Rust文本入口与有界 sidecar 宿主，随后接 Python parser | 当前CLI仍只登记明确选取的UTF8 MD/TXT；sidecar v1只验证原始字节/fake协议，真实PDF尚未接入 |
+| 资料解析 | Rust文本入口、有界 sidecar 宿主与单一 Python pdfplumber adapter | 项目只登记UTF8 MD/TXT；PDF v2独立解析到新测试根，项目登记仍待下一任务 |
 | 持久化 | 本地 SQLite | 来源项目保存项目、来源版本、Span与最小导入记录；fixture编译工作区另以Schema1保存Run、Coverage、Release和发布依据，数据库不放进阅读Vault |
 | 交换契约 | 带版本的 JSON | 显式校验输入、引用与结果；详见 [数据契约](DATA_CONTRACTS.md) |
 | 输出 | 有限Markdown、标题语义链接与比较表 | 当前只写尚不存在的新测试根中的Vault；完整Obsidian兼容及生产库维护需分别验收 |
@@ -207,7 +207,9 @@ case compile成功stdout为Schema1 CompileOutcome，包含producer=fixture、ope
 
 B03-T01 的已实现边界见[单请求协议v1](SIDECAR_PROTOCOL.md)：Rust Host 仅提供自有输入快照和新根，严格验证完整原始分区及实际资源；三个并发管道有明确限额，Windows JobList 在挂起创建时原子关联进程树，异常路径终止并等待。fake helper 只在测试 target，无生产 CLI 开关。CLI/desktop 的 unsafe forbid 保留；Win32 FFI 仅在小型平台 crate 的私有模块封装。
 
-v1 input_bytes 定位不表达 PDF 页或正文。后续真实 PDF 协议显式升级，不能修改旧 locator 含义；项目 Schema2 与编译 Schema1 仍分开。受控进程树及资源校验不是 OS 文件/网络沙盒，实测和未测范围见验证记录。
+v1 input_bytes 定位不表达 PDF 页或正文。[PDF v2](PDF_PARSE_PROTOCOL.md)单独定义真实物理页、原始字形、CropBox局部pt区域和UTF8正文范围，不修改旧locator含义；项目Schema2与编译Schema1仍分开。受控进程树及资源校验不是OS文件/网络沙盒，实测和未测范围见验证记录。
+
+`pdf_model.rs`严格解码并重算v2页清单、四角坐标、字形覆盖、正文/范围/资源与状态；`pdf_parse.rs`复用InputSnapshot、Workspace和原生进程宿主，编排单份解析与Host报告。唯一`sidecars/pdf_parser/adapter.py`以锁定Python及`-I -B`读取原始PDF。已验证资源与输入句柄保持到最终报告交付；先写`.parse.pending.json`，最终可取消复核后通过平台crate的保持句柄、不覆盖改名原子发布`parse.json`。提交前取消只保留未交付现场，提交后不再将后来取消改写为API失败。
 
 真实 PDF 接入前，已用小型协议测试程序验证进程启动、单个请求、结构化输出、超时、退出码和取消。请求包含版本、请求 ID、限定只读快照引用和工作区；响应包含来源指纹、完整原始字节单元、资源清单、问题和能力信息。
 
