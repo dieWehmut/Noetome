@@ -1,98 +1,70 @@
-# 近期开发步骤
+# B04近期执行步骤
 
-真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B02三项已分别验收，执行卡归档于[B02步骤](B02_STEPS.md)，闭环证据见[B02-T03](../validation/B02-T03.md)。B03-T01的有界fake协议已验收，证据见[B03-T01](../validation/B03-T01.md)；T02真实PDF已按[实施计划](B03-T02_PLAN.md)接线并执行有限样例验证，最终验收以账本及验证记录为准。T03项目Schema升级与PDF登记仍未开始；没有运行规模性能基准。
+真实状态以[任务账本](../../dev-log/tasks.json)和[STATUS](../../dev-log/STATUS.md)为准。B03三项已分别验收：有界fake进程、真实文本PDF解析、Schema3来源持久化；历史执行卡见[B03归档](B03_STEPS.md)，最终验证见[B03-T03](../validation/B03-T03.md)。本次只切换规划入口，三项仍todo，不运行start。
 
-**目标**：用一个有界 parser sidecar 将单份真实文本 PDF 变为可追溯的页与区域来源，在项目内安全登记并复用；每项交付独立验收。
+**目标与架构**：先固定有界模型请求，再单次小文本真实API候选抽取，最后独立核对真实证据与样本差异。Rust Core负责明确来源、预算和严格候选验证；Provider只返回领域候选，不控制本地路径或发布。现有fixture IR/NotePlan/Compiler和真实PDF页/区域分别保留原义。
 
-**架构**：Rust Core 负责输入能力、进程生命周期、严格输出验证、来源身份和持久化；测试 fake 先固定进程契约，随后只接一个 Python 文本 PDF 解析器。真实解析先在全新沙盒完成，最后才升级来源项目的数据契约并接入 import/inspect。
+**技术与依据**：继续锁定Rust/SQLite/Windows；T01完全离线，T02才按官方文档选择唯一需要的真实适配器。依据[PRD](../requirements/PRD.md)、[已采纳D07/D08/D12/D14](../requirements/DECISIONS.md)、[路线](ROADMAP.md)、[数据契约](../technical/DATA_CONTRACTS.md)、[模型测试门槛](../standards/TESTING.md)及[任务模板](../templates/TASK.md)。
 
-**技术与依据**：已有 Rust CLI/SQLite/Windows x64；Python 运行时和唯一 PDF 库在 B03-T02 按实际试验选择及锁定。本计划依据 [PRD FR-01/02/03/06](../requirements/PRD.md)、[已采纳 D02/D12/D13/D14](../requirements/DECISIONS.md)、[B03 路线](ROADMAP.md)、[Sidecar 架构](../technical/ARCHITECTURE.md)、[数据契约](../technical/DATA_CONTRACTS.md)、[外部能力引入门槛](../standards/TESTING.md)及[任务模板](../templates/TASK.md)。
+## 共同范围
 
-## 共同边界
+- 每项独立start/验收/记录/提交，同时最多一个in_progress。本批最多三张详细卡，远期仍只有阶段目标。
+- 不重开D01至D15批准；没有密钥不阻止T01离线工作。真实收费调用前须具备用户明确配置的provider、模型、凭据引用、资料外发范围和预算；普通回归不外发或自动扣费。
+- 本批关闭检索和模型工具，只处理短文本；不同时做OCR、视觉模型、多源融合、自动研究、完整GUI、自动NotePlan或生产Vault接管。
+- 材料/响应中的操作指令仅是内容，不能扩大路径、目标或预算。模型返回候选，结构合法、证据匹配、样本核对、科学质量分别记录。
+- 新候选采用独立版本和fake/model来源，初始unverified；不得改成fixture或fixture_reviewed绕过旧Compiler。来源项目Schema3与compile Schema1保持独立。
+- 小样本不替代PRD关键原子100%、98%、正式200原子基准、1000页或24小时门槛。
 
-- 每次只推进一项，依赖验收后才能start；T01已验收，T02按其实际账本状态交付，T03尚未start。本轮不自动启动下一项。
-- 本批不接扫描 OCR、模型/API、知识抽取、项目 GUI、生产 Vault、完整多格式适配或通用远程任务总线。扫描及复杂页仍须作为失败/需复核边界样例，不能据此宣称支持。
-- 只读用户明确提供的单文件，输出只在本轮明确且独占的范围内。资料中的链接和操作指令按内容处理，不能决定可执行程序、扩大文件范围或触发外发。受控 sidecar 的协议边界不等于已建立操作系统级沙盒。
-- 当前来源 `project.sqlite` 为 Schema2；当前编译 `state/compile.sqlite` 为独立 Schema1。PDF 登记所需的下一项目 Schema 必须显式设计，不能修改 Schema2 的含义，也不能混用编译库版本。
-- 页/区域定位、提取文本范围、原始 PDF 字节指纹是三个不同对象。旧 UTF8 `start_byte/end_byte/start_line/end_line` 只描述旧规范文本；PDF 的原生来源定位必须包含真实页和区域。
-- fake 协议、真实解析、独立审阅、项目持久化分别保存证据。未来门槛和配置上限不是已测性能；不得以小样例替代 PRD 的知识召回、科学准确率、1000 页或 24 小时指标。
+## B04-T01 离线fake单请求与候选IR契约
 
-## B03-T01 用 fake 子进程验证有界单请求 parser sidecar 协议
+**单一可见结果**：一个离线请求交付可严格重读的unverified候选，或可复现的分类失败，原项目/来源不变。
 
-**单一可见结果**：Rust 调用者能与实际 fake 小进程完成一次有界请求，或返回可复现的分类失败且结束进程。
+**依赖/需求**：B03-T03、B02-T02；部分FR-06/09/36/37/38/40及NFR-14/15。
 
-**依赖与范围**：B02-T03 验收完成；部分覆盖 FR-06/36/40、NFR-14。只交付严格协议与进程宿主，不引入 PDF Python 库。fake helper 是测试工具，生产 CLI 不暴露 fake 开关。
+**范围和接口**：开始时冻结SourceSlice、ExtractionRequest、ProviderOutcome、CandidateIr和CandidateReport。来源绑定真实版本/SHA和明确单元，Provider只收到文本及受限引用。候选身份由Core管理，不按自然语言名称合并；PDF定位若启用须显式parse/page/region/artifact绑定。预期按职责建立model_candidate、model_provider、knowledge_extract及model契约测试，当前不创建空模块。
 
-**实际模块职责**：Rust `sidecar.rs`负责输入能力、独占快照及最终资源复核，`sidecar_model.rs`定义严格版本化 DTO，`sidecar_process.rs`管理原生 argv、并发管道、限额与生命周期；小平台crate独立封装Windows Job/句柄。`tests/sidecar.rs`为harness=false target，fake helper在tests/support私有自入口。接口见[协议v1](../technical/SIDECAR_PROTOCOL.md)，过程及裁定见[T01计划](B03-T01_PLAN.md)。
+1. 调用前独立编写自造短文本及10至20个必要原子、条件/单位/例外/证据和允许排除项；不从待测输出生成expected。
+2. 冻结一个请求、无自动重试的政策：输入最多8KiB、响应512KiB、输出1024 Token、时限30秒。这些是初始约束政策，不是已测性能或真实计费。
+3. 实际取得行为红；私有fake重放合法及未知/重复字段、坏版本/身份、空/截断/超限、非法引用和凭据回显。分类认证、限流、超时、能力不足及远端未知。
+4. 验证预算不足零调用、未知费用不记零、确认响应不重复结算；在独占新根保存脱敏事实/指纹和候选，严格重读。已有/未知/替换根、Windows路径、原件和外部哨兵保护通过。
+5. 运行离线契约及旧fixture/NotePlan/Compiler回归，记录实际红绿，更新契约和验收，独立提交推送。
 
-**版本裁定**：本项v1只验证input_bytes原始分区，不伪装PDF页或正文坐标。后续T02复用已验收进程宿主和资源保护，显式定义PDF协议版本与locator并重跑严格验证，不能扩大v1含义。
+**停止**：离线契约和保护通过即结束，无真实费用；下一入口T02。
 
-**消费与交付接口**：输入是 Core 验证并保持守卫的明确单文件或本轮自有只读快照，加上 request_id、原始 SHA/长度和新工作区能力；交付严格响应或稳定错误。响应包含 request_id、协议版本、producer、解析器/能力版本、完整来源单元、相对资源清单和问题。本项只检查原始 input_bytes 分区，不包含页坐标；PDF定位留给T02的显式新协议。单个进程只接一个请求；关闭 stdin 后，stdout 必须是唯一 JSON，允许末尾空白，退出码也必须成功。
+## B04-T02 单次小文本真实API候选抽取
 
-1. 先写并实际运行 fake 进程负例，确认失败来自所要求的行为而非编译/setup：启动失败、空/截断/错误响应、额外 stdout、未知字段/版本、身份/指纹不符、合法 JSON 配非零退出和崩溃。日志必须走 stderr。
-2. 固定请求、响应、诊断、运行时限的确定值及可注入测试配置；stdout/stderr 同时有界排空，避免填满管道死锁。超过任何上限必须失败并保留错误，不能截断后继续使用结果。默认值是协议政策，不是实测容量。
-3. 在 Windows x64 明确受控进程树管理策略；真实 fake 子/孙进程握手后分别测试超时、取消、输出超限，终止并 wait，确认后代也退出。仅测试 `Child.kill()` 不足以证明树已清理；不把此项称为完整持久任务恢复或睡眠恢复。
-4. Core 独立复核路径、引用、实际资源 SHA/长度/身份、完整清单和工作区所有权。负例覆盖 `..`、绝对路径、Windows 名称/碰撞、链接/junction、未知文件及既有根；哨兵字节不变。响应路径不能作为任意文件读取能力。
-5. 运行定向进程组与适用统一检查，记录真红/绿、实际进程退出、错误码及 Windows 环境；同步协议和标准后审查提交推送。
+**单一可见结果**：一个明确配置的provider对一份已登记短MD/TXT完成一次有预算调用，产生仍unverified且可重读的合法候选。
 
-**停止**：协议进程组通过且边界证据齐全即结束。本项不启动真实解析器；下一入口 B03-T02 必须另行 start。
+**依赖/需求**：T01；部分FR-06/09/36/37/38/40及NFR-15。凭据、外发范围和预算是收费执行门槛；缺配置时可先完成本地实现和fake回归，未跑冒烟不得complete。
 
-## B03-T02 解析单份真实文本 PDF 并验证完整物理页与区域定位
+**范围**：仅一个实际provider/模型及结构化文本能力；候选不接NotePlan或生产发布。
 
-**单一可见结果**：一个明确选定的真实文本 PDF 经 Python 进程解析，在全新测试工作区获得能回到真实页面的正文、完整页清单、区域及明确问题。
+1. 执行时查官方文档并锁定唯一适配器，记录实际接口、返回模型、日期、能力及用量字段；不宣称通用兼容。
+2. 配置仅保存凭据引用，密钥/认证头不得进入仓库、项目、报告或Vault；明确目标、资料、用途、输出/时限和单次预算，关闭检索/工具。
+3. 完整选取最多8KiB自造/授权MD/TXT，发送前核对来源SHA及可信预算边界；缺失/不足零请求，无截断、自动重试或未知结果下重复费用。
+4. 实际响应经过T01入口严格解码，保存provider/模型、请求响应配置来源指纹、真实用量或明确未知和分类失败。合法JSON或模型自评不授予事实正确。
+5. 单独显式跑真实冒烟，重载不再调用API，原项目/来源/哨兵不变且无凭据泄露；记录实际调用和未测范围后提交推送。
 
-**依赖与范围**：B03-T01；部分覆盖FR-02/03/06、NFR-01/04/14。实际CLI为`source parse-pdf <PDF> <尚不存在的测试工作区> --python <绝对解释器路径> [--timeout-ms <0..30000>]`，不登记项目数据库。唯一pdfplumber adapter与PDF v2严格契约、实际模块及报告发布步骤见[T02计划](B03-T02_PLAN.md)和[PDF协议](../technical/PDF_PARSE_PROTOCOL.md)。扫描/复杂页用于支持矩阵，不同时开发OCR。
+**停止**：本次真实候选和审计通过即结束，不宣称科学准确/视觉/批量/长任务；下一入口T03。
 
-**预期模块职责**：在 `sidecars/pdf_parser/` 保存唯一 Python adapter、精确依赖与许可证说明；Rust `pdf_parse.rs` 负责候选来源 DTO、Core 验证和新根输出，复用 sidecar 宿主；`tests/pdf_parse.rs` 保存真实 CLI/篡改断言，`fixtures/pdf-text-v1/` 保存自造/授权样例及独立审阅说明。路径仅为实施候选，不在本轮创建。
+## B04-T03 候选证据及独立小基准差异核对
 
-**消费与交付接口**：消费已验收的有界 sidecar 请求。交付完整原始 PDF SHA/长度、parser/协议/选项版本、物理页清单、每页提取文本、区域、资源与问题；所有提取文本/资源均绑定实际 artifact 的相对路径和 SHA。整体存在 failed 或 needs_review 页时不报整份解析成功，仍可保留已确认范围。
+**单一可见结果**：保存候选只读对应到真实来源，并报告独立样本的内容/条件/证据差异；错证据或必要遗漏明确失败或待审。
 
-1. 开始时核对候选库官方接口、许可证、安装与 Python 支持，实际试验后只锁定一个 adapter。记录真实 Windows x64/Python/库版本；不能直接将候选宣传能力列为支持。普通协议 fake 回归不依赖该库。
-2. 先固定一页和多页单栏真实 PDF 的原始字节、页数、关键全文、阅读顺序与实际位置审阅预期，再取得真实 CLI 红灯。样例不含私密资料，预期不得从待测 parser 的输出生成；原 PDF 不修改。
-3. 固定 `physical_page_index` 为 0 基，完整范围为 `[0,page_count)`，显示物理页为索引加一；`printed_page_label` 只有实际可验证依据才填，否则 null。PDF 页标签不自动等同教材印刷页号。
-4. 固定 `pdf_page_region` locator 的 pt 单位、原点/Y轴、页面边界、CropBox/MediaBox与旋转变换。bbox须有限且在页内；无法可靠转换的页进入 needs_review。提取文本的 UTF8 半开范围必须同时指明 page/artifact/SHA，不能把 PDF raw offset、旧 `blocks-v1` 或文本行号当原生 PDF 区域。
-5. Core 校验原始指纹、全部页索引、区域和文本/资源引用及真实字节。实际页面回看独立核对有限样例的关键正文、顺序和区域；再篡改漏页/错页、错误 bbox、缺正文/乱序、引用和资源 SHA，要求失败。仅检查 bbox 在页内不足以证明位置正确。
-6. 小型支持矩阵分别实测扫描无文本层、空白、损坏/加密、表格、公式、图片、多栏和旋转页。无文本不自动等于合法空白；检测能力不足的视觉/顺序状态明确 needs_review，页面与原始证据仍在清单中。未支持的结构不得被普通文本拼接伪装为已正确保留。
-7. 实际测试输入未读全/变化/超限、进程超时/取消、部分页失败和路径保护。保存 ParseOutcome 与可重读的范围/资源事实，原输入与外部哨兵不变。完成定向真实 CLI、定位/支持矩阵与适用统一检查，记录实际时间/资源及未运行项后提交推送。
+**依赖/需求**：T02、B03-T03；部分FR-04/09/26/40及NFR-01至04。
 
-**停止**：有限真实文本解析及诚实的失败边界通过即结束；不宣称知识覆盖/科学质量，也不写项目 Schema。下一入口 B03-T03 独立 start。
+**范围**：只读验证候选和保存事实，不重复调用模型；输出独立候选证据域数据供后续规划消费。
 
-## B03-T03 安全登记单份 PDF 来源版本及解析尝试并验证复用与失败保护
+1. 重载来源/候选/请求/配置/响应指纹，原文件移走仍可查。text_span使用真实Span内非空UTF8区间/SHA；PDF只用ready parse和parsed页的既有region及实际artifact，重跑持久证据核对，拒绝模型bbox/raw offset/任意路径。
+2. 用B03真实PDF及明确标记的审阅候选验证PDF证据桥接；覆盖错页、过期parse/配置、合法SHA但错片段、无支持、丢条件和同步篡改。
+3. 按调用前独立冻结清单逐项比较内容、单位、条件、例外、关系及遗漏，不改分母/expected；必要遗漏阻断样本完成，零分母为不适用。
+4. 分别呈现结构、证据、样本核对和知识待审；不把证据匹配当科学正确或fixture_reviewed。JSON/Markdown分别解析并与只读事实一致，候选/来源/expected/哨兵不变。
+5. 保持旧fixture/Compiler回归，保存有限真实结果和未运行项，更新标准后独立提交推送。
 
-**单一可见结果**：项目中能 import/inspect 单份 PDF 的原始版本和真实解析尝试，同字节可复用，失败或升级中断不会覆盖旧证据。
+**停止**：三项分别验收后收束B04，按真实缺口滚动规划；模型候选接NotePlan/Compiler时另立任务，不自动启动OCR、研究、多源融合或生产发布。
 
-**依赖与范围**：B03-T02 和 B02-T01；部分覆盖 FR-01/02/06/35/40、NFR-07/08/14。只扩展来源登记，不创建知识 IR、NotePlan、Run/Release 或 GUI。Schema 迁移是该行为的必要安全前提，同属于本项；本项开始后先审查迁移方案再修改 writer。
+## 每项检查与日志
 
-**预期模块职责**：复用 `source.rs` CLI、`source_model.rs`、`source_schema.rs`、`source_write.rs` 的来源身份/候选事务/严格重读边界；只在职责需要时拆出 PDF parse 持久模型。新增精确 Schema 和快照布局说明、迁移与 `tests/pdf_source.rs` 进程断言；更新既有 `project.rs` 只读版本路由。不得用修改旧 Schema2 的枚举绕过升级。
+对应target只在任务建立后运行，不提前把不存在的文件/未跑调用记成通过。统一保持cargo fmt/check/test workspace、Python日志unittest、devlog check和git diff check；真实冒烟与普通离线回归分开。使用选定解释器，开发机路径不写进运行配置。
 
-**消费与交付接口**：消费 B03-T02 经 Core 验证的解析结果，将原始字节版本与解析尝试/结果分开存储。`source import <项目> <PDF> [--source-id <既有ID>]` 和 `source inspect <项目> <import-id>` 延续现有身份与审计语义，独立报告版本明确表达原始获取、PDF 解析、pending 知识状态。原始版本复用按 raw SHA；解析缓存另外绑定 raw SHA、parser、协议及影响输出的选项版本。
-
-1. 编码前冻结 Schema2 到下一显式项目 Schema（候选3）的精确表/约束、JSON版本、状态、快照布局、迁移和回退。旧表/记录及 UTF8 语义保持可重读；PDF原始字节、页/区域索引、文本 artifact 与资源另有准确契约。旧 `ready` 必需 normalized.txt、旧 failed 仅 UTF8错误的规则不能被隐式放宽。
-2. 先写真实迁移/登记红灯。使用新建 Schema1/Schema2 测试项目验证合法升级、旧项目文本历史保存、未知版本或坏记录拒绝；保持 project_id/created_at、Source/Version/Span/Import身份及内容指纹。候选 SQLite 事务和配对配置完全复核后才发布；inspect只读、不自动升级。
-3. 登记一份已确认 PDF 原始版本和解析尝试，并从持久快照重读页/区域/资源，不只返回内存 sidecar 成功。输入路径供本地审计，原文件移走仍可检查已保存的原始与解析证据；不扫描未选取资料。
-4. 固定重复语义并实跑：同字节/重命名复用原始来源版本；内容换版保留历史；回到旧字节复用旧版本；显式 source_id 不能按跨来源相同 SHA 合并。每次 import 有新身份，相同成功 parser/协议/选项可复用解析结果；版本或选项变化产生新 parse 身份，旧区域不重写。
-5. 完整 raw 已存但解析失败时记录失败 parse/未完成页，保留可重试原始版本；raw 未完整读取时只记录失败尝试，没有 version_id、完整SHA、空 normalized 或假 locator。失败缓存不得强制阻止后续有效重试；失败后再导入有效文件仍可成功。
-6. 先用候选写入阶段的实际故障测试升级/登记中断、数据库或文件占用、配置配对失败、未知/替换缓存和路径/junction；不报成功，不覆盖人工内容，保留明确待恢复现场。此处只承诺测过的受控故障，不承诺全部断电场景自动恢复。
-7. 真实 CLI核对每次报告与数据库、原始/解析快照的状态和计数一致；failed/needs_review不算解析完成，knowledge继续pending。完成PDF重复/失败/迁移用例，已有MD/TXT、fixture、桌面/帮助的适用回归和统一检查后保存证据、更新标准、提交推送。
-
-**停止**：三项各自真实验收后才收束 B03；按事实滚动规划后续，不自动启动 B04 API 或扫描 OCR。若遇到不能满足当前文本 PDF 定位的解析器限制，保留 failed/needs_review 和可复现原因，先处理本批问题，不叠加其他格式。
-
-## 执行时的验证与交接
-
-T01的sidecar定向组及适用统一检查已经实际运行，T02的pdf_parse target已接真实Python及冻结作者样例；数量与结果见各项验证记录。pdf_source仍待T03创建，不能提前算执行。fake、真实parser、持久化测试分别记录，不以统一回归替代定位抽查。
-
-```powershell
-./scripts/cargo_local.ps1 test -p noetome-cli --test sidecar --locked --offline
-./scripts/cargo_local.ps1 test -p noetome-cli --test pdf_parse --locked --offline
-./scripts/cargo_local.ps1 test -p noetome-cli --test pdf_source --locked --offline
-cargo fmt --all --check
-./scripts/cargo_local.ps1 check --workspace --locked --offline
-./scripts/cargo_local.ps1 test --workspace --locked --offline
-python -m unittest discover -s tests -p 'test_*.py'
-python scripts/devlog.py check
-git diff --check
-```
-
-Python指本轮选定的可用解释器；使用工作区运行时时记录工具返回的绝对路径，不将开发机路径写死进仓库。真实 parser 环境单独锁定并说明安装步骤，普通 fake 测试不触发下载。每项记录实际版本、命令、退出码、数量、失败与未运行项、原始样例SHA、独立预期与产物；仅这些真实证据满足任务后才能 complete。
-
-T01已完成行为验收；T02最终验收、账本与提交推送完成后停止。下一入口为B03-T03，仍为todo；执行者每轮先读日志、start单一任务，完成真实验收后complete并提交推送。T03依赖T02，不能提前开始。
+开始和完成状态只由devlog工具维护，完成必须附真实验证和仓库产物。检查通过后分步commit/push并核对remote；本次B03切批次仅规划，B04-T01保持todo。

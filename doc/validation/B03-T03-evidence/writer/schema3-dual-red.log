@@ -1,0 +1,117 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+warning: field `receipt` is never read
+   --> crates\noetome-cli\src\pdf_parse.rs:108:16
+    |
+106 | pub(crate) struct PdfParseHandoff {
+    |                   --------------- field in this struct
+107 |     pub(crate) output: PdfParseOutput,
+108 |     pub(crate) receipt: PdfParseReceipt,
+    |                ^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `snapshot`, `workspace`, and `artifacts` are never read
+   --> crates\noetome-cli\src\pdf_parse.rs:114:5
+    |
+113 | pub(crate) struct PdfParseReceipt {
+    |                   --------------- fields in this struct
+114 |     snapshot: InputSnapshot,
+    |     ^^^^^^^^
+115 |     workspace: Workspace,
+    |     ^^^^^^^^^
+116 |     artifacts: Vec<OwnedFile>,
+    |     ^^^^^^^^^
+
+warning: method `verify` is never used
+   --> crates\noetome-cli\src\pdf_parse.rs:120:19
+    |
+119 | impl PdfParseReceipt {
+    | -------------------- method in this implementation
+120 |     pub(crate) fn verify(&self, cancel: &AtomicBool) -> Result<(), SidecarError> {
+    |                   ^^^^^^
+
+warning: struct `PdfStoredParse` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:60:19
+   |
+60 | pub(crate) struct PdfStoredParse {
+   |                   ^^^^^^^^^^^^^^
+
+warning: struct `PdfImportRecord` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:77:19
+   |
+77 | pub(crate) struct PdfImportRecord {
+   |                   ^^^^^^^^^^^^^^^
+
+warning: struct `PdfStore` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:94:19
+   |
+94 | pub(crate) struct PdfStore {
+   |                   ^^^^^^^^
+
+warning: associated items `load` and `validate_snapshots` are never used
+   --> crates\noetome-cli\src\pdf_source_model.rs:101:19
+    |
+100 | impl PdfStore {
+    | ------------- associated items in this implementation
+101 |     pub(crate) fn load(_connection: &Connection, _store: &Store, _project_id: &str) -> Result<Self, ProjectError> { Err(unimplement...
+    |                   ^^^^
+102 |     pub(crate) fn validate_snapshots(&self, _root: &Path, _store: &Store, _project_id: &str, _staged_parse: Option<(&str, &Path)>) ...
+    |                   ^^^^^^^^^^^^^^^^^^
+
+warning: function `load_import_records` is never used
+   --> crates\noetome-cli\src\pdf_source_model.rs:104:15
+    |
+104 | pub(crate) fn load_import_records(_connection: &Connection) -> Result<Vec<PdfImportRecord>, ProjectError> { Err(unimplemented()) }
+    |               ^^^^^^^^^^^^^^^^^^^
+
+warning: function `insert_parse` is never used
+   --> crates\noetome-cli\src\pdf_source_model.rs:105:15
+    |
+105 | pub(crate) fn insert_parse(_connection: &Connection, _parse: &PdfStoredParse, _evidence: &PdfEvidence) -> Result<(), ProjectError> ...
+    |               ^^^^^^^^^^^^
+
+warning: function `insert_import` is never used
+   --> crates\noetome-cli\src\pdf_source_model.rs:106:15
+    |
+106 | pub(crate) fn insert_import(_connection: &Connection, _import: &PdfImportRecord) -> Result<(), ProjectError> { Err(unimplemented()) }
+    |               ^^^^^^^^^^^^^
+
+warning: struct `ParserOwner` is never constructed
+   --> crates\noetome-cli\src\source_write.rs:208:8
+    |
+208 | struct ParserOwner {
+    |        ^^^^^^^^^^^
+
+warning: method `run_pdf_parser` is never used
+   --> crates\noetome-cli\src\source_write.rs:574:19
+    |
+244 | impl Writer {
+    | ----------- method in this implementation
+...
+574 |     pub(crate) fn run_pdf_parser(
+    |                   ^^^^^^^^^^^^^^
+
+warning: `noetome-cli` (lib test) generated 12 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.29s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 1 test
+test source_write::tests::pdf_schema3_dual_tree_failures_restore_all_six_stages ... FAILED
+
+failures:
+
+---- source_write::tests::pdf_schema3_dual_tree_failures_restore_all_six_stages stdout ----
+
+thread 'source_write::tests::pdf_schema3_dual_tree_failures_restore_all_six_stages' (113076) panicked at crates\noetome-cli\src\source_write.rs:1637:17:
+assertion `left == right` failed
+  left: "PDF_SOURCE_UNIMPLEMENTED"
+ right: "TEST_CONTROLLED_FAILURE"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    source_write::tests::pdf_schema3_dual_tree_failures_restore_all_six_stages
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 239 filtered out; finished in 0.14s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

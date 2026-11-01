@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "verified_at_utc": "2026-11-01T13:21:12.889132+00:00",
+  "scope": "B03-T03 Schema/Model child subtask only",
+  "rust_target": "D:/Noetome/target",
+  "checks": [
+    {
+      "filter": "pdf_source_",
+      "passed": 15,
+      "failed": 0
+    },
+    {
+      "filter": "source_model::tests",
+      "passed": 19,
+      "failed": 0,
+      "overlap": "12 PDF model tests"
+    },
+    {
+      "filter": "source_schema::tests",
+      "passed": 6,
+      "failed": 0,
+      "overlap": "3 PDF schema tests"
+    },
+    {
+      "filter": "project::tests",
+      "passed": 11,
+      "failed": 0
+    }
+  ],
+  "unique_tests": 36,
+  "owned_rustfmt_check": true,
+  "owned_git_diff_check": true,
+  "red_logs": [
+    "red.log",
+    "red-artifact-path.log",
+    "red-import-exit.log",
+    "red-project-config.log",
+    "red-response_requires_observed.log",
+    "red-unread_pdf_import_requires_the_real_acquisition_failure_exit.log",
+    "red-precursor-exit.log"
+  ],
+  "sources": {
+    "crates/noetome-cli/src/source_schema.rs": "2f5f11ec97753dc4d2983b92f4d2be98f4f184d3b5f554a4878d6ce3dd0fbdc8",
+    "crates/noetome-cli/src/source_model.rs": "a307ff9a8a058e9f33f79586b90eaa045ae8651117f16668431c61f1c371d82d",
+    "crates/noetome-cli/src/project.rs": "8794733bca5c5ab485ac9f7d9f8c2663d72258cb29dfb6004d431777d786bfa0",
+    "crates/noetome-cli/src/pdf_source_schema.rs": "ba42831108f6edb94ef152b55b587b58d869e09430213d9b8ecc9e720ff50d02",
+    "crates/noetome-cli/src/pdf_source_model.rs": "df440fa377027a68b0bdc8a4be1406cec62a063ecde0a78e30961e65b65ecf6e"
+  },
+  "verification_logs": {
+    "final-pdf_source_.log": "be405b4bb34adeff18a6ddb3d3ea72e6e5d876ab56b82f156a7c5b79a8d619d2",
+    "final-source_model-tests.log": "3dd1bda13c950279c7ed1d35adbea5113195bfe00f927c0eba35fe204bcba09a",
+    "final-source_schema-tests.log": "4902ee496060e04da720f790ba46ac1623dcfbbcb8a711771b878e1d459915fc",
+    "final-project-tests.log": "e496b7d81ef06ce0c305a932774e92be5f28373ab46960e74aa5061c23bc2456"
+  },
+  "limits": [
+    "No full workspace run by this child. Root owns final workspace checks.",
+    "Primitive unit fixture proves persistence/Core invariants only. Independent actual PDF CLI acceptance is a separate current-task division.",
+    "No ledger/Git commits or push by this child."
+  ],
+  "final_patch": "Added synchronized precursor evidence/import failure classification check; latest PDF targeted15 all pass; owned files frozen after format/diff checks."
+}

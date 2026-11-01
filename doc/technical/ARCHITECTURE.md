@@ -246,3 +246,9 @@ B01A按用户确认管理窗口关闭事件：×默认隐藏原窗口到托盘�
 下一步只引入一个新的不确定因素，例如真实 PDF 解析或单一 API 抽取。对每项能力先用小样本建立支持和失败边界，再扩大资料规模；不以提前搭完整 GUI 取代核心验证。
 
 测试门槛与 fixture 管理见 [测试标准](../standards/TESTING.md)。任何改变 PRD 硬约束的工程简化都必须明确记录，不能只改实现并让文档自动失效。
+
+## B03-T03 PDF项目登记
+
+[PDF来源Schema3](PDF_SOURCE_SCHEMA.md)保留旧文本Schema2语义；raw SourceVersion与PDF parse身份分离，解析政策参与ready-only缓存。`pdf_source.rs`协调明确输入、真实解析或成功复用、candidate及发布后的重读；`pdf_source_model.rs`严格重建关系与证据并复算实际正文/定位，`pdf_source_schema.rs`负责精确DDL及candidate迁移。来源Reader分别路由Schema2和3，不用Schema2校验器忽略新对象。
+
+原项目配置/数据库的原生守卫在来源读取到Writer接续之间连续持有；选定PDF守卫覆盖整个提交。内部T02 retained receipt保持原始Workspace/资源句柄直到Writer登记身份，公开parse-pdf输出契约保留。Writer使用独立raw/parse暂存与cache守卫，并在PDF两树中独占copy保证nlink1；未知现场保留，恢复仍需检查。知识抽取、生产Vault维护与项目GUI由后续任务分别验收。

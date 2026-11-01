@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B03",
+  "current_batch": "B04",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -29,6 +29,13 @@
       "from_batch": "B02",
       "to_batch": "B03",
       "note": "B02三项真实验收并形成渲染/存储/CLI/测试提交；已审阅B03三个todo任务：fake sidecar协议、单一文本PDF解析与页/区域定位、显式项目Schema升级及PDF登记复用。本次仅切批次，不启动实现。"
+    },
+    {
+      "at": "2026-11-01T13:34:59Z",
+      "action": "batch",
+      "from_batch": "B03",
+      "to_batch": "B04",
+      "note": "B03三项真实验收完成；滚动规划离线fake模型契约、一次有预算真实小文本候选、独立证据和样本核对三卡。本次仅切执行入口，不start任何后续任务。"
     }
   ],
   "tasks": [
@@ -877,7 +884,7 @@
       "id": "B03-T03",
       "title": "安全登记单份PDF来源版本及解析尝试并验证复用与失败保护",
       "batch": "B03",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B03-T02",
         "B02-T01"
@@ -910,8 +917,133 @@
           "note": "续接T02已验收的真实PDF，在现有干净托管工作区开始显式Schema3来源登记与解析身份/复用/失败保护；先审查冻结迁移和快照契约，再真CLI红与实现。仅新测试项目，不创建知识或生产Vault。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-01T13:33:34Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "显式Schema3、PDF原始版本/解析尝试、真实失败重试与ready-only复用、严格持久证据重读及双树保护全部验收；独立审查状态分类缺口已实际红绿修复。完成B03，下一批仅规划。",
+          "validation": [
+            "fresh cargo fmt all check、cargo_local check/test workspace locked offline退出0；405项Rust测试无失败或忽略；Python日志unittest12/12。包含旧MD/TXT、fixture、PDF parse、sidecar、desktop和原生平台回归。",
+            "PDF source永久12组122次真实CLI全部通过，15冻结作者PDF从持久SQL/原始/资源重核全文、UTF8、glyph及bbox；真实Python3.12.7 native2后3.12.14恢复、max-pages政策变化、复用/迁移/未读全/同步SHA篡改及Windows占用、hardlink、junction通过。Writer Schema3两树六阶段故障和三次实际child.kill/wait、备份及中断拒绝通过；控制字节与真实PDF验收分开记录。",
+            "171归档文件SHA及16份实现提交源码指纹核对通过；308个本地Markdown链接、devlog check及git diff check通过；真实归档项目副本只读inspect0且前后SHA不变。仅本机有限样本，不包含OCR/模型/科学质量/跨平台/生产Vault/1000页/24小时或任意断电自动恢复。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B03-T03.md",
+              "sha256": "b762581524d194761b486276cec6e9de4deb902043f699eea4165112d744a0ef"
+            },
+            {
+              "path": "doc/validation/B03-T03.json",
+              "sha256": "aa4f7d54efe2348858bc436f7a2f9324313cc0020bf823c19eca1c855eadb09a"
+            },
+            {
+              "path": "doc/technical/PDF_SOURCE_SCHEMA.md",
+              "sha256": "45cb8d820a80935df6a398059855caa5322a76e4be63bdcc1cfc5d0862f62747"
+            },
+            {
+              "path": "crates/noetome-cli/src/pdf_source.rs",
+              "sha256": "3b9a8eb501c44519426a281ecb28bc049a0c412c9834d50999e0f06e2d25f333"
+            },
+            {
+              "path": "crates/noetome-cli/src/pdf_source_model.rs",
+              "sha256": "df440fa377027a68b0bdc8a4be1406cec62a063ecde0a78e30961e65b65ecf6e"
+            },
+            {
+              "path": "crates/noetome-cli/src/pdf_source_schema.rs",
+              "sha256": "ba42831108f6edb94ef152b55b587b58d869e09430213d9b8ecc9e720ff50d02"
+            },
+            {
+              "path": "crates/noetome-cli/src/source_write.rs",
+              "sha256": "d867bb9e14d620c10b1886c0b5023fbb9179961ffc75995a026dad359a6f71e9"
+            },
+            {
+              "path": "crates/noetome-cli/tests/pdf_source.rs",
+              "sha256": "c223cec2023c38321749180e27d0fc4c87070e45e13f33c4f6b766b8ec0d58d9"
+            }
+          ]
         }
       ]
+    },
+    {
+      "id": "B04-T01",
+      "title": "验证离线fake模型单请求与可追溯候选IR契约",
+      "batch": "B04",
+      "status": "todo",
+      "depends_on": [
+        "B03-T03",
+        "B02-T02"
+      ],
+      "requirements": [
+        "FR-06",
+        "FR-09",
+        "FR-36",
+        "FR-37",
+        "FR-38",
+        "FR-40",
+        "NFR-14",
+        "NFR-15"
+      ],
+      "acceptance": [
+        "编码前冻结独立版本化单请求/响应/候选IR/用量/失败契约并取得真实行为红；输入绑定已登记Source/Version/raw SHA和明确来源单元。text使用真实Span，PDF引用若启用另绑定ready parse/page/region/artifact SHA，不能用旧文本Span伪装PDF定位。",
+        "离线fake经同一窄Provider接口重放事先审阅的响应，严格拒绝未知/重复字段、错误版本/身份、空/截断/超限响应及无效证据。分类限流、超时、认证、能力不足和远端未知；普通回归不联网、不需密钥、不计真实费用，失败不生成成功IR或Release。",
+        "一次请求有输入/响应字节、输出Token、时限和预算政策，无自动重试；预算不足零调用，已知/未知用量费用分开，未知不记零，同一已确认响应不重复结算。fake统计明确标记，不作为真实消耗。",
+        "独占新测试根保存可重读脱敏事实、响应指纹和unverified候选；producer fake/model与旧fixture审阅语义分开。凭据哨兵、原项目、既有目录/未知替换/Windows保护及旧fixture/NotePlan/Compiler回归通过，保存真实证据后提交推送。"
+      ],
+      "history": []
+    },
+    {
+      "id": "B04-T02",
+      "title": "用明确配置和预算完成一次小文本真实API候选抽取",
+      "batch": "B04",
+      "status": "todo",
+      "depends_on": [
+        "B04-T01"
+      ],
+      "requirements": [
+        "FR-06",
+        "FR-09",
+        "FR-36",
+        "FR-37",
+        "FR-38",
+        "FR-40",
+        "NFR-15"
+      ],
+      "acceptance": [
+        "执行时按官方文档核对并只实现用户配置的一个提供商/模型及结构化文本能力，记录接口/模型/日期/策略。真实收费执行具备凭据引用、明确资料外发范围和预算，密钥不写仓库/项目/报告/Vault，检索和模型工具关闭。",
+        "从一份已登记可重读的短MD/TXT选完整有界文本，初轮最多8KiB UTF8、一次真实生成请求；明确输出Token/时限，无静默截断或自动重试。发送前核对配置/来源SHA/预算，缺失不足时零调用，远端结果不明记unknown。",
+        "实际响应经过T01严格解码，保存实际provider/返回模型、请求响应配置来源指纹和实际用量或明确未知；候选仍unverified，JSON合法和模型自信不代表事实正确。失败不损坏来源或伪造成功，候选只读重载不再次调用API。",
+        "真实冒烟单独显式启用并保存脱敏证据，不进入普通离线回归；本次成功只证明有限小文本调用，不宣称通用API/PDF视觉/科学质量/批量调用或长任务恢复。"
+      ],
+      "history": []
+    },
+    {
+      "id": "B04-T03",
+      "title": "只读核对候选知识的真实证据与独立小基准差异",
+      "batch": "B04",
+      "status": "todo",
+      "depends_on": [
+        "B04-T02",
+        "B03-T03"
+      ],
+      "requirements": [
+        "FR-04",
+        "FR-09",
+        "FR-26",
+        "FR-40",
+        "NFR-01",
+        "NFR-02",
+        "NFR-03",
+        "NFR-04"
+      ],
+      "acceptance": [
+        "只读重载候选、来源版本及保存请求/配置/响应，不重新调用模型；原文件移走仍可核对。MD/TXT绑定真实Span非空UTF8区间/SHA；PDF只用ready parse/parsed页/既有region及artifact SHA，重验持久raw/report/resources，不接受模型bbox、PDF raw offset或任意路径。",
+        "用调用前独立冻结的小文本必要原子清单核对内容、条件、单位、例外、证据和遗漏；用B03真实PDF及明确标记的审阅候选核对PDF定位桥接。正确SHA但错片段/页/过期parse/丢条件/无支持/同步篡改等负例拒绝，failed或needs_review不算通过。",
+        "分别报告结构、证据匹配、独立样本核对和知识待审；固定分母，零分母不适用，必要遗漏阻断样本完成。不把证据匹配当科学正确，不把PDF定位测试当模型PDF抽取，也不据小样本宣称PRD98%或正式200原子基准通过。",
+        "JSON/Markdown差异报告与只读事实一致，保留候选/原始来源/独立expected和外部哨兵，不覆写来源或IR历史/fixture/生产Vault。交付独立候选证据域数据供后续规划消费，保留旧fixture审阅及独立compile Schema1；完成实际检查后提交推送。"
+      ],
+      "history": []
     }
   ]
 }

@@ -1,0 +1,138 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+warning: field `receipt` is never read
+   --> crates\noetome-cli\src\pdf_parse.rs:108:16
+    |
+106 | pub(crate) struct PdfParseHandoff {
+    |                   --------------- field in this struct
+107 |     pub(crate) output: PdfParseOutput,
+108 |     pub(crate) receipt: PdfParseReceipt,
+    |                ^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: fields `snapshot`, `workspace`, and `artifacts` are never read
+   --> crates\noetome-cli\src\pdf_parse.rs:114:5
+    |
+113 | pub(crate) struct PdfParseReceipt {
+    |                   --------------- fields in this struct
+114 |     snapshot: InputSnapshot,
+    |     ^^^^^^^^
+115 |     workspace: Workspace,
+    |     ^^^^^^^^^
+116 |     artifacts: Vec<OwnedFile>,
+    |     ^^^^^^^^^
+
+warning: method `verify` is never used
+   --> crates\noetome-cli\src\pdf_parse.rs:120:19
+    |
+119 | impl PdfParseReceipt {
+    | -------------------- method in this implementation
+120 |     pub(crate) fn verify(&self, cancel: &AtomicBool) -> Result<(), SidecarError> {
+    |                   ^^^^^^
+
+warning: struct `PdfStoredParse` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:60:19
+   |
+60 | pub(crate) struct PdfStoredParse {
+   |                   ^^^^^^^^^^^^^^
+
+warning: struct `PdfImportRecord` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:77:19
+   |
+77 | pub(crate) struct PdfImportRecord {
+   |                   ^^^^^^^^^^^^^^^
+
+warning: struct `PdfStore` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:94:19
+   |
+94 | pub(crate) struct PdfStore {
+   |                   ^^^^^^^^
+
+warning: associated items `load` and `validate_snapshots` are never used
+   --> crates\noetome-cli\src\pdf_source_model.rs:101:19
+    |
+100 | impl PdfStore {
+    | ------------- associated items in this implementation
+101 |     pub(crate) fn load(_connection: &Connection, _store: &Store, _project_id: &str) -> Result<Self, ProjectError> { Err(unimplement...
+    |                   ^^^^
+102 |     pub(crate) fn validate_snapshots(&self, _root: &Path, _store: &Store, _project_id: &str, _staged_parse: Option<(&str, &Path)>) ...
+    |                   ^^^^^^^^^^^^^^^^^^
+
+warning: function `load_import_records` is never used
+   --> crates\noetome-cli\src\pdf_source_model.rs:104:15
+    |
+104 | pub(crate) fn load_import_records(_connection: &Connection) -> Result<Vec<PdfImportRecord>, ProjectError> { Err(unimplemented()) }
+    |               ^^^^^^^^^^^^^^^^^^^
+
+warning: function `insert_parse` is never used
+   --> crates\noetome-cli\src\pdf_source_model.rs:105:15
+    |
+105 | pub(crate) fn insert_parse(_connection: &Connection, _parse: &PdfStoredParse, _evidence: &PdfEvidence) -> Result<(), ProjectError> ...
+    |               ^^^^^^^^^^^^
+
+warning: function `insert_import` is never used
+   --> crates\noetome-cli\src\pdf_source_model.rs:106:15
+    |
+106 | pub(crate) fn insert_import(_connection: &Connection, _import: &PdfImportRecord) -> Result<(), ProjectError> { Err(unimplemented()) }
+    |               ^^^^^^^^^^^^^
+
+warning: struct `ParserOwner` is never constructed
+   --> crates\noetome-cli\src\source_write.rs:207:8
+    |
+207 | struct ParserOwner {
+    |        ^^^^^^^^^^^
+
+warning: method `run_pdf_parser` is never used
+   --> crates\noetome-cli\src\source_write.rs:573:19
+    |
+243 | impl Writer {
+    | ----------- method in this implementation
+...
+573 |     pub(crate) fn run_pdf_parser(
+    |                   ^^^^^^^^^^^^^^
+
+warning: `noetome-cli` (lib test) generated 12 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.45s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 4 tests
+test pdf_source_model::tests::configuration_key_separates_real_policy_and_source_identity ... FAILED
+test pdf_source_model::tests::evidence_failure_rejects_sequence_form ... FAILED
+test pdf_source_model::tests::evidence_requires_named_object_and_explicit_nulls ... FAILED
+test pdf_source_schema::tests::candidate_upgrade_preserves_metadata_and_legacy_history ... FAILED
+
+failures:
+
+---- pdf_source_model::tests::configuration_key_separates_real_policy_and_source_identity stdout ----
+
+thread 'pdf_source_model::tests::configuration_key_separates_real_policy_and_source_identity' (19416) panicked at crates\noetome-cli\src\pdf_source_model.rs:119:9:
+assertion `left != right` failed
+  left: ""
+ right: ""
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- pdf_source_model::tests::evidence_failure_rejects_sequence_form stdout ----
+
+thread 'pdf_source_model::tests::evidence_failure_rejects_sequence_form' (28476) panicked at crates\noetome-cli\src\pdf_source_model.rs:132:9:
+assertion failed: serde_json::from_value::<PdfEvidence>(value).is_err()
+
+---- pdf_source_model::tests::evidence_requires_named_object_and_explicit_nulls stdout ----
+
+thread 'pdf_source_model::tests::evidence_requires_named_object_and_explicit_nulls' (130712) panicked at crates\noetome-cli\src\pdf_source_model.rs:127:9:
+missing required nullable field was accepted
+
+---- pdf_source_schema::tests::candidate_upgrade_preserves_metadata_and_legacy_history stdout ----
+
+thread 'pdf_source_schema::tests::candidate_upgrade_preserves_metadata_and_legacy_history' (61052) panicked at crates\noetome-cli\src\pdf_source_schema.rs:24:54:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "PDF_SOURCE_UNIMPLEMENTED", exit_code: 2, message: "PDF source schema not implemented" }
+
+
+failures:
+    pdf_source_model::tests::configuration_key_separates_real_policy_and_source_identity
+    pdf_source_model::tests::evidence_failure_rejects_sequence_form
+    pdf_source_model::tests::evidence_requires_named_object_and_explicit_nulls
+    pdf_source_schema::tests::candidate_upgrade_preserves_metadata_and_legacy_history
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 236 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

@@ -1,0 +1,62 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+warning: unused import: `BTreeSet`
+ --> crates\noetome-cli\src\pdf_source_model.rs:2:33
+  |
+2 | use std::collections::{BTreeMap,BTreeSet};
+  |                                 ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::ffi::OsString`
+ --> crates\noetome-cli\src\pdf_source_model.rs:3:5
+  |
+3 | use std::ffi::OsString;
+  |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::fs`
+ --> crates\noetome-cli\src\pdf_source_model.rs:4:5
+  |
+4 | use std::fs;
+  |     ^^^^^^^
+
+warning: unused import: `std::sync::atomic::AtomicBool`
+ --> crates\noetome-cli\src\pdf_source_model.rs:6:5
+  |
+6 | use std::sync::atomic::AtomicBool;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `ArtifactKind`, `Producer`, `ResponseStatus`, and `UnitStatus`
+  --> crates\noetome-cli\src\pdf_source_model.rs:14:32
+   |
+14 | use crate::sidecar::{Artifact, ArtifactKind, ArtifactPolicy, InputFingerprint,Producer,ResponseStatus,UnitStatus};
+   |                                ^^^^^^^^^^^^                                   ^^^^^^^^ ^^^^^^^^^^^^^^ ^^^^^^^^^^
+
+warning: unused imports: `directory`, `exact_names`, `invalid_record`, `invalid_snapshot`, `read_single_snapshot`, `same_directory`, `snapshot_conflict`, `sql_failure`, `sql_u64`, `valid_failure`, `valid_hash`, `valid_selected_path`, `valid_time`, and `valid_uuid`
+  --> crates\noetome-cli\src\pdf_source_model.rs:15:48
+   |
+15 | ...re,directory,exact_names,invalid_record,invalid_snapshot,read_single_snapshot,require,same_directory,snapshot_conflict,sql_failure,sql_u64,valid_failure,valid_hash,valid_selected_path,valid_time,valid_uuid};
+   |       ^^^^^^^^^ ^^^^^^^^^^^ ^^^^^^^^^^^^^^ ^^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^^^^^^^^         ^^^^^^^^^^^^^^ ^^^^^^^^^^^^^^^^^ ^^^^^^^^^^^ ^^^^^^^ ^^^^^^^^^^^^^ ^^^^^^^^^^ ^^^^^^^^^^^^^^^^^^^ ^^^^^^^^^^ ^^^^^^^^^^
+
+warning: fields `artifacts` and `pages` are never read
+   --> crates\noetome-cli\src\pdf_source_model.rs:133:16
+    |
+130 | pub(crate) struct PdfStore {
+    |                   -------- fields in this struct
+...
+133 |     pub(crate) artifacts: BTreeMap<String, Vec<Artifact>>,
+    |                ^^^^^^^^^
+134 |     pub(crate) pages: BTreeMap<String, Vec<crate::pdf_parse::PdfPage>>,
+    |                ^^^^^
+    |
+    = note: `PdfStore` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib test) generated 7 warnings (run `cargo fix --lib -p noetome-cli --tests` to apply 6 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.85s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 1 test
+test source_write::tests::pdf_real_parser_handoff_ready_and_failed_trees_are_owned_and_removable ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 244 filtered out; finished in 0.94s
+

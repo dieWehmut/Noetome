@@ -1,0 +1,22 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.18s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 1 test
+test pdf_source_model::tests::failed_import_exit_must_equal_the_saved_actual_evidence_exit ... FAILED
+
+failures:
+
+---- pdf_source_model::tests::failed_import_exit_must_equal_the_saved_actual_evidence_exit stdout ----
+
+thread 'pdf_source_model::tests::failed_import_exit_must_equal_the_saved_actual_evidence_exit' (88016) panicked at crates\noetome-cli\src\pdf_source_model.rs:441:9:
+changed import exit was accepted despite actual saved evidence exit2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pdf_source_model::tests::failed_import_exit_must_equal_the_saved_actual_evidence_exit
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 258 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

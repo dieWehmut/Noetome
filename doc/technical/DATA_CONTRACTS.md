@@ -1,13 +1,13 @@
 # Noetome 最小数据契约
 
-本文件定义空项目、桌面窗口偏好、单份文本来源登记及 fixture 闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
+本文件定义空项目、桌面窗口偏好、单份文本/PDF来源登记及 fixture 闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
 
 实现状态以[任务账本](../../dev-log/tasks.json)和对应验证记录为准；本文件的字段清单本身不是能力验收记录。后续真实解析、模型与研究能力必须通过带版本的扩展进入，不能把缺失值编造成已有结果。
 
 ## 1 公共约定
 
 - JSON 使用 UTF-8。JSON schema 及 Rust 类型定义由实现提交维护，并用同一组契约样例核对。
-- 各文件、报告及数据库的 `schema_version` 独立演进，从整数 `1` 起；不支持的版本拒绝读取和写入。项目存储当前支持 Schema 1、2，导入报告与缓存所有权文件仍使用版本 1。
+- 各文件、报告及数据库的 `schema_version` 独立演进，从整数 `1` 起；不支持的版本拒绝读取和写入。项目存储当前支持 Schema 1、2、3；MD/TXT导入报告为版本1，PDF导入报告为版本2，缓存所有权文件仍为版本1。
 - `id` 是不透明字符串，不能由名称或输出路径推导。fixture 使用固定 ID，生产实现使用持久化生成的 ID。
 - B02-T01 的项目、来源、来源版本、Span 与导入 ID 必须为标准小写 UUID v4；显式 `source_id` 只允许引用当前项目中的既有来源。后续 fixture 身份由输入包声明，不能冒充生产导入生成的身份。
 - `revision` 是同一对象内递增的正整数；实体身份与内容修订分开。引用需要固定内容时同时保存 ID 和 revision。
@@ -26,9 +26,9 @@ Project 配置位置固定为项目根下 `project.json`，状态库为 `project
 | 字段 | 当前约束 |
 | --- | --- |
 | project_id | 初始化时生成并持久化的标准小写UUID v4，不从名称或目录推导 |
-| schema_version | init 为整数 `1`；inspect 支持 `1`、`2`，其他版本明确拒绝 |
+| schema_version | init 为整数 `1`；inspect 支持 `1`、`2`、`3`，其他版本明确拒绝 |
 | created_at | RFC 3339 UTC字符串，配置与数据库使用同一值 |
-| state | `initialized`，只表示项目建立完成；Schema 2 可已有来源记录，此值不表示资料或知识处理成功 |
+| state | `initialized`，只表示项目建立完成；Schema 2、3 可已有来源记录，此值不表示资料或知识处理成功 |
 | database | 固定项目相对路径`project.sqlite`，不接受绝对路径、URI或路径穿越 |
 
 配置上限为64 KiB，用于这五个元数据字段，不承载原始资料或知识内容。Schema 1 只建立 `project_metadata` 基础表，包含 `singleton`、`project_id`、`schema_version`、`created_at` 和 `state`；`singleton=1` 限定单条项目记录，项目 ID 唯一，版本和状态受约束。`PRAGMA user_version=1`，`PRAGMA application_id=0x4e4f4554` 标识 Noetome 项目库。inspect 核对真实表及列结构、配置、数据库记录与这两个标记；Schema 1 只允许该表和 SQLite 自身维护的对象，额外表、索引、视图或触发器必须拒绝。
@@ -308,3 +308,13 @@ B03-T01新增[独立sidecar v1契约](SIDECAR_PROTOCOL.md)，包括严格request
 | 研究扩展 | ResearchItem、批准范围、预算与停止原因 |
 
 扩展提交必须包含版本处理、旧 fixture 影响、有效及无效样例，并通过 [测试标准](../standards/TESTING.md)。不为尚未实现的所有未来类型预先建立空表或含义不明的万能 JSON 字段。
+
+## 9 PDF来源的显式Schema3扩展
+
+B03-T03使用[PDF来源Schema3](PDF_SOURCE_SCHEMA.md)的精确DDL与严格证据DTO，保持Schema2及以上MD/TXT的旧ready/failed、normalized与Span语义。共用Source与原始Version，PDF版本只表明acquired，规范化字段及旧Span为空；PDF parse、页、区域、资源与导入尝试另用五表保存。Source内revision按两类版本整体连续，自动路径/SHA复用限于同一媒体族；显式同Source/同SHA媒体族冲突拒绝。
+
+Schema1/2升级仅操作Writer的candidate，逐字段保存旧身份、SHA、时间、行顺序和快照，Schema3文本继续写入不得降级。严格配置是五字段命名对象，不能用数组、未知字段或缺失值绕过版本核对。项目inspect检查元数据和精确Schema；source inspect复验全部两类记录和快照，原选取文件可已搬移。
+
+PDF原始文件只在Version/raw.bin存一次，解析树为独立parse UUID下的report.json和声明资源；两树发布为不同文件身份的独占copy且各nlink1。持久Evidence绑定raw SHA/长度、parser/protocol/options/runtime和真实输出政策，成功结果复用全部旧ID与mtime，failed/needs_review每次真实重试并追加parse。timeout只控制本次执行，不改变成功内容缓存身份。
+
+持久报告与关系表、原始和实际资源逐项复核后重跑PDF Core校验。已确认Host响应必须保留实际PID和native exit0，关联import的状态/exit/error精确匹配Evidence；未读全三类获取失败固定exit3且无Version/parse/假页。PDF报告Schema2分别表达raw acquisition、parse和knowledge pending，inspect验证真实失败事实仍exit0。实际12组矩阵与受控故障证据见[B03-T03](../validation/B03-T03.md)，不构成知识科学质量、OCR或任意断电原子性的验收。

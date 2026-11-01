@@ -1,0 +1,24 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.68s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 1 test
+test pdf_source_model::tests::unread_pdf_import_requires_the_real_acquisition_failure_exit ... FAILED
+
+failures:
+
+---- pdf_source_model::tests::unread_pdf_import_requires_the_real_acquisition_failure_exit stdout ----
+
+thread 'pdf_source_model::tests::unread_pdf_import_requires_the_real_acquisition_failure_exit' (22024) panicked at crates\noetome-cli\src\pdf_source_model.rs:1484:9:
+changed unread acquisition exit2 was accepted
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pdf_source_model::tests::unread_pdf_import_requires_the_real_acquisition_failure_exit
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 262 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

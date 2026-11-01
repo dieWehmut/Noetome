@@ -1,0 +1,896 @@
+{
+  "argv": [
+    "D:\\Noetome\\target\\debug\\noetome.exe",
+    "source",
+    "inspect",
+    "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\doc\\validation\\B03-T03-evidence\\project-example",
+    "15cbb35b-f003-4ca0-996e-c2daac75a76d"
+  ],
+  "exit_code": 0,
+  "stdout": {
+    "error": null,
+    "exit_code": 0,
+    "import_id": "15cbb35b-f003-4ca0-996e-c2daac75a76d",
+    "imported_at": "2026-11-01T13:22:49.8061537Z",
+    "knowledge_status": "pending",
+    "pdf_parse": {
+      "config": {
+        "adapter_id": "pdfplumber-text",
+        "adapter_version": "1.0.0",
+        "artifact_policy": {
+          "max_file_bytes": 16777216,
+          "max_files": 64,
+          "max_total_bytes": 67108864
+        },
+        "options_version": "pdfplumber-glyph-lines-v1",
+        "pdf_policy": {
+          "max_glyphs": 32768,
+          "max_objects": 4096,
+          "max_pages": 63,
+          "max_regions": 4096
+        },
+        "protocol": "noetome-pdf-single-v2",
+        "protocol_schema": 2,
+        "runtime": {
+          "cffi": "2.1.1",
+          "charset_normalizer": "3.5.2",
+          "cryptography": "50.0.2",
+          "pdfminer": "20251230",
+          "pdfplumber": "0.11.9",
+          "pillow": "12.3.0",
+          "pycparser": "3.11",
+          "pypdfium2": "5.14.0",
+          "python": "3.12.14"
+        }
+      },
+      "evidence": {
+        "config": {
+          "adapter_id": "pdfplumber-text",
+          "adapter_version": "1.0.0",
+          "artifact_policy": {
+            "max_file_bytes": 16777216,
+            "max_files": 64,
+            "max_total_bytes": 67108864
+          },
+          "options_version": "pdfplumber-glyph-lines-v1",
+          "pdf_policy": {
+            "max_glyphs": 32768,
+            "max_objects": 4096,
+            "max_pages": 63,
+            "max_regions": 4096
+          },
+          "protocol": "noetome-pdf-single-v2",
+          "protocol_schema": 2,
+          "runtime": {
+            "cffi": "2.1.1",
+            "charset_normalizer": "3.5.2",
+            "cryptography": "50.0.2",
+            "pdfminer": "20251230",
+            "pdfplumber": "0.11.9",
+            "pillow": "12.3.0",
+            "pycparser": "3.11",
+            "pypdfium2": "5.14.0",
+            "python": "3.12.14"
+          }
+        },
+        "exit_code": 0,
+        "failure": null,
+        "host_report": {
+          "diagnostics": [],
+          "failure": null,
+          "input": {
+            "byte_length": 2124,
+            "relative_path": "input/raw.bin",
+            "sha256": "7ca556bf05274726f5f1adde564c74b1104a471d6aa027285563240b7a8e2a22"
+          },
+          "native_exit_code": 0,
+          "operation": "source_parse_pdf",
+          "page_display": [
+            {
+              "displayed_physical_page": 1,
+              "physical_page_idx": 0,
+              "printed_page_label": null,
+              "status": "parsed"
+            },
+            {
+              "displayed_physical_page": 2,
+              "physical_page_idx": 1,
+              "printed_page_label": null,
+              "status": "parsed"
+            },
+            {
+              "displayed_physical_page": 3,
+              "physical_page_idx": 2,
+              "printed_page_label": null,
+              "status": "parsed"
+            }
+          ],
+          "pid": 126204,
+          "processing_elapsed_ms": 289,
+          "producer": "parser",
+          "report_path": "parse.json",
+          "request": {
+            "artifact_policy": {
+              "max_file_bytes": 16777216,
+              "max_files": 64,
+              "max_total_bytes": 67108864
+            },
+            "input": {
+              "byte_length": 2124,
+              "relative_path": "input/raw.bin",
+              "sha256": "7ca556bf05274726f5f1adde564c74b1104a471d6aa027285563240b7a8e2a22"
+            },
+            "operation": "parse_pdf",
+            "options_version": "pdfplumber-glyph-lines-v1",
+            "pdf_policy": {
+              "max_glyphs": 32768,
+              "max_objects": 4096,
+              "max_pages": 63,
+              "max_regions": 4096
+            },
+            "protocol": "noetome-pdf-single-v2",
+            "request_id": "db5d1aef-fc1c-4fea-b7e0-13bff7e9d348",
+            "schema_version": 2,
+            "workspace": {
+              "artifact_directory": "artifacts"
+            }
+          },
+          "response": {
+            "adapter": {
+              "adapter_id": "pdfplumber-text",
+              "adapter_version": "1.0.0",
+              "options_version": "pdfplumber-glyph-lines-v1",
+              "producer": "parser",
+              "runtime": {
+                "cffi": "2.1.1",
+                "charset_normalizer": "3.5.2",
+                "cryptography": "50.0.2",
+                "pdfminer": "20251230",
+                "pdfplumber": "0.11.9",
+                "pillow": "12.3.0",
+                "pycparser": "3.11",
+                "pypdfium2": "5.14.0",
+                "python": "3.12.14"
+              }
+            },
+            "artifacts": [
+              {
+                "artifact_id": "pdf_inventory",
+                "byte_length": 43241,
+                "kind": "binary",
+                "relative_path": "artifacts/pdf_inventory.bin",
+                "sha256": "b93d89865a7dbc8ea7603241efbf9af60abeb053ed688b56f22302808e1391d6"
+              },
+              {
+                "artifact_id": "P0_text",
+                "byte_length": 96,
+                "kind": "utf8_text",
+                "relative_path": "artifacts/P0_text.txt",
+                "sha256": "1cbc7807aa7e601892fece74bcfe1a239816b4ca8f89c72abdadfdba59a1400a"
+              },
+              {
+                "artifact_id": "P1_text",
+                "byte_length": 90,
+                "kind": "utf8_text",
+                "relative_path": "artifacts/P1_text.txt",
+                "sha256": "b5dd0128abc1ea38740b993a7a3a6600aff553339900b58e8c59cf9e1c835993"
+              },
+              {
+                "artifact_id": "P2_text",
+                "byte_length": 99,
+                "kind": "utf8_text",
+                "relative_path": "artifacts/P2_text.txt",
+                "sha256": "20e7e3c2e8286b2cabb123c0b37b51abe56f9995411d40de14a0344230f33b13"
+              }
+            ],
+            "input": {
+              "byte_length": 2124,
+              "relative_path": "input/raw.bin",
+              "sha256": "7ca556bf05274726f5f1adde564c74b1104a471d6aa027285563240b7a8e2a22"
+            },
+            "inventory": {
+              "artifact_id": "pdf_inventory",
+              "sha256": "b93d89865a7dbc8ea7603241efbf9af60abeb053ed688b56f22302808e1391d6"
+            },
+            "issues": [],
+            "page_count": 3,
+            "pages": [
+              {
+                "excluded_glyph_ordinals": [],
+                "geometry": {
+                  "crop_box": [
+                    0.0,
+                    0.0,
+                    612.0,
+                    792.0
+                  ],
+                  "display_height_pt": 792.0,
+                  "display_width_pt": 612.0,
+                  "media_box": [
+                    0.0,
+                    0.0,
+                    612.0,
+                    792.0
+                  ],
+                  "rotation": 0,
+                  "user_unit": 1.0
+                },
+                "glyph_count": 92,
+                "physical_page_index": 0,
+                "printed_page_label": null,
+                "regions": [
+                  {
+                    "content": {
+                      "artifact_id": "P0_text",
+                      "end_byte": 17,
+                      "sha256": "1cbc7807aa7e601892fece74bcfe1a239816b4ca8f89c72abdadfdba59a1400a",
+                      "start_byte": 0
+                    },
+                    "glyph_ordinals": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        72.0,
+                        62.327999999999975,
+                        194.40000000000003,
+                        74.32799999999997
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 0
+                    },
+                    "ordinal": 0,
+                    "region_id": "P0_R0"
+                  },
+                  {
+                    "content": {
+                      "artifact_id": "P0_text",
+                      "end_byte": 45,
+                      "sha256": "1cbc7807aa7e601892fece74bcfe1a239816b4ca8f89c72abdadfdba59a1400a",
+                      "start_byte": 18
+                    },
+                    "glyph_ordinals": [
+                      17,
+                      18,
+                      19,
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29,
+                      30,
+                      31,
+                      32,
+                      33,
+                      34,
+                      35,
+                      36,
+                      37,
+                      38,
+                      39,
+                      40,
+                      41,
+                      42,
+                      43
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        72.0,
+                        98.32799999999996,
+                        266.3999999999999,
+                        110.32799999999996
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 0
+                    },
+                    "ordinal": 1,
+                    "region_id": "P0_R1"
+                  },
+                  {
+                    "content": {
+                      "artifact_id": "P0_text",
+                      "end_byte": 79,
+                      "sha256": "1cbc7807aa7e601892fece74bcfe1a239816b4ca8f89c72abdadfdba59a1400a",
+                      "start_byte": 46
+                    },
+                    "glyph_ordinals": [
+                      44,
+                      45,
+                      46,
+                      47,
+                      48,
+                      49,
+                      50,
+                      51,
+                      52,
+                      53,
+                      54,
+                      55,
+                      56,
+                      57,
+                      58,
+                      59,
+                      60,
+                      61,
+                      62,
+                      63,
+                      64,
+                      65,
+                      66,
+                      67,
+                      68,
+                      69,
+                      70,
+                      71,
+                      72,
+                      73,
+                      74,
+                      75,
+                      76
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        72.0,
+                        134.32799999999995,
+                        309.59999999999985,
+                        146.32799999999995
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 0
+                    },
+                    "ordinal": 2,
+                    "region_id": "P0_R2"
+                  },
+                  {
+                    "content": {
+                      "artifact_id": "P0_text",
+                      "end_byte": 95,
+                      "sha256": "1cbc7807aa7e601892fece74bcfe1a239816b4ca8f89c72abdadfdba59a1400a",
+                      "start_byte": 80
+                    },
+                    "glyph_ordinals": [
+                      77,
+                      78,
+                      79,
+                      80,
+                      81,
+                      82,
+                      83,
+                      84,
+                      85,
+                      86,
+                      87,
+                      88,
+                      89,
+                      90,
+                      91
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        72.0,
+                        170.32799999999995,
+                        180.0,
+                        182.32799999999995
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 0
+                    },
+                    "ordinal": 3,
+                    "region_id": "P0_R3"
+                  }
+                ],
+                "status": "parsed",
+                "text_artifact": {
+                  "artifact_id": "P0_text",
+                  "sha256": "1cbc7807aa7e601892fece74bcfe1a239816b4ca8f89c72abdadfdba59a1400a"
+                }
+              },
+              {
+                "excluded_glyph_ordinals": [],
+                "geometry": {
+                  "crop_box": [
+                    0.0,
+                    0.0,
+                    612.0,
+                    792.0
+                  ],
+                  "display_height_pt": 792.0,
+                  "display_width_pt": 612.0,
+                  "media_box": [
+                    0.0,
+                    0.0,
+                    612.0,
+                    792.0
+                  ],
+                  "rotation": 0,
+                  "user_unit": 1.0
+                },
+                "glyph_count": 86,
+                "physical_page_index": 1,
+                "printed_page_label": null,
+                "regions": [
+                  {
+                    "content": {
+                      "artifact_id": "P1_text",
+                      "end_byte": 16,
+                      "sha256": "b5dd0128abc1ea38740b993a7a3a6600aff553339900b58e8c59cf9e1c835993",
+                      "start_byte": 0
+                    },
+                    "glyph_ordinals": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        96.0,
+                        62.327999999999975,
+                        211.2,
+                        74.32799999999997
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 1
+                    },
+                    "ordinal": 0,
+                    "region_id": "P1_R0"
+                  },
+                  {
+                    "content": {
+                      "artifact_id": "P1_text",
+                      "end_byte": 45,
+                      "sha256": "b5dd0128abc1ea38740b993a7a3a6600aff553339900b58e8c59cf9e1c835993",
+                      "start_byte": 17
+                    },
+                    "glyph_ordinals": [
+                      16,
+                      17,
+                      18,
+                      19,
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29,
+                      30,
+                      31,
+                      32,
+                      33,
+                      34,
+                      35,
+                      36,
+                      37,
+                      38,
+                      39,
+                      40,
+                      41,
+                      42,
+                      43
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        96.0,
+                        98.32799999999996,
+                        297.5999999999999,
+                        110.32799999999996
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 1
+                    },
+                    "ordinal": 1,
+                    "region_id": "P1_R1"
+                  },
+                  {
+                    "content": {
+                      "artifact_id": "P1_text",
+                      "end_byte": 74,
+                      "sha256": "b5dd0128abc1ea38740b993a7a3a6600aff553339900b58e8c59cf9e1c835993",
+                      "start_byte": 46
+                    },
+                    "glyph_ordinals": [
+                      44,
+                      45,
+                      46,
+                      47,
+                      48,
+                      49,
+                      50,
+                      51,
+                      52,
+                      53,
+                      54,
+                      55,
+                      56,
+                      57,
+                      58,
+                      59,
+                      60,
+                      61,
+                      62,
+                      63,
+                      64,
+                      65,
+                      66,
+                      67,
+                      68,
+                      69,
+                      70,
+                      71
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        96.0,
+                        134.32799999999995,
+                        297.5999999999999,
+                        146.32799999999995
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 1
+                    },
+                    "ordinal": 2,
+                    "region_id": "P1_R2"
+                  },
+                  {
+                    "content": {
+                      "artifact_id": "P1_text",
+                      "end_byte": 89,
+                      "sha256": "b5dd0128abc1ea38740b993a7a3a6600aff553339900b58e8c59cf9e1c835993",
+                      "start_byte": 75
+                    },
+                    "glyph_ordinals": [
+                      72,
+                      73,
+                      74,
+                      75,
+                      76,
+                      77,
+                      78,
+                      79,
+                      80,
+                      81,
+                      82,
+                      83,
+                      84,
+                      85
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        96.0,
+                        170.32799999999995,
+                        196.8,
+                        182.32799999999995
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 1
+                    },
+                    "ordinal": 3,
+                    "region_id": "P1_R3"
+                  }
+                ],
+                "status": "parsed",
+                "text_artifact": {
+                  "artifact_id": "P1_text",
+                  "sha256": "b5dd0128abc1ea38740b993a7a3a6600aff553339900b58e8c59cf9e1c835993"
+                }
+              },
+              {
+                "excluded_glyph_ordinals": [],
+                "geometry": {
+                  "crop_box": [
+                    0.0,
+                    0.0,
+                    612.0,
+                    792.0
+                  ],
+                  "display_height_pt": 792.0,
+                  "display_width_pt": 612.0,
+                  "media_box": [
+                    0.0,
+                    0.0,
+                    612.0,
+                    792.0
+                  ],
+                  "rotation": 0,
+                  "user_unit": 1.0
+                },
+                "glyph_count": 95,
+                "physical_page_index": 2,
+                "printed_page_label": null,
+                "regions": [
+                  {
+                    "content": {
+                      "artifact_id": "P2_text",
+                      "end_byte": 17,
+                      "sha256": "20e7e3c2e8286b2cabb123c0b37b51abe56f9995411d40de14a0344230f33b13",
+                      "start_byte": 0
+                    },
+                    "glyph_ordinals": [
+                      0,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        120.0,
+                        62.327999999999975,
+                        242.40000000000003,
+                        74.32799999999997
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 2
+                    },
+                    "ordinal": 0,
+                    "region_id": "P2_R0"
+                  },
+                  {
+                    "content": {
+                      "artifact_id": "P2_text",
+                      "end_byte": 49,
+                      "sha256": "20e7e3c2e8286b2cabb123c0b37b51abe56f9995411d40de14a0344230f33b13",
+                      "start_byte": 18
+                    },
+                    "glyph_ordinals": [
+                      17,
+                      18,
+                      19,
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29,
+                      30,
+                      31,
+                      32,
+                      33,
+                      34,
+                      35,
+                      36,
+                      37,
+                      38,
+                      39,
+                      40,
+                      41,
+                      42,
+                      43,
+                      44,
+                      45,
+                      46,
+                      47
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        120.0,
+                        98.32799999999996,
+                        343.1999999999999,
+                        110.32799999999996
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 2
+                    },
+                    "ordinal": 1,
+                    "region_id": "P2_R1"
+                  },
+                  {
+                    "content": {
+                      "artifact_id": "P2_text",
+                      "end_byte": 82,
+                      "sha256": "20e7e3c2e8286b2cabb123c0b37b51abe56f9995411d40de14a0344230f33b13",
+                      "start_byte": 50
+                    },
+                    "glyph_ordinals": [
+                      48,
+                      49,
+                      50,
+                      51,
+                      52,
+                      53,
+                      54,
+                      55,
+                      56,
+                      57,
+                      58,
+                      59,
+                      60,
+                      61,
+                      62,
+                      63,
+                      64,
+                      65,
+                      66,
+                      67,
+                      68,
+                      69,
+                      70,
+                      71,
+                      72,
+                      73,
+                      74,
+                      75,
+                      76,
+                      77,
+                      78,
+                      79
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        120.0,
+                        134.32799999999995,
+                        350.39999999999986,
+                        146.32799999999995
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 2
+                    },
+                    "ordinal": 2,
+                    "region_id": "P2_R2"
+                  },
+                  {
+                    "content": {
+                      "artifact_id": "P2_text",
+                      "end_byte": 98,
+                      "sha256": "20e7e3c2e8286b2cabb123c0b37b51abe56f9995411d40de14a0344230f33b13",
+                      "start_byte": 83
+                    },
+                    "glyph_ordinals": [
+                      80,
+                      81,
+                      82,
+                      83,
+                      84,
+                      85,
+                      86,
+                      87,
+                      88,
+                      89,
+                      90,
+                      91,
+                      92,
+                      93,
+                      94
+                    ],
+                    "locator": {
+                      "bbox_pt": [
+                        120.0,
+                        170.32799999999995,
+                        228.0,
+                        182.32799999999995
+                      ],
+                      "kind": "pdf_page_region",
+                      "physical_page_index": 2
+                    },
+                    "ordinal": 3,
+                    "region_id": "P2_R3"
+                  }
+                ],
+                "status": "parsed",
+                "text_artifact": {
+                  "artifact_id": "P2_text",
+                  "sha256": "20e7e3c2e8286b2cabb123c0b37b51abe56f9995411d40de14a0344230f33b13"
+                }
+              }
+            ],
+            "protocol": "noetome-pdf-single-v2",
+            "request_id": "db5d1aef-fc1c-4fea-b7e0-13bff7e9d348",
+            "schema_version": 2,
+            "status": "complete"
+          },
+          "schema_version": 1,
+          "status": "ready",
+          "validation_status": "passed",
+          "verified_artifact_bytes": 43526,
+          "verified_artifact_count": 4,
+          "violations": []
+        },
+        "input": {
+          "byte_length": 2124,
+          "relative_path": "input/raw.bin",
+          "sha256": "7ca556bf05274726f5f1adde564c74b1104a471d6aa027285563240b7a8e2a22"
+        },
+        "schema_version": 1,
+        "status": "ready"
+      },
+      "parse_id": "b2aa6546-6093-49b9-a39e-7a6b32786ba4",
+      "report_path": ".noetome-pdf-parses/b2aa6546-6093-49b9-a39e-7a6b32786ba4/report.json",
+      "report_sha256": "08269f5dd864fd37e86388dcef9a258ac0c5c95a496f6efcb0b24308cb5c1038",
+      "reused": false,
+      "status": "ready"
+    },
+    "project_id": "f59a2e10-ff23-4690-a0f8-14c881a70e28",
+    "raw_acquisition": {
+      "error": null,
+      "reused": false,
+      "status": "acquired",
+      "version": {
+        "byte_length": 2124,
+        "content_sha256": "7ca556bf05274726f5f1adde564c74b1104a471d6aa027285563240b7a8e2a22",
+        "created_at": "2026-11-01T13:22:49.8061537Z",
+        "display_name": "选择多页.pdf",
+        "error": null,
+        "ingest_status": "acquired",
+        "media_type": "application/pdf",
+        "normalization_version": null,
+        "normalized_sha256": null,
+        "normalized_snapshot": null,
+        "raw_snapshot": ".noetome-sources/0dd7a3ee-2c82-4394-9844-e7c786666b81/raw.bin",
+        "revision": 1,
+        "source_id": "1b09b9bf-ccc7-40fa-a315-0ba6f8154e33",
+        "version_id": "0dd7a3ee-2c82-4394-9844-e7c786666b81"
+      }
+    },
+    "schema_version": 2,
+    "selected_path": "\\\\?\\C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B03-T03-tests\\02-persisted-author-62c5e168-0fe6-4087-ad68-762737025c0e\\tree\\选择多页.pdf",
+    "source_id": "1b09b9bf-ccc7-40fa-a315-0ba6f8154e33",
+    "status": "ready",
+    "version_id": "0dd7a3ee-2c82-4394-9844-e7c786666b81"
+  },
+  "stderr": "",
+  "before_after_sha256": {
+    "project.json": "fdd2a10219bc7e8b2bb015187445a68a1d7d5f82138864f6598ed06b5898ff34",
+    "project.sqlite": "bd712c81e16fd806515833091590fe1e18cf604cd61095175359c73d9cf0f9f7",
+    ".noetome-pdf-parses\\.owner.json": "4799b763a0466df151d5564882de704bde4e4f59e715e4ded4d779aa2bf05cbf",
+    ".noetome-sources\\.owner.json": "4799b763a0466df151d5564882de704bde4e4f59e715e4ded4d779aa2bf05cbf",
+    ".noetome-pdf-parses\\b2aa6546-6093-49b9-a39e-7a6b32786ba4\\report.json": "08269f5dd864fd37e86388dcef9a258ac0c5c95a496f6efcb0b24308cb5c1038",
+    ".noetome-pdf-parses\\b2aa6546-6093-49b9-a39e-7a6b32786ba4\\artifacts\\P0_text.txt": "1cbc7807aa7e601892fece74bcfe1a239816b4ca8f89c72abdadfdba59a1400a",
+    ".noetome-pdf-parses\\b2aa6546-6093-49b9-a39e-7a6b32786ba4\\artifacts\\P1_text.txt": "b5dd0128abc1ea38740b993a7a3a6600aff553339900b58e8c59cf9e1c835993",
+    ".noetome-pdf-parses\\b2aa6546-6093-49b9-a39e-7a6b32786ba4\\artifacts\\P2_text.txt": "20e7e3c2e8286b2cabb123c0b37b51abe56f9995411d40de14a0344230f33b13",
+    ".noetome-pdf-parses\\b2aa6546-6093-49b9-a39e-7a6b32786ba4\\artifacts\\pdf_inventory.bin": "b93d89865a7dbc8ea7603241efbf9af60abeb053ed688b56f22302808e1391d6",
+    ".noetome-sources\\0dd7a3ee-2c82-4394-9844-e7c786666b81\\raw.bin": "7ca556bf05274726f5f1adde564c74b1104a471d6aa027285563240b7a8e2a22"
+  }
+}

@@ -159,3 +159,11 @@ T13/T14另外通过测试构建的内部callback和真实子进程覆盖：实�
 首闭环验收必须同时具备：可复现离线运行、审阅过的 fixture、全部必需矩阵通过、无未批准写入、无已知必要覆盖缺口、真实报告和清楚的未实现能力列表。
 
 允许交付一个范围很小但可信的闭环；不允许通过跳过保护、隐藏失败或把模拟能力当成真实能力扩大完成声明。
+
+### B03-T03 PDF来源持久化门槛
+
+`tests/pdf_source.rs`通过真实CLI、SQLite和保存的raw/report/resources执行12组矩阵，复用冻结15份作者PDF及独立全文、UTF8范围、glyph与bbox预期。Schema1直升、Schema2旧历史保留、Schema3文本不降级、重复/重命名/换版回旧、显式Source身份、真实max-pages政策变化、连续失败与实际不同Python运行时失败后恢复须分别证明。
+
+只读检查不得依赖原选取文件或启动Python；必须核对持久报告与关系、实际raw/artifact、精确目录和原生nlink，重跑PDF Core验证。同改artifact/report/SQL SHA或合法页内bbox不能绕过定位/正文校验；ready的native/PID空值及未读全退出分类篡改另有永久负例。Windows share-lock、hardlink、junction、未知cache与严格五字段配置也在新测试项目中验证。
+
+Writer内部另外执行Schema3两树六个实际故障阶段和Prepared/DatabasePublished/ConfigPublished三个真实child.kill/wait，检查两备份、候选/正式版本、外部哨兵及公开inspect拒绝中断现场。生产CLI没有故障开关。数量、红/绿及未运行的规模/兼容/科学测试见[B03-T03记录](../validation/B03-T03.md)；统一回归不能替代这项来源定位和失败保护证据。

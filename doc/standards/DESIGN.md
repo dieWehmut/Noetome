@@ -48,7 +48,7 @@ noetome source inspect <project-path> <import-id>
 
 import只读取明确选取的单份文件，当前上限64 MiB，不扫描目录。首次登记在候选库把Schema1升级到2并保持项目身份/创建时间；配置与数据库版本失配、旧初始化残留或来源写目录必须明确拒绝。新来源生成不透明UUID；同字节复用版本和Span，每次选择仍有新的import-id。显式source-id固定既有来源后在其内部复用或换版，不能因另一来源SHA相同而合并。显示名称不决定身份，旧版本快照和原位置保留。
 
-来源import和inspect的stdout固定为报告Schema1 JSON，与项目Schema版本分开。报告包含项目/导入/来源/版本身份、时间与明确选取路径、ready或failed、reused、knowledge_status=pending、span_count、pending_extraction_count、版本字段、完整Span及错误。版本提供原始/规范SHA、长度、规则版本和真实相对快照位置；Span为规范UTF8字节半开区间及一基包含端点的行号。empty或仅首BOM文本为0段，未闭合围栏保留code区间并标needs_review。来源清点与ready仅说明字节、规范化和位置登记状态，不宣称知识覆盖100%或Markdown语义完全解析。
+MD/TXT来源import和inspect的stdout固定为报告Schema1 JSON，与项目Schema版本分开。报告包含项目/导入/来源/版本身份、时间与明确选取路径、ready或failed、reused、knowledge_status=pending、span_count、pending_extraction_count、版本字段、完整Span及错误。版本提供原始/规范SHA、长度、规则版本和真实相对快照位置；Span为规范UTF8字节半开区间及一基包含端点的行号。empty或仅首BOM文本为0段，未闭合围栏保留code区间并标needs_review。来源清点与ready仅说明字节、规范化和位置登记状态，不宣称知识覆盖100%或Markdown语义完全解析。
 
 来源错误和退出码按实际命令区分：
 
@@ -70,7 +70,7 @@ source inspect返回0只表示只读核对完成，不能把报告内failed改�
 
 ready仅表示本份PDF全页可靠文本与位置通过，知识状态仍未处理；partial聚合为needs_review，失败页保留真实页级failed和原因。扫描、空白、图像、表格、公式、多栏及竖排不能因存在一些文字被称为整份解析完成。配置/协议错误退出2，真实解析/限额/超时/取消/需复核退出3，内部输出错误退出1。未验证输出不展示已验证页或资源计数。
 
-`.parse.pending.json`仅表示尚未交付的本轮现场；最终复核通过后不覆盖地原子发布`parse.json`。发布前取消返回非零且保留可定位原因，不能将待提交报告当成功；发布后结果已经交付，后来取消不倒转其状态。PDF项目登记、模型和桌面文件选择另属后续能力。
+`.parse.pending.json`仅表示尚未交付的本轮现场；最终复核通过后不覆盖地原子发布`parse.json`。发布前取消返回非零且保留可定位原因，不能将待提交报告当成功；发布后结果已经交付，后来取消不倒转其状态。PDF项目登记采用下述显式Schema3扩展；模型和桌面文件选择另属后续能力。
 
 ### B02-T02 fixture 检查
 
@@ -226,3 +226,11 @@ B01A-T01的窗口行为遵循用户确认：最小化按钮保持普通Windows�
 每次影响 CLI 或报告的变更都检查：状态是否来自真实数据，失败是否可定位，摘要能否说明产物，是否出现假百分比、假价格、未实现能力或泄露内容。
 
 桌面端加入后再增加对应页面的截图和键盘检查。界面原型、静态截图、浏览器预览不替代实际运行验证；测试要求见 [测试标准](TESTING.md)。
+
+### B03-T03 PDF来源登记报告
+
+`source import <项目> <PDF> --python <绝对解释器路径> [--source-id <既有ID>] [--max-pages <0..63>] [--timeout-ms <0..30000>]`登记选定原始版本和解析尝试；PDF导入报告Schema2与项目Schema3独立。默认政策63页、30秒，可分别收紧；缺少或非法命令配置在获取之前退出2。
+
+报告依次提供身份和审计信息，raw_acquisition（acquired/failed、reused、version、error）、pdf_parse（ready/needs_review/failed/not_run、reused、parse_id、config、报告位置/指纹及Evidence）和knowledge_status=pending。原始PDF完整获取不代表解析ready；failed/needs_review保留真实范围并允许新的解析尝试，未读全不造Version/parse/页。成功缓存只复用ready，原始版本与解析复用状态分别呈现。
+
+成功或已登记失败的import在stdout提供单个JSON；参数、项目或项目写入被拒绝时stdout为空，stderr给出原因。已登记失败在stderr显示该error code/message，并保留真实exit分类：ready0、内部1、运行时/协议配置2、真实解析/需复核/未读全3。source inspect核对已持久化ready/review/failed事实均退出0；未知/损坏/中断项目拒绝且保留现场。每个关联import的exit/error必须匹配Evidence，不将native2折叠成3，已确认响应的PID/native0不能改为空值。

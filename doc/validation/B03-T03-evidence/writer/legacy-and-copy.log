@@ -1,0 +1,44 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+warning: method `stage_pdf_parse` is never used
+   --> crates\noetome-cli\src\source_write.rs:509:19
+    |
+194 | impl Writer {
+    | ----------- method in this implementation
+...
+509 |     pub(crate) fn stage_pdf_parse(&mut self, parse_id:&str, files:&BTreeMap<String,Vec<u8>>) -> Result<PathBuf,ProjectError> {
+    |                   ^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `valid_artifact_path` is never used
+   --> crates\noetome-cli\src\source_write.rs:885:4
+    |
+885 | fn valid_artifact_path(value:&str) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: `noetome-cli` (lib test) generated 2 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.10s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 18 tests
+test source_write::tests::beginning_then_aborting_preserves_original_project_and_sentinel ... ok
+test source_write::tests::externally_deleted_backup_is_not_recreated_during_abort ... ok
+test source_write::tests::callback_failure_does_not_change_original_database_or_config ... ok
+test source_write::tests::drop_rolls_back_a_known_callback_failure_without_an_explicit_abort ... ok
+test source_write::tests::invalid_internal_ids_or_project_identity_changes_do_not_publish ... ok
+test source_write::tests::a_replaced_project_directory_and_its_original_moved_tree_are_untouched ... ok
+test source_write::tests::actual_cleanup_delete_failure_keeps_validated_files_marker_and_both_backups ... ok
+test source_write::tests::candidate_replacement_and_unknown_transaction_or_root_content_are_preserved ... ok
+test source_write::tests::same_byte_replacement_of_published_targets_keeps_backups_and_marker ... ok
+test source_write::tests::pdf_raw_publication_is_an_independent_single_link_copy ... ok
+test source_write::tests::actual_windows_delete_sharing_failure_restores_old_project ... ok
+test source_write::tests::unknown_published_snapshot_content_is_preserved_without_rollback_deletion ... ok
+test source_write::tests::successful_commit_upgrades_identity_and_publishes_owned_snapshots ... ok
+test source_write::tests::actual_abort_snapshot_delete_failure_restores_pair_and_retains_both_backups ... ok
+test source_write::tests::second_commit_preserves_existing_cache_and_raw_only_versions ... ok
+test source_write::tests::preexisting_unowned_cache_and_version_collision_are_never_taken_over ... ok
+test source_write::tests::actual_process_kill_preserves_backups_and_blocks_inspection_at_three_stages ... ok
+test source_write::tests::controlled_failures_at_all_six_stages_restore_exact_original_bytes ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 214 filtered out; finished in 1.36s
+

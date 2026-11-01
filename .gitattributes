@@ -17,4 +17,11 @@ fixtures/pdf-text-v1/** -text
 # Acceptance archives sign their original bytes, including JSON line endings.
 doc/validation/B03-T02.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
 doc/validation/B03-T02-evidence/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+doc/validation/B03-T03.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+doc/validation/B03-T03-evidence/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+# Native logs retain their final empty line; still check spaces at line ends.
+doc/validation/B03-T03-evidence/**/*.log -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
+# Saved PDF xref spacing and binary inventories are part of their fingerprints.
+doc/validation/B03-T03-evidence/**/*.bin binary
+doc/validation/B03-T03-evidence/**/*.sqlite binary
 sidecars/pdf_parser/runtime-lock.json -text whitespace=trailing-space,space-before-tab,cr-at-eol

@@ -1,0 +1,22 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.72s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 1 test
+test source_write::tests::pdf_raw_publication_is_an_independent_single_link_copy ... FAILED
+
+failures:
+
+---- source_write::tests::pdf_raw_publication_is_an_independent_single_link_copy stdout ----
+
+thread 'source_write::tests::pdf_raw_publication_is_an_independent_single_link_copy' (90468) panicked at crates\noetome-cli\src\source_write.rs:969:13:
+assertion failed: !same_file::is_same_file(&staging, destination.join("raw.bin")).unwrap()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    source_write::tests::pdf_raw_publication_is_an_independent_single_link_copy
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 231 filtered out; finished in 0.21s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

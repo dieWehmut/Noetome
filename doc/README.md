@@ -31,3 +31,5 @@
 `requirements/PRD.html` 是由 Markdown 生成的阅读版；只修改 Markdown 后重新构建。其他标准文件以 Markdown 为准。旧 `docs` 路径仅保留迁移入口。
 
 遇到标准冲突时：当前用户指令优先，其次已采纳产品需求与决策；技术和设计负责具体实现；近期步骤缩小本轮范围，不得取消产品硬约束。将实质冲突写入日志并修正文档，不暗中选择方便的一边。
+
+PDF项目登记的精确Schema3、缓存与报告契约另见[PDF来源Schema](technical/PDF_SOURCE_SCHEMA.md)；真实验收记录见[B03-T03](validation/B03-T03.md)。

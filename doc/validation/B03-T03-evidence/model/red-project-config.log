@@ -1,0 +1,22 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.33s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 1 test
+test project::tests::project_config_requires_five_named_fields_and_rejects_sequence_form ... FAILED
+
+failures:
+
+---- project::tests::project_config_requires_five_named_fields_and_rejects_sequence_form stdout ----
+
+thread 'project::tests::project_config_requires_five_named_fields_and_rejects_sequence_form' (42944) panicked at crates\noetome-cli\src\project.rs:960:35:
+called `Result::unwrap_err()` on an `Ok` value: ProjectInfo { project_id: "9c708f27-18a1-4249-93c4-94a6e9b62f8c", schema_version: 1, created_at: "2026-11-01T13:13:44.2055999Z", state: "initialized", database: "project.sqlite" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    project::tests::project_config_requires_five_named_fields_and_rejects_sequence_form
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 259 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

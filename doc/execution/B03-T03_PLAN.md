@@ -25,23 +25,25 @@ T02内部`parse_pdf_retained`交付output及不序列化的receipt；receipt保�
 
 ## 步骤一：冻结契约和可定位真红
 
-- [ ] 三方审查Schema2旧语义、Writer清单/硬链接和独立验收；冻结Schema3及报告/路径/缓存身份。
-- [ ] 先运行真实旧CLI的PDF import预期成功负例（旧命令拒绝），保存退出及原项目/哨兵字节；Model/Schema/Writer新接口行为先在测试stub定位红。
-- [ ] Schema3在candidate迁移旧ID/行顺序/指纹及记录严格负例，故障只影响新测试项目。
+- [x] 三方审查Schema2旧语义、Writer清单/硬链接和独立验收；冻结Schema3及报告/路径/缓存身份。
+- [x] 先运行真实旧CLI的PDF import预期成功负例（旧命令拒绝），保存退出及原项目/哨兵字节；Model/Schema/Writer新接口行为先在测试stub定位红。
+- [x] Schema3在candidate迁移旧ID/行顺序/指纹及记录严格负例，故障只影响新测试项目。
 
 ## 步骤二：原始版本、解析尝试及安全发布
 
-- [ ] Schema3精确DDL、迁移、统一Store与只读project路由；既有Schema1/2规则保持。
-- [ ] PdfStore严格证据与关系重建、资源/原始/正文/坐标及状态复算；没有完整raw不造Version或parse。
-- [ ] Writer固定selected.pdf及受控T02树handoff，typed raw/parse暂存与单链接发布、完整回退和unknown现场保留。
-- [ ] Root以保持守卫的raw选择来源/版本；ready身份复用，否则实际parser。写candidate import/parse/index，暂存字节后重读，再配对发布和最终重读。
-- [ ] CLI与报告分别表达acquired、parse ready/review/failed/not_run、knowledge pending；配置错误2、真实失败3，inspect核对失败事实仍0。
+- [x] Schema3精确DDL、迁移、统一Store与只读project路由；既有Schema1/2规则保持。
+- [x] PdfStore严格证据与关系重建、资源/原始/正文/坐标及状态复算；没有完整raw不造Version或parse。
+- [x] Writer固定selected.pdf及受控T02树handoff，typed raw/parse暂存与单链接发布、完整回退和unknown现场保留。
+- [x] Root以保持守卫的raw选择来源/版本；ready身份复用，否则实际parser。写candidate import/parse/index，暂存字节后重读，再配对发布和最终重读。
+- [x] CLI与报告分别表达acquired、parse ready/review/failed/not_run、knowledge pending；配置错误2、真实失败3，inspect核对失败事实仍0。
 
 ## 步骤三：独立验收与收束
 
-- [ ] 12组真实CLI/SQLite/快照/Windows矩阵，实际不同runtime失败后恢复与max-pages选项变化，原作者expected不改。
-- [ ] 同步篡改report/DB/SHA负例仍由Core拒绝；旧文本/fixture/T02回归、真实三阶段kill和备份指纹证明中断保护。
-- [ ] fresh fmt/check/test workspace、Python12项/devlog/diff；记录实际数量、runtime/源码/资源指纹、未测范围，独立review无必要缺口。
-- [ ] complete B03-T03、分步commit/push并核对remote；B03三项完成后仅滚动规划下一批，不自动启动API或OCR。
+- [x] 12组真实CLI/SQLite/快照/Windows矩阵，实际不同runtime失败后恢复与max-pages选项变化，原作者expected不改。
+- [x] 同步篡改report/DB/SHA负例仍由Core拒绝；旧文本/fixture/T02回归、真实三阶段kill和备份指纹证明中断保护。
+- [x] fresh fmt/check/test workspace、Python12项/devlog/diff；记录实际数量、runtime/源码/资源指纹、未测范围，独立review无必要缺口。
+- [x] complete B03-T03、分步commit/push并核对remote；B03三项完成后仅滚动规划下一批，不自动启动API或OCR。
 
 复现：`cargo_local.ps1 test -p noetome-cli --test pdf_source --locked --offline`，真实Python由`NOETOME_TEST_PDF_PYTHON`及可选different-runtime env指定。规划不代替实际执行证据；任务状态仅账本维护。
+
+最终验收见[B03-T03](../validation/B03-T03.md)：405项Rust、12项Python、122次实际CLI；批次状态通过devlog维护，下一批仅规划。

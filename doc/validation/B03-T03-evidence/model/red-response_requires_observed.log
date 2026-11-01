@@ -1,0 +1,31 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.72s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 2 tests
+test pdf_source_model::tests::response_requires_observed_positive_pid ... FAILED
+test pdf_source_model::tests::response_requires_observed_success_native_exit ... FAILED
+
+failures:
+
+---- pdf_source_model::tests::response_requires_observed_positive_pid stdout ----
+
+thread 'pdf_source_model::tests::response_requires_observed_positive_pid' (2228) panicked at crates\noetome-cli\src\pdf_source_model.rs:1472:9:
+missing observed pid was accepted
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- pdf_source_model::tests::response_requires_observed_success_native_exit stdout ----
+
+thread 'pdf_source_model::tests::response_requires_observed_success_native_exit' (87640) panicked at crates\noetome-cli\src\pdf_source_model.rs:1472:9:
+missing observed native_exit_code was accepted
+
+
+failures:
+    pdf_source_model::tests::response_requires_observed_positive_pid
+    pdf_source_model::tests::response_requires_observed_success_native_exit
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 261 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

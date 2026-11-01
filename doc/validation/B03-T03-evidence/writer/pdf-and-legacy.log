@@ -1,0 +1,86 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+warning: unused import: `BTreeSet`
+ --> crates\noetome-cli\src\pdf_source_model.rs:2:33
+  |
+2 | use std::collections::{BTreeMap,BTreeSet};
+  |                                 ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::ffi::OsString`
+ --> crates\noetome-cli\src\pdf_source_model.rs:3:5
+  |
+3 | use std::ffi::OsString;
+  |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::fs`
+ --> crates\noetome-cli\src\pdf_source_model.rs:4:5
+  |
+4 | use std::fs;
+  |     ^^^^^^^
+
+warning: unused import: `std::sync::atomic::AtomicBool`
+ --> crates\noetome-cli\src\pdf_source_model.rs:6:5
+  |
+6 | use std::sync::atomic::AtomicBool;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `ArtifactKind`, `Producer`, `ResponseStatus`, and `UnitStatus`
+  --> crates\noetome-cli\src\pdf_source_model.rs:14:32
+   |
+14 | use crate::sidecar::{Artifact, ArtifactKind, ArtifactPolicy, InputFingerprint,Producer,ResponseStatus,UnitStatus};
+   |                                ^^^^^^^^^^^^                                   ^^^^^^^^ ^^^^^^^^^^^^^^ ^^^^^^^^^^
+
+warning: unused imports: `directory`, `exact_names`, `invalid_record`, `invalid_snapshot`, `read_single_snapshot`, `same_directory`, `snapshot_conflict`, `sql_failure`, `sql_u64`, `valid_failure`, `valid_hash`, `valid_selected_path`, `valid_time`, and `valid_uuid`
+  --> crates\noetome-cli\src\pdf_source_model.rs:15:48
+   |
+15 | ...re,directory,exact_names,invalid_record,invalid_snapshot,read_single_snapshot,require,same_directory,snapshot_conflict,sql_failure,sql_u64,valid_failure,valid_hash,valid_selected_path,valid_time,valid_uuid};
+   |       ^^^^^^^^^ ^^^^^^^^^^^ ^^^^^^^^^^^^^^ ^^^^^^^^^^^^^^^^ ^^^^^^^^^^^^^^^^^^^^         ^^^^^^^^^^^^^^ ^^^^^^^^^^^^^^^^^ ^^^^^^^^^^^ ^^^^^^^ ^^^^^^^^^^^^^ ^^^^^^^^^^ ^^^^^^^^^^^^^^^^^^^ ^^^^^^^^^^ ^^^^^^^^^^
+
+warning: fields `artifacts` and `pages` are never read
+   --> crates\noetome-cli\src\pdf_source_model.rs:133:16
+    |
+130 | pub(crate) struct PdfStore {
+    |                   -------- fields in this struct
+...
+133 |     pub(crate) artifacts: BTreeMap<String, Vec<Artifact>>,
+    |                ^^^^^^^^^
+134 |     pub(crate) pages: BTreeMap<String, Vec<crate::pdf_parse::PdfPage>>,
+    |                ^^^^^
+    |
+    = note: `PdfStore` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib test) generated 7 warnings (run `cargo fix --lib -p noetome-cli --tests` to apply 6 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.01s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 25 tests
+test source_write::tests::beginning_then_aborting_preserves_original_project_and_sentinel ... ok
+test source_write::tests::externally_deleted_backup_is_not_recreated_during_abort ... ok
+test source_write::tests::drop_rolls_back_a_known_callback_failure_without_an_explicit_abort ... ok
+test source_write::tests::callback_failure_does_not_change_original_database_or_config ... ok
+test source_write::tests::pdf_parse_rejects_unsafe_or_incomplete_inventory_before_creating_a_tree ... ok
+test source_write::tests::invalid_internal_ids_or_project_identity_changes_do_not_publish ... ok
+test source_write::tests::a_replaced_project_directory_and_its_original_moved_tree_are_untouched ... ok
+test source_write::tests::pdf_actual_unknown_parser_output_preserves_the_unadopted_tree ... ok
+test source_write::tests::pdf_preflight_without_a_parser_tree_can_abort_but_cancel_preserves ... ok
+test source_write::tests::candidate_replacement_and_unknown_transaction_or_root_content_are_preserved ... ok
+test source_write::tests::actual_cleanup_delete_failure_keeps_validated_files_marker_and_both_backups ... ok
+test source_write::tests::pdf_native_exit_two_is_a_retained_failed_report_and_can_abort ... ok
+test source_write::tests::actual_windows_delete_sharing_failure_restores_old_project ... ok
+test source_write::tests::unknown_published_snapshot_content_is_preserved_without_rollback_deletion ... ok
+test source_write::tests::same_byte_replacement_of_published_targets_keeps_backups_and_marker ... ok
+test source_write::tests::pdf_raw_publication_is_an_independent_single_link_copy ... ok
+test source_write::tests::successful_commit_upgrades_identity_and_publishes_owned_snapshots ... ok
+test source_write::tests::actual_abort_snapshot_delete_failure_restores_pair_and_retains_both_backups ... ok
+test source_write::tests::pdf_additional_hard_link_and_unknown_parse_content_preserve_the_scene ... ok
+test source_write::tests::second_commit_preserves_existing_cache_and_raw_only_versions ... ok
+test source_write::tests::pdf_raw_and_parse_publish_as_two_independent_exact_trees ... ok
+test source_write::tests::actual_process_kill_preserves_backups_and_blocks_inspection_at_three_stages ... ok
+test source_write::tests::preexisting_unowned_cache_and_version_collision_are_never_taken_over ... ok
+test source_write::tests::pdf_real_parser_handoff_ready_and_failed_trees_are_owned_and_removable ... ok
+test source_write::tests::controlled_failures_at_all_six_stages_restore_exact_original_bytes ... ok
+
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 220 filtered out; finished in 1.74s
+
