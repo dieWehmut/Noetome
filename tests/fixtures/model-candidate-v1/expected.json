@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "fixture_id": "model-candidate-v1",
+  "source": {
+    "path": "source.md",
+    "raw_sha256": "5aa51f5816ec39ac4eefd7a8299def081d33a2277a8fdddb66243b4a741c7591",
+    "raw_bytes": 1208,
+    "encoding": "UTF-8",
+    "normalization": "none"
+  },
+  "authoring": {
+    "method": "independent_synthetic_author",
+    "author_kind": "delegated_ai_author",
+    "basis": "先自造source.md，再由作者语义逐条写出必要原子；未读取或调用待测抽取器、fake响应或模型输出。",
+    "review_status": "author_expected_not_human_gold",
+    "freeze_policy": "v1源文与expected冻结后不得按待测结果更新；实质修订须另建版本并说明理由。"
+  },
+  "required_atom_count": 12,
+  "missing_required_atom_blocks_sample_completion": true,
+  "required_atoms": [
+    {
+      "atom_key": "r7.input_voltage",
+      "required": true,
+      "content": "纸灯箱 R7 的额定输入电压为 12 V。",
+      "qualifiers": [
+        "仅适用于直流供电"
+      ],
+      "support_quote": "纸灯箱 R7 的额定输入电压为 12 V，仅适用于直流供电。",
+      "reason": "必须保留12的电压单位和直流适用范围，不能改成交流或任意供电。"
+    },
+    {
+      "atom_key": "r7.paper_mass_limit",
+      "required": true,
+      "content": "箱内纸片总质量必须不超过 80 g。",
+      "qualifiers": [
+        "启动前",
+        "这里不计包装袋的质量"
+      ],
+      "support_quote": "启动前，箱内纸片总质量必须不超过 80 g；这里不计包装袋的质量。",
+      "reason": "上限包含80 g，适用时间是启动前；包装袋的排除是测量范围的一部分。"
+    },
+    {
+      "atom_key": "r7.closed_lid_start",
+      "required": true,
+      "content": "只有箱盖完全闭合时，主灯才允许启动。",
+      "qualifiers": [
+        "只有箱盖完全闭合时"
+      ],
+      "support_quote": "只有箱盖完全闭合时，主灯才允许启动。",
+      "reason": "完全闭合是启动的必要条件，不能降格为建议，也不能由闭合推出一定启动。"
+    },
+    {
+      "atom_key": "r7.green_key_hold",
+      "required": true,
+      "content": "按下绿色键并保持 2 s 才执行一次启动。",
+      "qualifiers": [
+        "短于 2 s 的按压无效"
+      ],
+      "support_quote": "按下绿色键并保持 2 s 才执行一次启动；短于 2 s 的按压无效。",
+      "reason": "必须保留绿色键、2 s时长、一次启动以及较短按压无效；不能将保持时长改为启动延迟。"
+    },
+    {
+      "atom_key": "r7.continuous_duration",
+      "required": true,
+      "content": "连续运行时长上限为 40 min。",
+      "qualifiers": [
+        "当环境温度为 10–30 °C（含端点）时"
+      ],
+      "support_quote": "当环境温度为 10–30 °C（含端点）时，连续运行时长上限为 40 min。",
+      "reason": "40 min是有温度条件的上限；10和30 °C端点均包含，不能扩展到未说明的温度。"
+    },
+    {
+      "atom_key": "r7.high_temperature_stop",
+      "required": true,
+      "content": "应停止点灯。",
+      "qualifiers": [
+        "若环境温度高于 30 °C",
+        "仅状态指示灯允许继续亮起"
+      ],
+      "support_quote": "若环境温度高于 30 °C，应停止点灯；仅状态指示灯允许继续亮起。",
+      "reason": "触发条件是严格高于30 °C；状态指示灯是明确例外，不能写成所有灯必须熄灭。"
+    },
+    {
+      "atom_key": "r7.brightness_record_interval",
+      "required": true,
+      "content": "每隔 5 min 记录一次亮度读数。",
+      "qualifiers": [
+        "运行期间",
+        "单位为 lx"
+      ],
+      "support_quote": "运行期间，每隔 5 min 记录一次亮度读数，单位为 lx。",
+      "reason": "记录行为的间隔为5 min，读数单位为lx；不得将间隔与读数阈值互换。"
+    },
+    {
+      "atom_key": "r7.consecutive_low_brightness",
+      "required": true,
+      "content": "只有亮度读数连续两次低于 15 lx 时才标记为“待检查”。",
+      "qualifiers": [
+        "只有亮度读数连续两次低于 15 lx 时",
+        "一次低值不触发该标记"
+      ],
+      "support_quote": "只有亮度读数连续两次低于 15 lx 时才标记为“待检查”；一次低值不触发该标记。",
+      "reason": "次数、连续性、严格低于15 lx和一次不触发共同限定标记规则，不能只保存阈值。"
+    },
+    {
+      "atom_key": "r7.pending_replace_before_restart",
+      "required": true,
+      "content": "下一次启动前必须更换纸片。",
+      "qualifiers": [
+        "标记为“待检查”后"
+      ],
+      "support_quote": "标记为“待检查”后，下一次启动前必须更换纸片。",
+      "reason": "待检查标记触发更换义务，其截止点是下一次启动前，不能漏掉条件或时序。"
+    },
+    {
+      "atom_key": "r7.manual_clear_after_replace",
+      "required": true,
+      "content": "必须手动清除“待检查”标记。",
+      "qualifiers": [
+        "更换纸片后"
+      ],
+      "support_quote": "更换纸片后，必须手动清除“待检查”标记。",
+      "reason": "清除发生在更换纸片之后且是手动行为；不能补造自动清除。"
+    },
+    {
+      "atom_key": "r7.wait_before_open",
+      "required": true,
+      "content": "应等待至少 3 min 再打开箱盖。",
+      "qualifiers": [
+        "停灯后",
+        "紧急断电时也执行这一等待规则"
+      ],
+      "support_quote": "停灯后，应等待至少 3 min 再打开箱盖；紧急断电时也执行这一等待规则。",
+      "reason": "等待时长是含3 min的下限，先等待再开盖；紧急断电不能被当成豁免。"
+    },
+    {
+      "atom_key": "r7.power_not_given",
+      "required": true,
+      "content": "本材料没有给出主灯功率。",
+      "qualifiers": [
+        "不能将缺失功率填写为 0 W"
+      ],
+      "support_quote": "本材料没有给出主灯功率，不能将缺失功率填写为 0 W。",
+      "reason": "缺失功率仍须显式表达为未给出；0 W是禁止的补充值，不能当作已知功率或合法排除。"
+    }
+  ],
+  "allowed_exclusions": [
+    {
+      "kind": "formatting_heading",
+      "support_quote": "# 纸灯箱 R7：虚构运行规则",
+      "reason": "标题只组织文本；R7主体名称已进入必要原子，不要求另造标题知识原子。"
+    },
+    {
+      "kind": "authoring_disclaimer",
+      "support_quote": "本材料由测试作者自造；设备、名称和数值均为虚构，仅用于核对文本抽取，不是实际设备使用说明。",
+      "reason": "这是样例的来源与用途声明，可保留为材料元信息，不纳入12个设备规则原子的固定分母。"
+    },
+    {
+      "kind": "formatting_heading",
+      "support_quote": "## 启动前",
+      "reason": "章节标题只组织规则；适用时序已由各条必要原子的正文和qualifiers保留。"
+    },
+    {
+      "kind": "formatting_heading",
+      "support_quote": "## 运行中",
+      "reason": "章节标题只组织规则；运行期间的记录条件已由必要原子保留。"
+    },
+    {
+      "kind": "formatting_heading",
+      "support_quote": "## 检查、停灯与缺失值",
+      "reason": "章节标题只组织规则；更换、等待及缺失值正文均不得随标题排除。"
+    },
+    {
+      "kind": "blank_lines",
+      "support_quote": null,
+      "reason": "空行没有设备规则语义，仅作为Markdown段落分隔；此项不允许排除任何非空正文。"
+    }
+  ],
+  "limitations": [
+    "本包只冻结短文本的独立作者语义预期，不含Provider响应、CandidateIr或NotePlan。",
+    "材料是虚构的，AI作者预期不是独立人工科学金标准。",
+    "固定12个必要原子的小样例不能证明PRD正式200原子、98%、真实PDF、通用模型质量或实际设备安全。",
+    "支持句是源码字节中的完整精确引用；后续Span ID、局部UTF-8字节范围和SHA须从实际登记的来源核验，不由本文件伪造。"
+  ]
+}
