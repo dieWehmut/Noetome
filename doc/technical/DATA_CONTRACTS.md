@@ -2,7 +2,7 @@
 
 本文件只定义首个 fixture 闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
 
-状态：工程基线，待实现验证。后续真实解析、模型与研究能力必须通过带版本的扩展进入，不能把缺失值编造成已有结果。
+实现状态以[任务账本](../../dev-log/tasks.json)和对应验证记录为准；本文件的字段清单本身不是能力验收记录。后续真实解析、模型与研究能力必须通过带版本的扩展进入，不能把缺失值编造成已有结果。
 
 ## 1 公共约定
 
@@ -20,9 +20,23 @@
 
 ### B01项目初始化契约
 
-在完整fixture闭环之前，B01-T02只实现Project最小状态：`project_id`、`schema_version`、`created_at`和`state`。`state`初态为`initialized`，不表示知识已生成。配置位置固定为项目根下`project.json`，状态库为`project.sqlite`，二者引用同一项目ID与Schema版本。
+在完整fixture闭环之前，B01-T02的Project配置位置固定为项目根下`project.json`，状态库为`project.sqlite`。配置只接受以下字段，缺失、未知字段或不支持的值必须拒绝。
 
-配置中数据库位置使用项目相对路径，不写死创建时的绝对目录。inspect不需要生成Run、Release或知识对象，也不得为只读查看执行迁移和修复。初始化完成标志和失败恢复策略在T02实现时用测试确定；已有内容不得被静默覆盖。
+| 字段 | v1 约束 |
+| --- | --- |
+| project_id | 初始化时生成并持久化的标准小写UUID v4，不从名称或目录推导 |
+| schema_version | 整数`1`，不支持的版本拒绝读取和写入 |
+| created_at | RFC 3339 UTC字符串，配置与数据库使用同一值 |
+| state | `initialized`，只表示空项目已初始化，不表示资料或知识已生成 |
+| database | 固定项目相对路径`project.sqlite`，不接受绝对路径、URI或路径穿越 |
+
+配置上限为64 KiB，用于这五个元数据字段，不承载原始资料或知识内容。数据库只建立`project_metadata`基础表，包含`singleton`、`project_id`、`schema_version`、`created_at`和`state`；`singleton=1`限定单条项目记录，项目ID唯一，版本和状态受约束。`PRAGMA user_version=1`，`PRAGMA application_id=0x4e4f4554`标识Noetome项目库。inspect核对真实表及列结构、配置、数据库记录与这两个标记；Schema 1只允许该表和SQLite自身维护的对象，额外表、索引、视图或触发器必须拒绝，不为查看创建Source、Run、Release或知识对象。
+
+init要求用户选定的目标目录尚不存在，父目录已存在；已有空目录、项目目录或未知内容均拒绝接管。初始化先独占创建目录和`.noetome-initializing`标记，在同目录的`.project.sqlite.initializing`、`.project.json.initializing`准备数据库与配置，通过不覆盖已有目标的文件硬链接发布两份正式文件，二者完成后才去除中断标记。完成项目只包含正式配置与数据库；链接发布发生在同一项目目录内，不把这种文件发布方式宣称为生产Vault多文件原子更新。
+
+普通失败只清理本次独占创建、仍与创建记录相符的内容；出现未知文件、文件变更或目录替换时保留目录。崩溃留下标记、暂存文件或缺失配对文件时，init和inspect报告`PROJECT_INCOMPLETE`，不补造成功状态、不覆盖残留。当前恢复方式是保留残留供检查，使用新的目标目录重新初始化空项目；未实现原目录自动续写或生产任务恢复。普通失败已经安全回滚时可在原路径重试。
+
+inspect以只读、immutable的SQLite URI打开数据库，文件路径先编码，拒绝`-journal`、`-wal`、`-shm`以及super-journal这类待恢复的侧文件；初始化库使用DELETE日志模式，检查时临时存储限定为内存。检查不得执行迁移、修复或创建SQLite侧文件。immutable会跳过SQLite锁和变更检测，见[SQLite URI规则](https://sqlite.org/uri.html)，因此只用于当前没有写任务的空项目检查；Windows检查期间保持只读文件句柄，阻止文件写入和删除，不承诺任意平台的并发外部写入一致性。后续持久写任务须重新设计快照和锁策略。项目路径及配置、数据库中的符号链接或Windows reparse/junction路径必须拒绝，不能借配置打开项目外文件。
 
 ### B02 fixture输入包
 
@@ -73,9 +87,9 @@ IR 包和计划包分别带 `schema_version`、`producer`、`revision`。IR 包�
 
 ## 4 处理账本
 
-**B01-T03的边界**：只保存来源版本、SourceSpan和最小导入登记记录（import_id、来源引用或失败对象、状态、span_count、待抽取数量、错误）。知识处理状态为pending；不创建IR、NotePlan、Release或完整Run。此阶段的“来源清单”表示字节和位置已清点，不表示必要知识覆盖完成。
+**B02单份文本导入的阶段边界**：在B01空项目与桌面骨架之后，先保存来源版本、SourceSpan和最小导入登记记录（import_id、来源引用或失败对象、状态、span_count、待抽取数量、错误）。知识处理状态为pending；不创建IR、NotePlan、Release或完整Run。此阶段的“来源清单”表示字节和位置已清点，不表示必要知识覆盖完成。具体任务卡由B01验收后滚动展开，不能把本段当作已经实现的文本导入能力。
 
-**以下完整CoverageRecord从B02开始**：fixture编译创建Run后，再将导入得到的Span映射为该Run的处理账本。这样T03不必为了run_id提前实现整个编译流水线。
+**以下完整CoverageRecord用于后续fixture编译阶段**：该阶段创建Run后，再将导入得到的Span映射为该Run的处理账本。单份文本导入不为了run_id提前实现整个编译流水线；B01-T03已按用户要求调整为桌面交付，与来源登记无关。
 
 每个 Span 在本轮有且仅有一个 CoverageRecord，分段清单与账本必须能够双向对账。
 

@@ -164,7 +164,7 @@
       "id": "B01-T02",
       "title": "实现空项目初始化和只读检查",
       "batch": "B01",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B01-T01"
       ],
@@ -178,7 +178,55 @@
         "已有项目 目标非空 不可写或初始化中断均给出明确错误且不覆盖用户内容",
         "临时目录中的初始化 只读检查 重复执行和失败恢复用例通过，不包含文档解析"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-01T02:35:26Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "实现新目录空项目配置和SQLite基础状态、只读inspect、碰撞和初始化中断保护；不导入文档、不增加桌面业务入口。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-01T03:02:31Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成CLI空项目初始化和只读inspect、身份及内容保护、中断与新路径重试；实现abdc947，构建辅助及桌面说明183b1fe。未接桌面项目业务或资料导入。",
+          "validation": [
+            "Windows x64实跑cargo fmt --all --check、cargo_local check --workspace --locked --offline及test --workspace --locked --offline通过；24项Rust测试0失败0忽略，含5存储、11项目进程、4既有CLI和4桌面。三个存储阶段实际终止子进程，残留拒写及新路径重试通过；Windows junction、真实WAL/rollback占用和只读共享实际通过。",
+            "独立Medium目录实跑初始化、连续两次inspect、已存在项目拒绝与搬移inspect成功；文件SHA和修改时间不变。原Low CLI真实os5退出3且没有创建目录或改哨兵，同字节Medium副本成功。wrapper引用分隔符实际init/inspect与TEMP/TMP恢复通过，证据B01-T02-project.json；首次C编译、prefix和测试锁区失败及修复保留在验证文档。",
+            "前端严格类型检查和生产构建通过；Python 3.12.14实跑12项日志unittest通过，devlog check、git diff --check和5文档28个本地链接核对通过。未运行Unix、生产Vault、资料解析、模型、知识编译或跨平台/任意断电验证。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/project.rs",
+              "sha256": "efc324e3d8ae08c7d5b6fb64191f89971d3fb493936b9dc0151d8136b4ed5beb"
+            },
+            {
+              "path": "crates/noetome-cli/tests/project.rs",
+              "sha256": "aaf2d513f0f32e959f8d6e896d86759ecb6fa1bff13856feb1d35505b5d82287"
+            },
+            {
+              "path": "scripts/cargo_local.ps1",
+              "sha256": "eada4c3d73121f41c34ec8efb76f1503757c4f18354c64d9f774d2566039ada5"
+            },
+            {
+              "path": "doc/technical/DATA_CONTRACTS.md",
+              "sha256": "e267a6bd46b0886d36fd87e859b5cc3e8375c25f22ae6381c586f21670a1a8d2"
+            },
+            {
+              "path": "doc/validation/B01-T02.md",
+              "sha256": "5fee57ca42807f0193277492b1ac8e05f2532f5de393b786a40e6ed9bc6a800e"
+            },
+            {
+              "path": "doc/validation/B01-T02-project.json",
+              "sha256": "c9cbb4a9296983fa19631d570d49f95965fbd41d69da15fcec080ce16d563f98"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B01-T03",

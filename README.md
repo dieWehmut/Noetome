@@ -2,7 +2,7 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-当前的 Rust CLI 和桌面应用骨架提供帮助、版本与本地连接检查；项目初始化、资料导入和知识生成尚未实现。桌面构建及安装验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+Rust CLI 提供空项目初始化与只读检查，以及帮助和版本命令。桌面骨架提供帮助、版本与本地连接检查，项目业务尚未接入桌面；资料导入和知识生成仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
 
 ## 开始开发
 
@@ -16,7 +16,7 @@
 
 ## 构建和运行 CLI
 
-在仓库根目录运行。已验证 Windows x64，`rust-toolchain.toml` 锁定 Rust 1.98.1，并安装 rustfmt。需要 Rustup 和可用的 MSVC C++ 链接环境；首次获取工具链需要网络。CLI 仅使用 Rust 标准库，单独构建 CLI 时不编译桌面依赖。
+在仓库根目录运行。已验证 Windows x64，`rust-toolchain.toml` 锁定 Rust 1.98.1，并安装 rustfmt。需要 Rustup 和可用的 MSVC C/C++ 编译、链接环境；首次获取工具链和锁定依赖需要网络。CLI 使用随 rusqlite 编译的 SQLite，不要求单独安装 SQLite；单独构建 CLI 时不编译 Tauri。
 
 ```powershell
 cargo build -p noetome-cli --locked --offline
@@ -24,7 +24,14 @@ cargo run -p noetome-cli --locked --offline -- --help
 cargo run -p noetome-cli --locked --offline -- --version
 ```
 
-构建后的 Windows 程序位于 `target/debug/noetome.exe`，当前版本为 `0.1.0`。无参数、`--help`（`-h`）显示帮助；`--version`（`-V`）显示版本。每次仅接受一个选项，未知或多余参数返回退出码 `2`、在标准错误输出 `CLI_INVALID_ARGUMENT` 和用法提示。输出失败返回 `1` 和 `CLI_OUTPUT_ERROR`。这些命令不创建项目、数据库或用户配置。
+构建后的 Windows 程序位于 `target/debug/noetome.exe`，当前版本为 `0.1.0`。无参数、`--help`（`-h`）显示帮助；`--version`（`-V`）显示版本。帮助和版本每次仅接受一个选项；项目命令用法见下文。未知或多余参数返回退出码 `2`、在标准错误输出 `CLI_INVALID_ARGUMENT` 和用法提示。输出失败返回 `1` 和 `CLI_OUTPUT_ERROR`。帮助、版本及无效语法不创建项目、数据库或用户配置。
+
+本机 Low 完整性构建树中的原生 C 编译器无法使用默认系统临时目录时，可改用 `./scripts/cargo_local.ps1`，其余参数与 Cargo 相同。脚本为编译选择 `target/compiler-temp`，结束后恢复调用者的临时目录环境，不修改权限。
+
+```powershell
+./scripts/cargo_local.ps1 check --workspace --locked --offline
+./scripts/cargo_local.ps1 test --workspace --locked --offline
+```
 
 ```powershell
 cargo fmt --all --check
@@ -33,6 +40,26 @@ cargo test -p noetome-cli --locked --offline
 ```
 
 进程测试使用 `target/cli-tests/` 内独占的临时目录，比对运行前后的目录和文件字节，测试结束自动清理。环境、实际结果及本轮遇到的问题见 [B01-T01 验证记录](doc/validation/B01-T01.md)。
+
+## 空项目初始化与检查
+
+```powershell
+New-Item -ItemType Directory -Path ./target/manual-projects -Force
+./scripts/cargo_local.ps1 run -p noetome-cli --locked --offline '--' project init './target/manual-projects/学习项目'
+./scripts/cargo_local.ps1 run -p noetome-cli --locked --offline '--' project inspect './target/manual-projects/学习项目'
+```
+
+PowerShell 调用脚本时须把传给 Cargo 的分隔符写为 `'--'`，避免未加引号的分隔符被脚本参数解析消耗。
+
+init 的父目录须已存在，目标目录须尚不存在；已有空目录、已有项目或未知内容不会被接管。配置 `project.json` 和数据库 `project.sqlite` 保存同一个 UUID v4、Schema 1、UTC 创建时间和 `initialized` 状态。数据库位置为项目相对路径，项目搬移后身份不变。
+
+inspect 核对实际配置和 SQLite 状态，不执行迁移、修复或事务恢复；重复运行不改写项目文件。无效契约或不支持的 Schema 返回 `2`，已有目标、初始化中断、数据库占用或文件访问失败返回 `3`，并显示稳定错误码。参数语法错误仍返回 `2`。
+
+初始化中断时，标记、暂存文件或缺失的配对文件会被明确报告并保留。已经确认安全回滚的普通失败可在原路径重试；保留的中断目录需先检查，当前恢复方式是另选新目录初始化空项目。当前没有原目录自动续写、生产任务恢复或资料导入。以 `-` 开头的项目路径前可加 `--` 分隔符，使用 `noetome project --help` 查看说明。
+
+本机原 `target/` 可执行文件继承 Low 标签，不能向普通 Medium 用户目录写入；测试示例因此使用构建树内的新目录。向正常用户目录创建项目时，须从正常输出位置的 CLI 副本运行。不得用用户生产 Vault 验证本轮能力。
+
+Windows 路径、文件占用、真实初始化中断与恢复测试及命令输出见 [B01-T02 验证记录](doc/validation/B01-T02.md)。
 
 ## 构建桌面应用
 
