@@ -1,19 +1,22 @@
 //! Protected, recoverable publication for source-registration writes.
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 use std::ffi::OsString;
 use std::fs::{self, File, OpenOptions};
-use std::io::Write;
+use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
+use std::sync::atomic::{AtomicBool, Ordering};
 
 use rusqlite::{Connection, OpenFlags};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
+use crate::pdf_parse::{self, PdfLimits, PdfParseOutput, PdfParseReport, PdfParserSpec};
 use crate::project::{self, ProjectError, ProjectInfo};
 
 const MARKER: &str = ".noetome-writing";
 const CACHE: &str = ".noetome-sources";
+const PDF_CACHE: &str = ".noetome-pdf-parses";
 const OWNER: &str = ".owner.json";
 const CANDIDATE_DB: &str = "candidate-project.sqlite";
 const CANDIDATE_CONFIG: &str = "candidate-project.json";
@@ -38,6 +41,7 @@ struct Snapshot {
     path: PathBuf,
     bytes: Vec<u8>,
     identity: same_file::Handle,
+    single_link: bool,
 }
 
 impl Snapshot {
@@ -62,6 +66,7 @@ impl Snapshot {
             path: path.into(),
             bytes,
             identity,
+            single_link: false,
         })
     }
     fn read(path: &Path) -> Result<Self, ProjectError> {
@@ -69,11 +74,80 @@ impl Snapshot {
         Self::capture(path, &guard)
     }
     fn matches(&self) -> bool {
+        if self.single_link {
+            return Self::read_single(&self.path, self.bytes.len() as u64).is_ok_and(|current| {
+                current.identity == self.identity && current.bytes == self.bytes
+            });
+        }
         project::check_components(&self.path).is_ok()
             && project::checked_file(&self.path).is_ok()
             && same_file::Handle::from_path(&self.path)
                 .is_ok_and(|current| current == self.identity)
             && fs::read(&self.path).ok().as_ref() == Some(&self.bytes)
+    }
+    fn read_single(path: &Path, limit: u64) -> Result<Self, ProjectError> {
+        Self::read_single_with_host(path, limit, false)
+    }
+    fn read_single_with_host(
+        path: &Path,
+        limit: u64,
+        host_write_guard: bool,
+    ) -> Result<Self, ProjectError> {
+        project::check_components(path)?;
+        let metadata = project::checked_file(path)?;
+        if metadata.len() > limit {
+            return Err(incomplete());
+        }
+        let guard = if host_write_guard {
+            let mut options = OpenOptions::new();
+            options.read(true);
+            #[cfg(windows)]
+            {
+                use std::os::windows::fs::OpenOptionsExt;
+                // Original Host guards retain WRITE and report DELETE access.
+                // Their share1 excludes external changes throughout this read;
+                // share7 here only permits coexistence with those capabilities.
+                options.share_mode(7).custom_flags(0x00200000);
+            }
+            options
+                .open(path)
+                .map_err(|error| ProjectError::io(path, error))?
+        } else {
+            project::read_guard(path)?
+        };
+        let identity =
+            same_file::Handle::from_file(guard.try_clone().map_err(|e| ProjectError::io(path, e))?)
+                .map_err(|e| ProjectError::io(path, e))?;
+        let current = same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))?;
+        if current != identity
+            || noetome_sidecar_platform::file_link_count(&guard)
+                .map_err(|e| ProjectError::io(path, e))?
+                != 1
+        {
+            return Err(incomplete());
+        }
+        let mut bytes = Vec::new();
+        (&guard)
+            .take(limit.saturating_add(1))
+            .read_to_end(&mut bytes)
+            .map_err(|e| ProjectError::io(path, e))?;
+        if bytes.len() as u64 > limit
+            || bytes.len() as u64 != metadata.len()
+            || noetome_sidecar_platform::file_link_count(&guard)
+                .map_err(|e| ProjectError::io(path, e))?
+                != 1
+            || same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))?
+                != identity
+        {
+            return Err(incomplete());
+        }
+        // Keep a share-delete identity so publication and rollback can rename.
+        Ok(Self {
+            path: path.into(),
+            bytes,
+            identity: current,
+            single_link: true,
+        })
     }
 }
 
@@ -109,6 +183,12 @@ struct StagedVersion {
     staging: PathBuf,
     destination: PathBuf,
     normalized: bool,
+    copy: bool,
+}
+struct StagedParse {
+    staging: PathBuf,
+    destination: PathBuf,
+    names: Vec<String>,
 }
 struct CacheGuard {
     directory: Directory,
@@ -121,6 +201,13 @@ struct CacheGuard {
 struct CacheOwner {
     schema_version: u32,
     project_id: String,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct ParserOwner {
+    schema_version: u32,
+    request_id: String,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -143,8 +230,9 @@ pub(crate) struct Writer {
     read_guards: Vec<File>,
     files: Vec<Snapshot>,
     directories: Vec<Directory>,
-    cache_guard: Option<CacheGuard>,
+    cache_guards: Vec<CacheGuard>,
     version: Option<StagedVersion>,
+    parse: Option<StagedParse>,
     prepared: bool,
     finished: bool,
     preserve: bool,
@@ -176,8 +264,9 @@ impl Writer {
             read_guards: Vec::new(),
             files: Vec::new(),
             directories: vec![marker_entry],
-            cache_guard: None,
+            cache_guards: Vec::new(),
             version: None,
+            parse: None,
             prepared: false,
             finished: false,
             preserve: false,
@@ -280,7 +369,7 @@ impl Writer {
                 return Err(incomplete());
             }
         }
-        if let Some(cache) = &self.cache_guard {
+        for cache in &self.cache_guards {
             if !cache.directory.matches() || !cache.owner.matches() {
                 return Err(incomplete());
             }
@@ -345,6 +434,24 @@ impl Writer {
         }
         self.files.push(current);
         result.map_err(|error| ProjectError::io(path, error))
+    }
+
+    fn create_single_file(&mut self, path: &Path, bytes: &[u8]) -> Result<(), ProjectError> {
+        self.create_file(path, bytes)?;
+        let index = self
+            .files
+            .iter()
+            .position(|file| file.path == path)
+            .ok_or_else(incomplete)?;
+        // Even a failed first single-link check must retain that requirement
+        // during rollback, so an externally added alias is preserved.
+        self.files[index].single_link = true;
+        let current = Snapshot::read_single(path, bytes.len() as u64)?;
+        if current.identity != self.files[index].identity || current.bytes != bytes {
+            return Err(incomplete());
+        }
+        self.files[index] = current;
+        Ok(())
     }
 
     fn refresh_candidate(&mut self) -> Result<(), ProjectError> {
@@ -431,13 +538,345 @@ impl Writer {
             staging,
             destination: destination.clone(),
             normalized: normalized.is_some(),
+            copy: false,
         });
         self.ensure_integrity()?;
         Ok(destination)
     }
 
-    fn prepare_cache(&mut self) -> Result<(), ProjectError> {
-        let cache_path = self.root().join(CACHE);
+    pub(crate) fn stage_pdf_raw(
+        &mut self,
+        version_id: &str,
+        raw: &[u8],
+    ) -> Result<PathBuf, ProjectError> {
+        self.ensure_integrity()?;
+        if raw.len() > 64 * 1024 * 1024 {
+            return Err(snapshot_conflict());
+        }
+        if !valid_uuid(version_id) {
+            return Err(ProjectError::new(
+                "SOURCE_INVALID_VERSION_ID",
+                2,
+                "内部快照版本必须是标准UUID v4。",
+            ));
+        }
+        if self.version.is_some() {
+            return Err(incomplete());
+        }
+        let staging = self.marker.path.join("version");
+        let destination = self.root().join(CACHE).join(version_id);
+        self.create_directory(&staging)?;
+        self.create_single_file(&staging.join("raw.bin"), raw)?;
+        self.version = Some(StagedVersion {
+            staging,
+            destination: destination.clone(),
+            normalized: false,
+            copy: true,
+        });
+        self.ensure_integrity()?;
+        Ok(destination)
+    }
+
+    pub(crate) fn run_pdf_parser(
+        &mut self,
+        parser: &PdfParserSpec,
+        raw: &[u8],
+        limits: PdfLimits,
+        cancel: &AtomicBool,
+    ) -> Result<PdfParseOutput, ProjectError> {
+        self.ensure_integrity()?;
+        if cancel.load(Ordering::Acquire) {
+            self.preserve = true;
+            return Err(ProjectError::new(
+                "SIDECAR_CANCELLED",
+                3,
+                "PDF解析已取消；写入现场已保留。",
+            ));
+        }
+        if raw.len() as u64 > limits.transport.max_input_bytes {
+            return Err(ProjectError::new(
+                "SIDECAR_INPUT_LIMIT",
+                3,
+                "已选PDF字节超过读取政策。",
+            ));
+        }
+        let selected = self.marker.path.join("selected.pdf");
+        let workspace = self.marker.path.join("parser");
+        self.create_single_file(&selected, raw)?;
+        self.ensure_integrity()?;
+        // Keep our selected raw immutable until T02's own input guard has been
+        // handed back. T02 owns its new child tree throughout execution.
+        let selected_guard = project::read_guard(&selected)?;
+        let result = pdf_parse::parse_pdf_retained(parser, &selected, &workspace, limits, cancel);
+        let handoff = match result {
+            Ok(handoff) => handoff,
+            Err(error) => {
+                if cancel.load(Ordering::Acquire)
+                    || matches!(error.code, "SIDECAR_CANCELLED" | "SIDECAR_CLEANUP_FAILED")
+                    || !matches!(fs::symlink_metadata(&workspace),Err(ref e) if e.kind()==std::io::ErrorKind::NotFound)
+                {
+                    self.preserve = true;
+                }
+                return Err(ProjectError::new(
+                    error.code,
+                    pdf_parse::error_exit_code(&error),
+                    error.message,
+                ));
+            }
+        };
+        let adopted = (|| {
+            handoff.receipt.verify(cancel).map_err(|error| {
+                ProjectError::new(
+                    error.code,
+                    pdf_parse::error_exit_code(&error),
+                    error.message,
+                )
+            })?;
+            let report = &handoff.output.report;
+            if report.schema_version != 1
+                || report.producer != crate::sidecar::Producer::Parser
+                || report.report_path != "parse.json"
+                || report.input.relative_path != "input/raw.bin"
+                || report.input.byte_length != raw.len() as u64
+                || report.input.sha256 != crate::sidecar::digest(raw)
+                || report.request.input != report.input
+                || !valid_uuid(&report.request.request_id)
+            {
+                return Err(incomplete());
+            }
+            let dirs = vec![
+                Directory::read(&workspace)?,
+                Directory::read(&workspace.join("input"))?,
+                Directory::read(&workspace.join("artifacts"))?,
+            ];
+            let expected = BTreeSet::from(
+                [
+                    ".owner.json",
+                    "request.json",
+                    "input",
+                    "artifacts",
+                    "parse.json",
+                ]
+                .map(OsString::from),
+            );
+            if directory_names(&workspace)? != expected
+                || directory_names(&workspace.join("input"))?
+                    != BTreeSet::from([OsString::from("raw.bin")])
+            {
+                return Err(incomplete());
+            }
+            let owner = Snapshot::read_single_with_host(&workspace.join(OWNER), 4096, true)?;
+            let descriptor: ParserOwner =
+                serde_json::from_slice(&owner.bytes).map_err(|_| incomplete())?;
+            if descriptor.schema_version != 1 || descriptor.request_id != report.request.request_id
+            {
+                return Err(incomplete());
+            }
+            let request = Snapshot::read_single_with_host(
+                &workspace.join("request.json"),
+                limits.transport.max_request_bytes as u64,
+                true,
+            )?;
+            let actual_request: crate::pdf_parse::PdfRequest =
+                serde_json::from_slice(&request.bytes).map_err(|_| incomplete())?;
+            if actual_request != report.request {
+                return Err(incomplete());
+            }
+            let input = Snapshot::read_single_with_host(
+                &workspace.join("input/raw.bin"),
+                raw.len() as u64,
+                true,
+            )?;
+            let formal = Snapshot::read_single_with_host(
+                &workspace.join("parse.json"),
+                8 * 1024 * 1024,
+                true,
+            )?;
+            if input.bytes != raw || formal.bytes != handoff.output.json.as_bytes() {
+                return Err(incomplete());
+            }
+            let mut files = vec![owner, request, input, formal];
+            let mut names = BTreeSet::new();
+            let mut folded = BTreeSet::new();
+            let mut total = 0u64;
+            let artifacts = report
+                .response
+                .as_ref()
+                .map_or(&[][..], |response| response.artifacts.as_slice());
+            if artifacts.len() > limits.transport.max_artifacts as usize {
+                return Err(incomplete());
+            }
+            for artifact in artifacts {
+                let extension = match artifact.kind {
+                    crate::sidecar::ArtifactKind::Binary => "bin",
+                    crate::sidecar::ArtifactKind::Utf8Text => "txt",
+                };
+                if !valid_artifact_path(&artifact.relative_path)
+                    || artifact.relative_path
+                        != format!("artifacts/{}.{extension}", artifact.artifact_id)
+                    || !folded.insert(artifact.relative_path.to_ascii_lowercase())
+                    || artifact.byte_length > limits.transport.max_artifact_bytes
+                {
+                    return Err(incomplete());
+                }
+                total = total
+                    .checked_add(artifact.byte_length)
+                    .ok_or_else(incomplete)?;
+                if total > limits.transport.max_total_artifact_bytes {
+                    return Err(incomplete());
+                }
+                names.insert(OsString::from(
+                    artifact
+                        .relative_path
+                        .strip_prefix("artifacts/")
+                        .ok_or_else(incomplete)?,
+                ));
+                let snapshot = Snapshot::read_single_with_host(
+                    &workspace.join(&artifact.relative_path),
+                    artifact.byte_length,
+                    true,
+                )?;
+                if snapshot.bytes.len() as u64 != artifact.byte_length
+                    || crate::sidecar::digest(&snapshot.bytes) != artifact.sha256
+                {
+                    return Err(incomplete());
+                }
+                files.push(snapshot);
+            }
+            if directory_names(&workspace.join("artifacts"))? != names {
+                return Err(incomplete());
+            }
+            handoff.receipt.verify(cancel).map_err(|error| {
+                ProjectError::new(
+                    error.code,
+                    pdf_parse::error_exit_code(&error),
+                    error.message,
+                )
+            })?;
+            if dirs.iter().any(|dir| !dir.matches())
+                || files.iter().any(|file| {
+                    !Snapshot::read_single_with_host(&file.path, file.bytes.len() as u64, true)
+                        .is_ok_and(|current| {
+                            current.identity == file.identity && current.bytes == file.bytes
+                        })
+                })
+            {
+                return Err(incomplete());
+            }
+            self.directories.extend(dirs);
+            self.files.extend(files);
+            Ok(())
+        })();
+        if let Err(error) = adopted {
+            self.preserve = true;
+            return Err(error);
+        }
+        let pdf_parse::PdfParseHandoff { output, receipt } = handoff;
+        drop(receipt);
+        drop(selected_guard);
+        if let Err(error) = self.ensure_integrity() {
+            self.preserve = true;
+            return Err(error);
+        }
+        Ok(output)
+    }
+
+    pub(crate) fn pdf_artifact_bytes(
+        &mut self,
+        report: &PdfParseReport,
+    ) -> Result<BTreeMap<String, Vec<u8>>, ProjectError> {
+        self.ensure_integrity()?;
+        let workspace = self.marker.path.join("parser");
+        let mut report_bytes = serde_json::to_vec_pretty(report).map_err(|_| incomplete())?;
+        report_bytes.push(b'\n');
+        let formal = self
+            .files
+            .iter()
+            .find(|file| file.path == workspace.join("parse.json"))
+            .ok_or_else(incomplete)?;
+        if !formal.single_link || formal.bytes != report_bytes {
+            return Err(incomplete());
+        }
+        let mut bytes = BTreeMap::new();
+        for artifact in report
+            .response
+            .as_ref()
+            .map_or(&[][..], |response| response.artifacts.as_slice())
+        {
+            if !valid_artifact_path(&artifact.relative_path) {
+                return Err(incomplete());
+            }
+            let snapshot = self
+                .files
+                .iter()
+                .find(|file| file.path == workspace.join(&artifact.relative_path))
+                .ok_or_else(incomplete)?;
+            if !snapshot.single_link
+                || snapshot.bytes.len() as u64 != artifact.byte_length
+                || crate::sidecar::digest(&snapshot.bytes) != artifact.sha256
+                || bytes
+                    .insert(artifact.relative_path.clone(), snapshot.bytes.clone())
+                    .is_some()
+            {
+                return Err(incomplete());
+            }
+        }
+        self.ensure_integrity()?;
+        Ok(bytes)
+    }
+
+    pub(crate) fn stage_pdf_parse(
+        &mut self,
+        parse_id: &str,
+        files: &BTreeMap<String, Vec<u8>>,
+    ) -> Result<PathBuf, ProjectError> {
+        self.ensure_integrity()?;
+        if !valid_uuid(parse_id) {
+            return Err(ProjectError::new(
+                "SOURCE_INVALID_PARSE_ID",
+                2,
+                "内部解析快照必须是标准UUID v4。",
+            ));
+        }
+        let mut folded = BTreeSet::new();
+        if self.parse.is_some()
+            || !files.contains_key("report.json")
+            || files.iter().any(|(name, bytes)| {
+                !folded.insert(name.to_ascii_lowercase())
+                    || if name == "report.json" {
+                        bytes.len() > 16 * 1024 * 1024
+                    } else {
+                        !valid_artifact_path(name) || bytes.len() > 16 * 1024 * 1024
+                    }
+            })
+            || files.len() > 65
+            || files
+                .iter()
+                .filter(|(name, _)| name.as_str() != "report.json")
+                .map(|(_, bytes)| bytes.len() as u64)
+                .sum::<u64>()
+                > 64 * 1024 * 1024
+        {
+            return Err(snapshot_conflict());
+        }
+        let staging = self.marker.path.join("parse");
+        let destination = self.root().join(PDF_CACHE).join(parse_id);
+        self.create_directory(&staging)?;
+        self.create_directory(&staging.join("artifacts"))?;
+        for (name, bytes) in files {
+            self.create_single_file(&staging.join(name), bytes)?;
+        }
+        self.parse = Some(StagedParse {
+            staging,
+            destination: destination.clone(),
+            names: files.keys().cloned().collect(),
+        });
+        self.ensure_integrity()?;
+        Ok(destination)
+    }
+
+    fn prepare_cache(&mut self, name: &str) -> Result<(), ProjectError> {
+        let cache_path = self.root().join(name);
         if project::exists(&cache_path)? {
             let directory = Directory::read(&cache_path).map_err(|_| snapshot_conflict())?;
             let owner_path = cache_path.join(OWNER);
@@ -448,7 +887,12 @@ impl Writer {
             {
                 return Err(snapshot_conflict());
             }
-            let owner = Snapshot::read(&owner_path).map_err(|_| snapshot_conflict())?;
+            let owner = if name == PDF_CACHE {
+                Snapshot::read_single(&owner_path, 4096)
+            } else {
+                Snapshot::read(&owner_path)
+            }
+            .map_err(|_| snapshot_conflict())?;
             if owner.bytes.len() > 4096 {
                 return Err(snapshot_conflict());
             }
@@ -458,7 +902,7 @@ impl Writer {
                 return Err(snapshot_conflict());
             }
             let names = directory_names(&cache_path)?;
-            self.cache_guard = Some(CacheGuard {
+            self.cache_guards.push(CacheGuard {
                 directory,
                 owner,
                 names,
@@ -471,49 +915,106 @@ impl Writer {
             })
             .map_err(|error| ProjectError::io(&cache_path, error))?;
             bytes.push(b'\n');
-            self.create_file(&cache_path.join(OWNER), &bytes)?;
+            if name == PDF_CACHE {
+                self.create_single_file(&cache_path.join(OWNER), &bytes)?;
+            } else {
+                self.create_file(&cache_path.join(OWNER), &bytes)?;
+            }
         }
         self.ensure_integrity()
     }
 
     fn publish_version(&mut self) -> Result<(), ProjectError> {
-        let Some(version) = &self.version else {
-            return Ok(());
-        };
-        let staging = version.staging.clone();
-        let destination = version.destination.clone();
-        let normalized = version.normalized;
-        self.prepare_cache()?;
-        if project::exists(&destination)? {
-            return Err(snapshot_conflict());
+        if let Some(version) = &self.version {
+            let staging = version.staging.clone();
+            let destination = version.destination.clone();
+            let normalized = version.normalized;
+            let copy = version.copy;
+            self.prepare_cache(CACHE)?;
+            if project::exists(&destination)? {
+                return Err(snapshot_conflict());
+            }
+            self.create_directory(&destination)?;
+            for name in ["raw.bin", "normalized.txt"] {
+                if name == "normalized.txt" && !normalized {
+                    continue;
+                }
+                self.ensure_integrity()?;
+                let staged = staging.join(name);
+                let target = destination.join(name);
+                let original = self
+                    .files
+                    .iter()
+                    .find(|file| file.path == staged)
+                    .ok_or_else(incomplete)?;
+                if !original.matches() {
+                    return Err(incomplete());
+                }
+                if copy {
+                    let bytes = original.bytes.clone();
+                    let identity = &original.identity;
+                    let identity = same_file::Handle::from_path(&staged)
+                        .map_err(|e| ProjectError::io(&staged, e))
+                        .and_then(|current| {
+                            if &current == identity {
+                                Ok(current)
+                            } else {
+                                Err(incomplete())
+                            }
+                        })?;
+                    self.create_single_file(&target, &bytes)?;
+                    let current = self.files.last().ok_or_else(incomplete)?;
+                    if current.identity == identity {
+                        return Err(incomplete());
+                    }
+                    continue;
+                }
+                // Directory creation and each file link are exclusive. This cannot
+                // replace an existing file, and staged links survive until cleanup.
+                fs::hard_link(&staged, &target)
+                    .map_err(|error| ProjectError::io(&target, error))?;
+                let current = Snapshot::read(&target)?;
+                if current.identity != original.identity || current.bytes != original.bytes {
+                    return Err(incomplete());
+                }
+                self.files.push(current);
+            }
         }
-        self.create_directory(&destination)?;
-        for name in ["raw.bin", "normalized.txt"] {
-            if name == "normalized.txt" && !normalized {
-                continue;
+        if let Some(parse) = &self.parse {
+            let staging = parse.staging.clone();
+            let destination = parse.destination.clone();
+            let names = parse.names.clone();
+            self.prepare_cache(PDF_CACHE)?;
+            if project::exists(&destination)? {
+                return Err(snapshot_conflict());
             }
-            self.ensure_integrity()?;
-            let staged = staging.join(name);
-            let target = destination.join(name);
-            let original = self
-                .files
-                .iter()
-                .find(|file| file.path == staged)
-                .ok_or_else(incomplete)?;
-            if !original.matches() {
-                return Err(incomplete());
+            self.create_directory(&destination)?;
+            self.create_directory(&destination.join("artifacts"))?;
+            for name in names {
+                self.ensure_integrity()?;
+                let staged = staging.join(&name);
+                let original = self
+                    .files
+                    .iter()
+                    .find(|file| file.path == staged)
+                    .ok_or_else(incomplete)?;
+                if !original.matches() || !original.single_link {
+                    return Err(incomplete());
+                }
+                let bytes = original.bytes.clone();
+                let identity = same_file::Handle::from_path(&staged)
+                    .map_err(|e| ProjectError::io(&staged, e))?;
+                self.create_single_file(&destination.join(name), &bytes)?;
+                if self.files.last().ok_or_else(incomplete)?.identity == identity {
+                    return Err(incomplete());
+                }
             }
-            // Directory creation and each file link are exclusive. This cannot
-            // replace an existing file, and staged links survive until cleanup.
-            fs::hard_link(&staged, &target).map_err(|error| ProjectError::io(&target, error))?;
-            let current = Snapshot::read(&target)?;
-            if current.identity != original.identity || current.bytes != original.bytes {
-                return Err(incomplete());
-            }
-            self.files.push(current);
         }
         self.ensure_integrity()?;
-        self.run_hook(WriteStage::VersionPublished)
+        if self.version.is_some() || self.parse.is_some() {
+            self.run_hook(WriteStage::VersionPublished)?;
+        }
+        Ok(())
     }
 
     fn publish_file(&mut self, staged: &Path, original_index: usize) -> Result<(), ProjectError> {
@@ -546,13 +1047,15 @@ impl Writer {
             || new_info.created_at != self.info.created_at
             || new_info.state != self.info.state
             || new_info.database != self.info.database
-            || !(new_info.schema_version == 2
-                || (new_info.schema_version == 1 && self.info.schema_version == 1))
+            || !matches!(
+                (self.info.schema_version, new_info.schema_version),
+                (1, 1 | 2 | 3) | (2, 2 | 3) | (3, 3)
+            )
         {
             return Err(ProjectError::new(
                 "SOURCE_INVALID_PROJECT_INFO",
                 2,
-                "来源写入不能改变项目身份、创建时间、基础状态或数据库路径；版本只允许保留Schema1或升级/保留Schema2。",
+                "来源写入不能改变项目身份、创建时间、基础状态或数据库路径；版本只允许保留或升级受支持的Schema1/2/3。",
             ));
         }
         let candidate_config = self.marker.path.join(CANDIDATE_CONFIG);
@@ -762,6 +1265,23 @@ fn valid_uuid(value: &str) -> bool {
     })
 }
 
+fn valid_artifact_path(value: &str) -> bool {
+    let Some(name) = value.strip_prefix("artifacts/") else {
+        return false;
+    };
+    let Some((id, extension)) = name.rsplit_once('.') else {
+        return false;
+    };
+    !id.is_empty()
+        && id.len() <= 128
+        && id.as_bytes()[0].is_ascii_alphanumeric()
+        && id
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'_' | b'-'))
+        && matches!(extension, "bin" | "txt")
+        && crate::fixture_input::valid_relative_path(value)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -774,7 +1294,7 @@ mod tests {
     impl Sandbox {
         fn new() -> Self {
             let parent =
-                Path::new(env!("CARGO_MANIFEST_DIR")).join("../../target/source-write-tests");
+                Path::new(env!("CARGO_MANIFEST_DIR")).join("../../.artifacts/B03-T03-writer/tests");
             fs::create_dir_all(&parent).unwrap();
             let root = parent
                 .canonicalize()
@@ -943,6 +1463,526 @@ mod tests {
 
     fn validate_project(path: &Path, marker: &same_file::Handle) -> Result<(), ProjectError> {
         project::inspect_for_writer(path, marker).map(|_| ())
+    }
+
+    #[test]
+    fn pdf_raw_publication_is_an_independent_single_link_copy() {
+        let sandbox = Sandbox::new();
+        let (root, _) = sandbox.project("pdf-copy");
+        let version = Uuid::new_v4().to_string();
+        let mut writer = Writer::begin(&root).unwrap();
+        let updated = writer.build_candidate(upgrade).unwrap();
+        let destination = writer.stage_pdf_raw(&version, b"owned PDF raw").unwrap();
+        let staging = root.join(MARKER).join("version/raw.bin");
+        writer
+            .commit(&updated, |path, marker| {
+                validate_project(path, marker)?;
+                assert!(!same_file::is_same_file(&staging, destination.join("raw.bin")).unwrap());
+                let staged = File::open(&staging).unwrap();
+                let published = File::open(destination.join("raw.bin")).unwrap();
+                assert_eq!(
+                    noetome_sidecar_platform::file_link_count(&staged).unwrap(),
+                    1
+                );
+                assert_eq!(
+                    noetome_sidecar_platform::file_link_count(&published).unwrap(),
+                    1
+                );
+                Ok(())
+            })
+            .unwrap();
+        assert_eq!(
+            fs::read(destination.join("raw.bin")).unwrap(),
+            b"owned PDF raw"
+        );
+    }
+
+    fn pdf_files() -> BTreeMap<String, Vec<u8>> {
+        BTreeMap::from([
+            ("report.json".into(), b"{}\n".to_vec()),
+            ("artifacts/A1.bin".into(), b"inventory".to_vec()),
+            ("artifacts/A2.txt".into(), b"text".to_vec()),
+        ])
+    }
+
+    fn selected_real_parser() -> PdfParserSpec {
+        PdfParserSpec {
+            python: PathBuf::from(
+                std::env::var_os("NOETOME_TEST_PDF_PYTHON")
+                    .expect("Set NOETOME_TEST_PDF_PYTHON to an explicitly selected pinned runtime"),
+            ),
+            adapter: pdf_parse::default_adapter().unwrap(),
+        }
+    }
+
+    #[test]
+    fn pdf_real_parser_handoff_ready_and_failed_trees_are_owned_and_removable() {
+        let sandbox = Sandbox::new();
+        for filename in ["single-column.pdf", "damaged.pdf"] {
+            let (root, _) = sandbox.project(filename);
+            let before = snapshot(&sandbox.0);
+            let raw = fs::read(
+                Path::new(env!("CARGO_MANIFEST_DIR"))
+                    .join("../../fixtures/pdf-text-v1")
+                    .join(filename),
+            )
+            .unwrap();
+            let mut writer = Writer::begin(&root).unwrap();
+            let output = writer
+                .run_pdf_parser(
+                    &selected_real_parser(),
+                    &raw,
+                    PdfLimits::default(),
+                    &AtomicBool::new(false),
+                )
+                .unwrap();
+            assert_eq!(output.report.input.sha256, crate::sidecar::digest(&raw));
+            assert_eq!(output.report.input.byte_length, raw.len() as u64);
+            assert_eq!(output.failed, filename == "damaged.pdf");
+            let actual = writer.pdf_artifact_bytes(&output.report).unwrap();
+            assert_eq!(actual.len(), output.report.verified_artifact_count as usize);
+            for (name, bytes) in actual {
+                assert_eq!(
+                    fs::read(root.join(MARKER).join("parser").join(name)).unwrap(),
+                    bytes
+                );
+            }
+            writer.ensure_integrity().unwrap();
+            writer.abort().unwrap();
+            assert_eq!(snapshot(&sandbox.0), before);
+        }
+    }
+
+    #[test]
+    fn pdf_preflight_without_a_parser_tree_can_abort_but_cancel_preserves() {
+        let sandbox = Sandbox::new();
+        let (root, _) = sandbox.project("pdf-preflight");
+        let before = snapshot(&sandbox.0);
+        let mut writer = Writer::begin(&root).unwrap();
+        let mut parser = selected_real_parser();
+        parser.python = PathBuf::from("untrusted-relative-python");
+        assert_eq!(
+            writer
+                .run_pdf_parser(
+                    &parser,
+                    b"PDF raw",
+                    PdfLimits::default(),
+                    &AtomicBool::new(false)
+                )
+                .unwrap_err()
+                .code(),
+            "PDF_RUNTIME_INVALID"
+        );
+        assert!(!root.join(MARKER).join("parser").exists());
+        writer.abort().unwrap();
+        assert_eq!(snapshot(&sandbox.0), before);
+        let mut writer = Writer::begin(&root).unwrap();
+        assert_eq!(
+            writer
+                .run_pdf_parser(
+                    &parser,
+                    b"PDF raw",
+                    PdfLimits::default(),
+                    &AtomicBool::new(true)
+                )
+                .unwrap_err()
+                .code(),
+            "SIDECAR_CANCELLED"
+        );
+        assert!(writer.preserve);
+        let preserved = snapshot(&sandbox.0);
+        drop(writer);
+        assert_eq!(snapshot(&sandbox.0), preserved);
+    }
+
+    #[test]
+    fn pdf_actual_unknown_parser_output_preserves_the_unadopted_tree() {
+        let sandbox = Sandbox::new();
+        let (root, _) = sandbox.project("pdf-untracked");
+        let mut parser = selected_real_parser();
+        // An explicitly marked fault adapter exercises native process output,
+        // not PDF correctness. Its unknown file must never become owned data.
+        parser.adapter = sandbox.0.join("fault_unknown.py");
+        fs::write(&parser.adapter,b"from pathlib import Path\nPath('unknown.txt').write_bytes(b'preserve unknown')\nprint('{}')\n").unwrap();
+        let mut writer = Writer::begin(&root).unwrap();
+        assert!(
+            writer
+                .run_pdf_parser(
+                    &parser,
+                    b"PDF raw",
+                    PdfLimits::default(),
+                    &AtomicBool::new(false)
+                )
+                .is_err()
+        );
+        assert!(writer.preserve);
+        assert_eq!(
+            fs::read(root.join(MARKER).join("parser/unknown.txt")).unwrap(),
+            b"preserve unknown"
+        );
+        let retained = snapshot(&sandbox.0);
+        drop(writer);
+        assert_eq!(snapshot(&sandbox.0), retained);
+        assert_eq!(
+            project::inspect(&root).unwrap_err().code(),
+            "PROJECT_INCOMPLETE"
+        );
+    }
+
+    #[test]
+    fn pdf_native_exit_two_is_a_retained_failed_report_and_can_abort() {
+        let sandbox = Sandbox::new();
+        let (root, _) = sandbox.project("pdf-native-two");
+        let mut parser = selected_real_parser();
+        parser.adapter = sandbox.0.join("fault_exit_two.py");
+        fs::write(
+            &parser.adapter,
+            b"import sys\nsys.stderr.write('explicit runtime fault')\nsys.exit(2)\n",
+        )
+        .unwrap();
+        let before = snapshot(&sandbox.0);
+        let mut writer = Writer::begin(&root).unwrap();
+        let output = writer
+            .run_pdf_parser(
+                &parser,
+                b"PDF raw",
+                PdfLimits::default(),
+                &AtomicBool::new(false),
+            )
+            .unwrap();
+        assert!(output.failed);
+        assert_eq!(output.exit_code, 2);
+        assert_eq!(output.report.native_exit_code, Some(2));
+        assert!(output.report.response.is_none());
+        assert!(
+            writer
+                .pdf_artifact_bytes(&output.report)
+                .unwrap()
+                .is_empty()
+        );
+        assert!(!writer.preserve);
+        writer.abort().unwrap();
+        assert_eq!(snapshot(&sandbox.0), before);
+    }
+
+    #[test]
+    fn pdf_schema3_actual_kill_keeps_both_trees_candidate_and_backups() {
+        use std::process::{Command, Stdio};
+        use std::time::{Duration, Instant};
+        const CHILD_ROOT: &str = "NOETOME_PDF_WRITER_CHILD_ROOT";
+        const CHILD_STAGE: &str = "NOETOME_PDF_WRITER_CHILD_STAGE";
+        const CHILD_READY: &str = "NOETOME_PDF_WRITER_CHILD_READY";
+        if let Some(root) = std::env::var_os(CHILD_ROOT) {
+            let stage_name = std::env::var(CHILD_STAGE).unwrap();
+            let ready = PathBuf::from(std::env::var_os(CHILD_READY).unwrap());
+            let mut writer = Writer::begin(Path::new(&root)).unwrap();
+            writer
+                .stage_pdf_raw(&Uuid::new_v4().to_string(), b"PDF raw")
+                .unwrap();
+            writer
+                .stage_pdf_parse(&Uuid::new_v4().to_string(), &pdf_files())
+                .unwrap();
+            writer.hook = Some(Box::new(move |stage, _| {
+                if format!("{stage:?}") == stage_name {
+                    let mut file = OpenOptions::new()
+                        .write(true)
+                        .create_new(true)
+                        .open(&ready)
+                        .unwrap();
+                    file.write_all(b"Schema3 with two staged trees reached\n")
+                        .unwrap();
+                    file.sync_all().unwrap();
+                    loop {
+                        std::thread::park_timeout(Duration::from_secs(1));
+                    }
+                }
+                Ok(())
+            }));
+            let updated = writer
+                .build_candidate(crate::pdf_source_schema::upgrade)
+                .unwrap();
+            writer.commit(&updated, validate_project).unwrap();
+            panic!("missing native kill stage");
+        }
+        let sandbox = Sandbox::new();
+        for stage in [
+            WriteStage::Prepared,
+            WriteStage::DatabasePublished,
+            WriteStage::ConfigPublished,
+        ] {
+            let (root, _) = sandbox.project(&format!("pdf-kill-{stage:?}"));
+            let old_config = fs::read(root.join(project::CONFIG)).unwrap();
+            let old_database = fs::read(root.join(project::DATABASE)).unwrap();
+            let ready = sandbox.0.join(format!("pdf-ready-{stage:?}"));
+            let mut child=Command::new(std::env::current_exe().unwrap()).args(["--exact","source_write::tests::pdf_schema3_actual_kill_keeps_both_trees_candidate_and_backups","--nocapture"])
+                .env(CHILD_ROOT,&root).env(CHILD_STAGE,format!("{stage:?}")).env(CHILD_READY,&ready)
+                .current_dir(&sandbox.0).stdout(Stdio::null()).stderr(Stdio::null()).spawn().unwrap();
+            let deadline = Instant::now() + Duration::from_secs(15);
+            while !ready.exists() && Instant::now() < deadline {
+                if child.try_wait().unwrap().is_some() {
+                    break;
+                }
+                std::thread::sleep(Duration::from_millis(10));
+            }
+            if !ready.exists() {
+                let _ = child.kill();
+                panic!(
+                    "PDF child did not reach {stage:?}: {}",
+                    child.wait().unwrap()
+                );
+            }
+            assert!(child.try_wait().unwrap().is_none());
+            child.kill().unwrap();
+            assert!(!child.wait().unwrap().success());
+            assert_eq!(
+                fs::read(root.join(MARKER).join("old-project.json")).unwrap(),
+                old_config
+            );
+            assert_eq!(
+                fs::read(root.join(MARKER).join("old-project.sqlite")).unwrap(),
+                old_database
+            );
+            assert_eq!(
+                fs::read(root.join(MARKER).join("version/raw.bin")).unwrap(),
+                b"PDF raw"
+            );
+            assert_eq!(
+                fs::read(root.join(MARKER).join("parse/report.json")).unwrap(),
+                b"{}\n"
+            );
+            let database = if stage == WriteStage::Prepared {
+                root.join(MARKER).join(CANDIDATE_DB)
+            } else {
+                root.join(project::DATABASE)
+            };
+            let connection =
+                Connection::open_with_flags(database, OpenFlags::SQLITE_OPEN_READ_ONLY).unwrap();
+            assert_eq!(
+                connection
+                    .query_row("PRAGMA user_version", [], |row| row.get::<_, u32>(0))
+                    .unwrap(),
+                3
+            );
+            drop(connection);
+            if stage != WriteStage::Prepared {
+                for cache in [CACHE, PDF_CACHE] {
+                    assert_eq!(directory_names(&root.join(cache)).unwrap().len(), 2);
+                    assert!(root.join(cache).join(OWNER).is_file());
+                }
+            }
+            let preserved = snapshot(&sandbox.0);
+            assert_eq!(
+                project::inspect(&root).unwrap_err().code(),
+                "PROJECT_INCOMPLETE"
+            );
+            assert_eq!(snapshot(&sandbox.0), preserved);
+        }
+    }
+
+    #[test]
+    fn pdf_raw_and_parse_publish_as_two_independent_exact_trees() {
+        let sandbox = Sandbox::new();
+        let (root, _) = sandbox.project("pdf-two-trees");
+        let mut writer = Writer::begin(&root).unwrap();
+        let updated = writer.build_candidate(upgrade).unwrap();
+        let raw = writer
+            .stage_pdf_raw(&Uuid::new_v4().to_string(), b"PDF raw")
+            .unwrap();
+        let parse = writer
+            .stage_pdf_parse(&Uuid::new_v4().to_string(), &pdf_files())
+            .unwrap();
+        writer
+            .commit(&updated, |path, marker| {
+                validate_project(path, marker)?;
+                for (staged, published) in [
+                    (
+                        root.join(MARKER).join("version/raw.bin"),
+                        raw.join("raw.bin"),
+                    ),
+                    (
+                        root.join(MARKER).join("parse/report.json"),
+                        parse.join("report.json"),
+                    ),
+                    (
+                        root.join(MARKER).join("parse/artifacts/A1.bin"),
+                        parse.join("artifacts/A1.bin"),
+                    ),
+                    (
+                        root.join(MARKER).join("parse/artifacts/A2.txt"),
+                        parse.join("artifacts/A2.txt"),
+                    ),
+                ] {
+                    assert!(!same_file::is_same_file(&staged, &published).unwrap());
+                    assert_eq!(
+                        noetome_sidecar_platform::file_link_count(&File::open(staged).unwrap())
+                            .unwrap(),
+                        1
+                    );
+                    assert_eq!(
+                        noetome_sidecar_platform::file_link_count(&File::open(published).unwrap())
+                            .unwrap(),
+                        1
+                    );
+                }
+                assert_eq!(
+                    directory_names(&parse).unwrap(),
+                    BTreeSet::from([OsString::from("artifacts"), OsString::from("report.json")])
+                );
+                assert_eq!(
+                    directory_names(&raw).unwrap(),
+                    BTreeSet::from([OsString::from("raw.bin")])
+                );
+                Ok(())
+            })
+            .unwrap();
+        assert!(!root.join(MARKER).exists());
+        assert_eq!(fs::read(raw.join("raw.bin")).unwrap(), b"PDF raw");
+        for (name, bytes) in pdf_files() {
+            assert_eq!(fs::read(parse.join(name)).unwrap(), bytes);
+        }
+        for cache in [CACHE, PDF_CACHE] {
+            let owner: CacheOwner =
+                serde_json::from_slice(&fs::read(root.join(cache).join(OWNER)).unwrap()).unwrap();
+            assert_eq!(owner.project_id, updated.project_id);
+            assert_eq!(owner.schema_version, 1);
+        }
+    }
+
+    #[test]
+    fn pdf_parse_rejects_unsafe_or_incomplete_inventory_before_creating_a_tree() {
+        let sandbox = Sandbox::new();
+        let (root, _) = sandbox.project("bad-parse-path");
+        let mut writer = Writer::begin(&root).unwrap();
+        for files in [
+            BTreeMap::new(),
+            BTreeMap::from([("unknown.txt".into(), vec![])]),
+            BTreeMap::from([
+                ("report.json".into(), vec![]),
+                ("artifacts/../escape.bin".into(), vec![]),
+            ]),
+            BTreeMap::from([
+                ("report.json".into(), vec![]),
+                ("artifacts/A.bin".into(), vec![]),
+                ("artifacts/a.bin".into(), vec![]),
+            ]),
+            BTreeMap::from([("report.json".into(), vec![]), ("raw.bin".into(), vec![])]),
+        ] {
+            let before = snapshot(&sandbox.0);
+            assert!(
+                writer
+                    .stage_pdf_parse(&Uuid::new_v4().to_string(), &files)
+                    .is_err()
+            );
+            assert_eq!(snapshot(&sandbox.0), before);
+        }
+        writer.abort().unwrap();
+    }
+
+    #[test]
+    fn pdf_additional_hard_link_and_unknown_parse_content_preserve_the_scene() {
+        let sandbox = Sandbox::new();
+        for hard_link in [true, false] {
+            let (root, _) = sandbox.project(&format!("pdf-preserve-{hard_link}"));
+            let old_config = fs::read(root.join(project::CONFIG)).unwrap();
+            let old_database = fs::read(root.join(project::DATABASE)).unwrap();
+            let mut writer = Writer::begin(&root).unwrap();
+            let updated = writer.build_candidate(upgrade).unwrap();
+            let raw = writer
+                .stage_pdf_raw(&Uuid::new_v4().to_string(), b"PDF raw")
+                .unwrap();
+            let parse = writer
+                .stage_pdf_parse(&Uuid::new_v4().to_string(), &pdf_files())
+                .unwrap();
+            let raw_hook = raw.clone();
+            let parse_hook = parse.clone();
+            let alias = sandbox.0.join("external-raw-alias");
+            let alias_hook = alias.clone();
+            writer.hook = Some(Box::new(move |stage, _| {
+                if stage == WriteStage::VersionPublished {
+                    if hard_link {
+                        fs::hard_link(raw_hook.join("raw.bin"), &alias_hook).unwrap();
+                    } else {
+                        fs::write(parse_hook.join("unknown.txt"), b"must survive").unwrap();
+                    }
+                }
+                Ok(())
+            }));
+            assert_eq!(
+                writer
+                    .commit(&updated, validate_project)
+                    .unwrap_err()
+                    .code(),
+                "SOURCE_WRITE_INCOMPLETE"
+            );
+            assert_eq!(
+                writer.abort().unwrap_err().code(),
+                "SOURCE_WRITE_INCOMPLETE"
+            );
+            let retained = snapshot(&sandbox.0);
+            drop(writer);
+            assert_eq!(snapshot(&sandbox.0), retained);
+            assert_eq!(fs::read(root.join(project::CONFIG)).unwrap(), old_config);
+            assert_eq!(
+                fs::read(root.join(project::DATABASE)).unwrap(),
+                old_database
+            );
+            assert!(root.join(MARKER).exists());
+            assert_eq!(fs::read(raw.join("raw.bin")).unwrap(), b"PDF raw");
+            if hard_link {
+                fs::remove_file(alias).unwrap();
+            }
+        }
+    }
+
+    #[test]
+    fn pdf_schema3_dual_tree_failures_restore_all_six_stages() {
+        let sandbox = Sandbox::new();
+        for point in [
+            WriteStage::Prepared,
+            WriteStage::VersionPublished,
+            WriteStage::DatabasePublished,
+            WriteStage::ConfigPublished,
+            WriteStage::Validated,
+            WriteStage::Cleanup,
+        ] {
+            let (root, _) = sandbox.project(&format!("pdf-six-{point:?}"));
+            let before = snapshot(&sandbox.0);
+            let mut writer = Writer::begin(&root).unwrap();
+            writer
+                .stage_pdf_raw(&Uuid::new_v4().to_string(), b"PDF raw")
+                .unwrap();
+            writer
+                .stage_pdf_parse(&Uuid::new_v4().to_string(), &pdf_files())
+                .unwrap();
+            writer.hook = Some(Box::new(move |stage, _| {
+                if stage == point {
+                    Err(ProjectError::new(
+                        "TEST_CONTROLLED_FAILURE",
+                        3,
+                        "PDF two-tree stage failure",
+                    ))
+                } else {
+                    Ok(())
+                }
+            }));
+            let candidate = writer.build_candidate(crate::pdf_source_schema::upgrade);
+            if point == WriteStage::Prepared {
+                assert_eq!(candidate.unwrap_err().code(), "TEST_CONTROLLED_FAILURE");
+            } else {
+                let updated = candidate.unwrap();
+                assert_eq!(updated.schema_version, 3);
+                assert_eq!(
+                    writer
+                        .commit(&updated, validate_project)
+                        .unwrap_err()
+                        .code(),
+                    "TEST_CONTROLLED_FAILURE"
+                );
+            }
+            writer.abort().unwrap();
+            assert_eq!(snapshot(&sandbox.0), before);
+            assert_eq!(project::inspect(&root).unwrap().schema_version, 1);
+        }
     }
 
     #[test]

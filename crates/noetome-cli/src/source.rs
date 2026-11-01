@@ -13,7 +13,7 @@ use crate::source_model::{ImportReport, SourceFailure, SourceSpan, SourceVersion
 use crate::{source_schema, source_write::Writer, text};
 
 const MAX_BYTES: u64 = 64 * 1024 * 1024;
-const INSERT_VERSION: &str = "INSERT INTO source_versions
+pub(crate) const INSERT_VERSION: &str = "INSERT INTO source_versions
     (version_id,source_id,revision,created_at,media_type,display_name,content_sha256,
     byte_length,normalized_sha256,normalization_version,ingest_status,raw_snapshot,
     normalized_snapshot,error_code,error_message)
@@ -27,7 +27,7 @@ const INSERT_IMPORT: &str = "INSERT INTO source_imports
     pending_extraction_count,knowledge_status,error_code,error_message)
     VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)";
 
-fn sql_integer(value: u64) -> Result<i64, ProjectError> {
+pub(crate) fn sql_integer(value: u64) -> Result<i64, ProjectError> {
     i64::try_from(value).map_err(|_| {
         ProjectError::new(
             "SOURCE_INVALID_RECORD",
@@ -40,18 +40,14 @@ fn sql_integer(value: u64) -> Result<i64, ProjectError> {
 pub struct CommandOutput {
     pub json: String,
     pub failure: Option<(String, String)>,
+    pub exit_code: u8,
 }
 
 fn empty_store() -> Store {
-    Store {
-        sources: BTreeMap::new(),
-        versions: BTreeMap::new(),
-        spans: BTreeMap::new(),
-        reports: Vec::new(),
-    }
+    Store::default()
 }
 
-fn invalid_id(id: &str) -> Result<(), ProjectError> {
+pub(crate) fn invalid_id(id: &str) -> Result<(), ProjectError> {
     if Uuid::parse_str(id).is_ok_and(|parsed| {
         parsed.get_version_num() == 4
             && parsed.get_variant() == uuid::Variant::RFC4122
@@ -67,7 +63,7 @@ fn invalid_id(id: &str) -> Result<(), ProjectError> {
     }
 }
 
-fn not_found() -> ProjectError {
+pub(crate) fn not_found() -> ProjectError {
     ProjectError::new(
         "SOURCE_NOT_FOUND",
         2,
@@ -81,6 +77,22 @@ fn database_store(
     info: &ProjectInfo,
     staged: Option<(&str, &Path)>,
 ) -> Result<Store, ProjectError> {
+    database_state(path, root, info, staged, None).map(|state| state.0)
+}
+
+pub(crate) type SourceState = (
+    Store,
+    crate::pdf_source_model::PdfStore,
+    BTreeMap<String, crate::pdf_source_model::PdfEvidence>,
+);
+
+pub(crate) fn database_state(
+    path: &Path,
+    root: &Path,
+    info: &ProjectInfo,
+    staged: Option<(&str, &Path)>,
+    staged_parse: Option<(&str, &Path)>,
+) -> Result<SourceState, ProjectError> {
     project::checked_file(path)?;
     let guard = project::read_guard(path)?;
     let before = guard
@@ -117,14 +129,25 @@ fn database_store(
                 "读取来源时项目元数据与已校验配置不一致。",
             ));
         }
-        let store = if info.schema_version == 2 {
-            source_schema::validate(&connection)?;
+        let store = if matches!(info.schema_version, 2 | 3) {
+            if info.schema_version == 3 {
+                crate::pdf_source_schema::validate(&connection)?;
+            } else {
+                source_schema::validate(&connection)?;
+            }
             Store::load(&connection, &info.project_id)?
         } else {
             empty_store()
         };
         store.validate_snapshots(root, &info.project_id, staged)?;
-        Ok(store)
+        let pdf = if info.schema_version == 3 {
+            crate::pdf_source_model::PdfStore::load(&connection, &store, &info.project_id)?
+        } else {
+            crate::pdf_source_model::PdfStore::default()
+        };
+        let evidence =
+            pdf.validate_snapshots(root, &store, &info.project_id, staged_parse, staged)?;
+        Ok((store, pdf, evidence))
     })();
     connection
         .close()
@@ -179,6 +202,13 @@ pub fn inspect(path: &Path, import_id: &str) -> Result<String, ProjectError> {
     invalid_id(import_id)?;
     let root = project::check_components(path)?;
     let (_, store) = current_store(&root)?;
+    if store
+        .pdf_imports
+        .iter()
+        .any(|record| record.import_id == import_id)
+    {
+        return crate::pdf_source::inspect(&root, import_id);
+    }
     let report = store
         .reports
         .iter()
@@ -354,6 +384,13 @@ fn register(
         if let Some(existing) = store.versions.values().find(|version| {
             version.source_id == *source && Some(&version.content_sha256) == hash.as_ref()
         }) {
+            if existing.media_type == "application/pdf" {
+                return Err(ProjectError::new(
+                    "SOURCE_MEDIA_CONFLICT",
+                    2,
+                    "同一来源的相同原始字节已登记为PDF；不能作为文本版本复用。",
+                ));
+            }
             version = Some(existing.clone());
             spans = store
                 .spans
@@ -520,7 +557,11 @@ fn register(
             ],
         )
         .map_err(ProjectError::database)?;
-    source_schema::validate(&transaction)?;
+    if updated.schema_version == 3 {
+        crate::pdf_source_schema::validate(&transaction)?;
+    } else {
+        source_schema::validate(&transaction)?;
+    }
     let saved = Store::load(&transaction, &info.project_id)?;
     if saved
         .reports
@@ -638,6 +679,7 @@ pub fn import(
         })?;
         Ok(CommandOutput {
             json,
+            exit_code: if plan.report.error.is_some() { 3 } else { 0 },
             failure: plan.report.error.map(|error| (error.code, error.message)),
         })
     })();

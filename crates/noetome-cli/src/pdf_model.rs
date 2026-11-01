@@ -14,13 +14,13 @@ use crate::sidecar::{
 pub const PROTOCOL: &str = "noetome-pdf-single-v2";
 pub const OPTIONS_VERSION: &str = "pdfplumber-glyph-lines-v1";
 
-fn required_option<'de, D: Deserializer<'de>, T: Deserialize<'de>>(
+pub(crate) fn required_option<'de, D: Deserializer<'de>, T: Deserialize<'de>>(
     deserializer: D,
 ) -> Result<Option<T>, D::Error> {
     Option::<T>::deserialize(deserializer)
 }
 
-fn deserialize_object<'de, D: Deserializer<'de>, T: Deserialize<'de>>(
+pub(crate) fn deserialize_object<'de, D: Deserializer<'de>, T: Deserialize<'de>>(
     deserializer: D,
 ) -> Result<T, D::Error> {
     struct ObjectVisitor<T>(std::marker::PhantomData<T>);

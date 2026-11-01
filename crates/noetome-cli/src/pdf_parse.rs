@@ -6,7 +6,7 @@ use std::path::{Path, PathBuf};
 use std::sync::atomic::AtomicBool;
 use std::time::Instant;
 
-use serde::Serialize;
+use serde::{Deserialize, Deserializer, Serialize};
 use uuid::Uuid;
 
 pub use crate::pdf_model::*;
@@ -33,41 +33,70 @@ pub enum PdfParseStatus {
     Failed,
 }
 
-#[derive(Debug, Clone, Serialize)]
-pub struct PdfFailure {
-    pub code: String,
-    pub message: String,
+impl<'de> Deserialize<'de> for PdfParseStatus {
+    fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        match String::deserialize(deserializer)?.as_str() {
+            "ready" => Ok(Self::Ready),
+            "needs_review" => Ok(Self::NeedsReview),
+            "failed" => Ok(Self::Failed),
+            _ => Err(serde::de::Error::custom("unknown PDF parse status")),
+        }
+    }
 }
 
-#[derive(Debug, Clone, Serialize)]
-pub struct PdfPageDisplay {
-    pub physical_page_idx: u32,
-    pub displayed_physical_page: u32,
-    pub printed_page_label: Option<String>,
-    pub status: UnitStatus,
+macro_rules! report_model {
+    ($name:ident { $($(#[$attr:meta])* $field:ident : $kind:ty),* $(,)? }) => {
+        #[derive(Debug, Clone, Serialize)]
+        pub struct $name { $($(#[$attr])* pub $field: $kind),* }
+        impl<'de> Deserialize<'de> for $name {
+            fn deserialize<D: Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+                #[derive(Deserialize)]
+                #[serde(deny_unknown_fields)]
+                struct Fields { $($(#[$attr])* $field: $kind),* }
+                let fields: Fields = crate::pdf_model::deserialize_object(deserializer)?;
+                Ok(Self { $($field: fields.$field),* })
+            }
+        }
+    };
 }
 
-#[derive(Debug, Clone, Serialize)]
-pub struct PdfParseReport {
-    pub schema_version: u32,
-    pub producer: Producer,
-    pub operation: &'static str,
-    pub status: PdfParseStatus,
-    pub input: InputFingerprint,
-    pub request: PdfRequest,
-    pub response: Option<PdfResponse>,
-    pub page_display: Vec<PdfPageDisplay>,
-    pub validation_status: &'static str,
-    pub failure: Option<PdfFailure>,
-    pub violations: Vec<ProtocolViolation>,
-    pub diagnostics: Vec<u8>,
-    pub pid: Option<u32>,
-    pub native_exit_code: Option<u32>,
-    pub processing_elapsed_ms: u64,
-    pub verified_artifact_count: u32,
-    pub verified_artifact_bytes: u64,
-    pub report_path: &'static str,
-}
+report_model!(PdfFailure {
+    code: String,
+    message: String
+});
+
+report_model!(PdfPageDisplay {
+    physical_page_idx: u32,
+    displayed_physical_page: u32,
+    #[serde(deserialize_with = "crate::pdf_model::required_option")]
+    printed_page_label: Option<String>,
+    status: UnitStatus,
+});
+
+report_model!(PdfParseReport {
+    schema_version: u32,
+    producer: Producer,
+    operation: String,
+    status: PdfParseStatus,
+    input: InputFingerprint,
+    request: PdfRequest,
+    #[serde(deserialize_with = "crate::pdf_model::required_option")]
+    response: Option<PdfResponse>,
+    page_display: Vec<PdfPageDisplay>,
+    validation_status: String,
+    #[serde(deserialize_with = "crate::pdf_model::required_option")]
+    failure: Option<PdfFailure>,
+    violations: Vec<ProtocolViolation>,
+    diagnostics: Vec<u8>,
+    #[serde(deserialize_with = "crate::pdf_model::required_option")]
+    pid: Option<u32>,
+    #[serde(deserialize_with = "crate::pdf_model::required_option")]
+    native_exit_code: Option<u32>,
+    processing_elapsed_ms: u64,
+    verified_artifact_count: u32,
+    verified_artifact_bytes: u64,
+    report_path: String,
+});
 
 #[derive(Debug)]
 pub struct PdfParseOutput {
@@ -75,6 +104,30 @@ pub struct PdfParseOutput {
     pub failed: bool,
     pub exit_code: u8,
     pub report: PdfParseReport,
+}
+
+pub(crate) struct PdfParseHandoff {
+    pub(crate) output: PdfParseOutput,
+    pub(crate) receipt: PdfParseReceipt,
+}
+
+/// Retains the original native capabilities until the project writer has
+/// recorded their identities. This capability is never serialized as evidence.
+pub(crate) struct PdfParseReceipt {
+    snapshot: InputSnapshot,
+    workspace: Workspace,
+    artifacts: Vec<OwnedFile>,
+}
+
+impl PdfParseReceipt {
+    pub(crate) fn verify(&self, cancel: &AtomicBool) -> Result<(), SidecarError> {
+        self.snapshot.verify(cancel)?;
+        self.workspace.verify(cancel)?;
+        for artifact in &self.artifacts {
+            artifact.verify(cancel)?;
+        }
+        Ok(())
+    }
 }
 
 pub fn default_adapter() -> Result<PathBuf, SidecarError> {
@@ -114,6 +167,17 @@ pub fn parse_pdf(
     limits: PdfLimits,
     cancel: &AtomicBool,
 ) -> Result<PdfParseOutput, SidecarError> {
+    parse_pdf_retained(parser, selected_input, new_workspace, limits, cancel)
+        .map(|handoff| handoff.output)
+}
+
+pub(crate) fn parse_pdf_retained(
+    parser: &PdfParserSpec,
+    selected_input: &Path,
+    new_workspace: &Path,
+    limits: PdfLimits,
+    cancel: &AtomicBool,
+) -> Result<PdfParseHandoff, SidecarError> {
     let started = Instant::now();
     crate::sidecar::check_cancel(cancel)?;
     check_policy(&limits)?;
@@ -323,13 +387,13 @@ pub fn parse_pdf(
     let report = PdfParseReport {
         schema_version: 1,
         producer: Producer::Parser,
-        operation: "source_parse_pdf",
+        operation: "source_parse_pdf".into(),
         status,
         input: request.input.clone(),
         request,
         response,
         page_display,
-        validation_status,
+        validation_status: validation_status.into(),
         failure: report_failure,
         violations,
         diagnostics,
@@ -338,7 +402,7 @@ pub fn parse_pdf(
         processing_elapsed_ms: started.elapsed().as_millis().min(u64::MAX as u128) as u64,
         verified_artifact_count,
         verified_artifact_bytes,
-        report_path: "parse.json",
+        report_path: "parse.json".into(),
     };
     let mut bytes =
         serde_json::to_vec_pretty(&report).map_err(|error| failure("PDF_REPORT_ERROR", error))?;
@@ -364,11 +428,18 @@ pub fn parse_pdf(
     // explicitly uncommitted pending report; cancellation after it cannot turn
     // the already delivered result into an API failure.
     workspace.publish_report(cancel)?;
-    Ok(PdfParseOutput {
-        json,
-        failed: exit_code != 0,
-        exit_code,
-        report,
+    Ok(PdfParseHandoff {
+        output: PdfParseOutput {
+            json,
+            failed: exit_code != 0,
+            exit_code,
+            report,
+        },
+        receipt: PdfParseReceipt {
+            snapshot,
+            workspace,
+            artifacts: artifact_guards,
+        },
     })
 }
 
@@ -402,4 +473,48 @@ fn check_policy(limits: &PdfLimits) -> Result<(), SidecarError> {
 
 fn failure(code: &'static str, error: impl fmt::Display) -> SidecarError {
     SidecarError::new(code, error.to_string())
+}
+
+#[cfg(test)]
+mod report_tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn persisted_host_report_requires_named_fields_and_explicit_nulls() {
+        let input =
+            json!({"relative_path":"input/raw.bin","byte_length":1,"sha256":"a".repeat(64)});
+        let value = json!({
+            "schema_version":1,"producer":"parser","operation":"source_parse_pdf","status":"failed",
+            "input":input,"request":{"schema_version":2,"protocol":PROTOCOL,
+                "request_id":"febdeacd-a3cb-4d22-9e42-407cdb72a53b","operation":"parse_pdf","input":input,
+                "workspace":{"artifact_directory":"artifacts"},"artifact_policy":{"max_file_bytes":1,"max_total_bytes":1,"max_files":1},
+                "pdf_policy":{"max_pages":1,"max_glyphs":1,"max_regions":1,"max_objects":1},"options_version":OPTIONS_VERSION},
+            "response":null,"page_display":[],"validation_status":"not_run",
+            "failure":{"code":"SIDECAR_TIMEOUT","message":"actual deadline exceeded"},"violations":[],"diagnostics":[],
+            "pid":null,"native_exit_code":null,"processing_elapsed_ms":1,
+            "verified_artifact_count":0,"verified_artifact_bytes":0,"report_path":"parse.json"
+        });
+        assert!(serde_json::from_value::<PdfParseReport>(value.clone()).is_ok());
+        for field in ["response", "failure", "pid", "native_exit_code"] {
+            let mut changed = value.clone();
+            changed.as_object_mut().unwrap().remove(field);
+            assert!(
+                serde_json::from_value::<PdfParseReport>(changed).is_err(),
+                "missing {field}"
+            );
+        }
+        let mut changed = value.clone();
+        changed["failure"] = json!(["SIDECAR_TIMEOUT", "actual deadline exceeded"]);
+        assert!(serde_json::from_value::<PdfParseReport>(changed).is_err());
+        let mut changed = value;
+        changed["unknown"] = json!(1);
+        assert!(serde_json::from_value::<PdfParseReport>(changed).is_err());
+    }
+
+    #[test]
+    fn parse_status_rejects_object_enum_encoding() {
+        assert!(serde_json::from_str::<PdfParseStatus>(r#"{"failed":null}"#).is_err());
+        assert!(serde_json::from_str::<PdfParseStatus>(r#""failed""#).is_ok());
+    }
 }

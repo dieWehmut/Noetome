@@ -820,7 +820,7 @@ fn unsupported_type_and_path_traversal_are_rejected_without_project_changes() {
     // Selecting arbitrary formats or paths with parent traversal must not start ingestion or widen input scope.
     let sandbox = Sandbox::new();
     let (project, _) = sandbox.project();
-    let unsupported = sandbox.root.join("unparsed.pdf");
+    let unsupported = sandbox.root.join("unparsed.zip");
     fs::write(&unsupported, b"not a supported format").unwrap();
     sandbox.rejects_preserving(
         &[

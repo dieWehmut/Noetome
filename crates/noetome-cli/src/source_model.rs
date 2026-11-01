@@ -14,11 +14,26 @@ use uuid::Uuid;
 use crate::project::{self, ProjectError};
 use crate::text::{ParseStatus, SpanKind};
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[serde(deny_unknown_fields)]
 pub(crate) struct SourceFailure {
     pub(crate) code: String,
     pub(crate) message: String,
+}
+impl<'de> Deserialize<'de> for SourceFailure {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        #[derive(Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct Fields {
+            code: String,
+            message: String,
+        }
+        let fields: Fields = crate::pdf_model::deserialize_object(deserializer)?;
+        Ok(Self {
+            code: fields.code,
+            message: fields.message,
+        })
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -76,18 +91,35 @@ pub(crate) struct ImportReport {
     pub(crate) error: Option<SourceFailure>,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub(crate) struct Store {
+    pub(crate) schema_version: u32,
     pub(crate) sources: BTreeMap<String, String>,
     pub(crate) versions: BTreeMap<String, SourceVersion>,
     pub(crate) spans: BTreeMap<String, Vec<SourceSpan>>,
     pub(crate) reports: Vec<ImportReport>,
+    pub(crate) pdf_imports: Vec<crate::pdf_source_model::PdfImportRecord>,
+}
+impl Default for Store {
+    fn default() -> Self {
+        Self {
+            schema_version: 1,
+            sources: BTreeMap::new(),
+            versions: BTreeMap::new(),
+            spans: BTreeMap::new(),
+            reports: Vec::new(),
+            pdf_imports: Vec::new(),
+        }
+    }
 }
 
 impl Store {
     pub(crate) fn load(connection: &Connection, project_id: &str) -> Result<Self, ProjectError> {
         let mut store = Self::default();
+        store.schema_version = connection
+            .pragma_query_value(None, "user_version", |row| row.get(0))
+            .map_err(invalid_record)?;
         let mut statement = connection
             .prepare("SELECT source_id, created_at FROM sources ORDER BY rowid")
             .map_err(invalid_record)?;
@@ -219,6 +251,9 @@ impl Store {
             )?;
             store.reports.push(report);
         }
+        if store.schema_version == 3 {
+            store.pdf_imports = crate::pdf_source_model::load_import_records(connection)?;
+        }
         store.validate_records(project_id)?;
         Ok(store)
     }
@@ -283,8 +318,13 @@ impl Store {
         Ok(())
     }
 
-    fn validate_records(&self, project_id: &str) -> Result<(), ProjectError> {
+    pub(crate) fn validate_records(&self, project_id: &str) -> Result<(), ProjectError> {
         require(valid_uuid(project_id), "项目 ID 无效")?;
+        require(
+            matches!(self.schema_version, 1 | 2 | 3)
+                && (self.schema_version == 3 || self.pdf_imports.is_empty()),
+            "来源登记 Schema 或 PDF 记录不匹配",
+        )?;
         for (source, created_at) in &self.sources {
             require(
                 valid_uuid(source) && valid_time(created_at),
@@ -311,6 +351,7 @@ impl Store {
             "来源位置清单与版本清单不一致",
         )?;
         let mut global_span_ids = BTreeSet::new();
+        let mut raw_keys = BTreeSet::new();
         for (id, version) in &self.versions {
             require(
                 id == &version.version_id
@@ -323,7 +364,8 @@ impl Store {
                 "来源版本修订或 UTC 时间无效",
             )?;
             require(
-                matches!(version.media_type.as_str(), "text/plain" | "text/markdown")
+                (matches!(version.media_type.as_str(), "text/plain" | "text/markdown")
+                    || (self.schema_version == 3 && version.media_type == "application/pdf"))
                     && !version.display_name.trim().is_empty(),
                 "来源类型或显示名称无效",
             )?;
@@ -332,13 +374,18 @@ impl Store {
                 "原始来源指纹或长度无效",
             )?;
             require(
+                raw_keys.insert((&version.source_id, &version.content_sha256)),
+                "同一来源的原始指纹重复",
+            )?;
+            require(
                 version.raw_snapshot == format!(".noetome-sources/{id}/raw.bin"),
                 "原始快照位置不符合固定版本目录",
             )?;
             match version.ingest_status.as_str() {
                 "ready" => {
                     require(
-                        version.error.is_none()
+                        version.media_type != "application/pdf"
+                            && version.error.is_none()
                             && version.normalization_version.as_deref()
                                 == Some(crate::text::NORMALIZATION_VERSION)
                             && version.normalized_sha256.as_deref().is_some_and(valid_hash)
@@ -349,7 +396,8 @@ impl Store {
                 }
                 "failed" => {
                     require(
-                        version.normalized_sha256.is_none()
+                        version.media_type != "application/pdf"
+                            && version.normalized_sha256.is_none()
                             && version.normalized_snapshot.is_none()
                             && version.normalization_version.is_none()
                             && version.error.as_ref().is_some_and(|error| {
@@ -358,13 +406,24 @@ impl Store {
                         "失败来源只能保存真实 UTF-8 失败和原始快照",
                     )?;
                 }
+                "acquired" => {
+                    require(
+                        self.schema_version == 3
+                            && version.media_type == "application/pdf"
+                            && version.normalized_sha256.is_none()
+                            && version.normalized_snapshot.is_none()
+                            && version.normalization_version.is_none()
+                            && version.error.is_none(),
+                        "PDF 原始版本只能保存 acquired 字节，不能附加文本或解析错误",
+                    )?;
+                }
                 _ => return Err(invalid_record("来源处理状态无效")),
             }
             let spans = self
                 .spans
                 .get(id)
                 .ok_or_else(|| invalid_record("版本缺少位置清单"))?;
-            if version.ingest_status == "failed" {
+            if version.ingest_status != "ready" {
                 require(spans.is_empty(), "失败来源不允许规范文本 Span")?;
             }
             for (ordinal, span) in spans.iter().enumerate() {
@@ -429,6 +488,7 @@ impl Store {
                         .ok_or_else(|| invalid_record("导入引用不存在的来源版本"))?;
                     require(
                         report.source_id.as_ref() == Some(&version.source_id)
+                            && version.media_type != "application/pdf"
                             && report.version.as_ref() == Some(version)
                             && self.spans.get(id) == Some(&report.spans)
                             && report.status == version.ingest_status
@@ -459,6 +519,66 @@ impl Store {
                 }
             }
         }
+        for report in &self.pdf_imports {
+            require(
+                self.schema_version == 3
+                    && valid_uuid(&report.import_id)
+                    && seen_import_ids.insert(report.import_id.clone())
+                    && valid_time(&report.imported_at)
+                    && report.knowledge_status == "pending",
+                "PDF 导入身份、UTC 时间或知识状态无效或与文本导入重复",
+            )?;
+            require(
+                valid_selected_path(&report.selected_path),
+                "PDF 导入的明确选取路径无效",
+            )?;
+            require(
+                report
+                    .source_id
+                    .as_ref()
+                    .is_none_or(|id| self.sources.contains_key(id)),
+                "PDF 导入引用不存在的来源",
+            )?;
+            match &report.version_id {
+                Some(id) => {
+                    let version = self
+                        .versions
+                        .get(id)
+                        .ok_or_else(|| invalid_record("PDF 导入引用不存在的原始版本"))?;
+                    require(
+                        version.media_type == "application/pdf"
+                            && version.ingest_status == "acquired"
+                            && report.source_id.as_ref() == Some(&version.source_id)
+                            && report.raw_status == "acquired"
+                            && report.parse_id.is_some(),
+                        "PDF 导入与原始获取身份或状态不一致",
+                    )?;
+                    require(
+                        report.reused_version == imported_versions.contains(id),
+                        "PDF 原始版本复用必须引用此前的获取事件",
+                    )?;
+                    imported_versions.insert(id.clone());
+                }
+                None => {
+                    require(
+                        report.raw_status == "failed"
+                            && report.parse_status == "not_run"
+                            && report.parse_id.is_none()
+                            && !report.reused_version
+                            && !report.reused_parse
+                            && report.exit_code == 3
+                            && report.error.as_ref().is_some_and(|error| {
+                                valid_failure(error)
+                                    && matches!(
+                                        error.code.as_str(),
+                                        "SOURCE_READ_ERROR" | "SOURCE_TOO_LARGE" | "SOURCE_CHANGED"
+                                    )
+                            }),
+                        "未读全 PDF 只能记录真实获取失败且不创建解析",
+                    )?;
+                }
+            }
+        }
         require(
             imported_versions.len() == self.versions.len(),
             "每个来源版本必须有初次导入记录",
@@ -477,7 +597,12 @@ impl Store {
             expected.insert(OsString::from("normalized.txt"));
         }
         exact_names(location, &expected)?;
-        let raw = read_snapshot(
+        let read = if version.media_type == "application/pdf" {
+            read_single_snapshot
+        } else {
+            read_snapshot
+        };
+        let raw = read(
             &location.join("raw.bin"),
             MAX_RAW_BYTES,
             Some(version.byte_length),
@@ -486,6 +611,10 @@ impl Store {
             || crate::text::sha256(&raw) != version.content_sha256
         {
             return Err(invalid_snapshot("原始快照字节、长度与版本指纹不一致"));
+        }
+        if version.media_type == "application/pdf" {
+            same_directory(location, &identity)?;
+            return Ok(());
         }
         match crate::text::analyze(&raw) {
             Ok(parsed) if version.ingest_status == "ready" => {
@@ -528,66 +657,88 @@ impl Store {
 
 const MAX_RAW_BYTES: u64 = 64 * 1024 * 1024;
 
-#[derive(Deserialize)]
-#[serde(deny_unknown_fields)]
 struct CacheOwner {
     schema_version: u32,
     project_id: String,
 }
-fn invalid_record(message: impl std::fmt::Display) -> ProjectError {
+impl<'de> Deserialize<'de> for CacheOwner {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        #[derive(Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct Fields {
+            schema_version: u32,
+            project_id: String,
+        }
+        let fields: Fields = crate::pdf_model::deserialize_object(deserializer)?;
+        Ok(Self {
+            schema_version: fields.schema_version,
+            project_id: fields.project_id,
+        })
+    }
+}
+pub(crate) fn invalid_record(message: impl std::fmt::Display) -> ProjectError {
     ProjectError::new(
         "SOURCE_INVALID_RECORD",
         2,
         format!("来源记录无效：{message}。没有修改数据库或快照。"),
     )
 }
-fn invalid_snapshot(message: &str) -> ProjectError {
+pub(crate) fn invalid_snapshot(message: &str) -> ProjectError {
     ProjectError::new(
         "SOURCE_INVALID_SNAPSHOT",
         2,
         format!("来源快照校验失败：{message}。原内容保留。"),
     )
 }
-fn snapshot_conflict(message: &str) -> ProjectError {
+pub(crate) fn snapshot_conflict(message: &str) -> ProjectError {
     ProjectError::new(
         "SOURCE_SNAPSHOT_CONFLICT",
         3,
         format!("来源快照目录冲突：{message}。不会覆盖或接管。"),
     )
 }
-fn require(condition: bool, message: &str) -> Result<(), ProjectError> {
+pub(crate) fn require(condition: bool, message: &str) -> Result<(), ProjectError> {
     if condition {
         Ok(())
     } else {
         Err(invalid_record(message))
     }
 }
-fn valid_uuid(value: &str) -> bool {
+pub(crate) fn valid_uuid(value: &str) -> bool {
     Uuid::parse_str(value).is_ok_and(|id| {
         id.get_version_num() == 4
             && id.get_variant() == uuid::Variant::RFC4122
             && id.to_string() == value
     })
 }
-fn valid_time(value: &str) -> bool {
+pub(crate) fn valid_time(value: &str) -> bool {
     OffsetDateTime::parse(value, &Rfc3339).is_ok_and(|time| time.offset() == UtcOffset::UTC)
 }
-fn valid_hash(value: &str) -> bool {
+pub(crate) fn valid_hash(value: &str) -> bool {
     value.len() == 64
         && value
             .bytes()
             .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
 }
-fn valid_failure(error: &SourceFailure) -> bool {
+pub(crate) fn valid_failure(error: &SourceFailure) -> bool {
     !error.code.trim().is_empty() && !error.message.trim().is_empty()
 }
-fn sql_u64(row: &rusqlite::Row<'_>, index: usize) -> rusqlite::Result<u64> {
+pub(crate) fn valid_selected_path(value: &str) -> bool {
+    let selected = Path::new(value);
+    !value.is_empty()
+        && selected.is_absolute()
+        && !value.contains('\0')
+        && !selected
+            .components()
+            .any(|part| matches!(part, Component::ParentDir))
+}
+pub(crate) fn sql_u64(row: &rusqlite::Row<'_>, index: usize) -> rusqlite::Result<u64> {
     u64::try_from(row.get::<_, i64>(index)?).map_err(|_| rusqlite::Error::InvalidQuery)
 }
 fn sql_usize(row: &rusqlite::Row<'_>, index: usize) -> rusqlite::Result<usize> {
     usize::try_from(row.get::<_, i64>(index)?).map_err(|_| rusqlite::Error::InvalidQuery)
 }
-fn sql_failure(
+pub(crate) fn sql_failure(
     row: &rusqlite::Row<'_>,
     code_index: usize,
     message_index: usize,
@@ -601,7 +752,7 @@ fn sql_failure(
         _ => Err(rusqlite::Error::InvalidQuery),
     }
 }
-fn directory(path: &Path) -> Result<same_file::Handle, ProjectError> {
+pub(crate) fn directory(path: &Path) -> Result<same_file::Handle, ProjectError> {
     project::check_components(path)?;
     let metadata = fs::symlink_metadata(path).map_err(|error| {
         if error.kind() == std::io::ErrorKind::NotFound {
@@ -618,13 +769,16 @@ fn directory(path: &Path) -> Result<same_file::Handle, ProjectError> {
     }
     same_file::Handle::from_path(path).map_err(|error| ProjectError::io(path, error))
 }
-fn same_directory(path: &Path, identity: &same_file::Handle) -> Result<(), ProjectError> {
+pub(crate) fn same_directory(
+    path: &Path,
+    identity: &same_file::Handle,
+) -> Result<(), ProjectError> {
     if directory(path)? != *identity {
         return Err(snapshot_conflict("校验期间目录身份发生变化"));
     }
     Ok(())
 }
-fn exact_names(path: &Path, expected: &BTreeSet<OsString>) -> Result<(), ProjectError> {
+pub(crate) fn exact_names(path: &Path, expected: &BTreeSet<OsString>) -> Result<(), ProjectError> {
     let names = fs::read_dir(path)
         .map_err(|error| ProjectError::io(path, error))?
         .map(|entry| entry.map(|entry| entry.file_name()))
@@ -635,10 +789,25 @@ fn exact_names(path: &Path, expected: &BTreeSet<OsString>) -> Result<(), Project
     }
     Ok(())
 }
-fn read_snapshot(
+pub(crate) fn read_snapshot(
     path: &Path,
     limit: u64,
     expected_length: Option<u64>,
+) -> Result<Vec<u8>, ProjectError> {
+    read_snapshot_inner(path, limit, expected_length, false)
+}
+pub(crate) fn read_single_snapshot(
+    path: &Path,
+    limit: u64,
+    expected_length: Option<u64>,
+) -> Result<Vec<u8>, ProjectError> {
+    read_snapshot_inner(path, limit, expected_length, true)
+}
+fn read_snapshot_inner(
+    path: &Path,
+    limit: u64,
+    expected_length: Option<u64>,
+    single_link: bool,
 ) -> Result<Vec<u8>, ProjectError> {
     project::check_components(path)?;
     let before = fs::symlink_metadata(path).map_err(|error| {
@@ -658,6 +827,13 @@ fn read_snapshot(
         return Err(invalid_snapshot("快照文件超出受限读取长度"));
     }
     let guard = project::read_guard(path)?;
+    if single_link
+        && noetome_sidecar_platform::file_link_count(&guard)
+            .map_err(|error| ProjectError::io(path, error))?
+            != 1
+    {
+        return Err(snapshot_conflict("PDF 快照必须仅有一个硬链接"));
+    }
     let opened_metadata = guard
         .metadata()
         .map_err(|error| ProjectError::io(path, error))?;
@@ -695,6 +871,13 @@ fn read_snapshot(
         || before.modified().ok() != after.modified().ok()
     {
         return Err(invalid_snapshot("读取期间快照身份、字节或长度发生变化"));
+    }
+    if single_link
+        && noetome_sidecar_platform::file_link_count(&guard)
+            .map_err(|error| ProjectError::io(path, error))?
+            != 1
+    {
+        return Err(snapshot_conflict("读取期间 PDF 快照新增硬链接"));
     }
     Ok(bytes)
 }
@@ -802,10 +985,12 @@ mod tests {
             error: None,
         };
         Store {
+            schema_version: 2,
             sources: BTreeMap::from([(SOURCE.into(), TIME.into())]),
             versions: BTreeMap::from([(VERSION.into(), version)]),
             spans: BTreeMap::from([(VERSION.into(), spans)]),
             reports: vec![report],
+            pdf_imports: Vec::new(),
         }
     }
     fn database(store: &Store) -> Connection {

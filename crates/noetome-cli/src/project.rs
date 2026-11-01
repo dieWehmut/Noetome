@@ -1,4 +1,4 @@
-//! Project initialization and read-only Schema 1/2 validation.
+//! Project initialization and read-only Schema 1/2/3 validation.
 use std::fmt;
 use std::fs::{self, Metadata, OpenOptions};
 use std::io::{self, Write};
@@ -29,7 +29,7 @@ PRAGMA user_version = 1;
 PRAGMA application_id = 1313817940;
 ";
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct ProjectInfo {
     pub project_id: String,
@@ -37,6 +37,27 @@ pub struct ProjectInfo {
     pub created_at: String,
     pub state: String,
     pub database: String,
+}
+impl<'de> Deserialize<'de> for ProjectInfo {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        #[derive(Deserialize)]
+        #[serde(deny_unknown_fields)]
+        struct Fields {
+            project_id: String,
+            schema_version: u32,
+            created_at: String,
+            state: String,
+            database: String,
+        }
+        let fields: Fields = crate::pdf_model::deserialize_object(deserializer)?;
+        Ok(Self {
+            project_id: fields.project_id,
+            schema_version: fields.schema_version,
+            created_at: fields.created_at,
+            state: fields.state,
+            database: fields.database,
+        })
+    }
 }
 
 #[derive(Debug)]
@@ -632,12 +653,12 @@ pub(crate) fn reject_sidecars(root: &Path) -> Result<(), ProjectError> {
 }
 
 fn validate_info(info: &ProjectInfo) -> Result<(), ProjectError> {
-    if !matches!(info.schema_version, 1 | 2) {
+    if !matches!(info.schema_version, 1 | 2 | 3) {
         return Err(ProjectError::new(
             "PROJECT_UNSUPPORTED_SCHEMA",
             2,
             format!(
-                "不支持项目 Schema {}；当前只支持 1 和 2，没有执行迁移。",
+                "不支持项目 Schema {}；当前只支持 1、2 和 3，没有执行迁移。",
                 info.schema_version
             ),
         ));
@@ -737,7 +758,7 @@ fn inspect_with_writer(
     let version: u32 = connection
         .pragma_query_value(None, "user_version", |r| r.get(0))
         .map_err(ProjectError::database)?;
-    if !matches!(version, 1 | 2) {
+    if !matches!(version, 1 | 2 | 3) {
         return Err(ProjectError::new(
             "PROJECT_UNSUPPORTED_SCHEMA",
             2,
@@ -776,6 +797,9 @@ fn inspect_with_writer(
     }
     if version == 2 {
         crate::source_schema::validate(&connection)?;
+    }
+    if version == 3 {
+        crate::pdf_source_schema::validate(&connection)?;
     }
     let columns = connection
         .prepare("PRAGMA table_info(project_metadata)")
@@ -916,6 +940,54 @@ mod tests {
         assert_eq!(inspect(&root).unwrap(), info);
         assert_eq!(inspect(&root).unwrap(), info);
         assert_eq!(snapshot(&root), before);
+    }
+
+    #[test]
+    fn pdf_schema_three_preserves_five_field_config_and_readonly_inspection() {
+        let sandbox = Sandbox::new();
+        let root = sandbox.0.join("schema-three");
+        let info = initialize(&root).unwrap();
+        let mut connection = Connection::open(root.join(DATABASE)).unwrap();
+        let updated = crate::pdf_source_schema::upgrade(&mut connection, &info).unwrap();
+        connection.close().unwrap();
+        fs::write(root.join(CONFIG), serde_json::to_vec(&updated).unwrap()).unwrap();
+        let before = snapshot(&root);
+        assert_eq!(inspect(&root).unwrap(), updated);
+        assert_eq!(inspect(&root).unwrap(), updated);
+        assert_eq!(snapshot(&root), before);
+        assert_eq!(
+            serde_json::to_value(&updated)
+                .unwrap()
+                .as_object()
+                .unwrap()
+                .len(),
+            5
+        );
+        let mut invalid = serde_json::to_value(&updated).unwrap();
+        invalid["pdf_policy"] = serde_json::json!({"max_pages":1});
+        fs::write(root.join(CONFIG), serde_json::to_vec(&invalid).unwrap()).unwrap();
+        assert_eq!(inspect(&root).unwrap_err().code(), "PROJECT_INVALID_CONFIG");
+        assert_eq!(
+            fs::read(root.join(DATABASE)).unwrap(),
+            before[Path::new(DATABASE)]
+        );
+    }
+    #[test]
+    fn project_config_requires_five_named_fields_and_rejects_sequence_form() {
+        let sandbox = Sandbox::new();
+        let root = sandbox.0.join("config-array");
+        let info = initialize(&root).unwrap();
+        let before = fs::read(root.join(DATABASE)).unwrap();
+        let sequence = serde_json::json!([
+            info.project_id,
+            info.schema_version,
+            info.created_at,
+            info.state,
+            info.database
+        ]);
+        fs::write(root.join(CONFIG), serde_json::to_vec(&sequence).unwrap()).unwrap();
+        assert_eq!(inspect(&root).unwrap_err().code(), "PROJECT_INVALID_CONFIG");
+        assert_eq!(fs::read(root.join(DATABASE)).unwrap(), before);
     }
 
     #[test]

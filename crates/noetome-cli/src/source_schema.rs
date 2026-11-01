@@ -73,7 +73,9 @@ PRAGMA user_version = 2;
 PRAGMA application_id = 1313817940;
 ";
 
-fn shape(connection: &Connection) -> Result<Vec<(String, String, String)>, ProjectError> {
+pub(crate) fn shape(
+    connection: &Connection,
+) -> Result<Vec<(String, String, String)>, ProjectError> {
     connection
         .prepare("SELECT name, type, coalesce(sql, '') FROM sqlite_schema WHERE name NOT GLOB 'sqlite_*' ORDER BY name")
         .and_then(|mut statement| {
@@ -114,6 +116,10 @@ pub(crate) fn upgrade(
     connection: &mut Connection,
     info: &ProjectInfo,
 ) -> Result<ProjectInfo, ProjectError> {
+    if info.schema_version == 3 {
+        crate::pdf_source_schema::validate(connection)?;
+        return Ok(info.clone());
+    }
     if info.schema_version == 2 {
         validate(connection)?;
         return Ok(info.clone());
@@ -122,7 +128,7 @@ pub(crate) fn upgrade(
         return Err(ProjectError::new(
             "PROJECT_UNSUPPORTED_SCHEMA",
             2,
-            "来源登记只支持项目Schema 1和2。",
+            "来源登记只支持项目Schema 1、2和3。",
         ));
     }
     connection

@@ -13,6 +13,9 @@ mod fixture_plan;
 mod fixture_render;
 mod pdf_model;
 pub mod pdf_parse;
+pub mod pdf_source;
+mod pdf_source_model;
+mod pdf_source_schema;
 pub mod project;
 pub mod sidecar;
 mod sidecar_model;
@@ -31,6 +34,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
 用法：noetome [选项]
       noetome project <init|inspect> <路径>
       noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
+      noetome source import <项目路径> <PDF文件> --python <绝对解释器路径> [--source-id <既有ID>] [--max-pages <0..63>] [--timeout-ms <0..30000>]
       noetome source inspect <项目路径> <import-id>
       noetome source parse-pdf <PDF文件> <全新测试输出根> --python <绝对解释器路径> [--timeout-ms <0..30000>]
       noetome case verify <fixture目录>
@@ -41,14 +45,14 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   -V, --version    显示版本
   project init <路径>     在尚不存在的目录初始化空项目
   project inspect <路径>  只读检查已有项目
-  source import           登记单份UTF8文本、不可变版本及完整位置清单
+  source import           登记单份UTF8文本或PDF、原始版本及解析结果
   source inspect          只读核对导入记录和真实快照
   source parse-pdf        解析选定的文本PDF，保存物理页、区域及原始证据报告
   case verify             只读校验明确fixture的来源、IR、计划与独立预期
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
 
 不传参数时显示帮助；project --help 或 source --help 查看命令说明。
-当前来源由用户明确选取，fixture知识与计划由作者声明；文本PDF可独立解析，项目登记和自动知识抽取尚未实现。
+当前来源由用户明确选取，fixture知识与计划由作者声明；PDF可解析并登记，自动知识抽取尚未实现。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -66,12 +70,16 @@ init建立空项目；来源登记通过source import，知识生成尚未实现
 pub const SOURCE_HELP: &str = "Noetome 来源命令
 
 用法：noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
+      noetome source import <项目路径> <PDF文件> --python <绝对解释器路径> [--source-id <既有ID>] [--max-pages <0..63>] [--timeout-ms <0..30000>]
       noetome source inspect <项目路径> <import-id>
       noetome source parse-pdf <PDF文件> <全新测试输出根> --python <绝对解释器路径> [--timeout-ms <0..30000>]
 
 import：只读选取的UTF8文件（最多64 MiB），保存原始/规范快照、来源版本和完整Span清单。
 初次写入将Schema1空项目升级为Schema2，保持项目身份和创建时间；已有版本保留。
+PDF导入显式升级为Schema3，保留旧文本记录；原始PDF与解析结果分别登记，不创建旧文本normalized快照。
 相同内容提示复用；显式source-id只在该来源身份内换版，不按名称合并。
+PDF相同原始字节复用版本，相同解析配置仅复用ready结果；失败或需复核每次形成新的真实解析尝试。
+--max-pages收紧默认63页政策；--timeout-ms控制本次执行，默认30秒；两者可分别设置。
 inspect：使用导入结果的import-id只读核对持久记录、快照与位置，不迁移或修复。
 parse-pdf：只读单份PDF（最多64 MiB），调用锁定Python文本解析器，输出根须尚不存在。
 保存parse.json、原始PDF、完整已确认物理页清单、区域正文和资源指纹；显示页号为物理索引加1。
@@ -80,7 +88,7 @@ Python环境安装步骤见sidecars/pdf_parser/README.md；配置/协议错误�
 结果为JSON；知识状态仍为pending。UTF8无效或文件未能完整读取会记录真实失败并返回非零。
 以 - 开头的路径可在动词后加 -- 分隔符；中文和空格路径须作为单独参数。
 项目写入中断保留标记、候选与备份；请检查旧目录并用新的测试项目重试。
-source导入不生成IR或Vault；已审阅fixture通过case compile输出临时Vault。PDF项目登记和模型抽取尚未实现。
+source导入不生成IR或Vault；已审阅fixture通过case compile输出临时Vault。模型抽取尚未实现。
 ";
 
 pub const CASE_HELP: &str = "Noetome fixture契约校验
@@ -118,6 +126,14 @@ pub enum CliCommand {
         project: PathBuf,
         file: PathBuf,
         source_id: Option<String>,
+    },
+    SourceImportPdf {
+        project: PathBuf,
+        file: PathBuf,
+        source_id: Option<String>,
+        python: PathBuf,
+        timeout_ms: u64,
+        max_pages: u32,
     },
     SourceInspect {
         project: PathBuf,
@@ -262,6 +278,69 @@ fn source_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
             timeout_ms: timeout.unwrap_or(30000),
         });
     }
+    if verb == "import" {
+        if let [project, file, options @ ..] = tail {
+            if PathBuf::from(file)
+                .extension()
+                .is_some_and(|ext| ext.eq_ignore_ascii_case("pdf"))
+            {
+                if !valid_path(project) || !valid_path(file) {
+                    return Err(INVALID_ARGUMENT);
+                }
+                let mut source_id = None;
+                let mut python = None;
+                let mut timeout = None;
+                let mut max_pages = None;
+                let mut options = options;
+                while let [flag, value, rest @ ..] = options {
+                    if flag == "--python" && python.is_none() && !value.is_empty() {
+                        let path = PathBuf::from(value);
+                        if !path.is_absolute() {
+                            return Err(INVALID_ARGUMENT);
+                        }
+                        python = Some(path);
+                    } else if flag == "--source-id" && source_id.is_none() {
+                        source_id = Some(
+                            value
+                                .to_str()
+                                .filter(|v| !v.is_empty())
+                                .ok_or(INVALID_ARGUMENT)?
+                                .into(),
+                        );
+                    } else if (flag == "--timeout-ms" && timeout.is_none())
+                        || (flag == "--max-pages" && max_pages.is_none())
+                    {
+                        let digits = value.to_str().ok_or(INVALID_ARGUMENT)?;
+                        if digits.is_empty() || !digits.bytes().all(|byte| byte.is_ascii_digit()) {
+                            return Err(INVALID_ARGUMENT);
+                        }
+                        let number: u64 = digits.parse().map_err(|_| INVALID_ARGUMENT)?;
+                        if flag == "--timeout-ms" && number <= 30000 {
+                            timeout = Some(number);
+                        } else if flag == "--max-pages" && number <= 63 {
+                            max_pages = Some(number as u32);
+                        } else {
+                            return Err(INVALID_ARGUMENT);
+                        }
+                    } else {
+                        return Err(INVALID_ARGUMENT);
+                    }
+                    options = rest;
+                }
+                if !options.is_empty() {
+                    return Err(INVALID_ARGUMENT);
+                }
+                return Ok(CliCommand::SourceImportPdf {
+                    project: project.into(),
+                    file: file.into(),
+                    source_id,
+                    python: python.ok_or(INVALID_ARGUMENT)?,
+                    timeout_ms: timeout.unwrap_or(30000),
+                    max_pages: max_pages.unwrap_or(63),
+                });
+            }
+        }
+    }
     match tail {
         [project, file] if verb == "import" && valid_path(project) && valid_path(file) => {
             Ok(CliCommand::SourceImport {
@@ -317,5 +396,54 @@ pub fn render(args: &[OsString]) -> Result<String, &'static str> {
         [arg] if arg == "--help" || arg == "-h" => Ok(HELP.to_owned()),
         [arg] if arg == "--version" || arg == "-V" => Ok(format!("noetome {VERSION}\n")),
         _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+#[cfg(test)]
+mod pdf_import_arguments {
+    use super::*;
+    fn args(tail: &[&str]) -> Vec<OsString> {
+        ["source", "import", "项目 path", "文本.PDF"]
+            .into_iter()
+            .chain(tail.iter().copied())
+            .map(OsString::from)
+            .collect()
+    }
+    #[test]
+    fn pdf_import_has_explicit_runtime_and_real_policy() {
+        let runtime = std::env::temp_dir().join("pdf-import-python.exe");
+        let command = parse(&args(&[
+            "--max-pages",
+            "1",
+            "--python",
+            runtime.to_str().unwrap(),
+            "--timeout-ms",
+            "2000",
+        ]))
+        .unwrap();
+        assert!(matches!(
+            command,
+            CliCommand::SourceImportPdf {
+                max_pages: 1,
+                timeout_ms: 2000,
+                ..
+            }
+        ));
+    }
+    #[test]
+    fn malformed_pdf_import_options_are_rejected_before_io() {
+        let runtime = std::env::temp_dir().join("pdf-import-python.exe");
+        let runtime = runtime.to_str().unwrap();
+        for tail in [
+            &[][..],
+            &["--python", "relative.exe"][..],
+            &["--python", runtime, "--max-pages", "64"][..],
+            &["--python", runtime, "--timeout-ms", "30001"][..],
+            &["--python", runtime, "--python", runtime][..],
+            &["--python", runtime, "--max-pages", "1", "--max-pages", "1"][..],
+            &["--python", runtime, "--source-id"][..],
+        ] {
+            assert!(parse(&args(tail)).is_err(), "accepted {tail:?}");
+        }
     }
 }

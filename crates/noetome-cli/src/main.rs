@@ -2,7 +2,7 @@ use std::env;
 use std::io::{self, Write};
 use std::process::ExitCode;
 
-use noetome_cli::{CliCommand, fixture, fixture_compile, pdf_parse, project, source};
+use noetome_cli::{CliCommand, fixture, fixture_compile, pdf_parse, pdf_source, project, source};
 
 fn main() -> ExitCode {
     // Keep OS-native arguments: malformed Unicode is an input error, not a panic.
@@ -76,9 +76,9 @@ fn main() -> ExitCode {
             source_id,
         } => match source::import(&project, &file, source_id.as_deref()) {
             Ok(output) => {
+                result_code = output.exit_code;
                 if let Some((code, message)) = output.failure {
                     let _ = writeln!(io::stderr().lock(), "{code}：{message}");
-                    result_code = 3;
                 }
                 output.json
             }
@@ -87,6 +87,39 @@ fn main() -> ExitCode {
                 return ExitCode::from(error.exit_code());
             }
         },
+        CliCommand::SourceImportPdf {
+            project,
+            file,
+            source_id,
+            python,
+            timeout_ms,
+            max_pages,
+        } => {
+            let adapter = match pdf_parse::default_adapter() {
+                Ok(path) => path,
+                Err(error) => {
+                    let _ = writeln!(io::stderr().lock(), "{error}");
+                    return ExitCode::from(pdf_parse::error_exit_code(&error));
+                }
+            };
+            let parser = pdf_parse::PdfParserSpec { python, adapter };
+            let mut limits = pdf_parse::PdfLimits::default();
+            limits.transport.timeout = std::time::Duration::from_millis(timeout_ms);
+            limits.policy.max_pages = max_pages;
+            match pdf_source::import(&project, &file, source_id.as_deref(), &parser, limits) {
+                Ok(output) => {
+                    result_code = output.exit_code;
+                    if let Some((code, message)) = output.failure {
+                        let _ = writeln!(io::stderr().lock(), "{code}：{message}");
+                    }
+                    output.json
+                }
+                Err(error) => {
+                    let _ = writeln!(io::stderr().lock(), "{error}");
+                    return ExitCode::from(error.exit_code());
+                }
+            }
+        }
         CliCommand::SourceInspect { project, import_id } => {
             match source::inspect(&project, &import_id) {
                 Ok(output) => output,
@@ -149,7 +182,7 @@ fn project_summary(result: &str, path: &std::path::Path, info: &project::Project
         "来源登记Schema；此状态只表示项目建立完成"
     };
     format!(
-        "结果：{result}\n项目：{}\n项目 ID：{}\nSchema 版本：{}\n创建时间：{}\n状态：{}（{stage}）\n配置：{}\n数据库：{}\n单份UTF8文本通过source import登记；知识抽取和笔记生成尚未实现。\n",
+        "结果：{result}\n项目：{}\n项目 ID：{}\nSchema 版本：{}\n创建时间：{}\n状态：{}（{stage}）\n配置：{}\n数据库：{}\n选取的UTF8文本或PDF通过source import登记；知识抽取和笔记生成尚未实现。\n",
         path.display(),
         info.project_id,
         info.schema_version,
