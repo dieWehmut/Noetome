@@ -453,7 +453,7 @@
       "id": "B02-T01",
       "title": "登记单份UTF8文本来源版本与完整Span清单",
       "batch": "B02",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B01-T02",
         "B01A-T01"
@@ -472,7 +472,67 @@
         "Schema 1空项目升级方案与只读inspect兼容边界明确；升级和导入失败保护原配置、数据库、旧内容及目录外哨兵，未完成状态不能显示成功",
         "临时目录中正常/重复/变化/失败/中文路径及链接越界行为验证、工作区检查与日志检查通过，提交独立验收证据后推送"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-01T07:31:22Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "推进单份UTF8文本来源版本、完整Span及最小导入登记；以导入触发受保护的Schema2升级，保持inspect只读，独立验证失败字节/身份/中断/路径保护；不启动IR或Vault。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-01T08:24:46Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "已实现单份UTF8 MD/TXT来源版本、不可变原始/规范快照、完整Span和最小导入记录，支持受保护Schema1到2升级及只读查看；知识仍pending。实现已小步提交4605f08，本轮不启动fixture或Vault。",
+          "validation": [
+            "本轮实际运行cargo fmt --all --check及cargo_local check/test --workspace --locked --offline全部通过；100项Rust测试0失败0忽略，含49库单元、4基础CLI、13项目、19来源及15桌面测试。npm run web:build严格类型和生产构建通过；Python日志unittest12项通过、独立脚本语法检查通过。",
+            "实际以同字节Medium CLI副本在新AppData命令视图和直接D盘测试目录分别运行独立CLI/只读PythonSQLite/SHA验收：每轮6导入、2来源、3版本、6Span；重复和重命名稳定、变化保留旧快照、无效UTF8保留raw失败版本、缺失文件无假版本、两计数真实对账、项目搬移及原文件删除后缓存只读检查通过，哨兵和mtime不变。AppData映射至Codex包内缓存的真实路径单列，未替代用户原生桌面验收。",
+            "真实Windows源独占读取及数据库替换/清理占用、junction、未知缓存/写目录、6阶段受控失败及3阶段实际进程终止均在本轮工作区套件运行通过；独立主链审查无Critical/Important。7份Markdown的62个本地链接、两份JSON实际计数解析、devlog check和git diff --check通过。仅当前Windows来源登记，不声称任意并发/断电、生产Vault、PDF/模型/IR或知识质量验收。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/source.rs",
+              "sha256": "a39e193cfd8ef8e548e15fc77f22d7b22af458c2b5ec8f35ea4ee87bedc79dd2"
+            },
+            {
+              "path": "crates/noetome-cli/src/source_model.rs",
+              "sha256": "038b6459a62b9fc4d18d29427b042f7bce02482ab95c47381ab2835a7bfee040"
+            },
+            {
+              "path": "crates/noetome-cli/src/source_write.rs",
+              "sha256": "3ecc5b015af8eda0d4054a19b70bdaae3c61e8296befa422bd00ba8c8713131c"
+            },
+            {
+              "path": "crates/noetome-cli/src/text.rs",
+              "sha256": "d435ab083930558646596fc796930be71eb92b00f8dd49ebf66b280c5322c00e"
+            },
+            {
+              "path": "crates/noetome-cli/tests/source.rs",
+              "sha256": "285a50093e006ca7522f11f2937e49a4841f9d3acaebb7052914099f238ebe2d"
+            },
+            {
+              "path": "scripts/verify_text_source.py",
+              "sha256": "63a74c273ece1ee5f8a80ca5cef6d04c5fa7b55ed596dcf13dca97d60c8846e7"
+            },
+            {
+              "path": "doc/validation/B02-T01.md",
+              "sha256": "6c6bab8252100902b1a6c30473db511f5a087526457f97651db1952c84878759"
+            },
+            {
+              "path": "doc/validation/B02-T01-direct.json",
+              "sha256": "534b0122322dd54ea2be0a651ec6237423567bd20bdefe6f6551263b614b914b"
+            },
+            {
+              "path": "doc/validation/B02-T01-local.json",
+              "sha256": "b8e26d14869675a0762dbebb46d02f8e29538a79027ac6717d67a78cdbbff21b"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B02-T02",

@@ -2,7 +2,7 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-Rust CLI 提供空项目初始化与只读检查，以及帮助和版本命令。桌面骨架提供帮助、版本与本地连接检查，项目业务尚未接入桌面；资料导入和知识生成仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目与来源业务尚未接入桌面；PDF解析、模型抽取和知识生成仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
 
 ## 开始开发
 
@@ -24,7 +24,7 @@ cargo run -p noetome-cli --locked --offline -- --help
 cargo run -p noetome-cli --locked --offline -- --version
 ```
 
-构建后的 Windows 程序位于 `target/debug/noetome.exe`，当前版本为 `0.1.0`。无参数、`--help`（`-h`）显示帮助；`--version`（`-V`）显示版本。帮助和版本每次仅接受一个选项；项目命令用法见下文。未知或多余参数返回退出码 `2`、在标准错误输出 `CLI_INVALID_ARGUMENT` 和用法提示。输出失败返回 `1` 和 `CLI_OUTPUT_ERROR`。帮助、版本及无效语法不创建项目、数据库或用户配置。
+构建后的 Windows 程序位于 `target/debug/noetome.exe`，当前版本为 `0.1.0`。无参数、`--help`（`-h`）显示帮助；`--version`（`-V`）显示版本。帮助和版本每次仅接受一个选项；项目和来源命令用法见下文。未知或多余参数返回退出码 `2`、在标准错误输出 `CLI_INVALID_ARGUMENT` 和用法提示。输出失败返回 `1` 和 `CLI_OUTPUT_ERROR`。帮助、版本及无效语法不创建项目、数据库或用户配置。
 
 本机 Low 完整性构建树中的原生 C 编译器无法使用默认系统临时目录时，可改用 `./scripts/cargo_local.ps1`，其余参数与 Cargo 相同。脚本为编译选择 `target/compiler-temp`，结束后恢复调用者的临时目录环境，不修改权限。
 
@@ -53,13 +53,38 @@ PowerShell 调用脚本时须把传给 Cargo 的分隔符写为 `'--'`，避免�
 
 init 的父目录须已存在，目标目录须尚不存在；已有空目录、已有项目或未知内容不会被接管。配置 `project.json` 和数据库 `project.sqlite` 保存同一个 UUID v4、Schema 1、UTC 创建时间和 `initialized` 状态。数据库位置为项目相对路径，项目搬移后身份不变。
 
-inspect 核对实际配置和 SQLite 状态，不执行迁移、修复或事务恢复；重复运行不改写项目文件。无效契约或不支持的 Schema 返回 `2`，已有目标、初始化中断、数据库占用或文件访问失败返回 `3`，并显示稳定错误码。参数语法错误仍返回 `2`。
+inspect 核对实际配置和 SQLite 状态，支持严格Schema 1/2，不执行迁移、修复或事务恢复；重复运行不改写项目文件。配置、数据库metadata及user_version须一致。无效契约或不支持的 Schema 返回 `2`，已有目标、初始化中断、数据库占用或文件访问失败返回 `3`，并显示稳定错误码。参数语法错误仍返回 `2`。
 
-初始化中断时，标记、暂存文件或缺失的配对文件会被明确报告并保留。已经确认安全回滚的普通失败可在原路径重试；保留的中断目录需先检查，当前恢复方式是另选新目录初始化空项目。当前没有原目录自动续写、生产任务恢复或资料导入。以 `-` 开头的项目路径前可加 `--` 分隔符，使用 `noetome project --help` 查看说明。
+初始化中断时，标记、暂存文件或缺失的配对文件会被明确报告并保留。已经确认安全回滚的普通失败可在原路径重试；保留的中断目录需先检查，当前恢复方式是另选新目录初始化空项目。当前没有原目录自动续写或生产任务恢复。以 `-` 开头的项目路径前可加 `--` 分隔符，使用 `noetome project --help` 查看说明。
 
 本机原 `target/` 可执行文件继承 Low 标签，不能向普通 Medium 用户目录写入；测试示例因此使用构建树内的新目录。向正常用户目录创建项目时，须从正常输出位置的 CLI 副本运行。不得用用户生产 Vault 验证本轮能力。
 
 Windows 路径、文件占用、真实初始化中断与恢复测试及命令输出见 [B01-T02 验证记录](doc/validation/B01-T02.md)。
+
+## 文本来源登记与检查
+
+只读用户明确选取的一份MD/TXT，不扫描目录。下例中的文件须由执行者准备；使用新的测试项目，避免以生产Vault验证功能。
+
+```powershell
+./target/debug/noetome.exe source --help
+./target/debug/noetome.exe source import './target/manual-projects/学习项目' './target/manual-projects/自造来源.md'
+./target/debug/noetome.exe source inspect './target/manual-projects/学习项目' '<上次输出的import_id>'
+./target/debug/noetome.exe source import './target/manual-projects/学习项目' './target/manual-projects/自造来源.md' --source-id '<既有source_id>'
+```
+
+成功输出纯JSON，包含`import_id`、`source_id`、`version_id`、`status`、`reused`、版本和完整Span清单。报告`schema_version=1`是JSON接口版本；首次导入将项目配置与数据库从Schema 1升级到2，保留项目身份、创建时间和`initialized`基础状态。该状态只表示项目已经建立，不能代表项目仍为空或知识生成完成。
+
+单文件上限64 MiB。规范化仅移除首个BOM并将CRLF/CR统一为LF；不替换无效UTF8或删除未理解文字。标题、文本、围栏代码和空白Span无缝覆盖全部规范UTF8字节，以半开字节区间和1起始的包含式行号定位；空文件0段，未闭合代码围栏保留内容并标为`needs_review`。`span_count`和`pending_extraction_count`均为实际Span数量，`knowledge_status=pending`，不表示知识覆盖率。
+
+未指定ID时优先保持此前同一选取路径的来源关联，否则复用已有同字节来源；相同字节再次导入或重命名不重建版本/Span，每次仍生成独立导入记录。显式`source_id`固定既有来源身份，再在该来源内部复用或增加修订，不因SHA相同合并另一来源。变化创建新的`version_id`，旧快照和位置保持不变。内部快照固定在项目内`.noetome-sources/<version_id>/`，owner绑定项目ID，路径为项目相对定位。
+
+完整读到但UTF8无效时，保存`failed`版本及真实原始SHA、长度和`raw.bin`，规范字段为null且Span为0；未读全、文件占用、不存在或超过上限时，只登记失败尝试，不制造版本或截断文本。失败记录成功持久化时stdout仍有JSON，stderr显示稳定错误码，导入退出`3`。非法身份、类型、路径或契约在写入前拒绝，stdout为空、退出`2`；文件访问或受保护写入失败退出`3`。
+
+`source inspect`重读持久记录、真实快照和全部区间；记录本身为`failed`但完整有效时查看退出`0`。查看保持只读，不访问原文件来重建缓存，不迁移或修复项目。缓存相对定位支持项目搬移，原文件重新定位及可用性状态仍属后续功能。
+
+升级和导入使用独占`.noetome-writing`目录保存候选、旧配置/数据库备份及操作说明，发布前后重读验证。普通失败只有在身份和字节仍属于本次写入时才恢复与清理；中断、未知内容、替换或无法确认的清理保留现场并报告未完成。遇该目录时公开inspect拒绝，不能把事务残留显示为成功。目前未提供自动恢复入口，也未承诺任意外部并发或任意断电下多文件原子提交。
+
+本机Windows完整来源验证、失败保护、独立SQLite/快照检查和正常完整性CLI副本实测见[B02-T01验证记录](doc/validation/B02-T01.md)。可用`scripts/verify_text_source.py`按记录中的命令在另一个全新测试根复现；输入全部自造，不调用模型，不生成IR或笔记。
 
 ## 构建桌面应用
 

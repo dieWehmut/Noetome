@@ -4,7 +4,7 @@
 
 ## 1 当前交付形式
 
-首阶段以CLI和本地确定性闭环为基础。根据2026年11月1日的用户要求，提前提供可本地安装的Windows桌面骨架；完整桌面功能继续逐项建设。JSON与Markdown报告和临时Vault的状态必须来自实际结果，输入IR和计划来自fixture的事实必须在摘要中明确。
+首阶段以CLI和本地确定性闭环为基础。当前CLI支持项目初始化、只读项目检查和B02-T01单份UTF8 MD/TXT来源登记与只读查看；知识状态保持pending，不生成IR、NotePlan、完整Run、Release或Vault。根据2026年11月1日的用户要求，已提前提供可本地安装的Windows桌面骨架；来源业务尚未接入GUI，完整桌面功能继续逐项建设。后续JSON/Markdown双报告及临时Vault的状态必须来自实际结果，输入IR和计划来自fixture的事实必须在摘要中明确。
 
 报告写“fixture 编译验证通过”，不能写“AI 已完成教材学习”“知识准确率100%”或“产品已支持 PDF”。没有发生的网络请求、模型推理和费用一律不编造。
 
@@ -33,7 +33,34 @@
 
 首闭环退出码遵循 [工程架构](../technical/ARCHITECTURE.md)：0 成功、2 输入错误、3 受阻或未完成、1 内部错误。错误输出不因“已经写了部分文件”返回成功。
 
-B01项目命令为`noetome project init <path>`与`noetome project inspect <path>`。成功摘要显示实际项目ID、Schema版本和`initialized`空状态，不能写成“资料已导入”或“知识已生成”。已有目标或初始化中断返回受阻；无效配置、Schema及数据库内容返回输入错误；每项错误带稳定`PROJECT_*`代码及可执行建议。中断目录保持原样，提示用户保留残留并使用新的目标目录重试，不把自动覆盖伪装成恢复。inspect只读查看，不在前端或CLI根据文件存在推断项目完整。
+B01项目命令为`noetome project init <path>`与`noetome project inspect <path>`。成功摘要显示实际项目ID、Schema版本和initialized基础状态。init仍建立Schema1空项目；Schema2检查不能固定宣称“尚未登记来源”，initialized只表示项目建立完成，不能写成“知识已生成”。已有目标或初始化中断返回受阻；无效配置、Schema及数据库内容返回输入错误；每项错误带稳定`PROJECT_*`代码及可执行建议。中断目录保持原样，提示用户保留残留并使用新的目标目录重试，不把自动覆盖伪装成恢复。inspect严格只读支持Schema1/2，不在前端或CLI根据文件存在推断项目完整。
+
+B02-T01来源命令为：
+
+```text
+noetome source import <project-path> <MD/TXT-file> [--source-id <existing-id>]
+noetome source inspect <project-path> <import-id>
+```
+
+`source --help`、`source import --help`和`source inspect --help`只显示帮助，不访问项目或写文件。中文、空格路径作为单独参数；以-开头的路径可在动词后加`--`。非法参数、未知选项、不支持类型、不安全路径及非法或未登记身份在写入前拒绝，不提供force接管入口。
+
+import只读取明确选取的单份文件，当前上限64 MiB，不扫描目录。首次登记在候选库把Schema1升级到2并保持项目身份/创建时间；配置与数据库版本失配、旧初始化残留或来源写目录必须明确拒绝。新来源生成不透明UUID；同字节复用版本和Span，每次选择仍有新的import-id。显式source-id固定既有来源后在其内部复用或换版，不能因另一来源SHA相同而合并。显示名称不决定身份，旧版本快照和原位置保留。
+
+来源import和inspect的stdout固定为报告Schema1 JSON，与项目Schema版本分开。报告包含项目/导入/来源/版本身份、时间与明确选取路径、ready或failed、reused、knowledge_status=pending、span_count、pending_extraction_count、版本字段、完整Span及错误。版本提供原始/规范SHA、长度、规则版本和真实相对快照位置；Span为规范UTF8字节半开区间及一基包含端点的行号。empty或仅首BOM文本为0段，未闭合围栏保留code区间并标needs_review。来源清点与ready仅说明字节、规范化和位置登记状态，不宣称知识覆盖100%或Markdown语义完全解析。
+
+来源错误和退出码按实际命令区分：
+
+| 情形 | stdout与诊断 | 退出码 |
+| --- | --- | --- |
+| ready来源登记，候选与正式记录/快照均已重读通过 | 导入JSON，无成功提示混入JSON | 0 |
+| 完整读取但UTF8无效 | failed JSON及SOURCE_INVALID_UTF8；仅有真实raw版本/指纹/长度，无规范快照或Span | 3 |
+| 缺失、未读全、超过上限或读取期间变化 | failed JSON及SOURCE_READ_ERROR、SOURCE_TOO_LARGE或SOURCE_CHANGED；无假版本、假SHA或截断内容 | 3 |
+| inspect核对已保存ready或failed记录通过 | 返回持久导入JSON；failed状态保留 | 0 |
+| 参数、类型、身份、路径或记录/快照契约无效 | stderr稳定CLI_INVALID_ARGUMENT、SOURCE_*或PROJECT_*代码，不输出成功JSON | 2 |
+| 未完成写入、未知缓存、项目占用或I/O阻断 | stderr稳定SOURCE_WRITE_INCOMPLETE、SOURCE_SNAPSHOT_CONFLICT、PROJECT_INCOMPLETE、PROJECT_DATABASE_BUSY或PROJECT_IO_ERROR，不输出成功JSON | 3 |
+| 内部操作、报告序列化或stdout输出失败 | stderr稳定错误，例如SOURCE_REPORT_ERROR或CLI_OUTPUT_ERROR | 1 |
+
+source inspect返回0只表示只读核对完成，不能把报告内failed改成成功。import保存来源读取失败记录与普通写入失败不同：前者保留可查看的真实失败对象，后者按可确认的自身文件回滚；未知内容、替换或清理失败保留标记和可用备份，提示检查现场，不自动接管。Windows准备阶段的句柄保护与发布复核不构成任意外部并发或任意断电下多文件原子恢复承诺。
 
 ### 摘要示例
 
@@ -49,7 +76,7 @@ B01项目命令为`noetome project init <path>`与`noetome project inspect <path
 产物：<临时 Vault 路径>
 ```
 
-此处数量仅为文案示例，实际值必须来自运行报告。成功文案不可硬编码到尚未完成的阶段。
+此处为后续fixture编译的文案示例，当前来源命令没有这些完成状态或Vault产物。数量必须来自实际运行报告，成功文案不可硬编码到尚未完成的阶段。
 
 ## 4 四类完成状态
 
@@ -64,9 +91,13 @@ B01项目命令为`noetome project init <path>`与`noetome project inspect <path
 
 首阶段可以只显示当前阶段和计数，不提供预计剩余时间。后续 ETA 没有可靠依据时显示“尚无法估算”。长时间无进展要说明等待对象，不能一直显示模糊的“处理中”。
 
+当前来源清单只展示实际Span数量、待抽取数量、解析问题及pending知识状态，不提前套用完整CoverageRecord或四维成功报告。无效UTF8和未读全文件没有规范Span；0段不能解释为知识工作已完成。
+
 ## 5 报告结构
 
-Markdown 报告和 JSON 报告表达同一事实，二者的数量、状态及产物清单必须一致。
+当前来源报告为stdout JSON，事实来自持久SQLite记录及快照重读，使用import-id再次查看，不生成Markdown双报告。调用方可将stdout重定向为文件；诊断走stderr，不要求从彩色摘要解析机器状态。报告保留失败字段，不能把inspect操作成功改写为来源内容成功。
+
+后续fixture编译的Markdown报告和JSON报告表达同一事实，二者的数量、状态及产物清单必须一致。以下运行报告结构用于该后续阶段，不给来源登记添加虚构的run_id、producer或输出产物：
 
 推荐顺序为：结果摘要、本轮范围、四类状态、发布文件、失败和待处理、排除与重复、验证结果、版本与重现信息。
 
@@ -112,7 +143,7 @@ Markdown 报告和 JSON 报告表达同一事实，二者的数量、状态及�
 
 ## 8 后续桌面交互
 
-当前桌面骨架包含工作台、运行检查和关于页面，使用用户选定图标派生的本地资源。工作台保持真实空状态，尚未接入的项目初始化业务以及未实现的资料导入和知识生成不提供假成功入口；CLI项目能力不能被描述为桌面已经能创建或打开项目。运行检查在实际Rust调用后显示版本、能力和命令结果；未运行、运行中、成功与失败分别表达。
+当前桌面骨架包含工作台、运行检查和关于页面，使用用户选定图标派生的本地资源。工作台保持真实空状态，尚未接入的项目初始化、CLI来源登记/查看以及未实现的知识生成不提供假成功入口；CLI能力不能被描述为桌面已经能创建或打开项目、选择文件或登记来源。运行检查在实际Rust调用后显示版本、能力和命令结果；受限cli_preview只接受help/version，帮助中出现source命令不代表GUI可以执行。未运行、运行中、成功与失败分别表达。
 
 B01A-T01的窗口行为遵循用户确认：最小化按钮保持普通Windows最小化，任务栏仍保留窗口；右上角 × 在未配置时默认隐藏到托盘，保留进程、导航和已有运行输出。左键单击既有应用图标的托盘，或右键菜单选择“显示窗口”，取消最小化、显示并聚焦原窗口。托盘菜单“退出”始终结束程序并移除图标，不受关闭窗口设置影响。托盘创建失败必须显示稳定错误并停止启动；隐藏或恢复失败须报告原因与可执行建议，不能把用户留在无恢复入口的隐藏窗口。
 

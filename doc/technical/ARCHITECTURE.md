@@ -2,15 +2,15 @@
 
 本文件规定当前采用的工程方向和首个可运行闭环。产品目标以 [PRD](../requirements/PRD.md) 为准；这里的分步实现不删减双模式、真实资料解析、主动图表表达和长期维护目标。
 
-状态：工程基线。具体第三方库及版本在引入时验证并锁定；文中描述的是应实现的行为，不表示已经通过测试。
+状态：工程基线。B01/B01A提供项目与桌面骨架，B02-T01已实现CLI单份文本来源登记；完整fixture编译闭环仍是后续目标。具体完成状态与验证证据以任务账本为准，不能把本文件中的后续设计当作已验收能力。第三方库及版本在引入时验证并锁定。
 
 ## 1 当前决定
 
 | 领域 | 采用方向 | 当前边界 |
 | --- | --- | --- |
 | 核心与命令行 | Rust core 与 CLI | 先建立可单独执行和测试的核心，不依赖 GUI |
-| 资料解析 | 简单文本入口加 Python parser sidecar | 首闭环处理 MD/TXT；真实 PDF 接入时才引入 sidecar 实现 |
-| 持久化 | 本地 SQLite | 保存来源、处理账本、运行与候选版本；不放进输出 Vault |
+| 资料解析 | Rust文本入口，后续加 Python parser sidecar | 当前CLI只登记明确选取的单份UTF8 MD/TXT；真实 PDF 接入时才引入 sidecar |
+| 持久化 | 本地 SQLite | 当前保存项目、来源版本、Span与最小导入记录；后续再加入运行、处理账本与候选版本，不放进输出 Vault |
 | 交换契约 | 带版本的 JSON | 显式校验输入、引用与结果；详见 [数据契约](DATA_CONTRACTS.md) |
 | 输出 | Obsidian Markdown 与本地资源 | 先写临时 Vault，禁止用生产笔记库验证 |
 | 桌面端 | Tauri 与 React TypeScript | 按用户要求提前桌面骨架及安装实测；调用同一核心接口，完整用例逐项接入 |
@@ -22,7 +22,7 @@ Markdown 是可阅读产物，Knowledge IR 是可验证的知识表达。文件�
 
 ## 2 首个闭环
 
-目标是证明输入、账本、计划、输出和报告之间能够对账，而不是证明模型能够理解教材。
+目标是证明输入、账本、计划、输出和报告之间能够对账，而不是证明模型能够理解教材。当前B02-T01只完成来源登记、不可变快照和完整Span清单；以下知识、计划、渲染及临时Vault步骤尚未实现。
 
 输入包括少量可审阅的 UTF-8 MD/TXT 文件，以及同一 fixture 包中的预先编写的 IR、NotePlan 和期望结果。IR 明确记录 `producer = fixture`；不得把它展示为自动抽取或已核验学科知识。
 
@@ -59,11 +59,37 @@ Markdown 是可阅读产物，Knowledge IR 是可验证的知识表达。文件�
 
 依赖方向为 CLI 到 Application，再到领域能力与适配器。核心规则不依赖终端输出、Tauri、浏览器或特定模型 SDK。外部副作用通过文件、数据库、解析器和模型等窄接口进入。
 
-B01-T02的项目初始化与检查逻辑先放在`noetome-cli`库的`project`模块，独立于终端输出；CLI只负责参数、摘要和退出码。该模块使用SQLite持久化最小项目记录，不提前拆全套core crate。桌面的帮助、版本、运行信息和B01A窗口偏好接口与项目业务分开，尚未接入项目业务入口。
+B01-T02的项目初始化与检查逻辑先放在`noetome-cli`库的`project`模块，独立于终端输出；B02-T01在同一库中增加来源模块，不提前拆全套core crate。当前文件职责为：
+
+| 文件 | 当前责任 |
+| --- | --- |
+| [lib.rs](../../crates/noetome-cli/src/lib.rs)、[main.rs](../../crates/noetome-cli/src/main.rs) | 纯参数解析、帮助与版本、受限命令分发、结果stdout及诊断stderr、退出码 |
+| [project.rs](../../crates/noetome-cli/src/project.rs) | Schema1空项目初始化、Schema1/2严格只读检查、路径及待恢复侧文件保护；writer内部验收仅可忽略自身写目录 |
+| [text.rs](../../crates/noetome-cli/src/text.rs) | 纯UTF8规范化、原始/规范SHA与确定性完整分段，不生成身份或写文件 |
+| [source_schema.rs](../../crates/noetome-cli/src/source_schema.rs) | Schema2精确表结构与约束、候选SQLite中Schema1到2的事务升级 |
+| [source_model.rs](../../crates/noetome-cli/src/source_model.rs) | 持久来源与导入记录加载、身份/引用/状态/计数校验、真实快照与完整Span重读验证 |
+| [source_write.rs](../../crates/noetome-cli/src/source_write.rs) | 独占写目录、原文件备份、候选库与新快照发布、受保护的失败回滚与清理 |
+| [source.rs](../../crates/noetome-cli/src/source.rs) | 明确单文件读取、来源身份和版本复用、最小导入登记、候选与正式文件验收、只读导入查看 |
+
+来源登记不创建完整Run、CoverageRecord、IR、NotePlan或Release。桌面的帮助、版本、运行信息和B01A窗口偏好接口与项目业务分开，尚未接入项目或来源业务入口。
 
 ## 4 工作区与文件职责
 
-每个测试用例使用一个独立临时工作区，并在报告中写明其位置。
+每个测试用例使用一个独立临时工作区，并在验收记录中写明其位置。当前来源项目的真实布局为：
+
+```text
+source-project/
+  project.json                  项目配置，init为Schema1，来源登记后为Schema2
+  project.sqlite                项目与来源持久记录
+  .noetome-sources/              存在来源版本时使用的固定快照根
+    .owner.json                 绑定项目身份
+    <version-id>/
+      raw.bin                   完整原始字节
+      normalized.txt            仅ready版本保存
+  .noetome-writing/              写入期间的操作说明、旧文件备份、候选与暂存快照
+```
+
+缓存和写目录由程序管理，不接受外部指定的内部输出路径。无效UTF8版本只保留raw.bin；未读全文件只登记失败尝试，不建立版本快照。后续fixture编译布局仍按以下职责规划，当前不生成这些IR、暂存Vault或双报告：
 
 ```text
 fixture-case/                  只读输入与审阅过的预期
@@ -74,7 +100,7 @@ fixture-case/                  只读输入与审阅过的预期
 temporary-workspace/           当前运行独占
   project.json
   project.sqlite
-  source-cache/
+  .noetome-sources/
   staging/<run-id>/
   output/<run-id>/vault/
   reports/<run-id>.json
@@ -83,13 +109,27 @@ temporary-workspace/           当前运行独占
 
 fixture 目录不能作为工作区或输出目录。项目根是用户明确选定的路径，可以是绝对路径或当前目录的相对路径；init只在尚不存在的目标下创建项目，不自动创建缺失的父目录。工作区内部的数据库、缓存及产物路径则必须相对于实际工作区，拒绝绝对路径、`..` 越界、Windows 保留名和经符号链接或 junction 指向外部的路径。
 
-空项目初始化以`project.json`和`project.sqlite`保存同一项目身份与版本，`.noetome-initializing`及两个临时文件限定未完成状态。SQLite事务和同目录的非覆盖文件发布各自保存证据，正式文件配对且标记移除后才显示初始化成功。普通失败仅清理本轮仍原样的独占文件；中断或未知内容保留供检查，当前可通过新的目标目录重新建立空项目，不声称支持原目录自动恢复。inspect使用只读immutable数据库访问，拒绝待恢复侧文件，不进行修复或迁移；具体字段和约束见[项目数据契约](DATA_CONTRACTS.md)。
+空项目初始化以`project.json`和`project.sqlite`保存同一Schema1项目身份与版本，`.noetome-initializing`及两个临时文件限定未完成状态。SQLite事务和同目录的非覆盖文件发布各自保存证据，正式文件配对且标记移除后才显示初始化成功。普通失败仅清理本轮仍原样的独占文件；中断或未知内容保留供检查，当前可通过新的目标目录重新建立空项目，不声称支持原目录自动恢复。project inspect支持严格只读Schema1/2检查，使用immutable数据库访问，拒绝待恢复侧文件及写目录，不进行修复或迁移；具体字段和约束见[项目数据契约](DATA_CONTRACTS.md)。
+
+首次来源登记在候选SQLite中事务升级为Schema2，保留project_id、created_at及initialized基础状态，并将配置与数据库配对发布；initialized在Schema2只表示项目建立完成。Schema1只允许基础表，Schema2只允许项目、来源、版本、Span和导入五张契约表及其约束。配置、数据库版本或元数据失配必须拒绝，不能让旧inspect忽略新表。
 
 输出目标必须是本轮尚不存在的目录。若遇到已存在的目标、文件或未知内容，返回阻断结果，不自动清空、覆盖、移动或接管。这个保守策略是首闭环的人工内容保护，不等同于已经实现增量合并。
 
 输出 Vault 只包含阅读所需文件。SQLite、日志、凭据、原始资料缓存和未发布候选不混入 Vault。追溯摘要与发布清单保存在相邻报告区，后续再决定可移植索引打包形式。
 
 ## 5 处理与事务边界
+
+当前单份文本登记按以下顺序执行：
+
+1. 校验项目、选取路径、MD/TXT类型和可选既有source-id，完整只读读取最多64 MiB原始字节；规范化仅移除首BOM并统一CRLF/CR为LF。
+2. 独占创建`.noetome-writing`，保存旧配置与数据库备份；在候选库完成必要升级、来源版本、Span和最小导入记录事务。
+3. 新版本在写目录暂存raw及合法规范文本；重读候选数据库、旧快照与暂存快照，核对完整位置和真实指纹。
+4. 独占创建新版本快照目录，不覆盖既有内容；检查原配置/数据库身份与字节后配对发布，重读正式数据库、配置和快照。
+5. 验证通过后清理仍属本轮的候选、备份和写目录，再返回导入JSON。成功持久保存的来源读取失败记录保留为failed并返回非零；普通写入失败回滚可确认的自身改动，未知内容或清理失败保留标记及可用备份并报告未完成。
+
+Windows准备阶段持有拒绝写入/删除的读句柄，替换前释放并复核身份与字节。该协议约束合作CLI并识别可观察的变更，不承诺任意外部并发编辑或任意断电下多文件原子提交。公开inspect不自动恢复中断现场。
+
+以下是后续fixture编译的目标流程，当前来源登记不提前建立Run：
 
 1. 校验 CLI 参数、fixture schema 和工作区范围，登记 Run。
 2. 读取完整来源字节并计算指纹，生成规范文本及 SourceSpan 清单。
@@ -109,23 +149,30 @@ SQLite 事务不等于文件系统事务。写文件成功后数据库提交失�
 
 领域 ID 从 fixture 或持久化状态读取，不按笔记标题重新生成。相同输入、契约版本、计划和渲染器版本，应产生相同内容文件；时间、运行 ID 等审计字段在报告中单独比较。
 
-缓存复用至少区分来源字节、规范化规则、分段规则、IR、计划和渲染器版本。首闭环可以先不提供缓存，但不得把“文件名相同”当作内容未变。无变化运行不得制造重复知识身份。
+当前来源版本保存原始/规范指纹、规范化和分段规则版本；同字节复用版本及Span，每次选取仍生成新的import-id。显式source-id先固定来源身份，再在其版本内复用或递增revision，不因另一来源SHA相同而合并。未指定ID时先保留既有选取路径关联，否则按同项目内容复用或新建来源；名称不参与身份生成，内容变化保留旧版本快照。
 
-数据库变化通过顺序迁移管理。项目记录所用 schema 版本；不支持的版本应拒绝写入并说明原因。初期允许明确拒绝旧测试库并要求使用新临时工作区，不提供假迁移能力。
+后续缓存复用还须区分IR、计划和渲染器版本，不得把“文件名相同”当作内容未变。无变化运行不得制造重复知识身份。
+
+数据库变化通过顺序迁移管理，项目记录所用schema版本。当前仅来源import提供已实现的Schema1到2候选升级；inspect没有迁移入口。不支持的版本必须拒绝并说明原因，未完成现场要求保留检查，不能提供假迁移或自动接管能力。
 
 ## 7 命令行边界
 
-首个用例入口可采用以下形式，具体命令名在 CLI 建立时保持唯一：
+当前CLI入口为：
 
 ```text
-noetome compile-fixture --case <fixture-dir> --workspace <temporary-dir>
+noetome --help
+noetome --version
+noetome project init <project-path>
+noetome project inspect <project-path>
+noetome source import <project-path> <MD/TXT-file> [--source-id <existing-id>]
+noetome source inspect <project-path> <import-id>
 ```
 
-命令读取本地 fixture，默认无网络、无生产 Vault 写入、无模型调用。不能提供跳过路径防护、覆盖账本或人工内容保护的快捷开关。
+help/version及命令帮助只解析和输出，不访问项目或生成来源。source import只把明确选取的本地单文件作为输入，不扫描资料目录；source inspect不再读取原选取文件，只读核对持久记录与项目内快照。两者不调用网络/模型、不输出Vault。后续fixture入口由[近期步骤](../execution/NEXT_STEPS.md)定义，尚未实现；不能提供跳过路径防护、覆盖账本或人工内容保护的快捷开关。
 
-标准输出用于简短结果或明确选择的 JSON；诊断写标准错误。机器可读报告永远可以通过文件获得，不通过解析彩色终端文字恢复状态。
+帮助、版本和项目摘要为文字stdout；来源import/inspect固定输出报告Schema1 JSON，JSON版本与项目Schema2分开。诊断写stderr，不混入JSON；来源结果持久保存在SQLite中，可用import-id再次只读查看，stdout可由调用方重定向为文件。当前没有完整Run或JSON/Markdown双报告文件，不通过解析终端文字恢复状态。
 
-退出码约定为：`0` 表示命令声明的操作已完成；fixture闭环命令还须全部验证并发布成功，项目初始化则只表示空项目契约已建立。`2` 表示参数或输入契约不合法；`3` 表示可解释的阻断或未完成；`1` 表示内部错误。中断不得转换为 `0`。详见 [设计标准](../standards/DESIGN.md)。
+退出码约定为：`0` 表示命令声明的操作已完成；项目初始化只表示空项目契约已建立，来源import只表示真实快照与来源记录验证完成。source inspect成功查看已保存failed导入记录仍返回0，因为只读核对已完成，不表示该来源登记成功。`2` 表示参数或输入契约不合法；`3` 表示来源读取失败、可解释的阻断或未完成；`1` 表示内部错误或stdout输出失败。已保存的失败导入同时输出JSON和稳定诊断；写入失败不输出成功JSON，中断不得转换为0。后续fixture闭环成功还须全部验证并发布。详见 [设计标准](../standards/DESIGN.md)。
 
 ## 8 后续适配器
 
@@ -147,7 +194,7 @@ Core 再次验证 sidecar 输出，不能相信其路径、引用或成功标志
 
 2026年11月1日用户要求提前搭建、安装并测试Windows应用。B01的桌面骨架由 `apps/desktop` 中的React TypeScript前端和 `crates/noetome-desktop` 中的Tauri入口组成。CLI和桌面入口共用 `crates/noetome-cli` 的纯Rust帮助、版本接口；B01最初提供 `runtime_info` 和受限的 `cli_preview`。B01A为窗口偏好增加 `get_close_behavior`、`set_close_behavior`，当前仅提供这四个受限命令，不接受任意文件路径、CLI参数或shell命令。
 
-当前 `runtime_info` 返回桌面与CLI版本、编译目标、已有能力和帮助文本；`cli_preview` 仅接受 `help` 或 `version`。前端在调用前显示未运行，收到实际结果后显示连接或执行状态。未实现的项目、资料、模型和知识产物不由桌面空状态推定为成功。
+当前 `runtime_info` 返回桌面与CLI版本、编译目标、已有能力和帮助文本；`cli_preview` 仅接受 `help` 或 `version`，不能执行项目或来源命令。前端在调用前显示未运行，收到实际结果后显示连接或执行状态。CLI来源登记能力尚未接入桌面选择、导入或查看，不能因帮助中出现source命令就宣称GUI已支持；模型和知识产物也不由桌面空状态推定为成功。
 
 `get_close_behavior`通过Rust的 `PreferencesState.reload` 实际重读固定设置文件；关于页打开或“重新读取”时不会只返回启动缓存。成功重读更新已生效偏好并返回其值，失败返回稳定错误并保留原有已生效行为。`set_close_behavior`仅接受两个关闭行为枚举，持久保存成功后才更新运行时值，失败保留原值与未知文件内容。设置版本、文件边界与恢复语义见[桌面窗口偏好契约](DATA_CONTRACTS.md#桌面窗口偏好契约)。
 
