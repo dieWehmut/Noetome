@@ -13,7 +13,7 @@
 | 持久化 | 本地 SQLite | 保存来源、处理账本、运行与候选版本；不放进输出 Vault |
 | 交换契约 | 带版本的 JSON | 显式校验输入、引用与结果；详见 [数据契约](DATA_CONTRACTS.md) |
 | 输出 | Obsidian Markdown 与本地资源 | 先写临时 Vault，禁止用生产笔记库验证 |
-| 桌面端 | 后续 Tauri 与 React TypeScript | 桌面端调用同一核心接口，不另建一套生成逻辑 |
+| 桌面端 | Tauri 与 React TypeScript | 按用户要求提前桌面骨架及安装实测；调用同一核心接口，完整用例逐项接入 |
 | 模型接入 | API 优先，再 Agent，再本地模型 | 首闭环不使用网络或模型；后续逐个能力接入 |
 
 Markdown 是可阅读产物，Knowledge IR 是可验证的知识表达。文件路径、概念身份和来源身份分别管理。简单原型也不得让 Markdown 成为唯一的状态存储。
@@ -138,7 +138,13 @@ Core 再次验证 sidecar 输出，不能相信其路径、引用或成功标志
 
 ### 桌面前端
 
-在 CLI 能输出可信状态后接入 Tauri。React TypeScript 负责资料选择、状态展示、预览和审批；文件写入和保护规则仍由 core 执行。关闭窗口与取消任务的语义必须分别设计。
+2026年11月1日用户要求提前搭建、安装并测试Windows应用。B01的桌面骨架由 `apps/desktop` 中的React TypeScript前端和 `crates/noetome-desktop` 中的Tauri入口组成。CLI和桌面入口共用 `crates/noetome-cli` 的纯Rust帮助、版本接口；桌面命令只提供 `runtime_info` 和受限的 `cli_preview`，不执行任意参数或shell命令。
+
+当前 `runtime_info` 返回桌面与CLI版本、编译目标、已有能力和帮助文本；`cli_preview` 仅接受 `help` 或 `version`。前端在调用前显示未运行，收到实际结果后显示连接或执行状态。未实现的项目、资料、模型和知识产物不由桌面空状态推定为成功。
+
+Windows构建使用锁定的Cargo和npm依赖，静态界面与指定图标派生资源随包提供。NSIS采用当前用户安装模式；不在安装包中混入原始 `sample/`、用户资料或仓库开发文件。安装包构建、本地安装和安装后运行分别记录证据。
+
+完整桌面用例后续由React TypeScript承担资料选择、状态展示、预览和审批；文件写入和保护规则仍由core执行。关闭窗口与取消任务的语义分别设计。本轮没有后台任务，关闭窗口按普通应用退出处理，后续持久任务不能沿用这一简化而隐式丢弃工作。
 
 ## 9 继续开发前的证据
 
