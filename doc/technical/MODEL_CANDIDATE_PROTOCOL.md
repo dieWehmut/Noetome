@@ -36,7 +36,7 @@ Core CandidateIr：schema_version=1、producer、candidate_id、revision=1、ver
 
 ## 用量、预算和结算
 
-Usage：provenance（simulated/provider_reported）、input_tokens、output_tokens、cost；两个 Token 字段显式 null 表示未知。fake 只能 simulated，model 只能 provider_reported。Cost：status（known/unknown）、amount_microunits、currency、basis（provider_reported/price_estimate/not_available）。known 需完整金额和币种，unknown 的金额/币种为 null 且 basis=not_available；未知费用不能显示为零。返回已知输出超限拒绝候选，已发请求不能改成未调用。
+Usage：provenance（simulated/provider_reported）、input_tokens、output_tokens、cost；两个 Token 字段显式 null 表示未知。fake 只能 simulated，model 只能 provider_reported。Cost：status（known/unknown）、amount_microunits、currency、basis（provider_reported/price_estimate/not_available）。known 需完整金额和三位ASCII大写币种代码（当前政策不查询币种目录），解码和结算共用同一费用校验，unknown 的金额/币种为 null 且 basis=not_available；未知费用不能显示为零。返回已知输出超限拒绝候选，已发请求不能改成未调用。
 
 本项 Budget 仅有 available_calls 和 available_output_tokens；发送前至少预留一次调用和本次输出上限，否则 Invocation/进程零调用、输出根不创建。价格未知仍可用次数和 Token 控制；此接口不提供货币硬上限承诺。fake 的真实 API 调用和实际费用不累计，模拟数值单独呈现。
 
@@ -46,7 +46,9 @@ SettlementLedger 以 request_id 和完整 response SHA 确认一次。同一确�
 
 CandidateStore 只在父目录已存在、与项目不重叠的全新普通目录创建。固定文件为 owner.json、request.json、report.json，以及成功完整响应的 response.json 和 candidate.json。使用 create_new、持续目录/文件身份守卫、nlink1、sync_all，最后不覆盖改名发布 report.json；未知文件、已有/替换根和中断现场拒绝并保留，不自动接管或删除。
 
-report.json 保存版本、UTC 时间、请求/响应指纹、实际宿主状态/PID/耗时、调用次数、预算预留、用量与唯一结算、失败或候选指纹。stderr 只保留字节数和 SHA，错误不带远端原文。响应只有完整、严格合法且无凭据回显才落盘；失败分类响应可保存供重读，但没有 candidate.json。非法或泄露响应只留可获得的完整指纹，不留原文。
+report.json 保存版本、UTC 时间、请求/响应指纹、实际宿主状态/PID/耗时、调用次数、预算预留、用量与唯一结算、失败或候选指纹。stderr 只保留捕获字节数和 SHA，错误不带远端原文；宿主失败时仅描述受限诊断前缀。响应只有完整、严格身份/用量/大小合法且无凭据回显才落盘。坏证据或输出超限仍保留这份确认响应和用量，严格候选解码继续拒绝；失败分类响应也没有 candidate.json。非法协议或泄露响应只留可获得的完整指纹。
+
+保存后内部重读使用保留的原文件句柄，避免Windows写守卫与新只读打开自锁，同时持续保持身份、长度和SHA约束。公开inspect在API返回后只读打开。失败报告status/PID、响应和诊断长度/SHA、失败分类须相互一致；not_called不能同时有PID，未知响应不接受伪造完整指纹。宿主已确认完整响应后到达的取消不能抹除该响应或结算。
 
 凭据只作为调用端临时哨兵引用，不能进入请求、项目、候选、报告或错误。请求与合法解码响应检查原始及 JSON 解码后的回显；发生回显拒绝保存响应/候选。根内哈希只证明自洽；重读还须再次核对明确项目的真实登记版本和发送 Span。原选取文件缺失不影响已存快照核对。未完成报告、未知额外文件、硬链接、junction、共享写锁及 Windows 非法名字均拒绝。
 

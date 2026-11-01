@@ -371,7 +371,11 @@ fn identity(file: &File) -> Result<Handle, SidecarError> {
     .map_err(|e| io_failure("SIDECAR_RESOURCE_INVALID", e))
 }
 
-fn ensure_identity(path: &Path, expected: &Handle, code: &'static str) -> Result<(), SidecarError> {
+pub(crate) fn ensure_identity(
+    path: &Path,
+    expected: &Handle,
+    code: &'static str,
+) -> Result<(), SidecarError> {
     checked_path(path)?;
     let actual = Handle::from_path(path).map_err(|e| io_failure(code, e))?;
     if &actual != expected {
@@ -383,7 +387,7 @@ fn ensure_identity(path: &Path, expected: &Handle, code: &'static str) -> Result
     Ok(())
 }
 
-fn guard_directory(path: &Path) -> Result<Handle, SidecarError> {
+pub(crate) fn guard_directory(path: &Path) -> Result<Handle, SidecarError> {
     checked_path(path)?;
     let meta =
         fs::symlink_metadata(path).map_err(|e| io_failure("SIDECAR_WORKSPACE_CONFLICT", e))?;
@@ -413,7 +417,7 @@ fn guard_directory(path: &Path) -> Result<Handle, SidecarError> {
     Ok(handle)
 }
 
-fn guard_chain(path: &Path) -> Result<Vec<(PathBuf, Handle)>, SidecarError> {
+pub(crate) fn guard_chain(path: &Path) -> Result<Vec<(PathBuf, Handle)>, SidecarError> {
     let mut paths: Vec<_> = path.ancestors().map(Path::to_path_buf).collect();
     paths.reverse();
     paths
@@ -486,7 +490,11 @@ pub(crate) struct OwnedFile {
     sha: String,
 }
 impl OwnedFile {
-    fn create(path: PathBuf, bytes: &[u8], cancel: &AtomicBool) -> Result<Self, SidecarError> {
+    pub(crate) fn create(
+        path: PathBuf,
+        bytes: &[u8],
+        cancel: &AtomicBool,
+    ) -> Result<Self, SidecarError> {
         Self::create_with_rename(path, bytes, cancel, false)
     }
     fn create_with_rename(
@@ -556,6 +564,24 @@ impl OwnedFile {
         }
         check_cancel(cancel)?;
         Ok(())
+    }
+    pub(crate) fn publish(mut self, target: PathBuf) -> Result<Self, SidecarError> {
+        noetome_sidecar_platform::rename_file_no_replace(&self.file, &target)
+            .map_err(|e| io_failure("SIDECAR_WORKSPACE_CONFLICT", e))?;
+        self.path = target;
+        Ok(self)
+    }
+    pub(crate) fn pending(
+        path: PathBuf,
+        bytes: &[u8],
+        cancel: &AtomicBool,
+    ) -> Result<Self, SidecarError> {
+        Self::create_with_rename(path, bytes, cancel, true)
+    }
+    pub(crate) fn read_owned(&self, limit: u64) -> Result<Vec<u8>, SidecarError> {
+        let cancel = AtomicBool::new(false);
+        self.verify(&cancel)?;
+        bounded_read(&self.file, limit, "SIDECAR_WORKSPACE_CONFLICT", &cancel)
     }
 }
 

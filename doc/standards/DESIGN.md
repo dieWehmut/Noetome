@@ -234,3 +234,9 @@ B01A-T01的窗口行为遵循用户确认：最小化按钮保持普通Windows�
 报告依次提供身份和审计信息，raw_acquisition（acquired/failed、reused、version、error）、pdf_parse（ready/needs_review/failed/not_run、reused、parse_id、config、报告位置/指纹及Evidence）和knowledge_status=pending。原始PDF完整获取不代表解析ready；failed/needs_review保留真实范围并允许新的解析尝试，未读全不造Version/parse/页。成功缓存只复用ready，原始版本与解析复用状态分别呈现。
 
 成功或已登记失败的import在stdout提供单个JSON；参数、项目或项目写入被拒绝时stdout为空，stderr给出原因。已登记失败在stderr显示该error code/message，并保留真实exit分类：ready0、内部1、运行时/协议配置2、真实解析/需复核/未读全3。source inspect核对已持久化ready/review/failed事实均退出0；未知/损坏/中断项目拒绝且保留现场。每个关联import的exit/error必须匹配Evidence，不将native2折叠成3，已确认响应的PID/native0不能改为空值。
+
+### B04-T01 候选只读入口
+
+`noetome knowledge inspect <项目路径> <候选根>`输出单个JSON，读取已保存的candidate/provider_failed/rejected事实均返回0；非法、被占用、损坏或未知现场给出固定错误并拒绝。不调用模型、不重计费，也不发布笔记。fake统计明确simulated，知识始终unverified；价格未知为null而非0。真实API抽取命令由后续任务独立验收。
+
+报告包含来源绑定、请求/响应指纹、实际PID/耗时、预算预留、一次结算、分类失败或候选ID。诊断正文和凭据不输出；模型内容不能控制路径。结构及证据合法不授予科学正确。

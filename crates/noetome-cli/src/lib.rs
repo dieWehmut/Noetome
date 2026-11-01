@@ -11,6 +11,9 @@ mod fixture_knowledge;
 mod fixture_model;
 mod fixture_plan;
 mod fixture_render;
+pub mod knowledge_extract;
+pub mod model_candidate;
+pub mod model_provider;
 mod pdf_model;
 pub mod pdf_parse;
 pub mod pdf_source;
@@ -39,6 +42,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome source parse-pdf <PDF文件> <全新测试输出根> --python <绝对解释器路径> [--timeout-ms <0..30000>]
       noetome case verify <fixture目录>
       noetome case compile <fixture目录> <尚不存在的测试输出根>
+      noetome knowledge inspect <项目路径> <候选根>
 
 当前支持：
   -h, --help       显示帮助
@@ -108,8 +112,24 @@ compile只使用父目录已存在的新测试根，已有目标、输入输出�
 以 - 开头的路径可在动词后加 -- 分隔符，包含空格的路径作为单独参数。
 ";
 
+pub const KNOWLEDGE_HELP: &str = "Noetome 候选知识检查
+
+用法：noetome knowledge inspect <项目路径> <候选根>
+
+只读重载单请求候选或分类失败，核对来源登记、真实Span、请求/响应指纹及独立候选契约。
+结果为JSON，不重新调用模型、累计费用或发布笔记；fake为模拟数据，候选保持unverified。
+已有、未知、损坏或中断现场保留；原选取文件移走后仍可核对已存快照。
+本入口尚不提供真实API抽取或PDF模型引用，生产收费请求需后续明确配置和预算。
+中文和空格路径须作为单独参数；以 - 开头的路径加 -- 分隔符。
+";
+
 #[derive(Debug)]
 pub enum CliCommand {
+    KnowledgeHelp,
+    KnowledgeInspect {
+        project: PathBuf,
+        output: PathBuf,
+    },
     Help,
     ProjectHelp,
     Version,
@@ -149,6 +169,9 @@ pub enum CliCommand {
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
 pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.first().is_some_and(|arg| arg == "knowledge") {
+        return knowledge_command(&args[1..]);
+    }
     if args.first().is_some_and(|arg| arg == "case") {
         return case_command(&args[1..]);
     }
@@ -176,6 +199,33 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
         }
         _ => Err(INVALID_ARGUMENT),
     }
+}
+
+fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.is_empty()
+        || matches!(args,[help] if help=="--help"||help=="-h")
+        || matches!(args,[verb,help] if verb=="inspect"&&(help=="--help"||help=="-h"))
+    {
+        return Ok(CliCommand::KnowledgeHelp);
+    }
+    let (paths, separated) = match args {
+        [verb, project, output] if verb == "inspect" => ((project, output), false),
+        [verb, separator, project, output] if verb == "inspect" && separator == "--" => {
+            ((project, output), true)
+        }
+        _ => return Err(INVALID_ARGUMENT),
+    };
+    if [paths.0, paths.1].iter().any(|path| {
+        path.is_empty()
+            || path.to_str().is_none()
+            || (!separated && path.as_encoded_bytes().first() == Some(&b'-'))
+    }) {
+        return Err(INVALID_ARGUMENT);
+    }
+    Ok(CliCommand::KnowledgeInspect {
+        project: paths.0.into(),
+        output: paths.1.into(),
+    })
 }
 
 fn case_command(args: &[OsString]) -> Result<CliCommand, &'static str> {

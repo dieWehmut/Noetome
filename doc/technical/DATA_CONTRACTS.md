@@ -318,3 +318,11 @@ Schema1/2升级仅操作Writer的candidate，逐字段保存旧身份、SHA、�
 PDF原始文件只在Version/raw.bin存一次，解析树为独立parse UUID下的report.json和声明资源；两树发布为不同文件身份的独占copy且各nlink1。持久Evidence绑定raw SHA/长度、parser/protocol/options/runtime和真实输出政策，成功结果复用全部旧ID与mtime，failed/needs_review每次真实重试并追加parse。timeout只控制本次执行，不改变成功内容缓存身份。
 
 持久报告与关系表、原始和实际资源逐项复核后重跑PDF Core校验。已确认Host响应必须保留实际PID和native exit0，关联import的状态/exit/error精确匹配Evidence；未读全三类获取失败固定exit3且无Version/parse/假页。PDF报告Schema2分别表达raw acquisition、parse和knowledge pending，inspect验证真实失败事实仍exit0。实际12组矩阵与受控故障证据见[B03-T03](../validation/B03-T03.md)，不构成知识科学质量、OCR或任意断电原子性的验收。
+
+## 10 独立候选Schema1
+
+[候选协议v1](MODEL_CANDIDATE_PROTOCOL.md)与旧fixture/compile Schema1及来源项目Schema3独立。Provider返回完整表达、条件/单位/例外和真实Span局部证据；Core分配candidate/atom UUID、revision1及unverified状态，不按名称合并，也不赋fixture_reviewed或necessary身份。该有限proposal尚不是完整多源Knowledge模型。
+
+SourceSlice绑定已登记project/source/version、原始/规范SHA和明确完整Span。新根固定owner/request/response/candidate/report文件，report为最后提交点；失败无candidate，未知现场不自动恢复。报告分开保存实际宿主状态、真实或模拟用量、未知费用、唯一确认和拒绝分类。严格审计合法但候选无效的响应仍保留已确认用量；JSON/身份/费用非法或凭据回显不保存正文。
+
+只读重载重验固定文件和真实项目快照，不调用Provider或累计账单。PDF暂不接受，不把PDF定位套入文本Span；T03另桥接已存parse/page/region/artifact。

@@ -252,3 +252,9 @@ B01A按用户确认管理窗口关闭事件：×默认隐藏原窗口到托盘�
 [PDF来源Schema3](PDF_SOURCE_SCHEMA.md)保留旧文本Schema2语义；raw SourceVersion与PDF parse身份分离，解析政策参与ready-only缓存。`pdf_source.rs`协调明确输入、真实解析或成功复用、candidate及发布后的重读；`pdf_source_model.rs`严格重建关系与证据并复算实际正文/定位，`pdf_source_schema.rs`负责精确DDL及candidate迁移。来源Reader分别路由Schema2和3，不用Schema2校验器忽略新对象。
 
 原项目配置/数据库的原生守卫在来源读取到Writer接续之间连续持有；选定PDF守卫覆盖整个提交。内部T02 retained receipt保持原始Workspace/资源句柄直到Writer登记身份，公开parse-pdf输出契约保留。Writer使用独立raw/parse暂存与cache守卫，并在PDF两树中独占copy保证nlink1；未知现场保留，恢复仍需检查。知识抽取、生产Vault维护与项目GUI由后续任务分别验收。
+
+## B04-T01 离线候选
+
+`model_candidate`定义独立命名对象协议、真实Span范围校验和Core生成的unverified IR；`model_provider`只接受可信进程能力，由现有Windows宿主执行一个有界请求，负责预算准入及唯一结算；`knowledge_extract`从连续守卫的来源重建选择，协调独占新根和严格重读。来源数据库保持只读，不新建Run/Release或接管Vault。
+
+库接口提供单请求抽取，生产CLI提供`knowledge inspect`。fake只在私有测试进程中实现，模型返回内容不控制路径、权限或发布。候选JSON、证据匹配、独立样本与科学正确分别保留阶段语义。具体契约见[候选协议v1](MODEL_CANDIDATE_PROTOCOL.md)，真实API和PDF候选证据桥接由后续卡分别验收。

@@ -2,7 +2,9 @@ use std::env;
 use std::io::{self, Write};
 use std::process::ExitCode;
 
-use noetome_cli::{CliCommand, fixture, fixture_compile, pdf_parse, pdf_source, project, source};
+use noetome_cli::{
+    CliCommand, fixture, fixture_compile, knowledge_extract, pdf_parse, pdf_source, project, source,
+};
 
 fn main() -> ExitCode {
     // Keep OS-native arguments: malformed Unicode is an input error, not a panic.
@@ -17,6 +19,19 @@ fn main() -> ExitCode {
 
     let mut result_code = 0;
     let output = match command {
+        CliCommand::KnowledgeHelp => noetome_cli::KNOWLEDGE_HELP.to_owned(),
+        CliCommand::KnowledgeInspect { project, output } => {
+            match knowledge_extract::inspect(&project, &output) {
+                Ok(report) => match serde_json::to_string_pretty(&report) {
+                    Ok(json) => format!("{json}\n"),
+                    Err(_) => return ExitCode::from(1),
+                },
+                Err(error) => {
+                    let _ = writeln!(io::stderr().lock(), "{error}");
+                    return ExitCode::from(2);
+                }
+            }
+        }
         CliCommand::Help => noetome_cli::HELP.to_owned(),
         CliCommand::ProjectHelp => noetome_cli::PROJECT_HELP.to_owned(),
         CliCommand::SourceHelp => noetome_cli::SOURCE_HELP.to_owned(),
