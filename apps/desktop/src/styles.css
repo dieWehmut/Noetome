@@ -129,6 +129,17 @@ h1 { font-size: 29px; letter-spacing: -1px; line-height: 1.5; }
 .about-details h2 { font-size: 14px; color: #5b4e42; margin-bottom: 10px; }
 .about-details p { color: #918374; font-size: 11px; line-height: 1.9; }
 .about-details .text-button, .about-details .local-label { margin-top: 17px; }
+.window-settings { margin-top: 26px; padding: 25px 27px; border: 1px solid var(--line); border-radius: 11px; background: #fcfaf7; }
+.window-settings h2 { font-size: 14px; color: #5b4e42; }
+.settings-description { margin-top: 9px; color: #918374; font-size: 11px; line-height: 1.9; }
+.settings-controls { display: flex; align-items: flex-end; gap: 12px; margin-top: 18px; }
+.settings-field { display: grid; gap: 8px; flex: 1; min-width: 0; max-width: 340px; }
+.settings-field label { color: #74675c; font-size: 11px; }
+.settings-field select { width: 100%; min-width: 0; min-height: 38px; padding: 9px 12px; border: 1px solid #ded3c6; border-radius: 6px; background: #fffdfa; color: #625548; font: inherit; font-size: 12px; }
+.settings-field select:disabled { opacity: .62; }
+.settings-field select:focus-visible { outline: 3px solid #b26c50; outline-offset: 3px; }
+.settings-controls .button { flex: 0 0 auto; }
+.settings-status { min-height: 19px; margin-top: 12px; color: #918374; font-size: 11px; line-height: 1.7; }
 
 @media (min-width: 1320px) {
   .main-content { padding-top: 47px; }
@@ -192,6 +203,7 @@ h1 { font-size: 29px; letter-spacing: -1px; line-height: 1.5; }
   .about-icon { width: 102px; height: 102px; border-radius: 23px; }
   .about-card h2 { font-size: 26px; }
   .about-card p { font-size: 11px; }
+  .window-settings { padding: 22px; }
 }
 
 @media (max-width: 570px) {
@@ -213,4 +225,7 @@ h1 { font-size: 29px; letter-spacing: -1px; line-height: 1.5; }
   .console-panel pre { padding: 14px; font-size: 10px; }
   .about-card { align-items: flex-start; flex-direction: column; padding: 24px; }
   .about-icon { width: 87px; height: 87px; }
+  .window-settings { padding: 19px; }
+  .settings-controls { flex-direction: column; align-items: stretch; }
+  .settings-field { max-width: none; }
 }
