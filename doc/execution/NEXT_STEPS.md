@@ -17,7 +17,7 @@
 5. 加入少量进程级CLI用例，验证退出码、必要输出及无文件副作用；不要只测试字符串拼接函数。
 6. 执行格式、构建和测试，更新日志及README运行说明，小步提交并推送后汇报结果。
 
-**预期文件**：`Cargo.toml`、`Cargo.lock`、`rust-toolchain.toml`、`crates/noetome-cli/Cargo.toml`、CLI源文件及针对性测试；这些现在尚未创建。
+**产物范围**：`Cargo.toml`、`Cargo.lock`、`rust-toolchain.toml`、`crates/noetome-cli/Cargo.toml`、CLI源文件及针对性测试。实际执行证据见 [B01-T01验证记录](../validation/B01-T01.md)，任务状态仍以账本为准。
 
 **验收命令**：
 

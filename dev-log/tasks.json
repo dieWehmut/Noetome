@@ -91,7 +91,7 @@
       "id": "B01-T01",
       "title": "建立可重复构建的Rust CLI最小骨架",
       "batch": "B01",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B00-T01"
       ],
@@ -102,7 +102,63 @@
         "cargo fmt --all --check cargo check --workspace cargo test --workspace和针对性CLI用例通过",
         "记录Windows实际构建环境，尚未引入SQLite Python sidecar GUI或真实模型调用"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-01T00:08:52Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "建立单一Rust CLI crate，复用并锁定已验证工具链；实现帮助和版本命令及无文件副作用测试，不推进项目初始化",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-01T00:12:47Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成单一CLI crate、固定Rust 1.98.1工具链和锁文件；实现中文帮助、版本与参数错误处理及进程测试。实现提交d2a7e65；补齐README和验证记录，本轮未启动B01-T02。",
+          "validation": [
+            "Windows x64实际运行cargo fmt --all --check、cargo check --workspace --locked --offline、cargo test --workspace --locked --offline均通过；4项进程测试共18次调用，验证退出码、输出、非Unicode输入及目录和原有文件字节无变化。",
+            "cargo run的--help和--version成功，版本为0.1.0；在新的target/repro-build目录中cargo build --workspace --locked --offline成功，生成程序帮助和版本实跑成功。",
+            "Python 3.12.7运行12项日志工具unittest全部通过；devlog check与git diff --check通过，修改文档中的本地链接核对通过。首次缺失锁文件、系统临时目录权限失败和格式修复保留在doc/validation/B01-T01.md；未执行跨平台、PDF、模型或知识质量测试。"
+          ],
+          "artifacts": [
+            {
+              "path": "Cargo.toml",
+              "sha256": "879b35657912431beb2679556d3ec0ad8b2bcfb7f1cfcf9a629dc054cd6f4e70"
+            },
+            {
+              "path": "Cargo.lock",
+              "sha256": "a7ec58fb4e43b9f8222854525be69ea83bf0f021b9e2c09b5dcdaf5c00306266"
+            },
+            {
+              "path": "rust-toolchain.toml",
+              "sha256": "9c1fbb8c1b62479e27e83f85a7133039e4a6f50d8181961ca4cc85f3ed8bb0b3"
+            },
+            {
+              "path": "crates/noetome-cli/Cargo.toml",
+              "sha256": "d0e871d435006a6affd752999830f058c9ad9f72af1ec12acbd00fa723039f14"
+            },
+            {
+              "path": "crates/noetome-cli/src/main.rs",
+              "sha256": "7639cc664abe41106e63499e4a9d2d2e9ee8982fe21e57be8052e9e3796afa95"
+            },
+            {
+              "path": "crates/noetome-cli/tests/cli.rs",
+              "sha256": "70f752a2ed9a1d924606e6d3b8e0ac14287d838e93efbca2f3f12e1f46dc1d34"
+            },
+            {
+              "path": "README.md",
+              "sha256": "a49ec146454ad6fb36a058f5c6aaddfe64cfb04ddce112d962de95173097bb9e"
+            },
+            {
+              "path": "doc/validation/B01-T01.md",
+              "sha256": "ecf174b9c8f04bb1e10791a5584076dc3369c82692c9b7d135cd61d881970814"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B01-T02",
