@@ -50,7 +50,7 @@ fn cli_preview(option: &str) -> Result<String, String> {
 
 #[tauri::command]
 fn get_close_behavior(state: tauri::State<'_, PreferencesState>) -> Result<String, String> {
-    state.get()
+    state.reload()
 }
 
 #[tauri::command]
@@ -200,7 +200,18 @@ fn handle_window_event(window: &tauri::Window, event: &WindowEvent) {
         let behavior = window
             .app_handle()
             .try_state::<PreferencesState>()
-            .map(|state| state.effective())
+            .map(|state| {
+                // Another running window may have saved a newer preference.
+                // Resolve the actual file before deciding what × should do.
+                if let Err(error) = state.reload() {
+                    report_desktop_error(
+                        "Noetome 窗口设置读取失败",
+                        &format!("{error}\n本次关闭保留此前已生效的窗口行为。请在“关于 → 窗口行为”中重新读取设置。"),
+                        window.app_handle().path().app_log_dir().ok(),
+                    );
+                }
+                state.effective()
+            })
             .unwrap_or(CloseBehavior::HideToTray);
         if behavior == CloseBehavior::Exit {
             return;
@@ -248,6 +259,15 @@ fn main() {
                 Ok(directory) => PreferencesState::load(directory),
                 Err(error) => PreferencesState::unavailable(error.to_string()),
             };
+            if let Err(error) = preferences.get() {
+                report_desktop_error(
+                    "Noetome 窗口设置读取失败",
+                    &format!(
+                        "{error}\n关闭窗口暂时隐藏到托盘。请在“关于 → 窗口行为”中重新读取设置；设置文件不会被覆盖。"
+                    ),
+                    app.path().app_log_dir().ok(),
+                );
+            }
             app.manage(preferences);
             for window in &windows {
                 if let Err(error) = tauri::WebviewWindowBuilder::from_config(app, window)

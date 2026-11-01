@@ -56,30 +56,61 @@ struct Store {
     snapshot: Option<Snapshot>,
 }
 
-pub struct PreferencesState(Mutex<Result<Store, String>>);
+pub struct PreferencesState {
+    directory: Option<PathBuf>,
+    store: Mutex<Result<Store, String>>,
+}
 
 impl PreferencesState {
     pub fn load(directory: PathBuf) -> Self {
-        Self(Mutex::new(Store::load(directory)))
+        Self {
+            store: Mutex::new(Store::load(directory.clone())),
+            directory: Some(directory),
+        }
     }
 
     pub fn unavailable(error: String) -> Self {
-        Self(Mutex::new(Err(format!(
-            "DESKTOP_SETTINGS_UNAVAILABLE：无法确定应用设置目录：{error}"
-        ))))
+        Self {
+            directory: None,
+            store: Mutex::new(Err(format!(
+                "DESKTOP_SETTINGS_UNAVAILABLE：无法确定应用设置目录：{error}"
+            ))),
+        }
     }
 
     pub fn get(&self) -> Result<String, String> {
-        let guard = self.0.lock().map_err(|_| unavailable())?;
+        let guard = self.store.lock().map_err(|_| unavailable())?;
         guard
             .as_ref()
             .map(|store| store.current.as_str().to_owned())
             .map_err(Clone::clone)
     }
 
+    pub fn reload(&self) -> Result<String, String> {
+        let Some(directory) = &self.directory else {
+            return self.get();
+        };
+        let mut guard = self.store.lock().map_err(|_| unavailable())?;
+        match Store::load(directory.clone()) {
+            Ok(store) => {
+                let behavior = store.current.as_str().to_owned();
+                *guard = Ok(store);
+                Ok(behavior)
+            }
+            Err(error) => {
+                // A failed retry never discards a previously effective choice
+                // or its snapshot. Unknown on-disk content remains untouched.
+                if guard.is_err() {
+                    *guard = Err(error.clone());
+                }
+                Err(error)
+            }
+        }
+    }
+
     pub fn set(&self, value: &str) -> Result<String, String> {
         let desired = CloseBehavior::parse(value)?;
-        let mut guard = self.0.lock().map_err(|_| unavailable())?;
+        let mut guard = self.store.lock().map_err(|_| unavailable())?;
         let store = guard.as_mut().map_err(|error| error.clone())?;
         store.save(desired)?;
         Ok(store.current.as_str().to_owned())
@@ -87,7 +118,7 @@ impl PreferencesState {
 
     pub fn effective(&self) -> CloseBehavior {
         // Corrupt/unsupported preferences do not destroy the only window.
-        self.0
+        self.store
             .lock()
             .ok()
             .and_then(|guard| guard.as_ref().ok().map(|store| store.current))
@@ -422,6 +453,92 @@ mod tests {
             assert_eq!(state.get().unwrap(), "exit");
             assert_eq!(snapshot(&sandbox.0), original);
         }
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn reload_recovers_after_a_windows_read_lock_blocks_initial_loading() {
+        use std::os::windows::fs::OpenOptionsExt;
+
+        let sandbox = Sandbox::new();
+        let path = sandbox.0.join(FILE_NAME);
+        let bytes = br#"{"schema_version":1,"close_behavior":"exit"}"#;
+        fs::write(&path, bytes).unwrap();
+        let deny_read = OpenOptions::new()
+            .read(true)
+            .share_mode(0)
+            .open(&path)
+            .unwrap();
+        let state = PreferencesState::load(sandbox.0.clone());
+        let initial_error = state.get().unwrap_err();
+        assert!(initial_error.starts_with("DESKTOP_SETTINGS_IO_ERROR"));
+        assert_eq!(state.effective(), CloseBehavior::HideToTray);
+        assert!(
+            state
+                .reload()
+                .unwrap_err()
+                .starts_with("DESKTOP_SETTINGS_IO_ERROR")
+        );
+
+        drop(deny_read);
+        assert_eq!(state.get().unwrap_err(), initial_error);
+        assert_eq!(state.reload().unwrap(), "exit");
+        assert_eq!(state.get().unwrap(), "exit");
+        assert_eq!(state.effective(), CloseBehavior::Exit);
+        assert_eq!(fs::read(path).unwrap(), bytes);
+        assert_eq!(fs::read_dir(&sandbox.0).unwrap().count(), 1);
+    }
+
+    #[test]
+    fn reload_rejects_corruption_and_preserves_the_previous_effective_choice() {
+        let sandbox = Sandbox::new();
+        let path = sandbox.0.join(FILE_NAME);
+        fs::write(&path, br#"{"schema_version":1,"close_behavior":"exit"}"#).unwrap();
+        let state = PreferencesState::load(sandbox.0.clone());
+        assert_eq!(state.get().unwrap(), "exit");
+        let corrupt = b"unknown settings must remain unchanged";
+        fs::write(&path, corrupt).unwrap();
+
+        let error = state.reload().unwrap_err();
+        assert!(error.starts_with("DESKTOP_SETTINGS_INVALID_FILE"));
+        assert_eq!(state.get().unwrap(), "exit");
+        assert_eq!(state.effective(), CloseBehavior::Exit);
+        assert_eq!(fs::read(&path).unwrap(), corrupt);
+        assert!(
+            state
+                .set("hide_to_tray")
+                .unwrap_err()
+                .starts_with("DESKTOP_SETTINGS_CONFLICT")
+        );
+        assert_eq!(fs::read(path).unwrap(), corrupt);
+        assert_eq!(fs::read_dir(&sandbox.0).unwrap().count(), 1);
+    }
+
+    #[test]
+    fn reload_updates_a_cached_choice_saved_by_an_independent_state_without_writing() {
+        let sandbox = Sandbox::new();
+        let path = sandbox.0.join(FILE_NAME);
+        let old = PreferencesState::load(sandbox.0.clone());
+        assert_eq!(old.get().unwrap(), "hide_to_tray");
+        assert_eq!(old.effective(), CloseBehavior::HideToTray);
+        assert!(!path.exists());
+        let independent = PreferencesState::load(sandbox.0.clone());
+
+        independent.set("exit").unwrap();
+        let saved_exit = fs::read(&path).unwrap();
+        assert_eq!(old.get().unwrap(), "hide_to_tray");
+        assert_eq!(old.reload().unwrap(), "exit");
+        assert_eq!(old.effective(), CloseBehavior::Exit);
+        assert_eq!(fs::read(&path).unwrap(), saved_exit);
+
+        independent.set("hide_to_tray").unwrap();
+        let saved_hide = fs::read(&path).unwrap();
+        assert_ne!(saved_hide, saved_exit);
+        assert_eq!(old.get().unwrap(), "exit");
+        assert_eq!(old.reload().unwrap(), "hide_to_tray");
+        assert_eq!(old.effective(), CloseBehavior::HideToTray);
+        assert_eq!(fs::read(path).unwrap(), saved_hide);
+        assert_eq!(fs::read_dir(&sandbox.0).unwrap().count(), 1);
     }
 
     #[test]
