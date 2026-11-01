@@ -2,7 +2,7 @@
 
 本文件规定当前采用的工程方向和首个可运行闭环。产品目标以 [PRD](../requirements/PRD.md) 为准；这里的分步实现不删减双模式、真实资料解析、主动图表表达和长期维护目标。
 
-状态：工程基线。B01/B01A提供项目与桌面骨架，B02-T01已实现CLI单份文本来源登记，B02-T02提供只读fixture知识/覆盖/计划及独立预期校验；实际Markdown编译与临时Vault仍是后续目标。具体完成状态与验证证据以任务账本为准，不能把本文件中的后续设计当作已验收能力。第三方库及版本在引入时验证并锁定。
+状态：工程基线。B01/B01A提供项目与桌面骨架，B02-T01已实现CLI单份文本来源登记，B02-T02提供只读fixture知识/覆盖/计划及独立预期校验；B02-T03当前实现将有效fixture编译到全新测试输出根，重读有限Markdown、保存双报告并以独立SQLite事务登记发布。任务完成状态与完整验证证据以[任务账本](../../dev-log/tasks.json)为准，不能把本文件中的后续设计或工程样例当作已验收能力。第三方库及版本在引入时验证并锁定。
 
 ## 1 当前决定
 
@@ -10,9 +10,9 @@
 | --- | --- | --- |
 | 核心与命令行 | Rust core 与 CLI | 先建立可单独执行和测试的核心，不依赖 GUI |
 | 资料解析 | Rust文本入口，后续加 Python parser sidecar | 当前CLI只登记明确选取的单份UTF8 MD/TXT；真实 PDF 接入时才引入 sidecar |
-| 持久化 | 本地 SQLite | 当前保存项目、来源版本、Span与最小导入记录；后续再加入运行、处理账本与候选版本，不放进输出 Vault |
+| 持久化 | 本地 SQLite | 来源项目保存项目、来源版本、Span与最小导入记录；fixture编译工作区另以Schema1保存Run、Coverage、Release和发布依据，数据库不放进阅读Vault |
 | 交换契约 | 带版本的 JSON | 显式校验输入、引用与结果；详见 [数据契约](DATA_CONTRACTS.md) |
-| 输出 | Obsidian Markdown 与本地资源 | 先写临时 Vault，禁止用生产笔记库验证 |
+| 输出 | 有限Markdown、标题语义链接与比较表 | 当前只写尚不存在的新测试根中的Vault；完整Obsidian兼容及生产库维护需分别验收 |
 | 桌面端 | Tauri 与 React TypeScript | 按用户要求提前桌面骨架及安装实测；调用同一核心接口，完整用例逐项接入 |
 | 模型接入 | API 优先，再 Agent，再本地模型 | 首闭环不使用网络或模型；后续逐个能力接入 |
 
@@ -22,22 +22,27 @@ Markdown 是可阅读产物，Knowledge IR 是可验证的知识表达。文件�
 
 ## 2 首个闭环
 
-目标是证明输入、账本、计划、输出和报告之间能够对账，而不是证明模型能够理解教材。B02-T01完成来源登记、不可变快照和完整Span清单；B02-T02核对自造fixture的IR、覆盖与NotePlan契约及独立expected。实际渲染、输出重读、Run/Release登记与临时Vault步骤尚未实现。
+目标是证明输入、账本、计划、输出和报告之间能够对账，而不是证明模型能够理解教材。B02-T01完成来源登记、不可变快照和完整Span清单；B02-T02核对自造fixture的IR、覆盖与NotePlan契约及独立expected。B02-T03复用同一只读加载结果，增加确定性渲染、暂存与Vault实际重读、Run/Coverage/Release登记及JSON/Markdown验证快照；实现边界见[本任务方案](../execution/B02-T03_PLAN.md)。
 
 输入包括少量可审阅的 UTF-8 MD/TXT 文件，以及同一 fixture 包中的预先编写的 IR、NotePlan 和期望结果。IR 明确记录 `producer = fixture`；不得把它展示为自动抽取或已核验学科知识。
 
 ```text
-只读 fixture 资料
-  -> 来源登记与版本指纹
-  -> 确定性文本分段与 SourceSpan 清单
-  -> 核对 fixture 中的知识与来源映射
-  -> 校验 NotePlan 与规范位置
-  -> 确定性 Markdown 渲染
-  -> 覆盖 引用 路径 内容映射检查
-  -> 临时 Vault 与运行报告
+只读 fixture 四包与完整来源
+  -> 真实指纹、确定性分段与声明 SourceSpan 对账
+  -> Coverage、Knowledge、NotePlan 与独立 expected 预检
+  -> 独占新根并登记本轮 Run、Coverage 与 staged Release
+  -> 确定性 Markdown 渲染到 staging/vault
+  -> 暂存实际清单、SHA、内容映射和全部语义链接验证
+  -> 独占写入 vault 并再次完整重读，Release = verified
+  -> 写入并重读同一 typed 事实的 JSON/Markdown 验证快照
+  -> 最后 SQLite 事务登记 publication_commits 与 published 状态
 ```
 
-首闭环至少包含一篇正文笔记、一张由结构化节点生成的对照表和一个跨笔记标题链接。表格数据来自已声明的原子映射；选择表格的计划由 fixture 给出，不能宣称已实现 AI 表达规划。
+当前[自造fixture](../../fixtures/text-compare-v1/README.md)包含两份关联笔记、两处规范解释标题、一个三列比较表和两个跨笔记标题链接；必要原子保留定义、虚构数值、单位、条件及例外。表格数据与语义链接来自已声明的计划，不能宣称已实现AI表达规划。正文、列表项与单元格均有实际UTF8字节范围映射，语义别名范围单独记录，不能借别名掩盖正文知识遗漏。
+
+渲染器`fixture-markdown-v1`当前支持H1笔记标题、H2小节、普通明文段落、有序列表和结构化比较表，以及追加到所属正文/列表项/单元格末尾的canonical标题链接。明文ASCII标点转义，换行与Tab使用固定编码后单次解码核对；表格内wiki别名分隔符写为`\|`。不把明文数学、HTML、公式、代码、Mermaid或嵌入解释为额外已支持的展示语义；原生应用视觉检查与工程解析校验分开记录。
+
+报告分别表达`source_coverage`、`knowledge_compilation`、`quality_validation`和`optional_research`的状态、理由与计数。前三维只描述本次工程校验；`optional_research = not_applicable`，`scientific_quality = not_run`。自造fixture通过不证明真实PDF/API抽取、科学正确率或原生Obsidian兼容。
 
 本阶段不实现 OCR、联网研究、事实裁决、自动笔记拆分、复杂图像重绘、生产 Vault 接管、自动三方合并或完整审批 UI。未知能力必须显示为未实现，不得以成功空输出替代。
 
@@ -75,8 +80,13 @@ B01-T02的项目初始化与检查逻辑先放在`noetome-cli`库的`project`模
 | [fixture_knowledge.rs](../../crates/noetome-cli/src/fixture_knowledge.rs) | 纯IR证据/引用/必要原子校验、逐Span覆盖及重复链对账 |
 | [fixture_plan.rs](../../crates/noetome-cli/src/fixture_plan.rs) | 纯计划/显示scope/规范位置/结构化链接校验与独立expected逐字段对账 |
 | [fixture.rs](../../crates/noetome-cli/src/fixture.rs) | 只读case verify编排与Schema1 JSON事实结果，来源失败时依赖项not_run；不发布文件 |
+| [fixture_render.rs](../../crates/noetome-cli/src/fixture_render.rs) | 纯有限Markdown渲染；独立解析重读文件，对账实际scope、全文语义引用、规范解释与独立expected，不调用render生成验证期望 |
+| [compile_model.rs](../../crates/noetome-cli/src/compile_model.rs) | 编译上下文、检查、四维状态、文件映射和验证报告的严格typed事实；发布引用不等于已提交发布 |
+| [compile_report.rs](../../crates/noetome-cli/src/compile_report.rs) | 从同一typed验证快照生成Markdown事实表，与磁盘JSON保持同一键、理由、计数和问题 |
+| [compile_store.rs](../../crates/noetome-cli/src/compile_store.rs) | 独占新根、目录/文件身份与精确清单保护、独立编译SQLite Schema1、阶段登记及最后发布事务 |
+| [fixture_compile.rs](../../crates/noetome-cli/src/fixture_compile.rs) | case compile预检、输入守卫、暂存/Vault双重验证、报告与存储协调；失败保留可确认现场，不接管已有目录 |
 
-来源登记不创建完整Run、CoverageRecord、IR、NotePlan或Release。fixture入口只读取作者声明的IR/覆盖/计划并验证，coverage_run_id是声明的审阅作用域，不登记持久Run。桌面的帮助、版本、运行信息和B01A窗口偏好接口与项目业务分开，尚未接入项目、来源或fixture业务入口。
+来源登记不创建完整Run、CoverageRecord、IR、NotePlan或Release。case verify只读取作者声明的IR/覆盖/计划并验证，coverage_run_id是声明的审阅作用域，不登记持久Run。case compile通过预检后才在独立新根保存真实Run与Release UUID及逐Span Coverage；原fixture审阅作用域另存于compile_metadata.fixture_scope_id，不把它冒充真实运行身份。桌面的帮助、版本、运行信息和B01A窗口偏好接口与项目业务分开，尚未接入项目、来源或fixture业务入口。
 
 ## 4 工作区与文件职责
 
@@ -94,7 +104,7 @@ source-project/
   .noetome-writing/              写入期间的操作说明、旧文件备份、候选与暂存快照
 ```
 
-缓存和写目录由程序管理，不接受外部指定的内部输出路径。无效UTF8版本只保留raw.bin；未读全文件只登记失败尝试，不建立版本快照。只读fixture输入的前半部分已存在；后续编译输出布局仍按以下职责规划，当前不生成暂存Vault或双报告：
+缓存和写目录由程序管理，不接受外部指定的内部输出路径。无效UTF8版本只保留raw.bin；未读全文件只登记失败尝试，不建立版本快照。fixture编译使用以下独立布局，不初始化来源项目或迁移project.sqlite：
 
 ```text
 fixture-case/                  只读输入与审阅过的预期
@@ -103,23 +113,26 @@ fixture-case/                  只读输入与审阅过的预期
   ir.json
   note-plan.json
   expected.json
-temporary-workspace/           当前运行独占
-  project.json
-  project.sqlite
-  .noetome-sources/
-  staging/<run-id>/
-  output/<run-id>/vault/
-  reports/<run-id>.json
-  reports/<run-id>.md
+new-output-root/               当前编译独占，运行前必须不存在
+  state/compile.sqlite         编译工作区Schema1，与来源项目Schema2分开
+  state/recovery.json          失败登记或报告无法完成且目录仍属本轮时保存诊断
+  staging/vault/<note-paths>    暂存候选，成功或失败均保留
+  vault/<note-paths>            通过暂存验证后写入并再次重读
+  reports/validation.json      本轮验证事实快照，result为validated或failed
+  reports/validation.md        同一事实的Markdown报告
+  reports/failure.json         已有验证快照后的失败另存，不覆盖原快照
+  reports/failure.md
 ```
 
-fixture 目录不能作为工作区或输出目录。项目根是用户明确选定的路径，可以是绝对路径或当前目录的相对路径；init只在尚不存在的目标下创建项目，不自动创建缺失的父目录。工作区内部的数据库、缓存及产物路径则必须相对于实际工作区，拒绝绝对路径、`..` 越界、Windows 保留名和经符号链接或 junction 指向外部的路径。
+fixture目录不能作为工作区或输出目录。项目根和编译输出根均由用户明确选定，可以是绝对路径或当前目录的相对路径；init与case compile都只创建尚不存在的目标，不自动补缺失父目录。编译输入与输出不得互为祖先；按路径组件判断，合法相邻目录仍可使用。工作区内部的数据库、缓存及产物路径必须相对于实际工作区，拒绝绝对路径、`..`、Windows保留名、不安全组件以及符号链接或junction。
 
 空项目初始化以`project.json`和`project.sqlite`保存同一Schema1项目身份与版本，`.noetome-initializing`及两个临时文件限定未完成状态。SQLite事务和同目录的非覆盖文件发布各自保存证据，正式文件配对且标记移除后才显示初始化成功。普通失败仅清理本轮仍原样的独占文件；中断或未知内容保留供检查，当前可通过新的目标目录重新建立空项目，不声称支持原目录自动恢复。project inspect支持严格只读Schema1/2检查，使用immutable数据库访问，拒绝待恢复侧文件及写目录，不进行修复或迁移；具体字段和约束见[项目数据契约](DATA_CONTRACTS.md)。
 
 首次来源登记在候选SQLite中事务升级为Schema2，保留project_id、created_at及initialized基础状态，并将配置与数据库配对发布；initialized在Schema2只表示项目建立完成。Schema1只允许基础表，Schema2只允许项目、来源、版本、Span和导入五张契约表及其约束。配置、数据库版本或元数据失配必须拒绝，不能让旧inspect忽略新表。
 
 输出目标必须是本轮尚不存在的目录。若遇到已存在的目标、文件或未知内容，返回阻断结果，不自动清空、覆盖、移动或接管。这个保守策略是首闭环的人工内容保护，不等同于已经实现增量合并。
+
+独立编译SQLite的`user_version = 1`、`application_id = 0x4e434d50`，固定使用`compile_metadata`、`runs`、`releases`、`coverage_records`、`rendered_files`、`publication_commits`六张表；来源项目Schema2仍只保留原有五张契约表。编译数据库采用`journal_mode = DELETE`、`synchronous = FULL`及外键约束，状态检查拒绝待恢复的`-journal`、`-wal`、`-shm`侧文件，不用immutable读取绕过未完成事务。它没有项目迁移或已有编译根接管入口。
 
 输出 Vault 只包含阅读所需文件。SQLite、日志、凭据、原始资料缓存和未发布候选不混入 Vault。追溯摘要与发布清单保存在相邻报告区，后续再决定可移植索引打包形式。
 
@@ -135,31 +148,33 @@ fixture 目录不能作为工作区或输出目录。项目根是用户明确选
 
 Windows准备阶段持有拒绝写入/删除的读句柄，替换前释放并复核身份与字节。该协议约束合作CLI并识别可观察的变更，不承诺任意外部并发编辑或任意断电下多文件原子提交。公开inspect不自动恢复中断现场。
 
-以下是后续fixture编译的目标流程，当前来源登记不提前建立Run：
+当前fixture编译按以下顺序执行，来源登记仍不提前建立Run：
 
-1. 校验 CLI 参数、fixture schema 和工作区范围，登记 Run。
-2. 读取完整来源字节并计算指纹，生成规范文本及 SourceSpan 清单。
-3. 将来源版本、Span 和初始账本在一个事务中提交；解析失败保留问题项。
-4. 读取 IR fixture，确认其声明的来源指纹、Span 引用和原子引用都有效。
-5. 校验所有必要原子的规范位置、表达节点及链接目标，再登记候选计划。
-6. 在独占暂存目录渲染候选文件，计算文件指纹及内容映射。
-7. 验证候选文件与账本；失败则保留诊断，禁止创建成功发布记录。
-8. 再次检查目标目录不存在，发布至本轮专属临时输出目录。
-9. 对发布文件重读核对指纹，最后写 Release 和真实完成报告。
+1. 完整只读加载四包与来源，复核真实SHA、Span边界及全部契约；保持LoadedCase文件句柄、身份和字节守卫至最终提交。纯预检拒绝既有目标、输入输出祖先重叠和不安全路径；语义失败不创建输出根。
+2. 独占创建新根、state与编译Schema1，保存本轮Run/Release UUID、IR/计划修订号、四包SHA及规范化/分段/覆盖政策/渲染规则版本；复制全部Span覆盖处置到本轮CoverageRecord，不复制来源项目数据库。
+3. 按已校验NotePlan确定性渲染，独占写入staging/vault，保存完整文件清单、SHA、字节数、内容与链接映射，再登记staged阶段。每次写入与阶段结束核对根、父目录、子目录及文件身份和精确清单。
+4. 重读暂存文件，独立解析实际标题、列表、比较表、正文scope和全文件wiki链接；对账计划文字、独立expected原子及qualifiers、规范解释位置和实际目标文件/唯一标题。不仅检查声明ID、mapping或SHA。
+5. 暂存验证通过后独占写入vault，再次重读与完整验证；每份输出与已验证暂存一致且输入守卫仍有效时登记Release=verified。vault中文件存在不表示已发布。
+6. 以同一CompileReport生成并重读JSON/Markdown验证快照，核对四维状态、必需检查、真实计数、问题、清单、映射、链接及输入/规则版本；报告publication仅引用数据库、publication_commits和release_id。
+7. 最后重新检查输入、全树身份、文件SHA、精确清单及数据库契约，在同一个SQLite事务中插入publication_commits并同步Run=succeeded/stage=finished、Release=published、全部Coverage=validated。该事务提交是唯一发布依据，随后没有必须成功的文件写入或清理；stdout输出失败也不反写已提交状态。
 
-SQLite 事务不等于文件系统事务。写文件成功后数据库提交失败，或反向发生时，都不能直接标为发布成功。首闭环至少保存明确的 `staged`、`verified`、`published` 状态及文件清单，重启时能识别残留候选并报告待恢复。
+报告的`result = validated`是验证事实快照，不能直接推导`published`。publication_commits绑定实际JSON、Markdown与compact文件清单的SHA；stdout外层release_status来自最终提交或失败结果。必需的sources、coverage、knowledge、note_plan、expected、rendering、staging_output、vault_output任一failed或not_run，以及前三维incomplete，均阻断发布；scientific_quality固定not_run，不作为已经执行的科学质量结论。
 
-本阶段可以采用“每轮新目录”的发布方式减少覆盖风险。后续生产 Vault 多文件更新需要独立设计发布日志、补偿、审批绑定和回滚，不能仅把目录改名方案推广成整库原子更新承诺。
+SQLite事务不等于文件系统事务。渲染或早期暂存未完成时保存failed Run与staged Release；实际输出验证、报告或最后登记失败进入recovery_required，保留候选和问题。已写validation快照后发生失败，另写failure快照，不把验证通过改称发布成功。失败状态登记或报告无法完成时，仅在目录及文件身份仍可确认时独占写state/recovery.json；未知内容、目录换号或链接替换不被覆盖、删除或接管。COMMIT失败后检查事务状态并显式rollback未结束事务，禁止将待提交发布记录带入失败路径。
+
+本阶段固定“每轮新目录”，创建后保留现场，没有Drop递归清理、公开自动恢复或强制接管入口。受控中断与占用测试证明已覆盖的失败边界，不保证任意断电或所有外部并发时序下多文件原子发布。后续生产Vault更新仍需独立设计发布日志、补偿、审批绑定和回滚。
 
 ## 6 可重复执行与版本
 
 领域 ID 从 fixture 或持久化状态读取，不按笔记标题重新生成。相同输入、契约版本、计划和渲染器版本，应产生相同内容文件；时间、运行 ID 等审计字段在报告中单独比较。
 
+case compile的两次新根运行保留相同Concept/Atom/Note/Section身份和笔记字节，另生成独立Run/Release UUID及UTC审计时间；运行身份、时间和输出根路径不写进正文。报告input_hashes固定包含case_sha256、ir_sha256、plan_sha256、expected_sha256，versions记录渲染及来源/覆盖规则。Windows上的进程验证以[固定作者字面期望](../../crates/noetome-cli/tests/support/compile_expectations.rs)核对两份完整Markdown，并在[12组真实CLI测试](../../crates/noetome-cli/tests/compile.rs)中执行35次调用，覆盖双目录、完整内容/引用/SQLite对账、Windows锁与junction和外部哨兵保护；不从待测输出回填expected。
+
 当前来源版本保存原始/规范指纹、规范化和分段规则版本；同字节复用版本及Span，每次选取仍生成新的import-id。显式source-id先固定来源身份，再在其版本内复用或递增revision，不因另一来源SHA相同而合并。未指定ID时先保留既有选取路径关联，否则按同项目内容复用或新建来源；名称不参与身份生成，内容变化保留旧版本快照。
 
 后续缓存复用还须区分IR、计划和渲染器版本，不得把“文件名相同”当作内容未变。无变化运行不得制造重复知识身份。
 
-数据库变化通过顺序迁移管理，项目记录所用schema版本。当前仅来源import提供已实现的Schema1到2候选升级；inspect没有迁移入口。不支持的版本必须拒绝并说明原因，未完成现场要求保留检查，不能提供假迁移或自动接管能力。
+数据库变化通过顺序迁移管理，项目记录所用schema版本。当前仅来源import提供已实现的项目Schema1到2候选升级；inspect没有迁移入口。编译工作区Schema1拥有独立application_id和精确六表契约，不迁移或复用来源项目Schema2。不支持的版本必须拒绝并说明原因，未完成现场要求保留检查，不能提供假迁移或自动接管能力。
 
 ## 7 命令行边界
 
@@ -173,13 +188,18 @@ noetome project inspect <project-path>
 noetome source import <project-path> <MD/TXT-file> [--source-id <existing-id>]
 noetome source inspect <project-path> <import-id>
 noetome case verify <case-root>
+noetome case compile <case-root> <new-output-root>
 ```
 
-help/version及命令帮助只解析和输出，不访问项目或生成来源。source import只把明确选取的本地单文件作为输入，不扫描资料目录；source inspect不再读取原选取文件，只读核对持久记录与项目内快照。两者不调用网络/模型、不输出Vault。B02-T02增加`case verify <case-root>`只读核对明确标为fixture的四包，输出分项JSON与稳定问题；不登记Run/Release或生成笔记。下一编译入口由[近期步骤](../execution/NEXT_STEPS.md)定义，尚未实现；不能提供跳过路径防护、覆盖账本或人工内容保护的快捷开关。
+help/version及命令帮助只解析和输出，不访问项目或生成来源。source import只把明确选取的本地单文件作为输入，不扫描资料目录；source inspect不再读取原选取文件，只读核对持久记录与项目内快照。两者不调用网络/模型、不输出Vault。case verify只读核对明确标为fixture的四包，输出分项JSON与稳定问题，不登记Run/Release或生成笔记。case compile接收明确的输入根和新输出根，动词后可用`--`分隔以`-`开头的路径；没有跳过验证、防护、覆盖已有内容或自动接管的快捷开关。
 
-帮助、版本和项目摘要为文字stdout；来源import/inspect与case verify固定输出各自报告Schema1 JSON，JSON版本与项目Schema2分开。诊断写stderr，不混入JSON；来源结果持久保存在SQLite中，可用import-id再次只读查看。fixture验证不持久登记，stdout可由调用方重定向为文件。当前没有完整Run或JSON/Markdown双报告文件，不通过解析终端文字恢复状态。
+帮助、版本和项目摘要为文字stdout；来源import/inspect与case verify固定输出各自报告Schema1 JSON，JSON版本与项目Schema2分开。诊断写stderr，不混入JSON；来源结果持久保存在SQLite中，可用import-id再次只读查看。fixture验证不持久登记，stdout可由调用方重定向为文件。
 
-退出码约定为：`0` 表示命令声明的操作已完成；项目初始化只表示空项目契约已建立，来源import只表示真实快照与来源记录验证完成。source inspect成功查看已保存failed导入记录仍返回0，因为只读核对已完成，不表示该来源登记成功。`2` 表示参数或输入契约不合法；`3` 表示来源读取失败、可解释的阻断或未完成；`1` 表示内部错误或stdout输出失败。已保存的失败导入同时输出JSON和稳定诊断；写入失败不输出成功JSON，中断不得转换为0。后续fixture闭环成功还须全部验证并发布。详见 [设计标准](../standards/DESIGN.md)。
+case compile成功stdout为Schema1 CompileOutcome，包含producer=fixture、operation=case_compile、case_id、run_id、release_id、release_status、output_created、paths及report。paths.root为实际绝对根，Vault、数据库和已写报告路径相对于根；不存在的产物为null。report逐字段等同磁盘JSON验证快照，外层release_status=published必须有数据库最终提交依据。语义预检失败时output_created=false、release_status=not_started，运行ID、report及产物路径为null，checks/issues只描述实际执行的预检，不伪装双报告已经生成。
+
+退出码约定为：`0`表示命令声明的操作已完成；项目初始化只表示空项目契约已建立，来源import只表示真实快照与来源记录验证完成。source inspect成功查看已保存failed导入记录仍返回0，因为只读核对已完成，不表示该来源登记成功。case compile返回0还要求必需验证全部通过并完成最后发布事务。
+
+`2`表示参数或输入契约不合法，compile的非法JSON/UTF8及PROJECT_UNSAFE_PATH拒绝在分配前输出空stdout；`3`表示来源读取失败、可解释的阻断或未完成，包括COMPILE_OUTPUT_EXISTS、COMPILE_INPUT_OUTPUT_OVERLAP及实际I/O/文件占用。compile语义预检失败输出output_created=false的分项JSON并返回3；拥有新根后的失败返回3，外层为staged或recovery_required并保留可确认现场，诊断CASE_COMPILATION_FAILED。`1`表示内部错误或stdout输出失败；提交后的CLI_OUTPUT_ERROR只说明输出传输失败，不能反写已提交Run/Release/Coverage或否认publication_commits。已保存的失败导入同时输出JSON和稳定诊断；写入失败不输出成功JSON，中断不得转换为0。详见[设计标准](../standards/DESIGN.md)。
 
 ## 8 后续适配器
 

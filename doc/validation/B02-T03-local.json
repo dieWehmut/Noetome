@@ -1,0 +1,1107 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-01T10:06:20.154065+00:00",
+  "scope": "B02-T03 fixture compilation, protected new test workspaces only",
+  "base_commit": "c03cd73605d852bc0cc0c3ecf48139b14c6f0be0",
+  "branch": "codex/b02-t03-fixture-vault",
+  "fixture_expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+  "verification": {
+    "cargo_fmt_all_check": {
+      "exit_code": 0
+    },
+    "cargo_check_workspace_locked_offline": {
+      "exit_code": 0
+    },
+    "cargo_test_workspace_locked_offline": {
+      "exit_code": 0,
+      "passed": 247,
+      "failed": 0,
+      "ignored": 0,
+      "suites": {
+        "cli_library": 164,
+        "cli_process": 4,
+        "compile_process": 12,
+        "fixture_process": 20,
+        "project_process": 13,
+        "source_process": 19,
+        "desktop": 15
+      },
+      "test_only_child_entries": 2,
+      "children_also_executed_by_parent_process_tests": true
+    },
+    "web_build": {
+      "exit_code": 0,
+      "typescript": "passed",
+      "vite": "passed"
+    },
+    "python_unittest": {
+      "exit_code": 0,
+      "passed": 12,
+      "failed": 0
+    },
+    "author_audit": {
+      "exit_code": 0
+    },
+    "py_compile": {
+      "exit_code": 0
+    },
+    "devlog_check": {
+      "exit_code": 0
+    },
+    "git_diff_check": {
+      "exit_code": 0
+    }
+  },
+  "cli_preparation": {
+    "Path": "D:\\Noetome\\.artifacts\\compile-cli-final-20261101\\noetome.exe",
+    "SHA256": "c08393bed4cca09493e3df1b089a81864da08a1f94c46bfb340bec03becb4d25",
+    "IntegrityLabel": "",
+    "IntegrityRid": 8192,
+    "SourcePath": "D:\\Noetome\\target\\debug\\noetome.exe",
+    "SourceSHA256": "c08393bed4cca09493e3df1b089a81864da08a1f94c46bfb340bec03becb4d25",
+    "Reused": false
+  },
+  "independent_cli_smoke": {
+    "schema_version": 1,
+    "scope": "fixture_compile_standard_library_reread",
+    "cli": "D:\\Noetome\\.artifacts\\compile-cli-final-20261101\\noetome.exe",
+    "cli_sha256": "c08393bed4cca09493e3df1b089a81864da08a1f94c46bfb340bec03becb4d25",
+    "root": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final",
+    "calls": [
+      {
+        "case": "D:\\Noetome\\fixtures\\text-compare-v1",
+        "output": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\output-a",
+        "exit_code": 0,
+        "stderr": "",
+        "stdout_sha256": "077ad36a1720994df677917b1f9170da789bd390e77efca7dbb61cc8528666ff",
+        "started_ns": 1793527495645824700,
+        "finished_ns": 1793527495918201300
+      },
+      {
+        "case": "D:\\Noetome\\fixtures\\text-compare-v1",
+        "output": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\output-b",
+        "exit_code": 0,
+        "stderr": "",
+        "stdout_sha256": "d426d574f712b00aef80d841fbc05f401daf90b666d22cc413d4d2a8c3491251",
+        "started_ns": 1793527495925788600,
+        "finished_ns": 1793527496099912500
+      },
+      {
+        "case": "D:\\Noetome\\fixtures\\text-compare-v1",
+        "output": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\output-a",
+        "exit_code": 3,
+        "stderr": "COMPILE_OUTPUT_EXISTS：输出根已存在：\\\\?\\D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\output-a；仅接受全新目录。\n",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "started_ns": 1793527496105642100,
+        "finished_ns": 1793527496119495200
+      },
+      {
+        "case": "D:\\Noetome\\fixtures\\text-compare-v1",
+        "output": "D:\\Noetome\\fixtures\\text-compare-v1",
+        "exit_code": 3,
+        "stderr": "COMPILE_INPUT_OUTPUT_OVERLAP：输入与输出不能互为祖先目录。\n",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "started_ns": 1793527496122118500,
+        "finished_ns": 1793527496140285900
+      },
+      {
+        "case": "D:\\Noetome\\fixtures\\text-compare-v1",
+        "output": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\missing-parent\\new",
+        "exit_code": 3,
+        "stderr": "PROJECT_IO_ERROR：无法访问项目路径 D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\missing-parent：系统找不到指定的文件。 (os error 2)\n",
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "started_ns": 1793527496141315800,
+        "finished_ns": 1793527496152134400
+      },
+      {
+        "case": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\missing-condition",
+        "output": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\missing-condition-output",
+        "exit_code": 3,
+        "stderr": "CASE_COMPILATION_FAILED：fixture编译未完成，请查看JSON问题及保留的阶段现场。已有目标不自动接管。\n",
+        "stdout_sha256": "9cba56878e16539e01ce3051635901a58ed60d105542669511cb0a68b4605198",
+        "started_ns": 1793527496159828000,
+        "finished_ns": 1793527496173406000
+      },
+      {
+        "case": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\pending-coverage",
+        "output": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\pending-coverage-output",
+        "exit_code": 3,
+        "stderr": "CASE_COMPILATION_FAILED：fixture编译未完成，请查看JSON问题及保留的阶段现场。已有目标不自动接管。\n",
+        "stdout_sha256": "9ef4c93f7137a5e06bc782fd6db3eddc6b261d94b1f5a025f05ffb9b07de03ab",
+        "started_ns": 1793527496179920000,
+        "finished_ns": 1793527496195354400
+      },
+      {
+        "case": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\table-alias-case",
+        "output": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\table-alias-output",
+        "exit_code": 0,
+        "stderr": "",
+        "stdout_sha256": "aac9c6393473bf25e3056db13a819bc704a5cf7cf83a8523a3382db6bd877e83",
+        "started_ns": 1793527496202682900,
+        "finished_ns": 1793527496388478200
+      }
+    ],
+    "published": [
+      {
+        "root": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\output-a",
+        "run_id": "8affa237-f3c3-4185-a444-27459806e40e",
+        "release_id": "fbaa46b5-f9ac-4f6b-8fa2-63ca46a5267f",
+        "files": [
+          {
+            "relative_path": "笔记/甲容器.md",
+            "note_id": "N4u",
+            "plan_revision": 1,
+            "content_sha256": "33eedf491e2ab58e5ee7d2da80c701e91bb0c77700b0212672a1ddbed2bfa376",
+            "byte_length": 462,
+            "content_mappings": [
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "Q2z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "atom_ids": [
+                  "A3d"
+                ],
+                "start_byte": 33,
+                "end_byte": 90
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W3g",
+                  "column_id": "D2c"
+                },
+                "atom_ids": [],
+                "start_byte": 202,
+                "end_byte": 214
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W3g",
+                  "column_id": "D4c"
+                },
+                "atom_ids": [
+                  "A5p"
+                ],
+                "start_byte": 217,
+                "end_byte": 320
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W3g",
+                  "column_id": "D6c"
+                },
+                "atom_ids": [
+                  "A9w"
+                ],
+                "start_byte": 323,
+                "end_byte": 423
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W7g",
+                  "column_id": "D2c"
+                },
+                "atom_ids": [],
+                "start_byte": 428,
+                "end_byte": 434
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W7g",
+                  "column_id": "D4c"
+                },
+                "atom_ids": [],
+                "start_byte": 437,
+                "end_byte": 446
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W7g",
+                  "column_id": "D6c"
+                },
+                "atom_ids": [],
+                "start_byte": 449,
+                "end_byte": 458
+              }
+            ],
+            "links": [
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "Q2z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "target_concept_id": "C6h",
+                "target_path": "笔记/乙容器.md",
+                "target_heading": "定义与条件",
+                "display_text": "乙容器",
+                "start_byte": 91,
+                "end_byte": 137
+              }
+            ]
+          },
+          {
+            "relative_path": "笔记/乙容器.md",
+            "note_id": "N8v",
+            "plan_revision": 1,
+            "content_sha256": "349f06a40ea199f4d2fb2f6ebcecf61aa652a571ea18e1e81f665a11cf505b88",
+            "byte_length": 244,
+            "content_mappings": [
+              {
+                "scope": {
+                  "section_id": "H6n",
+                  "node_id": "Q6z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "atom_ids": [
+                  "A7e"
+                ],
+                "start_byte": 33,
+                "end_byte": 90
+              },
+              {
+                "scope": {
+                  "section_id": "H6n",
+                  "node_id": "L9x",
+                  "kind": "list_item",
+                  "item_id": "I4b",
+                  "row_id": null,
+                  "column_id": null
+                },
+                "atom_ids": [
+                  "A9w"
+                ],
+                "start_byte": 142,
+                "end_byte": 242
+              }
+            ],
+            "links": [
+              {
+                "scope": {
+                  "section_id": "H6n",
+                  "node_id": "Q6z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "target_concept_id": "C2f",
+                "target_path": "笔记/甲容器.md",
+                "target_heading": "定义与比较",
+                "display_text": "甲容器",
+                "start_byte": 91,
+                "end_byte": 137
+              }
+            ]
+          }
+        ],
+        "report_sha256": "15fdd6f49aa82427937cb6e3515a23f8c4c2131cb99ea149234fecb1c83f55ba",
+        "markdown_sha256": "89f85e4780aadd65199af65b5b3e392d8f3adb5fe17b522cbd46dc550ce760a0",
+        "counts": {
+          "atoms": 4,
+          "duplicates": 1,
+          "excluded": 7,
+          "included": 4,
+          "issues": 0,
+          "links": 2,
+          "mappings": 9,
+          "nodes": 4,
+          "notes": 2,
+          "rendered_files": 2,
+          "required_atoms": 4,
+          "sources": 2,
+          "spans": 12
+        },
+        "dimensions": {
+          "knowledge_compilation": {
+            "state": "complete",
+            "reason": "自造fixture的必要原子、条件和证据映射已在实际文件中验证。",
+            "counts": {
+              "files": 2,
+              "required_atoms": 4
+            }
+          },
+          "optional_research": {
+            "state": "not_applicable",
+            "reason": "本轮未启用研究、模型或网络抽取。",
+            "counts": {}
+          },
+          "quality_validation": {
+            "state": "complete",
+            "reason": "仅完成本轮fixture契约、实际内容、映射、清单与本地引用的确定性检查；科学质量未运行。",
+            "counts": {
+              "issues": 0
+            }
+          },
+          "source_coverage": {
+            "state": "complete",
+            "reason": "自造fixture的完整来源及覆盖处置已双向对账。",
+            "counts": {
+              "duplicates": 1,
+              "excluded": 7,
+              "included": 4,
+              "spans": 12
+            }
+          }
+        },
+        "input_hashes": {
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb"
+        },
+        "versions": {
+          "coverage_policy:P1a": "fixture-policy-v1",
+          "coverage_policy:P1b": "fixture-policy-v1",
+          "coverage_policy:P2a": "fixture-policy-v1",
+          "coverage_policy:P2b": "fixture-policy-v1",
+          "coverage_policy:P3a": "fixture-policy-v1",
+          "coverage_policy:P3b": "fixture-policy-v1",
+          "coverage_policy:P4a": "fixture-policy-v1",
+          "coverage_policy:P4b": "fixture-policy-v1",
+          "coverage_policy:P5a": "fixture-policy-v1",
+          "coverage_policy:P5b": "fixture-policy-v1",
+          "coverage_policy:P6b": "fixture-policy-v1",
+          "coverage_policy:P7b": "fixture-policy-v1",
+          "ir_schema": "1",
+          "normalization:S4m": "utf8-newlines-v1",
+          "normalization:S9q": "utf8-newlines-v1",
+          "parser:S4m": "blocks-v1",
+          "parser:S9q": "blocks-v1",
+          "plan_schema": "1",
+          "renderer": "fixture-markdown-v1",
+          "report": "fixture-compile-report-v1",
+          "validator": "fixture-contracts-v1"
+        }
+      },
+      {
+        "root": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\output-b",
+        "run_id": "05f331c9-f7a4-4124-9aa8-bd687f87ab9b",
+        "release_id": "2856ce50-24ee-4d95-b33a-a0aaab64f954",
+        "files": [
+          {
+            "relative_path": "笔记/甲容器.md",
+            "note_id": "N4u",
+            "plan_revision": 1,
+            "content_sha256": "33eedf491e2ab58e5ee7d2da80c701e91bb0c77700b0212672a1ddbed2bfa376",
+            "byte_length": 462,
+            "content_mappings": [
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "Q2z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "atom_ids": [
+                  "A3d"
+                ],
+                "start_byte": 33,
+                "end_byte": 90
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W3g",
+                  "column_id": "D2c"
+                },
+                "atom_ids": [],
+                "start_byte": 202,
+                "end_byte": 214
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W3g",
+                  "column_id": "D4c"
+                },
+                "atom_ids": [
+                  "A5p"
+                ],
+                "start_byte": 217,
+                "end_byte": 320
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W3g",
+                  "column_id": "D6c"
+                },
+                "atom_ids": [
+                  "A9w"
+                ],
+                "start_byte": 323,
+                "end_byte": 423
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W7g",
+                  "column_id": "D2c"
+                },
+                "atom_ids": [],
+                "start_byte": 428,
+                "end_byte": 434
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W7g",
+                  "column_id": "D4c"
+                },
+                "atom_ids": [],
+                "start_byte": 437,
+                "end_byte": 446
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W7g",
+                  "column_id": "D6c"
+                },
+                "atom_ids": [],
+                "start_byte": 449,
+                "end_byte": 458
+              }
+            ],
+            "links": [
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "Q2z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "target_concept_id": "C6h",
+                "target_path": "笔记/乙容器.md",
+                "target_heading": "定义与条件",
+                "display_text": "乙容器",
+                "start_byte": 91,
+                "end_byte": 137
+              }
+            ]
+          },
+          {
+            "relative_path": "笔记/乙容器.md",
+            "note_id": "N8v",
+            "plan_revision": 1,
+            "content_sha256": "349f06a40ea199f4d2fb2f6ebcecf61aa652a571ea18e1e81f665a11cf505b88",
+            "byte_length": 244,
+            "content_mappings": [
+              {
+                "scope": {
+                  "section_id": "H6n",
+                  "node_id": "Q6z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "atom_ids": [
+                  "A7e"
+                ],
+                "start_byte": 33,
+                "end_byte": 90
+              },
+              {
+                "scope": {
+                  "section_id": "H6n",
+                  "node_id": "L9x",
+                  "kind": "list_item",
+                  "item_id": "I4b",
+                  "row_id": null,
+                  "column_id": null
+                },
+                "atom_ids": [
+                  "A9w"
+                ],
+                "start_byte": 142,
+                "end_byte": 242
+              }
+            ],
+            "links": [
+              {
+                "scope": {
+                  "section_id": "H6n",
+                  "node_id": "Q6z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "target_concept_id": "C2f",
+                "target_path": "笔记/甲容器.md",
+                "target_heading": "定义与比较",
+                "display_text": "甲容器",
+                "start_byte": 91,
+                "end_byte": 137
+              }
+            ]
+          }
+        ],
+        "report_sha256": "265b87adee4079af3206fbaa7f48d0aef977b8c0d82c5213446c4d9e9e843acd",
+        "markdown_sha256": "be3ccf28525fd9dad6d87e79cd8cf189e5976d52becc15566786e90163557af6",
+        "counts": {
+          "atoms": 4,
+          "duplicates": 1,
+          "excluded": 7,
+          "included": 4,
+          "issues": 0,
+          "links": 2,
+          "mappings": 9,
+          "nodes": 4,
+          "notes": 2,
+          "rendered_files": 2,
+          "required_atoms": 4,
+          "sources": 2,
+          "spans": 12
+        },
+        "dimensions": {
+          "knowledge_compilation": {
+            "state": "complete",
+            "reason": "自造fixture的必要原子、条件和证据映射已在实际文件中验证。",
+            "counts": {
+              "files": 2,
+              "required_atoms": 4
+            }
+          },
+          "optional_research": {
+            "state": "not_applicable",
+            "reason": "本轮未启用研究、模型或网络抽取。",
+            "counts": {}
+          },
+          "quality_validation": {
+            "state": "complete",
+            "reason": "仅完成本轮fixture契约、实际内容、映射、清单与本地引用的确定性检查；科学质量未运行。",
+            "counts": {
+              "issues": 0
+            }
+          },
+          "source_coverage": {
+            "state": "complete",
+            "reason": "自造fixture的完整来源及覆盖处置已双向对账。",
+            "counts": {
+              "duplicates": 1,
+              "excluded": 7,
+              "included": 4,
+              "spans": 12
+            }
+          }
+        },
+        "input_hashes": {
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb"
+        },
+        "versions": {
+          "coverage_policy:P1a": "fixture-policy-v1",
+          "coverage_policy:P1b": "fixture-policy-v1",
+          "coverage_policy:P2a": "fixture-policy-v1",
+          "coverage_policy:P2b": "fixture-policy-v1",
+          "coverage_policy:P3a": "fixture-policy-v1",
+          "coverage_policy:P3b": "fixture-policy-v1",
+          "coverage_policy:P4a": "fixture-policy-v1",
+          "coverage_policy:P4b": "fixture-policy-v1",
+          "coverage_policy:P5a": "fixture-policy-v1",
+          "coverage_policy:P5b": "fixture-policy-v1",
+          "coverage_policy:P6b": "fixture-policy-v1",
+          "coverage_policy:P7b": "fixture-policy-v1",
+          "ir_schema": "1",
+          "normalization:S4m": "utf8-newlines-v1",
+          "normalization:S9q": "utf8-newlines-v1",
+          "parser:S4m": "blocks-v1",
+          "parser:S9q": "blocks-v1",
+          "plan_schema": "1",
+          "renderer": "fixture-markdown-v1",
+          "report": "fixture-compile-report-v1",
+          "validator": "fixture-contracts-v1"
+        }
+      },
+      {
+        "root": "D:\\Noetome\\.artifacts\\compile-smoke-20261101-final\\table-alias-output",
+        "run_id": "3a83cdd5-81e8-44a9-b733-c1edf38682c0",
+        "release_id": "7890271a-6ee0-4e96-aafe-110d0a3fc950",
+        "files": [
+          {
+            "relative_path": "笔记/甲容器.md",
+            "note_id": "N4u",
+            "plan_revision": 1,
+            "content_sha256": "1794c138b700eeda47e0505ffe22da32e1beefd402fe4434e6377502124b45bb",
+            "byte_length": 516,
+            "content_mappings": [
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "Q2z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "atom_ids": [
+                  "A3d"
+                ],
+                "start_byte": 33,
+                "end_byte": 90
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W3g",
+                  "column_id": "D2c"
+                },
+                "atom_ids": [],
+                "start_byte": 202,
+                "end_byte": 214
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W3g",
+                  "column_id": "D4c"
+                },
+                "atom_ids": [
+                  "A5p"
+                ],
+                "start_byte": 217,
+                "end_byte": 320
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W3g",
+                  "column_id": "D6c"
+                },
+                "atom_ids": [
+                  "A9w"
+                ],
+                "start_byte": 377,
+                "end_byte": 477
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W7g",
+                  "column_id": "D2c"
+                },
+                "atom_ids": [],
+                "start_byte": 482,
+                "end_byte": 488
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W7g",
+                  "column_id": "D4c"
+                },
+                "atom_ids": [],
+                "start_byte": 491,
+                "end_byte": 500
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W7g",
+                  "column_id": "D6c"
+                },
+                "atom_ids": [],
+                "start_byte": 503,
+                "end_byte": 512
+              }
+            ],
+            "links": [
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "Q2z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "target_concept_id": "C6h",
+                "target_path": "笔记/乙容器.md",
+                "target_heading": "定义与条件",
+                "display_text": "乙容器",
+                "start_byte": 91,
+                "end_byte": 137
+              },
+              {
+                "scope": {
+                  "section_id": "H2j",
+                  "node_id": "T5x",
+                  "kind": "table_cell",
+                  "item_id": null,
+                  "row_id": "W3g",
+                  "column_id": "D4c"
+                },
+                "target_concept_id": "C6h",
+                "target_path": "笔记/乙容器.md",
+                "target_heading": "定义与条件",
+                "display_text": "乙容器入口",
+                "start_byte": 321,
+                "end_byte": 374
+              }
+            ]
+          },
+          {
+            "relative_path": "笔记/乙容器.md",
+            "note_id": "N8v",
+            "plan_revision": 1,
+            "content_sha256": "349f06a40ea199f4d2fb2f6ebcecf61aa652a571ea18e1e81f665a11cf505b88",
+            "byte_length": 244,
+            "content_mappings": [
+              {
+                "scope": {
+                  "section_id": "H6n",
+                  "node_id": "Q6z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "atom_ids": [
+                  "A7e"
+                ],
+                "start_byte": 33,
+                "end_byte": 90
+              },
+              {
+                "scope": {
+                  "section_id": "H6n",
+                  "node_id": "L9x",
+                  "kind": "list_item",
+                  "item_id": "I4b",
+                  "row_id": null,
+                  "column_id": null
+                },
+                "atom_ids": [
+                  "A9w"
+                ],
+                "start_byte": 142,
+                "end_byte": 242
+              }
+            ],
+            "links": [
+              {
+                "scope": {
+                  "section_id": "H6n",
+                  "node_id": "Q6z",
+                  "kind": "paragraph",
+                  "item_id": null,
+                  "row_id": null,
+                  "column_id": null
+                },
+                "target_concept_id": "C2f",
+                "target_path": "笔记/甲容器.md",
+                "target_heading": "定义与比较",
+                "display_text": "甲容器",
+                "start_byte": 91,
+                "end_byte": 137
+              }
+            ]
+          }
+        ],
+        "report_sha256": "44cec28b366835b1fa5dcaeff5f86da332a652ef7fedca983ef8d9b54749cb66",
+        "markdown_sha256": "f6767c878ec06837afd389f906642e1e9f0724645e5c756c90f33f72eb136079",
+        "counts": {
+          "atoms": 4,
+          "duplicates": 1,
+          "excluded": 7,
+          "included": 4,
+          "issues": 0,
+          "links": 3,
+          "mappings": 9,
+          "nodes": 4,
+          "notes": 2,
+          "rendered_files": 2,
+          "required_atoms": 4,
+          "sources": 2,
+          "spans": 12
+        },
+        "dimensions": {
+          "knowledge_compilation": {
+            "state": "complete",
+            "reason": "自造fixture的必要原子、条件和证据映射已在实际文件中验证。",
+            "counts": {
+              "files": 2,
+              "required_atoms": 4
+            }
+          },
+          "optional_research": {
+            "state": "not_applicable",
+            "reason": "本轮未启用研究、模型或网络抽取。",
+            "counts": {}
+          },
+          "quality_validation": {
+            "state": "complete",
+            "reason": "仅完成本轮fixture契约、实际内容、映射、清单与本地引用的确定性检查；科学质量未运行。",
+            "counts": {
+              "issues": 0
+            }
+          },
+          "source_coverage": {
+            "state": "complete",
+            "reason": "自造fixture的完整来源及覆盖处置已双向对账。",
+            "counts": {
+              "duplicates": 1,
+              "excluded": 7,
+              "included": 4,
+              "spans": 12
+            }
+          }
+        },
+        "input_hashes": {
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "expected_sha256": "2fbb84003ceb59eb748469c8c7ac1f50e0d5d2f8d0e6305fac6f9b66c834edb2",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "plan_sha256": "09efd02a039392c405d04ea8c15f810ed984e2aeadcf399f4eecdbd994140e61"
+        },
+        "versions": {
+          "coverage_policy:P1a": "fixture-policy-v1",
+          "coverage_policy:P1b": "fixture-policy-v1",
+          "coverage_policy:P2a": "fixture-policy-v1",
+          "coverage_policy:P2b": "fixture-policy-v1",
+          "coverage_policy:P3a": "fixture-policy-v1",
+          "coverage_policy:P3b": "fixture-policy-v1",
+          "coverage_policy:P4a": "fixture-policy-v1",
+          "coverage_policy:P4b": "fixture-policy-v1",
+          "coverage_policy:P5a": "fixture-policy-v1",
+          "coverage_policy:P5b": "fixture-policy-v1",
+          "coverage_policy:P6b": "fixture-policy-v1",
+          "coverage_policy:P7b": "fixture-policy-v1",
+          "ir_schema": "1",
+          "normalization:S4m": "utf8-newlines-v1",
+          "normalization:S9q": "utf8-newlines-v1",
+          "parser:S4m": "blocks-v1",
+          "parser:S9q": "blocks-v1",
+          "plan_schema": "1",
+          "renderer": "fixture-markdown-v1",
+          "report": "fixture-compile-report-v1",
+          "validator": "fixture-contracts-v1"
+        }
+      }
+    ],
+    "input_and_external_sentinel_unchanged": true,
+    "original_expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+    "scientific_quality": "not_run",
+    "native_obsidian": "separate_check_required"
+  },
+  "controlled_failures": [
+    {
+      "test": "first_staged_file_failure_keeps_partial_scene_and_truthful_reports",
+      "run": "failed",
+      "release": "staged",
+      "publication_commits": 0,
+      "report_pair": "actual JSON/Markdown reread and dimensions/counts compared"
+    },
+    {
+      "test": "actual_unit_loss_with_refreshed_hash_and_offsets_is_blocked",
+      "mutation": "remove cm from real bytes, refresh SHA/length/offsets",
+      "checks": {
+        "output_manifest": "passed",
+        "output_content": "failed",
+        "staging_output": "failed"
+      },
+      "release": "recovery_required",
+      "publication_commits": 0
+    },
+    {
+      "test": "actual_process_kill_after_persisted_staging_retains_unpublished_state",
+      "operation": "real child process alive at persisted staging, kill/wait",
+      "run": "running",
+      "release": "staged",
+      "rendered_files": 2,
+      "publication_commits": 0
+    },
+    {
+      "test": "real_sqlite_commit_busy_rolls_back_all_success_records",
+      "operation": "actual separate SQLite reader holds SHARED lock and COMMIT fails",
+      "release": "verified",
+      "publication_commits": 0,
+      "coverage_validated": 0,
+      "recovery_json": true
+    },
+    {
+      "test": "killed_sqlite_writer_leaves_a_hot_journal_that_read_checks_preserve",
+      "operation": "real 2 MiB SQLite spill, alive handshake, kill/wait; guarded read refuses",
+      "database_and_journal_bytes_unchanged": true
+    },
+    {
+      "test": "unknown_staged_file_is_preserved_without_publication",
+      "unknown_bytes_preserved": true,
+      "publication_commits": 0
+    },
+    {
+      "test": "occupied_report_path_is_preserved_and_does_not_claim_a_report_pair",
+      "manual_bytes_preserved": true,
+      "report_paths": null,
+      "publication_commits": 0
+    },
+    {
+      "test": "closed_stdout_after_real_compile_keeps_committed_publication_authority",
+      "ordinary_cli_exit_code": 1,
+      "diagnostic": "CLI_OUTPUT_ERROR",
+      "run": "succeeded",
+      "release": "published",
+      "coverage": "validated",
+      "publication_commits": 1
+    }
+  ],
+  "review": {
+    "blocking_findings_resolved": [
+      "actual staging-output failure was staged instead of recovery_required",
+      "Markdown omitted plan_revision and complete link scope"
+    ],
+    "minor_resolved": [
+      "underscore literal escaping"
+    ],
+    "previous_store_false_passes_resolved": [
+      "unrelated Markdown snapshot",
+      "wrong source count"
+    ],
+    "final_review": "no remaining blocker; reviewer reran report4 and unit-loss1 plus independent harness mutations"
+  },
+  "native_obsidian": {
+    "app_version": "1.6.7",
+    "installer_version": "1.6.7.0",
+    "profile": "D:\\Noetome\\.artifacts\\compile-native-20261101-b\\profile",
+    "vault": "D:\\Noetome\\.artifacts\\compile-native-20261101-b\\vault",
+    "community_plugins": [],
+    "launcher": "C:/Program Files/Obsidian/Obsidian.exe",
+    "launcher_sha256": "2156f15d12da8cc292fe0cc1884f32410fa187fede67beb6102cfcdc6442fbe2",
+    "notes_match_final_published_alias_output": true,
+    "checks": {
+      "headings": "passed",
+      "ordered_list": "passed",
+      "three_column_table": "passed",
+      "5_cm_8_cm_conditions_exceptions": "passed",
+      "missing_values": "passed",
+      "table_alias_to_beta_heading": "passed",
+      "beta_body_to_alpha_heading": "passed",
+      "alpha_body_to_beta_heading": "passed"
+    },
+    "screenshots": [
+      {
+        "path": "doc/validation/B02-T03-obsidian-alpha.png",
+        "sha256": "2074feb6d978f486ba63f0ea4a2c02ac0d19701b63de7f353d1ac49a2e34949e"
+      },
+      {
+        "path": "doc/validation/B02-T03-obsidian-beta.png",
+        "sha256": "7bce237212c2a0fa989e07c7ff923c44bf7fe0cce8bf5520ec0ffb0113b39636"
+      },
+      {
+        "path": "doc/validation/B02-T03-obsidian-return-alpha.png",
+        "sha256": "15ce67230ee878c9e42cf6a0762c260606a2444fa1d61a67edf320ec904ea9a9"
+      }
+    ],
+    "accessibility_snapshots": [
+      {
+        "path": "D:\\Noetome\\.artifacts\\compile-native-20261101-b\\alpha.ax.txt",
+        "sha256": "6793f73d6328543005a5d9e6a47994bde73178bec0d15b7980fdc81bf681f670"
+      },
+      {
+        "path": "D:\\Noetome\\.artifacts\\compile-native-20261101-b\\beta.ax.txt",
+        "sha256": "b477f87c720e646140c577fc274f722e9785963417386726c0f18617df4f30f1"
+      },
+      {
+        "path": "D:\\Noetome\\.artifacts\\compile-native-20261101-b\\body-link-beta.ax.txt",
+        "sha256": "844c890a346a3cb61a5dcb85445cf2ba997c7d3be91003a1b907236d0a1a1b11"
+      }
+    ],
+    "setup_attempts": [
+      {
+        "profile": ".artifacts/compile-native-20261101-a/profile",
+        "result": "starter opened, automatic update downloaded, no usable vault window; not counted as passing"
+      },
+      {
+        "profile": ".artifacts/compile-native-20261101-b/profile",
+        "result": "fresh profile with updateDisabled and valid fixed vault identifier; installed 1.6.7 opened selected test vault"
+      }
+    ],
+    "current_stable_full_matrix": "not_run",
+    "mathjax_mermaid_svg_properties_block_links": "not_run"
+  },
+  "limits": [
+    "authored fixture only, no PDF/OCR/model API extraction or scientific quality evaluation",
+    "selected new test roots only; no existing or production Vault takeover",
+    "controlled faults do not prove arbitrary power-loss recovery",
+    "project/fixture business is not integrated into desktop GUI",
+    "Windows x64 only; no cross-platform or complete Obsidian support matrix"
+  ]
+}

@@ -2,7 +2,7 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、明确标为fixture的IR与NotePlan契约校验，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖和独立预期。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture业务尚未接入桌面；PDF解析、模型抽取和笔记生成仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、明确标为fixture的IR与NotePlan契约校验和临时Vault编译，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖、独立预期和实际笔记，再保存Run、Release及双报告。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture业务尚未接入桌面；PDF解析与模型抽取仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
 
 ## 开始开发
 
@@ -109,7 +109,25 @@ python scripts/check_fixture_schema.py --module-dir '<工具目录>'
 python fixtures/text-compare-v1/audit_fixture.py
 ```
 
-实际Windows CLI、故障保护、审查回归和Schema验收见[B02-T02验证记录](doc/validation/B02-T02.md)。下一任务才将已校验fixture编译到全新的临时Vault。
+实际Windows只读CLI、故障保护、审查回归和Schema验收见[B02-T02验证记录](doc/validation/B02-T02.md)。
+
+## Fixture 临时 Vault 编译
+
+```powershell
+./target/debug/noetome.exe case compile './fixtures/text-compare-v1' '<父目录已存在的全新测试输出根>'
+```
+
+`case compile`只接受尚不存在的新根，拒绝既有内容、输入输出重叠和不安全路径。通过同一fixture的来源、覆盖、知识、计划和独立expected检查后，按计划渲染两份关联笔记、比较表及标题链接；重读暂存与Vault中的实际字节，核对单位、条件、映射、SHA和全部本地引用。它不读取用户生产Vault，不调用模型或PDF解析器。
+
+新根下`vault/`为可单独打开的笔记，`staging/vault/`为候选，`reports/validation.json`与`.md`共享真实验证事实。独立`state/compile.sqlite`为编译Schema1，与来源项目Schema2分开；最后单个事务绑定本轮文件和双报告指纹，更新Run、Release及完整Coverage。报告`validated`表示验证快照，发布依据为已提交的`publication_commits`，成功stdout外层才为`release_status=published`。
+
+实际内容或发布登记失败保留`staged`或`recovery_required`现场并返回非零，不覆盖已有报告和人工内容。若验证报告已写入，后续错误使用`failure.json/.md`；无法保存完整报告或失败状态时只在仍能确认归属的目录保存恢复诊断。没有重试接管或自动恢复原目录的入口。
+
+支持范围是普通标题、有序列表、比较表、明文转义及完整相对路径的wiki标题链接；表格别名使用`\|`。科学质量为`not_run`，可选研究为`not_applicable`。实际CLI、进程终止、SQLite失败和Obsidian 1.6.7有限语法验收见[B02-T03记录](doc/validation/B02-T03.md)。可在另一个新根复现：
+
+```powershell
+python scripts/verify_fixture_compile.py --cli '<实际可读CLI路径>' --root '<父目录已存在的新测试根>'
+```
 
 ## 构建桌面应用
 

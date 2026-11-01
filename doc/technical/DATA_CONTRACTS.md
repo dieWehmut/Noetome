@@ -1,6 +1,6 @@
 # Noetome 最小数据契约
 
-本文件定义空项目、桌面窗口偏好、单份文本来源登记及后续 fixture 闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
+本文件定义空项目、桌面窗口偏好、单份文本来源登记及 fixture 闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
 
 实现状态以[任务账本](../../dev-log/tasks.json)和对应验证记录为准；本文件的字段清单本身不是能力验收记录。后续真实解析、模型与研究能力必须通过带版本的扩展进入，不能把缺失值编造成已有结果。
 
@@ -72,7 +72,7 @@ Schema 2 保持 `project_metadata` 的五列，元数据及 `PRAGMA user_version
 
 ### B02 fixture输入包
 
-本输入包及第 5 至 8 节的 IR、NotePlan、验证、Run、Release 契约供 B02-T02/T03 后续实现；B02-T01 尚未实现这些对象或完整 Vault 编译。
+本输入包及第5至8节由B02-T02的只读fixture检查和B02-T03的临时Vault编译逐步落实；B02-T01来源导入不创建IR、计划或完整Run/Release。以下较完整的通用对象仍以各任务明确实现的字段为准，不提前保存空候选或问题身份。
 
 `case.json` 声明 `schema_version`、`case_id`、`sources`、`ir_file`、`note_plan_file` 和 `expected_file`。所有文件路径相对于 fixture 根目录，必须通过目录边界检查。
 
@@ -274,6 +274,24 @@ Release 保存 `release_id`、`run_id`、IR 与计划版本、渲染器版本、
 报告使用四个独立字段：`source_coverage`、`knowledge_compilation`、`quality_validation`、`optional_research`。值为 `complete`、`incomplete`、`not_applicable`；另有理由和计数。首闭环研究字段为 not_applicable，不显示“研究完成100%”。
 
 来源失败、必要原子遗漏、断链、路径风险、外部内容碰撞或未运行必需校验均禁止成功发布。Run 执行结束不等于 Release 已发布。
+
+### B02-T03 当前编译契约
+
+`case compile <case-root> <new-output-root>`复用同一受保护LoadedCase，先运行来源、覆盖、知识、计划与独立expected检查。输入语义失败不创建输出根；不支持的字段/版本或不安全路径返回2，来源读取/路径碰撞/未完成阻断返回3，输出传输错误返回1。普通帮助不写入。
+
+`RenderedFile`在上述最小字段外保存`links`；每个`content_mappings.scope`含`section_id/node_id/kind/item_id/row_id/column_id`及atom_ids和UTF8字节半开区间，表格标签/未给出单元格也有空原子映射。`LinkMapping`包含同样完整scope、target_concept_id/target_path/target_heading/display_text及实际token区间。别名区间与正文区间分开，不能用链接别名补足原子条件。校验独立解析实际有限Markdown，并以计划和expected核对，不只信任指纹或映射。
+
+编译报告Schema1使用[CompileReport](../../crates/noetome-cli/src/compile_model.rs)：schema_version、producer、case_id、run_id、release_id、started_at、finished_at、result、dimensions、checks、counts、issues、files、input_hashes、versions、publication。当前issues沿用fixture的rule_id/object_refs/message，不生成尚未实现的issue_id、candidate_id或severity/status记录。input_hashes固定四包SHA；versions保存渲染/校验/报告/契约及来源解析、规范化和覆盖政策版本。Run与Release为真实小写UUID v4，时间为UTC RFC3339；fixture原coverage_run_id只作为审阅作用域保存在metadata。
+
+三个核心维度根据实际检查为complete或incomplete；研究为not_applicable，scientific_quality检查not_run。必需检查为sources/coverage/knowledge/note_plan/expected/rendering/staging_output/vault_output；任意缺失、failed、not_run或非零issue_count均禁止发布。额外output_manifest/output_mapping/output_content/output_link记录实际输出问题。成功报告result为validated，失败为failed；这两个值都不自行证明发布已经提交。
+
+`publication`只引用state/compile.sqlite、publication_commits及release_id。Markdown显示同一份状态、理由、计数、问题、指纹、文件修订号以及完整内容/链接scope。stdout的外层CompileOutcome给出真实release_status、output_created、路径、原样report及issues；预检失败时run/release/report与不存在的路径为null。保存后的失败报告是当时事实快照，后续数据库错误另在外层issues及可用recovery.json中记录，不改写已有验证报告。
+
+独立编译数据库为Schema1（application_id=0x4e434d50），不升级来源project.sqlite Schema2。固定六表为compile_metadata/runs/releases/coverage_records/rendered_files/publication_commits，列与约束见[执行方案](../execution/B02-T03_PLAN.md)。初始化Run.running与Release.staged；完整暂存后Coverage.rendered；暂存和Vault重读通过后Release.verified。最后事务同时绑定文件清单SHA和双报告SHA、插入publication_commits、Run.succeeded/stage=finished、Release.published及全部Coverage.validated。最终COMMIT之前准备返回数据，之后没有必需文件写入或清理。
+
+数据库使用DELETE journal/FULL sync/外键检查。COMMIT失败显式回滚活动事务，不能把未提交的发布记录带入失败登记；只读核对前拒绝journal/wal/shm，不绕过热日志推断成功。渲染未完成留staged；实际输出验证或后续登记失败留recovery_required，无法更新状态时保留最后已提交阶段和诊断。报告或失败状态登记无法完成时，仅在整个目录及数据库身份仍可确认的场景独占保存recovery.json；未知内容或替换目录继续保留，不能删除、覆盖或接管。
+
+本轮输出根默认保留，重新编译必须另选新目录。暂存后真实进程终止、真实SQLite COMMIT Busy与热日志测试证明受控现场可识别；不表示任意断电自动恢复或生产Vault增量合并已经实现。证据见[B02-T03](../validation/B02-T03.md)。
 
 ## 9 扩展顺序
 

@@ -4,7 +4,9 @@
 
 ## 1 当前交付形式
 
-首阶段以CLI和本地确定性闭环为基础。当前CLI支持项目初始化、只读项目检查、B02-T01单份UTF8 MD/TXT来源登记与只读查看，以及B02-T02明确标为fixture的IR/NotePlan/独立expected契约校验。来源登记的知识状态保持pending，fixture的知识和计划是作者输入；当前不生成完整Run、Release或Vault。根据2026年11月1日的用户要求，已提前提供可本地安装的Windows桌面骨架；来源和fixture业务尚未接入GUI，完整桌面功能继续逐项建设。后续JSON/Markdown双报告及临时Vault的状态必须来自实际结果，输入IR和计划来自fixture的事实必须在摘要中明确。
+首阶段以CLI和本地确定性闭环为基础。当前CLI支持项目初始化、只读项目检查、B02-T01单份UTF8 MD/TXT来源登记与只读查看、B02-T02明确标为fixture的IR/NotePlan/独立expected契约校验，以及B02-T03将通过校验的fixture编译到全新测试根。compile建立本轮Run、CoverageRecord和Release，生成有限Markdown笔记、JSON/Markdown验证报告，并以最后SQLite事务登记发布依据；来源登记的知识状态仍为pending，verify仍保持只读。fixture的知识和表达计划是作者输入，必须在结果中保留`producer=fixture`。
+
+根据2026年11月1日的用户要求，已提前提供可本地安装的Windows桌面骨架；来源和fixture业务尚未接入GUI，完整桌面功能继续逐项建设。当前实现及原生应用的实际验收状态以[任务账本](../../dev-log/tasks.json)为准，不能把CLI工程检查描述为Obsidian应用或完整桌面业务已验收。
 
 报告写“fixture 编译验证通过”，不能写“AI 已完成教材学习”“知识准确率100%”或“产品已支持 PDF”。没有发生的网络请求、模型推理和费用一律不编造。
 
@@ -70,7 +72,35 @@ source inspect返回0只表示只读核对完成，不能把报告内failed改�
 
 契约通过退出0；语义问题stdout保留`passed=false`报告，stderr为`CASE_VERIFICATION_FAILED`，退出3；不合法JSON、版本、字段或路径在报告前拒绝，stdout为空、退出2；读取占用、变化或I/O阻断退出3。输出错误退出1。数量与问题来自本次输入，不能用固定成功摘要代替实际校验。
 
-计划明文字段与结构化链接分开，原始wiki/Markdown链接、HTML和隐藏注释不得绕开映射与链接检查。scope必须完整显示原子内容、条件和单位，规范定义不能被另一个相关数值替代。此阶段只验证计划，实际Markdown转义、文件内容和链接重读属于下一任务。
+计划明文字段与结构化链接分开，原始wiki/Markdown链接、HTML和隐藏注释不得绕开映射与链接检查。scope必须完整显示原子内容、条件和单位，规范定义不能被另一个相关数值替代。verify只验证输入契约；实际Markdown转义、文件内容和链接重读由独立的compile命令完成。
+
+### B02-T03 fixture 编译
+
+```text
+noetome case compile <case-root> <new-output-root>
+noetome case compile -- <case-root> <new-output-root>
+```
+
+两个路径分别是明确选择的只读fixture根与尚不存在的测试输出根；动词后的`--`用于以`-`开头的路径。输出根父目录必须存在。既有目录或文件、输入输出互为祖先、junction/reparse和不安全Windows组件在创建根前拒绝；重叠按组件判断，合法相邻目录可用。没有force、接管已有Vault或自动修复输入的入口。
+
+新根中的`state/compile.sqlite`是独立编译工作区Schema1，保存本轮运行、覆盖、Release及文件与报告指纹，不能用`project inspect`把它当作项目Schema2。`staging/vault/`保留生成候选；暂存实际重读通过后才写`vault/`并再次独立验证。所有本地wiki目标必须定位到实际笔记中的唯一canonical标题，正文与别名各有独立字节范围；源、计划、独立expected、目录清单及文件身份在发布前复核。
+
+stdout外层固定提供`schema_version=1`、`producer=fixture`、`operation=case_compile`、case/run/release身份、`release_status`、`output_created`、`paths`、`report`及问题。`paths.root`为绝对根路径；`vault`、`database`、`json_report`、`markdown_report`为根内相对路径或null，可用产物分别为`vault`、`state/compile.sqlite`与已保存报告。不得从空目录存在推断笔记可用，也不得把预检中的计划路径作为已生成产物。
+
+`report.result=validated`仅表示验证事实快照通过。报告的`publication`只引用数据库、`publication_commits`表和本轮release_id；最后数据库事务同时登记publication commit、Run.succeeded、Release.published和Coverage.validated后，stdout才允许`release_status=published`。已生成笔记、运行结束或两份报告存在都不能单独证明发布。
+
+| 情形 | stdout与诊断 | 退出码 |
+| --- | --- | --- |
+| 完整校验、暂存/Vault重读、双报告重读及最后事务提交通过 | CompileOutcome JSON，release_status=published，report与磁盘JSON相等 | 0 |
+| 参数、JSON/UTF8、字段/版本或不安全路径无效 | stdout为空，stderr稳定CLI_INVALID_ARGUMENT、CASE_*或PROJECT_UNSAFE_PATH | 2 |
+| 既有目标、输入输出祖先重叠、缺失父目录或真实读取占用/I/O | stdout为空，stderr为COMPILE_OUTPUT_EXISTS、COMPILE_INPUT_OUTPUT_OVERLAP、PROJECT_IO_ERROR或PROJECT_DATABASE_BUSY | 3 |
+| fixture语义或有限渲染预检失败 | JSON保留顶层checks/issues，output_created=false、release_status=not_started；run_id/release_id/report及产物路径为空，stderr为CASE_COMPILATION_FAILED | 3 |
+| 拥有根后渲染、实际输出验证或登记失败 | 可确认的结果JSON和问题，release_status=staged或recovery_required；stderr为CASE_COMPILATION_FAILED，保留现场 | 3 |
+| 内部编码或stdout输出失败 | stderr稳定COMPILE_REPORT_ERROR或CLI_OUTPUT_ERROR；无伪造成功输出 | 1 |
+
+渲染或初次暂存尚未完成时可保留staged；暂存/Vault实际验证、报告或发布登记失败为recovery_required。初期失败若能保存报告，使用`reports/validation.json`与`.md`记录`result=failed`；已保存validated快照后再失败则另存`reports/failure.json`与`.md`，保留原快照。报告对无法完整保存时不提供虚构的双报告路径；报告或失败状态登记无法完成时，仅在仍能确认本轮目录身份的情况下独占写`state/recovery.json`保存诊断。未知内容和替换路径保持原样，建议用户检查现场并选择新的测试根重试。
+
+最后提交之后若调用方关闭stdout，CLI仍可能退出1并报告CLI_OUTPUT_ERROR，已经提交的数据库发布依据必须保留；不能把传输失败反写为Run.failed或取消Publication。中断现场不自动接管或清理，受控故障检查不扩大为任意断电下多文件原子恢复保证。
 
 ### 摘要示例
 
@@ -81,12 +111,12 @@ source inspect返回0只表示只读核对完成，不能把报告内failed改�
 知识编译：完成
 质量验证：完成，仅含本轮确定性检查
 可选研究：不适用
-发布：临时 Vault 已生成
+发布：本轮 SQLite 发布事务已提交
 报告：<报告路径>
 产物：<临时 Vault 路径>
 ```
 
-此处为后续fixture编译的文案示例，当前来源命令没有这些完成状态或Vault产物。数量必须来自实际运行报告，成功文案不可硬编码到尚未完成的阶段。
+此处为成功compile结果的阅读示例，CLI实际输出为JSON。数量、状态和路径必须来自本次运行及已提交依据；当前来源命令没有这些完成状态或Vault产物。科学质量仍为not_run，不能把确定性质量验证完成描述为事实核验通过。
 
 ## 4 四类完成状态
 
@@ -101,17 +131,19 @@ source inspect返回0只表示只读核对完成，不能把报告内failed改�
 
 首阶段可以只显示当前阶段和计数，不提供预计剩余时间。后续 ETA 没有可靠依据时显示“尚无法估算”。长时间无进展要说明等待对象，不能一直显示模糊的“处理中”。
 
-当前来源清单只展示实际Span数量、待抽取数量、解析问题及pending知识状态，不提前套用完整CoverageRecord或四维成功报告。无效UTF8和未读全文件没有规范Span；0段不能解释为知识工作已完成。
+当前来源清单只展示实际Span数量、待抽取数量、解析问题及pending知识状态，不提前套用完整CoverageRecord或四维成功报告。无效UTF8和未读全文件没有规范Span；0段不能解释为知识工作已完成。compile四维分别使用source_coverage、knowledge_compilation、quality_validation、optional_research，每项有state、reason和counts；前三维只有各自所需检查实际完成才为complete，未完成为incomplete。本轮未启用研究，optional_research固定not_applicable；scientific_quality检查固定not_run，不列出虚构研究成果或模型价格。
 
 ## 5 报告结构
 
 当前来源报告为stdout JSON，事实来自持久SQLite记录及快照重读，使用import-id再次查看，不生成Markdown双报告。调用方可将stdout重定向为文件；诊断走stderr，不要求从彩色摘要解析机器状态。报告保留失败字段，不能把inspect操作成功改写为来源内容成功。
 
-后续fixture编译的Markdown报告和JSON报告表达同一事实，二者的数量、状态及产物清单必须一致。以下运行报告结构用于该后续阶段，不给来源登记添加虚构的run_id、producer或输出产物：
+B02-T03的JSON和Markdown报告由同一个typed [CompileReport](../../crates/noetome-cli/src/compile_model.rs)快照生成，[compile_report.rs](../../crates/noetome-cli/src/compile_report.rs)提供Markdown视图。Schema1包含schema_version、producer、case_id、run_id、release_id、started_at、finished_at、result、dimensions、checks、counts、issues、files、input_hashes、versions、publication。stdout内report逐字段等于磁盘JSON，不能分别拼装两套数量、状态或文件清单；不向来源登记添加虚构run_id或Vault产物。
 
-推荐顺序为：结果摘要、本轮范围、四类状态、发布文件、失败和待处理、排除与重复、验证结果、版本与重现信息。
+Markdown固定标题为“Noetome fixture 验证报告”，先列Schema、生产者、case/run/release身份、时间和result，再依次列“四维状态”“计数”“检查”“文件”“内容映射”“语义引用”“问题”“输入与规则”“发布依据”。表格保留稳定英文键；scope计数区分overall与各维度，问题逐条保留rule_id、object_refs及message。文件表列relative_path、note_id、plan_revision、byte_length和content_sha256；正文映射列出实际UTF8半开区间、scope与atom_ids，语义引用单独列出完整scope、目标概念、路径、heading、别名及区间。scope包括kind、item_id、row_id、column_id，写为`kind:item_id:row_id:column_id`，空字段保留占位；不能借用别名范围证明正文已经显示必要内容。
 
-报告需要保留：run_id、producer、输入指纹、配置及契约版本、输出指纹、校验器版本和生成时间。身份字段可放在展开细节或末尾，不占据摘要主体。
+input_hashes固定case_sha256、ir_sha256、plan_sha256、expected_sha256，versions保留实际规范化/解析/覆盖政策、IR/计划Schema、validator/report及renderer版本；当前renderer为fixture-markdown-v1。必需检查为sources、coverage、knowledge、note_plan、expected、rendering、staging_output、vault_output，发布前须全部passed且问题为0。输出清单、映射、内容与引用还分别列出output_manifest、output_mapping、output_content、output_link，不以总计掩盖失败。
+
+报告的“发布依据”只写`database=state/compile.sqlite`、`commit_table=publication_commits`和release_id，并明确验证通过与提交发布的关系。实际数据库提交记录还绑定两份报告SHA及文件manifest SHA；validated报告没有已提交记录时仍不得称published。
 
 失败项至少包含对象、失败原因、影响和建议动作。例如“第2份来源不是有效 UTF-8；该资料未进入知识编译；请转换编码或移除此份测试输入”。不得写“发生未知错误，请重试”作为唯一说明。
 
@@ -143,11 +175,17 @@ source inspect返回0只表示只读核对完成，不能把报告内failed改�
 
 - 同类型笔记使用一致的标题习惯；不规定每篇字数或知识量硬上限。
 - 比较表保留单位、条件和例外；列过多时拆分，不靠删内容压缩。
-- 正文中的语义链接由解析器生成，不让用户手动猜测目标文件或标题。
+- 正文中的语义链接由结构化SemanticLink解析到canonical文件和标题，不让用户手动猜测目标；fixture提供链接意图，当前不自动选择表达形式。
 - 必需信息不能只靠颜色、位置或折叠状态传达。
 - YAML 只放简短属性，不把整个证据数据库塞入笔记头部。
 - 来源不默认占据正文，但争议和适用范围不能因为“干净风格”而被隐藏。
-- 首闭环未实现公式或 Mermaid 渲染时，不宣称已经完成其视觉兼容性测试。
+- 当前公式、Mermaid、嵌入、代码块和自定义HTML没有结构化渲染支持，不宣称已完成其视觉兼容性测试。
+
+fixture-markdown-v1只生成`#`笔记标题、`##`小节、段落、从`1.`起始的有序列表、完整表格和本地wiki标题链接。结构标记不转义；明文中的ASCII标点逐个加反斜线，中文标点及`5 cm`等内容保留。正文或单元格换行使用固定`<br>`、Tab使用`&#9;`，来源本有这些字面字符时先转义，避免二次解释。每块后留空行，笔记以两个LF结尾；不把run_id、绝对输出根或时间写入正文，保证同fixture两次运行的笔记字节稳定。
+
+SemanticLink按声明顺序追加在所属段落、列表项或单元格末尾，正文与链接之间为一个空格。目标使用完整Vault相对路径去掉`.md`及精确标题，例如`[[笔记/乙容器#定义与条件|乙容器]]`；表格中的别名分隔符为`\|`，例如`[[笔记/乙容器#定义与条件\|乙容器入口]]`。标题与别名拒绝换行/Tab，别名拒绝`[]|`分隔字符；本版canonical标题不支持反斜线，预检返回RENDER_TEXT_SYNTAX，不静默改写。普通`x < 2`和`[1,2]`仅作为明文呈现，不承诺MathJax功能。
+
+[真实CLI测试](../../crates/noetome-cli/tests/compile.rs)当前覆盖12组、35次调用，包括固定两笔记/表格、表内别名、字面转义、两目录独立run/release、JSON/Markdown/SQLite对账及Windows锁/junction/外部哨兵保护。这些工程检查不替代原生Obsidian显示与交互验收；原生验收的当前结果由实际验证记录维护。
 
 后续主动图表应能说明选择理由，并映射到知识依据。生成图的箭头、表格空值、图例和单位须可核对；“看起来更好”不能覆盖语义错误。
 
