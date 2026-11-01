@@ -326,3 +326,5 @@ PDF原始文件只在Version/raw.bin存一次，解析树为独立parse UUID下�
 SourceSlice绑定已登记project/source/version、原始/规范SHA和明确完整Span。新根固定owner/request/response/candidate/report文件，report为最后提交点；失败无candidate，未知现场不自动恢复。报告分开保存实际宿主状态、真实或模拟用量、未知费用、唯一确认和拒绝分类。严格审计合法但候选无效的响应仍保留已确认用量；JSON/身份/费用非法或凭据回显不保存正文。
 
 只读重载重验固定文件和真实项目快照，不调用Provider或累计账单。PDF暂不接受，不把PDF定位套入文本Span；T03另桥接已存parse/page/region/artifact。
+
+API本地预检另有严格`FullTextSummary`命名对象，绑定实际raw/normalized字节、版本、revision和全Span/证据Span计数；它不是调用授权或模型报告。完整输入包含Formatting，而原`SourceSlice`保留明确证据子集。瞬时凭据帧不属于持久数据契约，密钥及其派生指纹不得写入项目或报告；实际提供商、配置/授权指纹和远端调用事实的持久入口尚未实现。见[本地边界](API_PREFLIGHT_BOUNDARY.md)。

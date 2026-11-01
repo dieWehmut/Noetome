@@ -20,6 +20,26 @@ use crate::{project, sidecar, source, source_model, text};
 pub struct ModelError {
     pub code: &'static str,
 }
+
+#[cfg(test)]
+mod credential_debug_tests {
+    use super::*;
+    #[test]
+    fn options_debug_never_prints_credential_sentinels() {
+        let secret = "B04_T02_SYNTHETIC_DEBUG_SECRET_6bca";
+        let options = ExtractionOptions {
+            version_id: "test-version".into(),
+            span_ids: vec!["test-span".into()],
+            policy: Policy::default(),
+            budget: Budget {
+                available_calls: 1,
+                available_output_tokens: 1024,
+            },
+            credential_sentinels: vec![secret.into()],
+        };
+        assert!(!format!("{options:?}").contains(secret));
+    }
+}
 impl std::fmt::Display for ModelError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}：候选操作未完成；已有资料和未知现场保留。", self.code)
@@ -71,7 +91,7 @@ macro_rules! record {
     };
 }
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct ExtractionOptions {
     pub version_id: String,
     pub span_ids: Vec<String>,
@@ -79,6 +99,17 @@ pub struct ExtractionOptions {
     pub budget: Budget,
     /// Transient values, never serialized. Real credentials belong to the adapter.
     pub credential_sentinels: Vec<String>,
+}
+impl std::fmt::Debug for ExtractionOptions {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("ExtractionOptions")
+            .field("version_id", &self.version_id)
+            .field("span_ids", &self.span_ids)
+            .field("policy", &self.policy)
+            .field("budget", &self.budget)
+            .field("credential_sentinels", &"[redacted]")
+            .finish()
+    }
 }
 record!(ReportFailure { code: String });
 record!(AttemptFacts {

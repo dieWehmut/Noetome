@@ -3,7 +3,8 @@ use std::io::{self, Write};
 use std::process::ExitCode;
 
 use noetome_cli::{
-    CliCommand, fixture, fixture_compile, knowledge_extract, pdf_parse, pdf_source, project, source,
+    CliCommand, fixture, fixture_compile, knowledge_extract, model_preflight, pdf_parse,
+    pdf_source, project, source,
 };
 
 fn main() -> ExitCode {
@@ -20,6 +21,17 @@ fn main() -> ExitCode {
     let mut result_code = 0;
     let output = match command {
         CliCommand::KnowledgeHelp => noetome_cli::KNOWLEDGE_HELP.to_owned(),
+        CliCommand::KnowledgePreflight{project,version_id}=>{
+            match model_preflight::prepare_whole_text(&project,&version_id).and_then(|prepared|{
+                prepared.verify()?;
+                Ok(serde_json::json!({"schema_version":1,"result":"source_ready","api_status":"not_called","externalization_authorized":false,"source":prepared.summary()}))
+            }) {
+                Ok(summary)=>match serde_json::to_string_pretty(&summary) {
+                    Ok(json)=>format!("{json}\n"),Err(_)=>return ExitCode::from(1)
+                },
+                Err(error)=>{let _=writeln!(io::stderr().lock(),"{error}");return ExitCode::from(2);}
+            }
+        },
         CliCommand::KnowledgeInspect { project, output } => {
             match knowledge_extract::inspect(&project, &output) {
                 Ok(report) => match serde_json::to_string_pretty(&report) {

@@ -18,6 +18,7 @@
 | [架构规范](technical/ARCHITECTURE.md) | 模块边界、技术方向和阶段约束 | 跨模块接口或责任变化 |
 | [数据契约](technical/DATA_CONTRACTS.md) | 当前最小实体、身份、来源和版本语义 | 增加持久字段、Schema或接口 |
 | [候选知识 v1](technical/MODEL_CANDIDATE_PROTOCOL.md) | 来源Span、离线请求、用量、未核验候选及重读 | 修改候选边界 |
+| [API 前的本地边界](technical/API_PREFLIGHT_BOUNDARY.md) | 完整短文本预检、瞬时凭据交接及尚缺的真实调用条件 | 修改 API 准备边界 |
 | [Sidecar v1](technical/SIDECAR_PROTOCOL.md) | 单请求、进程生命周期和原始字节资源契约 | 修改sidecar协议或平台边界 |
 | [PDF v2](technical/PDF_PARSE_PROTOCOL.md) | 单份真实文本PDF的页、字形、区域、正文与报告发布 | 修改PDF解析契约、坐标或有限支持 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |

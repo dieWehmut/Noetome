@@ -1,6 +1,6 @@
 # B04近期执行步骤
 
-真实状态以[任务账本](../../dev-log/tasks.json)和[STATUS](../../dev-log/STATUS.md)为准。B03三项已分别验收：有界fake进程、真实文本PDF解析、Schema3来源持久化；历史执行卡见[B03归档](B03_STEPS.md)，最终验证见[B03-T03](../validation/B03-T03.md)。B04-T01已完成离线验收，真实结果见[B04-T01](../validation/B04-T01.md)，契约见[候选协议v1](../technical/MODEL_CANDIDATE_PROTOCOL.md)；T02/T03仍todo，下一入口为T02。
+真实状态以[任务账本](../../dev-log/tasks.json)和[STATUS](../../dev-log/STATUS.md)为准。B03三项已分别验收：有界fake进程、真实文本PDF解析、Schema3来源持久化；历史执行卡见[B03归档](B03_STEPS.md)，最终验证见[B03-T03](../validation/B03-T03.md)。B04-T01已完成离线验收，真实结果见[B04-T01](../validation/B04-T01.md)，契约见[候选协议v1](../technical/MODEL_CANDIDATE_PROTOCOL.md)。T02已有[完整文本与瞬时凭据的本地边界](../technical/API_PREFLIGHT_BOUNDARY.md)，真实调用验收仍缺配置、资料外发范围和预算；T03仍须等待T02验收。
 
 **目标与架构**：先固定有界模型请求，再单次小文本真实API候选抽取，最后独立核对真实证据与样本差异。Rust Core负责明确来源、预算和严格候选验证；Provider只返回领域候选，不控制本地路径或发布。现有fixture IR/NotePlan/Compiler和真实PDF页/区域分别保留原义。
 
@@ -67,4 +67,4 @@
 
 对应target只在任务建立后运行，不提前把不存在的文件/未跑调用记成通过。统一保持cargo fmt/check/test workspace、Python日志unittest、devlog check和git diff check；真实冒烟与普通离线回归分开。使用选定解释器，开发机路径不写进运行配置。
 
-开始和完成状态只由devlog工具维护，完成必须附真实验证和仓库产物。检查通过后分步commit/push并核对remote；本轮仅推进B04-T01，后续真实收费调用保留独立验收。
+开始、阻塞和完成状态只由devlog工具维护，完成必须附真实验证和仓库产物。检查通过后分步commit/push并核对remote；每轮只推进当前选定的一项，真实收费调用保留独立验收。

@@ -50,6 +50,63 @@ pub(crate) fn execute_command(
             "Request exceeds the byte limit; no child was started.",
         ));
     }
+    execute_owned_command(
+        program,
+        args,
+        OwnedInput(request.to_vec()),
+        limits.max_request_bytes,
+        workspace,
+        limits,
+        cancel,
+    )
+}
+
+/// Private runtime-frame entry. The public model wire remains bounded separately
+/// by the credential boundary; the extra bytes are only a <=4KiB credential and
+/// a fixed-size header. This does not extend the child environment or handles.
+pub(crate) fn execute_command_sensitive(
+    program: &Path,
+    args: &[std::ffi::OsString],
+    request: Vec<u8>,
+    workspace: &Path,
+    limits: &SidecarLimits,
+    cancel: &AtomicBool,
+) -> Result<ProcessOutput, SidecarError> {
+    execute_owned_command(
+        program,
+        args,
+        OwnedInput(request),
+        limits.max_request_bytes.saturating_add(4096 + 64),
+        workspace,
+        limits,
+        cancel,
+    )
+}
+
+// Best-effort clearing of the owned writer copy on success and error paths.
+// Safe fill is not an optimizer-proof zeroization or memory-dump guarantee.
+struct OwnedInput(Vec<u8>);
+impl Drop for OwnedInput {
+    fn drop(&mut self) {
+        self.0.fill(0);
+    }
+}
+
+fn execute_owned_command(
+    program: &Path,
+    args: &[std::ffi::OsString],
+    request: OwnedInput,
+    max_transport_bytes: usize,
+    workspace: &Path,
+    limits: &SidecarLimits,
+    cancel: &AtomicBool,
+) -> Result<ProcessOutput, SidecarError> {
+    if request.0.len() > max_transport_bytes {
+        return Err(SidecarError::new(
+            "SIDECAR_REQUEST_LIMIT",
+            "Request exceeds the byte limit; no child was started.",
+        ));
+    }
     if cancel.load(Ordering::Acquire) {
         return Err(SidecarError::new(
             "SIDECAR_CANCELLED",
@@ -63,15 +120,12 @@ pub(crate) fn execute_command(
     // Trusted program/argv do not imply inheriting arbitrary development,
     // terminal or parser configuration. T01 needs only the existing Windows
     // system directory context; future adapters must define additions explicitly.
-    let system_root = std::env::vars_os()
-        .find(|(key, _)| key.to_string_lossy().eq_ignore_ascii_case("SystemRoot"))
-        .map(|(_, value)| value)
-        .ok_or_else(|| {
-            SidecarError::new(
-                "SIDECAR_SPAWN_FAILED",
-                "Windows SystemRoot is unavailable; no child was started.",
-            )
-        })?;
+    let system_root = std::env::var_os("SystemRoot").ok_or_else(|| {
+        SidecarError::new(
+            "SIDECAR_SPAWN_FAILED",
+            "Windows SystemRoot is unavailable; no child was started.",
+        )
+    })?;
     let environment = [(std::ffi::OsString::from("SystemRoot"), system_root)];
     let Spawned {
         mut process,
@@ -116,9 +170,8 @@ pub(crate) fn execute_command(
             })?);
         }
         let stopped = stop.clone();
-        let owned_request = request.to_vec();
         workers.push(Worker::spawn(Role::Stdin, move || {
-            write_pipe(stdin, &owned_request, &stopped)
+            write_pipe(stdin, &request.0, &stopped)
         })?);
         Ok::<(), io::Error>(())
     })();

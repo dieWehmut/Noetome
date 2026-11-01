@@ -4,6 +4,7 @@ use std::path::PathBuf;
 mod compile_model;
 mod compile_report;
 mod compile_store;
+pub mod credential_handoff;
 pub mod fixture;
 pub mod fixture_compile;
 mod fixture_input;
@@ -13,6 +14,7 @@ mod fixture_plan;
 mod fixture_render;
 pub mod knowledge_extract;
 pub mod model_candidate;
+pub mod model_preflight;
 pub mod model_provider;
 mod pdf_model;
 pub mod pdf_parse;
@@ -115,6 +117,10 @@ compile只使用父目录已存在的新测试根，已有目标、输入输出�
 pub const KNOWLEDGE_HELP: &str = "Noetome 候选知识检查
 
 用法：noetome knowledge inspect <项目路径> <候选根>
+      noetome knowledge preflight <项目路径> <version-id>
+
+preflight：只读核对完整短文本（规范UTF8最多8KiB），返回指纹和字节数，不输出原文。
+来源预检不授予外发权限，不创建候选目录、不读取凭据或调用API。
 
 只读重载单请求候选或分类失败，核对来源登记、真实Span、请求/响应指纹及独立候选契约。
 结果为JSON，不重新调用模型、累计费用或发布笔记；fake为模拟数据，候选保持unverified。
@@ -129,6 +135,10 @@ pub enum CliCommand {
     KnowledgeInspect {
         project: PathBuf,
         output: PathBuf,
+    },
+    KnowledgePreflight {
+        project: PathBuf,
+        version_id: String,
     },
     Help,
     ProjectHelp,
@@ -204,13 +214,17 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
 fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     if args.is_empty()
         || matches!(args,[help] if help=="--help"||help=="-h")
-        || matches!(args,[verb,help] if verb=="inspect"&&(help=="--help"||help=="-h"))
+        || matches!(args,[verb,help] if (verb=="inspect"||verb=="preflight")&&(help=="--help"||help=="-h"))
     {
         return Ok(CliCommand::KnowledgeHelp);
     }
     let (paths, separated) = match args {
-        [verb, project, output] if verb == "inspect" => ((project, output), false),
-        [verb, separator, project, output] if verb == "inspect" && separator == "--" => {
+        [verb, project, output] if verb == "inspect" || verb == "preflight" => {
+            ((project, output), false)
+        }
+        [verb, separator, project, output]
+            if (verb == "inspect" || verb == "preflight") && separator == "--" =>
+        {
             ((project, output), true)
         }
         _ => return Err(INVALID_ARGUMENT),
@@ -221,6 +235,12 @@ fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
             || (!separated && path.as_encoded_bytes().first() == Some(&b'-'))
     }) {
         return Err(INVALID_ARGUMENT);
+    }
+    if args[0] == "preflight" {
+        return Ok(CliCommand::KnowledgePreflight {
+            project: paths.0.into(),
+            version_id: paths.1.to_str().ok_or(INVALID_ARGUMENT)?.into(),
+        });
     }
     Ok(CliCommand::KnowledgeInspect {
         project: paths.0.into(),
