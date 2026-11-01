@@ -1,0 +1,1253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:noetome:schema:fixture:v1",
+  "title": "Noetome fixture input packages v1",
+  "description": "Structural schema for four explicitly authored producer=fixture input packages. Passing this schema does not prove source coverage, knowledge validity, rendered output or scientific correctness.",
+  "$comment": "Each object rejects unknown fields and requires every declared field, including nullable fields. Cross-file identities, source/media suffix binding, source hashes and complete Span segmentation, UTF-8 range boundaries, entity ID uniqueness, required atom status/support, Coverage dispositions/stages/subsets/duplicate chains, NotePlan mappings/canonical links, and independent expected equivalence are enforced by Rust case verify. Coverage enums retain representable failure/pending and later-stage values; B02-T02 case verify only accepts mapped/planned complete coverage. Unsigned integer maxima match the current 64-bit Rust fixture target.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/Manifest"
+    },
+    {
+      "$ref": "#/$defs/KnowledgeIr"
+    },
+    {
+      "$ref": "#/$defs/PlanPackage"
+    },
+    {
+      "$ref": "#/$defs/ExpectedPackage"
+    }
+  ],
+  "$defs": {
+    "SchemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "Producer": {
+      "type": "string",
+      "const": "fixture"
+    },
+    "Id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$",
+      "not": {
+        "pattern": "[^A-Za-z0-9_-]"
+      }
+    },
+    "Sha256": {
+      "type": "string",
+      "minLength": 64,
+      "maxLength": 64,
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "UnsignedInteger": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 18446744073709551615
+    },
+    "PositiveInteger": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 18446744073709551615
+    },
+    "NonemptyText": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S",
+      "not": {
+        "pattern": "\\u0000"
+      }
+    },
+    "Heading": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/NonemptyText"
+        }
+      ],
+      "not": {
+        "pattern": "[\\u0000-\\u001f\\u007f-\\u009f\\[\\]#|^]"
+      }
+    },
+    "RelativePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^[^/]+(?:/[^/]+)*$",
+      "allOf": [
+        {
+          "not": {
+            "pattern": "[<>:\"\\\\|?*\\u0000-\\u001f\\u007f-\\u009f]"
+          }
+        },
+        {
+          "not": {
+            "pattern": "(^|/)\\.{1,2}(/|$)"
+          }
+        },
+        {
+          "not": {
+            "pattern": "[ .](/|$)"
+          }
+        },
+        {
+          "not": {
+            "pattern": "(^|/)([Cc][Oo][Nn]|[Pp][Rr][Nn]|[Aa][Uu][Xx]|[Nn][Uu][Ll]|[Cc][Ll][Oo][Cc][Kk]\\$|[Cc][Oo][Nn][Ii][Nn]\\$|[Cc][Oo][Nn][Oo][Uu][Tt]\\$|[Cc][Oo][Mm][1-9¹²³]|[Ll][Pp][Tt][1-9¹²³])(\\.|/|$)"
+          }
+        }
+      ],
+      "$comment": "Lexical paths only. Rust enforces the 4096 UTF-8 byte limit, case/ancestor collisions, containment, identity, ordinary files and reparse/junction rejection."
+    },
+    "JsonPath": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/RelativePath"
+        }
+      ],
+      "pattern": "\\.json$"
+    },
+    "MarkdownPath": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/RelativePath"
+        }
+      ],
+      "pattern": "\\.md$"
+    },
+    "TextSourcePath": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/RelativePath"
+        }
+      ],
+      "pattern": "\\.([mM][dD]|[tT][xX][tT])$"
+    },
+    "IdArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Id"
+      },
+      "uniqueItems": true
+    },
+    "NullableId": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Id"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "NullableText": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/NonemptyText"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "SpanKind": {
+      "type": "string",
+      "enum": [
+        "heading",
+        "text",
+        "code",
+        "formatting"
+      ]
+    },
+    "ParseStatus": {
+      "type": "string",
+      "enum": [
+        "parsed",
+        "failed",
+        "needs_review"
+      ]
+    },
+    "AtomKind": {
+      "type": "string",
+      "enum": [
+        "definition",
+        "statement",
+        "comparison_value"
+      ]
+    },
+    "Verification": {
+      "type": "string",
+      "enum": [
+        "fixture_reviewed",
+        "unverified"
+      ]
+    },
+    "ValueStatus": {
+      "type": "string",
+      "enum": [
+        "known",
+        "unknown",
+        "not_applicable"
+      ]
+    },
+    "EvidenceRelation": {
+      "type": "string",
+      "enum": [
+        "supports",
+        "refutes",
+        "qualifies"
+      ]
+    },
+    "CoverageDisposition": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "included",
+        "excluded",
+        "duplicate",
+        "failed",
+        "needs_review"
+      ]
+    },
+    "CoverageStage": {
+      "type": "string",
+      "enum": [
+        "registered",
+        "mapped",
+        "planned",
+        "rendered",
+        "validated"
+      ]
+    },
+    "DecisionSource": {
+      "type": "string",
+      "enum": [
+        "fixture_review",
+        "deterministic_format"
+      ]
+    },
+    "CellKind": {
+      "type": "string",
+      "enum": [
+        "label",
+        "content",
+        "missing"
+      ]
+    },
+    "Manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "producer",
+        "case_id",
+        "sources",
+        "ir_file",
+        "note_plan_file",
+        "expected_file"
+      ],
+      "properties": {
+        "schema_version": {
+          "$ref": "#/$defs/SchemaVersion"
+        },
+        "producer": {
+          "$ref": "#/$defs/Producer"
+        },
+        "case_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FixtureSource"
+          },
+          "minItems": 1,
+          "maxItems": 32
+        },
+        "ir_file": {
+          "$ref": "#/$defs/JsonPath"
+        },
+        "note_plan_file": {
+          "$ref": "#/$defs/JsonPath"
+        },
+        "expected_file": {
+          "$ref": "#/$defs/JsonPath"
+        }
+      }
+    },
+    "FixtureSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "version_id",
+        "relative_path",
+        "media_type",
+        "content_sha256",
+        "normalized_sha256",
+        "normalization_version",
+        "parser_version",
+        "spans"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "version_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "relative_path": {
+          "$ref": "#/$defs/TextSourcePath"
+        },
+        "media_type": {
+          "type": "string",
+          "enum": [
+            "text/plain",
+            "text/markdown"
+          ]
+        },
+        "content_sha256": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "normalized_sha256": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "normalization_version": {
+          "type": "string",
+          "const": "utf8-newlines-v1"
+        },
+        "parser_version": {
+          "type": "string",
+          "const": "blocks-v1"
+        },
+        "spans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DeclaredSpan"
+          }
+        }
+      }
+    },
+    "DeclaredSpan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "span_id",
+        "ordinal",
+        "kind",
+        "start_byte",
+        "end_byte",
+        "start_line",
+        "end_line",
+        "text_sha256",
+        "parse_status"
+      ],
+      "properties": {
+        "span_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "ordinal": {
+          "$ref": "#/$defs/UnsignedInteger"
+        },
+        "kind": {
+          "$ref": "#/$defs/SpanKind"
+        },
+        "start_byte": {
+          "$ref": "#/$defs/UnsignedInteger"
+        },
+        "end_byte": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "start_line": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "end_line": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "text_sha256": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "parse_status": {
+          "$ref": "#/$defs/ParseStatus"
+        }
+      }
+    },
+    "KnowledgeIr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "producer",
+        "revision",
+        "coverage_run_id",
+        "sources",
+        "concepts",
+        "evidence",
+        "atoms",
+        "coverage"
+      ],
+      "properties": {
+        "schema_version": {
+          "$ref": "#/$defs/SchemaVersion"
+        },
+        "producer": {
+          "$ref": "#/$defs/Producer"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "coverage_run_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/IrSourceRef"
+          },
+          "minItems": 1,
+          "maxItems": 32
+        },
+        "concepts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Concept"
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          }
+        },
+        "atoms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/KnowledgeAtom"
+          }
+        },
+        "coverage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CoverageRecord"
+          }
+        }
+      }
+    },
+    "IrSourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "version_id",
+        "content_sha256",
+        "normalized_sha256"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "version_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "content_sha256": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "normalized_sha256": {
+          "$ref": "#/$defs/Sha256"
+        }
+      }
+    },
+    "Concept": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "concept_id",
+        "revision",
+        "canonical_name",
+        "aliases",
+        "needs_full_explanation"
+      ],
+      "properties": {
+        "concept_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "canonical_name": {
+          "$ref": "#/$defs/NonemptyText"
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NonemptyText"
+          }
+        },
+        "needs_full_explanation": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "source_span_id",
+        "excerpt_start_byte",
+        "excerpt_end_byte",
+        "excerpt_sha256"
+      ],
+      "properties": {
+        "evidence_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "source_span_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "excerpt_start_byte": {
+          "$ref": "#/$defs/UnsignedInteger"
+        },
+        "excerpt_end_byte": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "excerpt_sha256": {
+          "$ref": "#/$defs/Sha256"
+        }
+      }
+    },
+    "KnowledgeAtom": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "atom_id",
+        "revision",
+        "kind",
+        "concept_ids",
+        "content",
+        "qualifiers",
+        "evidence_links",
+        "required",
+        "verification",
+        "value_status"
+      ],
+      "properties": {
+        "atom_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "kind": {
+          "$ref": "#/$defs/AtomKind"
+        },
+        "concept_ids": {
+          "$ref": "#/$defs/IdArray",
+          "minItems": 1
+        },
+        "content": {
+          "$ref": "#/$defs/NonemptyText"
+        },
+        "qualifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NonemptyText"
+          }
+        },
+        "evidence_links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceLink"
+          },
+          "uniqueItems": true
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "verification": {
+          "$ref": "#/$defs/Verification"
+        },
+        "value_status": {
+          "$ref": "#/$defs/ValueStatus"
+        }
+      }
+    },
+    "EvidenceLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "relation"
+      ],
+      "properties": {
+        "evidence_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "relation": {
+          "$ref": "#/$defs/EvidenceRelation"
+        }
+      }
+    },
+    "CoverageRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "span_id",
+        "disposition",
+        "atom_ids",
+        "required_atom_ids",
+        "duplicate_of_span_id",
+        "exclusion_reason",
+        "decision_source",
+        "policy_version",
+        "stage"
+      ],
+      "properties": {
+        "run_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "span_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "disposition": {
+          "$ref": "#/$defs/CoverageDisposition"
+        },
+        "atom_ids": {
+          "$ref": "#/$defs/IdArray"
+        },
+        "required_atom_ids": {
+          "$ref": "#/$defs/IdArray"
+        },
+        "duplicate_of_span_id": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "exclusion_reason": {
+          "$ref": "#/$defs/NullableText"
+        },
+        "decision_source": {
+          "$ref": "#/$defs/DecisionSource"
+        },
+        "policy_version": {
+          "type": "string",
+          "const": "fixture-policy-v1"
+        },
+        "stage": {
+          "$ref": "#/$defs/CoverageStage"
+        }
+      }
+    },
+    "PlanPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "producer",
+        "revision",
+        "knowledge_revision",
+        "knowledge_sha256",
+        "notes",
+        "placements"
+      ],
+      "properties": {
+        "schema_version": {
+          "$ref": "#/$defs/SchemaVersion"
+        },
+        "producer": {
+          "$ref": "#/$defs/Producer"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "knowledge_revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "knowledge_sha256": {
+          "$ref": "#/$defs/Sha256"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Note"
+          },
+          "minItems": 1
+        },
+        "placements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Placement"
+          }
+        }
+      }
+    },
+    "Note": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "note_id",
+        "revision",
+        "title",
+        "output_path",
+        "sections"
+      ],
+      "properties": {
+        "note_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "revision": {
+          "$ref": "#/$defs/PositiveInteger"
+        },
+        "title": {
+          "$ref": "#/$defs/Heading"
+        },
+        "output_path": {
+          "$ref": "#/$defs/MarkdownPath"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Section"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "Section": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "section_id",
+        "heading",
+        "ordered_nodes"
+      ],
+      "properties": {
+        "section_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "heading": {
+          "$ref": "#/$defs/Heading"
+        },
+        "ordered_nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Node"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "Placement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "concept_id",
+        "note_id",
+        "section_id",
+        "canonical"
+      ],
+      "properties": {
+        "concept_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "note_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "section_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "canonical": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SemanticLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_concept_id",
+        "display_text"
+      ],
+      "properties": {
+        "target_concept_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "display_text": {
+          "$ref": "#/$defs/NonemptyText"
+        }
+      }
+    },
+    "Node": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ParagraphNode"
+        },
+        {
+          "$ref": "#/$defs/OrderedListNode"
+        },
+        {
+          "$ref": "#/$defs/TableNode"
+        }
+      ]
+    },
+    "ParagraphNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_id",
+        "representation_origin",
+        "atom_ids",
+        "kind",
+        "text",
+        "links"
+      ],
+      "properties": {
+        "node_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "representation_origin": {
+          "$ref": "#/$defs/Producer"
+        },
+        "atom_ids": {
+          "$ref": "#/$defs/IdArray"
+        },
+        "kind": {
+          "type": "string",
+          "const": "paragraph"
+        },
+        "text": {
+          "$ref": "#/$defs/NonemptyText"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SemanticLink"
+          }
+        }
+      }
+    },
+    "OrderedListNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_id",
+        "representation_origin",
+        "atom_ids",
+        "kind",
+        "items"
+      ],
+      "properties": {
+        "node_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "representation_origin": {
+          "$ref": "#/$defs/Producer"
+        },
+        "atom_ids": {
+          "$ref": "#/$defs/IdArray"
+        },
+        "kind": {
+          "type": "string",
+          "const": "ordered_list"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ListItem"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "TableNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_id",
+        "representation_origin",
+        "atom_ids",
+        "kind",
+        "columns",
+        "rows"
+      ],
+      "properties": {
+        "node_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "representation_origin": {
+          "$ref": "#/$defs/Producer"
+        },
+        "atom_ids": {
+          "$ref": "#/$defs/IdArray"
+        },
+        "kind": {
+          "type": "string",
+          "const": "table"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TableColumn"
+          },
+          "minItems": 1
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TableRow"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "ListItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "text",
+        "atom_ids",
+        "links"
+      ],
+      "properties": {
+        "item_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "text": {
+          "$ref": "#/$defs/NonemptyText"
+        },
+        "atom_ids": {
+          "$ref": "#/$defs/IdArray"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SemanticLink"
+          }
+        }
+      }
+    },
+    "TableColumn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "column_id",
+        "label"
+      ],
+      "properties": {
+        "column_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "label": {
+          "$ref": "#/$defs/NonemptyText"
+        }
+      }
+    },
+    "TableRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "row_id",
+        "cells"
+      ],
+      "properties": {
+        "row_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TableCell"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "TableCell": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "text",
+        "atom_ids",
+        "links"
+      ],
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/CellKind"
+        },
+        "text": {
+          "$ref": "#/$defs/NonemptyText"
+        },
+        "atom_ids": {
+          "$ref": "#/$defs/IdArray"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SemanticLink"
+          }
+        }
+      }
+    },
+    "ExpectedPackage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "producer",
+        "case_id",
+        "required_atoms",
+        "evidence",
+        "coverage",
+        "canonical_placements",
+        "required_links",
+        "tables"
+      ],
+      "properties": {
+        "schema_version": {
+          "$ref": "#/$defs/SchemaVersion"
+        },
+        "producer": {
+          "$ref": "#/$defs/Producer"
+        },
+        "case_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "required_atoms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExpectedAtom"
+          },
+          "minItems": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          }
+        },
+        "coverage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExpectedCoverage"
+          }
+        },
+        "canonical_placements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExpectedPlacement"
+          }
+        },
+        "required_links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExpectedLink"
+          }
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ExpectedTable"
+          }
+        }
+      }
+    },
+    "ExpectedAtom": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "atom_id",
+        "kind",
+        "concept_ids",
+        "content",
+        "qualifiers",
+        "evidence_span_ids"
+      ],
+      "properties": {
+        "atom_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "kind": {
+          "$ref": "#/$defs/AtomKind"
+        },
+        "concept_ids": {
+          "$ref": "#/$defs/IdArray",
+          "minItems": 1
+        },
+        "content": {
+          "$ref": "#/$defs/NonemptyText"
+        },
+        "qualifiers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NonemptyText"
+          }
+        },
+        "evidence_span_ids": {
+          "$ref": "#/$defs/IdArray",
+          "minItems": 1
+        }
+      }
+    },
+    "ExpectedCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "span_id",
+        "disposition",
+        "atom_ids",
+        "required_atom_ids",
+        "duplicate_of_span_id",
+        "exclusion_reason",
+        "decision_source"
+      ],
+      "properties": {
+        "span_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "disposition": {
+          "$ref": "#/$defs/CoverageDisposition"
+        },
+        "atom_ids": {
+          "$ref": "#/$defs/IdArray"
+        },
+        "required_atom_ids": {
+          "$ref": "#/$defs/IdArray"
+        },
+        "duplicate_of_span_id": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "exclusion_reason": {
+          "$ref": "#/$defs/NullableText"
+        },
+        "decision_source": {
+          "$ref": "#/$defs/DecisionSource"
+        }
+      }
+    },
+    "ExpectedPlacement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "concept_id",
+        "note_id",
+        "section_id",
+        "atom_ids"
+      ],
+      "properties": {
+        "concept_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "note_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "section_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "atom_ids": {
+          "$ref": "#/$defs/IdArray",
+          "minItems": 1
+        }
+      }
+    },
+    "ExpectedLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from_node_id",
+        "target_concept_id",
+        "display_text"
+      ],
+      "properties": {
+        "from_node_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "target_concept_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "display_text": {
+          "$ref": "#/$defs/NonemptyText"
+        }
+      }
+    },
+    "ExpectedTable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "node_id",
+        "columns",
+        "rows"
+      ],
+      "properties": {
+        "node_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TableColumn"
+          },
+          "minItems": 1
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TableRow"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "Issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule_id",
+        "object_refs",
+        "message"
+      ],
+      "properties": {
+        "rule_id": {
+          "$ref": "#/$defs/NonemptyText"
+        },
+        "object_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "message": {
+          "$ref": "#/$defs/NonemptyText"
+        }
+      }
+    },
+    "ResolvedTarget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "concept_id",
+        "note_id",
+        "section_id",
+        "output_path",
+        "heading"
+      ],
+      "properties": {
+        "concept_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "note_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "section_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "output_path": {
+          "$ref": "#/$defs/MarkdownPath"
+        },
+        "heading": {
+          "$ref": "#/$defs/Heading"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "producer": "fixture",
+  "case_id": "C7k",
+  "required_atoms": [
+    {
+      "atom_id": "A3d",
+      "kind": "definition",
+      "concept_ids": [
+        "C2f"
+      ],
+      "content": "甲容器是虚构的蓝砂收纳盒。",
+      "qualifiers": [],
+      "evidence_span_ids": [
+        "P3a",
+        "P7b"
+      ]
+    },
+    {
+      "atom_id": "A7e",
+      "kind": "definition",
+      "concept_ids": [
+        "C6h"
+      ],
+      "content": "乙容器是虚构的红砂收纳盒。",
+      "qualifiers": [],
+      "evidence_span_ids": [
+        "P3b"
+      ]
+    },
+    {
+      "atom_id": "A5p",
+      "kind": "comparison_value",
+      "concept_ids": [
+        "C2f"
+      ],
+      "content": "甲容器的虚构刻度为5 cm。",
+      "qualifiers": [
+        "仅用于室温演示",
+        "装满后停止读数",
+        "破损时不适用"
+      ],
+      "evidence_span_ids": [
+        "P5a"
+      ]
+    },
+    {
+      "atom_id": "A9w",
+      "kind": "comparison_value",
+      "concept_ids": [
+        "C6h"
+      ],
+      "content": "乙容器的虚构刻度为8 cm。",
+      "qualifiers": [
+        "仅用于室温演示",
+        "空盒时不读数",
+        "浸水后不适用"
+      ],
+      "evidence_span_ids": [
+        "P5b"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "E3a",
+      "source_span_id": "P3a",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 40,
+      "excerpt_sha256": "1494edf3abcd6cc4b91d64c2974a22de422c00686be1be8c06af244d70934821"
+    },
+    {
+      "evidence_id": "E5a",
+      "source_span_id": "P5a",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 104,
+      "excerpt_sha256": "eb2a2eb1f537be777839c6f1bb8146c1bd7ab2db82e39a06744261f51c0dd782"
+    },
+    {
+      "evidence_id": "E3b",
+      "source_span_id": "P3b",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 40,
+      "excerpt_sha256": "da6274343ab5816281a39d505287bc814db7b6ac9573feb2535c94078e3e484d"
+    },
+    {
+      "evidence_id": "E5b",
+      "source_span_id": "P5b",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 101,
+      "excerpt_sha256": "a87c6fd67f5c4c1469d0bef308e17f1f1a121e2fa38f2489607cd62f9fdd3f8f"
+    },
+    {
+      "evidence_id": "E7b",
+      "source_span_id": "P7b",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 40,
+      "excerpt_sha256": "1494edf3abcd6cc4b91d64c2974a22de422c00686be1be8c06af244d70934821"
+    }
+  ],
+  "coverage": [
+    {
+      "span_id": "P1a",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "自造材料标题，仅标识来源。",
+      "decision_source": "fixture_review"
+    },
+    {
+      "span_id": "P2a",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "纯空白分隔，无知识内容。",
+      "decision_source": "deterministic_format"
+    },
+    {
+      "span_id": "P3a",
+      "disposition": "included",
+      "atom_ids": [
+        "A3d"
+      ],
+      "required_atom_ids": [
+        "A3d"
+      ],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": null,
+      "decision_source": "fixture_review"
+    },
+    {
+      "span_id": "P4a",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "纯空白分隔，无知识内容。",
+      "decision_source": "deterministic_format"
+    },
+    {
+      "span_id": "P5a",
+      "disposition": "included",
+      "atom_ids": [
+        "A5p"
+      ],
+      "required_atom_ids": [
+        "A5p"
+      ],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": null,
+      "decision_source": "fixture_review"
+    },
+    {
+      "span_id": "P1b",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "自造材料标题，仅标识来源。",
+      "decision_source": "fixture_review"
+    },
+    {
+      "span_id": "P2b",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "纯空白分隔，无知识内容。",
+      "decision_source": "deterministic_format"
+    },
+    {
+      "span_id": "P3b",
+      "disposition": "included",
+      "atom_ids": [
+        "A7e"
+      ],
+      "required_atom_ids": [
+        "A7e"
+      ],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": null,
+      "decision_source": "fixture_review"
+    },
+    {
+      "span_id": "P4b",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "纯空白分隔，无知识内容。",
+      "decision_source": "deterministic_format"
+    },
+    {
+      "span_id": "P5b",
+      "disposition": "included",
+      "atom_ids": [
+        "A9w"
+      ],
+      "required_atom_ids": [
+        "A9w"
+      ],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": null,
+      "decision_source": "fixture_review"
+    },
+    {
+      "span_id": "P6b",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "纯空白分隔，无知识内容。",
+      "decision_source": "deterministic_format"
+    },
+    {
+      "span_id": "P7b",
+      "disposition": "duplicate",
+      "atom_ids": [
+        "A3d"
+      ],
+      "required_atom_ids": [
+        "A3d"
+      ],
+      "duplicate_of_span_id": "P3a",
+      "exclusion_reason": null,
+      "decision_source": "fixture_review"
+    }
+  ],
+  "canonical_placements": [
+    {
+      "concept_id": "C2f",
+      "note_id": "N4u",
+      "section_id": "H2j",
+      "atom_ids": [
+        "A3d"
+      ]
+    },
+    {
+      "concept_id": "C6h",
+      "note_id": "N8v",
+      "section_id": "H6n",
+      "atom_ids": [
+        "A7e"
+      ]
+    }
+  ],
+  "required_links": [
+    {
+      "from_node_id": "Q2z",
+      "target_concept_id": "C6h",
+      "display_text": "乙容器"
+    },
+    {
+      "from_node_id": "Q6z",
+      "target_concept_id": "C2f",
+      "display_text": "甲容器"
+    }
+  ],
+  "tables": [
+    {
+      "node_id": "T5x",
+      "columns": [
+        {
+          "column_id": "D2c",
+          "label": "比较属性"
+        },
+        {
+          "column_id": "D4c",
+          "label": "甲容器"
+        },
+        {
+          "column_id": "D6c",
+          "label": "乙容器"
+        }
+      ],
+      "rows": [
+        {
+          "row_id": "W3g",
+          "cells": [
+            {
+              "kind": "label",
+              "text": "虚构刻度",
+              "atom_ids": [],
+              "links": []
+            },
+            {
+              "kind": "content",
+              "text": "甲容器的虚构刻度为5 cm。仅用于室温演示；装满后停止读数；破损时不适用。",
+              "atom_ids": [
+                "A5p"
+              ],
+              "links": []
+            },
+            {
+              "kind": "content",
+              "text": "乙容器的虚构刻度为8 cm。仅用于室温演示；空盒时不读数；浸水后不适用。",
+              "atom_ids": [
+                "A9w"
+              ],
+              "links": []
+            }
+          ]
+        },
+        {
+          "row_id": "W7g",
+          "cells": [
+            {
+              "kind": "label",
+              "text": "单价",
+              "atom_ids": [],
+              "links": []
+            },
+            {
+              "kind": "missing",
+              "text": "未给出",
+              "atom_ids": [],
+              "links": []
+            },
+            {
+              "kind": "missing",
+              "text": "未给出",
+              "atom_ids": [],
+              "links": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

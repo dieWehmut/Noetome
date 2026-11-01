@@ -1,6 +1,11 @@
 use std::ffi::OsString;
 use std::path::PathBuf;
 
+pub mod fixture;
+mod fixture_input;
+mod fixture_knowledge;
+mod fixture_model;
+mod fixture_plan;
 pub mod project;
 pub mod source;
 mod source_model;
@@ -17,6 +22,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome project <init|inspect> <路径>
       noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
       noetome source inspect <项目路径> <import-id>
+      noetome case verify <fixture目录>
 
 当前支持：
   -h, --help       显示帮助
@@ -25,6 +31,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   project inspect <路径>  只读检查已有项目
   source import           登记单份UTF8文本、不可变版本及完整位置清单
   source inspect          只读核对导入记录和真实快照
+  case verify             只读校验明确fixture的来源、IR、计划与独立预期
 
 不传参数时显示帮助；project --help 或 source --help 查看命令说明。
 当前只登记明确选取的MD/TXT来源；知识抽取、PDF解析及笔记生成尚未实现。
@@ -57,6 +64,19 @@ inspect：使用导入结果的import-id只读核对持久记录、快照与位�
 PDF、模型抽取、IR和Vault输出尚未实现。
 ";
 
+pub const CASE_HELP: &str = "Noetome fixture契约校验
+
+用法：noetome case verify <case目录>
+
+只读取case.json明确声明的根内MD/TXT、IR、NotePlan和独立expected。
+校验完整Span覆盖、支持证据、必要原子与条件/单位、规范位置和实际计划显示映射。
+固定身份与审阅标记来自自造fixture，不代表模型抽取或科学质量已通过。
+结果为JSON，语义失败返回3；非法输入返回2，读取受阻返回3。
+不写项目、Run、Vault或报告文件，不自动迁移、修复或修改expected。
+以 - 开头的目录路径可在verify后加 -- 分隔符，包含空格的路径作为单独参数。
+rendering与scientific_quality保持not_run；当前仅契约验证。
+";
+
 #[derive(Debug)]
 pub enum CliCommand {
     Help,
@@ -74,10 +94,15 @@ pub enum CliCommand {
         project: PathBuf,
         import_id: String,
     },
+    CaseHelp,
+    CaseVerify(PathBuf),
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
 pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.first().is_some_and(|arg| arg == "case") {
+        return case_command(&args[1..]);
+    }
     if args.first().is_some_and(|arg| arg == "source") {
         return source_command(&args[1..]);
     }
@@ -99,6 +124,27 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
         [project, verb, path] if project == "project" => project_command(verb, path, false),
         [project, verb, separator, path] if project == "project" && separator == "--" => {
             project_command(verb, path, true)
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+fn case_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    match args {
+        [] => Ok(CliCommand::CaseHelp),
+        [help] if help == "--help" || help == "-h" => Ok(CliCommand::CaseHelp),
+        [verb, help] if verb == "verify" && (help == "--help" || help == "-h") => {
+            Ok(CliCommand::CaseHelp)
+        }
+        [verb, path]
+            if verb == "verify"
+                && !path.is_empty()
+                && path.as_encoded_bytes().first() != Some(&b'-') =>
+        {
+            Ok(CliCommand::CaseVerify(path.into()))
+        }
+        [verb, separator, path] if verb == "verify" && separator == "--" && !path.is_empty() => {
+            Ok(CliCommand::CaseVerify(path.into()))
         }
         _ => Err(INVALID_ARGUMENT),
     }

@@ -10,3 +10,5 @@
 .gitattributes text eol=lf
 # Preserve exact source bytes and their declared hashes in future fixtures.
 tests/fixtures/** -text
+# Fixture SHA contracts sign original bytes; Windows checkouts keep them stable.
+fixtures/text-compare-v1/** text eol=lf
