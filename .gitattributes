@@ -14,3 +14,7 @@ tests/fixtures/** -text
 fixtures/text-compare-v1/** text eol=lf
 # PDF corpus and author freezes are hashed as original bytes.
 fixtures/pdf-text-v1/** -text
+# Acceptance archives sign their original bytes, including JSON line endings.
+doc/validation/B03-T02.json -text
+doc/validation/B03-T02-evidence/** -text
+sidecars/pdf_parser/runtime-lock.json -text
