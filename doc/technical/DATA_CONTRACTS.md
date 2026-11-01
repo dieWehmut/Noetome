@@ -97,7 +97,7 @@ IR 包和计划包分别带 `schema_version`、`producer`、`revision`。IR 包�
 
 ## 4 处理账本
 
-**B02单份文本导入的阶段边界**：在B01空项目与桌面骨架之后，先保存来源版本、SourceSpan和最小导入登记记录（import_id、来源引用或失败对象、状态、span_count、待抽取数量、错误）。知识处理状态为pending；不创建IR、NotePlan、Release或完整Run。此阶段的“来源清单”表示字节和位置已清点，不表示必要知识覆盖完成。具体任务卡由B01验收后滚动展开，不能把本段当作已经实现的文本导入能力。
+**B02单份文本导入的阶段边界**：在B01空项目与桌面骨架之后，先保存来源版本、SourceSpan和最小导入登记记录（import_id、来源引用或失败对象、状态、span_count、待抽取数量、错误）。知识处理状态为pending；不创建IR、NotePlan、Release或完整Run。此阶段的“来源清单”表示字节和位置已清点，不表示必要知识覆盖完成。B01/B01A验收后，具体任务卡已在[近期步骤](../execution/NEXT_STEPS.md)滚动规划，尚未启动；不能把本段当作已经实现的文本导入能力。
 
 **以下完整CoverageRecord用于后续fixture编译阶段**：该阶段创建Run后，再将导入得到的Span映射为该Run的处理账本。单份文本导入不为了run_id提前实现整个编译流水线；B01-T03已按用户要求调整为桌面交付，与来源登记无关。
 
