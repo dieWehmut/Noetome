@@ -2,7 +2,7 @@
 
 本文件规定当前采用的工程方向和首个可运行闭环。产品目标以 [PRD](../requirements/PRD.md) 为准；这里的分步实现不删减双模式、真实资料解析、主动图表表达和长期维护目标。
 
-状态：工程基线。B01/B01A提供项目与桌面骨架，B02-T01已实现CLI单份文本来源登记；完整fixture编译闭环仍是后续目标。具体完成状态与验证证据以任务账本为准，不能把本文件中的后续设计当作已验收能力。第三方库及版本在引入时验证并锁定。
+状态：工程基线。B01/B01A提供项目与桌面骨架，B02-T01已实现CLI单份文本来源登记，B02-T02提供只读fixture知识/覆盖/计划及独立预期校验；实际Markdown编译与临时Vault仍是后续目标。具体完成状态与验证证据以任务账本为准，不能把本文件中的后续设计当作已验收能力。第三方库及版本在引入时验证并锁定。
 
 ## 1 当前决定
 
@@ -22,7 +22,7 @@ Markdown 是可阅读产物，Knowledge IR 是可验证的知识表达。文件�
 
 ## 2 首个闭环
 
-目标是证明输入、账本、计划、输出和报告之间能够对账，而不是证明模型能够理解教材。当前B02-T01只完成来源登记、不可变快照和完整Span清单；以下知识、计划、渲染及临时Vault步骤尚未实现。
+目标是证明输入、账本、计划、输出和报告之间能够对账，而不是证明模型能够理解教材。B02-T01完成来源登记、不可变快照和完整Span清单；B02-T02核对自造fixture的IR、覆盖与NotePlan契约及独立expected。实际渲染、输出重读、Run/Release登记与临时Vault步骤尚未实现。
 
 输入包括少量可审阅的 UTF-8 MD/TXT 文件，以及同一 fixture 包中的预先编写的 IR、NotePlan 和期望结果。IR 明确记录 `producer = fixture`；不得把它展示为自动抽取或已核验学科知识。
 
@@ -70,8 +70,13 @@ B01-T02的项目初始化与检查逻辑先放在`noetome-cli`库的`project`模
 | [source_model.rs](../../crates/noetome-cli/src/source_model.rs) | 持久来源与导入记录加载、身份/引用/状态/计数校验、真实快照与完整Span重读验证 |
 | [source_write.rs](../../crates/noetome-cli/src/source_write.rs) | 独占写目录、原文件备份、候选库与新快照发布、受保护的失败回滚与清理 |
 | [source.rs](../../crates/noetome-cli/src/source.rs) | 明确单文件读取、来源身份和版本复用、最小导入登记、候选与正式文件验收、只读导入查看 |
+| [fixture_model.rs](../../crates/noetome-cli/src/fixture_model.rs) | 四份fixture严格输入类型、枚举、ID与问题/规范目标结构；不定义生产生成器 |
+| [fixture_input.rs](../../crates/noetome-cli/src/fixture_input.rs) | 有界只读输入、普通路径/句柄保护、版本与SHA、复用实际分段并对账声明Span |
+| [fixture_knowledge.rs](../../crates/noetome-cli/src/fixture_knowledge.rs) | 纯IR证据/引用/必要原子校验、逐Span覆盖及重复链对账 |
+| [fixture_plan.rs](../../crates/noetome-cli/src/fixture_plan.rs) | 纯计划/显示scope/规范位置/结构化链接校验与独立expected逐字段对账 |
+| [fixture.rs](../../crates/noetome-cli/src/fixture.rs) | 只读case verify编排与Schema1 JSON事实结果，来源失败时依赖项not_run；不发布文件 |
 
-来源登记不创建完整Run、CoverageRecord、IR、NotePlan或Release。桌面的帮助、版本、运行信息和B01A窗口偏好接口与项目业务分开，尚未接入项目或来源业务入口。
+来源登记不创建完整Run、CoverageRecord、IR、NotePlan或Release。fixture入口只读取作者声明的IR/覆盖/计划并验证，coverage_run_id是声明的审阅作用域，不登记持久Run。桌面的帮助、版本、运行信息和B01A窗口偏好接口与项目业务分开，尚未接入项目、来源或fixture业务入口。
 
 ## 4 工作区与文件职责
 
@@ -89,7 +94,7 @@ source-project/
   .noetome-writing/              写入期间的操作说明、旧文件备份、候选与暂存快照
 ```
 
-缓存和写目录由程序管理，不接受外部指定的内部输出路径。无效UTF8版本只保留raw.bin；未读全文件只登记失败尝试，不建立版本快照。后续fixture编译布局仍按以下职责规划，当前不生成这些IR、暂存Vault或双报告：
+缓存和写目录由程序管理，不接受外部指定的内部输出路径。无效UTF8版本只保留raw.bin；未读全文件只登记失败尝试，不建立版本快照。只读fixture输入的前半部分已存在；后续编译输出布局仍按以下职责规划，当前不生成暂存Vault或双报告：
 
 ```text
 fixture-case/                  只读输入与审阅过的预期
@@ -97,6 +102,7 @@ fixture-case/                  只读输入与审阅过的预期
   case.json
   ir.json
   note-plan.json
+  expected.json
 temporary-workspace/           当前运行独占
   project.json
   project.sqlite
@@ -166,11 +172,12 @@ noetome project init <project-path>
 noetome project inspect <project-path>
 noetome source import <project-path> <MD/TXT-file> [--source-id <existing-id>]
 noetome source inspect <project-path> <import-id>
+noetome case verify <case-root>
 ```
 
-help/version及命令帮助只解析和输出，不访问项目或生成来源。source import只把明确选取的本地单文件作为输入，不扫描资料目录；source inspect不再读取原选取文件，只读核对持久记录与项目内快照。两者不调用网络/模型、不输出Vault。后续fixture入口由[近期步骤](../execution/NEXT_STEPS.md)定义，尚未实现；不能提供跳过路径防护、覆盖账本或人工内容保护的快捷开关。
+help/version及命令帮助只解析和输出，不访问项目或生成来源。source import只把明确选取的本地单文件作为输入，不扫描资料目录；source inspect不再读取原选取文件，只读核对持久记录与项目内快照。两者不调用网络/模型、不输出Vault。B02-T02增加`case verify <case-root>`只读核对明确标为fixture的四包，输出分项JSON与稳定问题；不登记Run/Release或生成笔记。下一编译入口由[近期步骤](../execution/NEXT_STEPS.md)定义，尚未实现；不能提供跳过路径防护、覆盖账本或人工内容保护的快捷开关。
 
-帮助、版本和项目摘要为文字stdout；来源import/inspect固定输出报告Schema1 JSON，JSON版本与项目Schema2分开。诊断写stderr，不混入JSON；来源结果持久保存在SQLite中，可用import-id再次只读查看，stdout可由调用方重定向为文件。当前没有完整Run或JSON/Markdown双报告文件，不通过解析终端文字恢复状态。
+帮助、版本和项目摘要为文字stdout；来源import/inspect与case verify固定输出各自报告Schema1 JSON，JSON版本与项目Schema2分开。诊断写stderr，不混入JSON；来源结果持久保存在SQLite中，可用import-id再次只读查看。fixture验证不持久登记，stdout可由调用方重定向为文件。当前没有完整Run或JSON/Markdown双报告文件，不通过解析终端文字恢复状态。
 
 退出码约定为：`0` 表示命令声明的操作已完成；项目初始化只表示空项目契约已建立，来源import只表示真实快照与来源记录验证完成。source inspect成功查看已保存failed导入记录仍返回0，因为只读核对已完成，不表示该来源登记成功。`2` 表示参数或输入契约不合法；`3` 表示来源读取失败、可解释的阻断或未完成；`1` 表示内部错误或stdout输出失败。已保存的失败导入同时输出JSON和稳定诊断；写入失败不输出成功JSON，中断不得转换为0。后续fixture闭环成功还须全部验证并发布。详见 [设计标准](../standards/DESIGN.md)。
 

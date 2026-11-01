@@ -4,7 +4,7 @@
 
 ## 1 当前交付形式
 
-首阶段以CLI和本地确定性闭环为基础。当前CLI支持项目初始化、只读项目检查和B02-T01单份UTF8 MD/TXT来源登记与只读查看；知识状态保持pending，不生成IR、NotePlan、完整Run、Release或Vault。根据2026年11月1日的用户要求，已提前提供可本地安装的Windows桌面骨架；来源业务尚未接入GUI，完整桌面功能继续逐项建设。后续JSON/Markdown双报告及临时Vault的状态必须来自实际结果，输入IR和计划来自fixture的事实必须在摘要中明确。
+首阶段以CLI和本地确定性闭环为基础。当前CLI支持项目初始化、只读项目检查、B02-T01单份UTF8 MD/TXT来源登记与只读查看，以及B02-T02明确标为fixture的IR/NotePlan/独立expected契约校验。来源登记的知识状态保持pending，fixture的知识和计划是作者输入；当前不生成完整Run、Release或Vault。根据2026年11月1日的用户要求，已提前提供可本地安装的Windows桌面骨架；来源和fixture业务尚未接入GUI，完整桌面功能继续逐项建设。后续JSON/Markdown双报告及临时Vault的状态必须来自实际结果，输入IR和计划来自fixture的事实必须在摘要中明确。
 
 报告写“fixture 编译验证通过”，不能写“AI 已完成教材学习”“知识准确率100%”或“产品已支持 PDF”。没有发生的网络请求、模型推理和费用一律不编造。
 
@@ -61,6 +61,16 @@ import只读取明确选取的单份文件，当前上限64 MiB，不扫描目�
 | 内部操作、报告序列化或stdout输出失败 | stderr稳定错误，例如SOURCE_REPORT_ERROR或CLI_OUTPUT_ERROR | 1 |
 
 source inspect返回0只表示只读核对完成，不能把报告内failed改成成功。import保存来源读取失败记录与普通写入失败不同：前者保留可查看的真实失败对象，后者按可确认的自身文件回滚；未知内容、替换或清理失败保留标记和可用备份，提示检查现场，不自动接管。Windows准备阶段的句柄保护与发布复核不构成任意外部并发或任意断电下多文件原子恢复承诺。
+
+### B02-T02 fixture 检查
+
+`noetome case verify <case-root>`及其帮助入口使用与来源命令一致的路径参数规则，动词后`--`可分隔以`-`开头的路径。验证只读，不登记Run、不写报告文件或Vault。有效输入stdout为Schema1 JSON，清楚标`producer=fixture`，显示实际来源/Span/原子/必要原子/计划笔记/节点数量与四包指纹。
+
+五个已运行检查为`sources`、`coverage`、`knowledge`、`note_plan`、`expected`，各有status和issue_count；来源失配时后续项为not_run。`rendering`与`scientific_quality`始终not_run，不能显示科学正确率或发布成功。每个问题含稳定rule_id、object_refs与原因；无效规范位置不作为可用链接目标返回。
+
+契约通过退出0；语义问题stdout保留`passed=false`报告，stderr为`CASE_VERIFICATION_FAILED`，退出3；不合法JSON、版本、字段或路径在报告前拒绝，stdout为空、退出2；读取占用、变化或I/O阻断退出3。输出错误退出1。数量与问题来自本次输入，不能用固定成功摘要代替实际校验。
+
+计划明文字段与结构化链接分开，原始wiki/Markdown链接、HTML和隐藏注释不得绕开映射与链接检查。scope必须完整显示原子内容、条件和单位，规范定义不能被另一个相关数值替代。此阶段只验证计划，实际Markdown转义、文件内容和链接重读属于下一任务。
 
 ### 摘要示例
 

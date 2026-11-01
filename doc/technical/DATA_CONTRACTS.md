@@ -234,6 +234,27 @@ v1 不单独冻结完整 Claim Schema。当前一个 statement 原子承载一�
 
 空单元格不得暗示数值为零；来源未给出时使用明确的缺失状态，不补造值。表格转义、链接目标和正文映射都由确定性编译器处理。
 
+### B02-T02 已实现的只读 fixture v1
+
+本节固定当前已实现的输入契约，后续RenderedFile/Run/Release仍按下节规划。结构定义为[`schemas/fixture-v1.json`](../../schemas/fixture-v1.json)，字段和跨包语义实施于`fixture_model`、`fixture_input`、`fixture_knowledge`及`fixture_plan`。四份JSON均`schema_version=1`、`producer=fixture`，对象拒绝未知字段；所有声明字段必填，包括允许null的覆盖处置字段。ID为1至128字节ASCII，首字符字母或数字，余字符可含`_`、`-`；SHA为64位小写十六进制。fixture作者提供固定身份，不使用生产导入生成的UUID来假称自动抽取。
+
+| 包 | 当前作用 |
+| --- | --- |
+| `case.json` | case_id、1至32个来源及明确相对文件定位、raw/normalized SHA、规范化/分段规则版本、完整SourceSpan声明，以及ir_path/plan_path/expected_path |
+| `ir.json` | revision、coverage_run_id审阅作用域、来源版本绑定、Concept、Evidence、Atom及逐Span CoverageRecord |
+| `note-plan.json` | revision、knowledge_revision、完整原始IR字节的knowledge_sha256、Note/Section/paragraph/ordered_list/table与placements |
+| `expected.json` | 独立required_atoms、完整evidence集合、coverage、canonical_placements、required_links及tables |
+
+每份JSON最多4 MiB，四包及所有来源读取总量最多64 MiB。来源只接受UTF8 MD/TXT，复用既有规范化与分段实现，再逐字段对账独立Span声明。证据的`excerpt_start_byte`/`excerpt_end_byte`是所属Span内的UTF8半开局部区间，不能为空、越界或切断字符；excerpt_sha256必须与实际片段字节一致。expected的Evidence同时锁定evidence_id、source_span_id、局部区间与SHA，合法短片段须本身已经独立审阅，不能缩成一个仍正确哈希的字符后继续通过。
+
+覆盖声明必须与实际Span集合双向一一对应，run_id/policy_version/stage有效。此任务只接受`mapped`或`planned`，included/duplicate需要有效映射与自身来源位置的支持证据；required_atom_ids恰为映射内必要原子的子集。排除保持空映射和非空审阅理由，确定性格式排除只能针对formatting。duplicate要求原文字节指纹及映射一致，链最终到included，不能自引用或成环。没有创建持久Run，coverage_run_id只标识fixture作者声明的审阅作用域。
+
+每个必要原子必须`required=true`、`verification=fixture_reviewed`、`value_status=known`，有有效supports证据并保留原子content与qualifiers中的条件、单位和例外。独立expected逐字段锁住这些内容及引用，不能从待测计划反向生成expected。每个显示scope（段落、单独列表项或单独内容单元格）完整承载其映射原子，别处同ID不能补足当前缺失表达。
+
+规范位置仍由Concept与Placement固定；expected的每个`canonical_placements`还必填非空、无重复、相关且有效的`atom_ids`。这些解释原子须在声明的note/section完整显示，仅留下比较值不能代替定义。SemanticLink必须解析到唯一有效规范位置。输出`.md`路径额外拒绝`#[]^`，并拒绝大小写或文件/目录祖先碰撞。明文字段拒绝原始wiki/Markdown链接、HTML、隐藏注释及非法控制符，引用通过结构化SemanticLink声明；普通比较符和数学单括号保留。
+
+`case verify`报告Schema1包含case_id、validator_version、实际counts、issues和resolved_targets及四包原始SHA。`checks.sources/coverage/knowledge/note_plan/expected`分别为passed或failed；来源不可信时依赖检查为not_run。`rendering/scientific_quality`始终not_run，passed仅代表本次契约检查通过。本报告没有伪造run_id/candidate_id/issue_id，也不代替后续发布报告。实际证据见[B02-T02记录](../validation/B02-T02.md)。
+
 ## 7 渲染与验证产物
 
 RenderedFile 最小字段为 `relative_path`、`content_sha256`、`byte_length`、`note_id`、`plan_revision` 和 `content_mappings`。每条映射记录 section_id、node_id、atom_ids 及输出 UTF-8 字节区间。

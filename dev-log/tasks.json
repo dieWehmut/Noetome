@@ -538,7 +538,7 @@
       "id": "B02-T02",
       "title": "校验明确fixture的IR NotePlan与独立必要原子清单",
       "batch": "B02",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B02-T01"
       ],
@@ -556,7 +556,71 @@
         "有效及缺失原子 缺证据 覆盖重复或缺漏 过期指纹 引用歧义 无效路径/版本样例产生有区分力的结果；验证不发布Vault，不宣称模型或科学质量通过",
         "契约及失败保护验证、工作区检查和日志检查通过，提交fixture及独立验收记录后推送"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-01T08:28:39Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "实现只读case verify契约校验：自造producer=fixture包、完整Span覆盖、有效证据/条件/单位、固定IR指纹的NotePlan及独立必要原子预期；不生成Vault或宣称真实模型质量。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-01T09:16:09Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成producer=fixture的只读case verify：严格四包与实际来源/Span对账、知识及覆盖不变量、完整IR绑定的NotePlan与独立expected；修复证据缩片、隐藏/未声明链接、规范定义移位及可选原子明文漏检，保存真实红绿和独立复审历史。未生成Vault，下一项B02-T03保持todo。",
+          "validation": [
+            "实际执行cargo fmt --all --check及cargo_local check/test --workspace --locked --offline通过，185项Rust测试0失败0忽略（114库/4CLI/20fixture/13项目/19来源/15桌面）；独立CLI build通过，前端严格类型及生产构建通过，12项Python测试、作者固定来源/Span/证据审计和三个Python文件语法检查通过。",
+            "20组fixture进程覆盖138次调用含实际Windows独占锁与junction、字节/mtime/目录/哨兵保护；独立最终复审51次（49语义拒绝3与2正例0）及正常Medium SHA匹配副本13次验收符合预期，输入及expected保持原样。jsonschema4.23.0 Draft202012结构检查和4有效包通过，31结构变异拒绝。旧错误通过/旧expected指纹保留，未计为最终成功。",
+            "修改的8份文档74个本地链接目标、devlog check和git diff --check通过；rendering/scientific_quality为not_run。未运行真实模型/PDF/OCR、生产Vault、安装版GUI新业务、跨平台或任意并发/断电保证。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/fixture.rs",
+              "sha256": "d904907dc79bbae8b759e19c01818d811a473e1b1a32372ae45bfaf43e288930"
+            },
+            {
+              "path": "crates/noetome-cli/src/fixture_input.rs",
+              "sha256": "bfc76699fe3698813517ad1b16b982da55b69e2cf68c81ea4ddffc0abcb037e7"
+            },
+            {
+              "path": "crates/noetome-cli/src/fixture_knowledge.rs",
+              "sha256": "8c72390a14a1be12ae567bfe86bb13e846fc4a6e3b50b449dd14ac7276dcdf65"
+            },
+            {
+              "path": "crates/noetome-cli/src/fixture_plan.rs",
+              "sha256": "3a3199430d3c5fec7cbea3665447edf910f7cc2f6b0e7b5c91c43c8fe9285ab2"
+            },
+            {
+              "path": "crates/noetome-cli/tests/fixture.rs",
+              "sha256": "4672ef35e29d9d35c2d4178bc3b7e88329ef012c15e64e0872a26ea2770a1164"
+            },
+            {
+              "path": "fixtures/text-compare-v1/expected.json",
+              "sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd"
+            },
+            {
+              "path": "fixtures/text-compare-v1/audit_fixture.py",
+              "sha256": "c278a80c463ad662d0657baf112315d23da636b816e4b4667228c96ec9a7d209"
+            },
+            {
+              "path": "schemas/fixture-v1.json",
+              "sha256": "386e8117fd451c22dac0ee8dabcedbb1bfc047a5270cb34675843d6ea87853d9"
+            },
+            {
+              "path": "doc/validation/B02-T02.md",
+              "sha256": "8ebdf4b9e5a623207231c1e7ba4be2c9e536bf502b67aa4e800806ff979452f3"
+            },
+            {
+              "path": "doc/validation/B02-T02-local.json",
+              "sha256": "6f5b570d5341fa8478ca18fd7b0d13b57693d880718ecb052e9ec091ea412821"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B02-T03",

@@ -1,0 +1,3608 @@
+{
+  "recorded_at": "2026-11-01T09:13:28+00:00",
+  "task": "B02-T02",
+  "scope": "Windows x64 self-authored fixture contracts only; rendering/scientific_quality not_run",
+  "commands": [
+    {
+      "command": "cargo fmt --all --check",
+      "exit_code": 0
+    },
+    {
+      "command": "./scripts/cargo_local.ps1 check --workspace --locked --offline",
+      "exit_code": 0
+    },
+    {
+      "command": "./scripts/cargo_local.ps1 test --workspace --locked --offline",
+      "exit_code": 0,
+      "passed": 185,
+      "failed": 0,
+      "ignored": 0,
+      "groups": {
+        "cli_library": 114,
+        "cli_process": 4,
+        "fixture_process": 20,
+        "project_process": 13,
+        "source_process": 19,
+        "desktop": 15
+      }
+    },
+    {
+      "command": "npm run web:build",
+      "exit_code": 0,
+      "includes": "strict TypeScript and Vite production build"
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_*.py",
+      "exit_code": 0,
+      "passed": 12
+    },
+    {
+      "command": "python fixtures/text-compare-v1/audit_fixture.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python -m py_compile scripts/check_fixture_schema.py scripts/verify_fixture_case.py fixtures/text-compare-v1/audit_fixture.py",
+      "exit_code": 0
+    },
+    {
+      "command": "./scripts/cargo_local.ps1 build -p noetome-cli --locked --offline",
+      "exit_code": 0
+    }
+  ],
+  "prepared_cli": {
+    "Path": "D:\\Noetome\\.artifacts\\fixture-cli-256eef0f-4969-4c98-8885-95fbdad7dada\\noetome.exe",
+    "SHA256": "7bd5da64690778d0da465372315d4b2a9899b7053c6633d0c051492d8554effe",
+    "IntegrityLabel": "",
+    "IntegrityRid": 8192,
+    "SourcePath": "D:\\Noetome\\target\\debug\\noetome.exe",
+    "SourceSHA256": "7bd5da64690778d0da465372315d4b2a9899b7053c6633d0c051492d8554effe",
+    "Reused": false
+  },
+  "normal_integrity_smoke": {
+    "schema_version": 1,
+    "scope": "Self-authored fixture, read-only contracts; no rendering, publication, models or scientific-quality assessment",
+    "cli_path": "D:\\Noetome\\.artifacts\\fixture-cli-256eef0f-4969-4c98-8885-95fbdad7dada\\noetome.exe",
+    "cli_sha256": "7bd5da64690778d0da465372315d4b2a9899b7053c6633d0c051492d8554effe",
+    "test_root": "D:\\Noetome\\.artifacts\\fixture-smoke-ab74682b-62e4-4be2-ba71-7e249c815268",
+    "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+    "calls": 13,
+    "input_bytes_mtime_attributes_and_directories_unchanged": true,
+    "external_sentinel_unchanged": true,
+    "results": [
+      {
+        "case": "valid",
+        "repetition": 0,
+        "exit_code": 0,
+        "stderr": "",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [],
+          "passed": true,
+          "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+          "producer": "fixture",
+          "resolved_targets": [
+            {
+              "concept_id": "C2f",
+              "heading": "定义与比较",
+              "note_id": "N4u",
+              "output_path": "笔记/甲容器.md",
+              "section_id": "H2j"
+            },
+            {
+              "concept_id": "C6h",
+              "heading": "定义与条件",
+              "note_id": "N8v",
+              "output_path": "笔记/乙容器.md",
+              "section_id": "H6n"
+            }
+          ],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "valid",
+        "repetition": 1,
+        "exit_code": 0,
+        "stderr": "",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [],
+          "passed": true,
+          "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+          "producer": "fixture",
+          "resolved_targets": [
+            {
+              "concept_id": "C2f",
+              "heading": "定义与比较",
+              "note_id": "N4u",
+              "output_path": "笔记/甲容器.md",
+              "section_id": "H2j"
+            },
+            {
+              "concept_id": "C6h",
+              "heading": "定义与条件",
+              "note_id": "N8v",
+              "output_path": "笔记/乙容器.md",
+              "section_id": "H6n"
+            }
+          ],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "missing-required-atom",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 6,
+              "status": "failed"
+            },
+            "expected": {
+              "issue_count": 3,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 3,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 3,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 3,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "dc831f1e17ba9dc0d359b8d3358b843c6833e80a41bd4b17904c0c279f382c2d",
+          "issues": [
+            {
+              "message": "覆盖原子映射不得重复，且必须唯一解析到已有原子。",
+              "object_refs": [
+                "P3a"
+              ],
+              "rule_id": "COVERAGE_ATOM_REFERENCE"
+            },
+            {
+              "message": "required_atom_ids必须恰为当前atom_ids中required原子的子集，不得重复、缺漏或增加。",
+              "object_refs": [
+                "P3a"
+              ],
+              "rule_id": "COVERAGE_REQUIRED_SUBSET"
+            },
+            {
+              "message": "每个已映射原子在当前来源位置仍需有范围和SHA有效的supports证据。",
+              "object_refs": [
+                "P3a",
+                "A3d"
+              ],
+              "rule_id": "COVERAGE_LOCATION_SUPPORT"
+            },
+            {
+              "message": "覆盖原子映射不得重复，且必须唯一解析到已有原子。",
+              "object_refs": [
+                "P7b"
+              ],
+              "rule_id": "COVERAGE_ATOM_REFERENCE"
+            },
+            {
+              "message": "required_atom_ids必须恰为当前atom_ids中required原子的子集，不得重复、缺漏或增加。",
+              "object_refs": [
+                "P7b"
+              ],
+              "rule_id": "COVERAGE_REQUIRED_SUBSET"
+            },
+            {
+              "message": "每个已映射原子在当前来源位置仍需有范围和SHA有效的supports证据。",
+              "object_refs": [
+                "P7b",
+                "A3d"
+              ],
+              "rule_id": "COVERAGE_LOCATION_SUPPORT"
+            },
+            {
+              "message": "A display scope references an unknown atom.",
+              "object_refs": [
+                "Q2z",
+                "A3d"
+              ],
+              "rule_id": "PLAN_MAPPING"
+            },
+            {
+              "message": "A canonical placement must fully display every independently reviewed explanation atom in this note and section; another related atom cannot replace it.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "PLAN_CANONICAL"
+            },
+            {
+              "message": "Every semantic link requires nonempty display text and resolves by concept ID to exactly one valid canonical placement.",
+              "object_refs": [
+                "Q6z",
+                "C2f"
+              ],
+              "rule_id": "PLAN_LINK_TARGET"
+            },
+            {
+              "message": "The nonempty independent required atom identity set must exactly equal IR.required, with no duplicates.",
+              "object_refs": [],
+              "rule_id": "EXPECTED_REQUIRED"
+            },
+            {
+              "message": "Every expected atom must correspond to exactly one IR atom.",
+              "object_refs": [
+                "A3d"
+              ],
+              "rule_id": "EXPECTED_ATOM"
+            },
+            {
+              "message": "This independent canonical explanation requires its nonempty, distinct, concept-related atom set to be fully displayed at this exact note and section.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "EXPECTED_CANONICAL"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "d892d76a361abf06ea5a6199880d9a4cfce315fcb4bfcfdd1d002569d7282eda",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "short-support",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "425c31f3011542e3632bc14b1c904c37b7b38b450f9bb6b6f041ec30f5ec02f6",
+          "issues": [
+            {
+              "message": "Evidence ID, source Span, UTF8 byte range and excerpt SHA256 must exactly match the independently reviewed evidence.",
+              "object_refs": [
+                "E5a"
+              ],
+              "rule_id": "EXPECTED_EVIDENCE"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "5f93c68f4bfe0d6dc4445b2c07d0c12194b3a972847697befd7581b69701fed0",
+          "producer": "fixture",
+          "resolved_targets": [
+            {
+              "concept_id": "C2f",
+              "heading": "定义与比较",
+              "note_id": "N4u",
+              "output_path": "笔记/甲容器.md",
+              "section_id": "H2j"
+            },
+            {
+              "concept_id": "C6h",
+              "heading": "定义与条件",
+              "note_id": "N8v",
+              "output_path": "笔记/乙容器.md",
+              "section_id": "H6n"
+            }
+          ],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "hidden-text",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 4,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [
+            {
+              "message": "plain-text-v1 display fields cannot contain raw HTML/comments, Obsidian hidden comments, unregistered wiki/Markdown links or images, email autolinks or unsupported control characters.",
+              "object_refs": [
+                "Q2z"
+              ],
+              "rule_id": "PLAN_TEXT_SYNTAX"
+            },
+            {
+              "message": "A canonical placement must fully display every independently reviewed explanation atom in this note and section; another related atom cannot replace it.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "PLAN_CANONICAL"
+            },
+            {
+              "message": "Every semantic link requires nonempty display text and resolves by concept ID to exactly one valid canonical placement.",
+              "object_refs": [
+                "Q6z",
+                "C2f"
+              ],
+              "rule_id": "PLAN_LINK_TARGET"
+            },
+            {
+              "message": "A required atom has no complete display of its content and every qualifier in any single scope.",
+              "object_refs": [
+                "A3d"
+              ],
+              "rule_id": "PLAN_REQUIRED"
+            },
+            {
+              "message": "This independent canonical explanation requires its nonempty, distinct, concept-related atom set to be fully displayed at this exact note and section.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "EXPECTED_CANONICAL"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "9f853ff1766385b724853be4284eed2eaeee52298e39062e2bb5ab41c5173a13",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "raw-wiki",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 4,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [
+            {
+              "message": "plain-text-v1 display fields cannot contain raw HTML/comments, Obsidian hidden comments, unregistered wiki/Markdown links or images, email autolinks or unsupported control characters.",
+              "object_refs": [
+                "Q2z"
+              ],
+              "rule_id": "PLAN_TEXT_SYNTAX"
+            },
+            {
+              "message": "A canonical placement must fully display every independently reviewed explanation atom in this note and section; another related atom cannot replace it.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "PLAN_CANONICAL"
+            },
+            {
+              "message": "Every semantic link requires nonempty display text and resolves by concept ID to exactly one valid canonical placement.",
+              "object_refs": [
+                "Q6z",
+                "C2f"
+              ],
+              "rule_id": "PLAN_LINK_TARGET"
+            },
+            {
+              "message": "A required atom has no complete display of its content and every qualifier in any single scope.",
+              "object_refs": [
+                "A3d"
+              ],
+              "rule_id": "PLAN_REQUIRED"
+            },
+            {
+              "message": "This independent canonical explanation requires its nonempty, distinct, concept-related atom set to be fully displayed at this exact note and section.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "EXPECTED_CANONICAL"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "4b777f86798b6a675916abd16190167bf31126b8fbe9ce31744bce02abaa9e51",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "moved-definition",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 2,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [
+            {
+              "message": "A canonical placement must fully display every independently reviewed explanation atom in this note and section; another related atom cannot replace it.",
+              "object_refs": [
+                "C6h",
+                "N8v",
+                "H6n"
+              ],
+              "rule_id": "PLAN_CANONICAL"
+            },
+            {
+              "message": "Every semantic link requires nonempty display text and resolves by concept ID to exactly one valid canonical placement.",
+              "object_refs": [
+                "Q2z",
+                "C6h"
+              ],
+              "rule_id": "PLAN_LINK_TARGET"
+            },
+            {
+              "message": "This independent canonical explanation requires its nonempty, distinct, concept-related atom set to be fully displayed at this exact note and section.",
+              "object_refs": [
+                "C6h",
+                "N8v",
+                "H6n"
+              ],
+              "rule_id": "EXPECTED_CANONICAL"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "c4124e2a91d88168017e128a6b8e5deded3871a2f28661a383559fca65a30ec2",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "optional-html",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "knowledge": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "note_plan": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 5,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "6bdff84b3f0692b921f58784c1394394270a91bb2a44ec641ac1af30bfaed801",
+          "issues": [
+            {
+              "message": "原子正文和每个已声明条件、单位或例外必须为非空明文。",
+              "object_refs": [
+                "Optional1"
+              ],
+              "rule_id": "KNOWLEDGE_ATOM_CONTENT"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "3eef6df1ae4eb75c757b345bdd5a111466455dc36ceb1efc1cdd15257c9c5572",
+          "producer": "fixture",
+          "resolved_targets": [
+            {
+              "concept_id": "C2f",
+              "heading": "定义与比较",
+              "note_id": "N4u",
+              "output_path": "笔记/甲容器.md",
+              "section_id": "H2j"
+            },
+            {
+              "concept_id": "C6h",
+              "heading": "定义与条件",
+              "note_id": "N8v",
+              "output_path": "笔记/乙容器.md",
+              "section_id": "H6n"
+            }
+          ],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "stale-ir-bytes",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "8282f4a59ac7e133fef9ad2fb7738d3e23b927eec9fe55f631439d7989aaca7c",
+          "issues": [
+            {
+              "message": "The plan must bind the current IR revision and SHA256 of the complete raw ir.json bytes.",
+              "object_refs": [],
+              "rule_id": "PLAN_IR_BINDING"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "source-mismatch",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "expected": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "note_plan": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 2,
+              "status": "failed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [
+            {
+              "message": "原始/规范SHA或解析规则版本与实际来源不符。",
+              "object_refs": [
+                "S4m",
+                "V8r"
+              ],
+              "rule_id": "SOURCE_CONTRACT"
+            },
+            {
+              "message": "Span类型、顺序、位置、行号、指纹或解析状态不符实际分段。",
+              "object_refs": [
+                "S4m",
+                "V8r"
+              ],
+              "rule_id": "SOURCE_CONTRACT"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "future-version",
+        "repetition": 0,
+        "exit_code": 2,
+        "stderr": "CASE_UNSUPPORTED_SCHEMA：fixture只支持Schema 1；没有迁移输入。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": null
+      },
+      {
+        "case": "unsafe-input",
+        "repetition": 0,
+        "exit_code": 2,
+        "stderr": "CASE_INVALID_JSON：case.json不符合严格fixture JSON契约：unknown field `ir_path`, expected one of `schema_version`, `producer`, `case_id`, `sources`, `ir_file`, `note_plan_file`, `expected_file` at line 166 column 11\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": null
+      },
+      {
+        "case": "unsafe-output",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 3,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [
+            {
+              "message": "A note output must be an ordinary Windows-safe relative Markdown path using forward slashes, without unsupported wiki address control characters #[]^.",
+              "object_refs": [
+                "N4u",
+                "笔记/甲#歧义.md"
+              ],
+              "rule_id": "PLAN_PATH"
+            },
+            {
+              "message": "A canonical placement must fully display every independently reviewed explanation atom in this note and section; another related atom cannot replace it.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "PLAN_CANONICAL"
+            },
+            {
+              "message": "Every semantic link requires nonempty display text and resolves by concept ID to exactly one valid canonical placement.",
+              "object_refs": [
+                "Q6z",
+                "C2f"
+              ],
+              "rule_id": "PLAN_LINK_TARGET"
+            },
+            {
+              "message": "This independent canonical explanation requires its nonempty, distinct, concept-related atom set to be fully displayed at this exact note and section.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "EXPECTED_CANONICAL"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "29ff725747554d69eeaa1aa57e8ebd2c1e474c5226c0c7d9ee59c5bdb860708c",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      }
+    ]
+  },
+  "independent_final_code_review": {
+    "root": "D:\\Noetome\\target\\.artifacts\\B02-T02-final-fix-review-8a63284049",
+    "binary_sha256": "f8f999862738b451de60ef3b49faf7178fa1559fde66f7b511c80ed8c7050bcb",
+    "source_binary_sha256_after": "f8f999862738b451de60ef3b49faf7178fa1559fde66f7b511c80ed8c7050bcb",
+    "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+    "current_baseline_byte_identity_asserted": true,
+    "calls": 51,
+    "negative_mutations": 49,
+    "positive_cases": 2,
+    "all_as_expected": true,
+    "all_read_only": true,
+    "all_expected_unchanged": true,
+    "results": [
+      {
+        "name": "baseline",
+        "exit_code": 0,
+        "passed": true,
+        "rules": [],
+        "required_rule": null,
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "short-support-prefix",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_EVIDENCE"
+        ],
+        "required_rule": "EXPECTED_EVIDENCE",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "canonical-definition-moved",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET"
+        ],
+        "required_rule": "PLAN_CANONICAL",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "canonical-definition-hidden-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET",
+          "PLAN_REQUIRED",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "canonical-definition-hidden-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET",
+          "PLAN_REQUIRED",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "note-title-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_HEADING",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "note-title-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_HEADING",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "note-title-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_HEADING",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "section-heading-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_HEADING",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "section-heading-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_HEADING",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "section-heading-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_HEADING",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "paragraph-text-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET",
+          "PLAN_REQUIRED",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "paragraph-text-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET",
+          "PLAN_REQUIRED",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "paragraph-text-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET",
+          "PLAN_REQUIRED",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "list-text-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "list-text-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "list-text-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-content-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_REQUIRED",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-content-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_REQUIRED",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-content-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_REQUIRED",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-label-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-label-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-label-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-missing-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-missing-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-missing-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "column-label-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "column-label-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "column-label-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "paragraph-link-text-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_LINK",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "paragraph-link-text-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_LINK",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "paragraph-link-text-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_LINK",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "list-link-text-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "list-link-text-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "list-link-text-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-link-text-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-link-text-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "table-link-text-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_TABLE",
+          "PLAN_LINK_TARGET",
+          "PLAN_TEXT_SYNTAX"
+        ],
+        "required_rule": "PLAN_TEXT_SYNTAX",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "output-path-hash",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET",
+          "PLAN_PATH"
+        ],
+        "required_rule": "PLAN_PATH",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "output-path-bracket-open",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET",
+          "PLAN_PATH"
+        ],
+        "required_rule": "PLAN_PATH",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "output-path-bracket-close",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET",
+          "PLAN_PATH"
+        ],
+        "required_rule": "PLAN_PATH",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "output-path-caret",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET",
+          "PLAN_PATH"
+        ],
+        "required_rule": "PLAN_PATH",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "concept-name-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "KNOWLEDGE_CONCEPT"
+        ],
+        "required_rule": "KNOWLEDGE_CONCEPT",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "concept-name-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "KNOWLEDGE_CONCEPT"
+        ],
+        "required_rule": "KNOWLEDGE_CONCEPT",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "concept-name-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "KNOWLEDGE_CONCEPT"
+        ],
+        "required_rule": "KNOWLEDGE_CONCEPT",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "concept-alias-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "KNOWLEDGE_CONCEPT"
+        ],
+        "required_rule": "KNOWLEDGE_CONCEPT",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "concept-alias-wiki",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "KNOWLEDGE_CONCEPT"
+        ],
+        "required_rule": "KNOWLEDGE_CONCEPT",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "concept-alias-obsidian-comment",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "KNOWLEDGE_CONCEPT"
+        ],
+        "required_rule": "KNOWLEDGE_CONCEPT",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "unused-optional-atom-content-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "KNOWLEDGE_ATOM_CONTENT"
+        ],
+        "required_rule": "KNOWLEDGE_ATOM_CONTENT",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "unused-optional-atom-qualifier-html",
+        "exit_code": 3,
+        "passed": false,
+        "rules": [
+          "KNOWLEDGE_ATOM_CONTENT"
+        ],
+        "required_rule": "KNOWLEDGE_ATOM_CONTENT",
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      },
+      {
+        "name": "optional-mathematics-positive",
+        "exit_code": 0,
+        "passed": true,
+        "rules": [],
+        "required_rule": null,
+        "rule_observed": true,
+        "expected_unchanged": true,
+        "read_only": true,
+        "as_expected": true
+      }
+    ]
+  },
+  "independent_schema": {
+    "validator": "jsonschema",
+    "validator_version": "4.23.0",
+    "draft": "2020-12",
+    "schema_sha256": "386e8117fd451c22dac0ee8dabcedbb1bfc047a5270cb34675843d6ea87853d9",
+    "schema_valid": true,
+    "accepted_packages": [
+      "case.json",
+      "ir.json",
+      "note-plan.json",
+      "expected.json"
+    ],
+    "rejected_mutations": [
+      "case.json:future-version",
+      "case.json:non-fixture-producer",
+      "case.json:unknown-field",
+      "case.json:missing-producer",
+      "ir.json:future-version",
+      "ir.json:non-fixture-producer",
+      "ir.json:unknown-field",
+      "ir.json:missing-producer",
+      "note-plan.json:future-version",
+      "note-plan.json:non-fixture-producer",
+      "note-plan.json:unknown-field",
+      "note-plan.json:missing-producer",
+      "expected.json:future-version",
+      "expected.json:non-fixture-producer",
+      "expected.json:unknown-field",
+      "expected.json:missing-producer",
+      "case.json:invalid-path-../ir.json",
+      "case.json:invalid-path-/ir.json",
+      "case.json:invalid-path-C:/ir.json",
+      "case.json:invalid-path-CON.json",
+      "case.json:invalid-path-sub\\ir.json",
+      "case.json:invalid-path-ir.txt",
+      "ir.json:negative-revision",
+      "ir.json:invalid-id",
+      "ir.json:invalid-sha",
+      "ir.json:missing-nullable",
+      "note-plan.json:unknown-node-kind",
+      "note-plan.json:invalid-output-suffix",
+      "expected.json:missing-evidence",
+      "expected.json:missing-canonical-atoms",
+      "expected.json:empty-canonical-atoms"
+    ],
+    "semantic_validation": "not_run_by_this_tool"
+  },
+  "historical_false_positive_reports": [
+    {
+      "name": "canonical-without-definition-report.json",
+      "report_sha256": "3acef85cbe38ca3f06c9f0ac597cb5b681d729d071243682284241f7de86b922",
+      "passed": true,
+      "expected_sha256": "f7b2d14cc91efcd1eb461920520c684b9bebc4ba61152783d53cb0bc802c9afd",
+      "checks": {
+        "coverage": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "expected": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "knowledge": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "note_plan": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "rendering": {
+          "issue_count": 0,
+          "status": "not_run"
+        },
+        "scientific_quality": {
+          "issue_count": 0,
+          "status": "not_run"
+        },
+        "sources": {
+          "issue_count": 0,
+          "status": "passed"
+        }
+      }
+    },
+    {
+      "name": "paragraph-hidden-comment-report.json",
+      "report_sha256": "dce1172cc41937fc8dba838b65a7b90e815c7b053add744bbc5a121feb9b7af3",
+      "passed": true,
+      "expected_sha256": "f7b2d14cc91efcd1eb461920520c684b9bebc4ba61152783d53cb0bc802c9afd",
+      "checks": {
+        "coverage": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "expected": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "knowledge": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "note_plan": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "rendering": {
+          "issue_count": 0,
+          "status": "not_run"
+        },
+        "scientific_quality": {
+          "issue_count": 0,
+          "status": "not_run"
+        },
+        "sources": {
+          "issue_count": 0,
+          "status": "passed"
+        }
+      }
+    },
+    {
+      "name": "paragraph-raw-html-report.json",
+      "report_sha256": "11aa6001f0f742c970ff7a0bd058c76cfb05ba2835403f704470ac3b026782b3",
+      "passed": true,
+      "expected_sha256": "f7b2d14cc91efcd1eb461920520c684b9bebc4ba61152783d53cb0bc802c9afd",
+      "checks": {
+        "coverage": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "expected": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "knowledge": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "note_plan": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "rendering": {
+          "issue_count": 0,
+          "status": "not_run"
+        },
+        "scientific_quality": {
+          "issue_count": 0,
+          "status": "not_run"
+        },
+        "sources": {
+          "issue_count": 0,
+          "status": "passed"
+        }
+      }
+    },
+    {
+      "name": "paragraph-raw-wiki-report.json",
+      "report_sha256": "45defe37478686c809bbc037d44dcc6208c54a339db7325bbcadcafc12dee8cb",
+      "passed": true,
+      "expected_sha256": "f7b2d14cc91efcd1eb461920520c684b9bebc4ba61152783d53cb0bc802c9afd",
+      "checks": {
+        "coverage": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "expected": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "knowledge": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "note_plan": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "rendering": {
+          "issue_count": 0,
+          "status": "not_run"
+        },
+        "scientific_quality": {
+          "issue_count": 0,
+          "status": "not_run"
+        },
+        "sources": {
+          "issue_count": 0,
+          "status": "passed"
+        }
+      }
+    },
+    {
+      "name": "support-only-prefix-report.json",
+      "report_sha256": "49d7d6223d680989f3cc2830b28e8f3702208ff499b622988263bd25dffeafd9",
+      "passed": true,
+      "expected_sha256": "f7b2d14cc91efcd1eb461920520c684b9bebc4ba61152783d53cb0bc802c9afd",
+      "checks": {
+        "coverage": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "expected": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "knowledge": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "note_plan": {
+          "issue_count": 0,
+          "status": "passed"
+        },
+        "rendering": {
+          "issue_count": 0,
+          "status": "not_run"
+        },
+        "scientific_quality": {
+          "issue_count": 0,
+          "status": "not_run"
+        },
+        "sources": {
+          "issue_count": 0,
+          "status": "passed"
+        }
+      }
+    }
+  ],
+  "historical_loader_audit": {
+    "artifact_dir": "D:\\Noetome\\target\\.artifacts\\audit-input-6c3a7bd7bb",
+    "binary_before_sha256": "fdcda46b2b072cf280290aeda414905bf318fb4a499d56e96de6b46462f19d8a",
+    "binary_after_sha256": "fdcda46b2b072cf280290aeda414905bf318fb4a499d56e96de6b46462f19d8a",
+    "case_count": 50,
+    "rejected_count": 50,
+    "panics": [],
+    "unexpected_success": [],
+    "changed_inputs": [],
+    "sentinel_sha256": "88fd25edd193f4e98c49b56e4928bcbf58ca0f3df157bef66583c66cfe34cfc1",
+    "results": [
+      {
+        "name": "missing-ir-option-duplicate_of_span_id",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：missing field `duplicate_of_span_id` at line 178 column 5\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "missing-expected-option-duplicate_of_span_id",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：expected.json不符合严格fixture JSON契约：missing field `duplicate_of_span_id` at line 72 column 5\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "missing-ir-option-exclusion_reason",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：missing field `exclusion_reason` at line 178 column 5\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "missing-expected-option-exclusion_reason",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：expected.json不符合严格fixture JSON契约：missing field `exclusion_reason` at line 72 column 5\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "unknown-node",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：note-plan.json不符合严格fixture JSON契约：unknown field `typo_field`, expected one of `node_id`, `representation_origin`, `atom_ids`, `text`, `links` at line 34 column 12\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "unknown-cell",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：note-plan.json不符合严格fixture JSON契约：unknown field `typo_field`, expected one of `kind`, `text`, `atom_ids`, `links` at line 109 column 11\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "unknown-item",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：note-plan.json不符合严格fixture JSON契约：unknown field `typo_field`, expected one of `item_id`, `text`, `atom_ids`, `links` at line 156 column 11\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "revision-type--1",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid value: integer `-1`, expected u64 at line 4 column 16\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "revision-type-18446744073709551616",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid type: floating point `1.8446744073709552e+19`, expected u64 at line 4 column 34\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "revision-type-1_5",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid type: floating point `1.5`, expected u64 at line 4 column 17\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "revision-type-None",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid type: null, expected u64 at line 4 column 18\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "revision-type-1",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid type: string \"1\", expected u64 at line 4 column 17\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "excerpt_start_byte-18446744073709551615",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "COVERAGE_LOCATION_SUPPORT",
+          "EXPECTED_ATOM",
+          "KNOWLEDGE_EVIDENCE_RANGE"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "excerpt_start_byte-18446744073709551616",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid type: floating point `1.8446744073709552e+19`, expected usize at line 44 column 48\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "excerpt_start_byte--1",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid value: integer `-1`, expected usize at line 44 column 30\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "excerpt_start_byte-None",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid type: null, expected usize at line 44 column 32\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "excerpt_start_byte-1_5",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid type: floating point `1.5`, expected usize at line 44 column 31\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "excerpt_end_byte-18446744073709551615",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "COVERAGE_LOCATION_SUPPORT",
+          "EXPECTED_ATOM",
+          "KNOWLEDGE_EVIDENCE_RANGE"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "excerpt_end_byte-18446744073709551616",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid type: floating point `1.8446744073709552e+19`, expected usize at line 45 column 46\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "excerpt_end_byte--1",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid value: integer `-1`, expected usize at line 45 column 28\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "excerpt_end_byte-None",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid type: null, expected usize at line 45 column 30\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "excerpt_end_byte-1_5",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：ir.json不符合严格fixture JSON契约：invalid type: floating point `1.5`, expected usize at line 45 column 29\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "span-usize-max",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "SOURCE_CONTRACT"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "empty-plan-notes",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "EXPECTED_LINK",
+          "EXPECTED_TABLE",
+          "PLAN_CANONICAL",
+          "PLAN_REQUIRED",
+          "PLAN_STRUCTURE"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "empty-plan-placements",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "EXPECTED_CANONICAL",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "empty-ir-concepts",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "KNOWLEDGE_ATOM_REFERENCE",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "empty-ir-evidence",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "COVERAGE_LOCATION_SUPPORT",
+          "EXPECTED_ATOM",
+          "KNOWLEDGE_ATOM_REFERENCE",
+          "KNOWLEDGE_ATOM_SUPPORT"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "empty-ir-atoms",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "COVERAGE_ATOM_REFERENCE",
+          "COVERAGE_LOCATION_SUPPORT",
+          "COVERAGE_REQUIRED_SUBSET",
+          "EXPECTED_ATOM",
+          "EXPECTED_REQUIRED",
+          "PLAN_CANONICAL",
+          "PLAN_LINK_TARGET",
+          "PLAN_MAPPING"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "empty-ir-coverage",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "COVERAGE_RECORD_COUNT",
+          "EXPECTED_COVERAGE"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "empty-ir-sources",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "COVERAGE_LOCATION_SUPPORT",
+          "KNOWLEDGE_ATOM_SUPPORT",
+          "KNOWLEDGE_EVIDENCE_SPAN",
+          "KNOWLEDGE_SOURCE_BINDING"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "path-c69006ec5b24",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_PATH：IR、计划和独立预期须声明.json普通相对文件。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "path-9c2a6445ed35",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_PATH：fixture只接受互不碰撞的普通相对文件路径。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "path-57751c5ce85d",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_PATH：fixture只接受互不碰撞的普通相对文件路径。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "path-b34b55bcbb70",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_PATH：fixture只接受互不碰撞的普通相对文件路径。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "path-c86f4cd10897",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_PATH：fixture只接受互不碰撞的普通相对文件路径。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "path-ab127ffac8c6",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_PATH：fixture只接受互不碰撞的普通相对文件路径。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "path-f0e97d4a5a0b",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_PATH：fixture只接受互不碰撞的普通相对文件路径。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "path-558d5038b388",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_PATH：fixture只接受互不碰撞的普通相对文件路径。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "path-0b8fdd2f1012",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_PATH：IR、计划和独立预期须声明.json普通相对文件。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "path-8369b33da4b3",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_PATH：fixture只接受互不碰撞的普通相对文件路径。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "empty-sources",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_MANIFEST：fixture需要有效固定case身份和1至32份明确来源。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "unknown-expected",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：expected.json不符合严格fixture JSON契约：unknown field `schema_verison`, expected one of `schema_version`, `producer`, `case_id`, `required_atoms`, `coverage`, `canonical_placements`, `required_links`, `tables` at line 289 column 18\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "future-expected",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_UNSUPPORTED_SCHEMA：fixture只支持Schema 1；没有迁移输入。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "null-node-atom-ids",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：note-plan.json不符合严格fixture JSON契约：invalid type: null, expected a sequence at line 31 column 12\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "unknown-node-tag",
+        "exit_code": 2,
+        "passed": null,
+        "issue_rules": [],
+        "stderr": "CASE_INVALID_JSON：note-plan.json不符合严格fixture JSON契约：unknown variant `paragraph_typo`, expected one of `paragraph`, `ordered_list`, `table` at line 24 column 38\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "empty-rows",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "EXPECTED_TABLE",
+          "PLAN_MAPPING",
+          "PLAN_REQUIRED",
+          "PLAN_TABLE"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "empty-columns",
+        "exit_code": 3,
+        "passed": false,
+        "issue_rules": [
+          "EXPECTED_TABLE",
+          "PLAN_TABLE"
+        ],
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "duplicate-schema-key",
+        "exit_code": 2,
+        "stderr": "CASE_INVALID_JSON：case.json不符合严格fixture JSON契约：duplicate field `schema_version` at line 2 column 39\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "duplicate-node-tag",
+        "exit_code": 2,
+        "stderr": "CASE_INVALID_JSON：note-plan.json不符合严格fixture JSON契约：duplicate field `kind` at line 24 column 41\n",
+        "files_unchanged": true,
+        "panicked": false
+      },
+      {
+        "name": "duplicate-node-field",
+        "exit_code": 2,
+        "stderr": "CASE_INVALID_JSON：note-plan.json不符合严格fixture JSON契约：duplicate field `text` at line 33 column 12\n",
+        "files_unchanged": true,
+        "panicked": false
+      }
+    ]
+  },
+  "limitations": [
+    "No model/API/PDF/OCR input",
+    "No rendered files or Vault",
+    "No installed GUI rebuild in B02-T02",
+    "No arbitrary concurrent replacement/crash guarantees",
+    "Independent expected remains fixture-author reviewed, not scientific truth"
+  ],
+  "initial_normal_integrity_smoke": {
+    "schema_version": 1,
+    "scope": "Self-authored fixture, read-only contracts; no rendering, publication, models or scientific-quality assessment",
+    "cli_path": "D:\\Noetome\\.artifacts\\fixture-cli-ecc57a90-21b7-47e3-9008-44af3d4c09d5\\noetome.exe",
+    "cli_sha256": "f8f999862738b451de60ef3b49faf7178fa1559fde66f7b511c80ed8c7050bcb",
+    "test_root": "D:\\Noetome\\.artifacts\\fixture-smoke-2079974b-8c53-406c-8095-5bed40d902c2",
+    "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+    "calls": 13,
+    "input_bytes_mtime_attributes_and_directories_unchanged": true,
+    "external_sentinel_unchanged": true,
+    "results": [
+      {
+        "case": "valid",
+        "repetition": 0,
+        "exit_code": 0,
+        "stderr": "",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [],
+          "passed": true,
+          "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+          "producer": "fixture",
+          "resolved_targets": [
+            {
+              "concept_id": "C2f",
+              "heading": "定义与比较",
+              "note_id": "N4u",
+              "output_path": "笔记/甲容器.md",
+              "section_id": "H2j"
+            },
+            {
+              "concept_id": "C6h",
+              "heading": "定义与条件",
+              "note_id": "N8v",
+              "output_path": "笔记/乙容器.md",
+              "section_id": "H6n"
+            }
+          ],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "valid",
+        "repetition": 1,
+        "exit_code": 0,
+        "stderr": "",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [],
+          "passed": true,
+          "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+          "producer": "fixture",
+          "resolved_targets": [
+            {
+              "concept_id": "C2f",
+              "heading": "定义与比较",
+              "note_id": "N4u",
+              "output_path": "笔记/甲容器.md",
+              "section_id": "H2j"
+            },
+            {
+              "concept_id": "C6h",
+              "heading": "定义与条件",
+              "note_id": "N8v",
+              "output_path": "笔记/乙容器.md",
+              "section_id": "H6n"
+            }
+          ],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "missing-required-atom",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 6,
+              "status": "failed"
+            },
+            "expected": {
+              "issue_count": 3,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 3,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 3,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 3,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "dc831f1e17ba9dc0d359b8d3358b843c6833e80a41bd4b17904c0c279f382c2d",
+          "issues": [
+            {
+              "message": "覆盖原子映射不得重复，且必须唯一解析到已有原子。",
+              "object_refs": [
+                "P3a"
+              ],
+              "rule_id": "COVERAGE_ATOM_REFERENCE"
+            },
+            {
+              "message": "required_atom_ids必须恰为当前atom_ids中required原子的子集，不得重复、缺漏或增加。",
+              "object_refs": [
+                "P3a"
+              ],
+              "rule_id": "COVERAGE_REQUIRED_SUBSET"
+            },
+            {
+              "message": "每个已映射原子在当前来源位置仍需有范围和SHA有效的supports证据。",
+              "object_refs": [
+                "P3a",
+                "A3d"
+              ],
+              "rule_id": "COVERAGE_LOCATION_SUPPORT"
+            },
+            {
+              "message": "覆盖原子映射不得重复，且必须唯一解析到已有原子。",
+              "object_refs": [
+                "P7b"
+              ],
+              "rule_id": "COVERAGE_ATOM_REFERENCE"
+            },
+            {
+              "message": "required_atom_ids必须恰为当前atom_ids中required原子的子集，不得重复、缺漏或增加。",
+              "object_refs": [
+                "P7b"
+              ],
+              "rule_id": "COVERAGE_REQUIRED_SUBSET"
+            },
+            {
+              "message": "每个已映射原子在当前来源位置仍需有范围和SHA有效的supports证据。",
+              "object_refs": [
+                "P7b",
+                "A3d"
+              ],
+              "rule_id": "COVERAGE_LOCATION_SUPPORT"
+            },
+            {
+              "message": "A display scope references an unknown atom.",
+              "object_refs": [
+                "Q2z",
+                "A3d"
+              ],
+              "rule_id": "PLAN_MAPPING"
+            },
+            {
+              "message": "A canonical placement must fully display every independently reviewed explanation atom in this note and section; another related atom cannot replace it.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "PLAN_CANONICAL"
+            },
+            {
+              "message": "Every semantic link requires nonempty display text and resolves by concept ID to exactly one valid canonical placement.",
+              "object_refs": [
+                "Q6z",
+                "C2f"
+              ],
+              "rule_id": "PLAN_LINK_TARGET"
+            },
+            {
+              "message": "The nonempty independent required atom identity set must exactly equal IR.required, with no duplicates.",
+              "object_refs": [],
+              "rule_id": "EXPECTED_REQUIRED"
+            },
+            {
+              "message": "Every expected atom must correspond to exactly one IR atom.",
+              "object_refs": [
+                "A3d"
+              ],
+              "rule_id": "EXPECTED_ATOM"
+            },
+            {
+              "message": "This independent canonical explanation requires its nonempty, distinct, concept-related atom set to be fully displayed at this exact note and section.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "EXPECTED_CANONICAL"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "d892d76a361abf06ea5a6199880d9a4cfce315fcb4bfcfdd1d002569d7282eda",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "short-support",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "425c31f3011542e3632bc14b1c904c37b7b38b450f9bb6b6f041ec30f5ec02f6",
+          "issues": [
+            {
+              "message": "Evidence ID, source Span, UTF8 byte range and excerpt SHA256 must exactly match the independently reviewed evidence.",
+              "object_refs": [
+                "E5a"
+              ],
+              "rule_id": "EXPECTED_EVIDENCE"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "5f93c68f4bfe0d6dc4445b2c07d0c12194b3a972847697befd7581b69701fed0",
+          "producer": "fixture",
+          "resolved_targets": [
+            {
+              "concept_id": "C2f",
+              "heading": "定义与比较",
+              "note_id": "N4u",
+              "output_path": "笔记/甲容器.md",
+              "section_id": "H2j"
+            },
+            {
+              "concept_id": "C6h",
+              "heading": "定义与条件",
+              "note_id": "N8v",
+              "output_path": "笔记/乙容器.md",
+              "section_id": "H6n"
+            }
+          ],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "hidden-text",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 4,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [
+            {
+              "message": "plain-text-v1 display fields cannot contain raw HTML/comments, Obsidian hidden comments, unregistered wiki/Markdown links or images, email autolinks or unsupported control characters.",
+              "object_refs": [
+                "Q2z"
+              ],
+              "rule_id": "PLAN_TEXT_SYNTAX"
+            },
+            {
+              "message": "A canonical placement must fully display every independently reviewed explanation atom in this note and section; another related atom cannot replace it.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "PLAN_CANONICAL"
+            },
+            {
+              "message": "Every semantic link requires nonempty display text and resolves by concept ID to exactly one valid canonical placement.",
+              "object_refs": [
+                "Q6z",
+                "C2f"
+              ],
+              "rule_id": "PLAN_LINK_TARGET"
+            },
+            {
+              "message": "A required atom has no complete display of its content and every qualifier in any single scope.",
+              "object_refs": [
+                "A3d"
+              ],
+              "rule_id": "PLAN_REQUIRED"
+            },
+            {
+              "message": "This independent canonical explanation requires its nonempty, distinct, concept-related atom set to be fully displayed at this exact note and section.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "EXPECTED_CANONICAL"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "9f853ff1766385b724853be4284eed2eaeee52298e39062e2bb5ab41c5173a13",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "raw-wiki",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 4,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [
+            {
+              "message": "plain-text-v1 display fields cannot contain raw HTML/comments, Obsidian hidden comments, unregistered wiki/Markdown links or images, email autolinks or unsupported control characters.",
+              "object_refs": [
+                "Q2z"
+              ],
+              "rule_id": "PLAN_TEXT_SYNTAX"
+            },
+            {
+              "message": "A canonical placement must fully display every independently reviewed explanation atom in this note and section; another related atom cannot replace it.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "PLAN_CANONICAL"
+            },
+            {
+              "message": "Every semantic link requires nonempty display text and resolves by concept ID to exactly one valid canonical placement.",
+              "object_refs": [
+                "Q6z",
+                "C2f"
+              ],
+              "rule_id": "PLAN_LINK_TARGET"
+            },
+            {
+              "message": "A required atom has no complete display of its content and every qualifier in any single scope.",
+              "object_refs": [
+                "A3d"
+              ],
+              "rule_id": "PLAN_REQUIRED"
+            },
+            {
+              "message": "This independent canonical explanation requires its nonempty, distinct, concept-related atom set to be fully displayed at this exact note and section.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "EXPECTED_CANONICAL"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "4b777f86798b6a675916abd16190167bf31126b8fbe9ce31744bce02abaa9e51",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "moved-definition",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 2,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [
+            {
+              "message": "A canonical placement must fully display every independently reviewed explanation atom in this note and section; another related atom cannot replace it.",
+              "object_refs": [
+                "C6h",
+                "N8v",
+                "H6n"
+              ],
+              "rule_id": "PLAN_CANONICAL"
+            },
+            {
+              "message": "Every semantic link requires nonempty display text and resolves by concept ID to exactly one valid canonical placement.",
+              "object_refs": [
+                "Q2z",
+                "C6h"
+              ],
+              "rule_id": "PLAN_LINK_TARGET"
+            },
+            {
+              "message": "This independent canonical explanation requires its nonempty, distinct, concept-related atom set to be fully displayed at this exact note and section.",
+              "object_refs": [
+                "C6h",
+                "N8v",
+                "H6n"
+              ],
+              "rule_id": "EXPECTED_CANONICAL"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "c4124e2a91d88168017e128a6b8e5deded3871a2f28661a383559fca65a30ec2",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "optional-html",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "knowledge": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "note_plan": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 5,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "6bdff84b3f0692b921f58784c1394394270a91bb2a44ec641ac1af30bfaed801",
+          "issues": [
+            {
+              "message": "原子正文和每个已声明条件、单位或例外必须为非空明文。",
+              "object_refs": [
+                "Optional1"
+              ],
+              "rule_id": "KNOWLEDGE_ATOM_CONTENT"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "3eef6df1ae4eb75c757b345bdd5a111466455dc36ceb1efc1cdd15257c9c5572",
+          "producer": "fixture",
+          "resolved_targets": [
+            {
+              "concept_id": "C2f",
+              "heading": "定义与比较",
+              "note_id": "N4u",
+              "output_path": "笔记/甲容器.md",
+              "section_id": "H2j"
+            },
+            {
+              "concept_id": "C6h",
+              "heading": "定义与条件",
+              "note_id": "N8v",
+              "output_path": "笔记/乙容器.md",
+              "section_id": "H6n"
+            }
+          ],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "stale-ir-bytes",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "8282f4a59ac7e133fef9ad2fb7738d3e23b927eec9fe55f631439d7989aaca7c",
+          "issues": [
+            {
+              "message": "The plan must bind the current IR revision and SHA256 of the complete raw ir.json bytes.",
+              "object_refs": [],
+              "rule_id": "PLAN_IR_BINDING"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "source-mismatch",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "expected": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "note_plan": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 2,
+              "status": "failed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [
+            {
+              "message": "原始/规范SHA或解析规则版本与实际来源不符。",
+              "object_refs": [
+                "S4m",
+                "V8r"
+              ],
+              "rule_id": "SOURCE_CONTRACT"
+            },
+            {
+              "message": "Span类型、顺序、位置、行号、指纹或解析状态不符实际分段。",
+              "object_refs": [
+                "S4m",
+                "V8r"
+              ],
+              "rule_id": "SOURCE_CONTRACT"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      },
+      {
+        "case": "future-version",
+        "repetition": 0,
+        "exit_code": 2,
+        "stderr": "CASE_UNSUPPORTED_SCHEMA：fixture只支持Schema 1；没有迁移输入。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": null
+      },
+      {
+        "case": "unsafe-input",
+        "repetition": 0,
+        "exit_code": 2,
+        "stderr": "CASE_INVALID_JSON：case.json不符合严格fixture JSON契约：unknown field `ir_path`, expected one of `schema_version`, `producer`, `case_id`, `sources`, `ir_file`, `note_plan_file`, `expected_file` at line 166 column 11\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": null
+      },
+      {
+        "case": "unsafe-output",
+        "repetition": 0,
+        "exit_code": 3,
+        "stderr": "CASE_VERIFICATION_FAILED：fixture契约校验未通过，请查看JSON中的规则和对象；没有发布产物。\n",
+        "input_unchanged": true,
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "report": {
+          "case_id": "C7k",
+          "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+          "checks": {
+            "coverage": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "expected": {
+              "issue_count": 1,
+              "status": "failed"
+            },
+            "knowledge": {
+              "issue_count": 0,
+              "status": "passed"
+            },
+            "note_plan": {
+              "issue_count": 3,
+              "status": "failed"
+            },
+            "rendering": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "scientific_quality": {
+              "issue_count": 0,
+              "status": "not_run"
+            },
+            "sources": {
+              "issue_count": 0,
+              "status": "passed"
+            }
+          },
+          "counts": {
+            "atoms": 4,
+            "nodes": 4,
+            "notes": 2,
+            "required_atoms": 4,
+            "sources": 2,
+            "spans": 12
+          },
+          "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+          "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+          "issues": [
+            {
+              "message": "A note output must be an ordinary Windows-safe relative Markdown path using forward slashes, without unsupported wiki address control characters #[]^.",
+              "object_refs": [
+                "N4u",
+                "笔记/甲#歧义.md"
+              ],
+              "rule_id": "PLAN_PATH"
+            },
+            {
+              "message": "A canonical placement must fully display every independently reviewed explanation atom in this note and section; another related atom cannot replace it.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "PLAN_CANONICAL"
+            },
+            {
+              "message": "Every semantic link requires nonempty display text and resolves by concept ID to exactly one valid canonical placement.",
+              "object_refs": [
+                "Q6z",
+                "C2f"
+              ],
+              "rule_id": "PLAN_LINK_TARGET"
+            },
+            {
+              "message": "This independent canonical explanation requires its nonempty, distinct, concept-related atom set to be fully displayed at this exact note and section.",
+              "object_refs": [
+                "C2f",
+                "N4u",
+                "H2j"
+              ],
+              "rule_id": "EXPECTED_CANONICAL"
+            }
+          ],
+          "passed": false,
+          "plan_sha256": "29ff725747554d69eeaa1aa57e8ebd2c1e474c5226c0c7d9ee59c5bdb860708c",
+          "producer": "fixture",
+          "resolved_targets": [],
+          "schema_version": 1,
+          "validator_version": "fixture-contracts-v1"
+        }
+      }
+    ]
+  },
+  "initial_prepared_cli": {
+    "Path": "D:\\Noetome\\.artifacts\\fixture-cli-ecc57a90-21b7-47e3-9008-44af3d4c09d5\\noetome.exe",
+    "SHA256": "f8f999862738b451de60ef3b49faf7178fa1559fde66f7b511c80ed8c7050bcb",
+    "IntegrityLabel": "",
+    "IntegrityRid": 8192,
+    "SourcePath": "D:\\Noetome\\target\\debug\\noetome.exe",
+    "SourceSHA256": "f8f999862738b451de60ef3b49faf7178fa1559fde66f7b511c80ed8c7050bcb",
+    "Reused": false
+  },
+  "artifact_scope_note": "Workspace and standalone builds have different binary fingerprints; each execution records its own SHA. Final standalone CLI was copied byte-for-byte with Medium integrity and rechecked with all 13 independent smoke calls."
+}

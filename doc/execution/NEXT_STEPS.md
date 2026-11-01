@@ -1,6 +1,6 @@
 # 近期开发步骤
 
-真实状态以[任务账本](../../dev-log/tasks.json)及[当前状态](../../dev-log/STATUS.md)为准。B01 CLI/空项目/可安装桌面骨架和B01A托盘/关闭设置已验收；历史分别保留在[B01步骤](B01_STEPS.md)及[B01A步骤](B01A_STEPS.md)。本批B02保持以下三项任务；文本来源实现方案见[B02-T01方案](B02-T01_PLAN.md)，实际验收证据见[B02-T01记录](../validation/B02-T01.md)。计划不代替账本状态，fixture校验和临时Vault仍按依赖顺序启动。
+真实状态以[任务账本](../../dev-log/tasks.json)及[当前状态](../../dev-log/STATUS.md)为准。B01 CLI/空项目/可安装桌面骨架和B01A托盘/关闭设置已验收；历史分别保留在[B01步骤](B01_STEPS.md)及[B01A步骤](B01A_STEPS.md)。本批B02保持以下三项任务；文本来源证据见[B02-T01记录](../validation/B02-T01.md)，只读fixture实现见[B02-T02方案](B02-T02_PLAN.md)及[B02-T02验收](../validation/B02-T02.md)。计划不代替账本状态；下一入口为B02-T03临时Vault编译，仍须独立start和实际验收。
 
 目标是用单份明确选取的文本和自造fixture完成本地确定性闭环。依据为[路线](ROADMAP.md)、[最小数据契约](../technical/DATA_CONTRACTS.md)、[测试标准](../standards/TESTING.md)及[决策基线](../requirements/DECISIONS.md)。fixture、fake和自动抽取的能力证明必须分开。
 

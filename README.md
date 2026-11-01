@@ -2,7 +2,7 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目与来源业务尚未接入桌面；PDF解析、模型抽取和知识生成仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、明确标为fixture的IR与NotePlan契约校验，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖和独立预期。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture业务尚未接入桌面；PDF解析、模型抽取和笔记生成仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
 
 ## 开始开发
 
@@ -24,7 +24,7 @@ cargo run -p noetome-cli --locked --offline -- --help
 cargo run -p noetome-cli --locked --offline -- --version
 ```
 
-构建后的 Windows 程序位于 `target/debug/noetome.exe`，当前版本为 `0.1.0`。无参数、`--help`（`-h`）显示帮助；`--version`（`-V`）显示版本。帮助和版本每次仅接受一个选项；项目和来源命令用法见下文。未知或多余参数返回退出码 `2`、在标准错误输出 `CLI_INVALID_ARGUMENT` 和用法提示。输出失败返回 `1` 和 `CLI_OUTPUT_ERROR`。帮助、版本及无效语法不创建项目、数据库或用户配置。
+构建后的 Windows 程序位于 `target/debug/noetome.exe`，当前版本为 `0.1.0`。无参数、`--help`（`-h`）显示帮助；`--version`（`-V`）显示版本。帮助和版本每次仅接受一个选项；项目、来源和case命令用法见下文。未知或多余参数返回退出码 `2`、在标准错误输出 `CLI_INVALID_ARGUMENT` 和用法提示。输出失败返回 `1` 和 `CLI_OUTPUT_ERROR`。帮助、版本及无效语法不创建项目、数据库或用户配置。
 
 本机 Low 完整性构建树中的原生 C 编译器无法使用默认系统临时目录时，可改用 `./scripts/cargo_local.ps1`，其余参数与 Cargo 相同。脚本为编译选择 `target/compiler-temp`，结束后恢复调用者的临时目录环境，不修改权限。
 
@@ -85,6 +85,31 @@ Windows 路径、文件占用、真实初始化中断与恢复测试及命令输
 升级和导入使用独占`.noetome-writing`目录保存候选、旧配置/数据库备份及操作说明，发布前后重读验证。普通失败只有在身份和字节仍属于本次写入时才恢复与清理；中断、未知内容、替换或无法确认的清理保留现场并报告未完成。遇该目录时公开inspect拒绝，不能把事务残留显示为成功。目前未提供自动恢复入口，也未承诺任意外部并发或任意断电下多文件原子提交。
 
 本机Windows完整来源验证、失败保护、独立SQLite/快照检查和正常完整性CLI副本实测见[B02-T01验证记录](doc/validation/B02-T01.md)。可用`scripts/verify_text_source.py`按记录中的命令在另一个全新测试根复现；输入全部自造，不调用模型，不生成IR或笔记。
+
+## 只读 fixture 契约校验
+
+仓库提供[自造案例](fixtures/text-compare-v1/README.md)：两个虚构容器、12个完整来源Span、4个必要原子、两份计划笔记和比较表。来源、IR、计划与独立expected均明确声明`producer=fixture`，不会被当成模型抽取结果。
+
+```powershell
+./target/debug/noetome.exe case --help
+./target/debug/noetome.exe case verify './fixtures/text-compare-v1'
+```
+
+`case verify`保持只读，不创建项目、数据库、Run、Release或Vault。case根内四份JSON和明确选取的1至32个MD/TXT必须是普通文件；每份JSON最多4 MiB，总输入最多64 MiB。相对路径拒绝越界、Windows保留名、大小写复用及reparse/junction；输入版本、必填字段、未知字段、枚举和范围严格校验。
+
+成功stdout为纯JSON、退出0；语义问题输出`passed=false`、问题规则及对象引用，stderr为`CASE_VERIFICATION_FAILED`、退出3。无法解码或输入契约无效时stdout为空、退出2，文件访问或变化阻断退出3。JSON分别列出`sources`、`coverage`、`knowledge`、`note_plan`、`expected`；`rendering`和`scientific_quality`保持`not_run`，不能用契约通过宣称笔记已经生成或科学质量合格。
+
+校验器核对原始/规范SHA与完整分段，Span和覆盖记录双向一一对应，重复记录保留自身证据并拒绝环；必要原子具有有效支持片段和已审阅状态。计划固定完整IR字节指纹，每个显示scope须完整包含原子内容、条件与单位；规范位置须实际显示独立expected要求的定义原子。expected锁住必要原子、完整证据定位/指纹、覆盖、规范位置、必需链接和比较表，不能靠计划中ID齐全蒙混过关。显示文本使用明文与结构化链接，拒绝原始wiki链接、HTML和隐藏注释；正常数学明文`x < 2`和`[1,2]`可用。
+
+结构Schema见[fixture-v1.json](schemas/fixture-v1.json)，跨文件语义由Rust继续校验。开发时可在独立工具目录安装`jsonschema==4.23.0`，运行以下检查；它不是产品或离线Cargo测试的依赖，不修改全局Python环境。
+
+```powershell
+python -m pip install --target '<新工具目录>' jsonschema==4.23.0
+python scripts/check_fixture_schema.py --module-dir '<工具目录>'
+python fixtures/text-compare-v1/audit_fixture.py
+```
+
+实际Windows CLI、故障保护、审查回归和Schema验收见[B02-T02验证记录](doc/validation/B02-T02.md)。下一任务才将已校验fixture编译到全新的临时Vault。
 
 ## 构建桌面应用
 
