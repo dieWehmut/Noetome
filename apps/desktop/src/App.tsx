@@ -126,7 +126,7 @@ export default function App() {
               <div className="section-title-row"><h2>当前可以做什么</h2><span>从小而可靠的能力开始</span></div>
               <div className="capability-grid">
                 <section className="capability-card"><div className="card-icon"><Icon name="terminal" /></div><span className="small-badge available">已接入</span><h3>查看帮助与版本</h3><p>通过本地组件查看 CLI 用法与版本，确认桌面应用连接状态。</p><button className="text-button" onClick={() => setPage("runtime")}>打开运行检查<Icon name="arrow" /></button></section>
-                <section className="capability-card"><div className="card-icon muted"><Icon name="book" /></div><span className="small-badge pending">尚未实现</span><h3>建立学习项目</h3><p>项目初始化和资料导入仍在开发中。当前没有已创建的项目。</p><span className="quiet-note">完成后将在这里开始</span></section>
+                <section className="capability-card"><div className="card-icon muted"><Icon name="book" /></div><span className="small-badge pending">尚未接入</span><h3>建立学习项目</h3><p>桌面项目入口尚未接入，资料导入仍在开发中。当前工作台尚未载入项目。</p><span className="quiet-note">完成后将在这里开始</span></section>
               </div>
 
               <section className="scope-note"><span className="scope-marker" aria-hidden="true" /><p>这是一份桌面应用骨架。资料解析、知识抽取与笔记生成尚未就绪。</p></section>
@@ -161,7 +161,7 @@ export default function App() {
             <>
               <div className="page-heading"><div><p className="eyebrow">ABOUT NOETOME</p><h1>让知识，有迹可循。</h1><p className="page-description">一款为个人学科学习而构建的知识编译器。</p></div></div>
               <section className="about-card"><img src="/app-icon.png" alt="Noetome 应用图标" className="about-icon" /><div><span className="section-kicker">PERSONAL KNOWLEDGE COMPILER</span><h2>Noetome</h2><p>从电子资料到 Obsidian 知识库，<br />让整理有依据，让理解能延续。</p><span className="about-version">{runtimeInfo ? `桌面应用 ${runtimeInfo.app_version}` : "早期桌面版 · 版本尚未读取"}</span></div></section>
-              <div className="about-details"><section><h2>现在的 Noetome</h2><p>当前提供本地桌面界面，以及帮助、版本和运行连接检查。项目初始化、资料导入和知识生成尚未实现。</p><button className="text-button" onClick={() => setPage("runtime")}>查看实际运行信息<Icon name="arrow" /></button></section><section><h2>在你的电脑上</h2><p>应用界面和图标随安装包提供，不需要外部字体或网页服务。当前操作读取本地运行信息，不发起模型请求。</p><span className="local-label"><span />本地运行</span></section></div>
+              <div className="about-details"><section><h2>现在的 Noetome</h2><p>当前桌面提供帮助、版本和运行连接检查。空项目初始化与只读检查通过 CLI 使用，尚未接入桌面；资料导入和知识生成仍在开发中。</p><button className="text-button" onClick={() => setPage("runtime")}>查看实际运行信息<Icon name="arrow" /></button></section><section><h2>在你的电脑上</h2><p>应用界面和图标随安装包提供，不需要外部字体或网页服务。当前操作读取本地运行信息，不发起模型请求。</p><span className="local-label"><span />本地运行</span></section></div>
             </>
           )}
         </main>
