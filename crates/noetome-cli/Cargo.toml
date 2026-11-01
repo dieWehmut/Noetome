@@ -7,6 +7,7 @@ publish = false
 description = "Noetome 命令行入口"
 
 [dependencies]
+noetome-sidecar-platform = { path = "../noetome-sidecar-platform" }
 rusqlite = { version = "=0.41.1", features = ["bundled"] }
 same-file = "=1.0.6"
 serde = { version = "=1.0.229", features = ["derive"] }
@@ -19,6 +20,11 @@ uuid = { version = "=1.29.0", features = ["v4"] }
 [[bin]]
 name = "noetome"
 path = "src/main.rs"
+
+[[test]]
+name = "sidecar"
+path = "tests/sidecar.rs"
+harness = false
 
 [lints]
 workspace = true

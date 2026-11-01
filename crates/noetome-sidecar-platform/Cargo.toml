@@ -1,0 +1,14 @@
+[package]
+name = "noetome-sidecar-platform"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+description = "Reviewed Windows process and file platform boundary for the bounded sidecar"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "=0.61.2", default-features = false, features = ["Win32_Foundation", "Win32_Security", "Win32_Storage_FileSystem", "Win32_System_Diagnostics_Debug", "Win32_System_ErrorReporting", "Win32_System_IO", "Win32_System_JobObjects", "Win32_System_Memory", "Win32_System_Pipes", "Win32_System_Threading"] }
+
+[lints.rust]
+unsafe_code = "deny"
+unsafe_op_in_unsafe_fn = "deny"
