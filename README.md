@@ -49,7 +49,11 @@ npm run desktop:build
 
 `desktop:build` 自动先检查并构建前端，再生成 Windows x64 的 NSIS 安装包，输出目录为 `target/release/bundle/nsis/`。安装模式为当前用户。安装后的窗口、快捷方式、版本、运行检查和重启都须实际验证，再把安装位置、包指纹和结果写入 `doc/validation/B01-T03.md`；生成安装包本身不能代替安装验收。
 
-本地可手动运行安装包，或在 PowerShell 中执行 `./scripts/install_desktop.ps1` 安装到当前用户的 `Programs/Noetome`。当前构建、安装尝试及剩余问题见 [B01-T03 验证记录](doc/validation/B01-T03.md)。
+在 PowerShell 中执行 `./scripts/install_desktop.ps1`，脚本先将安装包复制到当前用户的 `NoetomeBuilds/windows` 目录并校验字节和文件完整性标签，再安装到 `Programs/Noetome`。只准备手动安装包时运行 `./scripts/prepare_desktop_installer.ps1`，使用它返回的路径。
+
+本机仓库带有继承的 Windows Low 完整性标签，直接运行 `target/` 中的程序会因无法写入 AppData 而失败。交付脚本通过普通文件复制生成正常输出位置的副本，不修改仓库权限或进程令牌；如果输出位置仍为 Low，会明确拒绝。已经打开的旧安装器可能占用原安装包，须关闭后再覆盖该包，或通过 `-InstallerPath` 选择独立生成的新包。实际安装位置、指纹和测试见 [B01-T03 验证记录](doc/validation/B01-T03.md)。
+
+启动时应用检查自身数据目录是否可写，失败会显示原生错误弹窗、稳定错误码和具体路径；可写时追加启动错误日志。桌面接口没有新增文件或对话框 IPC 权限。
 
 开发调试使用 `npm run desktop:dev`。只预览前端使用 `npm run web:dev`；前端预览没有 Tauri Rust 运行时，点击运行检查会显示连接失败。
 

@@ -70,7 +70,7 @@ cargo run -p noetome-cli -- --version
 2. 将整个 `sample/` 加入Git忽略，只读取用户明确指定的图标。生成ICO和所需PNG，保存原图指纹与派生资源清单；不更改原图，构建不依赖本地样例目录。
 3. 新建Tauri入口与React TypeScript工作台，前端只调用共享Rust帮助、版本和运行信息接口；不执行任意shell参数、不提前启用文件或模型插件。
 4. 提供工作台、运行检查和关于页面。项目和资料功能保持真实空状态，连接和执行结果来自实际调用，错误显示稳定错误码。检查导航、焦点和较窄窗口下的可用性。
-5. 生成Windows当前用户模式的NSIS安装包，本地实际安装。核对安装文件、版本、应用图标、快捷方式和包指纹；安装后运行窗口、导航、Rust通信、帮助和版本，并验证关闭与重启。
+5. 生成Windows当前用户模式的NSIS安装包，使用 `scripts/prepare_desktop_installer.ps1` 在正常用户目录准备字节一致且标签可用的副本，再通过 `scripts/install_desktop.ps1` 本地实际安装。核对安装文件、版本、应用图标、快捷方式和包指纹；安装后运行窗口、导航、Rust通信、帮助和版本，并验证关闭与重启。启动目录或窗口失败必须给出用户可见错误。
 6. 执行前端类型检查、Rust格式/构建/测试、CLI回归和开发日志检查，记录实际安装测试及未运行项，小步提交并推送。
 
 **验收**：指定图标进入应用及安装资源；`sample/` 被忽略、原图不变；Windows当前用户安装与安装后运行检查真实通过；未实现能力显示清楚。
@@ -84,6 +84,7 @@ npm ci
 npm run web:check
 npm run web:build
 npm run desktop:build
+./scripts/install_desktop.ps1
 cargo fmt --all --check
 cargo check --workspace --locked
 cargo test --workspace --locked
