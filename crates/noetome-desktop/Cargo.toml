@@ -14,6 +14,9 @@ noetome-cli = { path = "../noetome-cli" }
 serde = { version = "=1.0.229", features = ["derive"] }
 tauri = { version = "=2.12.5", features = [] }
 
+[target.'cfg(target_os = "windows")'.dependencies]
+rfd = { version = "=0.17.2", default-features = false }
+
 [features]
 custom-protocol = ["tauri/custom-protocol"]
 
