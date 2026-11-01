@@ -2,6 +2,11 @@ use std::ffi::OsString;
 use std::path::PathBuf;
 
 pub mod project;
+pub mod source;
+mod source_model;
+mod source_schema;
+mod source_write;
+pub mod text;
 
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const INVALID_ARGUMENT: &str = "CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。";
@@ -10,15 +15,19 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
 
 用法：noetome [选项]
       noetome project <init|inspect> <路径>
+      noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
+      noetome source inspect <项目路径> <import-id>
 
 当前支持：
   -h, --help       显示帮助
   -V, --version    显示版本
   project init <路径>     在尚不存在的目录初始化空项目
   project inspect <路径>  只读检查已有项目
+  source import           登记单份UTF8文本、不可变版本及完整位置清单
+  source inspect          只读核对导入记录和真实快照
 
-不传参数时显示帮助；project --help 查看项目命令说明。
-当前支持空项目初始化和只读检查，资料导入与知识生成尚未实现。
+不传参数时显示帮助；project --help 或 source --help 查看命令说明。
+当前只登记明确选取的MD/TXT来源；知识抽取、PDF解析及笔记生成尚未实现。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -30,7 +39,22 @@ init：父目录须已存在，目标目录须尚不存在；不覆盖已有内�
 inspect：核对配置和 SQLite 状态，只读查看，不执行迁移或修复。
 路径可含中文和空格；以 - 开头的路径前加 -- 分隔符。
 初始化中断时保留未确认内容；请检查旧目录并选择新目录重试。
-当前项目为空，不代表资料已导入或知识已生成。
+init建立空项目；来源登记通过source import，知识生成尚未实现。
+";
+
+pub const SOURCE_HELP: &str = "Noetome 文本来源命令
+
+用法：noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
+      noetome source inspect <项目路径> <import-id>
+
+import：只读选取的UTF8文件（最多64 MiB），保存原始/规范快照、来源版本和完整Span清单。
+初次写入将Schema1空项目升级为Schema2，保持项目身份和创建时间；已有版本保留。
+相同内容提示复用；显式source-id只在该来源身份内换版，不按名称合并。
+inspect：使用导入结果的import-id只读核对持久记录、快照与位置，不迁移或修复。
+结果为JSON；知识状态仍为pending。UTF8无效或文件未能完整读取会记录真实失败并返回非零。
+以 - 开头的路径可在动词后加 -- 分隔符；中文和空格路径须作为单独参数。
+项目写入中断保留标记、候选与备份；请检查旧目录并用新的测试项目重试。
+PDF、模型抽取、IR和Vault输出尚未实现。
 ";
 
 #[derive(Debug)]
@@ -40,10 +64,23 @@ pub enum CliCommand {
     Version,
     ProjectInit(PathBuf),
     ProjectInspect(PathBuf),
+    SourceHelp,
+    SourceImport {
+        project: PathBuf,
+        file: PathBuf,
+        source_id: Option<String>,
+    },
+    SourceInspect {
+        project: PathBuf,
+        import_id: String,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
 pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.first().is_some_and(|arg| arg == "source") {
+        return source_command(&args[1..]);
+    }
     match args {
         [] => Ok(CliCommand::Help),
         [arg] if arg == "--help" || arg == "-h" => Ok(CliCommand::Help),
@@ -62,6 +99,52 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
         [project, verb, path] if project == "project" => project_command(verb, path, false),
         [project, verb, separator, path] if project == "project" && separator == "--" => {
             project_command(verb, path, true)
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+fn source_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.is_empty()
+        || matches!(args,[help] if help == "--help" || help == "-h")
+        || matches!(args,[verb,help] if (verb == "import" || verb == "inspect") && (help == "--help" || help == "-h"))
+    {
+        return Ok(CliCommand::SourceHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    let (tail, separator) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid_path = |path: &OsString| {
+        !path.is_empty() && (separator || path.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [project, file] if verb == "import" && valid_path(project) && valid_path(file) => {
+            Ok(CliCommand::SourceImport {
+                project: project.into(),
+                file: file.into(),
+                source_id: None,
+            })
+        }
+        [project, file, flag, id]
+            if verb == "import"
+                && flag == "--source-id"
+                && valid_path(project)
+                && valid_path(file) =>
+        {
+            Ok(CliCommand::SourceImport {
+                project: project.into(),
+                file: file.into(),
+                source_id: Some(id.to_str().ok_or(INVALID_ARGUMENT)?.into()),
+            })
+        }
+        [project, id] if verb == "inspect" && valid_path(project) => {
+            Ok(CliCommand::SourceInspect {
+                project: project.into(),
+                import_id: id.to_str().ok_or(INVALID_ARGUMENT)?.into(),
+            })
         }
         _ => Err(INVALID_ARGUMENT),
     }

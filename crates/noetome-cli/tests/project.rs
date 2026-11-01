@@ -534,7 +534,7 @@ fn malformed_configs_are_rejected_without_repair_or_path_escape() {
                 write_config(&project, &config);
             }
             "future-schema" => {
-                config["schema_version"] = json!(2);
+                config["schema_version"] = json!(99);
                 write_config(&project, &config);
             }
             "unknown-state" => {
@@ -596,12 +596,46 @@ fn corrupt_or_mismatched_databases_are_rejected_without_migration() {
                     .unwrap();
                 }
                 "application-id" => db.pragma_update(None, "application_id", 0).unwrap(),
-                "database-schema" => db.pragma_update(None, "user_version", 2).unwrap(),
+                "database-schema" => db.pragma_update(None, "user_version", 99).unwrap(),
                 _ => unreachable!(),
             }
         }
         sandbox.rejects_preserving("inspect", &project, 2, code);
     }
+}
+
+#[test]
+fn supported_schema_versions_must_match_without_migration() {
+    let sandbox = Sandbox::new();
+    for (config_version, database_version) in [(1, 2), (2, 1)] {
+        let project = sandbox
+            .root
+            .join(format!("schema-{config_version}-{database_version}"));
+        let mut config = sandbox.init(&project);
+        config["schema_version"] = json!(config_version);
+        write_config(&project, &config);
+        let db = Connection::open(project.join("project.sqlite")).unwrap();
+        db.pragma_update(None, "user_version", database_version)
+            .unwrap();
+        db.close().unwrap();
+        sandbox.rejects_preserving("inspect", &project, 2, "PROJECT_SCHEMA_MISMATCH");
+    }
+}
+
+#[test]
+fn writing_directory_is_incomplete_and_preserved_by_public_inspection() {
+    let sandbox = Sandbox::new();
+    let project = sandbox.root.join("pending-source-write");
+    sandbox.init(&project);
+    let marker = project.join(".noetome-writing");
+    fs::create_dir(&marker).unwrap();
+    fs::write(
+        marker.join("retained-backup"),
+        b"preserve pending write backup",
+    )
+    .unwrap();
+    sandbox.rejects_preserving("inspect", &project, 3, "PROJECT_INCOMPLETE");
+    sandbox.rejects_preserving("init", &project, 3, "PROJECT_INCOMPLETE");
 }
 
 #[test]

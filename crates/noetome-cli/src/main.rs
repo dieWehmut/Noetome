@@ -2,7 +2,7 @@ use std::env;
 use std::io::{self, Write};
 use std::process::ExitCode;
 
-use noetome_cli::{CliCommand, project};
+use noetome_cli::{CliCommand, project, source};
 
 fn main() -> ExitCode {
     // Keep OS-native arguments: malformed Unicode is an input error, not a panic.
@@ -15,9 +15,11 @@ fn main() -> ExitCode {
         }
     };
 
+    let mut result_code = 0;
     let output = match command {
         CliCommand::Help => noetome_cli::HELP.to_owned(),
         CliCommand::ProjectHelp => noetome_cli::PROJECT_HELP.to_owned(),
+        CliCommand::SourceHelp => noetome_cli::SOURCE_HELP.to_owned(),
         CliCommand::Version => format!("noetome {}\n", noetome_cli::VERSION),
         CliCommand::ProjectInit(path) => match project::initialize(&path) {
             Ok(info) => project_summary("空项目初始化完成", &path, &info),
@@ -33,18 +35,49 @@ fn main() -> ExitCode {
                 return ExitCode::from(error.exit_code());
             }
         },
+        CliCommand::SourceImport {
+            project,
+            file,
+            source_id,
+        } => match source::import(&project, &file, source_id.as_deref()) {
+            Ok(output) => {
+                if let Some((code, message)) = output.failure {
+                    let _ = writeln!(io::stderr().lock(), "{code}：{message}");
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
+        CliCommand::SourceInspect { project, import_id } => {
+            match source::inspect(&project, &import_id) {
+                Ok(output) => output,
+                Err(error) => {
+                    let _ = writeln!(io::stderr().lock(), "{error}");
+                    return ExitCode::from(error.exit_code());
+                }
+            }
+        }
     };
 
     if io::stdout().lock().write_all(output.as_bytes()).is_err() {
         let _ = writeln!(io::stderr().lock(), "CLI_OUTPUT_ERROR：无法写入标准输出。");
         return ExitCode::from(1);
     }
-    ExitCode::SUCCESS
+    ExitCode::from(result_code)
 }
 
 fn project_summary(result: &str, path: &std::path::Path, info: &project::ProjectInfo) -> String {
+    let stage = if info.schema_version == 1 {
+        "空项目，尚未登记来源"
+    } else {
+        "来源登记Schema；此状态只表示项目建立完成"
+    };
     format!(
-        "结果：{result}\n项目：{}\n项目 ID：{}\nSchema 版本：{}\n创建时间：{}\n状态：{}（空项目）\n配置：{}\n数据库：{}\n资料导入与知识生成尚未实现。\n",
+        "结果：{result}\n项目：{}\n项目 ID：{}\nSchema 版本：{}\n创建时间：{}\n状态：{}（{stage}）\n配置：{}\n数据库：{}\n单份UTF8文本通过source import登记；知识抽取和笔记生成尚未实现。\n",
         path.display(),
         info.project_id,
         info.schema_version,

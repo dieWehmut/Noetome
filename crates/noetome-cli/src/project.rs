@@ -1,4 +1,4 @@
-//! Minimal empty-project persistence. No sources, runs, or knowledge are created.
+//! Project initialization and read-only Schema 1/2 validation.
 use std::fmt;
 use std::fs::{self, Metadata, OpenOptions};
 use std::io::{self, Write};
@@ -11,9 +11,10 @@ use uuid::Uuid;
 
 pub const SCHEMA_VERSION: u32 = 1;
 pub const APPLICATION_ID: u32 = 0x4e4f4554;
-const CONFIG: &str = "project.json";
-const DATABASE: &str = "project.sqlite";
+pub(crate) const CONFIG: &str = "project.json";
+pub(crate) const DATABASE: &str = "project.sqlite";
 const MARKER: &str = ".noetome-initializing";
+const WRITE_DIRECTORY: &str = ".noetome-writing";
 const CONFIG_STAGE: &str = ".project.json.initializing";
 const DATABASE_STAGE: &str = ".project.sqlite.initializing";
 const SCHEMA: &str = "
@@ -52,31 +53,31 @@ impl ProjectError {
     pub fn exit_code(&self) -> u8 {
         self.exit_code
     }
-    fn new(code: &'static str, exit_code: u8, message: impl Into<String>) -> Self {
+    pub(crate) fn new(code: &'static str, exit_code: u8, message: impl Into<String>) -> Self {
         Self {
             code,
             exit_code,
             message: message.into(),
         }
     }
-    fn io(path: &Path, error: impl fmt::Display) -> Self {
+    pub(crate) fn io(path: &Path, error: impl fmt::Display) -> Self {
         Self::new(
             "PROJECT_IO_ERROR",
             3,
             format!("无法访问项目路径 {}：{error}", path.display()),
         )
     }
-    fn incomplete(path: &Path) -> Self {
+    pub(crate) fn incomplete(path: &Path) -> Self {
         Self::new(
             "PROJECT_INCOMPLETE",
             3,
             format!(
-                "项目初始化未完成：{}。现有文件保留原样；请检查该目录，并选择一个新的目录重新初始化。",
+                "项目初始化或来源写入未完成：{}。现有标记、候选及备份保留原样；请先检查中断现场，不要自动移除残留或覆盖。需要重新建立项目时请选择新的目录。",
                 path.display()
             ),
         )
     }
-    fn unsafe_path(path: &Path) -> Self {
+    pub(crate) fn unsafe_path(path: &Path) -> Self {
         Self::new(
             "PROJECT_UNSAFE_PATH",
             2,
@@ -86,14 +87,14 @@ impl ProjectError {
             ),
         )
     }
-    fn invalid_database(error: impl fmt::Display) -> Self {
+    pub(crate) fn invalid_database(error: impl fmt::Display) -> Self {
         Self::new(
             "PROJECT_INVALID_DATABASE",
             2,
             format!("项目数据库无效：{error}；只读检查没有修复或迁移数据库。"),
         )
     }
-    fn database(error: rusqlite::Error) -> Self {
+    pub(crate) fn database(error: rusqlite::Error) -> Self {
         use rusqlite::ErrorCode;
         if let rusqlite::Error::SqliteFailure(ref failure, _) = error {
             if matches!(
@@ -148,7 +149,7 @@ impl fmt::Display for ProjectError {
 }
 impl std::error::Error for ProjectError {}
 
-fn is_link(metadata: &Metadata) -> bool {
+pub(crate) fn is_link(metadata: &Metadata) -> bool {
     if metadata.file_type().is_symlink() {
         return true;
     }
@@ -161,7 +162,7 @@ fn is_link(metadata: &Metadata) -> bool {
     false
 }
 
-fn check_components(path: &Path) -> Result<PathBuf, ProjectError> {
+pub(crate) fn check_components(path: &Path) -> Result<PathBuf, ProjectError> {
     if path.as_os_str().is_empty()
         || path.to_str().is_none()
         || path.components().any(|c| matches!(c, Component::ParentDir))
@@ -246,7 +247,7 @@ fn check_components(path: &Path) -> Result<PathBuf, ProjectError> {
     Ok(absolute)
 }
 
-fn checked_file(path: &Path) -> Result<Metadata, ProjectError> {
+pub(crate) fn checked_file(path: &Path) -> Result<Metadata, ProjectError> {
     let metadata = fs::symlink_metadata(path).map_err(|e| ProjectError::io(path, e))?;
     if is_link(&metadata) || !metadata.is_file() {
         return Err(ProjectError::unsafe_path(path));
@@ -254,7 +255,7 @@ fn checked_file(path: &Path) -> Result<Metadata, ProjectError> {
     Ok(metadata)
 }
 
-fn read_guard(path: &Path) -> Result<fs::File, ProjectError> {
+pub(crate) fn read_guard(path: &Path) -> Result<fs::File, ProjectError> {
     let mut options = OpenOptions::new();
     options.read(true);
     #[cfg(windows)]
@@ -284,7 +285,7 @@ fn read_guard(path: &Path) -> Result<fs::File, ProjectError> {
     Ok(file)
 }
 
-fn exists(path: &Path) -> Result<bool, ProjectError> {
+pub(crate) fn exists(path: &Path) -> Result<bool, ProjectError> {
     match fs::symlink_metadata(path) {
         Ok(_) => Ok(true),
         Err(e) if e.kind() == io::ErrorKind::NotFound => Ok(false),
@@ -293,12 +294,39 @@ fn exists(path: &Path) -> Result<bool, ProjectError> {
 }
 
 fn is_incomplete(path: &Path) -> Result<bool, ProjectError> {
+    is_incomplete_for(path, None)
+}
+
+fn is_incomplete_for(
+    path: &Path,
+    writer: Option<&same_file::Handle>,
+) -> Result<bool, ProjectError> {
     for name in [MARKER, CONFIG_STAGE, DATABASE_STAGE] {
         if exists(&path.join(name))? {
             return Ok(true);
         }
     }
-    Ok(exists(&path.join(CONFIG))? != exists(&path.join(DATABASE))?)
+    if exists(&path.join(CONFIG))? != exists(&path.join(DATABASE))? {
+        return Ok(true);
+    }
+    let write_directory = path.join(WRITE_DIRECTORY);
+    match writer {
+        None => exists(&write_directory),
+        Some(owner) => {
+            let metadata = match fs::symlink_metadata(&write_directory) {
+                Ok(metadata) => metadata,
+                Err(error) if error.kind() == io::ErrorKind::NotFound => return Ok(true),
+                Err(error) => return Err(ProjectError::io(&write_directory, error)),
+            };
+            if is_link(&metadata) || !metadata.is_dir() {
+                return Ok(true);
+            }
+            check_components(&write_directory)?;
+            let current = same_file::Handle::from_path(&write_directory)
+                .map_err(|error| ProjectError::io(&write_directory, error))?;
+            Ok(current != *owner)
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -578,7 +606,7 @@ fn initialize_with(
     }
 }
 
-fn reject_sidecars(root: &Path) -> Result<(), ProjectError> {
+pub(crate) fn reject_sidecars(root: &Path) -> Result<(), ProjectError> {
     for entry in fs::read_dir(root).map_err(|e| ProjectError::io(root, e))? {
         let entry = entry.map_err(|e| ProjectError::io(root, e))?;
         let name = entry.file_name();
@@ -604,13 +632,13 @@ fn reject_sidecars(root: &Path) -> Result<(), ProjectError> {
 }
 
 fn validate_info(info: &ProjectInfo) -> Result<(), ProjectError> {
-    if info.schema_version != SCHEMA_VERSION {
+    if !matches!(info.schema_version, 1 | 2) {
         return Err(ProjectError::new(
             "PROJECT_UNSUPPORTED_SCHEMA",
             2,
             format!(
-                "不支持项目 Schema {}；当前只支持 {}，没有执行迁移。",
-                info.schema_version, SCHEMA_VERSION
+                "不支持项目 Schema {}；当前只支持 1 和 2，没有执行迁移。",
+                info.schema_version
             ),
         ));
     }
@@ -631,19 +659,35 @@ fn validate_info(info: &ProjectInfo) -> Result<(), ProjectError> {
         return Err(ProjectError::new(
             "PROJECT_INVALID_CONFIG",
             2,
-            "项目配置中的 ID、UTC 时间或状态不符合 Schema 1；没有修改配置。",
+            "项目配置中的 ID、UTC 时间或初始化状态无效；没有修改配置。",
         ));
     }
     Ok(())
 }
 
 pub fn inspect(path: &Path) -> Result<ProjectInfo, ProjectError> {
+    inspect_with_writer(path, None)
+}
+
+/// Only the writer that owns this ordinary directory can validate a candidate
+/// during its own publication. Old initialization remnants remain blocking.
+pub(crate) fn inspect_for_writer(
+    path: &Path,
+    marker_handle: &same_file::Handle,
+) -> Result<ProjectInfo, ProjectError> {
+    inspect_with_writer(path, Some(marker_handle))
+}
+
+fn inspect_with_writer(
+    path: &Path,
+    writer: Option<&same_file::Handle>,
+) -> Result<ProjectInfo, ProjectError> {
     let root = check_components(path)?;
     let metadata = fs::symlink_metadata(&root).map_err(|e| ProjectError::io(&root, e))?;
     if !metadata.is_dir() {
         return Err(ProjectError::unsafe_path(&root));
     }
-    if is_incomplete(&root)? {
+    if is_incomplete_for(&root, writer)? {
         return Err(ProjectError::incomplete(&root));
     }
     reject_sidecars(&root)?;
@@ -653,7 +697,7 @@ pub fn inspect(path: &Path) -> Result<ProjectInfo, ProjectError> {
         return Err(ProjectError::new(
             "PROJECT_INVALID_CONFIG",
             2,
-            "项目配置超出 Schema 1 元数据的 64 KiB 上限。",
+            "项目配置超出元数据的 64 KiB 上限。",
         ));
     }
     let _config_read_guard = read_guard(&config_path)?;
@@ -662,7 +706,7 @@ pub fn inspect(path: &Path) -> Result<ProjectInfo, ProjectError> {
         ProjectError::new(
             "PROJECT_INVALID_CONFIG",
             2,
-            format!("项目配置不是有效的 Schema 1 JSON：{e}；没有修改文件。"),
+            format!("项目配置不是有效的 JSON：{e}；没有修改文件。"),
         )
     })?;
     validate_info(&info)?;
@@ -693,11 +737,21 @@ pub fn inspect(path: &Path) -> Result<ProjectInfo, ProjectError> {
     let version: u32 = connection
         .pragma_query_value(None, "user_version", |r| r.get(0))
         .map_err(ProjectError::database)?;
-    if version != SCHEMA_VERSION {
+    if !matches!(version, 1 | 2) {
         return Err(ProjectError::new(
             "PROJECT_UNSUPPORTED_SCHEMA",
             2,
             format!("数据库 Schema 为 {version}，没有执行迁移。"),
+        ));
+    }
+    if version != info.schema_version {
+        return Err(ProjectError::new(
+            "PROJECT_SCHEMA_MISMATCH",
+            2,
+            format!(
+                "配置 Schema {} 与数据库 Schema {version} 不一致；没有迁移或修复。",
+                info.schema_version
+            ),
         ));
     }
     if application_id != APPLICATION_ID {
@@ -715,10 +769,13 @@ pub fn inspect(path: &Path) -> Result<ProjectInfo, ProjectError> {
                 .collect::<rusqlite::Result<Vec<_>>>()
         })
         .map_err(ProjectError::database)?;
-    if tables != [("project_metadata".to_owned(), "table".to_owned())] {
+    if version == 1 && tables != [("project_metadata".to_owned(), "table".to_owned())] {
         return Err(ProjectError::invalid_database(
             "Schema 1 只允许真实的 project_metadata 基础表，没有其他表、视图或触发器",
         ));
+    }
+    if version == 2 {
+        crate::source_schema::validate(&connection)?;
     }
     let columns = connection
         .prepare("PRAGMA table_info(project_metadata)")
@@ -744,9 +801,7 @@ pub fn inspect(path: &Path) -> Result<ProjectInfo, ProjectError> {
     ]
     .map(|(name, kind, not_null, pk)| (name.to_owned(), kind.to_owned(), not_null, pk));
     if columns != expected_columns {
-        return Err(ProjectError::invalid_database(
-            "基础表字段与 Schema 1 不一致",
-        ));
+        return Err(ProjectError::invalid_database("项目基础表字段不一致"));
     }
     let integrity: String = connection
         .pragma_query_value(None, "quick_check", |r| r.get(0))
@@ -763,6 +818,13 @@ pub fn inspect(path: &Path) -> Result<ProjectInfo, ProjectError> {
     let stored = connection.query_row("SELECT project_id, schema_version, created_at, state FROM project_metadata WHERE singleton = 1", [], |r| {
         Ok(ProjectInfo { project_id: r.get(0)?, schema_version: r.get(1)?, created_at: r.get(2)?, state: r.get(3)?, database: DATABASE.to_owned() })
     }).map_err(ProjectError::database)?;
+    if stored.schema_version != info.schema_version {
+        return Err(ProjectError::new(
+            "PROJECT_SCHEMA_MISMATCH",
+            2,
+            "配置与数据库元数据的 Schema 版本不一致；没有迁移或修复。",
+        ));
+    }
     if stored != info {
         return Err(ProjectError::invalid_database(
             "配置与数据库中的项目身份、版本、时间或状态不一致",
@@ -772,6 +834,9 @@ pub fn inspect(path: &Path) -> Result<ProjectInfo, ProjectError> {
         .close()
         .map_err(|(_, e)| ProjectError::database(e))?;
     reject_sidecars(&root)?;
+    if is_incomplete_for(&root, writer)? {
+        return Err(ProjectError::incomplete(&root));
+    }
     let after = checked_file(&database_path)?;
     if before.len() != after.len()
         || before.modified().ok() != after.modified().ok()
@@ -821,6 +886,170 @@ mod tests {
                 (path.file_name().unwrap().into(), fs::read(&path).unwrap())
             })
             .collect()
+    }
+
+    #[test]
+    fn source_schema_two_preserves_project_identity_and_inspection_is_readonly() {
+        let sandbox = Sandbox::new();
+        let root = sandbox.0.join("schema-two");
+        let mut info = initialize(&root).unwrap();
+        info.schema_version = 2;
+        let database = root.join(DATABASE);
+        let mut connection = Connection::open(&database).unwrap();
+        let transaction = connection.transaction().unwrap();
+        transaction
+            .execute_batch("DROP TABLE project_metadata;")
+            .unwrap();
+        transaction
+            .execute_batch(crate::source_schema::SCHEMA)
+            .unwrap();
+        transaction
+            .execute(
+                "INSERT INTO project_metadata(singleton, project_id, schema_version, created_at, state) VALUES (1, ?1, 2, ?2, 'initialized')",
+                params![info.project_id, info.created_at],
+            )
+            .unwrap();
+        transaction.commit().unwrap();
+        connection.close().unwrap();
+        fs::write(root.join(CONFIG), serde_json::to_vec(&info).unwrap()).unwrap();
+        let before = snapshot(&root);
+        assert_eq!(inspect(&root).unwrap(), info);
+        assert_eq!(inspect(&root).unwrap(), info);
+        assert_eq!(snapshot(&root), before);
+    }
+
+    #[test]
+    fn writer_inspection_only_allows_its_own_ordinary_directory() {
+        let sandbox = Sandbox::new();
+        let root = sandbox.0.join("owned-writer");
+        let info = initialize(&root).unwrap();
+        let before = snapshot(&root);
+        let marker = root.join(WRITE_DIRECTORY);
+        fs::create_dir(&marker).unwrap();
+        fs::write(marker.join("candidate"), b"retained candidate").unwrap();
+        let owner = same_file::Handle::from_path(&marker).unwrap();
+        assert_eq!(inspect(&root).unwrap_err().code(), "PROJECT_INCOMPLETE");
+        assert_eq!(inspect_for_writer(&root, &owner).unwrap(), info);
+        for (name, bytes) in &before {
+            assert_eq!(fs::read(root.join(name)).unwrap(), *bytes);
+        }
+        assert_eq!(
+            fs::read(marker.join("candidate")).unwrap(),
+            b"retained candidate"
+        );
+
+        let other = sandbox.0.join("unrelated-writer");
+        fs::create_dir(&other).unwrap();
+        let other_owner = same_file::Handle::from_path(&other).unwrap();
+        assert_eq!(
+            inspect_for_writer(&root, &other_owner).unwrap_err().code(),
+            "PROJECT_INCOMPLETE"
+        );
+        let moved = root.join("retained-original-writer");
+        fs::rename(&marker, &moved).unwrap();
+        fs::create_dir(&marker).unwrap();
+        assert_eq!(
+            inspect_for_writer(&root, &owner).unwrap_err().code(),
+            "PROJECT_INCOMPLETE"
+        );
+        assert_eq!(
+            fs::read(moved.join("candidate")).unwrap(),
+            b"retained candidate"
+        );
+        for (name, bytes) in &before {
+            assert_eq!(fs::read(root.join(name)).unwrap(), *bytes);
+        }
+    }
+
+    #[test]
+    fn writer_inspection_never_ignores_old_initialization_remnants_or_a_file_marker() {
+        let sandbox = Sandbox::new();
+        let root = sandbox.0.join("old-remnants");
+        initialize(&root).unwrap();
+        let marker = root.join(WRITE_DIRECTORY);
+        fs::create_dir(&marker).unwrap();
+        let owner = same_file::Handle::from_path(&marker).unwrap();
+        for name in [MARKER, CONFIG_STAGE, DATABASE_STAGE] {
+            fs::write(root.join(name), b"preserve old initialization remnant").unwrap();
+            assert_eq!(
+                inspect_for_writer(&root, &owner).unwrap_err().code(),
+                "PROJECT_INCOMPLETE"
+            );
+            assert_eq!(
+                fs::read(root.join(name)).unwrap(),
+                b"preserve old initialization remnant"
+            );
+            fs::remove_file(root.join(name)).unwrap();
+        }
+        for name in [CONFIG, DATABASE] {
+            let original = fs::read(root.join(name)).unwrap();
+            fs::remove_file(root.join(name)).unwrap();
+            assert_eq!(
+                inspect_for_writer(&root, &owner).unwrap_err().code(),
+                "PROJECT_INCOMPLETE"
+            );
+            assert!(!root.join(name).exists(), "inspection recreated {name}");
+            fs::write(root.join(name), original).unwrap();
+        }
+        fs::remove_dir(&marker).unwrap();
+        fs::write(&marker, b"not an ordinary directory").unwrap();
+        let file_owner = same_file::Handle::from_path(&marker).unwrap();
+        assert_eq!(
+            inspect_for_writer(&root, &file_owner).unwrap_err().code(),
+            "PROJECT_INCOMPLETE"
+        );
+        assert_eq!(fs::read(&marker).unwrap(), b"not an ordinary directory");
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn writer_inspection_rejects_a_junction_write_directory_without_touching_its_target() {
+        struct JunctionGuard(PathBuf);
+        impl Drop for JunctionGuard {
+            fn drop(&mut self) {
+                fs::remove_dir(&self.0).unwrap();
+            }
+        }
+
+        let sandbox = Sandbox::new();
+        let root = sandbox.0.join("linked-writer");
+        initialize(&root).unwrap();
+        let before = snapshot(&root);
+        let outside = sandbox.0.join("outside-writer");
+        fs::create_dir(&outside).unwrap();
+        fs::write(outside.join("sentinel"), b"preserve outside candidate").unwrap();
+        let marker = root.join(WRITE_DIRECTORY);
+        let dos_path = |path: &Path| {
+            let rendered = path.to_string_lossy();
+            rendered
+                .strip_prefix(r"\\?\")
+                .unwrap_or(&rendered)
+                .to_owned()
+        };
+        let output = Command::new("cmd")
+            .args(["/c", "mklink", "/J"])
+            .arg(dos_path(&marker))
+            .arg(dos_path(&outside))
+            .output()
+            .unwrap();
+        assert!(
+            output.status.success(),
+            "{}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+        let _junction = JunctionGuard(marker.clone());
+        let owner = same_file::Handle::from_path(&outside).unwrap();
+        assert_eq!(
+            inspect_for_writer(&root, &owner).unwrap_err().code(),
+            "PROJECT_INCOMPLETE"
+        );
+        assert_eq!(
+            fs::read(outside.join("sentinel")).unwrap(),
+            b"preserve outside candidate"
+        );
+        for (name, bytes) in &before {
+            assert_eq!(fs::read(root.join(name)).unwrap(), *bytes);
+        }
     }
 
     #[test]
