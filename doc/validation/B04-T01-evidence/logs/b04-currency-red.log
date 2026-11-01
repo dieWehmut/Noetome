@@ -1,0 +1,24 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 16.93s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 1 test
+test model_candidate::tests::currency_policy_is_shared_with_settlement ... FAILED
+
+failures:
+
+---- model_candidate::tests::currency_policy_is_shared_with_settlement stdout ----
+
+thread 'model_candidate::tests::currency_policy_is_shared_with_settlement' (133032) panicked at crates\noetome-cli\src\model_candidate.rs:522:13:
+assertion `left == right` failed: usd
+  left: Ok(Outcome { schema_version: 1, protocol: "noetome-model-single-v1", request_id: "10000000-0000-4000-8000-000000000001", request_sha256: "159c6eaef557917bafc8ec3483d51db41ac5da6ba43a7c81da9940ef7b69a1fb", provider: ProviderIdentity { producer: Fake, provider_id: "offline-fake", adapter_version: "1", requested_model: "reviewed-candidate-v1" }, actual_model: "reviewed-candidate-v1", status: Complete, candidates: [Candidate { ordinal: 0, statement: "A conditional claim.", qualifiers: ["under condition β"], evidence: [TextEvidence { span_id: "50000000-0000-4000-8000-000000000001", excerpt_start_byte: 6, excerpt_end_byte: 8, excerpt_sha256: "2245c1c8daf7694bc2b2fe9f156c39f4bac6c788dc32e42bccb74554af2b5d86" }] }], usage: Usage { provenance: Simulated, input_tokens: None, output_tokens: None, cost: Cost { status: Known, amount_microunits: Some(25), currency: Some("usd"), basis: ProviderReported } }, failure: None })
+ right: Err("MODEL_USAGE_INVALID")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    model_candidate::tests::currency_policy_is_shared_with_settlement
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 289 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

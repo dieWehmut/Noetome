@@ -1,0 +1,109 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+warning: associated items `publish` and `pending` are never used
+   --> crates\noetome-cli\src\sidecar.rs:560:19
+    |
+488 | impl OwnedFile {
+    | -------------- associated items in this implementation
+...
+560 |     pub(crate) fn publish(mut self, target: PathBuf) -> Result<Self, SidecarError> {
+    |                   ^^^^^^^
+...
+566 |     pub(crate) fn pending(path: PathBuf, bytes: &[u8], cancel: &AtomicBool) -> Result<Self, SidecarError> {
+    |                   ^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.65s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 15 tests
+test model_candidate::tests::request_policy_rejects_retry_tools_excess_and_invalid_source_binding ... ok
+test model_candidate::tests::valid_request_and_complete_utf8_evidence_are_accepted ... FAILED
+test model_candidate::tests::exact_input_byte_limit_and_multiple_ordered_units_are_accepted ... FAILED
+test model_candidate::tests::saved_ir_rejects_identity_fingerprint_source_and_proposal_mutation ... FAILED
+test model_candidate::tests::classified_failures_decode_without_success_candidates ... FAILED
+test model_candidate::tests::complete_outcomes_create_distinct_core_ids_and_stay_unverified ... FAILED
+test model_candidate::tests::named_objects_and_explicit_null_are_required_at_wire_boundary ... FAILED
+test model_candidate::tests::model_reported_usage_and_known_cost_are_accepted ... FAILED
+test model_candidate::tests::malformed_empty_and_truncated_responses_never_decode ... ok
+test model_candidate::tests::nested_named_objects_reject_unknown_duplicate_missing_and_array_fields ... FAILED
+test model_candidate::tests::candidate_count_statement_qualifier_and_evidence_limits_are_enforced ... FAILED
+test model_candidate::tests::complete_and_failed_states_cannot_mix_candidates_and_failures ... ok
+test model_candidate::tests::bounded_response_accepts_exact_limit_but_rejects_one_more_byte ... FAILED
+test model_candidate::tests::invalid_cost_provenance_and_over_limit_output_are_rejected ... ok
+test model_candidate::tests::response_identity_and_evidence_fail_closed ... ok
+
+failures:
+
+---- model_candidate::tests::valid_request_and_complete_utf8_evidence_are_accepted stdout ----
+
+thread 'model_candidate::tests::valid_request_and_complete_utf8_evidence_are_accepted' (143048) panicked at crates\noetome-cli\src\model_candidate.rs:143:9:
+assertion `left == right` failed
+  left: Err("MODEL_NOT_IMPLEMENTED")
+ right: Ok(())
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- model_candidate::tests::exact_input_byte_limit_and_multiple_ordered_units_are_accepted stdout ----
+
+thread 'model_candidate::tests::exact_input_byte_limit_and_multiple_ordered_units_are_accepted' (87756) panicked at crates\noetome-cli\src\model_candidate.rs:376:9:
+assertion `left == right` failed
+  left: Err("MODEL_NOT_IMPLEMENTED")
+ right: Ok(())
+
+---- model_candidate::tests::saved_ir_rejects_identity_fingerprint_source_and_proposal_mutation stdout ----
+
+thread 'model_candidate::tests::saved_ir_rejects_identity_fingerprint_source_and_proposal_mutation' (104880) panicked at crates\noetome-cli\src\model_candidate.rs:404:71:
+called `Result::unwrap()` on an `Err` value: "MODEL_NOT_IMPLEMENTED"
+
+---- model_candidate::tests::classified_failures_decode_without_success_candidates stdout ----
+
+thread 'model_candidate::tests::classified_failures_decode_without_success_candidates' (139472) panicked at crates\noetome-cli\src\model_candidate.rs:170:46:
+called `Result::unwrap()` on an `Err` value: "MODEL_NOT_IMPLEMENTED"
+
+---- model_candidate::tests::complete_outcomes_create_distinct_core_ids_and_stay_unverified stdout ----
+
+thread 'model_candidate::tests::complete_outcomes_create_distinct_core_ids_and_stay_unverified' (136824) panicked at crates\noetome-cli\src\model_candidate.rs:153:71:
+called `Result::unwrap()` on an `Err` value: "MODEL_NOT_IMPLEMENTED"
+
+---- model_candidate::tests::named_objects_and_explicit_null_are_required_at_wire_boundary stdout ----
+
+thread 'model_candidate::tests::named_objects_and_explicit_null_are_required_at_wire_boundary' (127400) panicked at crates\noetome-cli\src\model_candidate.rs:181:9:
+assertion failed: serde_json::from_slice::<Outcome>(&serde_json::to_vec(&wire).unwrap()).is_err()
+
+---- model_candidate::tests::model_reported_usage_and_known_cost_are_accepted stdout ----
+
+thread 'model_candidate::tests::model_reported_usage_and_known_cost_are_accepted' (22220) panicked at crates\noetome-cli\src\model_candidate.rs:243:42:
+called `Result::unwrap()` on an `Err` value: "MODEL_NOT_IMPLEMENTED"
+
+---- model_candidate::tests::nested_named_objects_reject_unknown_duplicate_missing_and_array_fields stdout ----
+
+thread 'model_candidate::tests::nested_named_objects_reject_unknown_duplicate_missing_and_array_fields' (111576) panicked at crates\noetome-cli\src\model_candidate.rs:300:17:
+missing /failure
+
+---- model_candidate::tests::candidate_count_statement_qualifier_and_evidence_limits_are_enforced stdout ----
+
+thread 'model_candidate::tests::candidate_count_statement_qualifier_and_evidence_limits_are_enforced' (20488) panicked at crates\noetome-cli\src\model_candidate.rs:346:9:
+assertion failed: decode(&wire, &req).is_ok()
+
+---- model_candidate::tests::bounded_response_accepts_exact_limit_but_rejects_one_more_byte stdout ----
+
+thread 'model_candidate::tests::bounded_response_accepts_exact_limit_but_rejects_one_more_byte' (93168) panicked at crates\noetome-cli\src\model_candidate.rs:273:9:
+assertion failed: decode_outcome(&bytes, &req, &request_sha(&req)).is_ok()
+
+
+failures:
+    model_candidate::tests::bounded_response_accepts_exact_limit_but_rejects_one_more_byte
+    model_candidate::tests::candidate_count_statement_qualifier_and_evidence_limits_are_enforced
+    model_candidate::tests::classified_failures_decode_without_success_candidates
+    model_candidate::tests::complete_outcomes_create_distinct_core_ids_and_stay_unverified
+    model_candidate::tests::exact_input_byte_limit_and_multiple_ordered_units_are_accepted
+    model_candidate::tests::model_reported_usage_and_known_cost_are_accepted
+    model_candidate::tests::named_objects_and_explicit_null_are_required_at_wire_boundary
+    model_candidate::tests::nested_named_objects_reject_unknown_duplicate_missing_and_array_fields
+    model_candidate::tests::saved_ir_rejects_identity_fingerprint_source_and_proposal_mutation
+    model_candidate::tests::valid_request_and_complete_utf8_evidence_are_accepted
+
+test result: FAILED. 5 passed; 10 failed; 0 ignored; 0 measured; 272 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

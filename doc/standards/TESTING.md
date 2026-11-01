@@ -167,3 +167,11 @@ T13/T14另外通过测试构建的内部callback和真实子进程覆盖：实�
 只读检查不得依赖原选取文件或启动Python；必须核对持久报告与关系、实际raw/artifact、精确目录和原生nlink，重跑PDF Core验证。同改artifact/report/SQL SHA或合法页内bbox不能绕过定位/正文校验；ready的native/PID空值及未读全退出分类篡改另有永久负例。Windows share-lock、hardlink、junction、未知cache与严格五字段配置也在新测试项目中验证。
 
 Writer内部另外执行Schema3两树六个实际故障阶段和Prepared/DatabasePublished/ConfigPublished三个真实child.kill/wait，检查两备份、候选/正式版本、外部哨兵及公开inspect拒绝中断现场。生产CLI没有故障开关。数量、红/绿及未运行的规模/兼容/科学测试见[B03-T03记录](../validation/B03-T03.md)；统一回归不能替代这项来源定位和失败保护证据。
+
+### B04-T01 模型候选门槛
+
+独立作者先冻结自造原文、12必要原子和条件/单位/例外，模拟响应模板另行审阅。18个candidate及9个Provider unit覆盖原始JSON命名对象/字段/枚举、实际来源区间SHA、大小上限、未知用量费用及一次结算；15组契约与进程target中第一组静态冻结，后14组使用真实private child或CLI，fake不作为实际模型和科学质量。
+
+保存、重读、0预算/输入8192与+1、分类失败、凭据原始及JSON解码回显、300ms真实超时/native退出、未知/同步篡改、Windows已有/非法/重叠/junction/hardlink/share-lock及处理中同字节替换须分别执行。保存自锁、币种解码/结算漂移和失败报告矛盾事实有实际红绿及永久回归。已确认完整响应后取消的具体竞争窗口只做静态修正，不计实测。
+
+全workspace447及Python12检查、原始353文件归档和归档副本实际只读重载见[B04-T01](../validation/B04-T01.md)。真实API收费冒烟、PDF模型引用、正式200原子/98%/1000页/24小时与生产Vault仍由后续任务另验。

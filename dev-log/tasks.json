@@ -970,7 +970,7 @@
       "id": "B04-T01",
       "title": "验证离线fake模型单请求与可追溯候选IR契约",
       "batch": "B04",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B03-T03",
         "B02-T02"
@@ -1000,6 +1000,58 @@
           "note": "沿已采纳B04执行卡，冻结离线单请求、来源证据、候选IR与预算/失败契约；先独立作者样例和真实红，再实现严格重读与新根保护。本轮不调用真实API。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-01T14:22:47Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "离线单请求候选契约、严格解码、真实Span来源绑定、预算零调用、唯一用量结算、独占新根保存/重读与Windows保护已实现；修复保存自锁、币种语义漂移及矛盾失败报告。fake明确模拟，候选unverified，不调用真实API或发布。",
+          "validation": [
+            "实际cargo fmt/check/test workspace离线通过，447 Rust通过/0失败/0忽略；18 candidate+9 Provider unit、15模型契约/进程组（14含真实child或CLI）；Python12、devlog及git diff checks通过。353原始文件与暂存字节一致、16源码指纹、143链接、归档CLI重读0并保持10文件SHA。独立复现红绿和终审无新未修复阻断；具体late-cancel竞争仅静态修正，科学/API/PDF模型/生产Vault未测。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B04-T01.md",
+              "sha256": "089e9fe89d79545264ac60b230196a5d01b0db5d3c24ff4340112ff22df1641a"
+            },
+            {
+              "path": "doc/validation/B04-T01.json",
+              "sha256": "f95c4d4677478cbcae42014544e2000e1438a2f8afbcd6e696aec6e527709bfc"
+            },
+            {
+              "path": "doc/technical/MODEL_CANDIDATE_PROTOCOL.md",
+              "sha256": "b81e212bced12c5aa1140d539927e08b54e7bbb50ce56e0e8615ff7540454522"
+            },
+            {
+              "path": "crates/noetome-cli/src/knowledge_extract.rs",
+              "sha256": "007eadc63bedb0ae34586d656096d02a5324b2786d69b5b71cc3e6d3d8a1bafc"
+            },
+            {
+              "path": "crates/noetome-cli/src/model_candidate.rs",
+              "sha256": "4c7459307724480de796b98b7e5f1d3938d4477fa27af7825f465e99be2d4ad6"
+            },
+            {
+              "path": "crates/noetome-cli/src/model_provider.rs",
+              "sha256": "f072889c3d3076d9ce2ca4e12dddf824e415fd38a46c3d08fcff714c6f65eab5"
+            },
+            {
+              "path": "crates/noetome-cli/tests/model_candidate.rs",
+              "sha256": "e12792bb30663b9d5c063cd5a2d7841834984515863d8cbc8945a15f0a0548e5"
+            },
+            {
+              "path": "crates/noetome-cli/tests/support/model_checks.rs",
+              "sha256": "16a8764c928295bd814deb130d5639a3d45ba6372c0165648ed1bad5b4eea6a8"
+            },
+            {
+              "path": "tests/fixtures/model-candidate-v1/source.md",
+              "sha256": "5aa51f5816ec39ac4eefd7a8299def081d33a2277a8fdddb66243b4a741c7591"
+            },
+            {
+              "path": "tests/fixtures/model-candidate-v1/expected.json",
+              "sha256": "f86f6948a69e15dc8afdacbab0fc72435754067ec88c61b7a2e1b248be14cb04"
+            }
+          ]
         }
       ]
     },

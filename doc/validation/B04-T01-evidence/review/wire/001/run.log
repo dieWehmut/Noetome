@@ -1,0 +1,80 @@
+   Compiling libsqlite3-sys v0.39.1
+   Compiling synstructure v0.14.0
+   Compiling zerovec-derive v0.11.7
+   Compiling displaydoc v0.2.7
+   Compiling serde_derive v1.0.229
+   Compiling time v0.3.55
+   Compiling serde_json v1.0.154
+   Compiling zerofrom-derive v0.1.8
+   Compiling yoke-derive v0.8.4
+   Compiling zerofrom v0.1.8
+   Compiling yoke v0.8.4
+   Compiling zerovec v0.11.9
+   Compiling zerotrie v0.2.5
+   Compiling tinystr v0.8.5
+   Compiling potential_utf v0.1.6
+   Compiling icu_collections v2.4.0
+   Compiling icu_locale_core v2.4.0
+   Compiling serde v1.0.229
+   Compiling rusqlite v0.41.1
+   Compiling icu_provider v2.4.0
+   Compiling icu_properties v2.4.0
+   Compiling icu_normalizer v2.4.0
+   Compiling idna_adapter v1.2.2
+   Compiling idna v1.1.0
+   Compiling url v2.5.8
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+   Compiling b04-wire-review-probe v0.0.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\b04-wire-review\probe-20261101-001)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 19.25s
+     Running `.artifacts\b04-wire-review\probe-20261101-001\target\debug\b04-wire-review-probe.exe`
+[
+  {
+    "currency": "USD",
+    "decode_outcome": "Ok(Outcome { schema_version: 1, protocol: \"noetome-model-single-v1\", request_id: \"d54b6a00-7b10-4ff2-bb8c-bd7f40434e6b\", request_sha256: \"9633b2765fb7131481ebdc2b69944fee639ed61533aec41396555e900f9226c8\", provider: ProviderIdentity { producer: Fake, provider_id: \"read-only-review-fake\", adapter_version: \"wire-review-v1\", requested_model: \"synthetic-review\" }, actual_model: \"synthetic-review\", status: Complete, candidates: [Candidate { ordinal: 0, statement: \"Synthetic response used only for wire review.\", qualifiers: [], evidence: [TextEvidence { span_id: \"d1490e0a-478a-4aa1-9fa5-385232400bbc\", excerpt_start_byte: 0, excerpt_end_byte: 20, excerpt_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\" }] }], usage: Usage { provenance: Simulated, input_tokens: Some(20), output_tokens: Some(10), cost: Cost { status: Known, amount_microunits: Some(7), currency: Some(\"USD\"), basis: ProviderReported } }, failure: None })",
+    "extract": "Ok(CandidateReport { schema_version: 1, protocol: \"noetome-model-single-v1\", request_id: \"d54b6a00-7b10-4ff2-bb8c-bd7f40434e6b\", request_sha256: \"9633b2765fb7131481ebdc2b69944fee639ed61533aec41396555e900f9226c8\", started_at: \"2026-11-01T14:05:26.4849328Z\", finished_at: \"2026-11-01T14:05:26.6825624Z\", result: \"candidate\", failure: None, attempt: AttemptFacts { status: Delivered, pid: Some(137388), elapsed_ms: 41, response_bytes: 866, response_sha256: Some(\"0bb3ea64f1758ace21edf0f651d7de202b5705dc5d3e7bc70534d1da9e1048a7\"), stderr_bytes: 0, stderr_sha256: Some(\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\") }, reservation: BudgetReservation { calls: 1, output_tokens: 1024 }, provider_invocations: 1, real_api_calls: 0, usage: Usage { provenance: Simulated, input_tokens: Some(20), output_tokens: Some(10), cost: Cost { status: Known, amount_microunits: Some(7), currency: Some(\"USD\"), basis: ProviderReported } }, settlement: Some(SettlementRecord { request_id: \"d54b6a00-7b10-4ff2-bb8c-bd7f40434e6b\", response_sha256: \"0bb3ea64f1758ace21edf0f651d7de202b5705dc5d3e7bc70534d1da9e1048a7\", usage: Usage { provenance: Simulated, input_tokens: Some(20), output_tokens: Some(10), cost: Cost { status: Known, amount_microunits: Some(7), currency: Some(\"USD\"), basis: ProviderReported } } }), actual_model: Some(\"synthetic-review\"), response_saved: true, candidate_sha256: Some(\"f6799f96f7fdc748e48fac08be7f7e4767159b9e978aef5afaf906811cc811f1\"), candidate_id: Some(\"5e755597-75a9-42da-8235-40908548d12e\"), verification: \"unverified\", source: SourceSlice { project_id: \"bf567549-6ae2-4e9c-b586-2a9da89b485a\", source_id: \"c70c7bb1-7d56-4396-b95a-34860c6df3f3\", version_id: \"eae62632-bdc4-4e82-b0c8-7b479e247a59\", revision: 1, raw_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", normalized_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", normalization_version: \"utf8-newlines-v1\", parser_version: \"blocks-v1\", units: [SourceUnit { kind: TextSpan, span_id: \"d1490e0a-478a-4aa1-9fa5-385232400bbc\", ordinal: 0, start_byte: 0, end_byte: 20, text_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", text: \"Review source text.\\n\" }] } })",
+    "inventory": [
+      "candidate.json",
+      "owner.json",
+      "report.json",
+      "request.json",
+      "response.json"
+    ],
+    "provider_invocations": 1,
+    "response_sha": "0bb3ea64f1758ace21edf0f651d7de202b5705dc5d3e7bc70534d1da9e1048a7",
+    "settlement": "Ok(Ok(Confirmed))"
+  },
+  {
+    "currency": "USDT",
+    "decode_outcome": "Ok(Outcome { schema_version: 1, protocol: \"noetome-model-single-v1\", request_id: \"2efc01ce-b168-4741-90bd-d817bc0fd58f\", request_sha256: \"1b30a12b4edd28b5ed3058279720d1ac973926ef3c824745f2097f6448125263\", provider: ProviderIdentity { producer: Fake, provider_id: \"read-only-review-fake\", adapter_version: \"wire-review-v1\", requested_model: \"synthetic-review\" }, actual_model: \"synthetic-review\", status: Complete, candidates: [Candidate { ordinal: 0, statement: \"Synthetic response used only for wire review.\", qualifiers: [], evidence: [TextEvidence { span_id: \"d1490e0a-478a-4aa1-9fa5-385232400bbc\", excerpt_start_byte: 0, excerpt_end_byte: 20, excerpt_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\" }] }], usage: Usage { provenance: Simulated, input_tokens: Some(20), output_tokens: Some(10), cost: Cost { status: Known, amount_microunits: Some(7), currency: Some(\"USDT\"), basis: ProviderReported } }, failure: None })",
+    "extract": "Err(ModelError { code: \"MODEL_USAGE_INVALID\" })",
+    "inventory": [
+      "owner.json",
+      "request.json"
+    ],
+    "provider_invocations": 1,
+    "response_sha": "cc35463473053c206648893ca794072bfdb9793a1eced11901b1b247f6becec0",
+    "settlement": "Ok(Err(\"MODEL_USAGE_INVALID\"))"
+  },
+  {
+    "currency": "usd",
+    "decode_outcome": "Ok(Outcome { schema_version: 1, protocol: \"noetome-model-single-v1\", request_id: \"d54b6a00-7b10-4ff2-bb8c-bd7f40434e6b\", request_sha256: \"9633b2765fb7131481ebdc2b69944fee639ed61533aec41396555e900f9226c8\", provider: ProviderIdentity { producer: Fake, provider_id: \"read-only-review-fake\", adapter_version: \"wire-review-v1\", requested_model: \"synthetic-review\" }, actual_model: \"synthetic-review\", status: Complete, candidates: [Candidate { ordinal: 0, statement: \"Synthetic response used only for wire review.\", qualifiers: [], evidence: [TextEvidence { span_id: \"d1490e0a-478a-4aa1-9fa5-385232400bbc\", excerpt_start_byte: 0, excerpt_end_byte: 20, excerpt_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\" }] }], usage: Usage { provenance: Simulated, input_tokens: Some(20), output_tokens: Some(10), cost: Cost { status: Known, amount_microunits: Some(7), currency: Some(\"usd\"), basis: ProviderReported } }, failure: None })",
+    "extract": "Err(ModelError { code: \"MODEL_OUTPUT_EXISTS\" })",
+    "inventory": [
+      "candidate.json",
+      "owner.json",
+      "report.json",
+      "request.json",
+      "response.json"
+    ],
+    "provider_invocations": 0,
+    "response_sha": "3c9c332128b38d875752acbe48b8aa2f4aaacea7c425d96cece7709533787d54",
+    "settlement": "Ok(Err(\"MODEL_USAGE_INVALID\"))"
+  },
+  {
+    "baseline_status": "delivered",
+    "failure_report_tamper_accepted": true,
+    "original_pid": 87904,
+    "provider_invocations": 1,
+    "tamper_inspect": "Ok(CandidateReport { schema_version: 1, protocol: \"noetome-model-single-v1\", request_id: \"408bca18-2e15-461e-840c-99753554cf5d\", request_sha256: \"3a44d39aafb98cb5f8d97232887a485466d3b5637b1ebb00229761bd2db56c17\", started_at: \"2026-11-01T14:05:26.9528399Z\", finished_at: \"2026-11-01T14:05:27.0893658Z\", result: \"rejected\", failure: Some(ReportFailure { code: \"MODEL_AUTHENTICATION\" }), attempt: AttemptFacts { status: NotCalled, pid: Some(87904), elapsed_ms: 24, response_bytes: 18446744073709551615, response_sha256: Some(\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"), stderr_bytes: 0, stderr_sha256: Some(\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\") }, reservation: BudgetReservation { calls: 1, output_tokens: 1024 }, provider_invocations: 1, real_api_calls: 0, usage: Usage { provenance: Simulated, input_tokens: None, output_tokens: None, cost: Cost { status: Unknown, amount_microunits: None, currency: None, basis: NotAvailable } }, settlement: None, actual_model: None, response_saved: false, candidate_sha256: None, candidate_id: None, verification: \"not_applicable\", source: SourceSlice { project_id: \"bf567549-6ae2-4e9c-b586-2a9da89b485a\", source_id: \"c70c7bb1-7d56-4396-b95a-34860c6df3f3\", version_id: \"eae62632-bdc4-4e82-b0c8-7b479e247a59\", revision: 1, raw_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", normalized_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", normalization_version: \"utf8-newlines-v1\", parser_version: \"blocks-v1\", units: [SourceUnit { kind: TextSpan, span_id: \"d1490e0a-478a-4aa1-9fa5-385232400bbc\", ordinal: 0, start_byte: 0, end_byte: 20, text_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", text: \"Review source text.\\n\" }] } })"
+  }
+]

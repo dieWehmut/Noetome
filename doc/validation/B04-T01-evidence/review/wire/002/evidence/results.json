@@ -1,0 +1,52 @@
+[
+  {
+    "currency": "USD",
+    "decode_outcome": "Ok(Outcome { schema_version: 1, protocol: \"noetome-model-single-v1\", request_id: \"a49a0fbf-b7e3-4900-b479-916639173067\", request_sha256: \"1ebf98f0b558da4b708bb8f3cb0e1229e0fb3c5310c5ded8ade4e2da52898e32\", provider: ProviderIdentity { producer: Fake, provider_id: \"read-only-review-fake\", adapter_version: \"wire-review-v1\", requested_model: \"synthetic-review\" }, actual_model: \"synthetic-review\", status: Complete, candidates: [Candidate { ordinal: 0, statement: \"Synthetic response used only for wire review.\", qualifiers: [], evidence: [TextEvidence { span_id: \"8ff2a0bb-8bcf-46e1-ad3d-96239cb4c141\", excerpt_start_byte: 0, excerpt_end_byte: 20, excerpt_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\" }] }], usage: Usage { provenance: Simulated, input_tokens: Some(20), output_tokens: Some(10), cost: Cost { status: Known, amount_microunits: Some(7), currency: Some(\"USD\"), basis: ProviderReported } }, failure: None })",
+    "extract": "Ok(CandidateReport { schema_version: 1, protocol: \"noetome-model-single-v1\", request_id: \"a49a0fbf-b7e3-4900-b479-916639173067\", request_sha256: \"1ebf98f0b558da4b708bb8f3cb0e1229e0fb3c5310c5ded8ade4e2da52898e32\", started_at: \"2026-11-01T14:11:09.0776998Z\", finished_at: \"2026-11-01T14:11:09.2367068Z\", result: \"candidate\", failure: None, attempt: AttemptFacts { status: Delivered, pid: Some(113532), elapsed_ms: 24, response_bytes: 866, response_sha256: Some(\"56c317b130fe79de992fe3d296aabaf52714ed53ac3b99f63305052e08b98b60\"), stderr_bytes: 0, stderr_sha256: Some(\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\") }, reservation: BudgetReservation { calls: 1, output_tokens: 1024 }, provider_invocations: 1, real_api_calls: 0, usage: Usage { provenance: Simulated, input_tokens: Some(20), output_tokens: Some(10), cost: Cost { status: Known, amount_microunits: Some(7), currency: Some(\"USD\"), basis: ProviderReported } }, settlement: Some(SettlementRecord { request_id: \"a49a0fbf-b7e3-4900-b479-916639173067\", response_sha256: \"56c317b130fe79de992fe3d296aabaf52714ed53ac3b99f63305052e08b98b60\", usage: Usage { provenance: Simulated, input_tokens: Some(20), output_tokens: Some(10), cost: Cost { status: Known, amount_microunits: Some(7), currency: Some(\"USD\"), basis: ProviderReported } } }), actual_model: Some(\"synthetic-review\"), response_saved: true, candidate_sha256: Some(\"ff4ba1c6f4f691c632c613e83a93e81898556eeb0368fec80770a6aa0f791789\"), candidate_id: Some(\"7b4e2035-0765-449e-96a8-32d8a74a7224\"), verification: \"unverified\", source: SourceSlice { project_id: \"b1c2a57c-d816-4eb3-9c15-06590c0e9589\", source_id: \"4963ae6e-b497-4576-887f-2a37caa1a606\", version_id: \"212ef82c-3c7e-4a63-b62b-c4269fc26ff2\", revision: 1, raw_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", normalized_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", normalization_version: \"utf8-newlines-v1\", parser_version: \"blocks-v1\", units: [SourceUnit { kind: TextSpan, span_id: \"8ff2a0bb-8bcf-46e1-ad3d-96239cb4c141\", ordinal: 0, start_byte: 0, end_byte: 20, text_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", text: \"Review source text.\\n\" }] } })",
+    "inventory": [
+      "candidate.json",
+      "owner.json",
+      "report.json",
+      "request.json",
+      "response.json"
+    ],
+    "provider_invocations": 1,
+    "response_sha": "56c317b130fe79de992fe3d296aabaf52714ed53ac3b99f63305052e08b98b60",
+    "settlement": "Ok(Ok(Confirmed))"
+  },
+  {
+    "currency": "USDT",
+    "decode_outcome": "Err(\"MODEL_USAGE_INVALID\")",
+    "extract": "Ok(CandidateReport { schema_version: 1, protocol: \"noetome-model-single-v1\", request_id: \"009dfd3f-7b76-4a23-9970-e86b0df74aa4\", request_sha256: \"8a6ad43a718ec196654aa0c16a4921c5d55c6975e9fbaa334400d14061259454\", started_at: \"2026-11-01T14:11:09.3187222Z\", finished_at: \"2026-11-01T14:11:09.4771914Z\", result: \"rejected\", failure: Some(ReportFailure { code: \"MODEL_USAGE_INVALID\" }), attempt: AttemptFacts { status: Delivered, pid: Some(130576), elapsed_ms: 30, response_bytes: 867, response_sha256: Some(\"7edee6a9025921ff513c5f814b18e6e0b844c32d955388cc70a7098e7e637ca6\"), stderr_bytes: 0, stderr_sha256: Some(\"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\") }, reservation: BudgetReservation { calls: 1, output_tokens: 1024 }, provider_invocations: 1, real_api_calls: 0, usage: Usage { provenance: Simulated, input_tokens: None, output_tokens: None, cost: Cost { status: Unknown, amount_microunits: None, currency: None, basis: NotAvailable } }, settlement: None, actual_model: None, response_saved: false, candidate_sha256: None, candidate_id: None, verification: \"not_applicable\", source: SourceSlice { project_id: \"b1c2a57c-d816-4eb3-9c15-06590c0e9589\", source_id: \"4963ae6e-b497-4576-887f-2a37caa1a606\", version_id: \"212ef82c-3c7e-4a63-b62b-c4269fc26ff2\", revision: 1, raw_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", normalized_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", normalization_version: \"utf8-newlines-v1\", parser_version: \"blocks-v1\", units: [SourceUnit { kind: TextSpan, span_id: \"8ff2a0bb-8bcf-46e1-ad3d-96239cb4c141\", ordinal: 0, start_byte: 0, end_byte: 20, text_sha256: \"7f5cdba4a35125eef20d86fe5de304f73bb1abf8acb0db626980f356bb936e26\", text: \"Review source text.\\n\" }] } })",
+    "inventory": [
+      "owner.json",
+      "report.json",
+      "request.json"
+    ],
+    "provider_invocations": 1,
+    "response_sha": "7edee6a9025921ff513c5f814b18e6e0b844c32d955388cc70a7098e7e637ca6",
+    "settlement": "Err(\"MODEL_USAGE_INVALID\")"
+  },
+  {
+    "currency": "usd",
+    "decode_outcome": "Err(\"MODEL_USAGE_INVALID\")",
+    "extract": "Err(ModelError { code: \"MODEL_OUTPUT_EXISTS\" })",
+    "inventory": [
+      "candidate.json",
+      "owner.json",
+      "report.json",
+      "request.json",
+      "response.json"
+    ],
+    "provider_invocations": 0,
+    "response_sha": "ed59bd3ac75e5b807970f81df038586303f48910252ef138e436a95405ee3b77",
+    "settlement": "Err(\"MODEL_USAGE_INVALID\")"
+  },
+  {
+    "baseline_status": "delivered",
+    "failure_report_tamper_accepted": false,
+    "original_pid": 62320,
+    "provider_invocations": 1,
+    "tamper_inspect": "Err(ModelError { code: \"MODEL_SAVED_ATTEMPT_INVALID\" })"
+  }
+]

@@ -25,3 +25,10 @@ doc/validation/B03-T03-evidence/**/*.log -text whitespace=blank-at-eol,space-bef
 doc/validation/B03-T03-evidence/**/*.bin binary
 doc/validation/B03-T03-evidence/**/*.sqlite binary
 sidecars/pdf_parser/runtime-lock.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+# B04 original-byte acceptance archives, including native logs and SQLite/raw data.
+doc/validation/B04-T01.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+doc/validation/B04-T01-evidence/** -text whitespace=trailing-space,space-before-tab,cr-at-eol
+doc/validation/B04-T01-evidence/**/*.log -text whitespace=blank-at-eol,space-before-tab,cr-at-eol,-blank-at-eof
+doc/validation/B04-T01-evidence/**/*.bin binary
+doc/validation/B04-T01-evidence/**/*.sqlite binary
+doc/validation/B04-T01-evidence/**/*.pdf binary

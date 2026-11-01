@@ -1,0 +1,14 @@
+    Blocking waiting for file lock on build directory
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.30s
+     Running tests\model_candidate.rs (D:/Noetome/target\debug\deps\model_candidate-a2bcaa9990c53b72.exe)
+evidence: \\?\C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\B04-T01-tests\02-save-reload-cli-1e155894-a35c-445c-82fa-3575e26c1660
+
+thread 'main' (18744) panicked at crates\noetome-cli\tests\support\model_checks.rs:128:125:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "PROJECT_DATABASE_BUSY" }
+test saved_candidate_survives_original_move_and_real_cli_inspect ... FAILED
+model process tests: 0 passed; 1 failed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `-p noetome-cli --test model_candidate`
+
+Caused by:
+  process didn't exit successfully: `D:/Noetome/target\debug\deps\model_candidate-a2bcaa9990c53b72.exe --exact saved_candidate_survives_original_move_and_real_cli_inspect` (exit code: 1)

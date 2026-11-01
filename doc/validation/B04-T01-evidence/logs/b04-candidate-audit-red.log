@@ -1,0 +1,44 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.94s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 17 tests
+test model_candidate::tests::request_policy_rejects_retry_tools_excess_and_invalid_source_binding ... ok
+test model_candidate::tests::audit_requires_strict_fields_identity_cost_and_bounded_payload ... FAILED
+test model_candidate::tests::named_objects_and_explicit_null_are_required_at_wire_boundary ... ok
+test model_candidate::tests::model_reported_usage_and_known_cost_are_accepted ... ok
+test model_candidate::tests::malformed_empty_and_truncated_responses_never_decode ... ok
+test model_candidate::tests::valid_request_and_complete_utf8_evidence_are_accepted ... ok
+test model_candidate::tests::exact_input_byte_limit_and_multiple_ordered_units_are_accepted ... ok
+test model_candidate::tests::complete_outcomes_create_distinct_core_ids_and_stay_unverified ... ok
+test model_candidate::tests::audit_retains_confirmed_model_usage_for_rejected_evidence_and_output_limit ... FAILED
+test model_candidate::tests::complete_and_failed_states_cannot_mix_candidates_and_failures ... ok
+test model_candidate::tests::saved_ir_rejects_identity_fingerprint_source_and_proposal_mutation ... ok
+test model_candidate::tests::invalid_cost_provenance_and_over_limit_output_are_rejected ... ok
+test model_candidate::tests::response_identity_and_evidence_fail_closed ... ok
+test model_candidate::tests::classified_failures_decode_without_success_candidates ... ok
+test model_candidate::tests::bounded_response_accepts_exact_limit_but_rejects_one_more_byte ... ok
+test model_candidate::tests::nested_named_objects_reject_unknown_duplicate_missing_and_array_fields ... ok
+test model_candidate::tests::candidate_count_statement_qualifier_and_evidence_limits_are_enforced ... ok
+
+failures:
+
+---- model_candidate::tests::audit_requires_strict_fields_identity_cost_and_bounded_payload stdout ----
+
+thread 'model_candidate::tests::audit_requires_strict_fields_identity_cost_and_bounded_payload' (137388) panicked at crates\noetome-cli\src\model_candidate.rs:670:9:
+assertion failed: decode_auditable_outcome(&bytes, &req, &request_sha(&req)).is_ok()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- model_candidate::tests::audit_retains_confirmed_model_usage_for_rejected_evidence_and_output_limit stdout ----
+
+thread 'model_candidate::tests::audit_retains_confirmed_model_usage_for_rejected_evidence_and_output_limit' (121472) panicked at crates\noetome-cli\src\model_candidate.rs:659:82:
+called `Result::unwrap()` on an `Err` value: "MODEL_AUDIT_NOT_IMPLEMENTED"
+
+
+failures:
+    model_candidate::tests::audit_requires_strict_fields_identity_cost_and_bounded_payload
+    model_candidate::tests::audit_retains_confirmed_model_usage_for_rejected_evidence_and_output_limit
+
+test result: FAILED. 15 passed; 2 failed; 0 ignored; 0 measured; 272 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "producer": "offline_fake_template",
+  "statements": [
+    {
+      "statement": "纸灯箱 R7 的额定输入电压为 12 V。",
+      "qualifiers": ["仅适用于直流供电"],
+      "support_quote": "纸灯箱 R7 的额定输入电压为 12 V，仅适用于直流供电。"
+    },
+    {
+      "statement": "箱内纸片总质量必须不超过 80 g。",
+      "qualifiers": ["启动前", "这里不计包装袋的质量"],
+      "support_quote": "启动前，箱内纸片总质量必须不超过 80 g；这里不计包装袋的质量。"
+    },
+    {
+      "statement": "只有箱盖完全闭合时，主灯才允许启动。",
+      "qualifiers": ["只有箱盖完全闭合时"],
+      "support_quote": "只有箱盖完全闭合时，主灯才允许启动。"
+    },
+    {
+      "statement": "按下绿色键并保持 2 s 才执行一次启动。",
+      "qualifiers": ["短于 2 s 的按压无效"],
+      "support_quote": "按下绿色键并保持 2 s 才执行一次启动；短于 2 s 的按压无效。"
+    },
+    {
+      "statement": "连续运行时长上限为 40 min。",
+      "qualifiers": ["当环境温度为 10–30 °C（含端点）时"],
+      "support_quote": "当环境温度为 10–30 °C（含端点）时，连续运行时长上限为 40 min。"
+    },
+    {
+      "statement": "应停止点灯。",
+      "qualifiers": ["若环境温度高于 30 °C", "仅状态指示灯允许继续亮起"],
+      "support_quote": "若环境温度高于 30 °C，应停止点灯；仅状态指示灯允许继续亮起。"
+    },
+    {
+      "statement": "每隔 5 min 记录一次亮度读数。",
+      "qualifiers": ["运行期间", "单位为 lx"],
+      "support_quote": "运行期间，每隔 5 min 记录一次亮度读数，单位为 lx。"
+    },
+    {
+      "statement": "只有亮度读数连续两次低于 15 lx 时才标记为“待检查”。",
+      "qualifiers": ["只有亮度读数连续两次低于 15 lx 时", "一次低值不触发该标记"],
+      "support_quote": "只有亮度读数连续两次低于 15 lx 时才标记为“待检查”；一次低值不触发该标记。"
+    },
+    {
+      "statement": "下一次启动前必须更换纸片。",
+      "qualifiers": ["标记为“待检查”后"],
+      "support_quote": "标记为“待检查”后，下一次启动前必须更换纸片。"
+    },
+    {
+      "statement": "必须手动清除“待检查”标记。",
+      "qualifiers": ["更换纸片后"],
+      "support_quote": "更换纸片后，必须手动清除“待检查”标记。"
+    },
+    {
+      "statement": "应等待至少 3 min 再打开箱盖。",
+      "qualifiers": ["停灯后", "紧急断电时也执行这一等待规则"],
+      "support_quote": "停灯后，应等待至少 3 min 再打开箱盖；紧急断电时也执行这一等待规则。"
+    },
+    {
+      "statement": "本材料没有给出主灯功率。",
+      "qualifiers": ["不能将缺失功率填写为 0 W"],
+      "support_quote": "本材料没有给出主灯功率，不能将缺失功率填写为 0 W。"
+    }
+  ]
+}
