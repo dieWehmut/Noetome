@@ -136,7 +136,7 @@ fn invalid_arguments_are_actionable_input_errors_without_writing_files() {
     let sandbox = Sandbox::new();
     for values in [
         vec!["--unknown"],
-        vec!["project", "init", "新项目 with spaces"],
+        vec!["project", "init"],
         vec!["source", "add", "资料.md"],
         vec!["--help", "--unknown"],
         vec!["--version", "--unknown"],

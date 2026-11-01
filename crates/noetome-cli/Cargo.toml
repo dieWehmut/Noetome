@@ -6,6 +6,15 @@ rust-version.workspace = true
 publish = false
 description = "Noetome 命令行入口"
 
+[dependencies]
+rusqlite = { version = "=0.41.1", features = ["bundled"] }
+same-file = "=1.0.6"
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.154"
+time = { version = "=0.3.55", features = ["formatting", "parsing"] }
+url = "=2.5.8"
+uuid = { version = "=1.29.0", features = ["v4"] }
+
 [[bin]]
 name = "noetome"
 path = "src/main.rs"
