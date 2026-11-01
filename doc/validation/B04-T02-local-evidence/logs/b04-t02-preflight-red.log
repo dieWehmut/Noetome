@@ -1,0 +1,154 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.82s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 11 tests
+
+thread 'model_preflight::tests::unknown_or_malformed_version_never_falls_back_to_another_registered_source' (133452) panicked at crates\noetome-cli\src\model_preflight.rs:232:13:
+assertion `left == right` failed
+  left: "MODEL_PREFLIGHT_UNIMPLEMENTED"
+ right: "MODEL_SOURCE_VERSION_UNKNOWN"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test model_preflight::tests::unknown_or_malformed_version_never_falls_back_to_another_registered_source ... FAILED
+
+thread 'model_preflight::tests::empty_and_only_formatting_documents_are_classified_without_writes' (75444) panicked at crates\noetome-cli\src\model_preflight.rs:212:13:
+assertion `left == right` failed
+  left: "MODEL_PREFLIGHT_UNIMPLEMENTED"
+ right: "MODEL_SOURCE_EMPTY"
+test model_preflight::tests::empty_and_only_formatting_documents_are_classified_without_writes ... FAILED
+
+thread 'model_preflight::tests::summary_uses_named_required_fields_and_contains_no_source_text' (82100) panicked at crates\noetome-cli\src\model_preflight.rs:307:83:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+test model_preflight::tests::summary_uses_named_required_fields_and_contains_no_source_text ... FAILED
+test model_preflight::tests::tampered_registered_normalized_snapshot_is_refused ... ok
+
+thread 'model_preflight::tests::normalization_cannot_hide_an_overlimit_raw_document' (78636) panicked at crates\noetome-cli\src\model_preflight.rs:204:9:
+assertion `left == right` failed
+  left: "MODEL_PREFLIGHT_UNIMPLEMENTED"
+ right: "MODEL_SOURCE_TOO_LARGE"
+test model_preflight::tests::normalization_cannot_hide_an_overlimit_raw_document ... FAILED
+
+thread 'model_preflight::tests::original_file_can_move_while_the_registered_snapshots_remain_readable' (113876) panicked at crates\noetome-cli\src\model_preflight.rs:263:83:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+test model_preflight::tests::original_file_can_move_while_the_registered_snapshots_remain_readable ... FAILED
+
+thread 'model_preflight::tests::invalid_utf8_and_unparsed_span_are_classified_without_writes' (71348) panicked at crates\noetome-cli\src\model_preflight.rs:221:9:
+assertion `left == right` failed
+  left: "MODEL_PREFLIGHT_UNIMPLEMENTED"
+ right: "MODEL_SOURCE_INVALID_UTF8"
+test model_preflight::tests::invalid_utf8_and_unparsed_span_are_classified_without_writes ... FAILED
+
+thread 'model_preflight::tests::live_preparation_denies_write_delete_and_directory_replacement_until_drop' (136640) panicked at crates\noetome-cli\src\model_preflight.rs:286:83:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+test model_preflight::tests::live_preparation_denies_write_delete_and_directory_replacement_until_drop ... FAILED
+
+thread 'model_preflight::tests::entire_registered_unicode_text_preserves_formatting_and_trailing_bytes' (24084) panicked at crates\noetome-cli\src\model_preflight.rs:160:83:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+test model_preflight::tests::entire_registered_unicode_text_preserves_formatting_and_trailing_bytes ... FAILED
+
+thread 'model_preflight::tests::exact_eight_kib_complete_text_is_accepted_and_plus_one_is_refused' (134524) panicked at crates\noetome-cli\src\model_preflight.rs:188:79:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+test model_preflight::tests::exact_eight_kib_complete_text_is_accepted_and_plus_one_is_refused ... FAILED
+
+thread 'model_preflight::tests::registered_pdf_is_rejected_as_a_capability_mismatch_without_starting_parser' (19288) panicked at crates\noetome-cli\src\model_preflight.rs:255:9:
+assertion `left == right` failed
+  left: "MODEL_PREFLIGHT_UNIMPLEMENTED"
+ right: "MODEL_SOURCE_CAPABILITY_INSUFFICIENT"
+test model_preflight::tests::registered_pdf_is_rejected_as_a_capability_mismatch_without_starting_parser ... FAILED
+
+failures:
+
+failures:
+    model_preflight::tests::empty_and_only_formatting_documents_are_classified_without_writes
+    model_preflight::tests::entire_registered_unicode_text_preserves_formatting_and_trailing_bytes
+    model_preflight::tests::exact_eight_kib_complete_text_is_accepted_and_plus_one_is_refused
+    model_preflight::tests::invalid_utf8_and_unparsed_span_are_classified_without_writes
+    model_preflight::tests::live_preparation_denies_write_delete_and_directory_replacement_until_drop
+    model_preflight::tests::normalization_cannot_hide_an_overlimit_raw_document
+    model_preflight::tests::original_file_can_move_while_the_registered_snapshots_remain_readable
+    model_preflight::tests::registered_pdf_is_rejected_as_a_capability_mismatch_without_starting_parser
+    model_preflight::tests::summary_uses_named_required_fields_and_contains_no_source_text
+    model_preflight::tests::unknown_or_malformed_version_never_falls_back_to_another_registered_source
+
+test result: FAILED. 1 passed; 10 failed; 0 ignored; 0 measured; 291 filtered out; finished in 0.78s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.04s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 11 tests
+
+thread 'model_preflight::tests::summary_uses_named_required_fields_and_contains_no_source_text' (3116) panicked at crates\noetome-cli\src\model_preflight.rs:318:83:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test model_preflight::tests::summary_uses_named_required_fields_and_contains_no_source_text ... FAILED
+
+thread 'model_preflight::tests::empty_and_only_formatting_documents_are_classified_without_writes' (78148) panicked at crates\noetome-cli\src\model_preflight.rs:217:13:
+assertion `left == right` failed
+  left: "MODEL_PREFLIGHT_UNIMPLEMENTED"
+ right: "MODEL_SOURCE_EMPTY"
+test model_preflight::tests::empty_and_only_formatting_documents_are_classified_without_writes ... FAILED
+
+thread 'model_preflight::tests::tampered_registered_normalized_snapshot_is_refused' (95396) panicked at crates\noetome-cli\src\model_preflight.rs:288:9:
+assertion `left == right` failed
+  left: "MODEL_PREFLIGHT_UNIMPLEMENTED"
+ right: "SOURCE_INVALID_SNAPSHOT"
+test model_preflight::tests::tampered_registered_normalized_snapshot_is_refused ... FAILED
+
+thread 'model_preflight::tests::unknown_or_malformed_version_never_falls_back_to_another_registered_source' (96484) panicked at crates\noetome-cli\src\model_preflight.rs:237:13:
+assertion `left == right` failed
+  left: "MODEL_PREFLIGHT_UNIMPLEMENTED"
+ right: "MODEL_SOURCE_VERSION_UNKNOWN"
+test model_preflight::tests::unknown_or_malformed_version_never_falls_back_to_another_registered_source ... FAILED
+
+thread 'model_preflight::tests::original_file_can_move_while_the_registered_snapshots_remain_readable' (110952) panicked at crates\noetome-cli\src\model_preflight.rs:274:83:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+test model_preflight::tests::original_file_can_move_while_the_registered_snapshots_remain_readable ... FAILED
+
+thread 'model_preflight::tests::live_preparation_denies_write_delete_and_directory_replacement_until_drop' (137920) panicked at crates\noetome-cli\src\model_preflight.rs:297:83:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+test model_preflight::tests::live_preparation_denies_write_delete_and_directory_replacement_until_drop ... FAILED
+
+thread 'model_preflight::tests::invalid_utf8_and_unparsed_span_are_classified_without_writes' (24632) panicked at crates\noetome-cli\src\model_preflight.rs:226:9:
+assertion `left == right` failed
+  left: "MODEL_PREFLIGHT_UNIMPLEMENTED"
+ right: "MODEL_SOURCE_INVALID_UTF8"
+test model_preflight::tests::invalid_utf8_and_unparsed_span_are_classified_without_writes ... FAILED
+
+thread 'model_preflight::tests::exact_eight_kib_complete_text_is_accepted_and_plus_one_is_refused' (5336) panicked at crates\noetome-cli\src\model_preflight.rs:188:79:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+test model_preflight::tests::exact_eight_kib_complete_text_is_accepted_and_plus_one_is_refused ... FAILED
+
+thread 'model_preflight::tests::larger_bom_crlf_raw_snapshot_keeps_the_complete_eight_kib_normalized_text' (18648) panicked at crates\noetome-cli\src\model_preflight.rs:204:83:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+test model_preflight::tests::larger_bom_crlf_raw_snapshot_keeps_the_complete_eight_kib_normalized_text ... FAILED
+
+thread 'model_preflight::tests::entire_registered_unicode_text_preserves_formatting_and_trailing_bytes' (129372) panicked at crates\noetome-cli\src\model_preflight.rs:160:83:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_PREFLIGHT_UNIMPLEMENTED" }
+test model_preflight::tests::entire_registered_unicode_text_preserves_formatting_and_trailing_bytes ... FAILED
+test model_preflight::tests::registered_pdf_is_rejected_as_a_capability_mismatch_without_starting_parser ... FAILED
+
+failures:
+
+failures:
+    model_preflight::tests::empty_and_only_formatting_documents_are_classified_without_writes
+    model_preflight::tests::entire_registered_unicode_text_preserves_formatting_and_trailing_bytes
+    model_preflight::tests::exact_eight_kib_complete_text_is_accepted_and_plus_one_is_refused
+    model_preflight::tests::invalid_utf8_and_unparsed_span_are_classified_without_writes
+    model_preflight::tests::larger_bom_crlf_raw_snapshot_keeps_the_complete_eight_kib_normalized_text
+    model_preflight::tests::live_preparation_denies_write_delete_and_directory_replacement_until_drop
+    model_preflight::tests::original_file_can_move_while_the_registered_snapshots_remain_readable
+    model_preflight::tests::registered_pdf_is_rejected_as_a_capability_mismatch_without_starting_parser
+    model_preflight::tests::summary_uses_named_required_fields_and_contains_no_source_text
+    model_preflight::tests::tampered_registered_normalized_snapshot_is_refused
+    model_preflight::tests::unknown_or_malformed_version_never_falls_back_to_another_registered_source
+
+thread 'model_preflight::tests::registered_pdf_is_rejected_as_a_capability_mismatch_without_starting_parser' (132356) panicked at crates\noetome-cli\src\model_preflight.rs:265:9:
+assertion `left == right` failed
+  left: "MODEL_PREFLIGHT_UNIMPLEMENTED"
+ right: "MODEL_SOURCE_CAPABILITY_INSUFFICIENT"
+
+test result: FAILED. 0 passed; 11 failed; 0 ignored; 0 measured; 291 filtered out; finished in 0.76s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

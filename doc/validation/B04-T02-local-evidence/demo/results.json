@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "real_api_calls": 0,
+  "real_credentials_read": false,
+  "cli_sha256": "348982f0e97ca9f5fbe36dcb22131f8c08977c302bb765b9600d176e12a26c38",
+  "cases": [
+    {
+      "case": "fictional-r7",
+      "raw_bytes": 1208,
+      "normalized_bytes": 1208,
+      "project_files": 5,
+      "preflight_calls": 2,
+      "exit_code": 0,
+      "project_unchanged": true,
+      "protected_files_unchanged": true,
+      "outputs_identical": true
+    },
+    {
+      "case": "crlf-exact-limit",
+      "raw_bytes": 12290,
+      "normalized_bytes": 8192,
+      "project_files": 5,
+      "preflight_calls": 2,
+      "exit_code": 0,
+      "project_unchanged": true,
+      "protected_files_unchanged": true,
+      "outputs_identical": true
+    },
+    {
+      "case": "over-limit",
+      "raw_bytes": 8193,
+      "normalized_bytes": 8193,
+      "project_files": 5,
+      "preflight_calls": 2,
+      "exit_code": 2,
+      "project_unchanged": true,
+      "protected_files_unchanged": true,
+      "outputs_identical": true
+    }
+  ],
+  "cli_calls": [
+    {
+      "case": "fictional-r7",
+      "name": "init",
+      "args": [
+        "project",
+        "init",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\fictional-r7\\project"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "fictional-r7",
+      "name": "import",
+      "args": [
+        "source",
+        "import",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\fictional-r7\\project",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\fictional-r7\\selected.md"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "fictional-r7",
+      "name": "preflight-1",
+      "args": [
+        "knowledge",
+        "preflight",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\fictional-r7\\project",
+        "74578200-74f1-4ebd-a21f-beef39915f6c"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "fictional-r7",
+      "name": "preflight-2",
+      "args": [
+        "knowledge",
+        "preflight",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\fictional-r7\\project",
+        "74578200-74f1-4ebd-a21f-beef39915f6c"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "crlf-exact-limit",
+      "name": "init",
+      "args": [
+        "project",
+        "init",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\crlf-exact-limit\\project"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "crlf-exact-limit",
+      "name": "import",
+      "args": [
+        "source",
+        "import",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\crlf-exact-limit\\project",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\crlf-exact-limit\\selected.md"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "crlf-exact-limit",
+      "name": "preflight-1",
+      "args": [
+        "knowledge",
+        "preflight",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\crlf-exact-limit\\project",
+        "63c926e4-07fb-495f-a534-bb3ecb8648c4"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "crlf-exact-limit",
+      "name": "preflight-2",
+      "args": [
+        "knowledge",
+        "preflight",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\crlf-exact-limit\\project",
+        "63c926e4-07fb-495f-a534-bb3ecb8648c4"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "over-limit",
+      "name": "init",
+      "args": [
+        "project",
+        "init",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\over-limit\\project"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "over-limit",
+      "name": "import",
+      "args": [
+        "source",
+        "import",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\over-limit\\project",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\over-limit\\selected.md"
+      ],
+      "exit_code": 0
+    },
+    {
+      "case": "over-limit",
+      "name": "preflight-1",
+      "args": [
+        "knowledge",
+        "preflight",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\over-limit\\project",
+        "1e951db8-f9ea-45ea-92bf-fbb0a5abcd80"
+      ],
+      "exit_code": 2
+    },
+    {
+      "case": "over-limit",
+      "name": "preflight-2",
+      "args": [
+        "knowledge",
+        "preflight",
+        "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-local-demo\\6523b65a-66dc-40ee-bf28-50c9cfe5a045\\over-limit\\project",
+        "1e951db8-f9ea-45ea-92bf-fbb0a5abcd80"
+      ],
+      "exit_code": 2
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "cli_sha256": "348982f0e97ca9f5fbe36dcb22131f8c08977c302bb765b9600d176e12a26c38",
+  "results": [
+    {
+      "name": "exact-bom-crlf-12290",
+      "result": "accepted",
+      "source": {
+        "evidence_span_count": 1,
+        "normalization_version": "utf8-newlines-v1",
+        "normalized_byte_length": 8192,
+        "normalized_sha256": "4fc218d79b08b9b309c8115605bdc597e47bc421dcc8ff774b6dea971b2f1912",
+        "parser_version": "blocks-v1",
+        "project_id": "a2c5f6a0-ebc1-4f74-b616-89231f941b65",
+        "raw_byte_length": 12290,
+        "raw_sha256": "baa39d9f05ef13c0d58819eabf26d2bce4558eeac49e5ab2d7956a36c1986e12",
+        "revision": 1,
+        "schema_version": 1,
+        "source_id": "f4677620-4794-42cc-9350-9c8efdeb032a",
+        "span_count": 1,
+        "version_id": "ab84b273-57b3-4087-a5d8-6177a43a0d76"
+      }
+    },
+    {
+      "name": "norm-plus-one",
+      "result": "refused",
+      "error_code": "MODEL_SOURCE_TOO_LARGE"
+    },
+    {
+      "name": "formatting-tail-and-moved-original",
+      "result": "accepted",
+      "source": {
+        "evidence_span_count": 3,
+        "normalization_version": "utf8-newlines-v1",
+        "normalized_byte_length": 76,
+        "normalized_sha256": "c6661b37551495acf46270e6f185f6e1cafab67513123a437ba020e54bb43839",
+        "parser_version": "blocks-v1",
+        "project_id": "e197ad0b-b354-4461-8c83-c88d085065ae",
+        "raw_byte_length": 87,
+        "raw_sha256": "05c38a0249d4faffa3c931114e51d3b95eb079e5687f2fb5a3bb531fe807335e",
+        "revision": 1,
+        "schema_version": 1,
+        "source_id": "e444a75a-74e3-4575-a902-4a353a7b792e",
+        "span_count": 6,
+        "version_id": "81d87ae1-d7b2-412c-8886-27da830fa6db"
+      }
+    },
+    {
+      "name": "separator",
+      "result": "accepted",
+      "source": {
+        "evidence_span_count": 3,
+        "normalization_version": "utf8-newlines-v1",
+        "normalized_byte_length": 76,
+        "normalized_sha256": "c6661b37551495acf46270e6f185f6e1cafab67513123a437ba020e54bb43839",
+        "parser_version": "blocks-v1",
+        "project_id": "e197ad0b-b354-4461-8c83-c88d085065ae",
+        "raw_byte_length": 87,
+        "raw_sha256": "05c38a0249d4faffa3c931114e51d3b95eb079e5687f2fb5a3bb531fe807335e",
+        "revision": 1,
+        "schema_version": 1,
+        "source_id": "e444a75a-74e3-4575-a902-4a353a7b792e",
+        "span_count": 6,
+        "version_id": "81d87ae1-d7b2-412c-8886-27da830fa6db"
+      }
+    },
+    {
+      "name": "unknown-version",
+      "result": "refused",
+      "error_code": "MODEL_SOURCE_VERSION_UNKNOWN"
+    },
+    {
+      "name": "invalid-version",
+      "result": "refused",
+      "error_code": "MODEL_SOURCE_VERSION_UNKNOWN"
+    },
+    {
+      "name": "cr-only-complete",
+      "result": "accepted",
+      "source": {
+        "evidence_span_count": 2,
+        "normalization_version": "utf8-newlines-v1",
+        "normalized_byte_length": 14,
+        "normalized_sha256": "f7a7d35fe48a830515d7ffdee913f211608950952dc736c8c707afaf524092bc",
+        "parser_version": "blocks-v1",
+        "project_id": "41357e6a-f795-49a3-b773-406d51d64147",
+        "raw_byte_length": 14,
+        "raw_sha256": "320188007dae2bea8e34e4987d4010d9d41490424cb202309e9372e32388779c",
+        "revision": 1,
+        "schema_version": 1,
+        "source_id": "0ac9f16e-6695-4177-873b-e27b2ddca3fd",
+        "span_count": 4,
+        "version_id": "dd1411d9-bcfe-461e-8378-103f16e196dd"
+      }
+    },
+    {
+      "name": "invalid-utf8",
+      "result": "refused",
+      "error_code": "MODEL_SOURCE_INVALID_UTF8"
+    },
+    {
+      "name": "formatting-only",
+      "result": "refused",
+      "error_code": "MODEL_SOURCE_EMPTY"
+    },
+    {
+      "name": "drop-formatting-subset",
+      "result": "refused",
+      "error_code": "SOURCE_INVALID_SNAPSHOT"
+    },
+    {
+      "name": "drop-tail-subset",
+      "result": "refused",
+      "error_code": "SOURCE_INVALID_SNAPSHOT"
+    },
+    {
+      "name": "spurious-formatting-kind",
+      "result": "refused",
+      "error_code": "SOURCE_INVALID_SNAPSHOT"
+    },
+    {
+      "name": "norm-and-sql-sha-only-tamper",
+      "result": "refused",
+      "error_code": "SOURCE_INVALID_SNAPSHOT"
+    }
+  ]
+}

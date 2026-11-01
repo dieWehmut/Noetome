@@ -32,3 +32,8 @@ doc/validation/B04-T01-evidence/**/*.log -text whitespace=blank-at-eol,space-bef
 doc/validation/B04-T01-evidence/**/*.bin binary
 doc/validation/B04-T01-evidence/**/*.sqlite binary
 doc/validation/B04-T01-evidence/**/*.pdf binary
+# B04-T02 local evidence preserves raw test whitespace and original log bytes.
+doc/validation/B04-T02-local.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+doc/validation/B04-T02-local-evidence/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+doc/validation/B04-T02-local-evidence/**/*.bin binary
+doc/validation/B04-T02-local-evidence/**/*.sqlite binary

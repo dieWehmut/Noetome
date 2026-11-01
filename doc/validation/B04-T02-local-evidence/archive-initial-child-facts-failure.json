@@ -1,0 +1,17 @@
+{
+  "phase": "original evidence archive assertions",
+  "actual_error": "KeyError: environment_names for the sleep case at line 68",
+  "cause": "the archive helper expected frame delivery metadata in timeout/cancel/no-read-stdin cases which intentionally announce only the native PID before consuming input",
+  "correction": "check all 19 native observer records, and only validate frame/environment fields where the child actually consumed the frame",
+  "existing_original_evidence_copies_preserved": true,
+  "product_bug": false,
+  "later_independent_audit": {
+    "initial_error_case_label_was_wrong": true,
+    "actual_missing_environment_case": "blocked-stdin",
+    "actual_frames_consumed": 18,
+    "actual_pid_only_cases": [
+      "blocked-stdin"
+    ],
+    "evidence": "Final original and archived child-facts plus helper source show sleep/cancel consume the frame before sleeping; the original 16/3 narrative was an archive helper interpretation error."
+  }
+}

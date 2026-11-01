@@ -1059,7 +1059,7 @@
       "id": "B04-T02",
       "title": "用明确配置和预算完成一次小文本真实API候选抽取",
       "batch": "B04",
-      "status": "todo",
+      "status": "blocked",
       "depends_on": [
         "B04-T01"
       ],
@@ -1078,7 +1078,26 @@
         "实际响应经过T01严格解码，保存实际provider/返回模型、请求响应配置来源指纹和实际用量或明确未知；候选仍unverified，JSON合法和模型自信不代表事实正确。失败不损坏来源或伪造成功，候选只读重载不再次调用API。",
         "真实冒烟单独显式启用并保存脱敏证据，不进入普通离线回归；本次成功只证明有限小文本调用，不宣称通用API/PDF视觉/科学质量/批量调用或长任务恢复。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-01T14:31:18Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "从9910876继续真实API任务；当前尚缺用户provider/model/凭据引用/外发范围/预算，已异步询问。先落实完整短文本真实快照预检及瞬时凭据交接的离线边界，保持零真实API调用，未跑实际冒烟不得complete。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-01T14:56:26Z",
+          "action": "block",
+          "from_status": "in_progress",
+          "to_status": "blocked",
+          "note": "已实现并提交470262b完整短文本预检与瞬时凭据交接；离线workspace468及Python12通过，19个合成凭据native child、独立13探针与归档6次只读重读详见doc/validation/B04-T02-local.md/.json。当前真实执行缺用户provider/API地址、model、显式凭据环境变量名称、资料外发确认和单次预算；真实adapter/远端审计/持久重载及冒烟未完成，等待必要配置，不complete、不启动T03。",
+          "validation": [],
+          "artifacts": []
+        }
+      ]
     },
     {
       "id": "B04-T03",

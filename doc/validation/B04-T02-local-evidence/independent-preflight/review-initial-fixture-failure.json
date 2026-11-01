@@ -1,0 +1,13 @@
+{
+  "stage": "initial independent 13-case probe",
+  "case": "drop-formatting-subset",
+  "actual_code": "PROJECT_DATABASE_BUSY",
+  "expected_for_valid_closed_fixture": "SOURCE_INVALID_SNAPSHOT",
+  "cause": "Python sqlite3 connection remained open after its context committed; the write file handle correctly blocked read_guard. Closed with contextlib.closing and reran in a new sandbox.",
+  "preserved_initial_directories": [
+    "C:\\Users\\Lyinn\\.codex\\worktrees\\b03-t01-sidecar\\Noetome\\.artifacts\\B04-T02-independent-preflight-review-95ad4f85-bec7-4fe4-9b31-243f904aa865"
+  ],
+  "rerun_cases": 13,
+  "rerun_pass": 13,
+  "product_bug": false
+}

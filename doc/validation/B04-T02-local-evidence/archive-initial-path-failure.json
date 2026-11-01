@@ -1,0 +1,8 @@
+{
+  "phase": "original evidence archive copy",
+  "actual_error": "AssertionError in checked_path at line 28 before copying the first credential directory",
+  "cause": "native extended path prefix \\?\\ was compared lexically with the regular repository path",
+  "correction": "remove only the native extended prefix before resolving and verifying the path stays in the task artifact workspace",
+  "existing_log_copies_preserved": true,
+  "product_bug": false
+}
