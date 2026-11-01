@@ -1,0 +1,30 @@
+{
+  "name": "noetome",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "web:dev": "vite --config apps/desktop/vite.config.ts",
+    "web:check": "tsc --project apps/desktop/tsconfig.json --noEmit",
+    "web:build": "npm run web:check && vite build --config apps/desktop/vite.config.ts",
+    "desktop:dev": "tauri dev --config crates/noetome-desktop/tauri.conf.json",
+    "desktop:build": "tauri build --config crates/noetome-desktop/tauri.conf.json"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "2.12.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.12.4",
+    "@types/node": "26.6.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "typescript": "7.0.2",
+    "vite": "8.3.5"
+  }
+}

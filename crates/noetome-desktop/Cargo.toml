@@ -1,0 +1,21 @@
+[package]
+name = "noetome-desktop"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish = false
+description = "Noetome 本地桌面应用"
+
+[build-dependencies]
+tauri-build = { version = "=2.7.4", features = [] }
+
+[dependencies]
+noetome-cli = { path = "../noetome-cli" }
+serde = { version = "=1.0.229", features = ["derive"] }
+tauri = { version = "=2.12.5", features = [] }
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]
+
+[lints]
+workspace = true
