@@ -52,3 +52,11 @@ Host 完整有界读取明确选定的单文件，保持读守卫，计算 SHA25
 ## 预期稳定分类
 
 INPUT_INVALID、INPUT_LIMIT、UNSAFE_PATH、WORKSPACE_CONFLICT、REQUEST_LIMIT、SPAWN_FAILED、PIPE_FAILED、STDOUT_LIMIT、STDERR_LIMIT、TIMEOUT、CANCELLED、EXIT_NONZERO、CLEANUP_FAILED、PROTOCOL_INVALID、RESOURCE_INVALID、INCOMPLETE 均加 `SIDECAR_` 前缀。校验问题另有 rule_id/object_refs/message；只附受限诊断，不保存无关材料。实现或真实试验发现冲突时记录裁定并更新本文件，不隐藏失败。
+
+## 实施中的实证裁定
+
+- Ruling：所有 DTO 强制 named object，所有枚举强制 string；Serde derive 原先接受 positional array 和 external-tag object。真实进程已错误返回 Complete，新增三项模型负例先红后绿，并以原始 MapAccess 委托严格字段，重复键继续拒绝。
+- Ruling：最终资源阶段重复检查精确库存、文件身份、实际链接数及长度/SHA。两个外部探针在读守卫生效后分别添加未知文件或硬链接，旧 Host 仍 Complete；修正版均 RESOURCE_INVALID 且保留真实现场。
+- Ruling：取消覆盖 Host 64 KiB 分块读取/复制、校验阶段及最终交付入口。原先子进程已退出后忽略取消的 8/16 MiB 真实探针已重现，不将 resource 包装覆盖 CANCELLED。
+- Ruling：进程只传现有 SystemRoot，其他运行时需求后续显式增加。完整环境约 10.82 s 的 helper 入口迟延被 TERM 单变量隔离；同步 spawn 只有毫秒级，控制环境未扩大任何限额。底层机理未知，不把猜测记为原因。
+- Ruling：根和观察句柄保守释放，但不宣称任何观察引用必使 Job 计数保持非零；当前准备失败探针持 query/synchronize 引用时计数已经归零。错误预期的失败单列，不计产品 TDD 红。

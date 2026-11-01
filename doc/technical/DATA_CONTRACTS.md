@@ -295,6 +295,8 @@ Release 保存 `release_id`、`run_id`、IR 与计划版本、渲染器版本、
 
 ## 9 扩展顺序
 
+B03-T01 新增[独立 sidecar v1 契约](SIDECAR_PROTOCOL.md)，包括严格 request/response、producer/能力、完整 input_bytes 分区、资源清单、partial/failed 及有界进程错误。它不写来源或编译数据库，不新增 Source/Version/Span 身份，不扩大旧 UTF8 与 fixture 契约。真实 PDF locator 在后续版本单独定义和验证。
+
 | 后续能力 | 到该阶段再引入的契约 |
 | --- | --- |
 | PDF 与扫描 | 页或区域 locator、图片资产、解析置信度及 sidecar 能力声明 |

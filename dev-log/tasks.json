@@ -714,7 +714,7 @@
       "id": "B03-T01",
       "title": "用fake子进程验证有界单请求parser sidecar协议",
       "batch": "B03",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B02-T03"
       ],
@@ -741,6 +741,50 @@
           "note": "在独立托管工作区冻结严格sidecar协议及Windows进程树宿主；先真实进程负例红，再实现有界管道/取消/资源复核。只本项，不接PDF解析或项目登记。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-01T11:34:32Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成严格原始字节sidecar协议、Windows挂起创建时原子Job关联、并发有界管道与终止等待；快照和最终资源复核、Host复核期取消及独立审查缺口均修复。fake仅私有测试入口，本项不接真实PDF，不启动T02。",
+          "validation": [
+            "本机Windows x64最终cargo fmt/check/test workspace locked offline退出0；Rust 323通过0失败0忽略，含25组实际sidecar矩阵114 Host调用/96 native根/1 smoke/6句柄观察孙进程，另1真实abort自然0xC0000409。Python unittest12通过；实际独立清单/硬链接/strict wire shape/Host资源期取消红绿探针均按稳定错误拒绝，完整原始字节及哨兵保留。14份提交证据与12个源码指纹、40项含原日志指纹及88个Markdown本地链接核对通过；普通CLI4次验证无fake入口；devlog check与git diff --cached --check通过。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/sidecar.rs",
+              "sha256": "82fb9abca8183478e14d217830fde7ca6963dd9ef6e8eda5dc9e4f0301970e9a"
+            },
+            {
+              "path": "crates/noetome-cli/src/sidecar_model.rs",
+              "sha256": "05748f201d1a59b71d5b715ee0540ce397af574b59d8dba696d06b3bbfc906db"
+            },
+            {
+              "path": "crates/noetome-cli/src/sidecar_process.rs",
+              "sha256": "afa8aa67c2f59c529440689f6120d62e4feea84c550104573cf0ab630ad9cd41"
+            },
+            {
+              "path": "crates/noetome-sidecar-platform/src/windows.rs",
+              "sha256": "529a83c39685f561710b6b9e205a159dc2f4a791c952d534868dfdd6f17846fd"
+            },
+            {
+              "path": "crates/noetome-cli/tests/sidecar.rs",
+              "sha256": "96845a3d507cee06df863d5914cb98a2e1c0d01ff77e4a5e33452eb530b549f3"
+            },
+            {
+              "path": "doc/technical/SIDECAR_PROTOCOL.md",
+              "sha256": "76b6db3df347c4838a9a53fcb80db6d655001f648fca799815f4907ffbbec8da"
+            },
+            {
+              "path": "doc/validation/B03-T01.md",
+              "sha256": "5e2fb1eca2f7f40934cb2d6fa423b5772a7582cbd48bd08933556dfc2caeba0f"
+            },
+            {
+              "path": "doc/validation/B03-T01.json",
+              "sha256": "bf849cf14af8d6cd60c8c71399c9c10ed62a351553b27474e533139485b9de74"
+            }
+          ]
         }
       ]
     },

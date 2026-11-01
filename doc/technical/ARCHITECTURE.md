@@ -9,7 +9,7 @@
 | 领域 | 采用方向 | 当前边界 |
 | --- | --- | --- |
 | 核心与命令行 | Rust core 与 CLI | 先建立可单独执行和测试的核心，不依赖 GUI |
-| 资料解析 | Rust文本入口，后续加 Python parser sidecar | 当前CLI只登记明确选取的单份UTF8 MD/TXT；真实 PDF 接入时才引入 sidecar |
+| 资料解析 | Rust文本入口与有界 sidecar 宿主，随后接 Python parser | 当前CLI仍只登记明确选取的UTF8 MD/TXT；sidecar v1只验证原始字节/fake协议，真实PDF尚未接入 |
 | 持久化 | 本地 SQLite | 来源项目保存项目、来源版本、Span与最小导入记录；fixture编译工作区另以Schema1保存Run、Coverage、Release和发布依据，数据库不放进阅读Vault |
 | 交换契约 | 带版本的 JSON | 显式校验输入、引用与结果；详见 [数据契约](DATA_CONTRACTS.md) |
 | 输出 | 有限Markdown、标题语义链接与比较表 | 当前只写尚不存在的新测试根中的Vault；完整Obsidian兼容及生产库维护需分别验收 |
@@ -205,7 +205,11 @@ case compile成功stdout为Schema1 CompileOutcome，包含producer=fixture、ope
 
 ### Python parser sidecar
 
-真实 PDF 接入前，以小型协议测试程序验证进程启动、单个请求、结构化输出、超时、退出码和取消。请求包含版本、请求 ID、限定输入句柄和工作区；响应包含来源指纹、Span、资源清单、问题和能力信息。
+B03-T01 的已实现边界见[单请求协议v1](SIDECAR_PROTOCOL.md)：Rust Host 仅提供自有输入快照和新根，严格验证完整原始分区及实际资源；三个并发管道有明确限额，Windows JobList 在挂起创建时原子关联进程树，异常路径终止并等待。fake helper 只在测试 target，无生产 CLI 开关。CLI/desktop 的 unsafe forbid 保留；Win32 FFI 仅在小型平台 crate 的私有模块封装。
+
+v1 input_bytes 定位不表达 PDF 页或正文。后续真实 PDF 协议显式升级，不能修改旧 locator 含义；项目 Schema2 与编译 Schema1 仍分开。受控进程树及资源校验不是 OS 文件/网络沙盒，实测和未测范围见验证记录。
+
+真实 PDF 接入前，已用小型协议测试程序验证进程启动、单个请求、结构化输出、超时、退出码和取消。请求包含版本、请求 ID、限定只读快照引用和工作区；响应包含来源指纹、完整原始字节单元、资源清单、问题和能力信息。
 
 协议先采用有边界的 JSON 请求响应。若使用标准输入输出，标准输出只传协议，日志走标准错误；必须限制响应大小。不要为了首个 PDF 提前设计通用远程任务总线。
 

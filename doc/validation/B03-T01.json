@@ -1,0 +1,398 @@
+{
+  "schema_version": 1,
+  "task_id": "B03-T01",
+  "recorded_at_utc": "2026-11-01T11:33:52+00:00",
+  "validation_scope": "protocol_only",
+  "producer_under_test": "fake",
+  "environment": {
+    "os": "Windows x64",
+    "os_build": "10.0.26200.8037",
+    "display_version": "25H2",
+    "rustc": "1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "1.98.1 (797e8a9bc 2026-08-05)",
+    "python": "3.12.14",
+    "target": "x86_64-pc-windows-msvc",
+    "dependency_mode": "locked/offline, existing local cache; no dependency versions changed",
+    "generated_directory_setup": "Only task-owned target, desktop/gen and .artifacts had Low integrity labels applied after real setup failures. No private or production directories changed."
+  },
+  "checks": [
+    {
+      "command": "cargo fmt --all --check",
+      "exit_code": 0
+    },
+    {
+      "command": "./scripts/cargo_local.ps1 check --workspace --locked --offline",
+      "exit_code": 0,
+      "warnings": 0,
+      "evidence": "doc/validation/B03-T01-evidence/workspace-check.log"
+    },
+    {
+      "command": "./scripts/cargo_local.ps1 test --workspace --locked --offline",
+      "exit_code": 0,
+      "passed": 323,
+      "failed": 0,
+      "ignored": 0,
+      "breakdown": {
+        "cli_library": 209,
+        "ordinary_cli": 4,
+        "compile": 12,
+        "fixture": 20,
+        "project": 13,
+        "sidecar_real_process_groups": 25,
+        "source": 19,
+        "desktop": 15,
+        "sidecar_platform": 6
+      },
+      "evidence": "doc/validation/B03-T01-evidence/workspace-tests.log"
+    },
+    {
+      "command": "python -m unittest discover -s tests -p \"test_*.py\"",
+      "exit_code": 0,
+      "passed": 12,
+      "failed": 0,
+      "evidence": "doc/validation/B03-T01-evidence/python-tests.log"
+    },
+    {
+      "command": "ordinary noetome CLI help and three fake candidate arguments",
+      "process_calls": 4,
+      "exit_codes": [
+        0,
+        2,
+        2,
+        2
+      ],
+      "evidence": "doc/validation/B03-T01-evidence/ordinary-cli.json"
+    }
+  ],
+  "sidecar_matrix": {
+    "passed_groups": 25,
+    "failed_groups": 0,
+    "host_calls": 114,
+    "native_roots": 96,
+    "direct_fake_smokes": 1,
+    "handle_observed_grandchildren": 6,
+    "separately_observed_abort_roots": 1,
+    "abort_exit_code_hex": "0xC0000409",
+    "abort_observed_wait_ms": 124.1663,
+    "late_inventory_guard_observed": true,
+    "late_hardlink_guard_observed": true,
+    "host_resource_cancellation_guard_observed": true,
+    "cases": [
+      "valid_response_from_real_test_process_preserves_reviewed_resources",
+      "missing_executable_is_a_real_spawn_failure",
+      "strict_wire_json_is_rejected_from_real_processes",
+      "strict_object_and_enum_shapes_are_rejected_from_real_processes",
+      "real_identity_and_capability_mutations_are_rejected",
+      "source_inventory_cannot_hide_missing_or_repeated_units",
+      "real_range_and_content_mutations_are_rejected",
+      "reported_partial_and_failure_preserve_verified_diagnostics",
+      "nonzero_exit_and_crash_cannot_use_complete_json",
+      "stdout_exact_boundary_and_one_excess_byte",
+      "stderr_boundaries_zero_and_binary_are_explicit",
+      "stderr_is_drained_before_child_reads_request",
+      "physical_resources_and_inventory_are_rechecked",
+      "response_resource_paths_do_not_expand_capabilities",
+      "malformed_partial_is_not_misclassified_as_verified_failure",
+      "real_tree_timeout_covers_root_and_pipe_holding_descendants",
+      "real_tree_cancellation_is_observed_after_live_handshake",
+      "real_tree_limits_end_descendants_and_both_pipes",
+      "utf8_artifact_characters_are_checked_independently",
+      "artifact_limits_are_checked_at_exact_boundaries",
+      "request_and_manifest_counts_have_exact_limits",
+      "preflight_limits_and_existing_roots_never_start_fake",
+      "real_windows_junctions_and_hardlinks_are_rejected",
+      "late_resource_inventory_addition_is_rejected",
+      "cancellation_during_host_resource_verification_is_rejected"
+    ],
+    "count_rule": "Actual final harness counters, not estimates. Native roots are a subset of Host calls; before-spawn rejections do not start a root. Support helper entry tests are included in Rust totals."
+  },
+  "limits": {
+    "input_bytes": 67108864,
+    "request_bytes": 65536,
+    "stdout_bytes": 4194304,
+    "stderr_bytes": 262144,
+    "artifact_bytes": 16777216,
+    "total_artifact_bytes": 67108864,
+    "artifacts": 64,
+    "units": 4096,
+    "issues": 128,
+    "run_timeout_ms": 30000,
+    "cleanup_timeout_ms": 2000,
+    "policy": "Public API only tightens limits. These are policies, not throughput or accuracy measurements."
+  },
+  "independent_author_facts": {
+    "abc_sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+    "utf8_e_acute_sha256": "4a99557e4033c3539de2eb65472017cad5f9557f7a0625a09f1c3f6e2ba69c4c",
+    "sixteen_mib_x_sha256": "a06c26cbac8b80704f420222dae5658b88ff2da96702d12ef7a4223e9361f7c1",
+    "fixed_compact_request_bytes": 407,
+    "unchanged_existing_fixture_expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd"
+  },
+  "review_reproductions": [
+    {
+      "finding": "late unknown artifact after actual read guard",
+      "old_result": "Complete",
+      "fixed_result": "SIDECAR_RESOURCE_INVALID",
+      "bytes_preserved": true,
+      "red": "inventory-red.log",
+      "green": "inventory-hardlink-green.log"
+    },
+    {
+      "finding": "late hardlink after actual read guard",
+      "old_result": "Complete",
+      "fixed_result": "SIDECAR_RESOURCE_INVALID",
+      "bytes_preserved": true,
+      "red": "hardlink-red.log",
+      "green": "inventory-hardlink-green.log"
+    },
+    {
+      "finding": "positional object arrays and external-tag enum objects",
+      "old_result": "Complete",
+      "fixed_result": "SIDECAR_PROTOCOL_INVALID",
+      "response": null,
+      "red": [
+        "object-shape-red.log",
+        "enum-shape-red.log"
+      ],
+      "green": [
+        "object-shape-green.log",
+        "enum-shape-green.log"
+      ]
+    },
+    {
+      "finding": "cancellation after child exit during Host resource verification",
+      "old_result": "Complete",
+      "fixed_result": "SIDECAR_CANCELLED",
+      "response": null,
+      "red": "host-cancel-red.log",
+      "green": "host-cancel-green.log"
+    }
+  ],
+  "environment_experiments": {
+    "term_probe": {
+      "with_term_spawn_ms": 3.4435,
+      "with_term_total_ms": 10834,
+      "without_term_spawn_ms": 1.8889,
+      "without_term_total_ms": 23.5521,
+      "conclusion": "TERM isolated a delay before private libtest helper user entry; underlying mechanism unresolved. Final Host passes only existing SystemRoot, without widening deadlines."
+    },
+    "wer_probe": {
+      "matching_application_to_wer_event_seconds": 11.58,
+      "separate_natural_abort_wait_ms": 2505,
+      "conclusion": "Observed fast-fail/WER wait, not an observed visible popup. Only private crash child configures its own ErrorMode/WER NO_UI, preserving true abort and five-second test policy. No Host or registry configuration changed."
+    },
+    "job_observer_probe": "This OS reported zero Job active processes despite a query/synchronize observer handle. The incorrect universal ref-count expectation is recorded as a test expectation failure, not product TDD red."
+  },
+  "evidence_files": [
+    {
+      "path": "doc/validation/B03-T01-evidence/workspace-tests.log",
+      "byte_length": 32975,
+      "sha256": "a857f1ebe7740d495ce254a2a20cb85941f6152dad3cd91d3d5d9ed978f9d81f",
+      "original_local_log": {
+        "path": ".artifacts/B03-T01-final-workspace-tests.log",
+        "byte_length": 32977,
+        "sha256": "8bfc82c1b1ada3ebebbde81445a0219026358d196fbce2f53145398625164ba1"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/workspace-check.log",
+      "byte_length": 914,
+      "sha256": "2c2ee6ac88fb323561947b23bec617da6d65bf2e52cf0a434816ad94f852699f",
+      "original_local_log": {
+        "path": ".artifacts/B03-T01-final-workspace-check.log",
+        "byte_length": 914,
+        "sha256": "2c2ee6ac88fb323561947b23bec617da6d65bf2e52cf0a434816ad94f852699f"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/python-tests.log",
+      "byte_length": 116,
+      "sha256": "ae7dabb5d4d980e2a907b6d7a79af87ecf471ac39a76add806b43f4e7833aa3a",
+      "original_local_log": {
+        "path": ".artifacts/B03-T01-final-python-tests.log",
+        "byte_length": 116,
+        "sha256": "ae7dabb5d4d980e2a907b6d7a79af87ecf471ac39a76add806b43f4e7833aa3a"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/ordinary-cli.json",
+      "byte_length": 1450,
+      "sha256": "1a14621057ae3db0b1e55bca90fbfd573772b6ba03c456999f710a7e5c524bfb",
+      "original_local_log": {
+        "path": ".artifacts/B03-T01-cli-fake-entry-check.log",
+        "byte_length": 1450,
+        "sha256": "1a14621057ae3db0b1e55bca90fbfd573772b6ba03c456999f710a7e5c524bfb"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/author-facts.log",
+      "byte_length": 270,
+      "sha256": "191d1d44223c615adb87fda882a51128242a1ec84e266055341116267fe23c9a",
+      "original_local_log": {
+        "path": ".artifacts/B03-T01-author-facts-audit.log",
+        "byte_length": 270,
+        "sha256": "191d1d44223c615adb87fda882a51128242a1ec84e266055341116267fe23c9a"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/inventory-red.log",
+      "byte_length": 214,
+      "sha256": "7a706825af03a31c899339a00cc8c7b26383c096e0a2323cdb6d8e00e0b6ce78",
+      "original_local_log": {
+        "path": ".artifacts/B03-T01-inventory-review-probe.log",
+        "byte_length": 214,
+        "sha256": "7a706825af03a31c899339a00cc8c7b26383c096e0a2323cdb6d8e00e0b6ce78"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/hardlink-red.log",
+      "byte_length": 236,
+      "sha256": "2ad0b31ba296cec13c0e45fff48ff960e969067d931d1aaf1b91749e6879952c",
+      "original_local_log": {
+        "path": ".artifacts/B03-T01-hardlink-review-probe.log",
+        "byte_length": 236,
+        "sha256": "2ad0b31ba296cec13c0e45fff48ff960e969067d931d1aaf1b91749e6879952c"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/inventory-hardlink-green.log",
+      "byte_length": 1197,
+      "sha256": "515f49aff8f497bdcc018e4468b8887dfe95da4842743b3350d7355221e113ea",
+      "original_local_log": {
+        "path": ".artifacts/B03-T01-review-probes-green.log",
+        "byte_length": 1197,
+        "sha256": "515f49aff8f497bdcc018e4468b8887dfe95da4842743b3350d7355221e113ea"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/object-shape-red.log",
+      "byte_length": 112,
+      "sha256": "1fde9a04e34b1098685823463305d062a66bc58273a49f854c7c8db6cb9df560",
+      "original_local_log": {
+        "path": ".artifacts/sidecar-review/probe_sequence.log",
+        "byte_length": 114,
+        "sha256": "bc2f758839a319563c71153c66a51e35b22dc42a3dbebb6be5e3017766f8a69c"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/object-shape-green.log",
+      "byte_length": 391,
+      "sha256": "bc2431aae975da966a37f9c2fcc3cce0ab0b0149f5c9f1fca19e4b4cd424db54",
+      "original_local_log": {
+        "path": ".artifacts/sidecar-review/probe_sequence.green.log",
+        "byte_length": 391,
+        "sha256": "bc2431aae975da966a37f9c2fcc3cce0ab0b0149f5c9f1fca19e4b4cd424db54"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/enum-shape-red.log",
+      "byte_length": 119,
+      "sha256": "85ab7d0eb0ef2010eee08a72445cc9277759a770a962227e8fd6017ffcf4c9e8",
+      "original_local_log": {
+        "path": ".artifacts/sidecar-review/probe_enum.log",
+        "byte_length": 121,
+        "sha256": "1dad5fe85853b63129a6cb118bd846a71faccc556c807b789e0d2179e2cf9906"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/enum-shape-green.log",
+      "byte_length": 402,
+      "sha256": "c10da9686dd6d1f3f3a65809c49255b5d2eabf21f2b3ff00ec0cd54000aca334",
+      "original_local_log": {
+        "path": ".artifacts/sidecar-review/probe_enum.green.log",
+        "byte_length": 402,
+        "sha256": "c10da9686dd6d1f3f3a65809c49255b5d2eabf21f2b3ff00ec0cd54000aca334"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/host-cancel-red.log",
+      "byte_length": 90,
+      "sha256": "68f6cd56240d7b89a9678495f9d13beb0cf5e3910f3690938f68422aa7b84dee",
+      "original_local_log": {
+        "path": ".artifacts/sidecar-review/probe_cancel.log",
+        "byte_length": 90,
+        "sha256": "68f6cd56240d7b89a9678495f9d13beb0cf5e3910f3690938f68422aa7b84dee"
+      }
+    },
+    {
+      "path": "doc/validation/B03-T01-evidence/host-cancel-green.log",
+      "byte_length": 264,
+      "sha256": "0e659ee50f4ea487d8fa2d9dcd071738fe2adb1dc2c55301e9f8054ee9aca5f4",
+      "original_local_log": {
+        "path": ".artifacts/sidecar-review/probe_cancel.green.log",
+        "byte_length": 264,
+        "sha256": "0e659ee50f4ea487d8fa2d9dcd071738fe2adb1dc2c55301e9f8054ee9aca5f4"
+      }
+    }
+  ],
+  "tested_source_fingerprints": [
+    {
+      "path": "Cargo.toml",
+      "byte_length": 248,
+      "sha256": "d02cbba862531b22111d7669a4d1020d8ecd5e4240d7f6f9c9c0747099a29e39"
+    },
+    {
+      "path": "Cargo.lock",
+      "byte_length": 106735,
+      "sha256": "e5b9d3cafe805f79eec871fba6cb34f58403900b0fb6d7c2ae30b459701dcdf1"
+    },
+    {
+      "path": "crates/noetome-cli/Cargo.toml",
+      "byte_length": 704,
+      "sha256": "b4bbcbac1b8dd15d7bfdc807ffbfd81c40b8473dc10e08d1156c9c113860f814"
+    },
+    {
+      "path": "crates/noetome-cli/src/lib.rs",
+      "byte_length": 10716,
+      "sha256": "3c93d2b5a74c7811e9037621758e76d33bf4907f03410630c6cde4ad9a58ceeb"
+    },
+    {
+      "path": "crates/noetome-cli/src/sidecar.rs",
+      "byte_length": 30735,
+      "sha256": "82fb9abca8183478e14d217830fde7ca6963dd9ef6e8eda5dc9e4f0301970e9a"
+    },
+    {
+      "path": "crates/noetome-cli/src/sidecar_model.rs",
+      "byte_length": 45074,
+      "sha256": "05748f201d1a59b71d5b715ee0540ce397af574b59d8dba696d06b3bbfc906db"
+    },
+    {
+      "path": "crates/noetome-cli/src/sidecar_process.rs",
+      "byte_length": 24242,
+      "sha256": "afa8aa67c2f59c529440689f6120d62e4feea84c550104573cf0ab630ad9cd41"
+    },
+    {
+      "path": "crates/noetome-cli/tests/sidecar.rs",
+      "byte_length": 50073,
+      "sha256": "96845a3d507cee06df863d5914cb98a2e1c0d01ff77e4a5e33452eb530b549f3"
+    },
+    {
+      "path": "crates/noetome-cli/tests/support/sidecar_fake.rs",
+      "byte_length": 23537,
+      "sha256": "970883a408ccaad9cd46643a236861471c0b636ca216aba2a8e5eac0d13711bc"
+    },
+    {
+      "path": "crates/noetome-sidecar-platform/Cargo.toml",
+      "byte_length": 662,
+      "sha256": "f3a8516f7bc380b08bd8614c2f985b20849044194133777a704ec43fff65a4b2"
+    },
+    {
+      "path": "crates/noetome-sidecar-platform/src/lib.rs",
+      "byte_length": 14567,
+      "sha256": "e3a02d51526756e845a0ccc309a4443d363d50f166fb8d989189767209841033"
+    },
+    {
+      "path": "crates/noetome-sidecar-platform/src/windows.rs",
+      "byte_length": 24558,
+      "sha256": "529a83c39685f561710b6b9e205a159dc2f4a791c952d534868dfdd6f17846fd"
+    }
+  ],
+  "local_debug_log_policy": "Other setup, initial red/green and environment logs remain in task-owned ignored .artifacts. Committed selected logs preserve every content line and remove only extra blank lines at EOF for git diff --check. Original untouched local logs and committed snapshots each have fingerprints. SHA does not replace behavior assertions.",
+  "not_run_or_not_claimed": [
+    "real PDF/Python parser, page/bbox/text accuracy or production source registration",
+    "OCR, models, network/API or scientific/knowledge-quality measurements",
+    "production Vault, new GUI/install behavior or cross-platform compatibility",
+    "OS filesystem/network sandbox, all filesystem/driver failures or atomicity against arbitrary edits after return",
+    "1000-page, 24-hour, throughput or scientific accuracy benchmarks",
+    "hard preemption of synchronous Win32 creation/open or CPU validation"
+  ]
+}
