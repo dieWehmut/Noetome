@@ -877,7 +877,7 @@
       "id": "B03-T03",
       "title": "安全登记单份PDF来源版本及解析尝试并验证复用与失败保护",
       "batch": "B03",
-      "status": "todo",
+      "status": "in_progress",
       "depends_on": [
         "B03-T02",
         "B02-T01"
@@ -901,7 +901,17 @@
         "只读inspect在原文件移动/删除后仍能依靠项目内已确认快照核对原始SHA、解析器/协议/选项版本、页/区域/资源完整性及持久报告；篡改、范围越界、未知缓存、Windows文件占用/链接/junction、候选目录替换和提交中断均不报告成功或覆盖人工内容。只清理已确认属本轮的沙盒或保留明确待恢复现场。",
         "source报告分别表达原始获取、PDF解析和知识pending状态，失败/needs_review页不算解析完成；不创建IR/NotePlan/Release或假覆盖、模型/科学指标。实际重复导入、失败后再导入、升级保护、已有MD/TXT及fixture闭环回归、统一日志检查通过并保存证据后提交推送。B03验收后仅滚动规划，不自动启动真实API或OCR。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-01T12:40:09Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "续接T02已验收的真实PDF，在现有干净托管工作区开始显式Schema3来源登记与解析身份/复用/失败保护；先审查冻结迁移和快照契约，再真CLI红与实现。仅新测试项目，不创建知识或生产Vault。",
+          "validation": [],
+          "artifacts": []
+        }
+      ]
     }
   ]
 }
