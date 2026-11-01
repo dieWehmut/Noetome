@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B01",
+  "current_batch": "B01A",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -8,6 +8,13 @@
       "from_batch": "B00",
       "to_batch": "B01",
       "note": "B00开发规范和日志基础已验收；B01三项已规划为todo，尚未启动产品代码开发"
+    },
+    {
+      "at": "2026-11-01T03:05:18Z",
+      "action": "batch",
+      "from_batch": "B01",
+      "to_batch": "B01A",
+      "note": "B01三项已验收并推送；根据用户新增最小化托盘要求，插入单任务桌面批次，再回到B02来源闭环。"
     }
   ],
   "tasks": [
@@ -314,6 +321,43 @@
               "sha256": "2b437c310099576860c69056e2671cd1c9347eb06a17d1dfff383dbd4bcdfe40"
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "B01A-T01",
+      "title": "桌面最小化托盘与安装实测",
+      "batch": "B01A",
+      "status": "blocked",
+      "depends_on": [
+        "B01-T03"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "使用既有指定图标创建Windows托盘，最小化后窗口隐藏且进程持续运行",
+        "托盘左键和显示窗口菜单可恢复窗口与焦点，保留先前导航及运行输出",
+        "托盘退出菜单结束进程并移除图标，关闭按钮保持现有退出行为",
+        "重新构建当前用户安装包并本地安装，实际验证托盘 最小化 恢复 退出及重启；必要回归通过",
+        "同步真实行为 失败诊断及验证证据，分步提交并推送远程"
+      ],
+      "history": [
+        {
+          "at": "2026-11-01T03:05:18Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "实现最小化隐藏到托盘、已有窗口恢复及明确退出，构建并安装当前版本做原生Windows实测。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-01T03:13:02Z",
+          "action": "block",
+          "from_status": "in_progress",
+          "to_status": "blocked",
+          "note": "托盘代码152c97c已完成；fmt/workspace check、24项Rust测试、前端及release/NSIS构建、本地安装和严格指纹/快捷方式登记通过。用户Esc停止Computer Use后未再操作桌面，原生最小化/左键及菜单恢复/退出/状态保留/重启五项尚待用户反馈；已请求实测。验证及安装证据见doc/validation/B01A-T01.md和B01A-T01-install.json。尚未验收，不推送本托盘分支。",
+          "validation": [],
+          "artifacts": []
         }
       ]
     }

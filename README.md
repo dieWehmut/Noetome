@@ -8,11 +8,11 @@ Rust CLI 提供空项目初始化与只读检查，以及帮助和版本命令�
 
 - [开发指引](AGENTS.md)：每轮工作规则及标准路径。
 - [标准文件入口](doc/README.md)：需求、技术、设计、测试和执行规范。
-- [近期开发步骤](doc/execution/NEXT_STEPS.md)：仅展开下一批3项，每轮推进一项。
+- [近期开发步骤](doc/execution/NEXT_STEPS.md)：仅展开下一批最多3项，每轮推进一项。
 - [当前状态](dev-log/STATUS.md)、[待办事项](dev-log/TODO.md)、[已完成事项](dev-log/DONE.md)：由任务账本自动生成。
 - [详细需求](doc/requirements/PRD.md)及[HTML阅读版](doc/requirements/PRD.html)。
 
-原待决策事项已按建议采纳，详见[决策基线](doc/requirements/DECISIONS.md)。根据2026年11月1日的用户要求，提前建设可本地安装的桌面骨架；后续继续完成空项目、文本来源和确定性输出闭环，再逐步接入PDF、模型及完整桌面功能。
+原待决策事项已按建议采纳，详见[决策基线](doc/requirements/DECISIONS.md)。根据2026年11月1日的用户要求，提前建设可本地安装的桌面骨架，并插入最小化托盘交付；后续在CLI空项目基础上完成文本来源和确定性输出闭环，再逐步接入PDF、模型及完整桌面功能。
 
 ## 构建和运行 CLI
 
@@ -81,6 +81,10 @@ npm run desktop:build
 本机仓库带有继承的 Windows Low 完整性标签，直接运行 `target/` 中的程序会因无法写入 AppData 而失败。交付脚本通过普通文件复制生成正常输出位置的副本，不修改仓库权限或进程令牌；如果输出位置仍为 Low，会明确拒绝。已经打开的旧安装器可能占用原安装包，须关闭后再覆盖该包，或通过 `-InstallerPath` 选择独立生成的新包。实际安装位置、指纹和测试见 [B01-T03 验证记录](doc/validation/B01-T03.md)。
 
 启动时应用检查自身数据目录是否可写，失败会显示原生错误弹窗、稳定错误码和具体路径；可写时追加启动错误日志。桌面接口没有新增文件或对话框 IPC 权限。
+
+本轮B01A-T01的托盘行为约定为：使用既有应用图标，最小化时隐藏主窗口并保留进程；左键单击托盘图标，或右键菜单选择“显示窗口”，恢复并聚焦原窗口，保留导航页面和已有运行输出。右键菜单的“退出”结束应用并移除托盘图标；窗口关闭按钮保持退出行为。托盘创建失败应显示`DESKTOP_TRAY_UNAVAILABLE`并停止启动，隐藏或恢复失败应显示`DESKTOP_TRAY_HIDE_FAILED`或`DESKTOP_WINDOW_RESTORE_FAILED`及处理建议。
+
+托盘版已完成本机安装，原生操作仍待验收，详见 [B01A-T01 验证记录](doc/validation/B01A-T01.md)。构建和代码检查不能代替安装后的最小化、恢复与退出实测。
 
 开发调试使用 `npm run desktop:dev`。只预览前端使用 `npm run web:dev`；前端预览没有 Tauri Rust 运行时，点击运行检查会显示连接失败。
 
