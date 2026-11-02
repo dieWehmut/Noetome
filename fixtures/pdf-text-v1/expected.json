@@ -1,0 +1,767 @@
+{
+  "schema_version": 1,
+  "producer": "authoring_fixture",
+  "review_basis": "uncompressed page tree, literal drawing text, authored baselines/Helvetica widths; independent Poppler review before adapter",
+  "cases": [
+    {
+      "file": "single-page.pdf",
+      "category": "single_column",
+      "raw_sha256": "1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457",
+      "byte_length": 873,
+      "authoring_page_count": 1,
+      "parse_page_count": 1,
+      "status": "parsed",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "parsed",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": [
+            {
+              "text": "Noetome PDF fixture - physical page one",
+              "bbox": [
+                72,
+                62.484,
+                291.42,
+                74.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 728
+              }
+            },
+            {
+              "text": "Alpha keeps its unit: 12 mg at room temperature.",
+              "bbox": [
+                72,
+                92.484,
+                331.452,
+                104.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 698
+              }
+            },
+            {
+              "text": "Café has UTF8 text; filename digits are not page labels.",
+              "bbox": [
+                72,
+                122.484,
+                368.136,
+                134.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 668
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "multiple-pages.pdf",
+      "category": "multiple_pages",
+      "raw_sha256": "52f87463abf89916ff5a91abb1c443e572c4d0036ee0c2511bca5f594a86c115",
+      "byte_length": 1562,
+      "authoring_page_count": 3,
+      "parse_page_count": 3,
+      "status": "parsed",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "parsed",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": [
+            {
+              "text": "Physical page one - introduction",
+              "bbox": [
+                72,
+                62.484,
+                242.748,
+                74.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 728
+              }
+            },
+            {
+              "text": "First: retain every source page.",
+              "bbox": [
+                72,
+                92.484,
+                237.396,
+                104.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 698
+              }
+            }
+          ]
+        },
+        {
+          "physical_page_index": 1,
+          "display_page_number": 2,
+          "printed_page_label": null,
+          "status": "parsed",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": [
+            {
+              "text": "Physical page two - middle",
+              "bbox": [
+                72,
+                62.484,
+                214.716,
+                74.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 728
+              }
+            },
+            {
+              "text": "Second: keep 25 mL under the stated condition.",
+              "bbox": [
+                72,
+                92.484,
+                326.82,
+                104.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 698
+              }
+            }
+          ]
+        },
+        {
+          "physical_page_index": 2,
+          "display_page_number": 3,
+          "printed_page_label": null,
+          "status": "parsed",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": [
+            {
+              "text": "Physical page three - last",
+              "bbox": [
+                72,
+                62.484,
+                206.724,
+                74.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 728
+              }
+            },
+            {
+              "text": "Third: the exception remains visible.",
+              "bbox": [
+                72,
+                92.484,
+                263.4,
+                104.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 698
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "crop-offset.pdf",
+      "category": "crop_media_offset",
+      "raw_sha256": "880f56601906d86db02ae585e2e01bb6689236a8e33d41de421ccbd24bc1c532",
+      "byte_length": 787,
+      "authoring_page_count": 1,
+      "parse_page_count": 1,
+      "status": "parsed",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "parsed",
+          "media_box": [
+            20,
+            30,
+            620,
+            830
+          ],
+          "crop_box": [
+            60,
+            90,
+            580,
+            790
+          ],
+          "rotation_degrees": 0,
+          "lines": [
+            {
+              "text": "CropBox text - the origin is the visible top left",
+              "bbox": [
+                40,
+                50.484,
+                277.432,
+                62.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 100,
+                "baseline": 730
+              }
+            },
+            {
+              "text": "MediaBox offset is not a text byte offset.",
+              "bbox": [
+                40,
+                80.484,
+                252.784,
+                92.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 100,
+                "baseline": 700
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "rotations.pdf",
+      "category": "rotation",
+      "raw_sha256": "1011f48bc325d58c601343b432be6b68edbaad4a803a8d191c573f4cda4fe67f",
+      "byte_length": 1672,
+      "authoring_page_count": 4,
+      "parse_page_count": 4,
+      "status": "needs_review",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "parsed",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": [
+            {
+              "text": "Rotate 0 - same native baseline",
+              "bbox": [
+                72,
+                62.484,
+                240.744,
+                74.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 728
+              }
+            }
+          ]
+        },
+        {
+          "physical_page_index": 1,
+          "display_page_number": 2,
+          "printed_page_label": null,
+          "status": "needs_review",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 90,
+          "lines": []
+        },
+        {
+          "physical_page_index": 2,
+          "display_page_number": 3,
+          "printed_page_label": null,
+          "status": "needs_review",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 180,
+          "lines": []
+        },
+        {
+          "physical_page_index": 3,
+          "display_page_number": 4,
+          "printed_page_label": null,
+          "status": "needs_review",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 270,
+          "lines": []
+        }
+      ]
+    },
+    {
+      "file": "scanned-page.pdf",
+      "category": "scan_no_text_layer",
+      "raw_sha256": "758c09cd50c8191618fd9c19aca94c0acff608b9292193111b63704bd206455c",
+      "byte_length": 1945,
+      "authoring_page_count": 1,
+      "parse_page_count": 1,
+      "status": "needs_review",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "needs_review",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": []
+        }
+      ]
+    },
+    {
+      "file": "blank-page.pdf",
+      "category": "unknown_blank",
+      "raw_sha256": "59eae7a19c103c45db82d1354b95a5ed0354f25825be3200657ddae25a2afcaa",
+      "byte_length": 609,
+      "authoring_page_count": 1,
+      "parse_page_count": 1,
+      "status": "needs_review",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "needs_review",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": []
+        }
+      ]
+    },
+    {
+      "file": "damaged.pdf",
+      "category": "damaged",
+      "raw_sha256": "54c3dab0dc44186b92eca235cfc6d705e233c6b54f903efaf71a45e77d13d69a",
+      "byte_length": 61,
+      "authoring_page_count": null,
+      "parse_page_count": null,
+      "status": "failed",
+      "pages": []
+    },
+    {
+      "file": "encrypted.pdf",
+      "category": "encrypted",
+      "raw_sha256": "d37bdfe11346ca7fe99414a7a45f33aa74f43011286da93b82010eafb3187e5d",
+      "byte_length": 1932,
+      "authoring_page_count": 1,
+      "parse_page_count": null,
+      "status": "failed",
+      "pages": []
+    },
+    {
+      "file": "table-page.pdf",
+      "category": "table",
+      "raw_sha256": "478664217ca4520eff3f0e7f0d990a2f11149a589c06b84d16ac53bfe70f0939",
+      "byte_length": 853,
+      "authoring_page_count": 1,
+      "parse_page_count": 1,
+      "status": "needs_review",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "needs_review",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": []
+        }
+      ]
+    },
+    {
+      "file": "formula-page.pdf",
+      "category": "formula_superscript",
+      "raw_sha256": "ec8a0268a3cd6de50423453fd8cfdb4939d0dc96dda746373f019909246c4411",
+      "byte_length": 710,
+      "authoring_page_count": 1,
+      "parse_page_count": 1,
+      "status": "needs_review",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "needs_review",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": []
+        }
+      ]
+    },
+    {
+      "file": "image-page.pdf",
+      "category": "image_with_text",
+      "raw_sha256": "ea70777b04400d8027798401b15bba9b596126b59c7f579dfd130cd097f3099d",
+      "byte_length": 2021,
+      "authoring_page_count": 1,
+      "parse_page_count": 1,
+      "status": "needs_review",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "needs_review",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": []
+        }
+      ]
+    },
+    {
+      "file": "columns-page.pdf",
+      "category": "multiple_columns",
+      "raw_sha256": "f338629f37f54d11d63fca8b347e26794d089ce9bc092eea9deab1b9c54c342a",
+      "byte_length": 844,
+      "authoring_page_count": 1,
+      "parse_page_count": 1,
+      "status": "needs_review",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "needs_review",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": []
+        }
+      ]
+    },
+    {
+      "file": "partial-page-failure.pdf",
+      "category": "partial_page_failure",
+      "raw_sha256": "618fa6e5b4c561637a011305047becb91644847e865484d88e2ba45c4d248eea",
+      "byte_length": 1050,
+      "authoring_page_count": 2,
+      "parse_page_count": 2,
+      "status": "failed",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "parsed",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": [
+            {
+              "text": "Confirmed first page survives a later page error.",
+              "bbox": [
+                72,
+                62.484,
+                326.088,
+                74.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 728
+              }
+            }
+          ]
+        },
+        {
+          "physical_page_index": 1,
+          "display_page_number": 2,
+          "printed_page_label": null,
+          "status": "failed",
+          "media_box": [
+            0,
+            0,
+            "(broken)",
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            "(broken)",
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": []
+        }
+      ]
+    },
+    {
+      "file": "layout-order.pdf",
+      "category": "drawing_order_differs",
+      "raw_sha256": "beab8ce1dde90530833939d4bc2c2346fd0b41725c0ba07fd084094f385771a5",
+      "byte_length": 727,
+      "authoring_page_count": 1,
+      "parse_page_count": 1,
+      "status": "parsed",
+      "pages": [
+        {
+          "physical_page_index": 0,
+          "display_page_number": 1,
+          "printed_page_label": null,
+          "status": "parsed",
+          "media_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "crop_box": [
+            0,
+            0,
+            600,
+            800
+          ],
+          "rotation_degrees": 0,
+          "lines": [
+            {
+              "text": "First visible line",
+              "bbox": [
+                72,
+                62.484,
+                154.008,
+                74.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 728
+              }
+            },
+            {
+              "text": "Second visible line",
+              "bbox": [
+                72,
+                92.484,
+                171.372,
+                104.484
+              ],
+              "tolerance_pt": 0.08,
+              "authoring": {
+                "font": "Helvetica",
+                "size": 12,
+                "x": 72,
+                "baseline": 698
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
