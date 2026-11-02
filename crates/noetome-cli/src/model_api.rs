@@ -673,6 +673,110 @@ if outcome is not None:sys.stdout.buffer.write(m.encode(outcome))
         assert_eq!(inspect(&sandbox.project, &sandbox.output).unwrap(), report);
     }
     #[test]
+    fn diagnostic_safe_rejected_envelope_is_preserved_without_model_usage_or_candidate() {
+        let fixture: Value = serde_json::from_slice(include_bytes!(
+            "../../../tests/fixtures/responses-api-synthetic-v1/http-response.json"
+        ))
+        .unwrap();
+        let mut unsupported = fixture;
+        unsupported["unsupported_vendor_field"] = json!({"diagnostic":"synthetic only"});
+        for raw in [
+            serde_json::to_vec(&unsupported).unwrap(),
+            br#"{"unexpected_shape":{"diagnostic":"synthetic only"}}"#.to_vec(),
+            br#"["synthetic unsupported envelope"]"#.to_vec(),
+        ] {
+            let sandbox = Sandbox::new();
+            let report = replay_raw(&sandbox, Some(&raw)).unwrap();
+            assert_eq!(report.execution_kind, "offline_test");
+            assert_eq!(report.confirmed_http_posts, Some(0));
+            assert_eq!(report.http_status, Some(200));
+            assert_eq!(report.http_state, "sent_once");
+            assert_eq!(
+                report.failure.as_deref(),
+                Some("MODEL_API_RESPONSE_INVALID")
+            );
+            assert_eq!(report.raw_response, Some(fingerprint(&raw)));
+            assert_eq!(
+                fs::read(sandbox.output.join("http-response.bin")).unwrap(),
+                raw
+            );
+            assert!(report.response_id.is_none());
+            assert!(report.actual_model.is_none());
+            assert_eq!(report.usage, unknown_usage());
+            assert!(report.usage_total_tokens.is_none());
+            assert!(report.canonical_response.is_none());
+            assert!(report.candidate.is_none());
+            assert!(!report.candidate_success);
+            fs::rename(&sandbox.selected, sandbox.root.join("moved-source.md")).unwrap();
+            let before = files(&sandbox.output);
+            assert_eq!(inspect(&sandbox.project, &sandbox.output).unwrap(), report);
+            assert_eq!(files(&sandbox.output), before);
+            // The reviewed old adapter never exposed an unsupported envelope as raw.
+            rewrite(&sandbox.output.join("report.json"), |saved| {
+                saved["runtime"]["adapter"] = json!({
+                    "sha256":"61a3f1318a7c2da869f7a2ba3fcc14db1761d84713a4da57a055bbd3aa5d31ae",
+                    "byte_length":28025
+                });
+            });
+            assert!(inspect(&sandbox.project, &sandbox.output).is_err());
+            sandbox.protect();
+        }
+    }
+    #[test]
+    fn diagnostic_legacy_no_raw_failure_remains_readable_only_for_reviewed_fingerprint() {
+        let sandbox = Sandbox::new();
+        let report = replay_raw(&sandbox, Some(br#"{"duplicate":1,"duplicate":2}"#)).unwrap();
+        assert_eq!(
+            report.failure.as_deref(),
+            Some("MODEL_API_RESPONSE_INVALID")
+        );
+        assert!(report.raw_response.is_none());
+        rewrite(&sandbox.output.join("report.json"), |saved| {
+            saved["runtime"]["adapter"] = json!({
+                "sha256":"61a3f1318a7c2da869f7a2ba3fcc14db1761d84713a4da57a055bbd3aa5d31ae",
+                "byte_length":28025
+            });
+        });
+        let before = files(&sandbox.output);
+        let legacy = inspect(&sandbox.project, &sandbox.output).unwrap();
+        assert!(legacy.raw_response.is_none());
+        assert!(legacy.canonical_response.is_none());
+        assert!(!legacy.candidate_success);
+        assert_eq!(legacy.usage, unknown_usage());
+        assert_eq!(files(&sandbox.output), before);
+        rewrite(&sandbox.output.join("report.json"), |saved| {
+            saved["runtime"]["adapter"]["sha256"] = json!("0".repeat(64));
+        });
+        assert!(inspect(&sandbox.project, &sandbox.output).is_err());
+        sandbox.protect();
+    }
+    #[test]
+    fn diagnostic_malformed_duplicate_or_sensitive_json_is_never_preserved_as_raw() {
+        for raw in [
+            br#"{"duplicate":1,"duplicate":2}"#.as_slice(),
+            br#"{"truncated":"#.as_slice(),
+            br#"{"diagnostic":"\u0000"}"#.as_slice(),
+            br#"{"diagnostic":"B04_T02_PRIVATE_SYNTHETIC_KEY_28176"}"#.as_slice(),
+        ] {
+            let sandbox = Sandbox::new();
+            let report = replay_raw(&sandbox, Some(raw)).unwrap();
+            assert!(report.raw_response.is_none());
+            assert!(!sandbox.output.join("http-response.bin").exists());
+            assert!(report.canonical_response.is_none());
+            assert!(report.actual_model.is_none());
+            assert!(report.response_id.is_none());
+            assert_eq!(report.usage, unknown_usage());
+            assert_eq!(inspect(&sandbox.project, &sandbox.output).unwrap(), report);
+            let wire = fs::read(sandbox.output.join("request.json")).unwrap();
+            let request: ExtractionRequest = serde_json::from_slice(&wire).unwrap();
+            let body = fs::read(sandbox.output.join("http-request.json")).unwrap();
+            if raw != br#"{"diagnostic":"B04_T02_PRIVATE_SYNTHETIC_KEY_28176"}"# {
+                assert!(decode::derive(&request, &wire, &body, raw, 200).is_err());
+            }
+            sandbox.protect();
+        }
+    }
+    #[test]
     fn private_actual_child_produces_unverified_candidate_and_readonly_reload_with_zero_real_api() {
         let sandbox = Sandbox::new();
         let report = replay(&sandbox).unwrap();

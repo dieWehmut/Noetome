@@ -575,12 +575,52 @@ fn canonical(
     )?;
     Ok(outcome)
 }
+fn validate_raw_strings(value: &Value) -> Result<(), ModelError> {
+    // Mirror the adapter's whole-JSON string check before retaining diagnostics.
+    // A rejected envelope does not bypass the UTF-8, length or NUL boundary.
+    match value {
+        Value::String(text) => require(text.len() <= 524288 && !text.contains('\0')),
+        Value::Array(items) => {
+            for item in items {
+                validate_raw_strings(item)?;
+            }
+            Ok(())
+        }
+        Value::Object(items) => {
+            for (name, item) in items {
+                require(name.len() <= 524288 && !name.contains('\0'))?;
+                validate_raw_strings(item)?;
+            }
+            Ok(())
+        }
+        _ => Ok(()),
+    }
+}
 pub(super) fn derive(
     request: &ExtractionRequest,
     wire: &[u8],
     body: &[u8],
     raw: &[u8],
     status: u32,
+) -> Result<(Option<Outcome>, HttpObservation), ModelError> {
+    derive_with_policy(request, wire, body, raw, status, true)
+}
+pub(super) fn derive_legacy(
+    request: &ExtractionRequest,
+    wire: &[u8],
+    body: &[u8],
+    raw: &[u8],
+    status: u32,
+) -> Result<(Option<Outcome>, HttpObservation), ModelError> {
+    derive_with_policy(request, wire, body, raw, status, false)
+}
+fn derive_with_policy(
+    request: &ExtractionRequest,
+    wire: &[u8],
+    body: &[u8],
+    raw: &[u8],
+    status: u32,
+    retain_rejected_envelope: bool,
 ) -> Result<(Option<Outcome>, HttpObservation), ModelError> {
     require(
         (100..=599).contains(&status)
@@ -589,6 +629,7 @@ pub(super) fn derive(
     )?;
     validate_body(body, request)?;
     let value = strict_value(raw)?;
+    validate_raw_strings(&value)?;
     let mut obs = HttpObservation {
         schema_version: 1,
         protocol: "noetome-responses-observation-v1".into(),
@@ -606,22 +647,45 @@ pub(super) fn derive(
         usage_output_tokens: None,
         usage_total_tokens: None,
     };
-    if !(200..300).contains(&status)
-        && value
-            .as_object()
-            .is_some_and(|v| v.len() == 1 && v.contains_key("error"))
-    {
-        let error = object(&value["error"], &["message"], &["type", "param", "code"])?;
-        string(&error["message"], 65536, false, false)?;
-        for field in ["type", "param", "code"] {
-            if let Some(v) = error.get(field) {
-                optional_string(v, 256)?;
+    let validation: Result<bool, ModelError> = (|| {
+        if !(200..300).contains(&status)
+            && value
+                .as_object()
+                .is_some_and(|v| v.len() == 1 && v.contains_key("error"))
+        {
+            let error = object(&value["error"], &["message"], &["type", "param", "code"])?;
+            string(&error["message"], 65536, false, false)?;
+            for field in ["type", "param", "code"] {
+                if let Some(v) = error.get(field) {
+                    optional_string(v, 256)?;
+                }
             }
+            return Ok(false);
         }
+        validate_response(&value)?;
+        Ok(true)
+    })();
+    let is_response = match validation {
+        Ok(is_response) => is_response,
+        Err(_) if retain_rejected_envelope => {
+            // Only strict, safe JSON reaches this branch. Unsupported vendor
+            // fields remain diagnostic bytes, with no asserted model or usage.
+            obs.failure = Some(
+                if (200..300).contains(&status) {
+                    "invalid_response"
+                } else {
+                    status_failure(status)
+                }
+                .into(),
+            );
+            return Ok((None, obs));
+        }
+        Err(error) => return Err(error),
+    };
+    if !is_response {
         obs.failure = Some(status_failure(status).into());
         return Ok((None, obs));
     }
-    validate_response(&value)?;
     obs.response_id = Some(string(&value["id"], 256, true, true)?.into());
     obs.actual_model = Some(string(&value["model"], 256, true, true)?.into());
     let (i, o, t) = usage(&value["usage"])?;

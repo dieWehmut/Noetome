@@ -882,6 +882,12 @@ fn verify_saved(
             "MODEL_API_SAVED_INVALID",
         )?;
     }
+    // This exact reviewed adapter produced the first failed live attempt. Its
+    // supported envelope discarded structural rejects; do not reinterpret those
+    // receipts using the newer diagnostic raw policy or acquire their paths.
+    let legacy_adapter = report.runtime.adapter.byte_length == 28025
+        && report.runtime.adapter.sha256
+            == "61a3f1318a7c2da869f7a2ba3fcc14db1761d84713a4da57a055bbd3aa5d31ae";
     require(
         report.runtime.schema
             == fingerprint(include_bytes!(
@@ -891,8 +897,9 @@ fn verify_saved(
                 == fingerprint(include_bytes!(
                     "../../../sidecars/responses_api/instructions.txt"
                 ))
-            && report.runtime.adapter
-                == fingerprint(include_bytes!("../../../sidecars/responses_api/adapter.py"))
+            && (legacy_adapter
+                || report.runtime.adapter
+                    == fingerprint(include_bytes!("../../../sidecars/responses_api/adapter.py")))
             && source_model::valid_hash(&report.runtime.python.sha256)
             && report.runtime.python.byte_length > 0,
         "MODEL_API_SAVED_INVALID",
@@ -953,7 +960,12 @@ fn verify_saved(
         if let Some(fp) = &report.raw_response {
             let bytes = snapshot.read("http-response.bin")?;
             check_fingerprint(bytes, fp)?;
-            let expected = decode::derive(
+            let derive = if legacy_adapter {
+                decode::derive_legacy
+            } else {
+                decode::derive
+            };
+            let expected = derive(
                 &saved_request,
                 wire,
                 body,

@@ -467,20 +467,25 @@ def decode_http_response(wire, raw, http_status, credential=b""):
         return None, obs
     try:
         parsed = strict_json(raw, request["policy"]["max_response_bytes"], credential)
+    except Invalid:
+        obs["failure"] = status_failure(http_status) if not 200 <= http_status < 300 else "invalid_response"
+        return None, obs
+    # Safe original JSON is useful diagnostic evidence even when this adapter's
+    # strictly supported envelope rejects its fields. It grants no model/usage facts.
+    obs["raw_response_available"] = True
+    try:
         if not 200 <= http_status < 300 and type(parsed) is dict and set(parsed) == {"error"}:
             error = named(parsed["error"], ("message",), ("type", "param", "code"))
             string(error["message"], 65536, nonempty=False)
             for field in ("type", "param", "code"):
                 if field in error:
                     nullable_string(error[field])
-            obs["raw_response_available"] = True
             obs["failure"] = status_failure(http_status)
             return None, obs
         response = validate_response(parsed)
     except Invalid:
         obs["failure"] = status_failure(http_status) if not 200 <= http_status < 300 else "invalid_response"
         return None, obs
-    obs["raw_response_available"] = True
     obs["response_id"], obs["actual_model"] = response["id"], response["model"]
     obs["usage_input_tokens"], obs["usage_output_tokens"], obs["usage_total_tokens"] = validate_usage(response["usage"])
     if not 200 <= http_status < 300:

@@ -307,6 +307,53 @@ class OfflineDecodeBehaviorTests(unittest.TestCase):
 
 
 class SingleHttpBehaviorTests(unittest.TestCase):
+    def test_safe_unknown_missing_or_wrong_type_envelope_retains_raw_for_diagnostics(self):
+        responses = []
+        unknown = provider_response()
+        unknown["unsupported_vendor_field"] = {"diagnostic": "synthetic only"}
+        responses.append((unknown, 200))
+        missing = provider_response()
+        del missing["model"]
+        responses.append((missing, 200))
+        wrong_type = provider_response()
+        wrong_type["usage"]["input_tokens"] = True
+        responses.append((wrong_type, 200))
+        responses.append((unknown, 401))
+        for index, (response, status) in enumerate(responses):
+            with self.subTest(case=index):
+                raw = json.dumps(response, ensure_ascii=False, indent=2).encode("utf-8")
+                outcome, files, connection = live_test(connection=MockConnection(raw=raw, status=status))
+                self.assertIsNone(outcome)
+                self.assertIn("http-response.bin", files, "strict safe JSON must remain inspectable after envelope rejection")
+                self.assertEqual(files["http-response.bin"], raw)
+                self.assertEqual(len(connection.requests), 1)
+                obs = json.loads(files["http-observation.json"])
+                failure = "invalid_response" if status == 200 else "authentication"
+                self.assertEqual((obs["http_state"], obs["http_status"], obs["failure"]), ("sent_once", status, failure))
+                self.assertTrue(obs["raw_response_available"])
+                self.assertFalse(obs["canonical_response_available"])
+                for field in ("response_id", "actual_model", "usage_input_tokens", "usage_output_tokens", "usage_total_tokens"):
+                    self.assertIsNone(obs[field])
+                run = decode_cli(raw, status=str(status))
+                self.assertEqual((run.returncode, run.stdout, run.stderr), (2, b"", b""))
+
+    def test_diagnostic_raw_retention_does_not_accept_echo_duplicates_or_malformed_json(self):
+        unknown_echo = provider_response()
+        unknown_echo["unsupported_vendor_field"] = "synthetic-private-key-ONLY-TEST"
+        raw_cases = [response_raw(unknown_echo), response_raw().replace(b'"id":', b'"id":"duplicate","id":', 1),
+                     response_raw()[:-1], b"\xff", b'{"future":1e999}']
+        for raw in raw_cases:
+            with self.subTest(case=raw_cases.index(raw)):
+                outcome, files, connection = live_test(connection=MockConnection(raw=raw))
+                self.assertIsNone(outcome)
+                self.assertNotIn("http-response.bin", files)
+                self.assertEqual(len(connection.requests), 1)
+                obs = json.loads(files["http-observation.json"])
+                self.assertFalse(obs["raw_response_available"])
+                self.assertFalse(obs["canonical_response_available"])
+                for field in ("response_id", "actual_model", "usage_input_tokens", "usage_output_tokens", "usage_total_tokens"):
+                    self.assertIsNone(obs[field])
+
     def test_json_scalar_prefix_codefence_and_unclosed_escaped_credential_are_never_saved(self):
         secret = b"SYNTHETIC_REVIEW_KEY_20261102"
         escaped = "".join("\\u%04x" % c for c in secret)
