@@ -727,3 +727,61 @@ fn review_large_resource_validation_cancel_latency() {
 fn review_primary_terminate_failure_reaps_real_tree() {
     tree_with_fault("tree_fallback", Some("SIDECAR_CLEANUP"), true);
 }
+
+#[cfg(windows)]
+#[test]
+fn review_broken_pipe_notifies_controller_and_reaps_live_tree() {
+    let (input, workspace, sentinel) = setup();
+    let handshake = sentinel.with_file_name("broken-pipe.json");
+    let mut cmd = command("tree_close_stdin");
+    cmd.args.push(handshake.clone().into_os_string());
+    let thread = std::thread::spawn(move || {
+        let limits = Limits {
+            request_bytes: 128 * 1024,
+            timeout_ms: 4000,
+            ..Limits::default()
+        };
+        let control = Control {
+            start: Instant::now(),
+            timeout: Duration::from_millis(4000),
+            cancelled: Arc::new(AtomicBool::new(false)),
+        };
+        let prepared = Prepared::new(&input, &workspace, limits.clone(), &control).unwrap();
+        let mut bytes = vec![b' '; 65536];
+        bytes.extend_from_slice(&serde_json::to_vec(&prepared.request).unwrap());
+        assert!(bytes.len() as u64 <= limits.request_bytes);
+        println!("broken_pipe_valid_request_bytes={}", bytes.len());
+        transport(&cmd, bytes, &limits, &control)
+    });
+    let until = Instant::now() + Duration::from_secs(1);
+    while !handshake.exists() {
+        assert!(Instant::now() < until, "BrokenPipe handshake failed");
+        std::thread::sleep(Duration::from_millis(5));
+    }
+    let pids: Vec<u32> = serde_json::from_slice(&fs::read(&handshake).unwrap()).unwrap();
+    let probe = |pids: &[u32]| {
+        let mut cmd = command("probe");
+        cmd.args
+            .extend(pids.iter().map(|p| OsString::from(p.to_string())));
+        let out = Command::new(cmd.program).args(cmd.args).output().unwrap();
+        assert!(out.status.success());
+        serde_json::from_slice::<Vec<u32>>(&out.stdout).unwrap()
+    };
+    assert_eq!(probe(&pids), pids);
+    println!("broken_pipe_live_pids={pids:?}");
+    let trigger = Instant::now();
+    fs::write(handshake.with_extension("json.go"), b"go").unwrap();
+    let error = thread.join().unwrap().unwrap_err();
+    let latency = trigger.elapsed();
+    println!(
+        "broken_pipe_latency_ms={} error={error}",
+        latency.as_millis()
+    );
+    assert!(probe(&pids).is_empty(), "IO failure must reclaim the tree");
+    assert_eq!(error.code, "SIDECAR_IO");
+    assert!(
+        latency < Duration::from_millis(500),
+        "IO notification must not wait for runtime: {latency:?}"
+    );
+    assert_eq!(fs::read(sentinel).unwrap(), b"outside sentinel");
+}

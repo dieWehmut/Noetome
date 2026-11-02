@@ -8,6 +8,12 @@ import subprocess
 import sys
 import time
 
+def ready(path, text):
+    path=Path(path)
+    pending=path.with_name(path.name+'.pending')
+    pending.write_text(text)
+    os.replace(pending,path)
+
 mode = sys.argv[1]
 if mode == 'probe':
     kernel = ctypes.windll.kernel32
@@ -22,13 +28,22 @@ if mode == 'probe':
     print(json.dumps(alive))
     sys.exit(0)
 if mode == 'grandchild':
-    Path(sys.argv[2]).write_text(str(os.getpid()))
+    ready(sys.argv[2],str(os.getpid()))
     time.sleep(30)
     sys.exit(0)
 if mode == 'child':
     subprocess.Popen([sys.executable, __file__, 'grandchild', sys.argv[2]], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    Path(sys.argv[3]).write_text(str(os.getpid()))
+    ready(sys.argv[3],str(os.getpid()))
     time.sleep(30)
+    sys.exit(0)
+if mode == 'tree_close_stdin':
+    base=Path(sys.argv[2])
+    subprocess.Popen([sys.executable,__file__,'child',str(base)+'.grandchild',str(base)+'.child'],stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+    while not (Path(str(base)+'.grandchild').exists() and Path(str(base)+'.child').exists()): time.sleep(.005)
+    ready(base,json.dumps([os.getpid(),int(Path(str(base)+'.child').read_text()),int(Path(str(base)+'.grandchild').read_text())]))
+    while not Path(str(base)+'.go').exists(): time.sleep(.005)
+    os.close(0)
+    time.sleep(5)
     sys.exit(0)
 if mode == 'no_stdin':
     time.sleep(30)
@@ -48,7 +63,7 @@ if mode.startswith('tree_'):
     while not (Path(str(base)+'.grandchild').exists() and Path(str(base)+'.child').exists()):
         if time.monotonic() > until: raise RuntimeError('tree handshake failed')
         time.sleep(.005)
-    base.write_text(json.dumps([os.getpid(), int(Path(str(base)+'.child').read_text()), int(Path(str(base)+'.grandchild').read_text())]))
+    ready(base,json.dumps([os.getpid(), int(Path(str(base)+'.child').read_text()), int(Path(str(base)+'.grandchild').read_text())]))
     while not Path(str(base)+'.go').exists(): time.sleep(.005)
     if mode == 'tree_early':
         print(json.dumps(response), flush=True)

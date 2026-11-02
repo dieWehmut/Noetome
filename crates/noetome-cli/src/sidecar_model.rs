@@ -138,7 +138,7 @@ object!(Response {
     workspace_capability_id: String, producer: Producer, parser: Parser,
     unit_count: u32, units: Vec<Unit>, resources: Vec<Resource>, issues: Vec<Issue>,
 });
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct SidecarError {
     pub code: &'static str,
     pub message: String,

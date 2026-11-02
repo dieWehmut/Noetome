@@ -180,6 +180,7 @@ fn read_bounded(
     mut pipe: impl Read,
     max: u64,
     overflow: Arc<AtomicBool>,
+    notify: std::sync::mpsc::SyncSender<SidecarError>,
 ) -> (Vec<u8>, Option<SidecarError>) {
     let mut bytes = Vec::new();
     let mut buf = [0u8; 8192];
@@ -191,17 +192,20 @@ fn read_bounded(
                     let keep = (max - bytes.len() as u64).min(n as u64) as usize;
                     bytes.extend_from_slice(&buf[..keep]);
                     overflow.store(true, Ordering::SeqCst);
-                    return (
-                        bytes,
-                        Some(SidecarError::new(
-                            "SIDECAR_LIMIT",
-                            "pipe byte limit; captured diagnostics may be incomplete",
-                        )),
+                    let error = SidecarError::new(
+                        "SIDECAR_LIMIT",
+                        "pipe byte limit; captured diagnostics may be incomplete",
                     );
+                    let _ = notify.send(error.clone());
+                    return (bytes, Some(error));
                 }
                 bytes.extend_from_slice(&buf[..n]);
             }
-            Err(e) => return (bytes, Some(SidecarError::new("SIDECAR_IO", e))),
+            Err(e) => {
+                let error = SidecarError::new("SIDECAR_IO", e);
+                let _ = notify.send(error.clone());
+                return (bytes, Some(error));
+            }
         }
     }
 }
@@ -257,12 +261,28 @@ fn transport(
         let errmax = limits.diagnostic_bytes;
         let outoverflow = overflow.clone();
         let erroverflow = overflow.clone();
-        let out_thread = thread::spawn(move || read_bounded(stdout, outmax, outoverflow));
-        let err_thread = thread::spawn(move || read_bounded(stderr, errmax, erroverflow));
-        let writer = thread::spawn(move || stdin.write_all(&bytes));
+        // At most one error from each of three workers; channel capacity is fixed.
+        let (notify, errors) = std::sync::mpsc::sync_channel(3);
+        let out_notify = notify.clone();
+        let err_notify = notify.clone();
+        let out_thread =
+            thread::spawn(move || read_bounded(stdout, outmax, outoverflow, out_notify));
+        let err_thread =
+            thread::spawn(move || read_bounded(stderr, errmax, erroverflow, err_notify));
+        let writer = thread::spawn(move || {
+            let result = stdin.write_all(&bytes);
+            if let Err(error) = &result {
+                let _ = notify.send(SidecarError::new("SIDECAR_IO", error));
+            }
+            result
+        });
         let mut failure = None;
         let mut status = None;
         loop {
+            if let Ok(error) = errors.try_recv() {
+                failure = Some(error);
+                break;
+            }
             if overflow.load(Ordering::SeqCst) {
                 failure = Some(SidecarError::new(
                     "SIDECAR_LIMIT",
