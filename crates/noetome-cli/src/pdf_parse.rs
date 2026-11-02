@@ -2,10 +2,10 @@
 use crate::{
     pdf_model::{MANIFEST_ID, Manifest, Report},
     pdf_validate::validate_manifest,
-    pdf_workspace::Workspace,
+    pdf_workspace::{CapturedTree, ParserOwner, Workspace},
     project,
     sidecar_model::{Limits, ParseStatus, SidecarError},
-    sidecar_process::{self, Control, ParserCommand, ValidatedResponse},
+    sidecar_process::{self, Control, ParserCommand, RunSession, ValidatedResponse},
 };
 use std::{
     ffi::OsString,
@@ -17,6 +17,19 @@ use std::{
 pub struct PdfOutput {
     pub json: String,
     pub failure: Option<(String, String)>,
+}
+pub(crate) struct CapturedPdf {
+    pub(crate) tree: CapturedTree,
+    pub(crate) report: Option<Report>,
+    pub(crate) manifest: Option<Manifest>,
+    pub(crate) error: Option<SidecarError>,
+    pub(crate) report_failure: Option<(String, String)>,
+}
+struct JobSession {
+    workspace: Workspace,
+    validated: Option<ValidatedResponse>,
+    failed: Option<RunSession>,
+    result: Result<(PdfOutput, Report, Manifest), SidecarError>,
 }
 // Generated from readable adapter.py and checked by build_pdf_sidecar.py.
 // Windows CreateProcess has a 32,767-character command line bound; the trusted
@@ -81,6 +94,69 @@ fn parse_command(
     limits: Limits,
     cancelled: Arc<AtomicBool>,
 ) -> Result<PdfOutput, SidecarError> {
+    execute_job(input, output, Ok(command), limits, cancelled)?
+        .result
+        .map(|result| result.0)
+}
+/// Source registration uses the same parser and Core checks, with a byte and
+/// capability receipt instead of an Err whose directory owners have expired.
+pub(crate) fn parse_owned(input: &Path, output: &Path) -> Result<CapturedPdf, SidecarError> {
+    let configured = configured_runtime().and_then(|runtime| command(&runtime));
+    parse_command_owned(
+        input,
+        output,
+        configured.as_ref().map_err(Clone::clone),
+        Limits::default(),
+        Arc::new(AtomicBool::new(false)),
+    )
+}
+fn parse_command_owned(
+    input: &Path,
+    output: &Path,
+    command: Result<&ParserCommand, SidecarError>,
+    limits: Limits,
+    cancelled: Arc<AtomicBool>,
+) -> Result<CapturedPdf, SidecarError> {
+    let job = execute_job(input, output, command, limits, cancelled)?;
+    capture_job(job, |_| {})
+}
+fn capture_job(job: JobSession, observe: impl FnOnce(&Path)) -> Result<CapturedPdf, SidecarError> {
+    // The test observer exercises the exact ownership handoff before capture
+    // opens any replacement guards. It is not a CLI/provider fault flag.
+    observe(&job.workspace.root);
+    let control = Control::new(5000, Arc::new(AtomicBool::new(false)));
+    let owner = job
+        .validated
+        .as_ref()
+        .map(ParserOwner::Validated)
+        .or_else(|| job.failed.as_ref().map(ParserOwner::Failed));
+    // The original Workspace, failed Prepared or validated resource set is
+    // still alive while capture acquires its new directory and file guards.
+    let tree = job.workspace.capture(owner, job.result.is_ok(), &control)?;
+    match job.result {
+        Ok((output, report, manifest)) => Ok(CapturedPdf {
+            tree,
+            report: Some(report),
+            manifest: Some(manifest),
+            error: None,
+            report_failure: output.failure,
+        }),
+        Err(error) => Ok(CapturedPdf {
+            tree,
+            report: None,
+            manifest: None,
+            error: Some(error),
+            report_failure: None,
+        }),
+    }
+}
+fn execute_job(
+    input: &Path,
+    output: &Path,
+    command: Result<&ParserCommand, SidecarError>,
+    limits: Limits,
+    cancelled: Arc<AtomicBool>,
+) -> Result<JobSession, SidecarError> {
     if [
         limits.request_bytes,
         limits.response_bytes,
@@ -102,7 +178,10 @@ fn parse_command(
     let control = Control::new(limits.timeout_ms, Arc::clone(&cancelled));
     control.check()?;
     let workspace = Workspace::create(output, &control)?;
+    let mut validated = None;
+    let mut failed = None;
     let result = (|| {
+        let command = command?;
         let remaining = limits
             .timeout_ms
             .saturating_sub(start.elapsed().as_millis().min(u128::from(u64::MAX)) as u64);
@@ -111,18 +190,27 @@ fn parse_command(
             timeout_ms: remaining.max(1),
             ..limits.clone()
         };
-        let validated = sidecar_process::run(
+        let session = sidecar_process::run_owned(
             command,
             input,
             &workspace.root.join("parser"),
             child_limits,
-            cancelled,
+            Arc::clone(&cancelled),
         )?;
+        if let Some(error) = session.failure() {
+            let error = error.clone();
+            failed = Some(session);
+            return Err(error);
+        }
+        validated = Some(session.into_validated()?);
+        let validated = validated
+            .as_ref()
+            .expect("successful session owns validated response");
         control.check()?;
-        let manifest = load_manifest(&validated, &control)?;
+        let manifest = load_manifest(validated, &control)?;
         let report = report(
             &manifest,
-            &validated,
+            validated,
             start.elapsed().as_millis().min(u128::from(u64::MAX)) as u64,
         )?;
         let json = serde_json::to_string_pretty(&report)
@@ -135,15 +223,15 @@ fn parse_command(
         let (md_guard, md_bytes) = workspace.read("parse-result.md", &control)?;
         let saved: Report =
             serde_json::from_slice(&json_bytes).map_err(|e| SidecarError::new("PDF_REPORT", e))?;
-        verify_report(&saved, &manifest, &validated, &md_bytes)?;
+        verify_report(&saved, &manifest, validated, &md_bytes)?;
         json_guard.verify(&control, &"PDF_REPORT")?;
         md_guard.verify(&control, &"PDF_REPORT")?;
         validated.recheck(&control)?;
         workspace.complete_layout(&control)?;
         control.check()?;
-        Ok(output_report(json, &saved))
+        Ok((output_report(json, &saved), saved, manifest))
     })();
-    result.map_err(|mut error: SidecarError| {
+    let result = result.map_err(|mut error: SidecarError| {
         // A failed/expired operation has no trusted full PDF result. Keep a
         // bounded diagnostic snapshot using a separate small cleanup deadline.
         let diagnostic_control = Control::new(5000, Arc::new(AtomicBool::new(false)));
@@ -157,6 +245,12 @@ fn parse_command(
                 .push_str(&format!("; failure report not persisted: {persist}"));
         }
         error
+    });
+    Ok(JobSession {
+        workspace,
+        validated,
+        failed,
+        result,
     })
 }
 

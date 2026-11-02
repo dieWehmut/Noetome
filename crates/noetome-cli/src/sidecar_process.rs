@@ -42,6 +42,35 @@ impl ValidatedResponse {
         control.check()
     }
 }
+struct RunParts {
+    response: Response,
+    diagnostics: Vec<u8>,
+    resources: ResourceGuards,
+}
+/// A failed transport/validation still owns the Prepared input and directory.
+/// Registry capture consumes its bytes while this capability is alive. The
+/// ordinary public run API continues to return its original Result.
+pub(crate) struct RunSession {
+    prepared: Prepared,
+    result: Result<RunParts, SidecarError>,
+}
+impl RunSession {
+    pub(crate) fn failure(&self) -> Option<&SidecarError> {
+        self.result.as_ref().err()
+    }
+    pub(crate) fn verify(&self, control: &Control) -> Result<(), SidecarError> {
+        self.prepared.verify(control)
+    }
+    pub(crate) fn into_validated(self) -> Result<ValidatedResponse, SidecarError> {
+        let parts = self.result?;
+        Ok(ValidatedResponse {
+            response: parts.response,
+            diagnostics: parts.diagnostics,
+            _prepared: self.prepared,
+            _resources: parts.resources,
+        })
+    }
+}
 pub(crate) struct Control {
     start: Instant,
     timeout: Duration,
@@ -82,6 +111,25 @@ fn run_inner(
     cancelled: Arc<AtomicBool>,
     allow_fake: bool,
 ) -> Result<ValidatedResponse, SidecarError> {
+    run_owned_inner(command, input, workspace, limits, cancelled, allow_fake)?.into_validated()
+}
+pub(crate) fn run_owned(
+    command: &ParserCommand,
+    input: &Path,
+    workspace: &Path,
+    limits: Limits,
+    cancelled: Arc<AtomicBool>,
+) -> Result<RunSession, SidecarError> {
+    run_owned_inner(command, input, workspace, limits, cancelled, false)
+}
+fn run_owned_inner(
+    command: &ParserCommand,
+    input: &Path,
+    workspace: &Path,
+    limits: Limits,
+    cancelled: Arc<AtomicBool>,
+    allow_fake: bool,
+) -> Result<RunSession, SidecarError> {
     if [
         limits.request_bytes,
         limits.response_bytes,
@@ -102,69 +150,71 @@ fn run_inner(
     let control = Control::new(limits.timeout_ms, cancelled);
     control.check()?;
     let prepared = Prepared::new(input, workspace, limits.clone(), &control)?;
-    let bytes = serde_json::to_vec(&prepared.request)
-        .map_err(|e| SidecarError::new("SIDECAR_PROTOCOL", e))?;
-    if bytes.len() as u64 > limits.request_bytes {
-        return Err(SidecarError::new("SIDECAR_LIMIT", "request byte limit"));
-    }
-    let (stdout, diagnostics) = transport(command, bytes, &limits, &control)?;
     let result = (|| {
-        control.check()?;
-        prepared.verify(&control)?;
-        let response: Response = serde_json::from_slice(&stdout)
+        let bytes = serde_json::to_vec(&prepared.request)
             .map_err(|e| SidecarError::new("SIDECAR_PROTOCOL", e))?;
-        if response.protocol_version != 1
-            || response.parser.capability_version != 1
-            || response.parser.capabilities != [Capability::SourceUnitsV1]
-            || response.parser.name.trim().is_empty()
-            || response.parser.name.len() > 128
-            || response.parser.version.trim().is_empty()
-            || response.parser.version.len() > 128
-        {
-            return Err(SidecarError::new(
-                "SIDECAR_VERSION",
-                "unsupported protocol/parser/capability",
-            ));
+        if bytes.len() as u64 > limits.request_bytes {
+            return Err(SidecarError::new("SIDECAR_LIMIT", "request byte limit"));
         }
-        if response.request_id != prepared.request.request_id
-            || response.workspace_capability_id != prepared.request.workspace.capability_id
-            || response.input_fingerprint.sha256 != prepared.request.input.fingerprint.sha256
-            || response.input_fingerprint.byte_length
-                != prepared.request.input.fingerprint.byte_length
-        {
-            return Err(SidecarError::new(
-                "SIDECAR_IDENTITY",
-                "request/input/workspace identity mismatch",
-            ));
-        }
-        if response.producer == Producer::Fake && !(cfg!(test) && allow_fake) {
-            return Err(SidecarError::new(
-                "SIDECAR_PRODUCER",
-                "synthetic producer is restricted to tests",
-            ));
-        }
-        let resources = prepared.resources(&response, &control)?;
-        #[cfg(test)]
-        VALIDATION_CANCEL.with(|flag| {
-            if flag.get() {
-                control.cancelled.store(true, Ordering::SeqCst);
-                CANCELLED_AT.with(|time| time.set(Some(Instant::now())));
+        let (stdout, diagnostics) = transport(command, bytes, &limits, &control)?;
+        let result = (|| {
+            control.check()?;
+            prepared.verify(&control)?;
+            let response: Response = serde_json::from_slice(&stdout)
+                .map_err(|e| SidecarError::new("SIDECAR_PROTOCOL", e))?;
+            if response.protocol_version != 1
+                || response.parser.capability_version != 1
+                || response.parser.capabilities != [Capability::SourceUnitsV1]
+                || response.parser.name.trim().is_empty()
+                || response.parser.name.len() > 128
+                || response.parser.version.trim().is_empty()
+                || response.parser.version.len() > 128
+            {
+                return Err(SidecarError::new(
+                    "SIDECAR_VERSION",
+                    "unsupported protocol/parser/capability",
+                ));
             }
-        });
-        validate_units(&response, &resources, &limits, &control)?;
-        control.check()?;
-        prepared.verify(&control)?;
-        Ok(ValidatedResponse {
-            response,
-            diagnostics: diagnostics.clone(),
-            _prepared: prepared,
-            _resources: resources,
+            if response.request_id != prepared.request.request_id
+                || response.workspace_capability_id != prepared.request.workspace.capability_id
+                || response.input_fingerprint.sha256 != prepared.request.input.fingerprint.sha256
+                || response.input_fingerprint.byte_length
+                    != prepared.request.input.fingerprint.byte_length
+            {
+                return Err(SidecarError::new(
+                    "SIDECAR_IDENTITY",
+                    "request/input/workspace identity mismatch",
+                ));
+            }
+            if response.producer == Producer::Fake && !(cfg!(test) && allow_fake) {
+                return Err(SidecarError::new(
+                    "SIDECAR_PRODUCER",
+                    "synthetic producer is restricted to tests",
+                ));
+            }
+            let resources = prepared.resources(&response, &control)?;
+            #[cfg(test)]
+            VALIDATION_CANCEL.with(|flag| {
+                if flag.get() {
+                    control.cancelled.store(true, Ordering::SeqCst);
+                    CANCELLED_AT.with(|time| time.set(Some(Instant::now())));
+                }
+            });
+            validate_units(&response, &resources, &limits, &control)?;
+            control.check()?;
+            prepared.verify(&control)?;
+            Ok(RunParts {
+                response,
+                diagnostics: diagnostics.clone(),
+                resources,
+            })
+        })();
+        result.map_err(|mut e| {
+            e.diagnostics = diagnostics;
+            e
         })
     })();
-    result.map_err(|mut e| {
-        e.diagnostics = diagnostics;
-        e
-    })
+    Ok(RunSession { prepared, result })
 }
 /// PDF sandbox inspection uses the same immutable file/resource guards as run,
 /// but does not spawn, create a directory, or accept synthetic producers.

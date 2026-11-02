@@ -187,6 +187,68 @@ fn real_parser_resource_limit_returns_nonzero_with_a_locatable_reason() {
     scratch.sentinel();
 }
 
+// The owned registry boundary returns guards acquired while the original
+// failed Prepared is still alive. No production fault switch is exposed.
+#[test]
+#[cfg(windows)]
+fn host_failure_keeps_parser_directory_alive_until_registry_capture() {
+    let scratch = Scratch::new();
+    let input = scratch.input();
+    let output = scratch.0.join("registry-capture");
+    let command = helper(
+        "import sys\nsys.stdin.buffer.read()\nsys.stderr.write('PDF_CAPTURE_HOST_FAILURE')\nsys.exit(7)",
+    );
+    let job = execute_job(&input, &output, Ok(&command), Limits::default(), cancel()).unwrap();
+    let result = capture_job(job, |root| {
+        assert!(
+            fs::rename(root.join("parser"), root.join("parser-before-capture")).is_err(),
+            "the actual failed Prepared must protect parser before receipt guards are opened"
+        );
+    })
+    .unwrap();
+    assert_eq!(result.error.as_ref().unwrap().code, "SIDECAR_EXIT");
+    assert!(result.report.is_none());
+    assert!(result.tree.files.contains_key("failure.json"));
+    let parser = output.join("parser");
+    let changed = output.join("parser-replaced");
+    assert!(
+        fs::rename(&parser, &changed).is_err(),
+        "registry capture must still hold the actual failed parser directory"
+    );
+    drop(result);
+    fs::rename(&parser, &changed).expect("the receipt releases its deny-delete guards at drop");
+    scratch.sentinel();
+}
+
+#[test]
+#[cfg(windows)]
+fn bounded_control_diagnostics_remain_a_capturable_host_failure() {
+    let scratch = Scratch::new();
+    let output = scratch.0.join("escaped-diagnostic-capture");
+    let command = helper(
+        "import sys\nsys.stdin.buffer.read()\nsys.stderr.buffer.write(b'\\x00' * 65536)\nsys.exit(7)",
+    );
+    let captured = parse_command_owned(
+        &scratch.input(),
+        &output,
+        Ok(&command),
+        Limits::default(),
+        cancel(),
+    )
+    .expect(
+        "bounded diagnostics must fit their JSON representation without losing the failed attempt",
+    );
+    assert_eq!(captured.error.as_ref().unwrap().code, "SIDECAR_EXIT");
+    let bytes = &captured.tree.files["failure.json"];
+    assert!(bytes.len() > 384 * 1024);
+    let report: serde_json::Value = serde_json::from_slice(bytes).unwrap();
+    assert_eq!(
+        report["error"]["diagnostics"].as_str().unwrap().as_bytes(),
+        &[0u8; 65536]
+    );
+    scratch.sentinel();
+}
+
 #[cfg(windows)]
 fn alive(pid: u32) -> bool {
     // Independent real Windows PID check through the stdlib test interpreter;

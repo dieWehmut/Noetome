@@ -59,6 +59,28 @@ impl Directory {
         }
         Ok(())
     }
+    pub(crate) fn remove_empty(self, code: &'static str) -> Result<(), SidecarError> {
+        self.verify(code)?;
+        let Self {
+            path,
+            identity,
+            _guard,
+        } = self;
+        // A read capability deliberately denies deletion. The byte receipt's
+        // parent capability remains alive while known owned cleanup releases
+        // this one guard and checks the same identity again.
+        drop(_guard);
+        project::check_components(&path).map_err(|e| err(code, e))?;
+        let metadata = fs::symlink_metadata(&path).map_err(|e| err(code, e))?;
+        if !metadata.is_dir()
+            || project::is_link(&metadata)
+            || same_file::Handle::from_path(&path).map_err(|e| err(code, e))? != identity
+        {
+            return Err(err(code, "owned empty directory changed before cleanup"));
+        }
+        // Never recurse: an added file or child makes this fail intact.
+        fs::remove_dir(&path).map_err(|e| err(code, e))
+    }
 }
 #[derive(Debug)]
 pub(crate) struct GuardedFile {
