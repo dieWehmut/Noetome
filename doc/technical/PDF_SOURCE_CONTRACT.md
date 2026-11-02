@@ -41,11 +41,17 @@ PDF导入报告独立`schema_version=2, report_kind=source_pdf_import`；旧文�
 
 ## PDF尝试、缓存与快照
 
+来源快照根的存在/缺失、精确版本清单及owner必须绑定同一次完整读取；owner文件与已有目录守卫保留到返回前，末尾再核对内容、身份和清单。该保护同样适用于只有旧文本版本和未获取PDF导入的Schema3；初始不存在的来源缓存若在读取期间出现，当前读取必须拒绝。
+
+旧MD/TXT快照保留原有逐文件读取时限；owner最终复查使用独立的有界控制，不给整段文本版本历史新增30秒限制。包含已获取PDF的快照核对继续使用原始共享时限。守卫生命周期与读取时限分别核对，合法历史不能仅因新增owner复查而变为无效。
+
 尝试固定源Version及完整raw SHA/长度。缓存键为`pdf-source-cache-v1`的规范JSON SHA：raw SHA/长度、sidecar协议、完整requested ParserIdentity、adapter.py SHA、import_options_version。当前parser为B03-T02唯一锁定版本；引擎/依赖/adapter/options/Python或可信源码改变，都改变键。默认`pdf-import-default-v1`可以复用同Version同键的最新已验证parsed/needs_review；failed绝不命中可用缓存。`--reparse`使用`pdf-import-fresh-v1`且跳过缓存，总是新parse_id，不覆盖旧定位。版本字段变更用契约矩阵验证，实际不同导入选项用普通CLI验证；不将合成旧parser身份宣称真实版本兼容已测。
 
 快照根`.noetome-pdf-parses`仅`.owner.json`和已登记parse UUID；owner沿用独立schema1/project_id。每次结果在`{parse_id}`保存B03-T02原始布局`parser/raw.pdf,pdf-manifest.json,pages/*`及Core parse-result.json/md。资源索引也包含Core两报告的SHA；raw同时与SourceVersion核对。每个旧结果只读保持原字节/位置，版本变化仅新目录。
 
 Host失败若已完整取得Version，保存失败parse而不造actual parser/完整页清单。`failure.json`保留真实分类和有界诊断；parser残留保持实际字节、SHA并标unconfirmed，不生成Page/Region。只接受可信adapter固定文件模式，额外未知文件或可疑目录不自动收为己有。sidecar内部RunSession将Prepared保留到成功/失败捕获交付之后；成功ValidatedResponse亦由外层持有至Core与capture结束，不能在transport/语义错误的问号路径先释放。外层/内层目录、资源及输入守卫在移交前核对，捕获的Dir/File守卫随receipt移入Writer；不能仅凭事后路径/文件存在收养。前置runtime失败没有作业树时只创建自己的失败记录；无法建立/证明内层所有权的初始化错误保留待恢复现场，不收养可疑残留。
+
+原始获取上限64 MiB与parser单资源上限16 MiB分开。可信parser读取限额失败可留下已确认自有的空parser/pages或parser目录；交接后Writer在守卫、完整清单及同一身份复核下非递归移除这些无字节资源的空目录，之后快照目录与资源索引精确对应。新增内容、替换或锁使清理失败时保留待恢复现场；只读reader不接受后来加入的未索引空目录。失败JSON最多512 KiB，涵盖64 KiB诊断的JSON控制字符转义；每parse树仍最多96 MiB。
 
 Inspector完整校验Project Schema3、统一Source/Version图、旧UTF8快照、PDF每次尝试、原始、所有已登记资源、JSON/MD及索引。validated结果调用B03-T02核心只读审计；host失败只验证失败快照与有界未确认清单，仍返回failed。manifest不完整/资源SHA或路径篡改/未知缓存/占用或链接均拒绝，不退回内存成功状态。
 

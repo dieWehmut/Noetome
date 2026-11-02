@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B03",
+  "current_batch": "B04",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -29,6 +29,13 @@
       "from_batch": "B02",
       "to_batch": "B03",
       "note": "B02三项真实验收并形成渲染/存储/CLI/测试提交；已审阅B03三个todo任务：fake sidecar协议、单一文本PDF解析与页/区域定位、显式项目Schema升级及PDF登记复用。本次仅切批次，不启动实现。"
+    },
+    {
+      "at": "2026-11-02T12:42:09Z",
+      "action": "batch",
+      "from_batch": "B03",
+      "to_batch": "B04",
+      "note": "B03三项均以实际实现、独立行为验证和审查修复验收；仅滚动展开B04最多三项：fake知识抽取契约、单个有预算真实文本API、独立知识/证据核对。本次切换不start产品任务，不触发真实API或OCR。"
     }
   ],
   "tasks": [
@@ -900,7 +907,7 @@
       "id": "B03-T03",
       "title": "安全登记单份PDF来源版本及解析尝试并验证复用与失败保护",
       "batch": "B03",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B03-T02",
         "B02-T01"
@@ -923,6 +930,134 @@
         "完整原始字节已保存但解析失败时保留真实原始版本与失败解析尝试及未完成页状态，允许后续新的解析尝试；未完整读取时只登记失败尝试，不造version_id、完整SHA、空normalized或假页/区域。一次失败后的有效导入仍可完成，重试不能永久命中failed缓存并伪装ready。",
         "只读inspect在原文件移动/删除后仍能依靠项目内已确认快照核对原始SHA、解析器/协议/选项版本、页/区域/资源完整性及持久报告；篡改、范围越界、未知缓存、Windows文件占用/链接/junction、候选目录替换和提交中断均不报告成功或覆盖人工内容。只清理已确认属本轮的沙盒或保留明确待恢复现场。",
         "source报告分别表达原始获取、PDF解析和知识pending状态，失败/needs_review页不算解析完成；不创建IR/NotePlan/Release或假覆盖、模型/科学指标。实际重复导入、失败后再导入、升级保护、已有MD/TXT及fixture闭环回归、统一日志检查通过并保存证据后提交推送。B03验收后仅滚动规划，不自动启动真实API或OCR。"
+      ],
+      "history": [
+        {
+          "at": "2026-11-02T10:19:04Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "按已采纳B03-T03任务卡推进显式Schema3与PDF原始版本/解析尝试登记；先冻结精确契约和实际迁移/CLI红灯，保留Schema2文本语义，只操作本轮新测试项目，不接模型、GUI或生产Vault。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-02T12:40:54Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成显式Schema3与PDF原始版本/独立解析尝试登记、默认复用和强制重解析、获取/解析失败分离、缓存与Writer保护；独立审查发现的owner生命周期及旧文本整体计时回归均以真实RED/GREEN修复；最终实现74f3849、能力保护9bc96a4、迁移80a7e47、契约红灯b2b8dad。",
+          "validation": [
+            "Windows x64实际cargo fmt/check通过；最终cargo test --workspace 436 passed/0 failed/0 ignored；选定CPython3.12.14 unittest 43通过；最终二进制独立verify_pdf_source 31项/159次普通CLI通过；独立模型direct-rustc 34行为用例通过，12x64MiB合法旧文本历史v1/v2/v3实测复归通过；Writer16场景含5阶段真实PID存活/kill/wait和独立abort敏感性变体；parser payload31814/8926字节绑定通过；145个文档本地链接、devlog11项与git staged diff --check通过。未把fake、未确认页、OCR、真实模型或性能目标算作完成。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B03-T03.md",
+              "sha256": "196bd31ae9d24ad5efee98d8d5f50eb4a79bf211ec9a0d90645f80da8b181645"
+            },
+            {
+              "path": "doc/validation/assets/B03-T03-cli-verification-final.json",
+              "sha256": "6098f280e54de15c8fa065f04137477f790e80cdaf5148502f46dcf8c2c5163f"
+            },
+            {
+              "path": "doc/validation/assets/B03-T03-model-rereview-v3.zip",
+              "sha256": "03bc7ed0e9f8ba9ed47b0b57d49c8b97deb259dc72867d042cd0c2c53e067042"
+            },
+            {
+              "path": "crates/noetome-cli/src/pdf_source.rs",
+              "sha256": "6b4d79bff75371b65936a26176daeb78ad94bf939ecda5733821d149b91b6091"
+            },
+            {
+              "path": "crates/noetome-cli/src/source_schema3.sql",
+              "sha256": "d688730dbe7e649867a0c11d493796b18588f7c2e66d8db038b7b8b984f8c780"
+            },
+            {
+              "path": "scripts/verify_pdf_source.py",
+              "sha256": "c22066e3d9784f08cb586833e6610f6f9d8cb55429c5a477805c067a29912ad7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B04-T01",
+      "title": "用离线fake验证有界知识抽取网关与来源证据契约",
+      "batch": "B04",
+      "status": "todo",
+      "depends_on": [
+        "B03-T03"
+      ],
+      "requirements": [
+        "FR-02",
+        "FR-04",
+        "FR-09",
+        "FR-37",
+        "FR-38",
+        "FR-40",
+        "NFR-07",
+        "NFR-08"
+      ],
+      "acceptance": [
+        "先固定有版本的最小抽取请求/候选、nullable/unknown、失败状态、来源Span或PDF parse/资源SHA/UTF8证据范围及单请求预算/时限契约，沿用现有严格IR和来源只读边界。",
+        "作者先写受控文本与独立gold，再实现显式producer=fake的单一重放provider；真实RED先于实现，fake结果不宣称真实模型、科学准确性或知识覆盖已完成。",
+        "普通CLI实际覆盖有效与非法/多余JSON、缺字段、未知版本/parse、错误SHA与中文UTF8边界、引文不符、失败PDF输入、能力不足、空响应、限额、超时/取消和预算停止；失败不得登记知识或发布成功。",
+        "请求/候选/报告只保存到新测试根，来源项目SQL、字节、mtime和清单前后不变；未知既有输出和路径越界拒绝。费用未知不填0，普通测试离线且无真实收费调用。",
+        "更新实际交换/设计/测试标准，针对性普通入口和独立行为验证、Rust workspace、Python、devlog及diff检查通过，新鲜审查无未处置重要问题后complete并提交推送。"
+      ],
+      "history": []
+    },
+    {
+      "id": "B04-T02",
+      "title": "接入单个可配置文本API并执行有预算的真实小范围抽取冒烟",
+      "batch": "B04",
+      "status": "todo",
+      "depends_on": [
+        "B04-T01"
+      ],
+      "requirements": [
+        "FR-09",
+        "FR-35",
+        "FR-36",
+        "FR-37",
+        "FR-38",
+        "FR-40",
+        "NFR-07",
+        "NFR-08",
+        "NFR-14"
+      ],
+      "acceptance": [
+        "使用用户提供的服务配置、外部凭据引用、模型标识和明确预算；真实收费调用前配置及预算必须满足D08。配置未提供时先完成离线适配，不以fake替代实际调用验收，不保存密钥或私人原文到仓库。",
+        "只接一个文本API，按该提供商官方资料核查端点、鉴权、结构化输出、模型能力、用量、错误及价格生效规则并记录实际提供商/模型/策略版本，不虚构通用兼容或派发视觉需求。",
+        "本地HTTP假服务形成真实RED并覆盖无效配置、鉴权错误、429、5xx、截断/非法响应、超时、能力不足、用量缺失和预算停止；请求前预留预算并限制输出，无价格显示未知，首冒烟不自动批量或无限重试。",
+        "明确小范围来源与调用前gold，在已有预算和配置下执行一次真实有界请求，保存实际请求策略、来源版本/SHA、原响应、返回用量、未知计费和Core候选核对；一次响应不代表完整知识或所有模型能力通过。",
+        "来源项目与旧证据前后不变，离线回归、独立调用证据审查及全部相关检查实际通过，真实成功/失败如实记录；满足真实调用门槛后complete并提交推送。"
+      ],
+      "history": []
+    },
+    {
+      "id": "B04-T03",
+      "title": "对真实模型候选做独立来源证据与条件化知识核对",
+      "batch": "B04",
+      "status": "todo",
+      "depends_on": [
+        "B04-T02"
+      ],
+      "requirements": [
+        "FR-02",
+        "FR-04",
+        "FR-09",
+        "FR-35",
+        "FR-40",
+        "NFR-03",
+        "NFR-07",
+        "NFR-08"
+      ],
+      "acceptance": [
+        "使用B04-T02的原始真实候选及调用前固定gold，在明确小范围来源中核对概念、事实、条件、单位、例外、排除与需复核，并绑定实际source/parse版本与UTF8引文范围。",
+        "先用删除条件/单位/例外、事实改写、错引、遗漏/重复原子和错误排除形成真实RED；原子数、正确引用或计划概念清单本身不能代替独立知识核对。",
+        "真实候选通过严格IR、来源证据与独立gold验证后输出小范围知识IR及双报告；失败逐对象定位，人工修订保留原候选和独立依据，不用gold改写原模型输出。",
+        "JSON/Markdown表达相同来源范围、知识、质量与研究未请求事实，真实分母/失败/复核/未处理数量可对账；小样本不替代200原子等正式基准，不宣布98%正式准确率或完整知识覆盖。",
+        "普通CLI、独立验证脚本、来源/证据/新根保护、完整回归、日志和新鲜审查实际通过后complete并提交推送；B04收束后仅滚动规划下一批最多三项。"
       ],
       "history": []
     }

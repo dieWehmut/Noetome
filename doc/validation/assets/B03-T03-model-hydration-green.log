@@ -1,0 +1,89 @@
+B03-T03 strict snapshot hydration and source-model regression GREEN
+Working directory: D:\Noetome
+Command:
+$env:NOETOME_PDF_PYTHON='D:\Noetome\.artifacts\b03-t02-python312\Scripts\python.exe'
+$env:NOETOME_TEST_PYTHON='C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+./scripts/cargo_local.ps1 test -p noetome-cli --lib source_model::tests --locked --offline
+Command exit: 0
+
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+warning: field `manifest` is never read
+  --> crates\noetome-cli\src\pdf_parse.rs:24:16
+   |
+21 | pub(crate) struct CapturedPdf {
+   |                   ----------- field in this struct
+...
+24 |     pub(crate) manifest: Option<Manifest>,
+   |                ^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `parse_owned` is never used
+   --> crates\noetome-cli\src\pdf_parse.rs:100:15
+    |
+100 | pub(crate) fn parse_owned(input: &Path, output: &Path) -> Result<CapturedPdf, SidecarError> {
+    |               ^^^^^^^^^^^
+
+warning: function `parse_command_owned` is never used
+   --> crates\noetome-cli\src\pdf_parse.rs:104:4
+    |
+104 | fn parse_command_owned(
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: methods `hydrate_pdf_reports`, `source_for_path`, `source_for_hash`, and `next_import_order` are never used
+   --> crates\noetome-cli\src\source_model.rs:379:19
+    |
+ 94 | impl Store {
+    | ---------- methods in this implementation
+...
+379 |     pub(crate) fn hydrate_pdf_reports(
+    |                   ^^^^^^^^^^^^^^^^^^^
+...
+404 |     pub(crate) fn source_for_path(&self, selected_path: &str) -> Option<String> {
+    |                   ^^^^^^^^^^^^^^^
+...
+427 |     pub(crate) fn source_for_hash(&self, hash: &str) -> Option<String> {
+    |                   ^^^^^^^^^^^^^^^
+...
+452 |     pub(crate) fn next_import_order(&self) -> Result<i64, ProjectError> {
+    |                   ^^^^^^^^^^^^^^^^^
+
+warning: methods `stage_pdf_version`, `pdf_parse_path`, and `stage_pdf_parse` are never used
+   --> crates\noetome-cli\src\source_write.rs:553:19
+    |
+169 | impl Writer {
+    | ----------- methods in this implementation
+...
+553 |     pub(crate) fn stage_pdf_version(&mut self, version_id: &str, raw: &[u8]) -> Result<PathBuf, ProjectError> {
+    |                   ^^^^^^^^^^^^^^^^^
+...
+568 |     pub(crate) fn pdf_parse_path(&self) -> Result<PathBuf, ProjectError> {
+    |                   ^^^^^^^^^^^^^^
+...
+574 |     pub(crate) fn stage_pdf_parse(&mut self, parse_id: &str, tree: CapturedTree) -> Result<PathBuf, ProjectError> {
+    |                   ^^^^^^^^^^^^^^^
+
+warning: `noetome-cli` (lib test) generated 5 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.72s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 15 tests
+test pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected ... ok
+test pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option ... ok
+test source_model::tests::snapshots_reject_changed_raw_bytes_and_incomplete_span_inventory ... ok
+test source_model::tests::snapshots_reject_unknown_cache_content_and_invalid_owner ... ok
+test source_model::tests::staged_snapshot_validation_is_restricted_to_the_current_writer_directory ... ok
+test source_model::tests::loading_and_validating_real_snapshots_preserves_complete_records ... ok
+test source_model::tests::pending_count_constraint_rejects_a_different_count_without_changing_the_report ... ok
+test source_model::tests::failed_utf8_versions_have_only_real_raw_bytes_and_no_spans ... ok
+test pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history ... ok
+test pdf_source_model::tests::report_hydration_rejects_foreign_import_identity ... ok
+test pdf_source_model::tests::report_hydration_rejects_caller_altered_sql_facts ... ok
+test source_model::tests::records_reject_invalid_hashes_and_reuse_before_the_first_import ... ok
+test pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages ... ok
+test pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states ... ok
+test pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 286 filtered out; finished in 0.07s
+
+

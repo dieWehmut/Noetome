@@ -1,0 +1,38 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.54s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-b3c381fa74716987.exe)
+
+running 4 tests
+Observed live raw sharing violation; mode=3, outcome=Applied
+Observed live raw sharing violation; mode=2, outcome=Applied
+Observed live raw sharing violation; mode=0, outcome=Applied
+
+thread 'pdf_source_model::tests::source_cache_races::owner_bytes_are_guarded_without_an_acquired_pdf_version' (50208) panicked at crates\noetome-cli\src\..\tests\support\source_cache_race_tests.rs:158:13:
+source-cache owner changed during validation without rejection
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test pdf_source_model::tests::source_cache_races::owner_bytes_are_guarded_without_an_acquired_pdf_version ... FAILED
+Observed live raw sharing violation; mode=1, outcome=Applied
+
+thread 'pdf_source_model::tests::source_cache_races::unknown_source_cache_entry_added_during_raw_read_is_rejected' (46608) panicked at crates\noetome-cli\src\..\tests\support\source_cache_race_tests.rs:95:5:
+new unindexed source-cache entry escaped final verification
+test pdf_source_model::tests::source_cache_races::unknown_source_cache_entry_added_during_raw_read_is_rejected ... FAILED
+
+thread 'pdf_source_model::tests::source_cache_races::owner_identity_is_guarded_without_an_acquired_pdf_version' (46532) panicked at crates\noetome-cli\src\..\tests\support\source_cache_race_tests.rs:158:13:
+source-cache owner changed during validation without rejection
+test pdf_source_model::tests::source_cache_races::owner_identity_is_guarded_without_an_acquired_pdf_version ... FAILED
+
+thread 'pdf_source_model::tests::source_cache_races::initially_absent_source_cache_created_during_staged_read_is_rejected' (52680) panicked at crates\noetome-cli\src\..\tests\support\source_cache_race_tests.rs:115:5:
+a new source-cache root escaped the final absence check
+test pdf_source_model::tests::source_cache_races::initially_absent_source_cache_created_during_staged_read_is_rejected ... FAILED
+
+failures:
+
+failures:
+    pdf_source_model::tests::source_cache_races::initially_absent_source_cache_created_during_staged_read_is_rejected
+    pdf_source_model::tests::source_cache_races::owner_bytes_are_guarded_without_an_acquired_pdf_version
+    pdf_source_model::tests::source_cache_races::owner_identity_is_guarded_without_an_acquired_pdf_version
+    pdf_source_model::tests::source_cache_races::unknown_source_cache_entry_added_during_raw_read_is_rejected
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 320 filtered out; finished in 4.37s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

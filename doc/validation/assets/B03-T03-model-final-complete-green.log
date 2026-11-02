@@ -1,0 +1,45 @@
+B03-T03 final model GREEN (21 synthetic PDF/native-protocol/Windows guard +7 legacy UTF8 tests)
+Working directory: D:\Noetome
+Command:
+$env:NOETOME_PDF_PYTHON='D:\Noetome\.artifacts\b03-t02-python312\Scripts\python.exe'
+$env:NOETOME_TEST_PYTHON='C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+./scripts/cargo_local.ps1 test -p noetome-cli --lib source_model::tests --locked --offline
+Command exit: 0
+
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.18s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-b3c381fa74716987.exe)
+
+running 28 tests
+test pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected ... ok
+test pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option ... ok
+test pdf_source_model::tests::a_new_exclusively_occupied_cache_root_is_rejected_during_absence_recheck ... ok
+test pdf_source_model::tests::next_global_import_order_reports_i64_overflow_without_wrapping ... ok
+test pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version ... ok
+test pdf_source_model::tests::report_hydration_rejects_foreign_import_identity ... ok
+test pdf_source_model::tests::historical_adapter_sha_recomputes_key_while_unsupported_actual_parser_is_rejected ... ok
+test pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history ... ok
+test pdf_source_model::tests::host_failure_rejects_fabricated_confirmed_pages_even_with_outer_hashes_updated ... ok
+test pdf_source_model::tests::report_hydration_rejects_caller_altered_sql_facts ... ok
+test source_model::tests::pending_count_constraint_rejects_a_different_count_without_changing_the_report ... ok
+test source_model::tests::snapshots_reject_changed_raw_bytes_and_incomplete_span_inventory ... ok
+test source_model::tests::loading_and_validating_real_snapshots_preserves_complete_records ... ok
+test source_model::tests::snapshots_reject_unknown_cache_content_and_invalid_owner ... ok
+test source_model::tests::failed_utf8_versions_have_only_real_raw_bytes_and_no_spans ... ok
+test pdf_source_model::tests::unified_source_helpers_follow_global_rowid_even_when_clock_moves_backwards ... ok
+test source_model::tests::staged_snapshot_validation_is_restricted_to_the_current_writer_directory ... ok
+test pdf_source_model::tests::global_import_history_rejects_cross_table_ids_and_rowid_collisions ... ok
+test pdf_source_model::tests::host_failure_keeps_partial_non_utf8_parser_bytes_unconfirmed ... ok
+test source_model::tests::records_reject_invalid_hashes_and_reuse_before_the_first_import ... ok
+test pdf_source_model::tests::native_semantic_inspector_rejects_utf8_cut_even_with_sql_and_all_outer_shas_updated ... ok
+test pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages ... ok
+test pdf_source_model::tests::staged_pdf_reader_only_accepts_registered_ids_in_the_current_writer_paths ... ok
+test pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states ... ok
+test pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion ... ok
+test pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw ... ok
+test pdf_source_model::tests::needs_review_reports_hydrate_actual_bound_issues_and_keep_knowledge_pending ... ok
+test pdf_source_model::tests::native_snapshot_reader_binds_full_page_region_and_core_resource_inventory ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 292 filtered out; finished in 0.19s
+
+

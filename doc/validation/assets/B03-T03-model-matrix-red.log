@@ -1,0 +1,98 @@
+B03-T03 model graph/snapshot RED; synthetic controlled captures only
+Working directory: D:\Noetome
+Command:
+$env:NOETOME_PDF_PYTHON='D:\Noetome\.artifacts\b03-t02-python312\Scripts\python.exe'
+$env:NOETOME_TEST_PYTHON='C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+./scripts/cargo_local.ps1 test -p noetome-cli --lib pdf_source_model::tests --locked --offline
+Command exit: 1
+
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+warning: struct `PdfParse` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:22:9
+   |
+22 | record!(PdfParse {
+   |         ^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+   = note: this warning originates in the macro `record` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: struct `PdfImportReport` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:42:9
+   |
+42 | record!(PdfImportReport {
+   |         ^^^^^^^^^^^^^^^
+   |
+   = note: this warning originates in the macro `record` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: struct `PdfResource` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:49:9
+   |
+49 | record!(PdfResource {
+   |         ^^^^^^^^^^^
+   |
+   = note: this warning originates in the macro `record` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: struct `PdfStore` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:56:19
+   |
+56 | pub(crate) struct PdfStore {
+   |                   ^^^^^^^^
+
+warning: `noetome-cli` (lib test) generated 4 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.24s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 6 tests
+test pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option ... FAILED
+test pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected ... FAILED
+test pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history ... FAILED
+test pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw ... FAILED
+test pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states ... FAILED
+test pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages ... FAILED
+
+failures:
+
+---- pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option stdout ----
+
+thread 'pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option' (21032) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:52:78:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "PDF cache contract not implemented" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected stdout ----
+
+thread 'pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected' (50952) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:40:9:
+missing nullable parse_id accepted
+
+---- pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history stdout ----
+
+thread 'pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history' (1676) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:106:5:
+complete synthetic PDF history rejected: Err(ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：来源类型或显示名称无效。没有修改数据库或快照。" })
+
+---- pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw stdout ----
+
+thread 'pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw' (46880) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:182:77:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：来源类型或显示名称无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states stdout ----
+
+thread 'pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states' (44080) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:111:65:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：来源类型或显示名称无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages stdout ----
+
+thread 'pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages' (52756) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:167:77:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：来源类型或显示名称无效。没有修改数据库或快照。" }
+
+
+failures:
+    pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option
+    pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages
+    pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected
+    pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw
+    pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states
+    pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history
+
+test result: FAILED. 0 passed; 6 failed; 0 ignored; 0 measured; 289 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`
+

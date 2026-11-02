@@ -1,0 +1,24 @@
+B03-T03 strict PDF report embedded version nullable fields SETUP FAILURE (not RED)
+Working directory: D:\Noetome
+Command:
+$env:NOETOME_PDF_PYTHON='D:\Noetome\.artifacts\b03-t02-python312\Scripts\python.exe'
+$env:NOETOME_TEST_PYTHON='C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+./scripts/cargo_local.ps1 test -p noetome-cli --lib pdf_source_model::tests::pdf_report_requires --locked --offline
+Command exit: 1
+
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+error[E0433]: cannot find `pdf_source` in `crate`
+   --> crates\noetome-cli\src\source.rs:190:23
+    |
+190 |         return crate::pdf_source::output(report);
+    |                       ^^^^^^^^^^ could not find `pdf_source` in the crate root
+
+error[E0433]: cannot find `pdf_source` in `crate`
+   --> crates\noetome-cli\src\source.rs:579:23
+    |
+579 |         return crate::pdf_source::import_selected(&root, &initial_info, &store, &selected, requested, reparse);
+    |                       ^^^^^^^^^^ could not find `pdf_source` in the crate root
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `noetome-cli` (lib test) due to 2 previous errors
+

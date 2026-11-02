@@ -1,0 +1,32 @@
+B03-T03 strict PDF report embedded version nullable fields RED (after parent integration compiles)
+Working directory: D:\Noetome
+Command:
+$env:NOETOME_PDF_PYTHON='D:\Noetome\.artifacts\b03-t02-python312\Scripts\python.exe'
+$env:NOETOME_TEST_PYTHON='C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+./scripts/cargo_local.ps1 test -p noetome-cli --lib pdf_source_model::tests::pdf_report_requires --locked --offline
+Command exit: 1
+
+    Blocking waiting for file lock on build directory
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.37s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 1 test
+test pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version ... FAILED
+
+failures:
+
+---- pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version stdout ----
+
+thread 'pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version' (54608) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:792:9:
+missing nullable embedded version normalized_sha256 accepted
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 310 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`
+

@@ -1,0 +1,62 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+warning: method `report_from_snapshot` is never used
+   --> crates\noetome-cli\src\pdf_source_model.rs:541:19
+    |
+211 | impl PdfStore {
+    | ------------- method in this implementation
+...
+541 |     pub(crate) fn report_from_snapshot(
+    |                   ^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `manifest` is never read
+  --> crates\noetome-cli\src\pdf_parse.rs:24:16
+   |
+21 | pub(crate) struct CapturedPdf {
+   |                   ----------- field in this struct
+...
+24 |     pub(crate) manifest: Option<Manifest>,
+   |                ^^^^^^^^
+
+warning: function `parse_owned` is never used
+   --> crates\noetome-cli\src\pdf_parse.rs:100:15
+    |
+100 | pub(crate) fn parse_owned(input: &Path, output: &Path) -> Result<CapturedPdf, SidecarError> {
+    |               ^^^^^^^^^^^
+
+warning: method `directory_paths` is never used
+  --> crates\noetome-cli\src\pdf_workspace.rs:37:19
+   |
+36 | impl CapturedTree {
+   | ----------------- method in this implementation
+37 |     pub(crate) fn directory_paths(&self) -> Vec<PathBuf> {
+   |                   ^^^^^^^^^^^^^^^
+
+warning: methods `hydrate_pdf_reports`, `source_for_path`, `source_for_hash`, and `next_import_order` are never used
+   --> crates\noetome-cli\src\source_model.rs:344:19
+    |
+ 94 | impl Store {
+    | ---------- methods in this implementation
+...
+344 |     pub(crate) fn hydrate_pdf_reports(
+    |                   ^^^^^^^^^^^^^^^^^^^
+...
+367 |     pub(crate) fn source_for_path(&self, selected_path: &str) -> Option<String> {
+    |                   ^^^^^^^^^^^^^^^
+...
+379 |     pub(crate) fn source_for_hash(&self, hash: &str) -> Option<String> {
+    |                   ^^^^^^^^^^^^^^^
+...
+393 |     pub(crate) fn next_import_order(&self) -> Result<i64, ProjectError> {
+    |                   ^^^^^^^^^^^^^^^^^
+
+warning: `noetome-cli` (lib test) generated 5 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.92s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 1 test
+test pdf_parse::tests::host_failure_keeps_parser_directory_alive_until_registry_capture ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 298 filtered out; finished in 0.06s
+

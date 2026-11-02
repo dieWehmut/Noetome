@@ -1,0 +1,21 @@
+B03-T03 model final formatting/compile/diff checks
+Working directory: D:\Noetome
+
+Check: owned_format
+Command: rustfmt --check --edition 2024 --config skip_children=true crates/noetome-cli/src/source_model.rs crates/noetome-cli/src/pdf_source_model.rs crates/noetome-cli/tests/support/pdf_source_model_tests.rs
+Exit: 0
+
+
+Check: crate_check
+Command: ./scripts/cargo_local.ps1 check -p noetome-cli --locked --offline
+Exit: 0
+    Checking serde_json v1.0.154
+    Checking noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.70s
+
+
+Check: owned_diff
+Command: git diff --check -- crates/noetome-cli/src/source_model.rs crates/noetome-cli/src/pdf_source_model.rs crates/noetome-cli/tests/support/pdf_source_model_tests.rs
+Exit: 0
+warning: in the working copy of 'crates/noetome-cli/src/source_model.rs', LF will be replaced by CRLF the next time Git touches it
+

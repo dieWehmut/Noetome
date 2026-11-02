@@ -12,6 +12,8 @@
 
 B03-T02另提供项目外PDF解析沙盒，只表达有限文本页、原始证据、真实位置和需复核/失败状态。单栏文本样例通过不扩大为全部PDF、结构或知识处理已支持。
 
+B03-T03将明确选定的PDF登记到来源项目，显示独立原始版本、解析尝试与获取/解析状态；重复导入、重解析及只读重查沿用CLI，知识仍pending。验收范围和原始证据见[B03-T03](../validation/B03-T03.md)。
+
 ## 2 信息优先级
 
 用户首先应看见结果和下一步动作，其次是范围、问题和细节。
@@ -37,12 +39,12 @@ B03-T02另提供项目外PDF解析沙盒，只表达有限文本页、原始证�
 
 首闭环退出码遵循 [工程架构](../technical/ARCHITECTURE.md)：0 成功、2 输入错误、3 受阻或未完成、1 内部错误。错误输出不因“已经写了部分文件”返回成功。
 
-B01项目命令为`noetome project init <path>`与`noetome project inspect <path>`。成功摘要显示实际项目ID、Schema版本和initialized基础状态。init仍建立Schema1空项目；Schema2检查不能固定宣称“尚未登记来源”，initialized只表示项目建立完成，不能写成“知识已生成”。已有目标或初始化中断返回受阻；无效配置、Schema及数据库内容返回输入错误；每项错误带稳定`PROJECT_*`代码及可执行建议。中断目录保持原样，提示用户保留残留并使用新的目标目录重试，不把自动覆盖伪装成恢复。inspect严格只读支持Schema1/2，不在前端或CLI根据文件存在推断项目完整。
+B01项目命令为`noetome project init <path>`与`noetome project inspect <path>`。成功摘要显示实际项目ID、Schema版本和initialized基础状态。init仍建立Schema1空项目；Schema2/3检查不能固定宣称“尚未登记来源”，initialized只表示项目建立完成，不能写成“知识已生成”。已有目标或初始化中断返回受阻；无效配置、Schema及数据库内容返回输入错误；每项错误带稳定`PROJECT_*`代码及可执行建议。中断目录保持原样，提示用户保留残留并使用新的目标目录重试，不把自动覆盖伪装成恢复。inspect严格只读支持Schema1/2/3，不在前端或CLI根据文件存在推断项目完整。
 
 B02-T01来源命令为：
 
 ```text
-noetome source import <project-path> <MD/TXT-file> [--source-id <existing-id>]
+noetome source import <project-path> <MD/TXT/PDF-file> [--source-id <existing-id>] [--reparse]
 noetome source inspect <project-path> <import-id>
 ```
 
@@ -79,7 +81,21 @@ JSON明确report_kind=pdf_parse_sandbox、原始SHA/字节、完整或未知页�
 
 inspect保持只读、重查原始/文本/manifest真实字节和全部位置、摘要及Markdown；成功读取needs_review/failed沙盒仍返回3并保留原状态。宿主失败可有failure.json及未确认现场，整体不算有效完整沙盒，inspect拒绝接管或修复。未确认原始或完整页清单保留null/已确认前缀，不补造成功对象。该报告不显示IR、知识覆盖、OCR、科学质量或发布成功。
 
+### B03-T03 PDF来源登记与重解析
+
+```text
+noetome source import <project-path> <PDF-file> [--source-id <existing-id>] [--reparse]
+noetome source inspect <project-path> <import-id>
+```
+
+PDF导入使用受保护的Schema3，原始版本与解析尝试分别显示ID。重复同字节与重命名可复用原始版本及默认的已验证缓存；每次导入仍有新import_id。显式source_id限定该来源内的版本复用；--reparse只用于PDF，每次创建新解析尝试并保留旧证据。MD/TXT配合--reparse在写入前拒绝。
+
+stdout为schema_version=2、report_kind=source_pdf_import的纯JSON，知识状态pending；原始获取状态、解析状态、实际页/区域数量、parser身份、选项、缓存键与问题各自明确。完整原始字节后的解析失败仍有原始版本；未读全时version/parse为空，页总数未知、区域数0。报告不得把原始获取成功或区域数解释为知识抽取完成。
+
+PDF只有parsed返回0，needs_review、failed及not_attempted返回3；只读inspect保留同一状态和退出码，从已保存原始与完整解析资源核对结果，原文件移动/删除后仍可重查。旧文本inspect仍按原规则返回0表示核对完成。未知Schema、额外缓存、owner变化、文件篡改、占用或未完成写入按已有稳定错误码拒绝；现场标记和备份用于后续检查，重查不自动修复。
+
 ### B02-T02 fixture 检查
+
 
 `noetome case verify <case-root>`及其帮助入口使用与来源命令一致的路径参数规则，动词后`--`可分隔以`-`开头的路径。验证只读，不登记Run、不写报告文件或Vault。有效输入stdout为Schema1 JSON，清楚标`producer=fixture`，显示实际来源/Span/原子/必要原子/计划笔记/节点数量与四包指纹。
 

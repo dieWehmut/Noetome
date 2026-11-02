@@ -1,0 +1,16 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.24s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-b3c381fa74716987.exe)
+
+running 4 tests
+Observed live raw sharing violation; mode=2, outcome=Blocked
+Observed live raw sharing violation; mode=3, outcome=Blocked
+Observed live raw sharing violation; mode=0, outcome=Applied
+Observed live raw sharing violation; mode=1, outcome=Applied
+test pdf_source_model::tests::source_cache_races::unknown_source_cache_entry_added_during_raw_read_is_rejected ... ok
+test pdf_source_model::tests::source_cache_races::owner_identity_is_guarded_without_an_acquired_pdf_version ... ok
+test pdf_source_model::tests::source_cache_races::owner_bytes_are_guarded_without_an_acquired_pdf_version ... ok
+test pdf_source_model::tests::source_cache_races::initially_absent_source_cache_created_during_staged_read_is_rejected ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 320 filtered out; finished in 4.46s
+

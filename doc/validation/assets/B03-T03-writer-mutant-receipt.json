@@ -1,0 +1,37 @@
+{
+  "isolated_root": "D:\\Noetome\\target\\compiler-temp\\noetome-pdf-writer-mutant-dcd9b00a5fe8404aaf6e5878a4b644f1",
+  "mutation": "Writer::abort omits restoration and owned cleanup",
+  "test_sha256": "52c2da6c3f011378e318c426c1ad15ec0b102ba1b00be544041b8ab6ee8d49dd",
+  "shared_source_write_before_sha256": "b8665d52745e5136962f2a00f3130894c589180ff8ecf6d09fa382739e56786f",
+  "shared_source_write_after_sha256": "b8665d52745e5136962f2a00f3130894c589180ff8ecf6d09fa382739e56786f",
+  "shared_source_write_unchanged": true,
+  "results": [
+    {
+      "label": "positive-diagnostic",
+      "compile_exit_code": 0,
+      "test_exit_code": 0,
+      "test_argv": [
+        "D:\\Noetome\\target\\compiler-temp\\noetome-pdf-writer-mutant-dcd9b00a5fe8404aaf6e5878a4b644f1\\positive-diagnostic\\noetome_cli-b3c381fa74716987.exe",
+        "--exact",
+        "source_write::pdf_tests::controlled_pdf_write_errors_restore_old_text_and_both_project_files_at_seven_stages",
+        "--nocapture"
+      ],
+      "wall_seconds": 20.888,
+      "binary_sha256": "f49aa4cac7668cf3e7538488522ef42a164520213bfbc74fa95f81b215015bfd"
+    },
+    {
+      "label": "negative-diagnostic",
+      "compile_exit_code": 0,
+      "test_exit_code": 101,
+      "test_argv": [
+        "D:\\Noetome\\target\\compiler-temp\\noetome-pdf-writer-mutant-dcd9b00a5fe8404aaf6e5878a4b644f1\\negative-diagnostic\\noetome_cli-b3c381fa74716987.exe",
+        "--exact",
+        "source_write::pdf_tests::controlled_pdf_write_errors_restore_old_text_and_both_project_files_at_seven_stages",
+        "--nocapture"
+      ],
+      "wall_seconds": 13.15,
+      "binary_sha256": "d17082d92a096c251a884d2bde6e415ae50dbe0408dc33ea0685f39dd9375669"
+    }
+  ],
+  "negative_reason": "\nthread 'source_write::pdf_tests::controlled_pdf_write_errors_restore_old_text_and_both_project_files_at_seven_stages' (54028) panicked at D:\\Noetome\\target\\compiler-temp\\noetome-pdf-writer-mutant-dcd9b00a5fe8404aaf6e5878a4b644f1\\snapshot\\crates\\noetome-cli\\src\\..\\tests\\support\\pdf_source_write_tests.rs:296:9:\na known PDF abort must remove its owned writing marker\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n"
+}

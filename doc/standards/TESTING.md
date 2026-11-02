@@ -138,6 +138,16 @@ Core DTO测试与adapter直接Python进程分开记账；Root PDF边界测试另
 
 真实PDF回归须先按[锁定环境](../../sidecars/pdf_parser/README.md)配置NOETOME_PDF_PYTHON绝对路径；既有fake回归用NOETOME_TEST_PYTHON，均不自动下载。每次改adapter后生成并检查`scripts/build_pdf_sidecar.py --check`的源码/payload字节和SHA绑定，避免可读源码测试与实际嵌入代码分叉。普通Rust构建消费提交的payload，不导入Python解析库。
 
+### B03-T03 PDF来源项目
+
+先固定[Schema3契约](../technical/PDF_SOURCE_CONTRACT.md)，真实RED必须区分产品失败、测试设置错误及更新后不适用的旧断言。普通CLI从旧Schema1/2升级，逐字段核对全部旧SQL四表与实际rowid、原始/规范化字节和报告；PDF保存独立raw/parse身份，默认复用、显式重解析、内容修订、回到旧字节、跨来源同SHA、失败后重试与获取未完成分别验收。
+
+Writer在准备、版本发布、parse发布、数据库发布、配置发布、完整重读和清理阶段做可确认回退；实际未知文件和Windows拒绝删除句柄必须保留现场及备份。真实子进程中断先以同步关闭的完整receipt证明阶段和PID存活，再终止/等待；不得用模拟PID或“已调用kill”替代退出证据。敏感性变体在独立编译目录破坏abort后，原测试应真实失败，变体不改生产代码。
+
+只读验证需要核对原始页JSON数值词法、所有资源SHA/长度/身份及精确缓存清单，已保存host失败与未确认parser残留按各自证据级别处理。并发回归在实际raw文件守卫被观察到后注入：新文件或原先不存在的来源根出现使当前读取拒绝，owner改写/替换被守卫阻止或使当前读取拒绝；覆盖无已获取PDF版本的Schema3。有限文本PDF登记通过仍不替代扫描OCR、科学准确性、生产Vault或跨平台实测。
+
+实际完整回归、独立CLI、审查修复和原始日志统一见[B03-T03验收](../validation/B03-T03.md)。
+
 ### 模型 API 与研究
 
 默认用 mock provider 重放已审阅响应，覆盖非法 JSON、空响应、限流、超时、未知计费和能力不足。真实 API 冒烟测试单独、显式启用，设置预算，不进入普通离线回归。

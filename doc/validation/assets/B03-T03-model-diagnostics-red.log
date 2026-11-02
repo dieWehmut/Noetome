@@ -1,0 +1,31 @@
+B03-T03 bounded JSON diagnostic expansion RED (synthetic 64 KiB control bytes)
+Working directory: D:\Noetome
+Command:
+$env:NOETOME_PDF_PYTHON='D:\Noetome\.artifacts\b03-t02-python312\Scripts\python.exe'
+$env:NOETOME_TEST_PYTHON='C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+./scripts/cargo_local.ps1 test -p noetome-cli --lib pdf_source_model::tests::bounded_host_diagnostics --locked --offline
+Command exit: 1
+
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.72s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-b3c381fa74716987.exe)
+
+running 1 test
+test pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion ... FAILED
+
+failures:
+
+---- pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion stdout ----
+
+thread 'pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion' (48580) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:929:5:
+bounded escaped diagnostics rejected: Err(ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 宿主失败报告 SHA 或长度无效。没有修改数据库或快照。" })
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 312 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`
+

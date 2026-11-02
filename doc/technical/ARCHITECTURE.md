@@ -2,15 +2,15 @@
 
 本文件规定当前采用的工程方向和首个可运行闭环。产品目标以 [PRD](../requirements/PRD.md) 为准；这里的分步实现不删减双模式、真实资料解析、主动图表表达和长期维护目标。
 
-状态：工程基线。B01/B01A提供项目与桌面骨架，B02-T01实现CLI单份文本来源登记，B02-T02提供只读fixture知识/覆盖/计划及独立预期校验；B02-T03将有效fixture编译到全新测试输出根，重读有限Markdown、保存双报告并以独立SQLite事务登记发布。B03-T01提供内部有界parser sidecar宿主；B03-T02接入单一锁定文本PDF adapter，在全新项目外测试根保存原始、物理页、真实区域和逐页文本，Core重新核对并保存JSON/Markdown，独立inspect保持只读。来源项目仍不登记PDF。任务完成状态与完整验证证据以[任务账本](../../dev-log/tasks.json)为准，不能把本文件中的后续设计或工程样例当作已验收能力。第三方库及版本在引入时验证并锁定。
+状态：工程基线。B01/B01A提供项目与桌面骨架，B02-T01实现CLI单份文本来源登记，B02-T02提供只读fixture知识/覆盖/计划及独立预期校验；B02-T03将有效fixture编译到全新测试输出根，重读有限Markdown、保存双报告并以独立SQLite事务登记发布。B03-T01提供内部有界parser sidecar宿主；B03-T02接入单一锁定文本PDF adapter，在全新项目外测试根保存原始、物理页、真实区域和逐页文本，Core重新核对并保存JSON/Markdown，独立inspect保持只读。B03-T03以显式Schema3将PDF原始版本、独立解析尝试和页/区域/资源索引纳入受保护的来源项目；验收见[B03-T03](../validation/B03-T03.md)。任务完成状态与完整验证证据以[任务账本](../../dev-log/tasks.json)为准，不能把本文件中的后续设计或工程样例当作已验收能力。第三方库及版本在引入时验证并锁定。
 
 ## 1 当前决定
 
 | 领域 | 采用方向 | 当前边界 |
 | --- | --- | --- |
 | 核心与命令行 | Rust core 与 CLI | 先建立可单独执行和测试的核心，不依赖 GUI |
-| 资料解析 | Rust文本入口及单一pdfplumber adapter的有界sidecar | 项目只登记UTF8 MD/TXT；PDF仅新测试根中的单文件文本解析与物理页/区域重查，扫描和复杂版面保守需复核 |
-| 持久化 | 本地 SQLite | 来源项目保存项目、来源版本、Span与最小导入记录；fixture编译工作区另以Schema1保存Run、Coverage、Release和发布依据，数据库不放进阅读Vault |
+| 资料解析 | Rust文本入口及单一pdfplumber adapter的有界sidecar | 来源项目登记明确选定的MD/TXT/PDF；PDF保存原始版本和独立解析尝试，扫描和复杂版面保守需复核 |
+| 持久化 | 本地 SQLite | 来源项目支持Schema1/2/3，PDF在Schema3保存页、区域、资源和真实导入顺序；fixture编译工作区另以Schema1保存Run、Coverage、Release和发布依据，数据库不放进阅读Vault |
 | 交换契约 | 带版本的 JSON | 显式校验输入、引用与结果；详见 [数据契约](DATA_CONTRACTS.md) |
 | 输出 | 有限Markdown、标题语义链接与比较表 | 当前只写尚不存在的新测试根中的Vault；完整Obsidian兼容及生产库维护需分别验收 |
 | 桌面端 | Tauri 与 React TypeScript | 按用户要求提前桌面骨架及安装实测；调用同一核心接口，完整用例逐项接入 |
@@ -23,6 +23,10 @@ B03-T02的 [PDF 沙盒](PDF_PARSE_CONTRACT.md) 复用protocol v1：可信嵌入P
 桌面窗口偏好与项目状态分开：`desktop-preferences.json` 固定在应用本地数据目录，由Rust读取和持久保存；前端仅通过受限设置命令选择关闭行为。×默认隐藏到托盘，可保存为直接退出；常规最小化保留任务栏窗口，托盘菜单退出始终终止应用。缺失偏好使用默认值且查询不创建文件；损坏或不支持版本保留文件并报告。设置查询实际重读文件，只有成功读取或保存才更新运行时偏好；重读或保存失败保留此前已生效的行为。启动读取失败且尚无有效偏好时，明确报告后安全采用隐藏到托盘，不伪称默认值已保存。此偏好不引入后台任务或项目数据库迁移。
 
 ## 2 首个闭环
+
+B03-T03的跨模块边界见[PDF来源契约](PDF_SOURCE_CONTRACT.md)：`pdf_source`只登记明确选定的资料，`pdf_source_model`核对严格持久图、原始页JSON及已保存报告，`source_schema3.sql`单独定义新Schema，旧Schema1/2与文本报告保持其原有含义。`RunSession`与`JobSession`保留原始目录能力到Core校验和捕获结束；`CapturedTree`在能力仍存活时取得守卫并移交`source_write`，Writer独占复制PDF文件、发布配置/数据库并完整重读后才清理。
+
+默认复用按原始版本和完整解析身份/协议/选项键选择已验证的parsed或needs_review尝试；失败重试与`--reparse`产生新parse身份，旧定位保持独立。来源缓存的owner守卫贯穿全部快照读取，返回前复查目录清单和初始缺失状态。完整原始字节已取得但解析失败仍保存原始版本；获取未完成只保存获取失败导入，知识状态保持pending。
 
 目标是证明输入、账本、计划、输出和报告之间能够对账，而不是证明模型能够理解教材。B02-T01完成来源登记、不可变快照和完整Span清单；B02-T02核对自造fixture的IR、覆盖与NotePlan契约及独立expected。B02-T03复用同一只读加载结果，增加确定性渲染、暂存与Vault实际重读、Run/Coverage/Release登记及JSON/Markdown验证快照；实现边界见[本任务方案](../execution/B02-T03_PLAN.md)。
 

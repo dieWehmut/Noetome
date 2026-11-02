@@ -1,0 +1,23 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.70s
+     Running tests\pdf_source.rs (target\debug\deps\pdf_source-ddac0beb1d635760.exe)
+
+running 1 test
+test complete_raw_above_parser_resource_limit_retains_a_retryable_original_version ... FAILED
+
+failures:
+
+---- complete_raw_above_parser_resource_limit_retains_a_retryable_original_version stdout ----
+
+thread 'complete_raw_above_parser_resource_limit_retains_a_retryable_original_version' (44104) panicked at crates\noetome-cli\tests\pdf_source.rs:264:9:
+JSON EOF while parsing a value at line 1 column 0; stdout=; stderr=SOURCE_SNAPSHOT_CONFLICT：来源快照目录冲突：PDF 存在未知、空或重复资源目录。不会覆盖或接管。
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    complete_raw_above_parser_resource_limit_retains_a_retryable_original_version
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 18 filtered out; finished in 2.97s
+
+error: test failed, to rerun pass `-p noetome-cli --test pdf_source`

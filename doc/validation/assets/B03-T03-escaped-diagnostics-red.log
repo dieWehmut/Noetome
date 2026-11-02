@@ -1,0 +1,22 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.31s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-b3c381fa74716987.exe)
+
+running 1 test
+test pdf_parse::tests::bounded_control_diagnostics_remain_a_capturable_host_failure ... FAILED
+
+failures:
+
+---- pdf_parse::tests::bounded_control_diagnostics_remain_a_capturable_host_failure stdout ----
+
+thread 'pdf_parse::tests::bounded_control_diagnostics_remain_a_capturable_host_failure' (53228) panicked at crates\noetome-cli\src\..\tests\support\pdf_parse_tests.rs:225:10:
+bounded diagnostics must fit their JSON representation without losing the failed attempt: SidecarError { code: "SIDECAR_LIMIT", message: "file byte limit", diagnostics: [] }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pdf_parse::tests::bounded_control_diagnostics_remain_a_capturable_host_failure
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 318 filtered out; finished in 0.07s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

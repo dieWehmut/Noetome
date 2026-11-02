@@ -1,0 +1,21 @@
+Observed raw sharing violation, then injected source-root mode 1
+During injection result=Ok(()); next read result=Err(ProjectError { code: "SOURCE_SNAPSHOT_CONFLICT", exit_code: 3, message: "来源快照目录冲突：快照清单存在缺失或未知内容。不会覆盖或接管。" })
+
+thread 'pdf_source_model::tests::audit_source_cache_concurrent_absence_change' (20468) panicked at C:\Users\Lyinn\AppData\Local\Temp\noetome-b03-t03-model-audit-5ba92cb23e364754b61fc7383aa9c8ae\snapshot\crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:1067:5:
+BUG: final source-root absence was not rechecked after a live staged raw guard
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Observed raw sharing violation, then injected source-root mode 2
+Owner mode 2; during injection result=Ok(())
+
+thread 'pdf_source_model::tests::audit_source_cache_concurrent_owner_bytes' (55088) panicked at C:\Users\Lyinn\AppData\Local\Temp\noetome-b03-t03-model-audit-5ba92cb23e364754b61fc7383aa9c8ae\snapshot\crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:1102:5:
+BUG: a source-root owner mutation escaped final verification in Schema3 with a failed unacquired PDF import
+Observed raw sharing violation, then injected source-root mode 3
+Owner mode 3; during injection result=Ok(())
+
+thread 'pdf_source_model::tests::audit_source_cache_concurrent_owner_identity' (248) panicked at C:\Users\Lyinn\AppData\Local\Temp\noetome-b03-t03-model-audit-5ba92cb23e364754b61fc7383aa9c8ae\snapshot\crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:1102:5:
+BUG: a source-root owner mutation escaped final verification in Schema3 with a failed unacquired PDF import
+Observed raw sharing violation, then injected source-root mode 0
+During injection result=Ok(()); next read result=Err(ProjectError { code: "SOURCE_SNAPSHOT_CONFLICT", exit_code: 3, message: "来源快照目录冲突：快照清单存在缺失或未知内容。不会覆盖或接管。" })
+
+thread 'pdf_source_model::tests::audit_source_cache_concurrent_unknown_inventory' (20456) panicked at C:\Users\Lyinn\AppData\Local\Temp\noetome-b03-t03-model-audit-5ba92cb23e364754b61fc7383aa9c8ae\snapshot\crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:1045:5:
+BUG: final source-root inventory was not checked after an observed live raw guard
