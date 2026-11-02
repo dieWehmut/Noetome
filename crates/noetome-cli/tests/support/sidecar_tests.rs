@@ -554,8 +554,7 @@ fn bounded_diagnostic_overflow_is_explicit() {
 #[test]
 fn failed_protocol_retains_diagnostics() {
     let (input, workspace, _) = setup();
-    let mut cmd = command("unknown");
-    cmd.args[0] = cmd.args[0].clone();
+    let cmd = command("unknown");
     let error = run_inner(
         &cmd,
         &input,

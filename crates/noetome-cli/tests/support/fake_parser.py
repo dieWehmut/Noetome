@@ -151,6 +151,3 @@ if mode=='trailing': wire+='\n \t\r'
 sys.stdout.write(wire)
 sys.stdout.flush()
 sys.exit(7 if mode=='nonzero' else 0)
-
-
-
