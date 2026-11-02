@@ -115,9 +115,32 @@ fn main() -> ExitCode {
                 return ExitCode::from(error.exit_code());
             }
         },
+        CliCommand::SourceImportFresh {
+            project,
+            file,
+            source_id,
+        } => match source::import_with_options(&project, &file, source_id.as_deref(), true) {
+            Ok(output) => {
+                if let Some((code, message)) = output.failure {
+                    let _ = writeln!(io::stderr().lock(), "{code}：{message}");
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
         CliCommand::SourceInspect { project, import_id } => {
-            match source::inspect(&project, &import_id) {
-                Ok(output) => output,
+            match source::inspect_output(&project, &import_id) {
+                Ok(output) => {
+                    if let Some((code, message)) = output.failure {
+                        let _ = writeln!(io::stderr().lock(), "{code}：{message}");
+                        result_code = 3;
+                    }
+                    output.json
+                }
                 Err(error) => {
                     let _ = writeln!(io::stderr().lock(), "{error}");
                     return ExitCode::from(error.exit_code());

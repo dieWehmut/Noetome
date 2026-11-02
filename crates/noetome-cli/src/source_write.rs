@@ -11,9 +11,12 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 use crate::project::{self, ProjectError, ProjectInfo};
+use crate::{pdf_workspace::CapturedTree, sidecar_process::Control};
+use std::sync::{Arc, atomic::AtomicBool};
 
 const MARKER: &str = ".noetome-writing";
 const CACHE: &str = ".noetome-sources";
+const PARSE_CACHE: &str = ".noetome-pdf-parses";
 const OWNER: &str = ".owner.json";
 const CANDIDATE_DB: &str = "candidate-project.sqlite";
 const CANDIDATE_CONFIG: &str = "candidate-project.json";
@@ -109,6 +112,12 @@ struct StagedVersion {
     staging: PathBuf,
     destination: PathBuf,
     normalized: bool,
+    raw_name: &'static str,
+    copy: bool,
+}
+struct StagedParse {
+    staging: PathBuf,
+    destination: PathBuf,
 }
 struct CacheGuard {
     directory: Directory,
@@ -127,10 +136,15 @@ struct CacheOwner {
 enum WriteStage {
     Prepared,
     VersionPublished,
+    ParsePublished,
     DatabasePublished,
     ConfigPublished,
     Validated,
     Cleanup,
+}
+#[cfg(test)]
+thread_local! {
+    static TEST_NEXT_HOOK: std::cell::RefCell<Option<Box<dyn FnMut(WriteStage, &Path) -> Result<(), ProjectError>>>> = std::cell::RefCell::new(None);
 }
 
 pub(crate) struct Writer {
@@ -144,7 +158,10 @@ pub(crate) struct Writer {
     files: Vec<Snapshot>,
     directories: Vec<Directory>,
     cache_guard: Option<CacheGuard>,
+    parse_cache_guard: Option<CacheGuard>,
     version: Option<StagedVersion>,
+    parse: Option<StagedParse>,
+    parse_guard: Option<CapturedTree>,
     prepared: bool,
     finished: bool,
     preserve: bool,
@@ -177,13 +194,16 @@ impl Writer {
             files: Vec::new(),
             directories: vec![marker_entry],
             cache_guard: None,
+            parse_cache_guard: None,
             version: None,
+            parse: None,
+            parse_guard: None,
             prepared: false,
             finished: false,
             preserve: false,
             recoverable_backups: BTreeSet::new(),
             #[cfg(test)]
-            hook: None,
+            hook: TEST_NEXT_HOOK.with(|hook| hook.borrow_mut().take()),
         };
         writer.ensure_owners()?;
         writer.info = project::inspect_for_writer(writer.root(), &writer.marker.identity)?;
@@ -236,6 +256,10 @@ impl Writer {
 
     fn ensure_integrity(&self) -> Result<(), ProjectError> {
         self.ensure_owners()?;
+        if let Some(tree) = &self.parse_guard {
+            tree.verify(&Control::new(5000, Arc::new(AtomicBool::new(false))))
+                .map_err(|_| incomplete())?;
+        }
         if self.files.iter().any(|file| !file.matches())
             || self
                 .originals
@@ -280,7 +304,10 @@ impl Writer {
                 return Err(incomplete());
             }
         }
-        if let Some(cache) = &self.cache_guard {
+        for cache in [&self.cache_guard, &self.parse_cache_guard]
+            .into_iter()
+            .flatten()
+        {
             if !cache.directory.matches() || !cache.owner.matches() {
                 return Err(incomplete());
             }
@@ -431,13 +458,18 @@ impl Writer {
             staging,
             destination: destination.clone(),
             normalized: normalized.is_some(),
+            raw_name: "raw.bin",
+            copy: false,
         });
         self.ensure_integrity()?;
         Ok(destination)
     }
 
     fn prepare_cache(&mut self) -> Result<(), ProjectError> {
-        let cache_path = self.root().join(CACHE);
+        self.prepare_cache_named(CACHE)
+    }
+    fn prepare_cache_named(&mut self, name: &'static str) -> Result<(), ProjectError> {
+        let cache_path = self.root().join(name);
         if project::exists(&cache_path)? {
             let directory = Directory::read(&cache_path).map_err(|_| snapshot_conflict())?;
             let owner_path = cache_path.join(OWNER);
@@ -458,11 +490,16 @@ impl Writer {
                 return Err(snapshot_conflict());
             }
             let names = directory_names(&cache_path)?;
-            self.cache_guard = Some(CacheGuard {
+            let guard = CacheGuard {
                 directory,
                 owner,
                 names,
-            });
+            };
+            if name == CACHE {
+                self.cache_guard = Some(guard);
+            } else {
+                self.parse_cache_guard = Some(guard);
+            }
         } else {
             self.create_directory(&cache_path)?;
             let mut bytes = serde_json::to_vec(&CacheOwner {
@@ -483,12 +520,14 @@ impl Writer {
         let staging = version.staging.clone();
         let destination = version.destination.clone();
         let normalized = version.normalized;
+        let raw_name = version.raw_name;
+        let copy = version.copy;
         self.prepare_cache()?;
         if project::exists(&destination)? {
             return Err(snapshot_conflict());
         }
         self.create_directory(&destination)?;
-        for name in ["raw.bin", "normalized.txt"] {
+        for name in [raw_name, "normalized.txt"] {
             if name == "normalized.txt" && !normalized {
                 continue;
             }
@@ -503,17 +542,143 @@ impl Writer {
             if !original.matches() {
                 return Err(incomplete());
             }
-            // Directory creation and each file link are exclusive. This cannot
-            // replace an existing file, and staged links survive until cleanup.
-            fs::hard_link(&staged, &target).map_err(|error| ProjectError::io(&target, error))?;
-            let current = Snapshot::read(&target)?;
-            if current.identity != original.identity || current.bytes != original.bytes {
-                return Err(incomplete());
+            if copy {
+                // PDF resource guards require one hard link. Exclusive copies
+                // keep staged and published snapshots independently immutable.
+                let bytes = original.bytes.clone();
+                self.create_file(&target, &bytes)?;
+            } else {
+                fs::hard_link(&staged, &target)
+                    .map_err(|error| ProjectError::io(&target, error))?;
+                let current = Snapshot::read(&target)?;
+                if current.identity != original.identity || current.bytes != original.bytes {
+                    return Err(incomplete());
+                }
+                self.files.push(current);
             }
-            self.files.push(current);
         }
         self.ensure_integrity()?;
         self.run_hook(WriteStage::VersionPublished)
+    }
+
+    pub(crate) fn stage_pdf_version(
+        &mut self,
+        version_id: &str,
+        raw: &[u8],
+    ) -> Result<PathBuf, ProjectError> {
+        self.ensure_integrity()?;
+        if !valid_uuid(version_id) || self.version.is_some() {
+            return Err(incomplete());
+        }
+        let staging = self.marker.path.join("version");
+        let destination = self.root().join(CACHE).join(version_id);
+        self.create_directory(&staging)?;
+        self.create_file(&staging.join("raw.pdf"), raw)?;
+        self.version = Some(StagedVersion {
+            staging,
+            destination: destination.clone(),
+            normalized: false,
+            raw_name: "raw.pdf",
+            copy: true,
+        });
+        self.ensure_integrity()?;
+        Ok(destination)
+    }
+
+    pub(crate) fn pdf_parse_path(&self) -> Result<PathBuf, ProjectError> {
+        self.ensure_integrity()?;
+        if self.parse.is_some() {
+            return Err(incomplete());
+        }
+        Ok(self.marker.path.join("parse"))
+    }
+
+    pub(crate) fn stage_pdf_parse(
+        &mut self,
+        parse_id: &str,
+        mut tree: CapturedTree,
+    ) -> Result<PathBuf, ProjectError> {
+        self.ensure_owners()?;
+        if !valid_uuid(parse_id)
+            || self.parse.is_some()
+            || tree.root != self.marker.path.join("parse")
+        {
+            return Err(incomplete());
+        }
+        tree.verify(&Control::new(5000, Arc::new(AtomicBool::new(false))))
+            .map_err(|_| incomplete())?;
+        // Early host failure may leave proven owned empty native directories.
+        // They contain no byte evidence or indexed resource; remove them
+        // nonrecursively after capability handoff, never loosen readonly audit.
+        tree.prune_empty_native_directories(&Control::new(5000, Arc::new(AtomicBool::new(false))))
+            .map_err(|_| incomplete())?;
+        // Every capability is still live while we record exact identities and
+        // bytes. Partial or unknown jobs never arrive as a CapturedTree.
+        for path in tree.directory_paths() {
+            self.directories.push(Directory::read(&path)?);
+        }
+        for (relative, bytes) in &tree.files {
+            let snapshot = Snapshot::read(&tree.root.join(relative))?;
+            if &snapshot.bytes != bytes {
+                return Err(incomplete());
+            }
+            self.files.push(snapshot);
+        }
+        let destination = self.root().join(PARSE_CACHE).join(parse_id);
+        self.parse = Some(StagedParse {
+            staging: tree.root.clone(),
+            destination: destination.clone(),
+        });
+        self.parse_guard = Some(tree);
+        self.ensure_integrity()?;
+        Ok(destination)
+    }
+
+    fn publish_parse(&mut self) -> Result<(), ProjectError> {
+        let Some(parse) = &self.parse else {
+            return Ok(());
+        };
+        let staging = parse.staging.clone();
+        let destination = parse.destination.clone();
+        self.prepare_cache_named(PARSE_CACHE)?;
+        if project::exists(&destination)? {
+            return Err(snapshot_conflict());
+        }
+        self.create_directory(&destination)?;
+        let directories = self
+            .parse_guard
+            .as_ref()
+            .ok_or_else(incomplete)?
+            .directory_paths();
+        for path in directories {
+            if path == staging {
+                continue;
+            }
+            let relative = path.strip_prefix(&staging).map_err(|_| incomplete())?;
+            self.create_directory(&destination.join(relative))?;
+        }
+        let names: Vec<_> = self
+            .parse_guard
+            .as_ref()
+            .ok_or_else(incomplete)?
+            .files
+            .keys()
+            .cloned()
+            .collect();
+        for name in names {
+            self.ensure_integrity()?;
+            let bytes = self
+                .parse_guard
+                .as_ref()
+                .ok_or_else(incomplete)?
+                .files
+                .get(&name)
+                .ok_or_else(incomplete)?
+                .clone();
+            self.create_file(&destination.join(name), &bytes)?;
+        }
+        self.ensure_integrity()?;
+        self.run_hook(WriteStage::ParsePublished)
     }
 
     fn publish_file(&mut self, staged: &Path, original_index: usize) -> Result<(), ProjectError> {
@@ -546,13 +711,14 @@ impl Writer {
             || new_info.created_at != self.info.created_at
             || new_info.state != self.info.state
             || new_info.database != self.info.database
-            || !(new_info.schema_version == 2
-                || (new_info.schema_version == 1 && self.info.schema_version == 1))
+            || !(matches!(self.info.schema_version, 1..=3)
+                && matches!(new_info.schema_version, 1..=3)
+                && new_info.schema_version >= self.info.schema_version)
         {
             return Err(ProjectError::new(
                 "SOURCE_INVALID_PROJECT_INFO",
                 2,
-                "来源写入不能改变项目身份、创建时间、基础状态或数据库路径；版本只允许保留Schema1或升级/保留Schema2。",
+                "来源写入不能改变项目身份、创建时间、基础状态或数据库路径；只允许保留或升级已知Schema1至3。",
             ));
         }
         let candidate_config = self.marker.path.join(CANDIDATE_CONFIG);
@@ -561,6 +727,7 @@ impl Writer {
         bytes.push(b'\n');
         self.create_file(&candidate_config, &bytes)?;
         self.publish_version()?;
+        self.publish_parse()?;
         self.ensure_integrity()?;
         // Shared identity handles remain, but deny-write/delete preparation
         // guards must be released before replacing the original pair.
@@ -634,6 +801,9 @@ impl Writer {
 
     fn remove_owned(&mut self, marker_only: bool) -> Result<(), ProjectError> {
         self.ensure_integrity()?;
+        // Verification above still holds the receipt. Release deny-delete
+        // capabilities only as the known identity/byte cleanup begins.
+        self.parse_guard.take();
         for index in (0..self.files.len()).rev() {
             if marker_only && !self.files[index].path.starts_with(&self.marker.path) {
                 continue;
@@ -761,6 +931,10 @@ fn valid_uuid(value: &str) -> bool {
             && id.to_string() == value
     })
 }
+
+#[cfg(test)]
+#[path = "../tests/support/pdf_source_write_tests.rs"]
+mod pdf_tests;
 
 #[cfg(test)]
 mod tests {

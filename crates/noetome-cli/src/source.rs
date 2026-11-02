@@ -1,5 +1,4 @@
 //! Explicit one-file registration. Ingestion never runs knowledge extraction.
-use std::collections::BTreeMap;
 use std::fs;
 use std::io::Read;
 use std::path::{Path, PathBuf};
@@ -13,7 +12,7 @@ use crate::source_model::{ImportReport, SourceFailure, SourceSpan, SourceVersion
 use crate::{source_schema, source_write::Writer, text};
 
 const MAX_BYTES: u64 = 64 * 1024 * 1024;
-const INSERT_VERSION: &str = "INSERT INTO source_versions
+pub(crate) const INSERT_VERSION: &str = "INSERT INTO source_versions
     (version_id,source_id,revision,created_at,media_type,display_name,content_sha256,
     byte_length,normalized_sha256,normalization_version,ingest_status,raw_snapshot,
     normalized_snapshot,error_code,error_message)
@@ -27,7 +26,7 @@ const INSERT_IMPORT: &str = "INSERT INTO source_imports
     pending_extraction_count,knowledge_status,error_code,error_message)
     VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)";
 
-fn sql_integer(value: u64) -> Result<i64, ProjectError> {
+pub(crate) fn sql_integer(value: u64) -> Result<i64, ProjectError> {
     i64::try_from(value).map_err(|_| {
         ProjectError::new(
             "SOURCE_INVALID_RECORD",
@@ -43,15 +42,10 @@ pub struct CommandOutput {
 }
 
 fn empty_store() -> Store {
-    Store {
-        sources: BTreeMap::new(),
-        versions: BTreeMap::new(),
-        spans: BTreeMap::new(),
-        reports: Vec::new(),
-    }
+    Store::default()
 }
 
-fn invalid_id(id: &str) -> Result<(), ProjectError> {
+pub(crate) fn invalid_id(id: &str) -> Result<(), ProjectError> {
     if Uuid::parse_str(id).is_ok_and(|parsed| {
         parsed.get_version_num() == 4
             && parsed.get_variant() == uuid::Variant::RFC4122
@@ -67,7 +61,7 @@ fn invalid_id(id: &str) -> Result<(), ProjectError> {
     }
 }
 
-fn not_found() -> ProjectError {
+pub(crate) fn not_found() -> ProjectError {
     ProjectError::new(
         "SOURCE_NOT_FOUND",
         2,
@@ -80,6 +74,15 @@ fn database_store(
     root: &Path,
     info: &ProjectInfo,
     staged: Option<(&str, &Path)>,
+) -> Result<Store, ProjectError> {
+    database_store_staged(path, root, info, staged, None)
+}
+pub(crate) fn database_store_staged(
+    path: &Path,
+    root: &Path,
+    info: &ProjectInfo,
+    staged: Option<(&str, &Path)>,
+    staged_parse: Option<(&str, &Path)>,
 ) -> Result<Store, ProjectError> {
     project::checked_file(path)?;
     let guard = project::read_guard(path)?;
@@ -117,13 +120,14 @@ fn database_store(
                 "读取来源时项目元数据与已校验配置不一致。",
             ));
         }
-        let store = if info.schema_version == 2 {
+        let mut store = if matches!(info.schema_version, 2 | 3) {
             source_schema::validate(&connection)?;
             Store::load(&connection, &info.project_id)?
         } else {
             empty_store()
         };
-        store.validate_snapshots(root, &info.project_id, staged)?;
+        store.validate_snapshots_staged(root, &info.project_id, staged, staged_parse)?;
+        store.hydrate_pdf_reports(root, staged_parse)?;
         Ok(store)
     })();
     connection
@@ -147,7 +151,7 @@ fn database_store(
     result
 }
 
-fn current_store(root: &Path) -> Result<(ProjectInfo, Store), ProjectError> {
+pub(crate) fn current_store(root: &Path) -> Result<(ProjectInfo, Store), ProjectError> {
     let info = project::inspect(root)?;
     let _config_guard = project::read_guard(&root.join(project::CONFIG))?;
     let _database_guard = project::read_guard(&root.join(project::DATABASE))?;
@@ -176,22 +180,36 @@ fn report_json(report: &ImportReport) -> Result<String, ProjectError> {
 }
 
 pub fn inspect(path: &Path, import_id: &str) -> Result<String, ProjectError> {
+    inspect_output(path, import_id).map(|output| output.json)
+}
+pub fn inspect_output(path: &Path, import_id: &str) -> Result<CommandOutput, ProjectError> {
     invalid_id(import_id)?;
     let root = project::check_components(path)?;
     let (_, store) = current_store(&root)?;
+    if let Some(report) = store
+        .pdf
+        .reports
+        .iter()
+        .find(|report| report.import_id == import_id)
+    {
+        return crate::pdf_source::output(report);
+    }
     let report = store
         .reports
         .iter()
         .find(|report| report.import_id == import_id)
         .ok_or_else(not_found)?;
-    report_json(report)
+    Ok(CommandOutput {
+        json: report_json(report)?,
+        failure: None,
+    })
 }
 
-struct Selected {
-    path: PathBuf,
-    media_type: &'static str,
-    raw: Option<Vec<u8>>,
-    failure: Option<SourceFailure>,
+pub(crate) struct Selected {
+    pub(crate) path: PathBuf,
+    pub(crate) media_type: &'static str,
+    pub(crate) raw: Option<Vec<u8>>,
+    pub(crate) failure: Option<SourceFailure>,
 }
 
 fn read_selected(path: &Path) -> Result<Selected, ProjectError> {
@@ -204,11 +222,12 @@ fn read_selected(path: &Path) -> Result<Selected, ProjectError> {
     let media_type = match extension.as_str() {
         "md" => "text/markdown",
         "txt" => "text/plain",
+        "pdf" => "application/pdf",
         _ => {
             return Err(ProjectError::new(
                 "SOURCE_UNSUPPORTED_TYPE",
                 2,
-                "本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。",
+                "本阶段只接受明确选取的.md、.txt或.pdf单文件。",
             ));
         }
     };
@@ -220,7 +239,7 @@ fn read_selected(path: &Path) -> Result<Selected, ProjectError> {
             return Err(ProjectError::new(
                 "SOURCE_UNSUPPORTED_TYPE",
                 2,
-                "请选取普通MD/TXT文件，不能导入目录。",
+                "请选取普通MD/TXT/PDF文件，不能导入目录。",
             ));
         }
     }
@@ -321,21 +340,9 @@ fn register(
         .to_str()
         .ok_or_else(|| ProjectError::unsafe_path(&selected.path))?
         .to_owned();
-    let path_source = store
-        .reports
-        .iter()
-        .rev()
-        .filter(|report| report.selected_path == selected_path)
-        .find_map(|report| report.source_id.clone());
+    let path_source = store.source_for_path(&selected_path);
     let hash = selected.raw.as_ref().map(|raw| text::sha256(raw));
-    let content_source = hash.as_ref().and_then(|hash| {
-        store
-            .reports
-            .iter()
-            .filter_map(|report| report.version.as_ref())
-            .find(|version| version.content_sha256 == *hash)
-            .map(|version| version.source_id.clone())
-    });
+    let content_source = hash.as_ref().and_then(|hash| store.source_for_hash(hash));
     let mut source_id = requested
         .map(str::to_owned)
         .or(path_source)
@@ -354,6 +361,13 @@ fn register(
         if let Some(existing) = store.versions.values().find(|version| {
             version.source_id == *source && Some(&version.content_sha256) == hash.as_ref()
         }) {
+            if existing.media_type == "application/pdf" {
+                return Err(ProjectError::new(
+                    "SOURCE_MEDIA_CONFLICT",
+                    2,
+                    "同一来源同字节版本已有不同媒体解释；不能改变旧版本类型。",
+                ));
+            }
             version = Some(existing.clone());
             spans = store
                 .spans
@@ -501,9 +515,20 @@ fn register(
                 .map_err(ProjectError::database)?;
         }
     }
+    let insert_import = if updated.schema_version == 3 {
+        "INSERT INTO source_imports
+        (rowid,import_id,imported_at,selected_path,source_id,version_id,status,reused,span_count,
+         pending_extraction_count,knowledge_status,error_code,error_message)
+         VALUES((SELECT COALESCE(MAX(n),0)+1 FROM (SELECT rowid AS n FROM source_imports UNION ALL SELECT rowid AS n FROM pdf_imports)),?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)"
+    } else {
+        INSERT_IMPORT
+    };
+    // Check the signed sequence before SQL arithmetic could promote overflow
+    // to REAL. Both formats share this order in Schema3.
+    store.next_import_order()?;
     transaction
         .execute(
-            INSERT_IMPORT,
+            insert_import,
             params![
                 report.import_id,
                 report.imported_at,
@@ -547,6 +572,14 @@ pub fn import(
     file: &Path,
     requested: Option<&str>,
 ) -> Result<CommandOutput, ProjectError> {
+    import_with_options(path, file, requested, false)
+}
+pub fn import_with_options(
+    path: &Path,
+    file: &Path,
+    requested: Option<&str>,
+    reparse: bool,
+) -> Result<CommandOutput, ProjectError> {
     if let Some(id) = requested {
         invalid_id(id)?;
     }
@@ -556,6 +589,23 @@ pub fn import(
         return Err(not_found());
     }
     let selected = read_selected(file)?;
+    if selected.media_type == "application/pdf" {
+        return crate::pdf_source::import_selected(
+            &root,
+            &initial_info,
+            &store,
+            &selected,
+            requested,
+            reparse,
+        );
+    }
+    if reparse {
+        return Err(ProjectError::new(
+            "SOURCE_INVALID_OPTIONS",
+            2,
+            "--reparse只用于PDF解析尝试。",
+        ));
+    }
     let analyzed = selected.raw.as_ref().map(|raw| text::analyze(raw));
     let normalized = analyzed.as_ref().and_then(|result| result.as_ref().ok());
     let decode_failure=analyzed.as_ref().and_then(|result|result.as_ref().err()).map(|error|SourceFailure {code:"SOURCE_INVALID_UTF8".into(),message:format!("选取文件不是有效UTF8（原始字节位置{}）；原始快照保留，没有生成替换文本或规范指纹。",error.valid_up_to())});

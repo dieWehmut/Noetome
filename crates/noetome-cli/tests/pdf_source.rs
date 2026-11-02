@@ -1051,6 +1051,45 @@ fn reparse_on_schema1_creates_one_fresh_real_attempt() {
 }
 
 #[test]
+fn complete_raw_above_parser_resource_limit_retains_a_retryable_original_version() {
+    // Source acquisition permits64MiB while this parser's raw resource is
+    // bounded at16MiB. A parser limit must not erase fully acquired bytes.
+    let scratch = Scratch::new();
+    let (project, _) = scratch.project("complete raw resource limit");
+    let selected = scratch.root.join("selected-large.pdf");
+    let original = fs::read(fixture("single-page.pdf")).unwrap();
+    let mut padded = original.clone();
+    padded.resize(17 * 1024 * 1024, b' ');
+    fs::write(&selected, &padded).unwrap();
+    let failed = incomplete(
+        &scratch.import(&project, &selected, None, false, true),
+        "failed",
+    );
+    pdf_version(&project, &failed, &padded);
+    assert_eq!(failed["pdf"]["outcome_kind"], "host_failed");
+    assert_eq!(failed["pdf"]["parser"], Value::Null);
+    assert_eq!(failed["pdf"]["page_count"], Value::Null);
+    assert_eq!(failed["pdf"]["confirmed_page_count"], 0);
+    assert_eq!(failed["pdf"]["region_count"], 0);
+    assert!(matches!(
+        failed["error"]["code"].as_str().unwrap(),
+        "SIDECAR_EXIT" | "SIDECAR_LIMIT"
+    ));
+    scratch.inspect(&project, &failed, 3);
+    let saved_raw = managed(&project, &failed["version"]["raw_snapshot"]);
+    let fingerprint = sha(&fs::read(&saved_raw).unwrap());
+    fs::write(&selected, &original).unwrap();
+    let ready = success(&scratch.import(&project, &selected, None, false, true));
+    assert_eq!(ready["source_id"], failed["source_id"]);
+    assert_ne!(ready["version_id"], failed["version_id"]);
+    assert_eq!(ready["version"]["revision"], 2);
+    assert_eq!(sha(&fs::read(&saved_raw).unwrap()), fingerprint);
+    scratch.inspect(&project, &ready, 0);
+    scratch.inspect(&project, &failed, 3);
+    scratch.sentinel();
+}
+
+#[test]
 fn explicit_source_id_isolates_same_sha_versions_and_parse_evidence() {
     // A global content cache must never merge a caller-selected existing Source.
     let scratch = Scratch::new();

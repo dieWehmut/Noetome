@@ -13,6 +13,8 @@ mod fixture_plan;
 mod fixture_render;
 mod pdf_model;
 pub mod pdf_parse;
+mod pdf_source;
+mod pdf_source_model;
 mod pdf_validate;
 mod pdf_workspace;
 pub mod project;
@@ -32,7 +34,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
 
 用法：noetome [选项]
       noetome project <init|inspect> <路径>
-      noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
+      noetome source import <项目路径> <MD/TXT/PDF文件> [--source-id <既有ID>] [--reparse]
       noetome source inspect <项目路径> <import-id>
       noetome source parse-pdf <PDF文件> <尚不存在的测试根>
       noetome source inspect-pdf <PDF测试根>
@@ -44,7 +46,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   -V, --version    显示版本
   project init <路径>     在尚不存在的目录初始化空项目
   project inspect <路径>  只读检查已有项目
-  source import           登记单份UTF8文本、不可变版本及完整位置清单
+  source import           登记单份文本或PDF的原始版本、解析状态及可追溯位置
   source inspect          只读核对导入记录和真实快照
   source parse-pdf        单份PDF解析到全新测试根，完整物理页/区域及需复核原因
   source inspect-pdf      只读核对已保存PDF、文本、位置和双报告
@@ -52,7 +54,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
 
 不传参数时显示帮助；project --help 或 source --help 查看命令说明。
-当前来源由用户明确选取，fixture知识与计划由作者声明；PDF先在独立新根解析，项目PDF登记和知识自动抽取尚未实现。
+当前来源由用户明确选取，PDF解析失败或需复核会保留原因，知识状态仍为pending；fixture知识与计划由作者声明，知识自动抽取尚未实现。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -69,23 +71,24 @@ init建立空项目；来源登记通过source import，知识生成尚未实现
 
 pub const SOURCE_HELP: &str = "Noetome 文本与PDF来源命令
 
-用法：noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
+用法：noetome source import <项目路径> <MD/TXT/PDF文件> [--source-id <既有ID>] [--reparse]
       noetome source inspect <项目路径> <import-id>
       noetome source parse-pdf <PDF文件> <尚不存在的测试根>
       noetome source inspect-pdf <PDF测试根>
 
-import：只读选取的UTF8文件（最多64 MiB），保存原始/规范快照、来源版本和完整Span清单。
-初次写入将Schema1空项目升级为Schema2，保持项目身份和创建时间；已有版本保留。
+import：只读选取的单文件（最多64 MiB）；MD/TXT保存原始/规范快照与Span，PDF保存原始版本及独立页/区域解析尝试。
+文本初次写入升级为Schema2，PDF写入升级为Schema3；保持项目身份、创建时间与已有历史，检查命令不会升级。
 相同内容提示复用；显式source-id只在该来源身份内换版，不按名称合并。
+PDF同字节按解析器/协议/选项复用已确认结果；--reparse只用于PDF，建立新解析尝试并保留旧结果。
 inspect：使用导入结果的import-id只读核对持久记录、快照与位置，不迁移或修复。
-结果为JSON；知识状态仍为pending。UTF8无效或文件未能完整读取会记录真实失败并返回非零。
+结果为JSON；分别显示原始获取、PDF解析及pending知识状态。未能完整读取不造版本，完整PDF解析失败仍保留原始版本和真实尝试；失败/需复核返回非零。
 以 - 开头的路径可在动词后加 -- 分隔符；中文和空格路径须作为单独参数。
 项目写入中断保留标记、候选与备份；请检查旧目录并用新的测试项目重试。
 parse-pdf：用NOETOME_PDF_PYTHON指定的锁定Python解释器解析一份明确PDF，仅写全新测试根。
 保存原始PDF、完整物理页/区域、逐页UTF8及双报告；扫描/空白/复杂版式需复核，返回非零。
 inspect-pdf：只读重查测试根的实际SHA、位置、正文与报告，原文件移动后仍可核对；不修复残留。
 PDF物理索引从0开始、显示页为索引+1，印刷页号未知；不以行号或文件名代替页码。
-source导入不生成IR或Vault；已审阅fixture通过case compile输出临时Vault。项目PDF登记和模型抽取尚未实现。
+source导入不生成IR或Vault；已审阅fixture通过case compile输出临时Vault。模型抽取尚未实现。
 ";
 
 pub const CASE_HELP: &str = "Noetome fixture契约校验
@@ -114,6 +117,11 @@ pub enum CliCommand {
     ProjectInspect(PathBuf),
     SourceHelp,
     SourceImport {
+        project: PathBuf,
+        file: PathBuf,
+        source_id: Option<String>,
+    },
+    SourceImportFresh {
         project: PathBuf,
         file: PathBuf,
         source_id: Option<String>,
@@ -229,6 +237,44 @@ fn source_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         !path.is_empty() && (separator || path.as_encoded_bytes().first() != Some(&b'-'))
     };
     match tail {
+        [project, file, flag]
+            if verb == "import"
+                && flag == "--reparse"
+                && valid_path(project)
+                && valid_path(file) =>
+        {
+            Ok(CliCommand::SourceImportFresh {
+                project: project.into(),
+                file: file.into(),
+                source_id: None,
+            })
+        }
+        [project, file, source_flag, id, fresh]
+            if verb == "import"
+                && source_flag == "--source-id"
+                && fresh == "--reparse"
+                && valid_path(project)
+                && valid_path(file) =>
+        {
+            Ok(CliCommand::SourceImportFresh {
+                project: project.into(),
+                file: file.into(),
+                source_id: Some(id.to_str().ok_or(INVALID_ARGUMENT)?.into()),
+            })
+        }
+        [project, file, fresh, source_flag, id]
+            if verb == "import"
+                && source_flag == "--source-id"
+                && fresh == "--reparse"
+                && valid_path(project)
+                && valid_path(file) =>
+        {
+            Ok(CliCommand::SourceImportFresh {
+                project: project.into(),
+                file: file.into(),
+                source_id: Some(id.to_str().ok_or(INVALID_ARGUMENT)?.into()),
+            })
+        }
         [file, output] if verb == "parse-pdf" && valid_path(file) && valid_path(output) => {
             Ok(CliCommand::SourceParsePdf {
                 file: file.into(),
