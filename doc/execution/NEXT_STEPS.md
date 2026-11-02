@@ -1,6 +1,6 @@
 # 近期开发步骤
 
-真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B02三项已分别验收，执行卡归档于[B02步骤](B02_STEPS.md)，闭环证据见[B02-T03](../validation/B02-T03.md)。当前批次B03只规划以下三项，均未开始；没有运行真实PDF解析、解析器选型、Schema升级或性能基准。
+真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B02三项已分别验收，执行卡归档于[B02步骤](B02_STEPS.md)，闭环证据见[B02-T03](../validation/B02-T03.md)。B03-T01已完成有界单请求sidecar的真实fake验证，证据见[B03-T01](../validation/B03-T01.md)；本批剩余两项仍是计划。下一入口B03-T02，没有运行真实PDF解析、解析器选型、Schema升级或产品性能基准。
 
 **目标**：用一个有界 parser sidecar 将单份真实文本 PDF 变为可追溯的页与区域来源，在项目内安全登记并复用；每项交付独立验收。
 
@@ -10,7 +10,7 @@
 
 ## 共同边界
 
-- 每次只推进一项，依赖验收后才能 start；三个任务均为 `todo`，历史为空。真实状态以任务账本为准；本批尚未开始实现。
+- 每次只推进一项，依赖验收后才能 start；B03-T01的实施和失败修复保留真实记录，B03-T02/T03保持 `todo`。真实状态以任务账本为准；完成当前任务不自动启动下一项。
 - 本批不接扫描 OCR、模型/API、知识抽取、项目 GUI、生产 Vault、完整多格式适配或通用远程任务总线。扫描及复杂页仍须作为失败/需复核边界样例，不能据此宣称支持。
 - 只读用户明确提供的单文件，输出只在本轮明确且独占的范围内。资料中的链接和操作指令按内容处理，不能决定可执行程序、扩大文件范围或触发外发。受控 sidecar 的协议边界不等于已建立操作系统级沙盒。
 - 当前来源 `project.sqlite` 为 Schema2；当前编译 `state/compile.sqlite` 为独立 Schema1。PDF 登记所需的下一项目 Schema 必须显式设计，不能修改 Schema2 的含义，也不能混用编译库版本。
@@ -23,15 +23,11 @@
 
 **依赖与范围**：B02-T03 验收完成；部分覆盖 FR-06/36/40、NFR-14。只交付严格协议与进程宿主，不引入 PDF Python 库。fake helper 是测试工具，生产 CLI 不暴露 fake 开关。
 
-**预期模块职责**：新增 Rust `sidecar_model.rs` 定义严格版本化 DTO，`sidecar_process.rs` 管理原生 argv、并发管道、限额与生命周期；新增 `tests/sidecar.rs` 和仅测试构建的 fake helper。准确目录与 API 在本项开始时冻结，不提前创建空模块。
+**实际模块职责**：Rust `sidecar_model.rs` 定义严格版本化DTO，`sidecar_process.rs` 管理原生argv、并发管道、限额与生命周期，`sidecar_workspace.rs`保持输入/目录/资源守卫。库测试编译`tests/support/sidecar_tests.rs`和标准库fake helper；`tests/sidecar.rs`独立证明普通入口拒绝fake。准确接口见[协议](../technical/SIDECAR_PROTOCOL.md)。
 
-**消费与交付接口**：输入是 Core 验证并保持守卫的明确单文件或本轮自有只读快照，加上 request_id、原始 SHA/长度和新工作区能力；交付严格响应或稳定错误。响应包含 request_id、协议版本、producer、解析器/能力版本、完整来源单元、相对资源清单和问题。fake 的合成页坐标只证明协议检查，不证明 PDF 定位。单个进程只接一个请求；关闭 stdin 后，stdout 必须是唯一 JSON，允许末尾空白，退出码也必须成功。
+**消费与交付接口**：输入是Core验证并保持守卫的明确单文件或本轮自有只读快照，加上request_id、原始SHA/长度和新工作区能力；交付严格响应或稳定错误。响应包含同一request_id、协议版本、producer、解析器/能力版本、完整来源单元、相对资源清单和问题。fake的合成单元与资源文本范围只证明协议检查，不定义PDF物理页或bbox。单个进程只接一个请求；关闭stdin后，stdout必须是唯一JSON，允许末尾空白，退出码也必须成功。
 
-1. 先写并实际运行 fake 进程负例，确认失败来自所要求的行为而非编译/setup：启动失败、空/截断/错误响应、额外 stdout、未知字段/版本、身份/指纹不符、合法 JSON 配非零退出和崩溃。日志必须走 stderr。
-2. 固定请求、响应、诊断、运行时限的确定值及可注入测试配置；stdout/stderr 同时有界排空，避免填满管道死锁。超过任何上限必须失败并保留错误，不能截断后继续使用结果。默认值是协议政策，不是实测容量。
-3. 在 Windows x64 明确受控进程树管理策略；真实 fake 子/孙进程握手后分别测试超时、取消、输出超限，终止并 wait，确认后代也退出。仅测试 `Child.kill()` 不足以证明树已清理；不把此项称为完整持久任务恢复或睡眠恢复。
-4. Core 独立复核路径、引用、实际资源 SHA/长度/身份、完整清单和工作区所有权。负例覆盖 `..`、绝对路径、Windows 名称/碰撞、链接/junction、未知文件及既有根；哨兵字节不变。响应路径不能作为任意文件读取能力。
-5. 运行定向进程组与适用统一检查，记录真红/绿、实际进程退出、错误码及 Windows 环境；同步协议和标准后审查提交推送。
+**实际验收**：79项宿主边界用例和3项普通入口通过，全workspace329项Rust回归、12项Python、格式、locked离线check及日志检查通过。真实进程负例先红再实现；Windows根/子/孙PID先确认存活再确认退出，涵盖超时、取消、输出超限、父进程早退及独立终止兜底。Core复核输入、资源字节/身份/清单和路径哨兵。独立审查的重复UTF8扫描、主终止失败阻塞兜底、BrokenPipe延迟三项均先复现后修复；复审重新链接普通库探针并实跑关闭三项。实施步骤归档于[实施方案](B03-T01_PLAN.md)，真实命令、失败与未运行项见[验收](../validation/B03-T01.md)。
 
 **停止**：协议进程组通过且边界证据齐全即结束。本项不启动真实解析器；下一入口 B03-T02 必须另行 start。
 
@@ -77,9 +73,10 @@
 
 ## 执行时的验证与交接
 
-下列都是未来执行命令或门槛，规划阶段没有运行它们。定向测试文件在对应任务中创建后执行，fake、真实 parser、持久化测试分别记录，不以统一回归替代定位抽查。
+sidecar宿主、普通入口及统一检查已在B03-T01实际执行。下列pdf_parse/pdf_source定向测试仍是后续门槛，文件未创建，也未运行；应在对应任务中创建后执行。fake、真实parser、持久化分别记录，不以统一回归替代定位抽查。
 
 ```powershell
+./scripts/cargo_local.ps1 test -p noetome-cli --lib sidecar_process::tests --locked --offline
 ./scripts/cargo_local.ps1 test -p noetome-cli --test sidecar --locked --offline
 ./scripts/cargo_local.ps1 test -p noetome-cli --test pdf_parse --locked --offline
 ./scripts/cargo_local.ps1 test -p noetome-cli --test pdf_source --locked --offline
@@ -93,4 +90,4 @@ git diff --check
 
 Python指本轮选定的可用解释器；使用工作区运行时时记录工具返回的绝对路径，不将开发机路径写死进仓库。真实 parser 环境单独锁定并说明安装步骤，普通 fake 测试不触发下载。每项记录实际版本、命令、退出码、数量、失败与未运行项、原始样例SHA、独立预期与产物；仅这些真实证据满足任务后才能 complete。
 
-本批三项只规划为todo。下一入口是B03-T01，执行者每轮先读日志、start单一任务，完成真实验收后complete并提交推送；切换批次不自动启动产品实现。
+本批B03-T01已按真实证据验收；下一入口是B03-T02。执行者每轮先读日志、start单一任务，完成该项真实验收后complete并提交推送；当前不start下一项，也不切换批次。

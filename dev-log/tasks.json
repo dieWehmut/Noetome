@@ -714,7 +714,7 @@
       "id": "B03-T01",
       "title": "用fake子进程验证有界单请求parser sidecar协议",
       "batch": "B03",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B02-T03"
       ],
@@ -732,7 +732,67 @@
         "fake helper仅在测试入口启用并明确producer=fake，不依赖PDF/OCR/模型库、网络或下载；普通CLI和项目登记不能接受fake解析结果，不宣称操作系统级沙盒或真实PDF解析已通过。",
         "先真实行为红再实现，完成定向进程断言与适用Rust/Python/日志检查；保存协议、稳定错误码、Windows环境、可复现命令和实际数量，更新相关标准后审查提交推送。验收后停止，不自动start B03-T02。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-02T05:45:58Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "固定严格单请求parser sidecar协议，先实跑fake进程红灯，再验证并发限额、Windows进程树终止和资源工作区保护；本轮不启动真实PDF。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-02T06:46:42Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "交付严格v1有界单请求parser宿主、输入与资源守卫及Windows整树收束；独立审查发现的重复UTF8扫描、终止失败兜底和BrokenPipe延迟均真实红转绿并复审关闭。本轮只完成B03-T01，真实PDF和下一项未启动。",
+          "validation": [
+            "修复后32c1861实现树：cargo fmt --all --check、locked离线workspace check通过；全workspace Rust 329通过/0失败/0忽略（含79宿主边界、3普通入口），Python unittest 12通过；devlog check 11项与工作区/暂存diff检查均通过。",
+            "Windows 11 Pro x64 10.0.26200真实root/child/grandchild先PID握手存活后停止：超时、取消、输出超限、父进程早退和主终止私有故障兜底均退出；真实junction/硬链接、既有根及路径/字节/精确清单拒绝，原输入和外部哨兵不变；普通库/CLI/项目排除fake。",
+            "独立复审三项Important关闭、无新增Critical/Important；重新链接普通rlib的公共大资源1000ms政策873ms合法完成，65988字节BrokenPipe公共run 220ms SIDECAR_IO；另6项定向全绿，取消2ms，真实三PID终止兜底8ms及BrokenPipe13ms退出。原始行为红灯与测试/setup失败按事实保留。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/sidecar_model.rs",
+              "sha256": "1a3d65cac3f710d6e91868b318fcb3f3845f3ac57f3b9886e9aec4ecc9f9c79e"
+            },
+            {
+              "path": "crates/noetome-cli/src/sidecar_process.rs",
+              "sha256": "cdf16eb1b22a4040da4314a1a0980f7e0c690f69776dbcf2efd85495ae355ee7"
+            },
+            {
+              "path": "crates/noetome-cli/src/sidecar_workspace.rs",
+              "sha256": "dd5736092bbdd86228b7d60e94e8151ce33d419c01bca8dd2efea5060de8cf0d"
+            },
+            {
+              "path": "crates/noetome-cli/tests/support/sidecar_tests.rs",
+              "sha256": "c276e272bf74a30706f383839ac9be8e4918230674626b078f1dda7528f4dc1f"
+            },
+            {
+              "path": "crates/noetome-cli/tests/support/fake_parser.py",
+              "sha256": "1f83d0091a1eb02999e4d125e4cce1e848ab0250b809758d96d1b578e3bfbc80"
+            },
+            {
+              "path": "crates/noetome-cli/tests/sidecar.rs",
+              "sha256": "286cbceae06aedf17bd129e395cb0b9876ef38ba61a45a081feea1d77ab6e35f"
+            },
+            {
+              "path": "doc/technical/SIDECAR_PROTOCOL.md",
+              "sha256": "73023ae9d3e4dcb03f1bec5a9eba06dd14c78ba080a874f9548ec633e7d8600c"
+            },
+            {
+              "path": "doc/validation/B03-T01.md",
+              "sha256": "69fbb9bfe9fb303065ae6857a818ddf1e99732c7c361566e8988b2da072023bb"
+            },
+            {
+              "path": "doc/validation/B03-T01-local.json",
+              "sha256": "b60c345569c668ec1fc63b34c5aa0e2e270d9f49ec3685fa7b78114c73f1ce06"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B03-T02",

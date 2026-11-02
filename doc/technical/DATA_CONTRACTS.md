@@ -19,6 +19,14 @@
 
 ## 2 输入包
 
+### B03-T01 parser sidecar 协议
+
+单请求 parser 协议独立采用 `protocol_version = 1`，完整字段、限额和稳定错误见[专门契约](SIDECAR_PROTOCOL.md)。它与来源项目 Schema2、编译数据库 Schema1、fixture JSON Schema1 分开演进，不将 sidecar 响应直接当作数据库记录。
+
+Core 固定 request_id、单份原始输入指纹及新工作区能力；响应中的 producer、解析器/能力版本、有序完整单元、资源和问题全部复核。提取文本范围相对于指定 UTF8 resource，而非原始文件二进制或旧 normalized.txt；资源的相对路径、真实字节、身份和精确清单共同约束读取范围。普通入口只接受 parser producer，fake 许可仅编译进测试。
+
+本项的 fake 单元为合成数据。完整序号与引用校验不能证明真实 PDF 页数或 bbox；PDF 原生定位在 B03-T02 采用显式契约扩展，不放宽既有文本来源 Schema2。
+
 ### 项目初始化与存储版本
 
 Project 配置位置固定为项目根下 `project.json`，状态库为 `project.sqlite`。B01-T02 的 Schema 1 是空项目基线，`project init` 继续生成该版本；B02-T01 由来源导入触发受保护的 Schema 2 升级。配置只接受以下字段，缺失、未知字段或不支持的值必须拒绝。

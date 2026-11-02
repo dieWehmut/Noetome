@@ -2,7 +2,7 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、明确标为fixture的IR与NotePlan契约校验和临时Vault编译，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖、独立预期和实际笔记，再保存Run、Release及双报告。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture业务尚未接入桌面；PDF解析与模型抽取仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、明确标为fixture的IR与NotePlan契约校验和临时Vault编译，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖、独立预期和实际笔记，再保存Run、Release及双报告。内部 parser sidecar 宿主提供严格单请求与Windows进程树管理，实际fake只用于协议测试，真实PDF解析仍待接入。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture业务尚未接入桌面；模型抽取仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
 
 ## 开始开发
 
@@ -128,6 +128,19 @@ python fixtures/text-compare-v1/audit_fixture.py
 ```powershell
 python scripts/verify_fixture_compile.py --cli '<实际可读CLI路径>' --root '<父目录已存在的新测试根>'
 ```
+
+## Parser sidecar 开发入口
+
+`noetome_cli::sidecar_process::run` 接收可信程序与原生argv、明确单文件、尚不存在的工作区、限额和取消令牌。Core保持输入和目录守卫，并复核唯一JSON响应、身份、来源单元、资源实际字节和精确清单；响应及诊断超限、超时、取消或管道失败返回分类错误并收束受控进程树。wire与默认政策见[协议](doc/technical/SIDECAR_PROTOCOL.md)，验收范围见[B03-T01](doc/validation/B03-T01.md)。
+
+测试helper仅用Python标准库，在测试构建中允许`producer=fake`；普通库入口拒绝fake，CLI没有fake或parse-pdf命令。运行进程组前选择可用Python解释器；若使用Codex工作区运行时，把工具返回的绝对路径赋给`NOETOME_TEST_PYTHON`，不在仓库写死开发机路径。
+
+```powershell
+./scripts/cargo_local.ps1 test -p noetome-cli --lib sidecar_process::tests --locked --offline
+./scripts/cargo_local.ps1 test -p noetome-cli --test sidecar --locked --offline
+```
+
+进程与资源保护当前只实现Windows。Job Object管理进程树，不提供文件或网络沙盒；协议测试的合成单元不证明真实PDF页、区域、阅读顺序或科学质量。错误工作区保留可定位现场，下一任务再选择并锁定唯一文本PDF解析器。
 
 ## 构建桌面应用
 

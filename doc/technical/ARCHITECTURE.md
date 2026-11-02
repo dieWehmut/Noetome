@@ -2,14 +2,14 @@
 
 本文件规定当前采用的工程方向和首个可运行闭环。产品目标以 [PRD](../requirements/PRD.md) 为准；这里的分步实现不删减双模式、真实资料解析、主动图表表达和长期维护目标。
 
-状态：工程基线。B01/B01A提供项目与桌面骨架，B02-T01已实现CLI单份文本来源登记，B02-T02提供只读fixture知识/覆盖/计划及独立预期校验；B02-T03当前实现将有效fixture编译到全新测试输出根，重读有限Markdown、保存双报告并以独立SQLite事务登记发布。任务完成状态与完整验证证据以[任务账本](../../dev-log/tasks.json)为准，不能把本文件中的后续设计或工程样例当作已验收能力。第三方库及版本在引入时验证并锁定。
+状态：工程基线。B01/B01A提供项目与桌面骨架，B02-T01已实现CLI单份文本来源登记，B02-T02提供只读fixture知识/覆盖/计划及独立预期校验；B02-T03将有效fixture编译到全新测试输出根，重读有限Markdown、保存双报告并以独立SQLite事务登记发布。B03-T01增加内部有界parser sidecar宿主，真实fake验证进程契约，尚未接入PDF解析。任务完成状态与完整验证证据以[任务账本](../../dev-log/tasks.json)为准，不能把本文件中的后续设计或工程样例当作已验收能力。第三方库及版本在引入时验证并锁定。
 
 ## 1 当前决定
 
 | 领域 | 采用方向 | 当前边界 |
 | --- | --- | --- |
 | 核心与命令行 | Rust core 与 CLI | 先建立可单独执行和测试的核心，不依赖 GUI |
-| 资料解析 | Rust文本入口，后续加 Python parser sidecar | 当前CLI只登记明确选取的单份UTF8 MD/TXT；真实 PDF 接入时才引入 sidecar |
+| 资料解析 | Rust文本入口及有界 parser sidecar 宿主 | 当前CLI只登记明确选取的单份UTF8 MD/TXT；sidecar已固定单请求契约，真实PDF库与页/区域定位待独立验收 |
 | 持久化 | 本地 SQLite | 来源项目保存项目、来源版本、Span与最小导入记录；fixture编译工作区另以Schema1保存Run、Coverage、Release和发布依据，数据库不放进阅读Vault |
 | 交换契约 | 带版本的 JSON | 显式校验输入、引用与结果；详见 [数据契约](DATA_CONTRACTS.md) |
 | 输出 | 有限Markdown、标题语义链接与比较表 | 当前只写尚不存在的新测试根中的Vault；完整Obsidian兼容及生产库维护需分别验收 |
@@ -85,6 +85,9 @@ B01-T02的项目初始化与检查逻辑先放在`noetome-cli`库的`project`模
 | [compile_report.rs](../../crates/noetome-cli/src/compile_report.rs) | 从同一typed验证快照生成Markdown事实表，与磁盘JSON保持同一键、理由、计数和问题 |
 | [compile_store.rs](../../crates/noetome-cli/src/compile_store.rs) | 独占新根、目录/文件身份与精确清单保护、独立编译SQLite Schema1、阶段登记及最后发布事务 |
 | [fixture_compile.rs](../../crates/noetome-cli/src/fixture_compile.rs) | case compile预检、输入守卫、暂存/Vault双重验证、报告与存储协调；失败保留可确认现场，不接管已有目录 |
+| [sidecar_model.rs](../../crates/noetome-cli/src/sidecar_model.rs) | 严格protocol_version=1 DTO、解析器能力、来源单元/资源/问题和限额；独立于项目与编译Schema |
+| [sidecar_process.rs](../../crates/noetome-cli/src/sidecar_process.rs) | 可信原生argv、并发有界管道、单请求身份/引用校验及Windows受控进程树停止与退出确认 |
+| [sidecar_workspace.rs](../../crates/noetome-cli/src/sidecar_workspace.rs) | 明确输入只读守卫、独占新目录能力、资源身份/SHA/UTF8/路径与精确清单复核 |
 
 来源登记不创建完整Run、CoverageRecord、IR、NotePlan或Release。case verify只读取作者声明的IR/覆盖/计划并验证，coverage_run_id是声明的审阅作用域，不登记持久Run。case compile通过预检后才在独立新根保存真实Run与Release UUID及逐Span Coverage；原fixture审阅作用域另存于compile_metadata.fixture_scope_id，不把它冒充真实运行身份。桌面的帮助、版本、运行信息和B01A窗口偏好接口与项目业务分开，尚未接入项目、来源或fixture业务入口。
 
@@ -205,11 +208,13 @@ case compile成功stdout为Schema1 CompileOutcome，包含producer=fixture、ope
 
 ### Python parser sidecar
 
-真实 PDF 接入前，以小型协议测试程序验证进程启动、单个请求、结构化输出、超时、退出码和取消。请求包含版本、请求 ID、限定输入句柄和工作区；响应包含来源指纹、Span、资源清单、问题和能力信息。
+B03-T01实现[单请求协议](SIDECAR_PROTOCOL.md)：Core验证明确选取的单文件，保持拒绝写入/删除的读守卫，将绝对路径、完整原始SHA/长度、访问约束、全新工作区能力及限额放入请求。响应必须回传protocol_version、request_id、原始指纹及workspace能力，并提供producer、parser/能力版本、完整来源单元、相对资源清单和结构化问题。资源文本的UTF8半开范围与未来PDF物理页/bbox、旧规范文本Span分别定义，不能混用。
 
-协议先采用有边界的 JSON 请求响应。若使用标准输入输出，标准输出只传协议，日志走标准错误；必须限制响应大小。不要为了首个 PDF 提前设计通用远程任务总线。
+宿主用可信可执行文件和原生argv启动，资料及响应不决定命令。stdin写完后关闭，stdout/stderr并发有界读取，stdout只接受一个JSON及末尾空白；合法JSON配非零退出仍失败。请求、响应、诊断、输入、资源、数量和时间有明确政策，超过上限不得截断后报成功。Windows Job Object管理本轮进程树，子/孙进程退出以实际活动PID和原生退出状态确认。仅测试构建允许fake；普通库、CLI和项目登记拒绝fake。
 
-Core 再次验证 sidecar 输出，不能相信其路径、引用或成功标志。解析器只读取明确提供的输入，不获取整个用户目录的搜索权限。具体 PDF/OCR 库逐项试验后确定，并记录扫描、表格、公式及图片的支持边界。
+Core复核资源的Windows安全相对路径、文件/目录身份、链接数、真实SHA/长度、UTF8范围及精确清单，保留输入与成功结果的读守卫；拒绝既有工作区、未知内容和路径越界。错误现场保留，不自动接管或递归删除。Job管理和路径复核不构成操作系统文件/网络沙盒；具体守卫、错误及实际边界见[B03-T01验证](../validation/B03-T01.md)。
+
+真实PDF解析在B03-T02另行选择并锁定唯一Python文本解析器，固定完整物理页、坐标变换和独立页面审阅预期，再记录扫描、表格、公式及图片的支持与失败边界。当前协议fake不证明解析器真实性、科学质量、跨平台或长任务指标；不提前接OCR或通用远程任务总线。
 
 ### 模型 API
 

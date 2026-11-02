@@ -1,0 +1,1286 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-02T06:46:06.210560+00:00",
+  "task": "B03-T01",
+  "scope": "Bounded single-request parser host; actual synthetic helpers; new selected test roots only",
+  "branch": "codex/b03-t01-parser-sidecar",
+  "base_commit": "06201407b42fa870681cf65526205c2e1369db82",
+  "tested_implementation_commit": "32c1861db82527d2e8587fdc4f26dea9929d44f6",
+  "implementation_commits": [
+    "f1e6d336f0e83e21b46ef592c5de2f55f37e7a11 feat(sidecar): validate bounded parser requests and reap Windows process trees",
+    "cae9895d487342c22138a73d29b5fbc961cce373 test(sidecar): remove redundant setup and trailing whitespace",
+    "71776d5b6d023041bd806abfb918ba9ecd53d33e fix(sidecar): bound validation latency and cache decoded resource text",
+    "0536cb282cdac3aaa65e9e22a6f5a60d4420dfb8 fix(sidecar): trigger independent termination fallback before finite exit waits",
+    "32c1861db82527d2e8587fdc4f26dea9929d44f6 fix(sidecar): notify controller of pipe errors and reclaim the live process tree"
+  ],
+  "environment": {
+    "os": "Windows 11 Pro",
+    "windows_version": "10.0.26200",
+    "architecture": "x64",
+    "rustc": "rustc 1.98.1 (48a229cea 2026-09-01)",
+    "cargo": "cargo 1.98.1 (797e8a9bc 2026-08-05)",
+    "rust_target": "x86_64-pc-windows-msvc",
+    "python_version": "3.12.14",
+    "python_origin": "Codex workspace dependency runtime",
+    "test_python_selection_env": "NOETOME_TEST_PYTHON",
+    "cargo_wrapper": "scripts/cargo_local.ps1",
+    "cargo_temp": "target/compiler-temp"
+  },
+  "selected_synthetic_input": {
+    "byte_length": 14,
+    "sha256": "9ce76b0fd6d0b46d6e843ddf1a167d8422d6aad723cdb3fc24055aaf3c4b2e2e"
+  },
+  "outside_sentinel": {
+    "byte_length": 16,
+    "sha256": "41f88c640190c6aa656b240a9bddd5bb2a38ac146e968f9048f2c9b7c9322a34"
+  },
+  "policy_defaults": {
+    "request_bytes": 65536,
+    "response_bytes": 4194304,
+    "diagnostic_bytes": 65536,
+    "input_bytes": 67108864,
+    "resource_bytes": 16777216,
+    "total_resource_bytes": 67108864,
+    "resources": 256,
+    "units": 10000,
+    "issues": 1000,
+    "timeout_ms": 30000,
+    "directory_components_per_resource": 32,
+    "cleanup_timeout_ms": 10000,
+    "measured_capacity_claim": false
+  },
+  "locked_direct_dependencies": {
+    "process_wrap": "10.0.1",
+    "windows_win32job": "2.0.3",
+    "windows_winapi_util": "0.1.11",
+    "workspace_unsafe_code": "forbid"
+  },
+  "verification": {
+    "cargo_fmt_all_check": {
+      "command": "cargo fmt --all --check",
+      "exit_code": 0,
+      "log": "target/sidecar-evidence/28-root-final-fmt.txt"
+    },
+    "cargo_check_workspace": {
+      "command": "./scripts/cargo_local.ps1 check --workspace --locked --offline",
+      "exit_code": 0,
+      "log": "target/sidecar-evidence/26-root-final-workspace-check.txt"
+    },
+    "cargo_test_workspace": {
+      "command": "./scripts/cargo_local.ps1 test --workspace --locked --offline",
+      "exit_code": 0,
+      "passed": 329,
+      "failed": 0,
+      "ignored": 0,
+      "suites": {
+        "cli_library": {
+          "result": "ok",
+          "passed": 243,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 3.33
+        },
+        "cli_main_empty": {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.0
+        },
+        "cli_process": {
+          "result": "ok",
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.08
+        },
+        "compile_process": {
+          "result": "ok",
+          "passed": 12,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.55
+        },
+        "fixture_process": {
+          "result": "ok",
+          "passed": 20,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.73
+        },
+        "project_process": {
+          "result": "ok",
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.34
+        },
+        "sidecar_production_entry": {
+          "result": "ok",
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.07
+        },
+        "source_process": {
+          "result": "ok",
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.73
+        },
+        "desktop": {
+          "result": "ok",
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.02
+        },
+        "cli_doc_tests_empty": {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.0
+        }
+      },
+      "sidecar_host_cases": 79,
+      "sidecar_host_case_names": [
+        "sidecar_process::tests::existing_workspace_is_rejected",
+        "sidecar_process::tests::blocked_stdin_writer_is_joined_on_timeout",
+        "sidecar_process::tests::input_byte_limit",
+        "sidecar_process::tests::input_hardlink_rejected",
+        "sidecar_process::tests::bounded_diagnostic_overflow_is_explicit",
+        "sidecar_process::tests::actual_input_fingerprint_is_complete",
+        "sidecar_process::tests::concurrent_stderr_is_drained",
+        "sidecar_process::tests::empty_parser_version",
+        "sidecar_process::tests::crashed_process",
+        "sidecar_process::tests::duplicate_units",
+        "sidecar_process::tests::diagnostics_are_separate",
+        "sidecar_process::tests::hardlink_resource_rejected_with_external_sentinel_unchanged",
+        "sidecar_process::tests::pre_cancel_does_not_launch",
+        "sidecar_process::tests::issue_count_limit",
+        "sidecar_process::tests::invalid_utf8_response",
+        "sidecar_process::tests::empty_response",
+        "sidecar_process::tests::failed_protocol_retains_diagnostics",
+        "sidecar_process::tests::request_byte_limit",
+        "sidecar_process::tests::no_stdin_reader_times_out",
+        "sidecar_process::tests::input_write_is_denied",
+        "sidecar_process::tests::missing_ordinal",
+        "sidecar_process::tests::failed_unit_without_issue",
+        "sidecar_process::tests::missing_nullable_text_field",
+        "sidecar_process::tests::invalid_json_response",
+        "sidecar_process::tests::junction_rejected_with_external_sentinel_unchanged",
+        "sidecar_process::tests::missing_units",
+        "sidecar_process::tests::public_entry_rejects_fake",
+        "sidecar_process::tests::real_parser_zero_units_rejected",
+        "sidecar_process::tests::resource_byte_limit",
+        "sidecar_process::tests::resource_absolute_path",
+        "sidecar_process::tests::resource_directory_depth_limit",
+        "sidecar_process::tests::cancellation_reaps_live_tree",
+        "sidecar_process::tests::resource_case_collision",
+        "sidecar_process::tests::resource_invalid_utf8",
+        "sidecar_process::tests::resource_parent_path",
+        "sidecar_process::tests::resource_count_limit",
+        "sidecar_process::tests::resource_reserved_name",
+        "sidecar_process::tests::resource_range_splits_character",
+        "sidecar_process::tests::resource_unknown_directory",
+        "sidecar_process::tests::resource_trailing_dot",
+        "sidecar_process::tests::start_failure",
+        "sidecar_process::tests::resource_unreferenced",
+        "sidecar_process::tests::resource_unknown_file",
+        "sidecar_process::tests::early_parent_exit_reaps_noninherited_descendants",
+        "sidecar_process::tests::resource_prefix_collision",
+        "sidecar_process::tests::resource_unknown_reference",
+        "sidecar_process::tests::resource_wrong_length",
+        "sidecar_process::tests::resource_wrong_sha",
+        "sidecar_process::tests::review_unit_without_issue",
+        "sidecar_process::tests::overflow_reaps_live_tree",
+        "sidecar_process::tests::stdout_byte_limit",
+        "sidecar_process::tests::second_stdout_json",
+        "sidecar_process::tests::stderr_byte_limit",
+        "sidecar_process::tests::review_units_preserve_status_and_issue",
+        "sidecar_process::tests::successful_result_holds_resource_and_directory_guards",
+        "sidecar_process::tests::total_resource_byte_limit",
+        "sidecar_process::tests::trailing_whitespace_is_accepted",
+        "sidecar_process::tests::truncated_response",
+        "sidecar_process::tests::unit_count_limit",
+        "sidecar_process::tests::unknown_enum",
+        "sidecar_process::tests::unknown_capability",
+        "sidecar_process::tests::unknown_field",
+        "sidecar_process::tests::unknown_issue_reference",
+        "sidecar_process::tests::zero_policy_rejected_without_workspace",
+        "sidecar_process::tests::unknown_nested_field",
+        "sidecar_process::tests::unknown_unit_cannot_be_parsed",
+        "sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree",
+        "sidecar_process::tests::valid_json_with_nonzero_exit_is_failure",
+        "sidecar_process::tests::unsupported_capability_version",
+        "sidecar_process::tests::unsupported_version",
+        "sidecar_process::tests::valid_resources",
+        "sidecar_process::tests::wrong_request_id",
+        "sidecar_process::tests::review_primary_terminate_failure_reaps_real_tree",
+        "sidecar_process::tests::wrong_length",
+        "sidecar_process::tests::wrong_sha",
+        "sidecar_process::tests::wrong_workspace_identity",
+        "sidecar_process::tests::review_large_resource_timeout_latency",
+        "sidecar_process::tests::review_large_resource_validation_cancel_latency",
+        "sidecar_process::tests::timeout_reaps_live_tree"
+      ],
+      "log": "target/sidecar-evidence/27-root-final-workspace-test.txt"
+    },
+    "sidecar_host": {
+      "command": "./scripts/cargo_local.ps1 test -p noetome-cli --lib sidecar_process::tests --locked --offline",
+      "exit_code": 0,
+      "passed": 79,
+      "failed": 0,
+      "ignored": 0,
+      "log": "target/sidecar-evidence/23-green-all-sidecar.txt"
+    },
+    "sidecar_production_entry": {
+      "command": "./scripts/cargo_local.ps1 test -p noetome-cli --test sidecar --locked --offline",
+      "exit_code": 0,
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0,
+      "log": "target/sidecar-evidence/24-green-production-entry.txt"
+    },
+    "python_unittest": {
+      "command": "python -m unittest discover -s tests -p 'test_*.py'",
+      "exit_code": 0,
+      "passed": 12,
+      "failed": 0,
+      "seconds": 0.277,
+      "log": "target/sidecar-evidence/29-root-final-python.txt"
+    },
+    "devlog_before_complete": {
+      "command": "python scripts/devlog.py check",
+      "exit_code": 0,
+      "tasks": 11,
+      "log": "target/sidecar-evidence/30-root-precomplete-devlog.txt"
+    },
+    "git_diff_check": {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  },
+  "independent_review": {
+    "reviewed_commit": "32c1861db82527d2e8587fdc4f26dea9929d44f6",
+    "ready": true,
+    "critical": 0,
+    "important": 0,
+    "original_findings": 3,
+    "closed_findings": 3,
+    "report_local_path": ".artifacts/b03-t01-review/REVIEW-02.md",
+    "report_sha256": "37ea2e9c42be309cdebd5d962d1ab5c975adac2f29fbfbceb94826c330c46fcc",
+    "relinked_production_rlib_sha256": "64961b40c855c21185b1c6a5daf111d14f9b22bc6b707fb2c376409379fe6151",
+    "public_large_resource": {
+      "policy_timeout_ms": 1000,
+      "resource_bytes": 16777216,
+      "units": 10000,
+      "before_elapsed_ms": 6887,
+      "before_result": "SIDECAR_TIMEOUT",
+      "after_elapsed_ms": 873,
+      "after_result": "OK",
+      "recompiled_probe": "target/sidecar-review/probe-r2.exe"
+    },
+    "public_broken_pipe": {
+      "request_bytes": 65988,
+      "policy_request_bytes": 131072,
+      "input_path_directory_depth": 320,
+      "before_elapsed_ms": 4004,
+      "before_result": "SIDECAR_TIMEOUT",
+      "after_elapsed_ms": 220,
+      "after_result": "SIDECAR_IO",
+      "timing_scope": "whole public run, including input/path preparation",
+      "recompiled_probe": "target/sidecar-review/probe-io-r2.exe"
+    },
+    "independent_targeted": {
+      "filter": "sidecar_process::tests::review_",
+      "passed": 6,
+      "failed": 0,
+      "filtered": 237,
+      "seconds": 2.4,
+      "new_fix_cases": 4,
+      "existing_review_cases": 2,
+      "large_resource_elapsed_ms": 878,
+      "validation_cancel_latency_ms": 2,
+      "broken_pipe_live_pids": [
+        43580,
+        44228,
+        46756
+      ],
+      "broken_pipe_latency_ms": 13,
+      "broken_pipe_result": "SIDECAR_IO",
+      "broken_pipe_os_error": 109,
+      "fallback_live_pids": [
+        43348,
+        44092,
+        21060
+      ],
+      "fallback_stop_elapsed_ms": 8,
+      "returned_pids_alive": 0,
+      "sentinel_unchanged": true
+    },
+    "primary_termination_fault": "Private cfg(test) skip of primary termination; real Windows root/child/grandchild and Observer fallback"
+  },
+  "retained_failures": {
+    "true_behavior_red_logs": [
+      "01-red-nonzero.txt",
+      "02-red-identity.txt",
+      "08-red-depth.txt",
+      "14-red-validation-latency.txt",
+      "17-red-termination-fallback.txt",
+      "20-red-broken-pipe.txt"
+    ],
+    "setup_or_test_assumption_logs": [
+      "03-green-process.txt",
+      "04-green-process.txt",
+      "05-green-process.txt",
+      "15-green-validation-latency.txt",
+      "21-green-broken-pipe.txt"
+    ],
+    "notes": "File names with green do not imply success. Compile/setup and mistaken assertions are not qualifying product behavior red. Initial 325-test result precedes fixes."
+  },
+  "tested_artifact_fingerprints": [
+    {
+      "path": "Cargo.lock",
+      "sha256": "346f5a31dfec4da9c0e4a51cec47b9731f92025fe317a52606b8f79b7fd41e9c"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "685a4e91efc75448a9a11425677b8a0248599d821462720bfa0d189fbe91b023"
+    },
+    {
+      "path": "crates/noetome-cli/Cargo.toml",
+      "sha256": "85530417085cb8f3ada8db8175670d63b1b3b40824a0cf597472702450827c63"
+    },
+    {
+      "path": "crates/noetome-cli/src/lib.rs",
+      "sha256": "3f728826ec48ccb61ad660597119d420598ce98dd1529c050051ccf1ca1b7e9f"
+    },
+    {
+      "path": "crates/noetome-cli/src/sidecar_model.rs",
+      "sha256": "1a3d65cac3f710d6e91868b318fcb3f3845f3ac57f3b9886e9aec4ecc9f9c79e"
+    },
+    {
+      "path": "crates/noetome-cli/src/sidecar_process.rs",
+      "sha256": "cdf16eb1b22a4040da4314a1a0980f7e0c690f69776dbcf2efd85495ae355ee7"
+    },
+    {
+      "path": "crates/noetome-cli/src/sidecar_workspace.rs",
+      "sha256": "dd5736092bbdd86228b7d60e94e8151ce33d419c01bca8dd2efea5060de8cf0d"
+    },
+    {
+      "path": "crates/noetome-cli/tests/support/fake_parser.py",
+      "sha256": "1f83d0091a1eb02999e4d125e4cce1e848ab0250b809758d96d1b578e3bfbc80"
+    },
+    {
+      "path": "crates/noetome-cli/tests/support/sidecar_tests.rs",
+      "sha256": "c276e272bf74a30706f383839ac9be8e4918230674626b078f1dda7528f4dc1f"
+    },
+    {
+      "path": "crates/noetome-cli/tests/sidecar.rs",
+      "sha256": "286cbceae06aedf17bd129e395cb0b9876ef38ba61a45a081feea1d77ab6e35f"
+    },
+    {
+      "path": "doc/technical/SIDECAR_PROTOCOL.md",
+      "sha256": "73023ae9d3e4dcb03f1bec5a9eba06dd14c78ba080a874f9548ec633e7d8600c"
+    }
+  ],
+  "raw_logs_local_only": true,
+  "raw_log_fingerprints": [
+    {
+      "path": "target/sidecar-evidence/01-red-nonzero.txt",
+      "byte_length": 1314,
+      "sha256": "ab92d40e6d358a9f277ff371ae554e71cf6368bfde5e6d9ebef9317f124e97c2",
+      "rust_test_results": [
+        {
+          "result": "FAILED",
+          "passed": 0,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 164,
+          "seconds": 0.04
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/02-red-identity.txt",
+      "byte_length": 3429,
+      "sha256": "33f6d6e32b263cac02b02745aab62e323d9383f5a603395fc4b0e1157d868e60",
+      "rust_test_results": [
+        {
+          "result": "FAILED",
+          "passed": 0,
+          "failed": 4,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 218,
+          "seconds": 0.06
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/03-green-process.txt",
+      "byte_length": 3658,
+      "sha256": "cec757af7ed08dd2faf1683bf62f4901a037e1fa3d2e7b0d1327c44c31bfdbf9",
+      "rust_test_results": [],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/04-green-process.txt",
+      "byte_length": 21420,
+      "sha256": "694c55f6d0dd367aa66f3500ac43e8accf7c6f6436190463e458a46bb6bf52e7",
+      "rust_test_results": [
+        {
+          "result": "FAILED",
+          "passed": 1,
+          "failed": 57,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 164,
+          "seconds": 1.04
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/05-green-process.txt",
+      "byte_length": 8495,
+      "sha256": "5dc247d63aa8acda62efbde97eaba29f04f0bf01458e0f8d4cce471bbcebb5cd",
+      "rust_test_results": [
+        {
+          "result": "FAILED",
+          "passed": 55,
+          "failed": 3,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 164,
+          "seconds": 2.93
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/06-green-process.txt",
+      "byte_length": 5045,
+      "sha256": "238e6703715de9a6e07cb60da0911479548df98b69a158dad4c0d9dbaeb06410",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 58,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 164,
+          "seconds": 2.99
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 4,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 12,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 20,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 13,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 19,
+          "seconds": 0.0
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/07-green-expanded.txt",
+      "byte_length": 6077,
+      "sha256": "33bffafaab147daacff576ad4d63aeaef7e382a8a22ffe958ca4a6563a754f18",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 73,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 164,
+          "seconds": 3.25
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 4,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 12,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 20,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 13,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 19,
+          "seconds": 0.0
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/08-red-depth.txt",
+      "byte_length": 40713,
+      "sha256": "454c41e0c5c016d114839242a8a5668d4c7dff4dcf325deaa6c40a7a330a95ee",
+      "rust_test_results": [
+        {
+          "result": "FAILED",
+          "passed": 0,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 238,
+          "seconds": 0.1
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/09-green-depth.txt",
+      "byte_length": 1601,
+      "sha256": "e520756061bcbc17f7285df77125605e52421ac7cb2d1ddd4897ca4c1456a8cf",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 238,
+          "seconds": 0.08
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 4,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 12,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 20,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 13,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 19,
+          "seconds": 0.0
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/10-green-integration.txt",
+      "byte_length": 501,
+      "sha256": "e8577db07b96cfcbc79baa09bd66b7772e1c46a154bd40dcbf86cc683e2ef47e",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.1
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/11-green-final-process.txt",
+      "byte_length": 5027,
+      "sha256": "8a63f1e62d82703564a66704fa6ca98829dc628a4452218bd5862386d1286afc",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 75,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 164,
+          "seconds": 3.34
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/12-final-workspace-check.txt",
+      "byte_length": 73,
+      "sha256": "ecfa4248eef4eba08d6a014289ec0d206eb8bf86bb2c37c29d9bd3faa45956cb",
+      "rust_test_results": [],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/13-final-workspace-test.txt",
+      "byte_length": 30350,
+      "sha256": "01039a93dd633baf4c48501ca3d980777d07b2cc720874bdc6981c51e54db4a0",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 239,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 3.29
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.08
+        },
+        {
+          "result": "ok",
+          "passed": 12,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.62
+        },
+        {
+          "result": "ok",
+          "passed": 20,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.75
+        },
+        {
+          "result": "ok",
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.29
+        },
+        {
+          "result": "ok",
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.07
+        },
+        {
+          "result": "ok",
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.67
+        },
+        {
+          "result": "ok",
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.02
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.0
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/14-red-validation-latency.txt",
+      "byte_length": 1435,
+      "sha256": "13ff0cab0ae68c7040fc2552e61147359887df75f0cf32391be44d110f148fb3",
+      "rust_test_results": [
+        {
+          "result": "FAILED",
+          "passed": 0,
+          "failed": 2,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 239,
+          "seconds": 13.67
+        }
+      ],
+      "observed_metrics": [
+        "test sidecar_process::tests::review_large_resource_timeout_latency ... large_resource_timeout elapsed_ms=6863 result=Some(\"SIDECAR_TIMEOUT\")",
+        "thread 'sidecar_process::tests::review_large_resource_timeout_latency' (32384) panicked at crates\\noetome-cli\\src\\..\\tests\\support\\sidecar_tests.rs:664:5:",
+        "test sidecar_process::tests::review_large_resource_validation_cancel_latency ... large_resource_validation_cancel latency_ms=5938 result=Some(\"SIDECAR_CANCELLED\")",
+        "thread 'sidecar_process::tests::review_large_resource_validation_cancel_latency' (36644) panicked at crates\\noetome-cli\\src\\..\\tests\\support\\sidecar_tests.rs:674:5:",
+        "    sidecar_process::tests::review_large_resource_timeout_latency",
+        "    sidecar_process::tests::review_large_resource_validation_cancel_latency"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/15-green-validation-latency.txt",
+      "byte_length": 18410371,
+      "sha256": "2fbdfc537d2a345b05ab7897da9d58f209db49eec94b5facecdfb6f035a831b2",
+      "rust_test_results": [
+        {
+          "result": "FAILED",
+          "passed": 1,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 239,
+          "seconds": 2.05
+        }
+      ],
+      "observed_metrics": [
+        "test sidecar_process::tests::review_large_resource_timeout_latency ... large_resource_timeout elapsed_ms=899 result=None",
+        "thread 'sidecar_process::tests::review_large_resource_timeout_latency' (32644) panicked at crates\\noetome-cli\\src\\..\\tests\\support\\sidecar_tests.rs:663:23:",
+        "test sidecar_process::tests::review_large_resource_validation_cancel_latency ... large_resource_validation_cancel latency_ms=2 result=Some(\"SIDECAR_CANCELLED\")",
+        "    sidecar_process::tests::review_large_resource_timeout_latency"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/16-green-validation-latency.txt",
+      "byte_length": 638,
+      "sha256": "cd20f09ccde3692111bbba647428065a9d91123085073fe6f713b85eabab3bbb",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 239,
+          "seconds": 1.76
+        }
+      ],
+      "observed_metrics": [
+        "test sidecar_process::tests::review_large_resource_timeout_latency ... large_resource_timeout elapsed_ms=888 result=None",
+        "test sidecar_process::tests::review_large_resource_validation_cancel_latency ... large_resource_validation_cancel latency_ms=2 result=Some(\"SIDECAR_CANCELLED\")"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/17-red-termination-fallback.txt",
+      "byte_length": 1038,
+      "sha256": "3ebd46840ea469f64f24f976a7b923a39b79e6a75d314bc187c368ec2cc4a07c",
+      "rust_test_results": [
+        {
+          "result": "FAILED",
+          "passed": 0,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 241,
+          "seconds": 30.26
+        }
+      ],
+      "observed_metrics": [
+        "tree_mode=tree_fallback live_pids=[38232, 44080, 33484]",
+        "tree_mode=tree_fallback primary_failure=true stop_elapsed_ms=30013"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/18-green-termination-fallback.txt",
+      "byte_length": 553,
+      "sha256": "6971364b8f5c70b6ce4d8018a60743ead7796da0712c9bea9047f9f3ed9bec99",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 241,
+          "seconds": 0.25
+        }
+      ],
+      "observed_metrics": [
+        "tree_mode=tree_fallback live_pids=[45520, 46768, 47668]",
+        "tree_mode=tree_fallback primary_failure=true stop_elapsed_ms=7"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/19-green-tree-regressions.txt",
+      "byte_length": 1305,
+      "sha256": "5163ac1ab1d57de615cf65a89e3d0b36578be474021343209faa8f21ac931504",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 5,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 237,
+          "seconds": 2.07
+        }
+      ],
+      "observed_metrics": [
+        "tree_mode=tree_early live_pids=[18504, 43512, 44140]",
+        "tree_mode=tree_timeout live_pids=[23128, 33764, 15184]",
+        "tree_mode=tree_output live_pids=[5600, 11928, 41264]",
+        "tree_mode=tree_fallback live_pids=[46316, 45476, 44652]",
+        "tree_mode=tree_early primary_failure=false stop_elapsed_ms=13",
+        "tree_mode=tree_cancel live_pids=[11500, 22608, 21580]",
+        "tree_mode=tree_output primary_failure=false stop_elapsed_ms=11",
+        "tree_mode=tree_fallback primary_failure=true stop_elapsed_ms=9",
+        "tree_mode=tree_cancel primary_failure=false stop_elapsed_ms=9",
+        "tree_mode=tree_timeout primary_failure=false stop_elapsed_ms=1762"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/20-red-broken-pipe.txt",
+      "byte_length": 1113,
+      "sha256": "9f015be8514fae0af5dd1ba7eed9753fb5ff176badbfc85f63cc41f109771e47",
+      "rust_test_results": [
+        {
+          "result": "FAILED",
+          "passed": 0,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 242,
+          "seconds": 4.06
+        }
+      ],
+      "observed_metrics": [
+        "broken_pipe_valid_request_bytes=66284",
+        "broken_pipe_live_pids=[46732, 39824, 11928]",
+        "broken_pipe_latency_ms=3816 error=SIDECAR_TIMEOUT: runtime limit",
+        "thread 'sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree' (18504) panicked at crates\\noetome-cli\\src\\..\\tests\\support\\sidecar_tests.rs:755:5:",
+        "test sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree ... FAILED",
+        "    sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/21-green-broken-pipe.txt",
+      "byte_length": 1021,
+      "sha256": "6b2361aad87d50bef7f3729a9d84a4ce0d274dce55bb4d7b04807fe42c423bb2",
+      "rust_test_results": [
+        {
+          "result": "FAILED",
+          "passed": 0,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 242,
+          "seconds": 0.14
+        }
+      ],
+      "observed_metrics": [
+        "broken_pipe_valid_request_bytes=66284",
+        "thread 'sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree' (48016) panicked at crates\\noetome-cli\\src\\..\\tests\\support\\sidecar_tests.rs:748:78:",
+        "test sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree ... FAILED",
+        "    sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/22-green-broken-pipe.txt",
+      "byte_length": 540,
+      "sha256": "7d4df29fa903da2eca174d83f3b08e12b867cde9caf591cfeef23f95bc23f4f5",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 242,
+          "seconds": 0.26
+        }
+      ],
+      "observed_metrics": [
+        "broken_pipe_valid_request_bytes=66284",
+        "broken_pipe_live_pids=[16360, 41652, 45548]",
+        "broken_pipe_latency_ms=13 error=SIDECAR_IO: 管道已结束。 (os error 109)",
+        "test sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree ... ok"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/23-green-all-sidecar.txt",
+      "byte_length": 6280,
+      "sha256": "b01fcd161a5cb7bc41ab1deeeebf0f9964a9008a2daf529d138d4bf8ee661e74",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 79,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 164,
+          "seconds": 3.56
+        }
+      ],
+      "observed_metrics": [
+        "tree_mode=tree_cancel live_pids=[45076, 22840, 45156]",
+        "tree_mode=tree_cancel primary_failure=false stop_elapsed_ms=8",
+        "tree_mode=tree_early live_pids=[34704, 42884, 22792]",
+        "tree_mode=tree_early primary_failure=false stop_elapsed_ms=15",
+        "tree_mode=tree_output live_pids=[47344, 46728, 46140]",
+        "tree_mode=tree_output primary_failure=false stop_elapsed_ms=10",
+        "broken_pipe_valid_request_bytes=66284",
+        "broken_pipe_live_pids=[21048, 46752, 43060]",
+        "broken_pipe_latency_ms=6 error=SIDECAR_IO: 管道已结束。 (os error 109)",
+        "test sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree ... ok",
+        "tree_mode=tree_fallback live_pids=[42492, 35808, 29276]",
+        "tree_mode=tree_fallback primary_failure=true stop_elapsed_ms=7",
+        "tree_mode=tree_timeout live_pids=[43168, 46812, 47300]",
+        "large_resource_timeout elapsed_ms=1003 result=Some(\"SIDECAR_TIMEOUT\")",
+        "test sidecar_process::tests::review_large_resource_timeout_latency ... ok",
+        "large_resource_validation_cancel latency_ms=2 result=Some(\"SIDECAR_CANCELLED\")",
+        "test sidecar_process::tests::review_large_resource_validation_cancel_latency ... ok",
+        "tree_mode=tree_timeout primary_failure=false stop_elapsed_ms=1777"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/24-green-production-entry.txt",
+      "byte_length": 501,
+      "sha256": "1e3ae014e4487942656eff43047ca98f97deb8df3f5fc0b2564d712fb17e8449",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.07
+        }
+      ],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/25-check-workspace.txt",
+      "byte_length": 211,
+      "sha256": "b9af576957ea6a791ff1630c06ae91ef0c2c4353512a2d8ea866954389fc2246",
+      "rust_test_results": [],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/26-green-public-latency-probe.txt",
+      "byte_length": 54,
+      "sha256": "d783c394ae1f14a30766a1a06b8e8835a570fe9b295ef31676c39d8647f04228",
+      "rust_test_results": [],
+      "observed_metrics": [
+        "timeout_ms=1000 cancel_ms=0 elapsed_ms=921 result=OK"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/26-root-final-workspace-check.txt",
+      "byte_length": 73,
+      "sha256": "df7860f8aa157a24fccd11b752f656a1f5aafa1c580b5ed76380615322ddd30b",
+      "rust_test_results": [],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/27-green-public-broken-pipe-probe.txt",
+      "byte_length": 100,
+      "sha256": "a54ff51edfc477e6724a09189744f9fd7471deebb8de913a98fe8132edf7b359",
+      "rust_test_results": [],
+      "observed_metrics": [
+        "elapsed_ms=272 code=SIDECAR_IO diagnostics=closed stdin outsize=65536 insize=65536 pending=65988"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/27-root-final-workspace-test.txt",
+      "byte_length": 30154,
+      "sha256": "1f91ff7611472e715d9fd1db1e2d12fd59d37cb465928bea877557ed1e8bf2e5",
+      "rust_test_results": [
+        {
+          "result": "ok",
+          "passed": 243,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 3.33
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.0
+        },
+        {
+          "result": "ok",
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.08
+        },
+        {
+          "result": "ok",
+          "passed": 12,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.55
+        },
+        {
+          "result": "ok",
+          "passed": 20,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.73
+        },
+        {
+          "result": "ok",
+          "passed": 13,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.34
+        },
+        {
+          "result": "ok",
+          "passed": 3,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.07
+        },
+        {
+          "result": "ok",
+          "passed": 19,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.73
+        },
+        {
+          "result": "ok",
+          "passed": 15,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.02
+        },
+        {
+          "result": "ok",
+          "passed": 0,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered": 0,
+          "seconds": 0.0
+        }
+      ],
+      "observed_metrics": [
+        "test sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree ... ok",
+        "test sidecar_process::tests::review_large_resource_timeout_latency ... ok",
+        "test sidecar_process::tests::review_large_resource_validation_cancel_latency ... ok"
+      ]
+    },
+    {
+      "path": "target/sidecar-evidence/28-root-final-fmt.txt",
+      "byte_length": 13,
+      "sha256": "a9f58776a09b5dac438049683f24bf85764e0ff8e7455952456165c68c158627",
+      "rust_test_results": [],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/29-root-final-python.txt",
+      "byte_length": 116,
+      "sha256": "2cc259111bd890bc031a0056cfa4f199eba207d76569a23b2ccae3ac2e055b58",
+      "rust_test_results": [],
+      "observed_metrics": []
+    },
+    {
+      "path": "target/sidecar-evidence/30-root-precomplete-devlog.txt",
+      "byte_length": 69,
+      "sha256": "8cabeb60da6c5ed041b43f8dd8bb5985057d41223e63458d380908653d086014",
+      "rust_test_results": [],
+      "observed_metrics": []
+    }
+  ],
+  "not_run": [
+    "real_pdf_parser",
+    "physical_page_bbox_or_reading_order_review",
+    "pdf_ocr_or_model_library",
+    "pdf_source_persistence_or_project_schema_upgrade",
+    "gui_business_integration",
+    "production_vault",
+    "linux_macos_process_host",
+    "separate_file_symlink_privilege_case",
+    "actual_win32_terminate_api_fault",
+    "simultaneous_failure_of_all_windows_cleanup_mechanisms",
+    "all_external_concurrency_schedules",
+    "arbitrary_power_loss_recovery",
+    "scientific_accuracy",
+    "1000_page_or_24_hour_performance_targets"
+  ],
+  "next_task": "B03-T02",
+  "next_task_started": false,
+  "batch_completed": false
+}
