@@ -31,6 +31,27 @@ impl std::fmt::Display for CredentialError {
 impl std::error::Error for CredentialError {}
 
 impl TransientCredential {
+    /// Validate arbitrary JSON artifacts without disclosing the credential.
+    pub fn validate_no_echo(&self, bytes: &[u8]) -> Result<(), CredentialError> {
+        if bytes.len() > 524288 {
+            return Err(CredentialError {
+                code: "MODEL_CREDENTIAL_JSON_INVALID",
+            });
+        }
+        if raw_contains_secret(bytes, self) {
+            return Err(CredentialError {
+                code: "MODEL_CREDENTIAL_ECHO",
+            });
+        }
+        let value = strict_json_value(bytes)?;
+        scan_artifact_value(
+            &value,
+            std::str::from_utf8(&self.bytes).map_err(|_| CredentialError {
+                code: "MODEL_CREDENTIAL_INVALID",
+            })?,
+            0,
+        )
+    }
     pub fn new(bytes: &[u8]) -> Result<Self, CredentialError> {
         if !Self::valid(bytes) {
             return Err(CredentialError {
@@ -82,6 +103,243 @@ impl TransientCredential {
             code: "MODEL_CREDENTIAL_INVALID",
         })?;
         Self::from_owned(text.into_bytes())
+    }
+}
+
+pub(crate) fn strict_json_value(bytes: &[u8]) -> Result<serde_json::Value, CredentialError> {
+    use serde::de::{MapAccess, SeqAccess, Visitor};
+    struct Strict(serde_json::Value);
+    impl<'de> serde::Deserialize<'de> for Strict {
+        fn deserialize<D: serde::Deserializer<'de>>(de: D) -> Result<Self, D::Error> {
+            struct V;
+            impl<'de> Visitor<'de> for V {
+                type Value = Strict;
+                fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                    f.write_str("strict JSON")
+                }
+                fn visit_unit<E: serde::de::Error>(self) -> Result<Strict, E> {
+                    Ok(Strict(serde_json::Value::Null))
+                }
+                fn visit_bool<E: serde::de::Error>(self, v: bool) -> Result<Strict, E> {
+                    Ok(Strict(v.into()))
+                }
+                fn visit_i64<E: serde::de::Error>(self, v: i64) -> Result<Strict, E> {
+                    Ok(Strict(v.into()))
+                }
+                fn visit_u64<E: serde::de::Error>(self, v: u64) -> Result<Strict, E> {
+                    Ok(Strict(v.into()))
+                }
+                fn visit_f64<E: serde::de::Error>(self, v: f64) -> Result<Strict, E> {
+                    serde_json::Number::from_f64(v)
+                        .map(|n| Strict(n.into()))
+                        .ok_or_else(|| E::custom("MODEL_JSON_NONFINITE"))
+                }
+                fn visit_str<E: serde::de::Error>(self, v: &str) -> Result<Strict, E> {
+                    Ok(Strict(v.into()))
+                }
+                fn visit_string<E: serde::de::Error>(self, v: String) -> Result<Strict, E> {
+                    Ok(Strict(v.into()))
+                }
+                fn visit_seq<A: SeqAccess<'de>>(self, mut a: A) -> Result<Strict, A::Error> {
+                    let mut values = Vec::new();
+                    while let Some(v) = a.next_element::<Strict>()? {
+                        values.push(v.0);
+                    }
+                    Ok(Strict(values.into()))
+                }
+                fn visit_map<A: MapAccess<'de>>(self, mut a: A) -> Result<Strict, A::Error> {
+                    let mut values = serde_json::Map::new();
+                    while let Some(key) = a.next_key::<String>()? {
+                        if values.contains_key(&key) {
+                            return Err(serde::de::Error::custom("MODEL_JSON_DUPLICATE_FIELD"));
+                        }
+                        values.insert(key, a.next_value::<Strict>()?.0);
+                    }
+                    Ok(Strict(values.into()))
+                }
+            }
+            de.deserialize_any(V)
+        }
+    }
+    serde_json::from_slice::<Strict>(bytes)
+        .map(|v| v.0)
+        .map_err(|_| CredentialError {
+            code: "MODEL_CREDENTIAL_JSON_INVALID",
+        })
+}
+
+fn scan_artifact_value(
+    value: &serde_json::Value,
+    secret: &str,
+    depth: u32,
+) -> Result<(), CredentialError> {
+    match value {
+        serde_json::Value::String(text) => scan_artifact_string(text, secret, depth),
+        serde_json::Value::Array(items) => {
+            for item in items {
+                scan_artifact_value(item, secret, depth)?;
+            }
+            Ok(())
+        }
+        serde_json::Value::Object(items) => {
+            for (key, item) in items {
+                scan_artifact_string(key, secret, depth)?;
+                scan_artifact_value(item, secret, depth)?;
+            }
+            Ok(())
+        }
+        _ => Ok(()),
+    }
+}
+fn scan_artifact_string(text: &str, secret: &str, depth: u32) -> Result<(), CredentialError> {
+    if text.contains(secret) {
+        return Err(CredentialError {
+            code: "MODEL_CREDENTIAL_ECHO",
+        });
+    }
+    // Decode valid escape fragments even without an enclosing quoted token:
+    // model content can have prose prefixes or end inside an unfinished value.
+    // Invalid literal escapes remain text, so ordinary quotations stay usable.
+    let decoded = decode_escape_fragments(text);
+    if decoded == text {
+        return Ok(());
+    }
+    if depth >= 16 {
+        return Err(CredentialError {
+            code: "MODEL_CREDENTIAL_JSON_INVALID",
+        });
+    }
+    scan_artifact_string(&decoded, secret, depth + 1)
+}
+
+fn decode_escape_fragments(text: &str) -> String {
+    fn hex(text: &str, start: usize) -> Option<u32> {
+        let digits = text.get(start..start.checked_add(4)?)?;
+        if !digits.bytes().all(|b| b.is_ascii_hexdigit()) {
+            return None;
+        }
+        u32::from_str_radix(digits, 16).ok()
+    }
+    let bytes = text.as_bytes();
+    let mut out = String::with_capacity(text.len());
+    let mut cursor = 0;
+    while cursor < bytes.len() {
+        if bytes[cursor] == b'\\' {
+            let simple = match bytes.get(cursor + 1) {
+                Some(b'"') => Some('"'),
+                Some(b'\\') => Some('\\'),
+                Some(b'/') => Some('/'),
+                Some(b'b') => Some('\u{8}'),
+                Some(b'f') => Some('\u{c}'),
+                Some(b'n') => Some('\n'),
+                Some(b'r') => Some('\r'),
+                Some(b't') => Some('\t'),
+                _ => None,
+            };
+            if let Some(ch) = simple {
+                out.push(ch);
+                cursor += 2;
+                continue;
+            }
+            if bytes.get(cursor + 1) == Some(&b'u') {
+                if let Some(first) = hex(text, cursor + 2) {
+                    let (code, consumed) = if (0xd800..=0xdbff).contains(&first)
+                        && bytes.get(cursor + 6..cursor + 8) == Some(b"\\u")
+                    {
+                        match hex(text, cursor + 8).filter(|n| (0xdc00..=0xdfff).contains(n)) {
+                            Some(second) => {
+                                (0x10000 + ((first - 0xd800) << 10) + second - 0xdc00, 12)
+                            }
+                            None => (first, 6),
+                        }
+                    } else {
+                        (first, 6)
+                    };
+                    if let Some(ch) = char::from_u32(code) {
+                        out.push(ch);
+                        cursor += consumed;
+                        continue;
+                    }
+                }
+            }
+        }
+        let ch = text[cursor..]
+            .chars()
+            .next()
+            .expect("cursor at UTF8 boundary");
+        out.push(ch);
+        cursor += ch.len_utf8();
+    }
+    out
+}
+
+#[cfg(test)]
+mod artifact_scan_tests {
+    use super::*;
+    const SECRET: &str = "SYNTHETIC_ARTIFACT_CREDENTIAL_20261102";
+    #[test]
+    fn ordinary_complete_json_passes_without_exposing_key() {
+        let key = TransientCredential::new(SECRET.as_bytes()).unwrap();
+        assert!(
+            key.validate_no_echo(br#"{"status":"completed","value":[1,true,null]}"#)
+                .is_ok()
+        );
+    }
+    #[test]
+    fn nested_closed_string_in_truncated_json_does_not_hide_unicode_echo() {
+        let key = TransientCredential::new(SECRET.as_bytes()).unwrap();
+        let escaped: String = SECRET
+            .chars()
+            .map(|c| format!("\\u{:04x}", c as u32))
+            .collect();
+        let nested = format!("{{\"statement\":\"{escaped}\"");
+        let raw = serde_json::to_vec(&serde_json::json!({"output_text":nested})).unwrap();
+        assert_eq!(
+            key.validate_no_echo(&raw).unwrap_err().code,
+            "MODEL_CREDENTIAL_ECHO"
+        );
+    }
+    #[test]
+    fn duplicate_keys_and_nonfinite_numbers_are_not_folded() {
+        for raw in [br#"{"a":1,"a":2}"#.as_slice(), br#"{"a":1e999}"#] {
+            assert!(strict_json_value(raw).is_err());
+        }
+    }
+    #[test]
+    fn escaped_fragments_in_unclosed_or_prefixed_text_are_rejected() {
+        let key = TransientCredential::new(SECRET.as_bytes()).unwrap();
+        let escaped: String = SECRET
+            .chars()
+            .map(|c| format!("\\u{:04x}", c as u32))
+            .collect();
+        let cases = [
+            format!("\"{escaped}\""),
+            format!("\"{escaped}"),
+            format!("{{\"value\":\"{escaped}"),
+            format!("```json\n{{\"value\":\"{escaped}\"}}\n```"),
+            serde_json::to_string(&format!("\"{escaped}\"")).unwrap(),
+            format!("{{\"value\":\"{escaped}\\u12"),
+        ];
+        let results: Vec<_> = cases
+            .iter()
+            .map(|text| {
+                let raw = serde_json::to_vec(&serde_json::json!({"output_text":text})).unwrap();
+                key.validate_no_echo(&raw).err().map(|error| error.code)
+            })
+            .collect();
+        assert_eq!(results, vec![Some("MODEL_CREDENTIAL_ECHO"); cases.len()]);
+    }
+    #[test]
+    fn ordinary_prose_with_quotes_and_invalid_literal_escapes_remains_usable() {
+        let key = TransientCredential::new(SECRET.as_bytes()).unwrap();
+        for text in [
+            "{literal \"a\\q\"}\n",
+            "```note\n\"ordinary quotation\"\n```",
+            "a literal \\u12 and \\q",
+        ] {
+            let raw = serde_json::to_vec(&serde_json::json!({"output_text":text})).unwrap();
+            assert!(key.validate_no_echo(&raw).is_ok());
+        }
     }
 }
 
