@@ -3,7 +3,7 @@ use std::io::{self, Write};
 use std::process::ExitCode;
 
 use noetome_cli::{
-    CliCommand, fixture, fixture_compile, knowledge_extract, model_preflight, pdf_parse,
+    CliCommand, fixture, fixture_compile, knowledge_extract, model_api, model_preflight, pdf_parse,
     pdf_source, project, source,
 };
 
@@ -20,6 +20,27 @@ fn main() -> ExitCode {
 
     let mut result_code = 0;
     let output = match command {
+        CliCommand::ApiHelp => noetome_cli::API_HELP.to_owned(),
+        CliCommand::ApiRun { preflight, project, version_id, configuration, authorization, output, python } => {
+            let result = if preflight {
+                model_api::preflight(&project, &version_id, &configuration, &authorization, &output, &python)
+                    .and_then(|report| serde_json::to_string_pretty(&report).map_err(|_| "MODEL_API_SERIALIZATION_FAILED".into()))
+            } else {
+                model_api::extract(&project, &version_id, &configuration, &authorization, &output, &python)
+                    .and_then(|report| {
+                        if !report.candidate_success { result_code = 3; }
+                        serde_json::to_string_pretty(&report).map_err(|_| "MODEL_API_SERIALIZATION_FAILED".into())
+                    })
+            };
+            match result { Ok(json) => format!("{json}\n"), Err(error) => { let _ = writeln!(io::stderr().lock(), "{error}"); return ExitCode::from(2); } }
+        },
+        CliCommand::ApiInspect { project, output } => match model_api::inspect(&project, &output) {
+            Ok(report) => {
+                if !report.candidate_success { result_code = 3; }
+                match serde_json::to_string_pretty(&report) { Ok(json) => format!("{json}\n"), Err(_) => return ExitCode::from(1) }
+            },
+            Err(error) => { let _ = writeln!(io::stderr().lock(), "{error}"); return ExitCode::from(2); }
+        },
         CliCommand::KnowledgeHelp => noetome_cli::KNOWLEDGE_HELP.to_owned(),
         CliCommand::KnowledgePreflight{project,version_id}=>{
             match model_preflight::prepare_whole_text(&project,&version_id).and_then(|prepared|{

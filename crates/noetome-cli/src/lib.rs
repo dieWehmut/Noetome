@@ -1,6 +1,7 @@
 use std::ffi::OsString;
 use std::path::PathBuf;
 
+pub(crate) mod api_store;
 mod compile_model;
 mod compile_report;
 mod compile_store;
@@ -13,6 +14,7 @@ mod fixture_model;
 mod fixture_plan;
 mod fixture_render;
 pub mod knowledge_extract;
+pub mod model_api;
 pub mod model_candidate;
 pub mod model_preflight;
 pub mod model_provider;
@@ -45,6 +47,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome case verify <fixture目录>
       noetome case compile <fixture目录> <尚不存在的测试输出根>
       noetome knowledge inspect <项目路径> <候选根>
+      noetome api <preflight|extract|inspect> --help
 
 当前支持：
   -h, --help       显示帮助
@@ -58,7 +61,8 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
 
 不传参数时显示帮助；project --help 或 source --help 查看命令说明。
-当前来源由用户明确选取，fixture知识与计划由作者声明；PDF可解析并登记，自动知识抽取尚未实现。
+当前来源由用户明确选取，fixture知识与计划由作者声明；PDF可解析并登记。
+api入口提供明确配置和授权的单次短文本候选抽取；知识保持unverified，自动笔记发布尚未实现。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -125,12 +129,41 @@ preflight：只读核对完整短文本（规范UTF8最多8KiB），返回指纹
 只读重载单请求候选或分类失败，核对来源登记、真实Span、请求/响应指纹及独立候选契约。
 结果为JSON，不重新调用模型、累计费用或发布笔记；fake为模拟数据，候选保持unverified。
 已有、未知、损坏或中断现场保留；原选取文件移走后仍可核对已存快照。
-本入口尚不提供真实API抽取或PDF模型引用，生产收费请求需后续明确配置和预算。
+明确配置、外发授权和预算的短文本API另见 api --help；本入口不提供PDF模型引用。
 中文和空格路径须作为单独参数；以 - 开头的路径加 -- 分隔符。
+";
+
+pub const API_HELP: &str = "Noetome 单次 Responses 候选抽取
+
+用法：noetome api preflight <项目路径> <version-id> <配置JSON> <授权JSON> <全新输出根> --python <绝对解释器路径>
+      noetome api extract <项目路径> <version-id> <配置JSON> <授权JSON> <全新输出根> --python <绝对解释器路径>
+      noetome api inspect <项目路径> <候选根>
+
+preflight：核对完整短文本、明确配置、外发授权、预算及锁定运行时，不读取密钥、不创建输出或调用API。
+extract：准入后读取 env:NOETOME_AI134_KEY，仅向固定 ai.1343263.xyz/v1/responses 发一次请求。
+模型固定 deepseek-flash，完整规范UTF8最多8KiB，输出最多1024 Token、30秒，无重试、检索或工具。
+输出根须尚不存在；成功候选保持unverified，费用未知不记零。失败现场保留，不自动重发。
+inspect：原生只读核对保存的配置/授权、来源、请求、响应和候选，不读取密钥或启动进程。
+配置与本地隐藏密钥输入步骤见 sidecars/responses_api/README.md 和 doc/technical/RESPONSES_API_PROTOCOL.md。
+以 - 开头的路径在动词后加 --；中文和空格路径须作为单独参数。API密钥没有命令行参数。
 ";
 
 #[derive(Debug)]
 pub enum CliCommand {
+    ApiHelp,
+    ApiRun {
+        preflight: bool,
+        project: PathBuf,
+        version_id: String,
+        configuration: PathBuf,
+        authorization: PathBuf,
+        output: PathBuf,
+        python: PathBuf,
+    },
+    ApiInspect {
+        project: PathBuf,
+        output: PathBuf,
+    },
     KnowledgeHelp,
     KnowledgeInspect {
         project: PathBuf,
@@ -179,6 +212,9 @@ pub enum CliCommand {
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
 pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.first().is_some_and(|arg| arg == "api") {
+        return api_command(&args[1..]);
+    }
     if args.first().is_some_and(|arg| arg == "knowledge") {
         return knowledge_command(&args[1..]);
     }
@@ -209,6 +245,70 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
         }
         _ => Err(INVALID_ARGUMENT),
     }
+}
+
+fn api_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.is_empty()
+        || matches!(args, [help] if help == "--help" || help == "-h")
+        || matches!(args, [verb, help] if (verb == "preflight" || verb == "extract" || verb == "inspect") && (help == "--help" || help == "-h"))
+    {
+        return Ok(CliCommand::ApiHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    let (tail, separated) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |value: &OsString| {
+        !value.is_empty()
+            && value.to_str().is_some()
+            && (separated || !value.as_encoded_bytes().starts_with(b"-"))
+    };
+    if verb == "inspect" {
+        let [project, output] = tail else {
+            return Err(INVALID_ARGUMENT);
+        };
+        if !valid(project) || !valid(output) {
+            return Err(INVALID_ARGUMENT);
+        }
+        return Ok(CliCommand::ApiInspect {
+            project: project.into(),
+            output: output.into(),
+        });
+    }
+    let [
+        project,
+        version,
+        configuration,
+        authorization,
+        output,
+        flag,
+        runtime,
+    ] = tail
+    else {
+        return Err(INVALID_ARGUMENT);
+    };
+    if (verb != "preflight" && verb != "extract")
+        || [project, version, configuration, authorization, output]
+            .iter()
+            .any(|v| !valid(v))
+        || flag != "--python"
+        || runtime.is_empty()
+        || runtime.to_str().is_none()
+        || !PathBuf::from(runtime).is_absolute()
+    {
+        return Err(INVALID_ARGUMENT);
+    }
+    Ok(CliCommand::ApiRun {
+        preflight: verb == "preflight",
+        project: project.into(),
+        version_id: version.to_str().ok_or(INVALID_ARGUMENT)?.into(),
+        configuration: configuration.into(),
+        authorization: authorization.into(),
+        output: output.into(),
+        python: runtime.into(),
+    })
 }
 
 fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
@@ -514,6 +614,70 @@ mod pdf_import_arguments {
             &["--python", runtime, "--source-id"][..],
         ] {
             assert!(parse(&args(tail)).is_err(), "accepted {tail:?}");
+        }
+    }
+}
+
+#[cfg(test)]
+mod api_cli_tests {
+    use super::*;
+    fn args(values: &[&str]) -> Vec<OsString> {
+        values.iter().map(OsString::from).collect()
+    }
+    #[test]
+    fn api_commands_admit_only_explicit_runtime_and_exact_paths() {
+        let runtime = std::env::temp_dir().join("api-python.exe");
+        for verb in ["preflight", "extract"] {
+            let parsed = parse(&args(&[
+                "api",
+                verb,
+                "项目 path",
+                "version",
+                "cfg",
+                "auth",
+                "new out",
+                "--python",
+                runtime.to_str().unwrap(),
+            ]));
+            assert!(parsed.is_ok(), "{parsed:?}");
+            let separated = parse(&args(&[
+                "api",
+                verb,
+                "--",
+                "-project",
+                "version",
+                "-cfg",
+                "-auth",
+                "-out",
+                "--python",
+                runtime.to_str().unwrap(),
+            ]));
+            assert!(separated.is_ok(), "{separated:?}");
+        }
+        assert!(parse(&args(&["api", "inspect", "项目 path", "候选 root"])).is_ok());
+        assert!(parse(&args(&["api", "--help"])).is_ok());
+    }
+    #[test]
+    fn api_rejects_missing_implicit_or_duplicate_options_before_io() {
+        for values in [
+            vec![
+                "api", "extract", "project", "version", "cfg", "auth", "output",
+            ],
+            vec![
+                "api", "extract", "project", "version", "cfg", "auth", "output", "--python",
+                "relative",
+            ],
+            vec![
+                "api", "extract", "project", "version", "cfg", "auth", "output", "--key",
+                "sentinel",
+            ],
+            vec![
+                "api", "inspect", "project", "output", "--python", "relative",
+            ],
+            vec!["api", "inspect", "-project", "output"],
+            vec!["api", "inspect", "", "output"],
+        ] {
+            assert!(parse(&args(&values)).is_err(), "accepted {values:?}");
         }
     }
 }

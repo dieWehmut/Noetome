@@ -103,6 +103,50 @@ fn args(values: &[&str]) -> Vec<OsString> {
 }
 
 #[test]
+fn api_help_and_missing_source_admission_do_not_touch_files() {
+    let sandbox = Sandbox::new();
+    for values in [
+        vec!["api"],
+        vec!["api", "--help"],
+        vec!["api", "extract", "--help"],
+        vec!["api", "inspect", "--help"],
+    ] {
+        let output = sandbox.run(&args(&values));
+        assert!(output.status.success());
+        assert!(output.stderr.is_empty());
+        let text = String::from_utf8(output.stdout).unwrap();
+        for expected in [
+            "api preflight",
+            "api extract",
+            "api inspect",
+            "unverified",
+            "没有命令行参数",
+        ] {
+            assert!(text.contains(expected), "missing {expected}");
+        }
+    }
+    let runtime = sandbox.root.join("not-created-python.exe");
+    for verb in ["preflight", "extract"] {
+        let output = sandbox.run(&args(&[
+            "api",
+            verb,
+            "missing project",
+            "version",
+            "missing config",
+            "missing auth",
+            "new output",
+            "--python",
+            runtime.to_str().unwrap(),
+        ]));
+        assert_eq!(output.status.code(), Some(2));
+        assert!(output.stdout.is_empty());
+        let error = String::from_utf8(output.stderr).unwrap();
+        assert!(error.contains("MODEL_"));
+        assert!(!error.contains("CLI_INVALID_ARGUMENT"));
+    }
+}
+
+#[test]
 fn help_succeeds_without_writing_files() {
     let sandbox = Sandbox::new();
     for values in [&[][..], &["--help"][..], &["-h"][..]] {
