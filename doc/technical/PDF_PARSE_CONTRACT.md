@@ -4,7 +4,7 @@
 
 ## 入口与布局
 
-`source parse-pdf <明确PDF> <尚不存在的测试根>` 使用调用者提供的 `NOETOME_PDF_PYTHON` 绝对路径。Python adapter 随 CLI 嵌入，依赖锁定，isolated/no-bytecode 原生 argv，不使用 shell，不下载依赖。`source inspect-pdf <测试根>` 只读重查已保存字节，不依赖原文件仍存在。
+`source parse-pdf <明确PDF> <尚不存在的测试根>` 使用调用者提供的 `NOETOME_PDF_PYTHON` 绝对路径。Python adapter 随 CLI 嵌入，依赖锁定，isolated/no-bytecode 原生 argv，不使用 shell，不下载依赖。Windows 原始代码 `-c` 实际触发过 CreateProcess 长度上限，现以标准库 zlib 解压可信嵌入 payload 再 compile/exec；生成工具核对 payload 解压结果、源码与 SHA，不改变文档数据边界，不写临时 driver。`source inspect-pdf <测试根>` 只读重查已保存字节，不依赖原文件仍存在。
 
 ```text
 new-test-root/
@@ -30,6 +30,8 @@ parser 精确身份：engine pdfplumber / engine_version 0.11.9，engine_depende
 
 完整枚举后的 page_count 为真实页对象总数，pages 恰为 `[0,page_count)`。页级失败仍有原来的物理页条目。枚举未完成时 page_count=null，只保存已确认前缀，整体 failed；未知总数或 0 页另有 `pdf-document` failed 单元。正常页对应 `page-000000`，与 sidecar ordinal、状态、全文引用和资源逐页双向对账。
 
+空文本页保留已确认的 `page.text`、SHA 与实际0字节 UTF8资源，但 protocol v1 的单元为 `kind=unknown`、`text=null`，资源引用仍包含该逐页artifact。v1要求每个非空引用 `start_byte < end_byte`，不得用 `[0,0)` 伪造正文。该页必须 needs_review；零字符不证明合法空白或完成覆盖。
+
 ## 坐标
 
 geometry 的 `unit=pt`、`origin=crop_top_left`、`y_axis=down`。`media_box`、`crop_box` 保存 PDF 原始 user space 的四个角坐标 `[x0,y0,x1,y1]`，先规范化角序；CropBox 必须位于 MediaBox 内。`user_unit` 指每 PDF user unit 的 pt 数；`rotation_degrees` 为顺时针 0/90/180/270。`width_pt`/`height_pt` 是旋转后的显示 CropBox 尺寸。
@@ -49,14 +51,18 @@ Glyph 必填 `ordinal`、`text`、`bbox`、`font_name`、`font_size`、`upright`
 
 text artifact 必填 `resource_id`、`sha256`、`byte_length`；区域 text 必填 `resource_id`、`resource_sha256`、`start_byte`、`end_byte`。UTF8 范围是相对指定本页 artifact 的半开字节区间，须在字符边界，实际片段须等于字符清单重建的行。它不是 PDF 二进制 offset，也不是旧 blocks-v1 全局 byte/line locator。
 
-行策略固定为按 top 排序、距行首 top 不超过 3pt 分组、行内按 left/原字符序号排序；实际相邻字形空隙超过 3pt且两边不是空白时插入一个空格。每个声明行后追加 LF，Core 重建全文并检查顺序、行范围及 bbox。该工程一致性审计不能独立证明待测解析器没有漏读原 PDF；固定 authoring 预期与独立页面回看另外核对有限真实样例。
+行策略固定为按 top 排序、距行首 top 不超过 3pt 分组、行内按 left/原字符序号排序；实际相邻字形空隙超过 3pt且两边不是空白时插入一个空格。每个声明行的正文半开范围不含 LF；artifact在正文后追加 LF，下一区域从上一end_byte+1开始。Core 重建全文并检查顺序、行范围及 bbox。该工程一致性审计不能独立证明待测解析器没有漏读原 PDF；固定 authoring 预期与独立页面回看另外核对有限真实样例。
 
 ## 状态与边界
 
 存在 failed 页/枚举失败时整体 failed；否则任一 needs_review 页或 blocking issue 令整体 needs_review；全部页 parsed 且无 blocking issue 才 parsed，CLI 退出 0。其他情况退出非零并保存已确认页和问题。
 
-无文本层扫描与未确认空白均 needs_review。图形/图片/注释、表格候选、公式字体或上下标、重叠/列间大间隔、编码不可靠、非水平文字、非零旋转或非默认 UserUnit 按保守检测需复核。视觉条目包含 `visual_id`、`kind=image|vector|annotation`、`physical_page_index`、`bbox` 和 `evidence_resource_id=raw-pdf`；仅证明原始页面保留，不声称图片、公式结构或 OCR 已提取。
+无文本层扫描与未确认空白均 needs_review；只有空白字符的非空artifact亦需复核，保留实际正文和非空wire范围。图形/图片/注释、表格候选、公式字体或上下标、重叠/列间大间隔、编码不可靠、非水平文字、非零旋转或非默认 UserUnit 按保守检测需复核。多码点glyph decode保留原字符及原始证据，但字体宽度/对应关系未经独立验证，必须needs_review；空格推断只看前glyph末字符和后glyph首字符，不在已有边界空白外多插空格。几何大间隔/重叠检查独立于空白字符。
+
+相邻规范行的水平包络不相交且间隔大于36pt、top差介于0和max(72pt,6×两行最大高度)时，视为可能错开栏/侧注并需复核。adapter与Core都做这项线性候选检查；它阻止已复现的交错栏误parsed，不声称完整分栏算法或全部版面检测正确。
+
+视觉条目包含 `visual_id`、`kind=image|vector|annotation`、`physical_page_index`、`bbox` 和 `evidence_resource_id=raw-pdf`；仅证明原始页面保留，不声称图片、公式结构或 OCR 已提取。
 
 政策上限：最多 128 个已确认页、每页 50,000 字符、总 200,000 字符；sidecar 字节/资源/时限进一步约束，默认完整 raw 资源不得超过 16MiB。资源用独占 create 写入并核对实际字节。限额、超时、取消和未确认读取均失败，完整原始 SHA 或页总数未知时保持未知。
 
-Core 报告包含 schema_version=1、report_kind=pdf_parse_sandbox、input_fingerprint、parser、status、可空 page_count、parsed/needs_review/failed 页数、manifest_path=parser/pdf-manifest.json、manifest_sha256、实际 elapsed_ms/resource_bytes 和 sidecar。inspect 重读报告、manifest、原始及全部资源并重新计算摘要，Markdown 与 JSON 同一事实。elapsed 是该次完成的实际测量，不是未来性能预测；没有知识 IR、Run/Release、知识覆盖或科学指标。
+Core 报告包含 schema_version=1、report_kind=pdf_parse_sandbox、input_fingerprint、parser、status、可空 page_count、parsed/needs_review/failed 页数、manifest_path=parser/pdf-manifest.json、manifest_sha256、实际 elapsed_ms/resource_bytes 和 sidecar。inspect 重读报告、manifest、原始及全部资源并重新计算摘要，Markdown 与 JSON 同一事实。elapsed 测量原始准备、sidecar 和初次 Core 验收完成前的实际时长，不含最后报告写入/重读与 stdout；完整 CLI 时长由独立验证脚本另测，不是未来性能预测。没有知识 IR、Run/Release、知识覆盖或科学指标。

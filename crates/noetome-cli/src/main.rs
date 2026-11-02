@@ -2,7 +2,7 @@ use std::env;
 use std::io::{self, Write};
 use std::process::ExitCode;
 
-use noetome_cli::{CliCommand, fixture, fixture_compile, project, source};
+use noetome_cli::{CliCommand, fixture, fixture_compile, pdf_parse, project, source};
 
 fn main() -> ExitCode {
     // Keep OS-native arguments: malformed Unicode is an input error, not a panic.
@@ -53,6 +53,34 @@ fn main() -> ExitCode {
             Err(error) => {
                 let _ = writeln!(io::stderr().lock(), "{error}");
                 return ExitCode::from(error.exit_code());
+            }
+        },
+        CliCommand::SourceParsePdf { file, output } => match pdf_parse::parse(&file, &output) {
+            Ok(output) => {
+                if let Some((code, message)) = output.failure {
+                    let _ = writeln!(io::stderr().lock(), "{code}: {message}");
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                result_code = 3;
+                pdf_parse::failure_json(&error)
+            }
+        },
+        CliCommand::SourceInspectPdf(path) => match pdf_parse::inspect(&path) {
+            Ok(output) => {
+                if let Some((code, message)) = output.failure {
+                    let _ = writeln!(io::stderr().lock(), "{code}: {message}");
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                result_code = 3;
+                pdf_parse::failure_json(&error)
             }
         },
         CliCommand::Version => format!("noetome {}\n", noetome_cli::VERSION),

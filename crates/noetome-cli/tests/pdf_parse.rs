@@ -43,9 +43,12 @@ impl Drop for Scratch {
     }
 }
 fn fixture(name: &str) -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR"))
-        .join("../../fixtures/pdf-text-v1")
-        .join(name)
+    fs::canonicalize(
+        Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../../fixtures/pdf-text-v1")
+            .join(name),
+    )
+    .unwrap()
 }
 fn cli(args: &[&str], paths: &[&Path]) -> Output {
     let mut command = Command::new(env!("CARGO_BIN_EXE_noetome"));
@@ -110,6 +113,42 @@ fn check_authoring(root: &Path, expected: &Value) {
             actual["geometry"]["rotation_degrees"],
             want["rotation_degrees"]
         );
+        for field in ["width_pt", "height_pt", "user_unit"] {
+            assert!(
+                (actual["geometry"][field].as_f64().unwrap()
+                    - want["geometry"][field].as_f64().unwrap())
+                .abs()
+                    < 0.000001
+            );
+        }
+        for axis in 0..6 {
+            assert!(
+                (actual["geometry"]["pdf_to_display"][axis].as_f64().unwrap()
+                    - want["geometry"]["pdf_to_display"][axis].as_f64().unwrap())
+                .abs()
+                    < 0.000001
+            );
+        }
+        let glyphs = actual["glyphs"].as_array().unwrap();
+        let expected_glyphs = want["glyph_positions"].as_array().unwrap();
+        assert_eq!(
+            glyphs.len(),
+            expected_glyphs.len(),
+            "all authoring characters, including review pages"
+        );
+        for (glyph, expected_glyph) in glyphs.iter().zip(expected_glyphs) {
+            assert_eq!(glyph["ordinal"], expected_glyph["ordinal"]);
+            assert_eq!(glyph["text"], expected_glyph["text"]);
+            for axis in 0..4 {
+                assert!(
+                    (glyph["bbox"][axis].as_f64().unwrap()
+                        - expected_glyph["bbox"][axis].as_f64().unwrap())
+                    .abs()
+                        <= expected_glyph["tolerance_pt"].as_f64().unwrap(),
+                    "independent rotated/physical glyph bbox: {glyph} vs {expected_glyph}"
+                );
+            }
+        }
         let expected_lines = want["lines"].as_array().unwrap();
         if expected_lines.is_empty() {
             continue;
@@ -273,6 +312,15 @@ fn existing_root_unreadable_input_and_unknown_workspace_entries_never_succeed() 
         fs::read(root.join("human.txt")).unwrap(),
         b"keep human content"
     );
+    let traversal = scratch.0.join("unused").join("..").join("escaped");
+    let escaped = cli(
+        &["source", "parse-pdf"],
+        &[&fixture("single-page.pdf"), &traversal],
+    );
+    assert!(!escaped.status.success());
+    assert!(String::from_utf8_lossy(&escaped.stderr).contains("SIDECAR_WORKSPACE"));
+    assert!(!scratch.0.join("unused").exists());
+    assert!(!scratch.0.join("escaped").exists());
     let missing_root = scratch.0.join("read-failure");
     let missing = cli(
         &["source", "parse-pdf"],
@@ -294,6 +342,109 @@ fn existing_root_unreadable_input_and_unknown_workspace_entries_never_succeed() 
     fs::write(valid.join("parser/unknown.txt"), b"unknown file").unwrap();
     let unknown = cli(&["source", "inspect-pdf"], &[&valid]);
     assert!(!unknown.status.success());
+    scratch.sentinel();
+}
+
+#[test]
+fn missing_or_relative_runtime_is_explicit_failure_without_creating_a_sandbox() {
+    let scratch = Scratch::new();
+    let input = fixture("single-page.pdf");
+    let original = fs::read(&input).unwrap();
+    for (index, runtime) in [None, Some("python.exe")].into_iter().enumerate() {
+        let root = scratch.0.join(format!("runtime-error-{index}"));
+        let mut command = Command::new(env!("CARGO_BIN_EXE_noetome"));
+        command.args(["source", "parse-pdf"]).arg(&input).arg(&root);
+        command.env_remove("NOETOME_PDF_PYTHON");
+        if let Some(runtime) = runtime {
+            command.env("NOETOME_PDF_PYTHON", runtime);
+        }
+        let output = command.output().unwrap();
+        assert_eq!(output.status.code(), Some(3));
+        assert!(String::from_utf8_lossy(&output.stderr).contains("PDF_RUNTIME"));
+        let failure = json_output(&output);
+        assert_eq!(failure["input_fingerprint"], Value::Null);
+        assert_eq!(failure["page_count"], Value::Null);
+        assert!(!root.exists());
+        assert_eq!(fs::read(&input).unwrap(), original);
+        scratch.sentinel();
+    }
+}
+
+#[test]
+fn multicodepoint_unicode_mapping_preserves_one_edge_space_and_remains_reviewable() {
+    // Author a genuine ToUnicode map before starting the parser. This test
+    // asserts literal decoded text, not font-width support for this encoding.
+    let scratch = Scratch::new();
+    let selected = scratch.0.join("mapped-space.pdf");
+    let contents = b"BT /F1 12 Tf 1 0 0 1 72 728 Tm (A) Tj 1 0 0 1 103 728 Tm (B) Tj ET";
+    let cmap=b"/CIDInit /ProcSet findresource begin\n12 dict begin\nbegincmap\n/CIDSystemInfo << /Registry (Adobe) /Ordering (UCS) /Supplement 0 >> def\n/CMapName /NoetomeTestMap def\n/CMapType 2 def\n1 begincodespacerange\n<00> <FF>\nendcodespacerange\n2 beginbfchar\n<41> <00410020>\n<42> <0042>\nendbfchar\nendcmap\nCMapName currentdict /CMap defineresource pop\nend\nend\n";
+    let stream = |bytes: &[u8]| {
+        let mut object = format!("<< /Length {} >>\nstream\n", bytes.len()).into_bytes();
+        object.extend_from_slice(bytes);
+        object.extend_from_slice(b"\nendstream");
+        object
+    };
+    let objects=vec![
+        b"<< /Type /Catalog /Pages 2 0 R >>".to_vec(),
+        b"<< /Type /Pages /Count 1 /Kids [3 0 R] >>".to_vec(),
+        b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 600 800] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>".to_vec(),
+        b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding /ToUnicode 6 0 R >>".to_vec(),stream(contents),stream(cmap),
+    ];
+    let mut raw = b"%PDF-1.4\n% Noetome public ToUnicode regression\n".to_vec();
+    let mut offsets = vec![0];
+    for (i, object) in objects.iter().enumerate() {
+        offsets.push(raw.len());
+        raw.extend_from_slice(format!("{} 0 obj\n", i + 1).as_bytes());
+        raw.extend_from_slice(object);
+        raw.extend_from_slice(b"\nendobj\n");
+    }
+    let xref = raw.len();
+    raw.extend_from_slice(
+        format!("xref\n0 {}\n0000000000 65535 f \n", objects.len() + 1).as_bytes(),
+    );
+    for offset in offsets.iter().skip(1) {
+        raw.extend_from_slice(format!("{offset:010} 00000 n \n").as_bytes());
+    }
+    raw.extend_from_slice(
+        format!(
+            "trailer\n<< /Size {} /Root 1 0 R >>\nstartxref\n{xref}\n%%EOF\n",
+            objects.len() + 1
+        )
+        .as_bytes(),
+    );
+    fs::write(&selected, &raw).unwrap();
+    let root = scratch.0.join("mapped-space-result");
+    let output = cli(&["source", "parse-pdf"], &[&selected, &root]);
+    assert_eq!(output.status.code(), Some(3));
+    let report = json_output(&output);
+    assert_eq!(
+        report["status"],
+        "needs_review",
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert_eq!(report["page_count"], 1);
+    assert_eq!(report["input_fingerprint"]["sha256"], sha(&raw));
+    let manifest: Value =
+        serde_json::from_slice(&fs::read(root.join("parser/pdf-manifest.json")).unwrap()).unwrap();
+    assert_eq!(manifest["pages"][0]["glyphs"][0]["text"], "A ");
+    assert_eq!(
+        fs::read(root.join("parser/pages/000000.txt")).unwrap(),
+        b"A B\n"
+    );
+    assert!(
+        manifest["issues"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|issue| issue["code"] == "PDF_MULTICODEPOINT_GLYPH")
+    );
+    let before = fs::read(root.join("parse-result.json")).unwrap();
+    let inspected = cli(&["source", "inspect-pdf"], &[&root]);
+    assert_eq!(inspected.status.code(), Some(3));
+    assert_eq!(json_output(&inspected), report);
+    assert_eq!(fs::read(root.join("parse-result.json")).unwrap(), before);
+    assert_eq!(fs::read(selected).unwrap(), raw);
     scratch.sentinel();
 }
 
@@ -348,6 +499,14 @@ fn location_and_body_mutations_fail_even_after_artifact_hashes_are_updated() {
             }
             "wrong_order" => {
                 page["regions"].as_array_mut().unwrap().swap(0, 1);
+                for (ordinal, region) in page["regions"]
+                    .as_array_mut()
+                    .unwrap()
+                    .iter_mut()
+                    .enumerate()
+                {
+                    region["region_id"] = json!(format!("region-000000-{ordinal:06}"));
+                }
             }
             "missing_body" => {
                 page["regions"].as_array_mut().unwrap().remove(1);
@@ -390,13 +549,29 @@ fn location_and_body_mutations_fail_even_after_artifact_hashes_are_updated() {
         fs::write(&report_path, serde_json::to_vec_pretty(&report).unwrap()).unwrap();
         fs::write(
             &markdown_path,
-            original_markdown.replace(&old_sha, &new_sha),
+            original_markdown.replace(&old_sha, &new_sha).replace(
+                &format!("| resource_bytes | {} |", original_report["resource_bytes"]),
+                &format!("| resource_bytes | {} |", report["resource_bytes"]),
+            ),
         )
         .unwrap();
         let inspected = cli(&["source", "inspect-pdf"], &[&root]);
         assert!(
             !inspected.status.success(),
             "accepted semantic mutation {mutation}"
+        );
+        let diagnostics = String::from_utf8_lossy(&inspected.stderr);
+        let expected_code = match mutation {
+            "missing_page" => "PDF_PAGES",
+            "wrong_page" | "out_of_bounds_bbox" | "wrong_in_bounds_bbox" => "PDF_LOCATOR",
+            "wrong_order" | "missing_body" | "cut_utf8" => "PDF_TEXT",
+            "unsafe_resource_path" => "SIDECAR_RESOURCE",
+            "unknown_field" => "PDF_MANIFEST",
+            _ => unreachable!(),
+        };
+        assert!(
+            diagnostics.contains(expected_code),
+            "mutation {mutation} failed for unrelated report/Markdown reason: {diagnostics}"
         );
         assert_eq!(
             fs::read(root.join("parser/raw.pdf")).unwrap(),

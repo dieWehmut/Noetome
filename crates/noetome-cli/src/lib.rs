@@ -11,6 +11,10 @@ mod fixture_knowledge;
 mod fixture_model;
 mod fixture_plan;
 mod fixture_render;
+mod pdf_model;
+pub mod pdf_parse;
+mod pdf_validate;
+mod pdf_workspace;
 pub mod project;
 pub mod sidecar_model;
 pub mod sidecar_process;
@@ -30,6 +34,8 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome project <init|inspect> <路径>
       noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
       noetome source inspect <项目路径> <import-id>
+      noetome source parse-pdf <PDF文件> <尚不存在的测试根>
+      noetome source inspect-pdf <PDF测试根>
       noetome case verify <fixture目录>
       noetome case compile <fixture目录> <尚不存在的测试输出根>
 
@@ -40,11 +46,13 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   project inspect <路径>  只读检查已有项目
   source import           登记单份UTF8文本、不可变版本及完整位置清单
   source inspect          只读核对导入记录和真实快照
+  source parse-pdf        单份PDF解析到全新测试根，完整物理页/区域及需复核原因
+  source inspect-pdf      只读核对已保存PDF、文本、位置和双报告
   case verify             只读校验明确fixture的来源、IR、计划与独立预期
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
 
 不传参数时显示帮助；project --help 或 source --help 查看命令说明。
-当前来源由用户明确选取，fixture知识与计划由作者声明；自动抽取及PDF解析尚未实现。
+当前来源由用户明确选取，fixture知识与计划由作者声明；PDF先在独立新根解析，项目PDF登记和知识自动抽取尚未实现。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -59,10 +67,12 @@ inspect：核对配置和 SQLite 状态，只读查看，不执行迁移或修�
 init建立空项目；来源登记通过source import，知识生成尚未实现。
 ";
 
-pub const SOURCE_HELP: &str = "Noetome 文本来源命令
+pub const SOURCE_HELP: &str = "Noetome 文本与PDF来源命令
 
 用法：noetome source import <项目路径> <MD/TXT文件> [--source-id <既有ID>]
       noetome source inspect <项目路径> <import-id>
+      noetome source parse-pdf <PDF文件> <尚不存在的测试根>
+      noetome source inspect-pdf <PDF测试根>
 
 import：只读选取的UTF8文件（最多64 MiB），保存原始/规范快照、来源版本和完整Span清单。
 初次写入将Schema1空项目升级为Schema2，保持项目身份和创建时间；已有版本保留。
@@ -71,7 +81,11 @@ inspect：使用导入结果的import-id只读核对持久记录、快照与位�
 结果为JSON；知识状态仍为pending。UTF8无效或文件未能完整读取会记录真实失败并返回非零。
 以 - 开头的路径可在动词后加 -- 分隔符；中文和空格路径须作为单独参数。
 项目写入中断保留标记、候选与备份；请检查旧目录并用新的测试项目重试。
-source导入不生成IR或Vault；已审阅fixture通过case compile输出临时Vault。PDF和模型抽取尚未实现。
+parse-pdf：用NOETOME_PDF_PYTHON指定的锁定Python解释器解析一份明确PDF，仅写全新测试根。
+保存原始PDF、完整物理页/区域、逐页UTF8及双报告；扫描/空白/复杂版式需复核，返回非零。
+inspect-pdf：只读重查测试根的实际SHA、位置、正文与报告，原文件移动后仍可核对；不修复残留。
+PDF物理索引从0开始、显示页为索引+1，印刷页号未知；不以行号或文件名代替页码。
+source导入不生成IR或Vault；已审阅fixture通过case compile输出临时Vault。项目PDF登记和模型抽取尚未实现。
 ";
 
 pub const CASE_HELP: &str = "Noetome fixture契约校验
@@ -108,6 +122,11 @@ pub enum CliCommand {
         project: PathBuf,
         import_id: String,
     },
+    SourceParsePdf {
+        file: PathBuf,
+        output: PathBuf,
+    },
+    SourceInspectPdf(PathBuf),
     CaseHelp,
     CaseVerify(PathBuf),
     CaseCompile {
@@ -196,7 +215,7 @@ fn case_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
 fn source_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     if args.is_empty()
         || matches!(args,[help] if help == "--help" || help == "-h")
-        || matches!(args,[verb,help] if (verb == "import" || verb == "inspect") && (help == "--help" || help == "-h"))
+        || matches!(args,[verb,help] if (verb == "import" || verb == "inspect" || verb == "parse-pdf" || verb == "inspect-pdf") && (help == "--help" || help == "-h"))
     {
         return Ok(CliCommand::SourceHelp);
     }
@@ -210,6 +229,15 @@ fn source_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         !path.is_empty() && (separator || path.as_encoded_bytes().first() != Some(&b'-'))
     };
     match tail {
+        [file, output] if verb == "parse-pdf" && valid_path(file) && valid_path(output) => {
+            Ok(CliCommand::SourceParsePdf {
+                file: file.into(),
+                output: output.into(),
+            })
+        }
+        [output] if verb == "inspect-pdf" && valid_path(output) => {
+            Ok(CliCommand::SourceInspectPdf(output.into()))
+        }
         [project, file] if verb == "import" && valid_path(project) && valid_path(file) => {
             Ok(CliCommand::SourceImport {
                 project: project.into(),

@@ -68,17 +68,18 @@ def main() -> None:
             record["renders"].append({"physical_page_index": page_index, "exit": rendered.returncode,
                                        "path": png.name if png.exists() else None,
                                        "diagnostics": rendered.stderr.decode("utf8", errors="replace")})
-            if not png.exists():
-                continue
+            assert rendered.returncode == 0 and png.exists(), (selected.name, page_index, rendered.stderr)
             picture = Image.open(png).convert("RGB")
             if page_index < len(case["pages"]):
                 want_page = case["pages"][page_index]
                 crop = want_page["crop_box"]
-                if want_page["rotation_degrees"] == 0 and isinstance(crop[2], (int, float)):
-                    x_scale = picture.width / (crop[2]-crop[0])
-                    y_scale = picture.height / (crop[3]-crop[1])
+                if isinstance(crop[2], (int, float)):
+                    geometry = want_page["geometry"]
+                    x_scale = picture.width / geometry["width_pt"]
+                    y_scale = picture.height / geometry["height_pt"]
                     draw = ImageDraw.Draw(picture)
-                    for line in want_page["lines"]:
+                    regions = want_page["lines"] if want_page["lines"] else want_page["glyph_positions"]
+                    for line in regions:
                         l, t, r, b = line["bbox"]
                         draw.rectangle((l*x_scale, t*y_scale, r*x_scale, b*y_scale), outline="#c12832", width=2)
             annotated = args.output / f"{selected.stem}-p{page_index+1:03}-authoring.png"
@@ -96,6 +97,7 @@ def main() -> None:
         sheet.paste(picture, (column*tile_w+8, row*tile_h+38))
         draw.text((column*tile_w+8, row*tile_h+8), label, font=font, fill="black")
     sheet.save(args.output / "authoring-contact.png")
+    assert len(pictures) == sum(record["actual_pages"] or 0 for record in records)
     report = {"schema_version": 1, "reviewer": "independent Poppler tool + agent visual review, not human scientific gold standard", "fixture_count": len(records), "render_count": len(pictures), "records": records}
     (args.output / "authoring-review.json").write_text(json.dumps(report, ensure_ascii=False, indent=2)+"\n", encoding="utf8", newline="\n")
     print(f"Authoring SHA/page checks: {len(records)} fixtures; {len(pictures)} actual page PNGs. Text tool: {'run' if args.pdftotext else 'not_run_unavailable'}; contact and individual authoring regions saved.")

@@ -17,7 +17,7 @@ pub(crate) struct Directory {
     _guard: Option<File>,
 }
 impl Directory {
-    fn capture(path: &Path, code: &'static str) -> Result<Self, SidecarError> {
+    pub(crate) fn capture(path: &Path, code: &'static str) -> Result<Self, SidecarError> {
         project::check_components(path).map_err(|e| err(code, e))?;
         let meta = fs::symlink_metadata(path).map_err(|e| err(code, e))?;
         if !meta.is_dir() || project::is_link(&meta) {
@@ -68,7 +68,7 @@ pub(crate) struct GuardedFile {
     fingerprint: Fingerprint,
 }
 impl GuardedFile {
-    fn open(
+    pub(crate) fn open(
         path: &Path,
         max: u64,
         control: &Control,
@@ -113,7 +113,7 @@ impl GuardedFile {
         guard.verify(control, code)?;
         Ok((guard, bytes))
     }
-    fn verify(&self, control: &Control, code: &'static str) -> Result<(), SidecarError> {
+    pub(crate) fn verify(&self, control: &Control, code: &'static str) -> Result<(), SidecarError> {
         control.check()?;
         project::check_components(&self.path).map_err(|e| err(code, e))?;
         project::checked_file(&self.path).map_err(|e| err(code, e))?;
@@ -176,6 +176,25 @@ impl Prepared {
         limits: Limits,
         control: &Control,
     ) -> Result<Self, SidecarError> {
+        Self::prepare(input, workspace, limits, control, true)
+    }
+    /// Internal read-only recheck of a persisted PDF resource directory.
+    /// Never sent as a new process request or exposed as a public fake entry.
+    pub(crate) fn existing(
+        input: &Path,
+        workspace: &Path,
+        limits: Limits,
+        control: &Control,
+    ) -> Result<Self, SidecarError> {
+        Self::prepare(input, workspace, limits, control, false)
+    }
+    fn prepare(
+        input: &Path,
+        workspace: &Path,
+        limits: Limits,
+        control: &Control,
+        create: bool,
+    ) -> Result<Self, SidecarError> {
         let input = project::check_components(input).map_err(|e| err("SIDECAR_INPUT", e))?;
         let workspace =
             project::check_components(workspace).map_err(|e| err("SIDECAR_WORKSPACE", e))?;
@@ -193,7 +212,9 @@ impl Prepared {
             &"SIDECAR_WORKSPACE",
         )?;
         control.check()?;
-        fs::create_dir(&workspace).map_err(|e| err("SIDECAR_WORKSPACE", e))?;
+        if create {
+            fs::create_dir(&workspace).map_err(|e| err("SIDECAR_WORKSPACE", e))?;
+        }
         let root = Directory::capture(&workspace, &"SIDECAR_WORKSPACE")?;
         let request = Request {
             protocol_version: 1,

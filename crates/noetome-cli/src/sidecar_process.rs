@@ -29,12 +29,32 @@ pub struct ValidatedResponse {
     _prepared: Prepared,
     _resources: ResourceGuards,
 }
+impl ValidatedResponse {
+    pub(crate) fn resource_data(
+        &self,
+    ) -> &std::collections::BTreeMap<String, crate::sidecar_workspace::ResourceData> {
+        &self._resources.bytes
+    }
+    pub(crate) fn recheck(&self, control: &Control) -> Result<(), SidecarError> {
+        self._prepared.verify(control)?;
+        // A final bounded whole-manifest recheck, never one re-read per glyph.
+        let _guards = self._prepared.resources(&self.response, control)?;
+        control.check()
+    }
+}
 pub(crate) struct Control {
     start: Instant,
     timeout: Duration,
     cancelled: Arc<AtomicBool>,
 }
 impl Control {
+    pub(crate) fn new(timeout_ms: u64, cancelled: Arc<AtomicBool>) -> Self {
+        Self {
+            start: Instant::now(),
+            timeout: Duration::from_millis(timeout_ms),
+            cancelled,
+        }
+    }
     pub(crate) fn check(&self) -> Result<(), SidecarError> {
         if self.cancelled.load(Ordering::SeqCst) {
             return Err(SidecarError::new("SIDECAR_CANCELLED", "request cancelled"));
@@ -79,11 +99,7 @@ fn run_inner(
             "limits must be positive",
         ));
     }
-    let control = Control {
-        start: Instant::now(),
-        timeout: Duration::from_millis(limits.timeout_ms),
-        cancelled,
-    };
+    let control = Control::new(limits.timeout_ms, cancelled);
     control.check()?;
     let prepared = Prepared::new(input, workspace, limits.clone(), &control)?;
     let bytes = serde_json::to_vec(&prepared.request)
@@ -148,6 +164,60 @@ fn run_inner(
     result.map_err(|mut e| {
         e.diagnostics = diagnostics;
         e
+    })
+}
+/// PDF sandbox inspection uses the same immutable file/resource guards as run,
+/// but does not spawn, create a directory, or accept synthetic producers.
+pub(crate) fn reopen_pdf_resources(
+    response: Response,
+    workspace: &Path,
+    limits: Limits,
+    control: &Control,
+) -> Result<ValidatedResponse, SidecarError> {
+    control.check()?;
+    let valid_uuid = |value: &str| {
+        uuid::Uuid::parse_str(value).ok().is_some_and(|id| {
+            id.get_version() == Some(uuid::Version::Random)
+                && id.get_variant() == uuid::Variant::RFC4122
+                && id.to_string() == value
+        })
+    };
+    if response.protocol_version != 1
+        || response.parser.capability_version != 1
+        || response.parser.capabilities != [Capability::SourceUnitsV1]
+        || response.producer != Producer::Parser
+        || !valid_uuid(&response.request_id)
+        || !valid_uuid(&response.workspace_capability_id)
+    {
+        return Err(SidecarError::new(
+            "SIDECAR_PROTOCOL",
+            "unsupported persisted parser response/identity",
+        ));
+    }
+    let mut prepared = Prepared::existing(
+        &workspace.join("raw.pdf"),
+        workspace,
+        limits.clone(),
+        control,
+    )?;
+    if response.input_fingerprint.sha256 != prepared.request.input.fingerprint.sha256
+        || response.input_fingerprint.byte_length != prepared.request.input.fingerprint.byte_length
+    {
+        return Err(SidecarError::new(
+            "SIDECAR_IDENTITY",
+            "saved raw PDF/input fingerprint mismatch",
+        ));
+    }
+    prepared.request.request_id = response.request_id.clone();
+    prepared.request.workspace.capability_id = response.workspace_capability_id.clone();
+    let resources = prepared.resources(&response, control)?;
+    validate_units(&response, &resources, &limits, control)?;
+    control.check()?;
+    Ok(ValidatedResponse {
+        response,
+        diagnostics: Vec::new(),
+        _prepared: prepared,
+        _resources: resources,
     })
 }
 #[cfg(windows)]
