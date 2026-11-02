@@ -1,0 +1,80 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+warning: field `manifest` is never read
+  --> crates\noetome-cli\src\pdf_parse.rs:24:16
+   |
+21 | pub(crate) struct CapturedPdf {
+   |                   ----------- field in this struct
+...
+24 |     pub(crate) manifest: Option<Manifest>,
+   |                ^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `parse_owned` is never used
+   --> crates\noetome-cli\src\pdf_parse.rs:100:15
+    |
+100 | pub(crate) fn parse_owned(input: &Path, output: &Path) -> Result<CapturedPdf, SidecarError> {
+    |               ^^^^^^^^^^^
+
+warning: function `parse_command_owned` is never used
+   --> crates\noetome-cli\src\pdf_parse.rs:104:4
+    |
+104 | fn parse_command_owned(
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: methods `hydrate_pdf_reports`, `source_for_path`, `source_for_hash`, and `next_import_order` are never used
+   --> crates\noetome-cli\src\source_model.rs:379:19
+    |
+ 94 | impl Store {
+    | ---------- methods in this implementation
+...
+379 |     pub(crate) fn hydrate_pdf_reports(
+    |                   ^^^^^^^^^^^^^^^^^^^
+...
+404 |     pub(crate) fn source_for_path(&self, selected_path: &str) -> Option<String> {
+    |                   ^^^^^^^^^^^^^^^
+...
+427 |     pub(crate) fn source_for_hash(&self, hash: &str) -> Option<String> {
+    |                   ^^^^^^^^^^^^^^^
+...
+452 |     pub(crate) fn next_import_order(&self) -> Result<i64, ProjectError> {
+    |                   ^^^^^^^^^^^^^^^^^
+
+warning: methods `stage_pdf_version`, `pdf_parse_path`, and `stage_pdf_parse` are never used
+   --> crates\noetome-cli\src\source_write.rs:553:19
+    |
+169 | impl Writer {
+    | ----------- methods in this implementation
+...
+553 |     pub(crate) fn stage_pdf_version(&mut self, version_id: &str, raw: &[u8]) -> Result<PathBuf, ProjectError> {
+    |                   ^^^^^^^^^^^^^^^^^
+...
+568 |     pub(crate) fn pdf_parse_path(&self) -> Result<PathBuf, ProjectError> {
+    |                   ^^^^^^^^^^^^^^
+...
+574 |     pub(crate) fn stage_pdf_parse(&mut self, parse_id: &str, tree: CapturedTree) -> Result<PathBuf, ProjectError> {
+    |                   ^^^^^^^^^^^^^^^
+
+warning: `noetome-cli` (lib test) generated 5 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.53s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 1 test
+test source_schema::tests::schema_one_upgrades_recheck_metadata_after_a_real_write_lock_handoff ... FAILED
+
+failures:
+
+---- source_schema::tests::schema_one_upgrades_recheck_metadata_after_a_real_write_lock_handoff stdout ----
+
+thread 'source_schema::tests::schema_one_upgrades_recheck_metadata_after_a_real_write_lock_handoff' (6248) panicked at crates\noetome-cli\src\source_schema3_tests.rs:653:20:
+called `Result::unwrap_err()` on an `Ok` value: ProjectInfo { project_id: "5232018c-42e9-4db6-8e2e-58d8e40d9e66", schema_version: 3, created_at: "2026-11-01T00:00:00Z", state: "initialized", database: "project.sqlite" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    source_schema::tests::schema_one_upgrades_recheck_metadata_after_a_real_write_lock_handoff
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 300 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`
+exit_code=101

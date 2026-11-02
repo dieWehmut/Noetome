@@ -1,0 +1,25 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.25s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 1 test
+test project::tests::exact_schema_three_project_inspection_is_readonly ... FAILED
+
+failures:
+
+---- project::tests::exact_schema_three_project_inspection_is_readonly stdout ----
+
+thread 'project::tests::exact_schema_three_project_inspection_is_readonly' (15900) panicked at crates\noetome-cli\src\project.rs:937:35:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "PROJECT_UNSUPPORTED_SCHEMA", exit_code: 2, message: "不支持项目 Schema 3；当前只支持 1 和 2，没有执行迁移。" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    project::tests::exact_schema_three_project_inspection_is_readonly
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 276 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`
+exit_code=101

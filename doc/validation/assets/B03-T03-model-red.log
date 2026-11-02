@@ -1,0 +1,86 @@
+B03-T03 model component RED (synthetic contract fixtures)
+Working directory: D:\Noetome
+Command:
+$env:NOETOME_PDF_PYTHON='D:\Noetome\.artifacts\b03-t02-python312\Scripts\python.exe'
+$env:NOETOME_TEST_PYTHON='C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+./scripts/cargo_local.ps1 test -p noetome-cli --lib pdf_source_model::tests --locked --offline
+Command exit: 1
+Observed: 3 tests failed for missing feature/strict contract, 0 passed; setup failures excluded.
+
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+warning: unused import: `std::path::Path`
+ --> crates\noetome-cli\src\pdf_source_model.rs:4:5
+  |
+4 | use std::path::Path;
+  |     ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: struct `PdfParse` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:22:9
+   |
+22 | record!(PdfParse {
+   |         ^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+   = note: this warning originates in the macro `record` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: struct `PdfImportReport` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:42:9
+   |
+42 | record!(PdfImportReport {
+   |         ^^^^^^^^^^^^^^^
+   |
+   = note: this warning originates in the macro `record` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: struct `PdfResource` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:49:9
+   |
+49 | record!(PdfResource {
+   |         ^^^^^^^^^^^
+   |
+   = note: this warning originates in the macro `record` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: struct `PdfStore` is never constructed
+  --> crates\noetome-cli\src\pdf_source_model.rs:56:19
+   |
+56 | pub(crate) struct PdfStore {
+   |                   ^^^^^^^^
+
+warning: `noetome-cli` (lib test) generated 5 warnings (run `cargo fix --lib -p noetome-cli --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.70s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 3 tests
+test pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option ... FAILED
+test pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected ... FAILED
+test pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history ... FAILED
+
+failures:
+
+---- pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option stdout ----
+
+thread 'pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option' (11500) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:52:78:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "PDF cache contract not implemented" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected stdout ----
+
+thread 'pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected' (40576) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:40:9:
+missing nullable parse_id accepted
+
+---- pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history stdout ----
+
+thread 'pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history' (47404) panicked at crates\noetome-cli\src\..\tests\support\pdf_source_model_tests.rs:106:5:
+complete synthetic PDF history rejected: Err(ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：来源类型或显示名称无效。没有修改数据库或快照。" })
+
+
+failures:
+    pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option
+    pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected
+    pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 277 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`
+

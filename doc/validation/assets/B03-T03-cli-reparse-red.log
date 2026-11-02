@@ -1,0 +1,25 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.63s
+     Running tests\pdf_source.rs (target\debug\deps\pdf_source-6ba3d8a22e97cf50.exe)
+
+running 1 test
+test reparse_on_schema1_creates_one_fresh_real_attempt ... FAILED
+
+failures:
+
+---- reparse_on_schema1_creates_one_fresh_real_attempt stdout ----
+
+thread 'reparse_on_schema1_creates_one_fresh_real_attempt' (38860) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    reparse_on_schema1_creates_one_fresh_real_attempt
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p noetome-cli --test pdf_source`

@@ -1,0 +1,65 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.94s
+     Running tests\pdf_source.rs (target\debug\deps\pdf_source-6ba3d8a22e97cf50.exe)
+
+running 5 tests
+test schema1_pdf_import_registers_authored_pages_and_exact_ten_tables ... FAILED
+test missing_runtime_keeps_acquired_raw_and_failed_attempt_then_recovers_readonly ... FAILED
+test same_bytes_repeat_and_rename_reuse_version_parse_without_new_evidence ... FAILED
+test damaged_encrypted_partial_and_review_keep_raw_and_honest_page_counts ... FAILED
+test schema2_upgrade_preserves_all_old_rows_reports_snapshots_and_text_semantics ... FAILED
+
+failures:
+
+---- schema1_pdf_import_registers_authored_pages_and_exact_ten_tables stdout ----
+
+thread 'schema1_pdf_import_registers_authored_pages_and_exact_ten_tables' (53568) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- missing_runtime_keeps_acquired_raw_and_failed_attempt_then_recovers_readonly stdout ----
+
+thread 'missing_runtime_keeps_acquired_raw_and_failed_attempt_then_recovers_readonly' (47224) panicked at crates\noetome-cli\tests\pdf_source.rs:280:5:
+assertion `left == right` failed: PDF failure must be a saved incomplete report: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(3)
+
+---- same_bytes_repeat_and_rename_reuse_version_parse_without_new_evidence stdout ----
+
+thread 'same_bytes_repeat_and_rename_reuse_version_parse_without_new_evidence' (43372) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- damaged_encrypted_partial_and_review_keep_raw_and_honest_page_counts stdout ----
+
+thread 'damaged_encrypted_partial_and_review_keep_raw_and_honest_page_counts' (54308) panicked at crates\noetome-cli\tests\pdf_source.rs:280:5:
+assertion `left == right` failed: PDF failure must be a saved incomplete report: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(3)
+
+---- schema2_upgrade_preserves_all_old_rows_reports_snapshots_and_text_semantics stdout ----
+
+thread 'schema2_upgrade_preserves_all_old_rows_reports_snapshots_and_text_semantics' (52036) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+
+failures:
+    damaged_encrypted_partial_and_review_keep_raw_and_honest_page_counts
+    missing_runtime_keeps_acquired_raw_and_failed_attempt_then_recovers_readonly
+    same_bytes_repeat_and_rename_reuse_version_parse_without_new_evidence
+    schema1_pdf_import_registers_authored_pages_and_exact_ten_tables
+    schema2_upgrade_preserves_all_old_rows_reports_snapshots_and_text_semantics
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.55s
+
+error: test failed, to rerun pass `-p noetome-cli --test pdf_source`

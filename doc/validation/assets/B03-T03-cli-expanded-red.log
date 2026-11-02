@@ -1,0 +1,222 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+warning: struct `LegacyTable` is never constructed
+   --> crates\noetome-cli\src\source_schema.rs:243:8
+    |
+243 | struct LegacyTable {
+    |        ^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `LEGACY_TABLES` is never used
+   --> crates\noetome-cli\src\source_schema.rs:248:7
+    |
+248 | const LEGACY_TABLES: [LegacyTable; 5] = [
+    |       ^^^^^^^^^^^^^
+
+warning: function `legacy_rows` is never used
+   --> crates\noetome-cli\src\source_schema.rs:271:4
+    |
+271 | fn legacy_rows(connection: &Connection) -> Result<Vec<Vec<Vec<Value>>>, ProjectError> {
+    |    ^^^^^^^^^^^
+
+warning: function `upgrade_pdf` is never used
+   --> crates\noetome-cli\src\source_schema.rs:290:15
+    |
+290 | pub(crate) fn upgrade_pdf(
+    |               ^^^^^^^^^^^
+
+warning: `noetome-cli` (lib) generated 4 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.54s
+     Running tests\pdf_source.rs (target\debug\deps\pdf_source-6ba3d8a22e97cf50.exe)
+
+running 18 tests
+test actual_pdf_cache_junction_is_rejected_and_its_target_stays_unchanged ... FAILED
+test actual_hardlinked_pdf_resource_is_rejected_even_with_identical_bytes ... FAILED
+test schema1_pdf_import_registers_authored_pages_and_exact_ten_tables ... FAILED
+test missing_and_oversized_pdf_record_only_failed_import_then_valid_input_recovers ... FAILED
+test configuration_schema_mismatch_or_unknown_schema_never_implicitly_migrates ... FAILED
+test missing_runtime_keeps_acquired_raw_and_failed_attempt_then_recovers_readonly ... FAILED
+test damaged_encrypted_partial_and_review_keep_raw_and_honest_page_counts ... FAILED
+test reparse_on_schema1_creates_one_fresh_real_attempt ... FAILED
+test explicit_source_id_isolates_same_sha_versions_and_parse_evidence ... FAILED
+test same_bytes_repeat_and_rename_reuse_version_parse_without_new_evidence ... FAILED
+test actual_windows_exclusive_pdf_lock_creates_no_version_and_unlock_recovers ... FAILED
+test changed_raw_and_sql_resource_or_page_index_are_rejected_without_writes ... FAILED
+test semantic_region_and_utf8_tamper_fail_even_when_all_outer_hashes_match ... FAILED
+test unknown_pdf_cache_and_snapshot_entries_are_never_accepted_or_cleaned ... FAILED
+test mixed_text_and_pdf_imports_share_a_unique_increasing_sql_rowid_sequence ... FAILED
+test cross_table_duplicate_import_rowid_or_uuid_cannot_hide_behind_text_inspect ... FAILED
+test real_windows_database_replace_lock_preserves_old_text_and_config_bytes ... FAILED
+test schema2_upgrade_preserves_all_old_rows_reports_snapshots_and_text_semantics ... FAILED
+
+failures:
+
+---- actual_pdf_cache_junction_is_rejected_and_its_target_stays_unchanged stdout ----
+
+thread 'actual_pdf_cache_junction_is_rejected_and_its_target_stays_unchanged' (48360) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- actual_hardlinked_pdf_resource_is_rejected_even_with_identical_bytes stdout ----
+
+thread 'actual_hardlinked_pdf_resource_is_rejected_even_with_identical_bytes' (55168) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- schema1_pdf_import_registers_authored_pages_and_exact_ten_tables stdout ----
+
+thread 'schema1_pdf_import_registers_authored_pages_and_exact_ten_tables' (41496) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- missing_and_oversized_pdf_record_only_failed_import_then_valid_input_recovers stdout ----
+
+thread 'missing_and_oversized_pdf_record_only_failed_import_then_valid_input_recovers' (49336) panicked at crates\noetome-cli\tests\pdf_source.rs:280:5:
+assertion `left == right` failed: PDF failure must be a saved incomplete report: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(3)
+
+---- configuration_schema_mismatch_or_unknown_schema_never_implicitly_migrates stdout ----
+
+thread 'configuration_schema_mismatch_or_unknown_schema_never_implicitly_migrates' (40332) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- missing_runtime_keeps_acquired_raw_and_failed_attempt_then_recovers_readonly stdout ----
+
+thread 'missing_runtime_keeps_acquired_raw_and_failed_attempt_then_recovers_readonly' (55156) panicked at crates\noetome-cli\tests\pdf_source.rs:280:5:
+assertion `left == right` failed: PDF failure must be a saved incomplete report: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(3)
+
+---- damaged_encrypted_partial_and_review_keep_raw_and_honest_page_counts stdout ----
+
+thread 'damaged_encrypted_partial_and_review_keep_raw_and_honest_page_counts' (54016) panicked at crates\noetome-cli\tests\pdf_source.rs:280:5:
+assertion `left == right` failed: PDF failure must be a saved incomplete report: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(3)
+
+---- reparse_on_schema1_creates_one_fresh_real_attempt stdout ----
+
+thread 'reparse_on_schema1_creates_one_fresh_real_attempt' (8952) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(0)
+
+---- explicit_source_id_isolates_same_sha_versions_and_parse_evidence stdout ----
+
+thread 'explicit_source_id_isolates_same_sha_versions_and_parse_evidence' (19344) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- same_bytes_repeat_and_rename_reuse_version_parse_without_new_evidence stdout ----
+
+thread 'same_bytes_repeat_and_rename_reuse_version_parse_without_new_evidence' (49208) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- actual_windows_exclusive_pdf_lock_creates_no_version_and_unlock_recovers stdout ----
+
+thread 'actual_windows_exclusive_pdf_lock_creates_no_version_and_unlock_recovers' (52216) panicked at crates\noetome-cli\tests\pdf_source.rs:280:5:
+assertion `left == right` failed: PDF failure must be a saved incomplete report: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(3)
+
+---- changed_raw_and_sql_resource_or_page_index_are_rejected_without_writes stdout ----
+
+thread 'changed_raw_and_sql_resource_or_page_index_are_rejected_without_writes' (51008) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- semantic_region_and_utf8_tamper_fail_even_when_all_outer_hashes_match stdout ----
+
+thread 'semantic_region_and_utf8_tamper_fail_even_when_all_outer_hashes_match' (47952) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- unknown_pdf_cache_and_snapshot_entries_are_never_accepted_or_cleaned stdout ----
+
+thread 'unknown_pdf_cache_and_snapshot_entries_are_never_accepted_or_cleaned' (39072) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- mixed_text_and_pdf_imports_share_a_unique_increasing_sql_rowid_sequence stdout ----
+
+thread 'mixed_text_and_pdf_imports_share_a_unique_increasing_sql_rowid_sequence' (54756) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- cross_table_duplicate_import_rowid_or_uuid_cannot_hide_behind_text_inspect stdout ----
+
+thread 'cross_table_duplicate_import_rowid_or_uuid_cannot_hide_behind_text_inspect' (52780) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+---- real_windows_database_replace_lock_preserves_old_text_and_config_bytes stdout ----
+
+thread 'real_windows_database_replace_lock_preserves_old_text_and_config_bytes' (45276) panicked at crates\noetome-cli\tests\pdf_source.rs:1606:5:
+assertion `left == right` failed: deny-delete publication must fail: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(3)
+
+---- schema2_upgrade_preserves_all_old_rows_reports_snapshots_and_text_semantics stdout ----
+
+thread 'schema2_upgrade_preserves_all_old_rows_reports_snapshots_and_text_semantics' (44368) panicked at crates\noetome-cli\tests\pdf_source.rs:266:5:
+assertion `left == right` failed: missing or failed ordinary source CLI: SOURCE_UNSUPPORTED_TYPE：本阶段只接受明确选取的.md或.txt单文件；其他格式尚未解析。
+
+  left: Some(2)
+ right: Some(0)
+
+
+failures:
+    actual_hardlinked_pdf_resource_is_rejected_even_with_identical_bytes
+    actual_pdf_cache_junction_is_rejected_and_its_target_stays_unchanged
+    actual_windows_exclusive_pdf_lock_creates_no_version_and_unlock_recovers
+    changed_raw_and_sql_resource_or_page_index_are_rejected_without_writes
+    configuration_schema_mismatch_or_unknown_schema_never_implicitly_migrates
+    cross_table_duplicate_import_rowid_or_uuid_cannot_hide_behind_text_inspect
+    damaged_encrypted_partial_and_review_keep_raw_and_honest_page_counts
+    explicit_source_id_isolates_same_sha_versions_and_parse_evidence
+    missing_and_oversized_pdf_record_only_failed_import_then_valid_input_recovers
+    missing_runtime_keeps_acquired_raw_and_failed_attempt_then_recovers_readonly
+    mixed_text_and_pdf_imports_share_a_unique_increasing_sql_rowid_sequence
+    real_windows_database_replace_lock_preserves_old_text_and_config_bytes
+    reparse_on_schema1_creates_one_fresh_real_attempt
+    same_bytes_repeat_and_rename_reuse_version_parse_without_new_evidence
+    schema1_pdf_import_registers_authored_pages_and_exact_ten_tables
+    schema2_upgrade_preserves_all_old_rows_reports_snapshots_and_text_semantics
+    semantic_region_and_utf8_tamper_fail_even_when_all_outer_hashes_match
+    unknown_pdf_cache_and_snapshot_entries_are_never_accepted_or_cleaned
+
+test result: FAILED. 0 passed; 18 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.63s
+
+error: test failed, to rerun pass `-p noetome-cli --test pdf_source`

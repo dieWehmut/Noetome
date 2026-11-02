@@ -1,0 +1,19 @@
+# B03-T03 真实红灯与编码前审查
+
+实现前冻结[精确契约](../technical/PDF_SOURCE_CONTRACT.md)和[实施方案](../execution/B03-T03_PLAN.md)，只操作本轮新测试项目。旧Schema2不能承载PDF，现有已验收T02解析沙盒不证明项目登记已完成。
+
+最初测试准备错误把`project init`文字输出当成JSON，未进入业务断言；原失败目录保留。修正helper按实际project.json读取后，真正CLI RED执行`./scripts/cargo_local.ps1 test -p noetome-cli --test pdf_source --locked --offline`，显式指定T02锁定venv和工作区测试Python：编译成功，5组全部因普通source import返回SOURCE_UNSUPPORTED_TYPE/exit2而失败（期望0/3），0 ignored。Schema2组先实际创建旧MD重复/换版/回旧SHA、非法UTF8及缺文件历史，再冻结旧5表rowid/字段、报告和快照，随后进入真实PDF拒绝。
+
+另一独立`--reparse`真实RED运行单组普通source import，返回CLI_INVALID_ARGUMENT/exit2、期望0。两轮完整源码/命令/output/exit/SHA由执行者保存，初5源码SHA `d960b97ae241acff9bfcde3251bf72db06dd2cdcd10fc880905e70db04c11078`，reparse阶段SHA `bb5d9e8160810bca9e9ee70a1932a515c3169a7d810c45124f6d7bd0ec17534e`。它们是错误行为红灯，不把语法或编译错误当功能证明。
+
+Schema组件无警告RED调用现有validate/upgrade：3旧测试通过、5新增断言失败，现有validator拒绝精确3、upgrade返回2或拒绝3，及不一致元数据未拒绝；project::inspect另单组真实PROJECT_UNSUPPORTED_SCHEMA红灯。Schema3 SQL此时只供测试构造，生产Schema逻辑尚未改变；冻结SQL SHA `d688730dbe7e649867a0c11d493796b18588f7c2e66d8db038b7b8b984f8c780`。
+
+编码前独立审查允许总体方向继续，但指出两个Important：host失败时Prepared会在sidecar Err返回前释放，外层Workspace不能替代内层parser守卫；新两张导入表缺少统一排序会漏验首次Version或同路径关联。已在契约明确RunSession保留Prepared到capture、ValidatedResponse保留到Core/capture结束，以及两表隐式rowid共享全局正序/重复拒绝和旧边联合验图。两项都必须有定向实际红绿，不能仅改文档视为解决。
+
+扩展18组CLI真实RED与3个模型合成契约RED已经实际执行。后者分别击中缓存键占位失败、缺少显式nullable字段仍被接受，以及旧联合模型拒绝合法PDF失败版本图；合成模型图不冒充真实parser验收。
+
+Prepared移交的真实RED使用仅测试的可信小进程读取单请求后退出7，得到SIDECAR_EXIT，随后的parser目录rename仍成功，触发保护断言失败。其完整初始源码SHA为`6e82cc89d51b1f146208091908644562cc112a6f9ac1af2d6799c7545964cfef`。实现必须在原会话守卫仍存活的移交点观察rename被拒绝，再由receipt保持守卫；不能在Err后才收养路径。
+
+Schema审查又以第二SQLite连接的BEGIN IMMEDIATE、busy_handler和Condvar握手复现真实锁等待期间metadata改变。两条升级入口在竞争者提交新project_id后仍错误返回原ID的Schema2/3；两份真实RED保留，随后在取得事务后再次校验原候选。等待锁前的检查不能代替锁内检查。
+
+原始RED日志、两份初始测试源码及实际SHA/字节数已归档为[证据清单](assets/B03-T03-red-evidence.json)，它们只证明真实起点和失败复现，不表示最终统一回归、持久化、复用或故障验收已完成。最终命令、原件与审查关闭另追加。

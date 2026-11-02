@@ -1,0 +1,60 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.22s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 8 tests
+test source_schema::tests::exact_source_schema_accepts_its_empty_registration_state ... ok
+test source_schema::tests::candidate_upgrade_rejects_a_mismatched_identity_without_rewriting_old_rows ... FAILED
+test source_schema::tests::pdf_upgrade_of_empty_schema_one_reaches_three_with_the_original_identity ... FAILED
+test source_schema::tests::legacy_upgrade_keeps_schema_three_without_a_downgrade ... FAILED
+test source_schema::tests::exact_schema_three_accepts_its_empty_registration_state ... FAILED
+test source_schema::tests::schema_three_migration_preserves_every_legacy_row_value_identity_and_order ... FAILED
+test source_schema::tests::source_schema_rejects_unknown_objects_and_changed_constraints ... ok
+test source_schema::tests::upgrading_a_candidate_preserves_identity_and_rejects_unknown_schema_atomically ... ok
+
+failures:
+
+---- source_schema::tests::candidate_upgrade_rejects_a_mismatched_identity_without_rewriting_old_rows stdout ----
+
+thread 'source_schema::tests::candidate_upgrade_rejects_a_mismatched_identity_without_rewriting_old_rows' (52756) panicked at crates\noetome-cli\src\source_schema3_tests.rs:125:56:
+called `Result::unwrap_err()` on an `Ok` value: ProjectInfo { project_id: "2232018c-42e9-4db6-8e2e-58d8e40d9e66", schema_version: 2, created_at: "2026-11-01T00:00:00Z", state: "initialized", database: "project.sqlite" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- source_schema::tests::pdf_upgrade_of_empty_schema_one_reaches_three_with_the_original_identity stdout ----
+
+thread 'source_schema::tests::pdf_upgrade_of_empty_schema_one_reaches_three_with_the_original_identity' (8876) panicked at crates\noetome-cli\src\source_schema3_tests.rs:104:5:
+assertion `left == right` failed
+  left: ProjectInfo { project_id: "5232018c-42e9-4db6-8e2e-58d8e40d9e66", schema_version: 2, created_at: "2026-11-01T00:00:00Z", state: "initialized", database: "project.sqlite" }
+ right: ProjectInfo { project_id: "5232018c-42e9-4db6-8e2e-58d8e40d9e66", schema_version: 3, created_at: "2026-11-01T00:00:00Z", state: "initialized", database: "project.sqlite" }
+
+---- source_schema::tests::legacy_upgrade_keeps_schema_three_without_a_downgrade stdout ----
+
+thread 'source_schema::tests::legacy_upgrade_keeps_schema_three_without_a_downgrade' (34412) panicked at crates\noetome-cli\src\source_schema3_tests.rs:114:56:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "PROJECT_UNSUPPORTED_SCHEMA", exit_code: 2, message: "来源登记只支持项目Schema 1和2。" }
+
+---- source_schema::tests::exact_schema_three_accepts_its_empty_registration_state stdout ----
+
+thread 'source_schema::tests::exact_schema_three_accepts_its_empty_registration_state' (25820) panicked at crates\noetome-cli\src\source_schema3_tests.rs:73:25:
+the frozen exact Schema3 must be recognized: ProjectError { code: "PROJECT_INVALID_DATABASE", exit_code: 2, message: "项目数据库无效：Schema 2 表、字段或约束不符合来源登记契约；没有修改数据库；只读检查没有修复或迁移数据库。" }
+
+---- source_schema::tests::schema_three_migration_preserves_every_legacy_row_value_identity_and_order stdout ----
+
+thread 'source_schema::tests::schema_three_migration_preserves_every_legacy_row_value_identity_and_order' (40152) panicked at crates\noetome-cli\src\source_schema3_tests.rs:83:5:
+assertion `left == right` failed
+  left: ProjectInfo { project_id: "5232018c-42e9-4db6-8e2e-58d8e40d9e66", schema_version: 2, created_at: "2026-11-01T00:00:00Z", state: "initialized", database: "project.sqlite" }
+ right: ProjectInfo { project_id: "5232018c-42e9-4db6-8e2e-58d8e40d9e66", schema_version: 3, created_at: "2026-11-01T00:00:00Z", state: "initialized", database: "project.sqlite" }
+
+
+failures:
+    source_schema::tests::candidate_upgrade_rejects_a_mismatched_identity_without_rewriting_old_rows
+    source_schema::tests::exact_schema_three_accepts_its_empty_registration_state
+    source_schema::tests::legacy_upgrade_keeps_schema_three_without_a_downgrade
+    source_schema::tests::pdf_upgrade_of_empty_schema_one_reaches_three_with_the_original_identity
+    source_schema::tests::schema_three_migration_preserves_every_legacy_row_value_identity_and_order
+
+test result: FAILED. 3 passed; 5 failed; 0 ignored; 0 measured; 269 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`
+exit_code=101

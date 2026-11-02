@@ -1,6 +1,6 @@
 # 近期开发步骤
 
-真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B02三项已分别验收，执行卡归档于[B02步骤](B02_STEPS.md)，闭环证据见[B02-T03](../validation/B02-T03.md)。B03-T01交付有界单请求sidecar的真实fake验证；B03-T02交付单一pdfplumber的真实PDF解析沙盒、页/区域Core复核和只读重查，证据见[B03-T02](../validation/B03-T02.md)。下一入口B03-T03仍未启动：显式项目Schema升级、PDF来源登记与解析缓存复用尚未实现。
+真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B02三项已分别验收，执行卡归档于[B02步骤](B02_STEPS.md)，闭环证据见[B02-T03](../validation/B02-T03.md)。B03-T01交付有界单请求sidecar的真实fake验证；B03-T02交付单一pdfplumber的真实PDF解析沙盒、页/区域Core复核和只读重查，证据见[B03-T02](../validation/B03-T02.md)。B03-T03已独立start并冻结[Schema3精确契约](../technical/PDF_SOURCE_CONTRACT.md)、[实施方案](B03-T03_PLAN.md)与[真实红灯](../validation/B03-T03-RED.md)；目前进行登记联动、故障验证与审查，尚未complete。
 
 **目标**：用一个有界 parser sidecar 将单份真实文本 PDF 变为可追溯的页与区域来源，在项目内安全登记并复用；每项交付独立验收。
 
@@ -69,13 +69,13 @@
 
 ## 执行时的验证与交接
 
-sidecar宿主与真实pdf_parse/统一检查已分别在B03-T01/T02实际执行。`pdf_source`仍是B03-T03后续门槛，文件未创建也未运行，应在对应任务创建后执行。fake、真实parser、持久化分别记录，不以统一回归替代定位抽查。下面包含后续门槛命令，不能把列出命令视为运行。
+sidecar宿主与真实pdf_parse/统一检查已分别在B03-T01/T02实际执行。`pdf_source`是当前B03-T03登记门槛，真实CLI测试现已创建并运行红灯；最终结果在本项验收记录保存。fake、真实parser、持久化分别记录，不以统一回归替代定位抽查。下面是门槛命令，不能把列出命令视为运行。
 
 ```powershell
 ./scripts/cargo_local.ps1 test -p noetome-cli --lib sidecar_process::tests --locked --offline
 ./scripts/cargo_local.ps1 test -p noetome-cli --test sidecar --locked --offline
 ./scripts/cargo_local.ps1 test -p noetome-cli --test pdf_parse --locked --offline
-# B03-T03尚未创建/执行：
+# B03-T03当前登记验收，实际结果单独保存：
 ./scripts/cargo_local.ps1 test -p noetome-cli --test pdf_source --locked --offline
 cargo fmt --all --check
 ./scripts/cargo_local.ps1 check --workspace --locked --offline
@@ -87,4 +87,4 @@ git diff --check
 
 Python指本轮选定的可用解释器；使用工作区运行时时记录工具返回的绝对路径，不将开发机路径写死进仓库。真实 parser 环境单独锁定并说明安装步骤，普通 fake 测试不触发下载。每项记录实际版本、命令、退出码、数量、失败与未运行项、原始样例SHA、独立预期与产物；仅这些真实证据满足任务后才能 complete。
 
-本批T01/T02产物和实际验收分别归档；下一入口B03-T03要先冻结显式Schema升级方案和真实迁移红灯。执行者每轮先读日志、start单一任务，完成该项真实验收后complete并提交推送；T02验收后不在同轮start下一项，也不切换批次。
+本批T01/T02产物和实际验收分别归档；B03-T03已冻结显式Schema3与真实迁移红灯，仍须完成持久化、失败保护和全部相关检查。执行者先读日志、start单一任务，完成该项真实验收后complete并提交推送；B03未完成前不切批次、不启动API或OCR。
