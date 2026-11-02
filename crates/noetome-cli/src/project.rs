@@ -1,4 +1,4 @@
-//! Project initialization and read-only Schema 1/2 validation.
+//! Project initialization and read-only Schema 1/2/3 validation.
 use std::fmt;
 use std::fs::{self, Metadata, OpenOptions};
 use std::io::{self, Write};
@@ -17,7 +17,7 @@ const MARKER: &str = ".noetome-initializing";
 const WRITE_DIRECTORY: &str = ".noetome-writing";
 const CONFIG_STAGE: &str = ".project.json.initializing";
 const DATABASE_STAGE: &str = ".project.sqlite.initializing";
-const SCHEMA: &str = "
+pub(crate) const SCHEMA: &str = "
 CREATE TABLE project_metadata (
     singleton INTEGER PRIMARY KEY CHECK (singleton = 1),
     project_id TEXT NOT NULL UNIQUE,
@@ -631,13 +631,13 @@ pub(crate) fn reject_sidecars(root: &Path) -> Result<(), ProjectError> {
     Ok(())
 }
 
-fn validate_info(info: &ProjectInfo) -> Result<(), ProjectError> {
-    if !matches!(info.schema_version, 1 | 2) {
+pub(crate) fn validate_info(info: &ProjectInfo) -> Result<(), ProjectError> {
+    if !matches!(info.schema_version, 1 | 2 | 3) {
         return Err(ProjectError::new(
             "PROJECT_UNSUPPORTED_SCHEMA",
             2,
             format!(
-                "不支持项目 Schema {}；当前只支持 1 和 2，没有执行迁移。",
+                "不支持项目 Schema {}；当前只支持 1、2 和 3，没有执行迁移。",
                 info.schema_version
             ),
         ));
@@ -737,7 +737,7 @@ fn inspect_with_writer(
     let version: u32 = connection
         .pragma_query_value(None, "user_version", |r| r.get(0))
         .map_err(ProjectError::database)?;
-    if !matches!(version, 1 | 2) {
+    if !matches!(version, 1 | 2 | 3) {
         return Err(ProjectError::new(
             "PROJECT_UNSUPPORTED_SCHEMA",
             2,
@@ -774,7 +774,9 @@ fn inspect_with_writer(
             "Schema 1 只允许真实的 project_metadata 基础表，没有其他表、视图或触发器",
         ));
     }
-    if version == 2 {
+    if version == 1 {
+        crate::source_schema::validate_initial(&connection)?;
+    } else {
         crate::source_schema::validate(&connection)?;
     }
     let columns = connection
@@ -915,6 +917,132 @@ mod tests {
         let before = snapshot(&root);
         assert_eq!(inspect(&root).unwrap(), info);
         assert_eq!(inspect(&root).unwrap(), info);
+        assert_eq!(snapshot(&root), before);
+    }
+
+    fn schema_three_project(sandbox: &Sandbox, name: &str) -> (PathBuf, ProjectInfo) {
+        let root = sandbox.0.join(name);
+        let mut info = initialize(&root).unwrap();
+        info.schema_version = 3;
+        let database = root.join(DATABASE);
+        let mut connection = Connection::open(&database).unwrap();
+        let transaction = connection.transaction().unwrap();
+        transaction
+            .execute_batch("DROP TABLE project_metadata;")
+            .unwrap();
+        transaction
+            .execute_batch(include_str!("source_schema3.sql"))
+            .unwrap();
+        transaction.execute("INSERT INTO project_metadata(singleton,project_id,schema_version,created_at,state) VALUES(1,?1,3,?2,'initialized')", params![info.project_id, info.created_at]).unwrap();
+        transaction.commit().unwrap();
+        connection.close().unwrap();
+        fs::write(root.join(CONFIG), serde_json::to_vec(&info).unwrap()).unwrap();
+        (root, info)
+    }
+
+    #[test]
+    fn exact_schema_three_project_inspection_is_readonly() {
+        let sandbox = Sandbox::new();
+        let (root, info) = schema_three_project(&sandbox, "schema-three");
+        let before = snapshot(&root);
+        let times = [CONFIG, DATABASE]
+            .map(|name| fs::metadata(root.join(name)).unwrap().modified().unwrap());
+        assert_eq!(inspect(&root).unwrap(), info);
+        assert_eq!(inspect(&root).unwrap(), info);
+        assert_eq!(snapshot(&root), before);
+        assert_eq!(
+            [CONFIG, DATABASE]
+                .map(|name| fs::metadata(root.join(name)).unwrap().modified().unwrap()),
+            times
+        );
+    }
+
+    #[test]
+    fn schema_three_inspection_rejects_mismatched_and_unknown_versions_without_migration() {
+        let sandbox = Sandbox::new();
+        for (index, (config_version, database_version, expected)) in [
+            (2, 3, "PROJECT_SCHEMA_MISMATCH"),
+            (1, 3, "PROJECT_SCHEMA_MISMATCH"),
+            (3, 2, "PROJECT_SCHEMA_MISMATCH"),
+            (3, 1, "PROJECT_SCHEMA_MISMATCH"),
+            (4, 3, "PROJECT_UNSUPPORTED_SCHEMA"),
+            (3, 4, "PROJECT_UNSUPPORTED_SCHEMA"),
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let (root, mut info) = schema_three_project(&sandbox, &format!("version-pair-{index}"));
+            info.schema_version = config_version;
+            fs::write(root.join(CONFIG), serde_json::to_vec(&info).unwrap()).unwrap();
+            let connection = Connection::open(root.join(DATABASE)).unwrap();
+            connection
+                .pragma_update(None, "user_version", database_version)
+                .unwrap();
+            connection.close().unwrap();
+            let before = snapshot(&root);
+            assert_eq!(
+                inspect(&root).unwrap_err().code(),
+                expected,
+                "config={config_version}, database={database_version}"
+            );
+            assert_eq!(snapshot(&root), before);
+        }
+    }
+
+    #[test]
+    fn schema_three_inspection_rejects_unknown_objects_changed_constraints_and_bad_metadata() {
+        let sandbox = Sandbox::new();
+        for (index, change) in [
+            "CREATE TABLE unregistered(value TEXT)",
+            "CREATE INDEX extra_index ON sources(created_at)",
+            "CREATE VIEW extra_view AS SELECT * FROM sources",
+            "CREATE TRIGGER extra_trigger AFTER INSERT ON sources BEGIN SELECT 1; END",
+            "ALTER TABLE pdf_parses ADD COLUMN unexpected TEXT",
+            "DROP TABLE pdf_imports; CREATE TABLE pdf_imports(import_id TEXT)",
+            "DELETE FROM project_metadata",
+            "PRAGMA application_id=0",
+            "UPDATE project_metadata SET project_id='1232018c-42e9-4db6-8e2e-58d8e40d9e66'",
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let (root, _) = schema_three_project(&sandbox, &format!("unknown-or-invalid-{index}"));
+            let connection = Connection::open(root.join(DATABASE)).unwrap();
+            connection.execute_batch(change).unwrap();
+            connection.close().unwrap();
+            let before = snapshot(&root);
+            assert_eq!(
+                inspect(&root).unwrap_err().code(),
+                "PROJECT_INVALID_DATABASE",
+                "change={change}"
+            );
+            assert_eq!(snapshot(&root), before);
+        }
+    }
+
+    #[test]
+    fn initialized_schema_one_inspection_rejects_weakened_metadata_constraints() {
+        let sandbox = Sandbox::new();
+        let root = sandbox.0.join("schema-one-constraints");
+        let info = initialize(&root).unwrap();
+        let connection = Connection::open(root.join(DATABASE)).unwrap();
+        connection
+            .execute_batch("DROP TABLE project_metadata;")
+            .unwrap();
+        let changed = SCHEMA.replace("CHECK (singleton = 1)", "CHECK (singleton >= 1)");
+        connection.execute_batch(&changed).unwrap();
+        connection
+            .execute(
+                "INSERT INTO project_metadata VALUES(1,?1,1,?2,'initialized')",
+                params![info.project_id, info.created_at],
+            )
+            .unwrap();
+        connection.close().unwrap();
+        let before = snapshot(&root);
+        assert_eq!(
+            inspect(&root).unwrap_err().code(),
+            "PROJECT_INVALID_DATABASE"
+        );
         assert_eq!(snapshot(&root), before);
     }
 

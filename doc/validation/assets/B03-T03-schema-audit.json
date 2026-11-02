@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "scope": "frozen review audit replay; SQL only in memory; no Rust rerun",
+  "frozen_hashes_verified": {
+    "source_schema.rs": "c0edd0fa39891681331256a8eca8804beb4690dc5e9ffb7394c33532dbab8171",
+    "source_schema3.sql": "d688730dbe7e649867a0c11d493796b18588f7c2e66d8db038b7b8b984f8c780",
+    "source_schema3_tests.rs": "f6a165b74a43cd4350378c5108e75b50d0cb67a88a1ca63b23c46dcc800c4e6f",
+    "project.rs": "8d5382097ad9aafe23bbbc3faccaef68bf695df0f9e7fe30b54dbc08edfa15c5"
+  },
+  "sqlite_version": "3.53.1",
+  "schema1_ddl_unchanged": true,
+  "schema2_ddl_unchanged": true,
+  "schema3_table_count": 10,
+  "schema3_ordered_column_counts": {
+    "project_metadata": 5,
+    "sources": 2,
+    "source_versions": 15,
+    "source_spans": 11,
+    "source_imports": 12,
+    "pdf_parses": 22,
+    "pdf_pages": 6,
+    "pdf_regions": 13,
+    "pdf_resources": 8,
+    "pdf_imports": 12
+  },
+  "legacy_ddl_preserved": [
+    "sources",
+    "source_spans",
+    "source_imports"
+  ],
+  "metadata_only_version_changed": true,
+  "composite_pdf_foreign_keys_verified": true,
+  "migration_sql_row_values_and_rowids": [
+    {
+      "from": 1,
+      "to": 3,
+      "old_rows_preserved": {
+        "project_metadata": 1,
+        "sources": 0,
+        "source_versions": 0,
+        "source_spans": 0,
+        "source_imports": 0
+      }
+    },
+    {
+      "from": 2,
+      "to": 3,
+      "old_rows_preserved": {
+        "project_metadata": 1,
+        "sources": 2,
+        "source_versions": 3,
+        "source_spans": 3,
+        "source_imports": 6
+      }
+    }
+  ]
+}

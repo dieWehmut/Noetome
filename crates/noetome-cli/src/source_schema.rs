@@ -1,5 +1,5 @@
 //! Schema for source registration, independent of knowledge processing.
-use rusqlite::Connection;
+use rusqlite::{Connection, params_from_iter, types::Value};
 
 use crate::project::{ProjectError, ProjectInfo};
 
@@ -73,6 +73,8 @@ PRAGMA user_version = 2;
 PRAGMA application_id = 1313817940;
 ";
 
+pub(crate) const SCHEMA3: &str = include_str!("source_schema3.sql");
+
 fn shape(connection: &Connection) -> Result<Vec<(String, String, String)>, ProjectError> {
     connection
         .prepare("SELECT name, type, coalesce(sql, '') FROM sqlite_schema WHERE name NOT GLOB 'sqlite_*' ORDER BY name")
@@ -85,15 +87,21 @@ fn shape(connection: &Connection) -> Result<Vec<(String, String, String)>, Proje
         .map_err(ProjectError::database)
 }
 
-pub(crate) fn validate(connection: &Connection) -> Result<(), ProjectError> {
+fn validate_shape(connection: &Connection, schema: &str, version: u32) -> Result<(), ProjectError> {
+    let application_id: u32 = connection
+        .pragma_query_value(None, "application_id", |row| row.get(0))
+        .map_err(ProjectError::database)?;
+    if application_id != crate::project::APPLICATION_ID {
+        return Err(ProjectError::invalid_database("数据库应用标识不匹配"));
+    }
     let reference = Connection::open_in_memory().map_err(ProjectError::database)?;
     reference
-        .execute_batch(SCHEMA)
+        .execute_batch(schema)
         .map_err(ProjectError::database)?;
     if shape(connection)? != shape(&reference)? {
-        return Err(ProjectError::invalid_database(
-            "Schema 2 表、字段或约束不符合来源登记契约；没有修改数据库",
-        ));
+        return Err(ProjectError::invalid_database(format!(
+            "Schema {version} 表、字段或约束不符合项目契约；没有修改数据库"
+        )));
     }
     let mut foreign_keys = connection
         .prepare("PRAGMA foreign_key_check")
@@ -110,27 +118,96 @@ pub(crate) fn validate(connection: &Connection) -> Result<(), ProjectError> {
     Ok(())
 }
 
-pub(crate) fn upgrade(
-    connection: &mut Connection,
-    info: &ProjectInfo,
-) -> Result<ProjectInfo, ProjectError> {
-    if info.schema_version == 2 {
-        validate(connection)?;
-        return Ok(info.clone());
+fn database_version(connection: &Connection) -> Result<u32, ProjectError> {
+    connection
+        .pragma_query_value(None, "user_version", |row| row.get(0))
+        .map_err(ProjectError::database)
+}
+
+pub(crate) fn validate(connection: &Connection) -> Result<(), ProjectError> {
+    let version = database_version(connection)?;
+    let schema = match version {
+        2 => SCHEMA,
+        3 => SCHEMA3,
+        _ => return Err(unsupported_schema(version)),
+    };
+    validate_shape(connection, schema, version)
+}
+
+pub(crate) fn validate_initial(connection: &Connection) -> Result<(), ProjectError> {
+    let version = database_version(connection)?;
+    if version != 1 {
+        return Err(unsupported_schema(version));
     }
-    if info.schema_version != 1 {
+    validate_shape(connection, crate::project::SCHEMA, 1)
+}
+
+fn unsupported_schema(version: u32) -> ProjectError {
+    ProjectError::new(
+        "PROJECT_UNSUPPORTED_SCHEMA",
+        2,
+        format!("不支持项目 Schema {version}；来源登记只支持 1、2 和 3，没有迁移或降级。"),
+    )
+}
+
+fn validate_candidate(connection: &Connection, info: &ProjectInfo) -> Result<(), ProjectError> {
+    crate::project::validate_info(info)?;
+    let version = database_version(connection)?;
+    if !matches!(version, 1 | 2 | 3) {
+        return Err(unsupported_schema(version));
+    }
+    if version != info.schema_version {
         return Err(ProjectError::new(
-            "PROJECT_UNSUPPORTED_SCHEMA",
+            "PROJECT_SCHEMA_MISMATCH",
             2,
-            "来源登记只支持项目Schema 1和2。",
+            "候选数据库 Schema 与已检查的配置版本不一致；没有迁移。",
         ));
     }
-    connection
-        .execute_batch("PRAGMA foreign_keys = ON;")
+    if version == 1 {
+        validate_initial(connection)?;
+    } else {
+        validate(connection)?;
+    }
+    let count: i64 = connection
+        .query_row("SELECT count(*) FROM project_metadata", [], |row| {
+            row.get(0)
+        })
         .map_err(ProjectError::database)?;
-    let transaction = connection
-        .transaction_with_behavior(rusqlite::TransactionBehavior::Immediate)
+    if count != 1 {
+        return Err(ProjectError::invalid_database("项目元数据必须恰有一条记录"));
+    }
+    let stored = connection
+        .query_row(
+            "SELECT project_id,schema_version,created_at,state FROM project_metadata WHERE singleton=1",
+            [],
+            |row| Ok(ProjectInfo {
+                project_id: row.get(0)?,
+                schema_version: row.get(1)?,
+                created_at: row.get(2)?,
+                state: row.get(3)?,
+                database: crate::project::DATABASE.into(),
+            }),
+        )
         .map_err(ProjectError::database)?;
+    if stored.schema_version != info.schema_version {
+        return Err(ProjectError::new(
+            "PROJECT_SCHEMA_MISMATCH",
+            2,
+            "候选数据库元数据 Schema 与已检查的配置版本不一致；没有迁移。",
+        ));
+    }
+    if &stored != info {
+        return Err(ProjectError::invalid_database(
+            "候选数据库与已检查的项目身份、时间或状态不一致",
+        ));
+    }
+    Ok(())
+}
+
+fn initialize_sources(
+    transaction: &rusqlite::Transaction<'_>,
+    info: &ProjectInfo,
+) -> Result<ProjectInfo, ProjectError> {
     transaction
         .execute_batch("DROP TABLE project_metadata;")
         .map_err(ProjectError::database)?;
@@ -138,16 +215,129 @@ pub(crate) fn upgrade(
         .execute_batch(SCHEMA)
         .map_err(ProjectError::database)?;
     transaction.execute("INSERT INTO project_metadata(singleton,project_id,schema_version,created_at,state) VALUES(1,?1,2,?2,?3)", rusqlite::params![info.project_id,info.created_at,info.state]).map_err(ProjectError::database)?;
-    validate(&transaction)?;
-    transaction.commit().map_err(ProjectError::database)?;
     let mut updated = info.clone();
     updated.schema_version = 2;
+    validate_candidate(transaction, &updated)?;
+    Ok(updated)
+}
+
+pub(crate) fn upgrade(
+    connection: &mut Connection,
+    info: &ProjectInfo,
+) -> Result<ProjectInfo, ProjectError> {
+    validate_candidate(connection, info)?;
+    if matches!(info.schema_version, 2 | 3) {
+        return Ok(info.clone());
+    }
+    connection
+        .execute_batch("PRAGMA foreign_keys = ON;")
+        .map_err(ProjectError::database)?;
+    let transaction = connection
+        .transaction_with_behavior(rusqlite::TransactionBehavior::Immediate)
+        .map_err(ProjectError::database)?;
+    validate_candidate(&transaction, info)?;
+    let updated = initialize_sources(&transaction, info)?;
+    transaction.commit().map_err(ProjectError::database)?;
+    Ok(updated)
+}
+
+struct LegacyTable {
+    select: &'static str,
+    insert: &'static str,
+}
+
+const LEGACY_TABLES: [LegacyTable; 5] = [
+    LegacyTable {
+        select: "SELECT rowid,singleton,project_id,schema_version,created_at,state FROM project_metadata ORDER BY rowid",
+        insert: "INSERT INTO project_metadata(rowid,singleton,project_id,schema_version,created_at,state) VALUES(?1,?2,?3,?4,?5,?6)",
+    },
+    LegacyTable {
+        select: "SELECT rowid,source_id,created_at FROM sources ORDER BY rowid",
+        insert: "INSERT INTO sources(rowid,source_id,created_at) VALUES(?1,?2,?3)",
+    },
+    LegacyTable {
+        select: "SELECT rowid,version_id,source_id,revision,created_at,media_type,display_name,content_sha256,byte_length,normalized_sha256,normalization_version,ingest_status,raw_snapshot,normalized_snapshot,error_code,error_message FROM source_versions ORDER BY rowid",
+        insert: "INSERT INTO source_versions(rowid,version_id,source_id,revision,created_at,media_type,display_name,content_sha256,byte_length,normalized_sha256,normalization_version,ingest_status,raw_snapshot,normalized_snapshot,error_code,error_message) VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16)",
+    },
+    LegacyTable {
+        select: "SELECT rowid,span_id,source_version_id,ordinal,kind,start_byte,end_byte,start_line,end_line,text_sha256,parser_version,parse_status FROM source_spans ORDER BY rowid",
+        insert: "INSERT INTO source_spans(rowid,span_id,source_version_id,ordinal,kind,start_byte,end_byte,start_line,end_line,text_sha256,parser_version,parse_status) VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)",
+    },
+    LegacyTable {
+        select: "SELECT rowid,import_id,imported_at,selected_path,source_id,version_id,status,reused,span_count,pending_extraction_count,knowledge_status,error_code,error_message FROM source_imports ORDER BY rowid",
+        insert: "INSERT INTO source_imports(rowid,import_id,imported_at,selected_path,source_id,version_id,status,reused,span_count,pending_extraction_count,knowledge_status,error_code,error_message) VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13)",
+    },
+];
+
+fn legacy_rows(connection: &Connection) -> Result<Vec<Vec<Vec<Value>>>, ProjectError> {
+    LEGACY_TABLES
+        .iter()
+        .map(|table| {
+            let mut statement = connection
+                .prepare(table.select)
+                .map_err(ProjectError::database)?;
+            let columns = statement.column_count();
+            statement
+                .query_map([], |row| (0..columns).map(|index| row.get(index)).collect())
+                .map_err(ProjectError::database)?
+                .collect::<rusqlite::Result<_>>()
+                .map_err(ProjectError::database)
+        })
+        .collect()
+}
+
+/// Upgrade only an already copied candidate. The writer owns original bytes,
+/// backups, configuration pairing and final publication.
+pub(crate) fn upgrade_pdf(
+    connection: &mut Connection,
+    info: &ProjectInfo,
+) -> Result<ProjectInfo, ProjectError> {
+    validate_candidate(connection, info)?;
+    if info.schema_version == 3 {
+        return Ok(info.clone());
+    }
+    connection
+        .execute_batch("PRAGMA foreign_keys=ON;")
+        .map_err(ProjectError::database)?;
+    let transaction = connection
+        .transaction_with_behavior(rusqlite::TransactionBehavior::Immediate)
+        .map_err(ProjectError::database)?;
+    validate_candidate(&transaction, info)?;
+    if info.schema_version == 1 {
+        initialize_sources(&transaction, info)?;
+    }
+    let mut rows = legacy_rows(&transaction)?;
+    // The sole intentional change to old row values is metadata schema_version.
+    // Its position follows the explicit metadata SELECT above (including rowid).
+    rows[0][0][3] = Value::Integer(3);
+    transaction
+        .execute_batch("DROP TABLE source_imports; DROP TABLE source_spans; DROP TABLE source_versions; DROP TABLE sources; DROP TABLE project_metadata;")
+        .map_err(ProjectError::database)?;
+    transaction
+        .execute_batch(SCHEMA3)
+        .map_err(ProjectError::database)?;
+    for (table, rows) in LEGACY_TABLES.iter().zip(rows) {
+        let mut statement = transaction
+            .prepare(table.insert)
+            .map_err(ProjectError::database)?;
+        for row in rows {
+            statement
+                .execute(params_from_iter(row))
+                .map_err(ProjectError::database)?;
+        }
+    }
+    let mut updated = info.clone();
+    updated.schema_version = 3;
+    validate_candidate(&transaction, &updated)?;
+    transaction.commit().map_err(ProjectError::database)?;
     Ok(updated)
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    include!("source_schema3_tests.rs");
 
     #[test]
     fn source_schema_rejects_unknown_objects_and_changed_constraints() {
@@ -175,7 +365,7 @@ mod tests {
     #[test]
     fn upgrading_a_candidate_preserves_identity_and_rejects_unknown_schema_atomically() {
         let mut database = Connection::open_in_memory().unwrap();
-        database.execute_batch("CREATE TABLE project_metadata (singleton INTEGER PRIMARY KEY CHECK(singleton=1), project_id TEXT NOT NULL UNIQUE, schema_version INTEGER NOT NULL CHECK(schema_version=1), created_at TEXT NOT NULL, state TEXT NOT NULL CHECK(state='initialized')); PRAGMA user_version=1; PRAGMA application_id=1313817940;").unwrap();
+        database.execute_batch(crate::project::SCHEMA).unwrap();
         let info = ProjectInfo {
             project_id: "5232018c-42e9-4db6-8e2e-58d8e40d9e66".into(),
             schema_version: 1,

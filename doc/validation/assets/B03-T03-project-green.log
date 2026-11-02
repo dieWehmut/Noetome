@@ -1,0 +1,78 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+warning: field `manifest` is never read
+  --> crates\noetome-cli\src\pdf_parse.rs:24:16
+   |
+21 | pub(crate) struct CapturedPdf {
+   |                   ----------- field in this struct
+...
+24 |     pub(crate) manifest: Option<Manifest>,
+   |                ^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `parse_owned` is never used
+   --> crates\noetome-cli\src\pdf_parse.rs:100:15
+    |
+100 | pub(crate) fn parse_owned(input: &Path, output: &Path) -> Result<CapturedPdf, SidecarError> {
+    |               ^^^^^^^^^^^
+
+warning: function `parse_command_owned` is never used
+   --> crates\noetome-cli\src\pdf_parse.rs:104:4
+    |
+104 | fn parse_command_owned(
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: methods `source_for_path`, `source_for_hash`, and `next_import_order` are never used
+   --> crates\noetome-cli\src\source_model.rs:404:19
+    |
+ 94 | impl Store {
+    | ---------- methods in this implementation
+...
+404 |     pub(crate) fn source_for_path(&self, selected_path: &str) -> Option<String> {
+    |                   ^^^^^^^^^^^^^^^
+...
+427 |     pub(crate) fn source_for_hash(&self, hash: &str) -> Option<String> {
+    |                   ^^^^^^^^^^^^^^^
+...
+452 |     pub(crate) fn next_import_order(&self) -> Result<i64, ProjectError> {
+    |                   ^^^^^^^^^^^^^^^^^
+
+warning: methods `stage_pdf_version`, `pdf_parse_path`, and `stage_pdf_parse` are never used
+   --> crates\noetome-cli\src\source_write.rs:553:19
+    |
+169 | impl Writer {
+    | ----------- methods in this implementation
+...
+553 |     pub(crate) fn stage_pdf_version(&mut self, version_id: &str, raw: &[u8]) -> Result<PathBuf, ProjectError> {
+    |                   ^^^^^^^^^^^^^^^^^
+...
+568 |     pub(crate) fn pdf_parse_path(&self) -> Result<PathBuf, ProjectError> {
+    |                   ^^^^^^^^^^^^^^
+...
+574 |     pub(crate) fn stage_pdf_parse(&mut self, parse_id: &str, tree: CapturedTree) -> Result<PathBuf, ProjectError> {
+    |                   ^^^^^^^^^^^^^^^
+
+warning: `noetome-cli` (lib test) generated 5 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.56s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 13 tests
+test project::tests::configuration_requires_a_real_uuid_v4_rfc4122_variant ... ok
+test project::tests::rollback_does_not_remove_a_replacement_empty_directory ... ok
+test project::tests::writer_inspection_never_ignores_old_initialization_remnants_or_a_file_marker ... ok
+test project::tests::writer_inspection_only_allows_its_own_ordinary_directory ... ok
+test project::tests::writer_inspection_rejects_a_junction_write_directory_without_touching_its_target ... ok
+test project::tests::source_schema_two_preserves_project_identity_and_inspection_is_readonly ... ok
+test project::tests::initialized_schema_one_inspection_rejects_weakened_metadata_constraints ... ok
+test project::tests::exact_schema_three_project_inspection_is_readonly ... ok
+test project::tests::rollback_preserves_unknown_content_changed_bytes_deleted_files_and_replaced_files ... ok
+test project::tests::handled_initialization_failures_clean_only_owned_files_and_allow_same_path_retry ... ok
+test project::tests::schema_three_inspection_rejects_mismatched_and_unknown_versions_without_migration ... ok
+test project::tests::actual_process_termination_preserves_partial_state_and_new_path_retry_succeeds ... ok
+test project::tests::schema_three_inspection_rejects_unknown_objects_changed_constraints_and_bad_metadata ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 290 filtered out; finished in 0.27s
+
+exit_code=0
