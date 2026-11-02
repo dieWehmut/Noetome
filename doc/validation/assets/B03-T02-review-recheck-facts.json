@@ -1,0 +1,87 @@
+{
+  "review": "B03-T02 three P2 scoped recheck",
+  "fix_package_sha256": "96645c69eaf6bf43b36a25f7595b83070c68f9e9013fa1a074544b6b1c1fac25",
+  "binary_sha256": "d0cb8b88d01a36b3f5da8b7efb7b3835f88374ac02859bcabfebcc5e6e045fcb",
+  "review_root": "D:\\Noetome\\target\\compiler-temp\\b03-t02-fix-recheck-1c05c1a6df0744dcab8f59055aefbf3a",
+  "real_cli_calls": 8,
+  "cases": [
+    {
+      "source": "D:\\Noetome\\target\\compiler-temp\\b03-t02-core-review-3e3292ced6c44fdab0d01981dd60edbc\\staggered_columns.pdf",
+      "input_sha256": "f48239de187a3302946411defe2bf1510b719f23a5e362639f3130a368826d61",
+      "output_root": "D:\\Noetome\\target\\compiler-temp\\b03-t02-fix-recheck-1c05c1a6df0744dcab8f59055aefbf3a\\staggered_columns",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "status": "needs_review",
+      "page_count": 1,
+      "required_issue": "PDF_POSSIBLE_COLUMNS",
+      "issue_codes": [
+        "PDF_POSSIBLE_COLUMNS"
+      ],
+      "text": "Left first paragraph.\nRight first paragraph.\nLeft continuation.\nRight continuation.\n",
+      "glyph_count": 80,
+      "exact_report_round_trip": true,
+      "inspect_bytes_and_mtimes_unchanged": true,
+      "original_and_sentinel_unchanged": true
+    },
+    {
+      "source": "D:\\Noetome\\target\\compiler-temp\\b03-t02-core-review-3e3292ced6c44fdab0d01981dd60edbc\\whitespace_only.pdf",
+      "input_sha256": "9e422ad7c56b2863dec7b1bf90149aa1be832a6ef4ac9561a6e3c431b55b40a8",
+      "output_root": "D:\\Noetome\\target\\compiler-temp\\b03-t02-fix-recheck-1c05c1a6df0744dcab8f59055aefbf3a\\whitespace_only",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "status": "needs_review",
+      "page_count": 1,
+      "required_issue": "PDF_UNKNOWN_BLANK",
+      "issue_codes": [
+        "PDF_UNKNOWN_BLANK"
+      ],
+      "text": "   \n",
+      "glyph_count": 3,
+      "exact_report_round_trip": true,
+      "inspect_bytes_and_mtimes_unchanged": true,
+      "original_and_sentinel_unchanged": true
+    },
+    {
+      "source": "D:\\Noetome\\target\\compiler-temp\\b03-t02-core-review-3e3292ced6c44fdab0d01981dd60edbc\\unicode_mapping_space.pdf",
+      "input_sha256": "ff6dffc86c3ac2af29344c54377a3ac20aa8e2c6046cc676dbf90316015c53aa",
+      "output_root": "D:\\Noetome\\target\\compiler-temp\\b03-t02-fix-recheck-1c05c1a6df0744dcab8f59055aefbf3a\\unicode_mapping_space",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "status": "needs_review",
+      "page_count": 1,
+      "required_issue": "PDF_MULTICODEPOINT_GLYPH",
+      "issue_codes": [
+        "PDF_MULTICODEPOINT_GLYPH",
+        "PDF_LAYOUT_GAP"
+      ],
+      "text": "A B\n",
+      "glyph_count": 2,
+      "exact_report_round_trip": true,
+      "inspect_bytes_and_mtimes_unchanged": true,
+      "original_and_sentinel_unchanged": true
+    },
+    {
+      "source": "D:\\Noetome\\target\\compiler-temp\\b03-t02-core-review-3e3292ced6c44fdab0d01981dd60edbc\\unicode_mapping_small_gap.pdf",
+      "input_sha256": "921fdaf3204670b0ca8067d50b1578a0b04934eda406d25651479702194aa3b4",
+      "output_root": "D:\\Noetome\\target\\compiler-temp\\b03-t02-fix-recheck-1c05c1a6df0744dcab8f59055aefbf3a\\unicode_mapping_small_gap",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "status": "needs_review",
+      "page_count": 1,
+      "required_issue": "PDF_MULTICODEPOINT_GLYPH",
+      "issue_codes": [
+        "PDF_MULTICODEPOINT_GLYPH"
+      ],
+      "text": "A B\n",
+      "glyph_count": 2,
+      "exact_report_round_trip": true,
+      "inspect_bytes_and_mtimes_unchanged": true,
+      "original_and_sentinel_unchanged": true
+    }
+  ],
+  "result": "passed",
+  "not_run": [
+    "full workspace regression",
+    "general layout/ToUnicode bbox correctness"
+  ]
+}

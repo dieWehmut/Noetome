@@ -1,6 +1,6 @@
 # Noetome 最小数据契约
 
-本文件定义空项目、桌面窗口偏好、单份文本来源登记及 fixture 闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
+本文件定义空项目、桌面窗口偏好、单份文本来源登记、独立PDF解析沙盒及fixture闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
 
 实现状态以[任务账本](../../dev-log/tasks.json)和对应验证记录为准；本文件的字段清单本身不是能力验收记录。后续真实解析、模型与研究能力必须通过带版本的扩展进入，不能把缺失值编造成已有结果。
 
@@ -26,6 +26,14 @@
 Core 固定 request_id、单份原始输入指纹及新工作区能力；响应中的 producer、解析器/能力版本、有序完整单元、资源和问题全部复核。提取文本范围相对于指定 UTF8 resource，而非原始文件二进制或旧 normalized.txt；资源的相对路径、真实字节、身份和精确清单共同约束读取范围。普通入口只接受 parser producer，fake 许可仅编译进测试。
 
 本项的 fake 单元为合成数据。完整序号与引用校验不能证明真实 PDF 页数或 bbox；PDF 原生定位在 B03-T02 采用显式契约扩展，不放宽既有文本来源 Schema2。
+
+### B03-T02 PDF解析沙盒
+
+[pdf-page-regions-v1](PDF_PARSE_CONTRACT.md) 是protocol v1中由资源SHA绑定的严格manifest，所有字段与nullable项均必填、未知字段拒绝；不是新增项目Schema。保存完整raw-pdf、逐页UTF8、manifest及Core JSON/Markdown。每个物理页有零基索引、一基显示物理页、未知printed_page_label=null、真实几何、glyph/region/visual清单和parsed/needs_review/failed；未枚举完总数保持null并保留已确认前缀。完整总数与有序页面和wire单元双向一致，失败/需复核页不算整份parsed。
+
+区域定位独立声明pdf_page_region、物理页及显示CropBox左上原点/Y向下的pt bbox，保存raw MediaBox/CropBox、Rotate、UserUnit与pdf_to_display矩阵。字节范围只绑定指定逐页UTF8的resource_id和SHA，正文区间不含artifact追加的LF；不是PDF二进制偏移或旧blocks-v1 SourceSpan。空artifact可有已确认0字节及空SHA，但wire单元为unknown/text=null，不制造[0,0)正文。字符/区域一致性不能独立证明任意PDF内容无遗漏；固定作者预期及原始页回看另验证有限样例。
+
+解析器身份绑定精确engine/依赖、adapter/options及Python版本。只读inspect从已保存的原始和全部资源核对实际字节与报告；原文件移动不影响这次重查。B03-T03才设计来源项目的下一显式Schema、raw版本和独立解析尝试/缓存；不能把PDF写进Schema2只允许的text/plain、utf8-newlines-v1、blocks-v1、raw.bin/normalized.txt语义。
 
 ### 项目初始化与存储版本
 

@@ -2,7 +2,7 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、明确标为fixture的IR与NotePlan契约校验和临时Vault编译，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖、独立预期和实际笔记，再保存Run、Release及双报告。内部 parser sidecar 宿主提供严格单请求与Windows进程树管理，实际fake只用于协议测试，真实PDF解析仍待接入。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture业务尚未接入桌面；模型抽取仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、独立新测试根中的单份文本PDF解析与页/区域重查、明确标为fixture的IR与NotePlan契约校验和临时Vault编译，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖、独立预期和实际笔记，再保存Run、Release及双报告。PDF采用锁定的单一pdfplumber sidecar，Core复核原始、全部物理页、真实CropBox位置与逐页UTF8；扫描和复杂版面保守需复核，PDF尚未登记进来源项目。fake只用于协议测试。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture/PDF业务尚未接入桌面；模型抽取仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
 
 ## 开始开发
 
@@ -27,6 +27,8 @@ cargo run -p noetome-cli --locked --offline -- --version
 构建后的 Windows 程序位于 `target/debug/noetome.exe`，当前版本为 `0.1.0`。无参数、`--help`（`-h`）显示帮助；`--version`（`-V`）显示版本。帮助和版本每次仅接受一个选项；项目、来源和case命令用法见下文。未知或多余参数返回退出码 `2`、在标准错误输出 `CLI_INVALID_ARGUMENT` 和用法提示。输出失败返回 `1` 和 `CLI_OUTPUT_ERROR`。帮助、版本及无效语法不创建项目、数据库或用户配置。
 
 本机 Low 完整性构建树中的原生 C 编译器无法使用默认系统临时目录时，可改用 `./scripts/cargo_local.ps1`，其余参数与 Cargo 相同。脚本为编译选择 `target/compiler-temp`，结束后恢复调用者的临时目录环境，不修改权限。
+
+普通构建/check不启动Python。运行完整Cargo/Python测试前须建立[锁定PDF环境](sidecars/pdf_parser/README.md)，将其绝对解释器路径赋给NOETOME_PDF_PYTHON；fake进程测试另外用NOETOME_TEST_PYTHON选择可信解释器。直接adapter unittest使用运行unittest的Python，亦须匹配锁定版本；没有设置时真实测试明确失败，不自动下载或跳过。
 
 ```powershell
 ./scripts/cargo_local.ps1 check --workspace --locked --offline
@@ -133,14 +135,39 @@ python scripts/verify_fixture_compile.py --cli '<实际可读CLI路径>' --root 
 
 `noetome_cli::sidecar_process::run` 接收可信程序与原生argv、明确单文件、尚不存在的工作区、限额和取消令牌。Core保持输入和目录守卫，并复核唯一JSON响应、身份、来源单元、资源实际字节和精确清单；响应及诊断超限、超时、取消或管道失败返回分类错误并收束受控进程树。wire与默认政策见[协议](doc/technical/SIDECAR_PROTOCOL.md)，验收范围见[B03-T01](doc/validation/B03-T01.md)。
 
-测试helper仅用Python标准库，在测试构建中允许`producer=fake`；普通库入口拒绝fake，CLI没有fake或parse-pdf命令。运行进程组前选择可用Python解释器；若使用Codex工作区运行时，把工具返回的绝对路径赋给`NOETOME_TEST_PYTHON`，不在仓库写死开发机路径。
+测试helper仅用Python标准库，在测试构建中允许`producer=fake`；普通库入口拒绝fake，CLI没有fake或任意parser命令覆盖参数。运行进程组前选择可用Python解释器；若使用Codex工作区运行时，把工具返回的绝对路径赋给`NOETOME_TEST_PYTHON`，不在仓库写死开发机路径。
 
 ```powershell
 ./scripts/cargo_local.ps1 test -p noetome-cli --lib sidecar_process::tests --locked --offline
 ./scripts/cargo_local.ps1 test -p noetome-cli --test sidecar --locked --offline
 ```
 
-进程与资源保护当前只实现Windows。Job Object管理进程树，不提供文件或网络沙盒；协议测试的合成单元不证明真实PDF页、区域、阅读顺序或科学质量。错误工作区保留可定位现场，下一任务再选择并锁定唯一文本PDF解析器。
+进程与资源保护当前只实现Windows。Job Object管理进程树，不提供文件或网络沙盒；协议测试的合成单元不证明真实PDF页、区域、阅读顺序或科学质量。错误工作区保留可定位现场。下述PDF入口另使用真实锁定adapter和独立作者预期验收。
+
+## 单份文本 PDF 解析沙盒
+
+先按[adapter安装和许可说明](sidecars/pdf_parser/README.md)创建新的CPython 3.12.14 Windows x64环境，按requirements-lock.txt的全部精确版本和wheel SHA安装。运行时不自动安装依赖；调用者只设置可信解释器，PDF内容不选择命令、代码或输出路径。
+
+```powershell
+$env:NOETOME_PDF_PYTHON = '<锁定测试环境的绝对路径>/Scripts/python.exe'
+./target/debug/noetome.exe source parse-pdf './fixtures/pdf-text-v1/single-page.pdf' './target/compiler-temp/pdf-example-one'
+./target/debug/noetome.exe source inspect-pdf './target/compiler-temp/pdf-example-one'
+```
+
+目标的父目录须存在且根尚不存在。本机target的Low标签限制同样适用，示例使用构建树内的新测试根。parse仅保存parser/raw.pdf、逐页UTF8、PDF manifest及Core核对后的parse-result.json/.md；不写项目SQLite或Vault。原文件移动或删除后inspect仍可根据已保存证据重查，不修复残留或接管既有目录。
+
+每页有零基physical_page_index、一基display_page_number和未知printed_page_label=null；区域为显示CropBox左上原点、Y向下的pt bbox，保留原MediaBox/CropBox、Rotate/UserUnit及变换矩阵。UTF8半开范围只绑定该页文本artifact和SHA，正文范围不含行尾LF；原始PDF二进制偏移和旧blocks-v1全局行号不能替代这些位置。
+
+全部页面parsed且无blocking问题才退出0。扫描无文本层、未知空白、表格/公式/图像、多栏、非水平/旋转文字等needs_review仍保留物理页和raw证据，退出3；损坏、加密、读取/资源/位置/时限/取消失败同样非零。未确认完整原始或页数时保留null/已确认前缀，不造完整SHA或页面清单。inspect同样保留needs_review/failed的非零状态。宿主失败现场可有failure.json，不能作为完整沙盒读取成功。
+
+本阶段政策为最多128页、每页50,000字形、总200,000字形，默认单raw资源16MiB，另受[sidecar字节/进程限额](doc/technical/SIDECAR_PROTOCOL.md)约束；这些是上限而非吞吐实测。适用支持矩阵、实际小样例时间/资源和已执行故障见[B03-T02验收](doc/validation/B03-T02.md)，精确字段见[PDF契约](doc/technical/PDF_PARSE_CONTRACT.md)。[14份自造PDF](fixtures/pdf-text-v1/README.md)的作者预期与独立25页Poppler渲染不是一般PDF或科学质量金标准；错开栏、只有空白字符及多码点decode也保守复核，OCR、复杂结构和模型知识仍未实现。
+
+```powershell
+python scripts/build_pdf_sidecar.py --check
+python scripts/verify_pdf_parse.py '<父目录存在的全新测试根>' --binary '<编译CLI的绝对路径>'
+```
+
+源码经标准库zlib压缩嵌入，字节绑定检查避免可读源码与实际CLI代码不同；原生短argv避免已实测的WindowsCreateProcess长度失败。独立核验工具不导入parser/Core助手，按事先预期和实际保存字节检查正文、页、坐标、状态与只读inspect，保存JSON/Markdown支持矩阵。
 
 ## 构建桌面应用
 

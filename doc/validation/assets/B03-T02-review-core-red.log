@@ -1,0 +1,38 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.01s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 5 tests
+test fixture_render::tests::output_limit_refuses_a_complete_chunk_without_truncating_text ... ok
+test pdf_validate::tests::refuses_multicodepoint_glyph_claimed_as_parsed_despite_consistent_body ... FAILED
+test pdf_validate::tests::refuses_staggered_disjoint_line_columns_claimed_as_parsed ... FAILED
+test pdf_validate::tests::refuses_whitespace_only_page_claimed_as_parsed ... FAILED
+test compile_store::tests::recovery_refuses_to_write_when_an_owned_directory_is_replaced ... ok
+
+failures:
+
+---- pdf_validate::tests::refuses_multicodepoint_glyph_claimed_as_parsed_despite_consistent_body stdout ----
+
+thread 'pdf_validate::tests::refuses_multicodepoint_glyph_claimed_as_parsed_despite_consistent_body' (49948) panicked at crates\noetome-cli\src\..\tests\support\pdf_validate_tests.rs:125:43:
+called `Result::unwrap_err()` on an `Ok` value: ()
+
+---- pdf_validate::tests::refuses_staggered_disjoint_line_columns_claimed_as_parsed stdout ----
+
+thread 'pdf_validate::tests::refuses_staggered_disjoint_line_columns_claimed_as_parsed' (14000) panicked at crates\noetome-cli\src\..\tests\support\pdf_validate_tests.rs:99:43:
+called `Result::unwrap_err()` on an `Ok` value: ()
+
+---- pdf_validate::tests::refuses_whitespace_only_page_claimed_as_parsed stdout ----
+
+thread 'pdf_validate::tests::refuses_whitespace_only_page_claimed_as_parsed' (49812) panicked at crates\noetome-cli\src\..\tests\support\pdf_validate_tests.rs:113:43:
+called `Result::unwrap_err()` on an `Ok` value: ()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pdf_validate::tests::refuses_multicodepoint_glyph_claimed_as_parsed_despite_consistent_body
+    pdf_validate::tests::refuses_staggered_disjoint_line_columns_claimed_as_parsed
+    pdf_validate::tests::refuses_whitespace_only_page_claimed_as_parsed
+
+test result: FAILED. 2 passed; 3 failed; 0 ignored; 0 measured; 266 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

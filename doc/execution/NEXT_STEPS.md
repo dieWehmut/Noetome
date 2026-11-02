@@ -1,16 +1,16 @@
 # 近期开发步骤
 
-真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B02三项已分别验收，执行卡归档于[B02步骤](B02_STEPS.md)，闭环证据见[B02-T03](../validation/B02-T03.md)。B03-T01已完成有界单请求sidecar的真实fake验证，证据见[B03-T01](../validation/B03-T01.md)；本批剩余两项仍是计划。下一入口B03-T02，没有运行真实PDF解析、解析器选型、Schema升级或产品性能基准。
+真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B02三项已分别验收，执行卡归档于[B02步骤](B02_STEPS.md)，闭环证据见[B02-T03](../validation/B02-T03.md)。B03-T01交付有界单请求sidecar的真实fake验证；B03-T02交付单一pdfplumber的真实PDF解析沙盒、页/区域Core复核和只读重查，证据见[B03-T02](../validation/B03-T02.md)。下一入口B03-T03仍未启动：显式项目Schema升级、PDF来源登记与解析缓存复用尚未实现。
 
 **目标**：用一个有界 parser sidecar 将单份真实文本 PDF 变为可追溯的页与区域来源，在项目内安全登记并复用；每项交付独立验收。
 
 **架构**：Rust Core 负责输入能力、进程生命周期、严格输出验证、来源身份和持久化；测试 fake 先固定进程契约，随后只接一个 Python 文本 PDF 解析器。真实解析先在全新沙盒完成，最后才升级来源项目的数据契约并接入 import/inspect。
 
-**技术与依据**：已有 Rust CLI/SQLite/Windows x64；Python 运行时和唯一 PDF 库在 B03-T02 按实际试验选择及锁定。本计划依据 [PRD FR-01/02/03/06](../requirements/PRD.md)、[已采纳 D02/D12/D13/D14](../requirements/DECISIONS.md)、[B03 路线](ROADMAP.md)、[Sidecar 架构](../technical/ARCHITECTURE.md)、[数据契约](../technical/DATA_CONTRACTS.md)、[外部能力引入门槛](../standards/TESTING.md)及[任务模板](../templates/TASK.md)。
+**技术与依据**：已有 Rust CLI/SQLite/Windows x64；B03-T02实测锁定Python3.12.14、pdfplumber0.11.9/pdfminer.six20251230及全部运行依赖。只消费已提交可信payload的Rust构建不自动下载/安装Python；真实PDF测试需明确配置锁定运行时。本计划依据 [PRD FR-01/02/03/06](../requirements/PRD.md)、[已采纳 D02/D12/D13/D14](../requirements/DECISIONS.md)、[B03 路线](ROADMAP.md)、[Sidecar 架构](../technical/ARCHITECTURE.md)、[数据契约](../technical/DATA_CONTRACTS.md)、[外部能力引入门槛](../standards/TESTING.md)及[任务模板](../templates/TASK.md)。
 
 ## 共同边界
 
-- 每次只推进一项，依赖验收后才能 start；B03-T01的实施和失败修复保留真实记录，B03-T02/T03保持 `todo`。真实状态以任务账本为准；完成当前任务不自动启动下一项。
+- 每次只推进一项，依赖验收后才能 start；B03-T01/T02的实施和失败修复保留真实记录，B03-T03必须另轮start。真实状态以任务账本为准；完成当前任务不自动启动下一项。
 - 本批不接扫描 OCR、模型/API、知识抽取、项目 GUI、生产 Vault、完整多格式适配或通用远程任务总线。扫描及复杂页仍须作为失败/需复核边界样例，不能据此宣称支持。
 - 只读用户明确提供的单文件，输出只在本轮明确且独占的范围内。资料中的链接和操作指令按内容处理，不能决定可执行程序、扩大文件范围或触发外发。受控 sidecar 的协议边界不等于已建立操作系统级沙盒。
 - 当前来源 `project.sqlite` 为 Schema2；当前编译 `state/compile.sqlite` 为独立 Schema1。PDF 登记所需的下一项目 Schema 必须显式设计，不能修改 Schema2 的含义，也不能混用编译库版本。
@@ -35,19 +35,15 @@
 
 **单一可见结果**：一个明确选定的真实文本 PDF 经 Python 进程解析，在全新测试工作区获得能回到真实页面的正文、完整页清单、区域及明确问题。
 
-**依赖与范围**：B03-T01；部分覆盖 FR-02/03/06、NFR-01/04/14。新增候选 CLI `source parse-pdf <PDF> <尚不存在的测试工作区>`，不登记项目数据库。命令名称在本项协议设计时与既有 CLI 统一，行为必须保留两条明确路径和新根拒写。只选择一个文本 PDF 解析器，扫描/复杂页用于支持矩阵，不同时开发 OCR。
+**依赖与范围**：B03-T01；部分覆盖 FR-02/03/06、NFR-01/04/14。普通 CLI `source parse-pdf <PDF> <尚不存在的测试工作区>` 和只读 `source inspect-pdf <测试工作区>` 已实跑。新根拒写既有路径，不登记项目数据库。唯一文本解析器为pdfplumber，扫描/复杂页保存问题与原始证据，不报完整解析或OCR成功。
 
-**预期模块职责**：在 `sidecars/pdf_parser/` 保存唯一 Python adapter、精确依赖与许可证说明；Rust `pdf_parse.rs` 负责候选来源 DTO、Core 验证和新根输出，复用 sidecar 宿主；`tests/pdf_parse.rs` 保存真实 CLI/篡改断言，`fixtures/pdf-text-v1/` 保存自造/授权样例及独立审阅说明。路径仅为实施候选，不在本轮创建。
+**实际模块职责**：`sidecars/pdf_parser/` 保存唯一Python adapter、SHA绑定压缩payload、精确依赖和许可；`pdf_model.rs`固定严格DTO，`pdf_validate.rs`复核物理页/字符/区域/文本/状态，`pdf_workspace.rs`维护新根和报告守卫，`pdf_parse.rs`复用sidecar全过程控制并保存/重查报告。`tests/pdf_parse.rs`、`tests/support/pdf_parse_tests.rs`/`pdf_validate_tests.rs`保存真实CLI、过程边界和Core负例；`fixtures/pdf-text-v1/`及独立验证脚本保存作者输入/位置预期。准确接口见[PDF契约](../technical/PDF_PARSE_CONTRACT.md)。
 
 **消费与交付接口**：消费已验收的有界 sidecar 请求。交付完整原始 PDF SHA/长度、parser/协议/选项版本、物理页清单、每页提取文本、区域、资源与问题；所有提取文本/资源均绑定实际 artifact 的相对路径和 SHA。整体存在 failed 或 needs_review 页时不报整份解析成功，仍可保留已确认范围。
 
-1. 开始时核对候选库官方接口、许可证、安装与 Python 支持，实际试验后只锁定一个 adapter。记录真实 Windows x64/Python/库版本；不能直接将候选宣传能力列为支持。普通协议 fake 回归不依赖该库。
-2. 先固定一页和多页单栏真实 PDF 的原始字节、页数、关键全文、阅读顺序与实际位置审阅预期，再取得真实 CLI 红灯。样例不含私密资料，预期不得从待测 parser 的输出生成；原 PDF 不修改。
-3. 固定 `physical_page_index` 为 0 基，完整范围为 `[0,page_count)`，显示物理页为索引加一；`printed_page_label` 只有实际可验证依据才填，否则 null。PDF 页标签不自动等同教材印刷页号。
-4. 固定 `pdf_page_region` locator 的 pt 单位、原点/Y轴、页面边界、CropBox/MediaBox与旋转变换。bbox须有限且在页内；无法可靠转换的页进入 needs_review。提取文本的 UTF8 半开范围必须同时指明 page/artifact/SHA，不能把 PDF raw offset、旧 `blocks-v1` 或文本行号当原生 PDF 区域。
-5. Core 校验原始指纹、全部页索引、区域和文本/资源引用及真实字节。实际页面回看独立核对有限样例的关键正文、顺序和区域；再篡改漏页/错页、错误 bbox、缺正文/乱序、引用和资源 SHA，要求失败。仅检查 bbox 在页内不足以证明位置正确。
-6. 小型支持矩阵分别实测扫描无文本层、空白、损坏/加密、表格、公式、图片、多栏和旋转页。无文本不自动等于合法空白；检测能力不足的视觉/顺序状态明确 needs_review，页面与原始证据仍在清单中。未支持的结构不得被普通文本拼接伪装为已正确保留。
-7. 实际测试输入未读全/变化/超限、进程超时/取消、部分页失败和路径保护。保存 ParseOutcome 与可重读的范围/资源事实，原输入与外部哨兵不变。完成定向真实 CLI、定位/支持矩阵与适用统一检查，记录实际时间/资源及未运行项后提交推送。
+**实际验收要点**：唯一运行时按hash锁定后在新venv实际安装；14自造PDF有独立原始操作符/字形/正文预期和25页Poppler渲染。独立29次普通CLI核对24确认物理页、1025字形、15行完整正文、全部资源SHA与只读往返。页索引0基、显示页索引+1，印刷页标签保持null；UTF8半开范围绑定逐页artifact，区域保留真实CropBox/MediaBox/旋转/pt矩阵。扫描、未知空白、视觉关联和不可靠顺序需复核，损坏/加密/部分页异常failed。
+
+**故障与审查**：真实CLI/定位负例先红；Core同时检查精确页清单、字符包络/分配、全文、语义及路径引用，真实进程测试覆盖限额、超时/取消、占用/硬链接/junction和新根保护。初次审查的错开栏、纯空格和ToUnicode边界空白三项P2已独立复现、红绿修复和原四PDF复审关闭。最终PID握手测试竞态也稳定先红后绿；364 Rust/43 Python、离线check和格式检查通过。过程/语义/真实样例及未运行项分别归档，不用小样例声明性能或科学质量。
 
 **停止**：有限真实文本解析及诚实的失败边界通过即结束；不宣称知识覆盖/科学质量，也不写项目 Schema。下一入口 B03-T03 独立 start。
 
@@ -73,12 +69,13 @@
 
 ## 执行时的验证与交接
 
-sidecar宿主、普通入口及统一检查已在B03-T01实际执行。下列pdf_parse/pdf_source定向测试仍是后续门槛，文件未创建，也未运行；应在对应任务中创建后执行。fake、真实parser、持久化分别记录，不以统一回归替代定位抽查。
+sidecar宿主与真实pdf_parse/统一检查已分别在B03-T01/T02实际执行。`pdf_source`仍是B03-T03后续门槛，文件未创建也未运行，应在对应任务创建后执行。fake、真实parser、持久化分别记录，不以统一回归替代定位抽查。下面包含后续门槛命令，不能把列出命令视为运行。
 
 ```powershell
 ./scripts/cargo_local.ps1 test -p noetome-cli --lib sidecar_process::tests --locked --offline
 ./scripts/cargo_local.ps1 test -p noetome-cli --test sidecar --locked --offline
 ./scripts/cargo_local.ps1 test -p noetome-cli --test pdf_parse --locked --offline
+# B03-T03尚未创建/执行：
 ./scripts/cargo_local.ps1 test -p noetome-cli --test pdf_source --locked --offline
 cargo fmt --all --check
 ./scripts/cargo_local.ps1 check --workspace --locked --offline
@@ -90,4 +87,4 @@ git diff --check
 
 Python指本轮选定的可用解释器；使用工作区运行时时记录工具返回的绝对路径，不将开发机路径写死进仓库。真实 parser 环境单独锁定并说明安装步骤，普通 fake 测试不触发下载。每项记录实际版本、命令、退出码、数量、失败与未运行项、原始样例SHA、独立预期与产物；仅这些真实证据满足任务后才能 complete。
 
-本批B03-T01已按真实证据验收；下一入口是B03-T02。执行者每轮先读日志、start单一任务，完成该项真实验收后complete并提交推送；当前不start下一项，也不切换批次。
+本批T01/T02产物和实际验收分别归档；下一入口B03-T03要先冻结显式Schema升级方案和真实迁移红灯。执行者每轮先读日志、start单一任务，完成该项真实验收后complete并提交推送；T02验收后不在同轮start下一项，也不切换批次。

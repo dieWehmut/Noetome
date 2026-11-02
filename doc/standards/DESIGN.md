@@ -10,6 +10,8 @@
 
 报告写“fixture 编译验证通过”，不能写“AI 已完成教材学习”“知识准确率100%”或“产品已支持 PDF”。没有发生的网络请求、模型推理和费用一律不编造。
 
+B03-T02另提供项目外PDF解析沙盒，只表达有限文本页、原始证据、真实位置和需复核/失败状态。单栏文本样例通过不扩大为全部PDF、结构或知识处理已支持。
+
 ## 2 信息优先级
 
 用户首先应看见结果和下一步动作，其次是范围、问题和细节。
@@ -63,6 +65,19 @@ import只读取明确选取的单份文件，当前上限64 MiB，不扫描目�
 | 内部操作、报告序列化或stdout输出失败 | stderr稳定错误，例如SOURCE_REPORT_ERROR或CLI_OUTPUT_ERROR | 1 |
 
 source inspect返回0只表示只读核对完成，不能把报告内failed改成成功。import保存来源读取失败记录与普通写入失败不同：前者保留可查看的真实失败对象，后者按可确认的自身文件回滚；未知内容、替换或清理失败保留标记和可用备份，提示检查现场，不自动接管。Windows准备阶段的句柄保护与发布复核不构成任意外部并发或任意断电下多文件原子恢复承诺。
+
+### B03-T02 PDF解析和重查
+
+```text
+noetome source parse-pdf <selected-PDF> <new-test-root>
+noetome source inspect-pdf <test-root>
+```
+
+`NOETOME_PDF_PYTHON`须指向调用者配置的绝对锁定解释器；失配/缺失明确PDF_RUNTIME或依赖错误，不触发安装或交互。parse只用尚不存在的新根，已有目录、路径跳转、链接、占用和变化都拒绝。输出原始、逐页文本与manifest，再由Core写相同事实的parse-result.json/.md；stdout纯JSON，诊断stderr。
+
+JSON明确report_kind=pdf_parse_sandbox、原始SHA/字节、完整或未知页总数、物理页的parsed/review/failed数量、精确parser身份、manifest位置/SHA、实际elapsed/resource字节和sidecar事实。Markdown列相同事实、物理页状态及逐条问题；印刷页码未知，不以文件名或章节号冒充。只有整份parsed退出0；needs_review/failed及读取、路径、限额、超时/取消、子进程或Core失败退出3。语法无效退出2，stdout写失败退出1。
+
+inspect保持只读、重查原始/文本/manifest真实字节和全部位置、摘要及Markdown；成功读取needs_review/failed沙盒仍返回3并保留原状态。宿主失败可有failure.json及未确认现场，整体不算有效完整沙盒，inspect拒绝接管或修复。未确认原始或完整页清单保留null/已确认前缀，不补造成功对象。该报告不显示IR、知识覆盖、OCR、科学质量或发布成功。
 
 ### B02-T02 fixture 检查
 

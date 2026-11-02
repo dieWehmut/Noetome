@@ -798,7 +798,7 @@
       "id": "B03-T02",
       "title": "解析单份真实文本PDF并验证完整物理页与区域定位",
       "batch": "B03",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B03-T01"
       ],
@@ -828,6 +828,71 @@
           "note": "按既定任务卡接入唯一pdfplumber文本PDF sidecar；先固定自造PDF独立正文/坐标预期和真实CLI红灯，随后实现完整页清单、Core定位复核及新沙盒保护，不登记项目或接OCR。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-02T10:12:37Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成单一pdfplumber真实PDF解析沙盒、完整物理页与CropBox区域Core复核、逐页UTF8绑定及只读inspect；实现提交e360c49。独立审查三项P2与最终PID握手竞态均实测先红后绿并复审关闭。未登记来源项目、改Schema、写Vault或接OCR/模型；B03-T03另轮start。",
+          "validation": [
+            "Windows11 x64 / CPython3.12.14：新venv实际按require-hashes及only-binary安装8个精确运行依赖，最终元数据/pip check通过；payload检查31814字节源/8926字节压缩逐字节一致。官方接口、wheel SHA和许可依据已记录。",
+            "实际cargo fmt --all --check、cargo_local check --workspace --locked --offline和test --workspace --locked --offline均退出0；最终364 Rust通过、0失败0忽略，包含15 Core定位、13 PDF过程边界、7真实PDF CLI组。Python unittest实际43通过、21.503秒、退出0（31 adapter方法和12日志工具）。首次最终PID空文件竞态失败保留，稳定红灯后修复并重跑整workspace通过。",
+            "14自造PDF与独立authoring expected/25页Poppler记录先于对应修复冻结；独立验证器实际14 parse+14 inspect+1 version共29普通CLI，核对24确认物理页、1025字形位置、15完整字面行/顺序/UTF8范围、资源SHA及精确目录。4整份parsed/7needs_review/3failed；原输入和外部哨兵及inspect字节/mtime不变。",
+            "独立代码审查原四PDF另实跑4 parse+4 inspect，错开栏/纯空格/ToUnicode三P2均关闭，保存原始PDF和复审事实；最后握手修复复审独立重放cancel/timeout两项通过。语义变異同时同步SHA/报告并断言具体错误族；占用、硬链接、junction、目录保护及真实live PID退出实际通过。",
+            "完整CLI parse墙钟195.838至253.874ms；已验证raw/text/manifest资源920至99807字节，测量二进制SHA与后续workspace二进制区分。未运行内存/CPU采样、1000页、24小时、跨平台、UserUnit独立物理比例、科学质量/OCR/模型指标；pdftotext不可用。",
+            "实际本轮20篇Markdown/256个本地链接、6 Python AST通过；21个实现输入/源码及24个归档原始记录字节与Git索引/SHA一致；devlog check 11项与git diff/cached diff --check通过。原件空白保留，Markdown仅清理转录排版。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/pdf_parse.rs",
+              "sha256": "41322efe397cc7a192069a1fa89260ae5089d9bd80ca91b3dbc3f0bc215faa18"
+            },
+            {
+              "path": "crates/noetome-cli/src/pdf_validate.rs",
+              "sha256": "ec2092f86e96d7a8eb6da4df8a6c884e9b21b81d23b344b4d7c3d4c517c33298"
+            },
+            {
+              "path": "sidecars/pdf_parser/adapter.py",
+              "sha256": "5e0a8c25c531085c5d04d55b094904fb83a79c3b3f2b3cd979e163c5bfc179b8"
+            },
+            {
+              "path": "sidecars/pdf_parser/requirements-lock.txt",
+              "sha256": "7deece8e669fcdcfe1ff18e6b4280df876b2b37c4fbc11f58df7100b35333fe7"
+            },
+            {
+              "path": "fixtures/pdf-text-v1/expected.json",
+              "sha256": "020977dbb0eecb79799dbac3bb89bcec11db9443507a0d90b04ee4a0d8ffb352"
+            },
+            {
+              "path": "scripts/verify_pdf_parse.py",
+              "sha256": "546b8dd1d864335de6ecc6061f2c209270b0b7966c54f904c71ce9acc0770e8d"
+            },
+            {
+              "path": "doc/validation/B03-T02.md",
+              "sha256": "44c0c12226f897516c0e8cef91f322ae14faa0d11a086bb96e04b963328ec99a"
+            },
+            {
+              "path": "doc/validation/B03-T02-REVIEW.md",
+              "sha256": "fc7db2590773e86a9055504d8d683c6b625b8407884e3b69fba6733e9db475fb"
+            },
+            {
+              "path": "doc/validation/assets/B03-T02-support-matrix.json",
+              "sha256": "74a8277c1b7b7a08b9b2737540104f856345b03b9ab63b5a3423f95339ec9e8e"
+            },
+            {
+              "path": "doc/validation/assets/B03-T02-authoring-review.json",
+              "sha256": "1e9997eda2ed075d54076db9297fb193e18efe99c1fcaeeedb698b79e956b6ab"
+            },
+            {
+              "path": "doc/validation/assets/B03-T02-workspace-tests.log",
+              "sha256": "be052dbacbd1a0aa43a269c21832ac413fec153f77dbe4b75d01832d17486bbc"
+            },
+            {
+              "path": "doc/validation/assets/B03-T02-python-tests.log",
+              "sha256": "e480e6a86e2bb31e3d79a669f8f2ecb2b91ae5fbc180f77bebdcd07a2445af42"
+            }
+          ]
         }
       ]
     },

@@ -1,0 +1,127 @@
+# B03-T02 empty page / protocol-v1 integration repair
+
+This is a separate record. The previous adapter report remains unchanged as historical evidence. This round changes only adapter.py and test_pdf_adapter.py; it does not alter the generic host, dependency locks, payload/build tool, dev-log state or Git index.
+
+## Observed real integration failure
+
+The parent reported the compressed compiled CLI rejecting scanned-page.pdf (old payload, target/compiler-temp/b03-t02-scan-probe-01) as `SIDECAR_UNITS: invalid UTF8 text range`. The unchanged v1 host rejects every non-null range with start_byte >= end_byte. The prior adapter kept the real empty artifact but incorrectly declared its generic range as [0,0). blank-page.pdf had the same error.
+
+## Contract and correction
+
+For a successfully extracted empty page, retain page.text with byte_length=0, the genuine empty UTF8 file/SHA and resource_ids including page-text-000000. Declare generic unit.kind=unknown and the required nullable unit.text=null. Nonempty pages retain kind=text and their complete strictly nonempty half-open UTF8 range. Every non-null generic unit range is now tested with start_byte < end_byte. Scanned and unknown blank pages remain needs_review with blocking issues and raw evidence.
+
+## Targeted RED / GREEN
+
+Exact command for both runs:
+
+```powershell
+& 'C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -X utf8 -m unittest discover -s tests -p 'test_pdf_adapter.py' -k 'scan_and_unknown_blank' -v
+```
+
+Actual RED: exit 1; one method, two failed real-PDF subtests:
+
+```text
+test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests.test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues) ... 
+  test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests.test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues) (filename='scanned-page.pdf') ... FAIL
+  test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests.test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues) (filename='blank-page.pdf') ... FAIL
+
+======================================================================
+FAIL: test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests.test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues) (filename='scanned-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_pdf_adapter.py", line 448, in test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues
+    case, response, manifest, resources = self.run_fixture(filename)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\tests\test_pdf_adapter.py", line 143, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\tests\test_pdf_adapter.py", line 237, in valid_response
+    self.assertIsNone(unit["text"])
+AssertionError: {'resource_id': 'page-text-000000', 'start_byte': 0, 'end_byte': 0} is not None
+
+======================================================================
+FAIL: test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests.test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues) (filename='blank-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_pdf_adapter.py", line 448, in test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues
+    case, response, manifest, resources = self.run_fixture(filename)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\tests\test_pdf_adapter.py", line 143, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\tests\test_pdf_adapter.py", line 237, in valid_response
+    self.assertIsNone(unit["text"])
+AssertionError: {'resource_id': 'page-text-000000', 'start_byte': 0, 'end_byte': 0} is not None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.458s
+
+FAILED (failures=2)
+```
+
+Actual GREEN: exit 0:
+
+```text
+test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests.test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.325s
+
+OK
+```
+
+## Full 28-method adapter regression
+
+Exact command:
+
+```powershell
+& 'C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -X utf8 -m unittest discover -s tests -p 'test_pdf_adapter.py' -v
+```
+
+Actual exit 0; all 28 methods / 89 isolated subprocess invocations pass, without failures, errors or skips. Complete output (line endings normalized for Markdown):
+
+```text
+test_actual_small_byte_count_and_runtime_limits_never_claim_success (test_pdf_adapter.PdfAdapterTests.test_actual_small_byte_count_and_runtime_limits_never_claim_success) ... ok
+test_annotation_uses_raw_rotation_transform_without_following_action (test_pdf_adapter.PdfAdapterTests.test_annotation_uses_raw_rotation_transform_without_following_action) ... ok
+test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit (test_pdf_adapter.PdfAdapterTests.test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit) ... ok
+test_duplicate_json_and_extra_requests_and_invalid_utf8_are_rejected (test_pdf_adapter.PdfAdapterTests.test_duplicate_json_and_extra_requests_and_invalid_utf8_are_rejected) ... ok
+test_empty_document_gets_failed_document_unit (test_pdf_adapter.PdfAdapterTests.test_empty_document_gets_failed_document_unit) ... ok
+test_enumeration_failure_keeps_prefix_and_unknown_total_with_document_unit (test_pdf_adapter.PdfAdapterTests.test_enumeration_failure_keeps_prefix_and_unknown_total_with_document_unit) ... ok
+test_existing_resource_collision_never_overwrites_human_bytes (test_pdf_adapter.PdfAdapterTests.test_existing_resource_collision_never_overwrites_human_bytes) ... ok
+test_glyph_policy_overflow_does_not_publish_truncated_inventory (test_pdf_adapter.PdfAdapterTests.test_glyph_policy_overflow_does_not_publish_truncated_inventory) ... ok
+test_glyphs_outside_cropbox_fail_page_instead_of_silently_clamping (test_pdf_adapter.PdfAdapterTests.test_glyphs_outside_cropbox_fail_page_instead_of_silently_clamping) ... ok
+test_invalid_request_diagnostic_respects_small_explicit_byte_cap (test_pdf_adapter.PdfAdapterTests.test_invalid_request_diagnostic_respects_small_explicit_byte_cap) ... ok
+test_overlapping_glyphs_are_preserved_and_require_review (test_pdf_adapter.PdfAdapterTests.test_overlapping_glyphs_are_preserved_and_require_review) ... ok
+test_partial_page_failure_retains_confirmed_page_and_true_total (test_pdf_adapter.PdfAdapterTests.test_partial_page_failure_retains_confirmed_page_and_true_total) ... ok
+test_pdf_page_policy_overflow_does_not_truncate_page_manifest (test_pdf_adapter.PdfAdapterTests.test_pdf_page_policy_overflow_does_not_truncate_page_manifest) ... ok
+test_raw_pdf_policy_overflow_fails_before_any_resource_is_written (test_pdf_adapter.PdfAdapterTests.test_raw_pdf_policy_overflow_fails_before_any_resource_is_written) ... ok
+test_real_cropbox_offset_matches_visible_origin (test_pdf_adapter.PdfAdapterTests.test_real_cropbox_offset_matches_visible_origin) ... ok
+test_real_multiple_pages_preserves_every_physical_page (test_pdf_adapter.PdfAdapterTests.test_real_multiple_pages_preserves_every_physical_page) ... ok
+test_real_single_page_matches_full_authoring_text_and_utf8_ranges (test_pdf_adapter.PdfAdapterTests.test_real_single_page_matches_full_authoring_text_and_utf8_ranges) ... ok
+test_region_slice_is_exact_authoring_line_excluding_appended_lf (test_pdf_adapter.PdfAdapterTests.test_region_slice_is_exact_authoring_line_excluding_appended_lf) ... ok
+test_rotations_and_userunit_keep_true_transforms_and_review_status (test_pdf_adapter.PdfAdapterTests.test_rotations_and_userunit_keep_true_transforms_and_review_status) ... ok
+test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests.test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import) ... ok
+test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests.test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues) ... ok
+test_table_formula_image_and_columns_remain_honestly_needs_review (test_pdf_adapter.PdfAdapterTests.test_table_formula_image_and_columns_remain_honestly_needs_review) ... ok
+test_total_glyph_policy_overflow_never_publishes_incomplete_manifest (test_pdf_adapter.PdfAdapterTests.test_total_glyph_policy_overflow_never_publishes_incomplete_manifest) ... ok
+test_underflowed_display_geometry_cannot_be_reported_as_zero_area_review (test_pdf_adapter.PdfAdapterTests.test_underflowed_display_geometry_cannot_be_reported_as_zero_area_review) ... ok
+test_unknown_and_missing_fields_and_bad_enums_are_rejected (test_pdf_adapter.PdfAdapterTests.test_unknown_and_missing_fields_and_bad_enums_are_rejected) ... ok
+test_unknown_format_preserves_complete_raw_without_inventing_pages (test_pdf_adapter.PdfAdapterTests.test_unknown_format_preserves_complete_raw_without_inventing_pages) ... ok
+test_visual_reading_order_preserves_actual_drawing_inventory (test_pdf_adapter.PdfAdapterTests.test_visual_reading_order_preserves_actual_drawing_inventory) ... ok
+test_wrong_input_fingerprint_is_rejected_before_creating_resources (test_pdf_adapter.PdfAdapterTests.test_wrong_input_fingerprint_is_rejected_before_creating_resources) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 15.284s
+
+OK
+```
+
+## Frozen handoff
+
+| File | UTF8 bytes | SHA256 |
+| --- | ---: | --- |
+| sidecars/pdf_parser/adapter.py | 31014 | b4ee4721fe0e6eba18729e9d4fdcb2355d295a6541c277cbd79cead17af456b2 |
+| tests/test_pdf_adapter.py | 37042 | 0ce75bd0f6016e4c3648694e5414d7b55bafc828035ed2ac1e751f763e4dbf77 |
+
+Both files pass AST parsing and independent trailing-whitespace checks. The uncompressed source is 31,014 ASCII characters; native argv using the bundled interpreter is 31,173 characters. The parent must regenerate the compressed payload against the new source hash and rerun compiled CLI/Core/inspect checks. No further source edits are planned for this handoff. The tests remain bounded Windows x64 public engineering fixtures; they do not establish OCR, arbitrary-PDF completeness, scientific quality or cross-platform/performance benchmarks.
+

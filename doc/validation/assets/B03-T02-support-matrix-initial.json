@@ -1,0 +1,906 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-11-02T09:02:13.528720+00:00",
+  "verifier": "stdlib authoring oracle and filesystem byte audit, no parser/Core helpers",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "verifier_python": "3.12.14",
+  "binary": {
+    "path": "D:\\Noetome\\target\\debug\\noetome.exe",
+    "sha256": "0f6dec260bea5c24f257d284fa9a8b81d41e6d5fea641518046ade079409d71d",
+    "byte_length": 9217536,
+    "version": "noetome 0.1.0"
+  },
+  "runtime": "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+  "test_root": "D:\\Noetome\\target\\compiler-temp\\b03-t02-final-validation-01",
+  "expected": {
+    "sha256": "9c9e8b91ef871c73d38d08637d1a39a11f1a6767a7b6927359f2c7c4b08656b8",
+    "byte_length": 269921
+  },
+  "prior_visual_review": {
+    "sha256": "d1ab2e5b2a990c00b7e976a572dfcdb63b725124421e6880ce03d165543971e2",
+    "byte_length": 19987
+  },
+  "measurement": "one real CLI process per operation; wall_ms includes launch, sidecar, Core and reports; elapsed_ms is reported acquisition+child+initial Core; resource_bytes sums validated raw/text/manifest",
+  "not_run": [
+    "memory/CPU sampling",
+    "1000-page throughput",
+    "24-hour stability",
+    "cross-platform compatibility",
+    "human scientific gold standard",
+    "OCR",
+    "model/knowledge recall or scientific accuracy",
+    "physical UserUnit scaling by independent renderer",
+    "pdftotext unavailable"
+  ],
+  "cases": [
+    {
+      "file": "single-page.pdf",
+      "category": "single_column",
+      "raw_sha256": "1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457",
+      "input_bytes": 873,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "parsed",
+      "parse_exit": 0,
+      "inspect_exit": 0,
+      "wall_ms": 213.015,
+      "inspect_wall_ms": 19.564,
+      "reported_elapsed_ms": 195,
+      "resource_bytes": 25955,
+      "total_output_file_bytes": 29457,
+      "parsed_pages": 1,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 143,
+      "literal_lines_checked": 3,
+      "diagnostics": "",
+      "inspect_diagnostics": "",
+      "issues": [],
+      "files": {
+        "parse-result.json": {
+          "sha256": "855ed47cfe985b7339fd4740d00af2f6c60cb1c63329ddadfca5f13077645d7c",
+          "byte_length": 2590
+        },
+        "parse-result.md": {
+          "sha256": "579e1aaa9b1d2b4de25bf9889cd525782ee6b68245401aed5a0cdddba27bcaf6",
+          "byte_length": 912
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "ba2f6db48aa0f2a485453db4bed9dd4d54e728a3486171f54f17d14f0266f1eb",
+          "byte_length": 147
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "f3ff3555e5cde1bcf4e04289ac6d55ffefccd331a8547a605ce228e26fff7046",
+          "byte_length": 24935
+        },
+        "parser/raw.pdf": {
+          "sha256": "1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457",
+          "byte_length": 873
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "multiple-pages.pdf",
+      "category": "multiple_pages",
+      "raw_sha256": "52f87463abf89916ff5a91abb1c443e572c4d0036ee0c2511bca5f594a86c115",
+      "input_bytes": 1562,
+      "authoring_page_count": 3,
+      "page_count": 3,
+      "status": "parsed",
+      "parse_exit": 0,
+      "inspect_exit": 0,
+      "wall_ms": 207.386,
+      "inspect_wall_ms": 24.161,
+      "reported_elapsed_ms": 187,
+      "resource_bytes": 37360,
+      "total_output_file_bytes": 42198,
+      "parsed_pages": 3,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 199,
+      "literal_lines_checked": 6,
+      "diagnostics": "",
+      "inspect_diagnostics": "",
+      "issues": [],
+      "files": {
+        "parse-result.json": {
+          "sha256": "249804a6c438fd558b38fa5fa368714d44821e9d3f0f2ecf554a5d22ca44e6ca",
+          "byte_length": 3887
+        },
+        "parse-result.md": {
+          "sha256": "212a04b329b01a2f1c701cdf96d2b8189774eb6161a27f31c6c63eef61be16c5",
+          "byte_length": 951
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "8a4c0ee60a207e1b1805df47bcef6fe5b2ef78b00f81854ab8f1bc294c71ba31",
+          "byte_length": 66
+        },
+        "parser/pages/000001.txt": {
+          "sha256": "31f5340429f8110071769257fc69e42eba58a1934710d5d457517f6bb64b75ad",
+          "byte_length": 74
+        },
+        "parser/pages/000002.txt": {
+          "sha256": "3f801d01041b3a9bcb19f663ebe7019971d93d0ae49ec740ca92169c2bc9b25a",
+          "byte_length": 65
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "4b4168147cc4a8d836d3668ebe8af95c218154fbd1a5403debc3db2ab76a80a9",
+          "byte_length": 35593
+        },
+        "parser/raw.pdf": {
+          "sha256": "52f87463abf89916ff5a91abb1c443e572c4d0036ee0c2511bca5f594a86c115",
+          "byte_length": 1562
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "crop-offset.pdf",
+      "category": "crop_media_offset",
+      "raw_sha256": "880f56601906d86db02ae585e2e01bb6689236a8e33d41de421ccbd24bc1c532",
+      "input_bytes": 787,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "parsed",
+      "parse_exit": 0,
+      "inspect_exit": 0,
+      "wall_ms": 198.838,
+      "inspect_wall_ms": 18.467,
+      "reported_elapsed_ms": 181,
+      "resource_bytes": 17283,
+      "total_output_file_bytes": 20783,
+      "parsed_pages": 1,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 91,
+      "literal_lines_checked": 2,
+      "diagnostics": "",
+      "inspect_diagnostics": "",
+      "issues": [],
+      "files": {
+        "parse-result.json": {
+          "sha256": "33fffe40c6487cee92482e72d50d3977b8de2086fe720d320de44c2153c3b68a",
+          "byte_length": 2588
+        },
+        "parse-result.md": {
+          "sha256": "73b1db7c9ee1b495205e4d97c71c40e67822ff038cdff949905dd8ef4a629b5c",
+          "byte_length": 912
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "cd166e8895e4a2ffae01af15ab06a6c8a6f7c77f0dabc77ca0b74789538dadcf",
+          "byte_length": 93
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "086acba9a85f119459a6534297584922c99a965baf14af9f34fda2d3f0552dca",
+          "byte_length": 16403
+        },
+        "parser/raw.pdf": {
+          "sha256": "880f56601906d86db02ae585e2e01bb6689236a8e33d41de421ccbd24bc1c532",
+          "byte_length": 787
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "rotations.pdf",
+      "category": "rotation_crop_and_user_unit",
+      "raw_sha256": "c24e9c95454bc60e46ac9363839a765019456d35dd69726a0322cf8b655b1e00",
+      "input_bytes": 3048,
+      "authoring_page_count": 8,
+      "page_count": 8,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 231.789,
+      "inspect_wall_ms": 36.539,
+      "reported_elapsed_ms": 206,
+      "resource_bytes": 99807,
+      "total_output_file_bytes": 114681,
+      "parsed_pages": 1,
+      "review_pages": 7,
+      "failed_pages": 0,
+      "glyphs_checked": 281,
+      "literal_lines_checked": 1,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 1 parsed, 7 needs_review, 0 failed pages; confirmed total 8. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 1 parsed, 7 needs_review, 0 failed pages; confirmed total 8. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_TEXT_ORIENTATION",
+          "unit_ids": [
+            "page-000001"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000001"
+          ]
+        },
+        {
+          "code": "PDF_MIXED_FONT_SIZE",
+          "unit_ids": [
+            "page-000001"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000002"
+          ]
+        },
+        {
+          "code": "PDF_TEXT_ORIENTATION",
+          "unit_ids": [
+            "page-000003"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000003"
+          ]
+        },
+        {
+          "code": "PDF_MIXED_FONT_SIZE",
+          "unit_ids": [
+            "page-000003"
+          ]
+        },
+        {
+          "code": "PDF_TEXT_ORIENTATION",
+          "unit_ids": [
+            "page-000004"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000004"
+          ]
+        },
+        {
+          "code": "PDF_MIXED_FONT_SIZE",
+          "unit_ids": [
+            "page-000004"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000005"
+          ]
+        },
+        {
+          "code": "PDF_TEXT_ORIENTATION",
+          "unit_ids": [
+            "page-000006"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000006"
+          ]
+        },
+        {
+          "code": "PDF_MIXED_FONT_SIZE",
+          "unit_ids": [
+            "page-000006"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_USER_UNIT",
+          "unit_ids": [
+            "page-000007"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "52e2aeac35704dd90e081c7e3c9e3ad82b3441637cafa0f2cc6cd32965699714",
+          "byte_length": 12272
+        },
+        "parse-result.md": {
+          "sha256": "71281444a3b24402bea253040051f1ec07bebc232b757ddd0f9519c139df8a08",
+          "byte_length": 2602
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "8771173b15b05dea527abe84ebc34cd978342630d787a26e76ceedd32feb1adf",
+          "byte_length": 32
+        },
+        "parser/pages/000001.txt": {
+          "sha256": "09150762d7ee6e6e96ffd0a0f48d7b300f03f5c3d460e0fd391286b12d8dce63",
+          "byte_length": 62
+        },
+        "parser/pages/000002.txt": {
+          "sha256": "e17306cc928caecf9b5c43263bfa1865f43cdca8046f63e3d628ff965345ff91",
+          "byte_length": 34
+        },
+        "parser/pages/000003.txt": {
+          "sha256": "e5df32c79bc9fe1500c2ecbfb34680102d198698589ee4d8414aa93b4ee1b796",
+          "byte_length": 64
+        },
+        "parser/pages/000004.txt": {
+          "sha256": "1749541eadec02891e2dabf21185b570576b1739eceacc33f8ddb38e57417ad5",
+          "byte_length": 71
+        },
+        "parser/pages/000005.txt": {
+          "sha256": "840e0ad7f4cd4424b32e83a231818ef1dd34cc9cb296e649e9d63cef3ab46f35",
+          "byte_length": 38
+        },
+        "parser/pages/000006.txt": {
+          "sha256": "af4e0be37560c9faf8fd0ad078ed7288c78585663795d6d3d05c9ec1c86a9e7f",
+          "byte_length": 73
+        },
+        "parser/pages/000007.txt": {
+          "sha256": "819439b2d311c885feade6634e6eea13135f95c556c679cc024195e53e523e2c",
+          "byte_length": 43
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "d70b5658776ac2bad2dfa92a4f01b21aacbfae754536362af61d5d29f088222c",
+          "byte_length": 96342
+        },
+        "parser/raw.pdf": {
+          "sha256": "c24e9c95454bc60e46ac9363839a765019456d35dd69726a0322cf8b655b1e00",
+          "byte_length": 3048
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "scanned-page.pdf",
+      "category": "scan_no_text_layer",
+      "raw_sha256": "758c09cd50c8191618fd9c19aca94c0acff608b9292193111b63704bd206455c",
+      "input_bytes": 1945,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 192.838,
+      "inspect_wall_ms": 17.239,
+      "reported_elapsed_ms": 176,
+      "resource_bytes": 3946,
+      "total_output_file_bytes": 8317,
+      "parsed_pages": 0,
+      "review_pages": 1,
+      "failed_pages": 0,
+      "glyphs_checked": 0,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_VISUAL_CONTENT",
+          "unit_ids": [
+            "page-000000"
+          ]
+        },
+        {
+          "code": "PDF_NO_TEXT_LAYER",
+          "unit_ids": [
+            "page-000000"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "4c94a279704c71c20ffcb97da30c3b6d7c063ab174b52eb815c998aecbfe182d",
+          "byte_length": 3214
+        },
+        "parse-result.md": {
+          "sha256": "4e6228925338f9b03b39e5f52ebebb62553695515c87f15a5517bfe93a3d66e3",
+          "byte_length": 1157
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "79a40ccc70fd406168ad0f04d0ce29461b7bcb2959b396f6e97e649b66007463",
+          "byte_length": 2001
+        },
+        "parser/raw.pdf": {
+          "sha256": "758c09cd50c8191618fd9c19aca94c0acff608b9292193111b63704bd206455c",
+          "byte_length": 1945
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "blank-page.pdf",
+      "category": "unknown_blank",
+      "raw_sha256": "59eae7a19c103c45db82d1354b95a5ed0354f25825be3200657ddae25a2afcaa",
+      "input_bytes": 609,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 191.929,
+      "inspect_wall_ms": 16.983,
+      "reported_elapsed_ms": 173,
+      "resource_bytes": 2218,
+      "total_output_file_bytes": 6070,
+      "parsed_pages": 0,
+      "review_pages": 1,
+      "failed_pages": 0,
+      "glyphs_checked": 0,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_UNKNOWN_BLANK",
+          "unit_ids": [
+            "page-000000"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "20098c9dd6aa02d6473f42530b0cb2e1073d6b16f054b3484a8d4c299c79a1d9",
+          "byte_length": 2834
+        },
+        "parse-result.md": {
+          "sha256": "f7456e1bd9e264357a188a05c9575f9bcb512b9d3f83d226549676bb00f22a8a",
+          "byte_length": 1018
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "f38512d2473b5a0f22877ca2976065fa9e866927c1d9a9dcc960e94deee94233",
+          "byte_length": 1609
+        },
+        "parser/raw.pdf": {
+          "sha256": "59eae7a19c103c45db82d1354b95a5ed0354f25825be3200657ddae25a2afcaa",
+          "byte_length": 609
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "damaged.pdf",
+      "category": "damaged",
+      "raw_sha256": "54c3dab0dc44186b92eca235cfc6d705e233c6b54f903efaf71a45e77d13d69a",
+      "input_bytes": 61,
+      "authoring_page_count": null,
+      "page_count": null,
+      "status": "failed",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 189.19,
+      "inspect_wall_ms": 15.668,
+      "reported_elapsed_ms": 173,
+      "resource_bytes": 920,
+      "total_output_file_bytes": 4365,
+      "parsed_pages": 0,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 0,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status failed: 0 parsed, 0 needs_review, 0 failed pages; confirmed total unknown. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status failed: 0 parsed, 0 needs_review, 0 failed pages; confirmed total unknown. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_ENUMERATION",
+          "unit_ids": [
+            "pdf-document"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "ff99229c14b4474e4dbfc71952dc49b1ccc36927768327245acea544f4c6c5b0",
+          "byte_length": 2467
+        },
+        "parse-result.md": {
+          "sha256": "9a71a37aef3be8ef68fac6c8a6b67c20e3758d5b79d80b2e29d1085562dae97c",
+          "byte_length": 978
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "10fcaeb3727340ee34d1f6b5a05e9b04e943f3ffae304fd2089fcce7a52ad433",
+          "byte_length": 859
+        },
+        "parser/raw.pdf": {
+          "sha256": "54c3dab0dc44186b92eca235cfc6d705e233c6b54f903efaf71a45e77d13d69a",
+          "byte_length": 61
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "encrypted.pdf",
+      "category": "encrypted",
+      "raw_sha256": "d37bdfe11346ca7fe99414a7a45f33aa74f43011286da93b82010eafb3187e5d",
+      "input_bytes": 1932,
+      "authoring_page_count": 1,
+      "page_count": null,
+      "status": "failed",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 195.259,
+      "inspect_wall_ms": 16.303,
+      "reported_elapsed_ms": 179,
+      "resource_bytes": 2795,
+      "total_output_file_bytes": 6250,
+      "parsed_pages": 0,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 0,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status failed: 0 parsed, 0 needs_review, 0 failed pages; confirmed total unknown. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status failed: 0 parsed, 0 needs_review, 0 failed pages; confirmed total unknown. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_ENUMERATION",
+          "unit_ids": [
+            "pdf-document"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "d8e42413b2fb7ce3094fd5dc3efb037854b1b7b50ae49d115ad59ce045715a17",
+          "byte_length": 2474
+        },
+        "parse-result.md": {
+          "sha256": "6f270161f083ffb234a3ab56b8d02b84466c541569f4b04fbc5c68cfb1ec71d7",
+          "byte_length": 981
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "f52d3ecb1cf7daca1e150df42816618bf567bd148937f4167c18a1468b505a7a",
+          "byte_length": 863
+        },
+        "parser/raw.pdf": {
+          "sha256": "d37bdfe11346ca7fe99414a7a45f33aa74f43011286da93b82010eafb3187e5d",
+          "byte_length": 1932
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "table-page.pdf",
+      "category": "table",
+      "raw_sha256": "478664217ca4520eff3f0e7f0d990a2f11149a589c06b84d16ac53bfe70f0939",
+      "input_bytes": 853,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 204.167,
+      "inspect_wall_ms": 18.289,
+      "reported_elapsed_ms": 185,
+      "resource_bytes": 6618,
+      "total_output_file_bytes": 11085,
+      "parsed_pages": 0,
+      "review_pages": 1,
+      "failed_pages": 0,
+      "glyphs_checked": 19,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_VISUAL_CONTENT",
+          "unit_ids": [
+            "page-000000"
+          ]
+        },
+        {
+          "code": "PDF_LAYOUT_GAP",
+          "unit_ids": [
+            "page-000000"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "a3b9ba00744701b8df107f3ef2cc76f83ce8576bd30d004afd04c7016eeb9593",
+          "byte_length": 3312
+        },
+        "parse-result.md": {
+          "sha256": "0bb273f6a6a5e50d39736e3c4ea4240708d7e5965a7f1c38e956fec95f92bfc0",
+          "byte_length": 1155
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "ee59aa3a93b567fa884d7b0216ed5e97339d076a9cfb33283e339376fa1b6a5f",
+          "byte_length": 23
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "ca5d4707a885b79efa41f2f21f7fb2e0b969f214a074e010dd2bd1133e98a5e3",
+          "byte_length": 5742
+        },
+        "parser/raw.pdf": {
+          "sha256": "478664217ca4520eff3f0e7f0d990a2f11149a589c06b84d16ac53bfe70f0939",
+          "byte_length": 853
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "formula-page.pdf",
+      "category": "formula_superscript",
+      "raw_sha256": "ec8a0268a3cd6de50423453fd8cfdb4939d0dc96dda746373f019909246c4411",
+      "input_bytes": 710,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 193.962,
+      "inspect_wall_ms": 19.118,
+      "reported_elapsed_ms": 175,
+      "resource_bytes": 5059,
+      "total_output_file_bytes": 9043,
+      "parsed_pages": 0,
+      "review_pages": 1,
+      "failed_pages": 0,
+      "glyphs_checked": 16,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_MIXED_FONT_SIZE",
+          "unit_ids": [
+            "page-000000"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "b83111ff5c75b0575d814cff636b5f52b6cf74d8022b12627fc7fd89b17455db",
+          "byte_length": 2951
+        },
+        "parse-result.md": {
+          "sha256": "f9539c954a7e1c6fca6561ee2e163e8f927a68f88864546fd8b84353f3fb4435",
+          "byte_length": 1033
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "71046e767099bc04fd29f15ec1c8cfbeaf071de5b3d90962f55658e3fb87f765",
+          "byte_length": 17
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "9d27f4899476e9cd23e58e555db835dfb9b3acc222ebe9d296382b3d8585df77",
+          "byte_length": 4332
+        },
+        "parser/raw.pdf": {
+          "sha256": "ec8a0268a3cd6de50423453fd8cfdb4939d0dc96dda746373f019909246c4411",
+          "byte_length": 710
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "image-page.pdf",
+      "category": "image_with_text",
+      "raw_sha256": "ea70777b04400d8027798401b15bba9b596126b59c7f579dfd130cd097f3099d",
+      "input_bytes": 2021,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 194.192,
+      "inspect_wall_ms": 17.646,
+      "reported_elapsed_ms": 176,
+      "resource_bytes": 9491,
+      "total_output_file_bytes": 13515,
+      "parsed_pages": 0,
+      "review_pages": 1,
+      "failed_pages": 0,
+      "glyphs_checked": 35,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_VISUAL_CONTENT",
+          "unit_ids": [
+            "page-000000"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "83ed87d595bb8d9cbc00427b02bef00933c8505e9458da1aaab6f292c946e268",
+          "byte_length": 2972
+        },
+        "parse-result.md": {
+          "sha256": "3801cc615c142d093d790757fe6fda5a8423df42a506c513d77801e8d99155a3",
+          "byte_length": 1052
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "4f3e2b4a9d0c04d49392b2591d52fbe1d782b7d776524b1d46f55f7250efd8b0",
+          "byte_length": 36
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "0f18f2ebf8304cef3bdb1565d444999fbc03615f11448d55e4b01e350481c95e",
+          "byte_length": 7434
+        },
+        "parser/raw.pdf": {
+          "sha256": "ea70777b04400d8027798401b15bba9b596126b59c7f579dfd130cd097f3099d",
+          "byte_length": 2021
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "columns-page.pdf",
+      "category": "multiple_columns",
+      "raw_sha256": "f338629f37f54d11d63fca8b347e26794d089ce9bc092eea9deab1b9c54c342a",
+      "input_bytes": 844,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 194.994,
+      "inspect_wall_ms": 18.168,
+      "reported_elapsed_ms": 176,
+      "resource_bytes": 13983,
+      "total_output_file_bytes": 17958,
+      "parsed_pages": 0,
+      "review_pages": 1,
+      "failed_pages": 0,
+      "glyphs_checked": 72,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_LAYOUT_GAP",
+          "unit_ids": [
+            "page-000000"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "22e59887a7b07586376cf1cdeff418383b168d965249e1e44b905e2100af92b5",
+          "byte_length": 2947
+        },
+        "parse-result.md": {
+          "sha256": "43057869ebbdb28bab673a8c037852e7f055d000ab28ee3391b93f7bd1f1ad90",
+          "byte_length": 1028
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "0dbab5b62932932922dfdfa82224bd912dac14d68303c777aa176c5ac9605d2a",
+          "byte_length": 76
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "ff7ebb28101590c4a16cf0f2566d0a86529f94f25473b825e5661dc3ea035806",
+          "byte_length": 13063
+        },
+        "parser/raw.pdf": {
+          "sha256": "f338629f37f54d11d63fca8b347e26794d089ce9bc092eea9deab1b9c54c342a",
+          "byte_length": 844
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "partial-page-failure.pdf",
+      "category": "partial_page_failure",
+      "raw_sha256": "618fa6e5b4c561637a011305047becb91644847e865484d88e2ba45c4d248eea",
+      "input_bytes": 1050,
+      "authoring_page_count": 2,
+      "page_count": 2,
+      "status": "failed",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 193.122,
+      "inspect_wall_ms": 20.579,
+      "reported_elapsed_ms": 176,
+      "resource_bytes": 10901,
+      "total_output_file_bytes": 15004,
+      "parsed_pages": 1,
+      "review_pages": 0,
+      "failed_pages": 1,
+      "glyphs_checked": 49,
+      "literal_lines_checked": 1,
+      "diagnostics": "PDF_INCOMPLETE: PDF status failed: 1 parsed, 0 needs_review, 1 failed pages; confirmed total 2. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status failed: 1 parsed, 0 needs_review, 1 failed pages; confirmed total 2. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_PAGE_GEOMETRY",
+          "unit_ids": [
+            "page-000001"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "1b4e43c0246ff7af525c405155569645b5a2cb730f9098cf56db6db0a7af0983",
+          "byte_length": 3103
+        },
+        "parse-result.md": {
+          "sha256": "1a4de03eb18d794e81d84e0657d7f6a1e9cc0f0442e5d8b8e9a71a5096d01f93",
+          "byte_length": 1000
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "9db2039f3cd4b1e49b2b9d4b30d25234f05027de29d7593ac9f427c3bc95d263",
+          "byte_length": 50
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "4d3453c12500a092e733fad6e9134697e2acd06ab9e93c4b52336285d264b317",
+          "byte_length": 9801
+        },
+        "parser/raw.pdf": {
+          "sha256": "618fa6e5b4c561637a011305047becb91644847e865484d88e2ba45c4d248eea",
+          "byte_length": 1050
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "layout-order.pdf",
+      "category": "drawing_order_differs",
+      "raw_sha256": "beab8ce1dde90530833939d4bc2c2346fd0b41725c0ba07fd084094f385771a5",
+      "input_bytes": 727,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "parsed",
+      "parse_exit": 0,
+      "inspect_exit": 0,
+      "wall_ms": 191.571,
+      "inspect_wall_ms": 17.863,
+      "reported_elapsed_ms": 175,
+      "resource_bytes": 8326,
+      "total_output_file_bytes": 11823,
+      "parsed_pages": 1,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 37,
+      "literal_lines_checked": 2,
+      "diagnostics": "",
+      "inspect_diagnostics": "",
+      "issues": [],
+      "files": {
+        "parse-result.json": {
+          "sha256": "7d10375e55dd499ee6950e3207fd025a776715b61faa4794d8e95cb111630ce2",
+          "byte_length": 2586
+        },
+        "parse-result.md": {
+          "sha256": "77aa3dc8d7bbf7c4d31c588cb03a6b7402f733ef09d4393c56bdc68b6fe22541",
+          "byte_length": 911
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "78486ff3227764ad34291f94dff5d12e511a5c7774686eab98cfab7bc6c9544e",
+          "byte_length": 39
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "e00fa234218bcfbd00367056689cf6eff55cee3a94bb74cc190adcb6e531604d",
+          "byte_length": 7560
+        },
+        "parser/raw.pdf": {
+          "sha256": "beab8ce1dde90530833939d4bc2c2346fd0b41725c0ba07fd084094f385771a5",
+          "byte_length": 727
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    }
+  ],
+  "real_cli_calls": 29,
+  "physical_pages_recorded": 22,
+  "result": "passed"
+}

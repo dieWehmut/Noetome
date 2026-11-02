@@ -1,0 +1,23 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.84s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-106f6dd13b943159.exe)
+
+running 15 tests
+test pdf_validate::tests::rejects_wrong_crop_rotation_matrix ... ok
+test pdf_validate::tests::rejects_text_artifact_resource_sha_or_page_reference_change ... ok
+test pdf_validate::tests::rejects_unconfirmed_page_count_claimed_as_parsed ... ok
+test pdf_validate::tests::accepts_review_page_with_confirmed_empty_artifact_and_no_wire_range ... ok
+test pdf_validate::tests::rejects_missing_page_and_fake_page_count ... ok
+test pdf_validate::tests::rejects_missing_body_even_when_all_artifact_shas_are_valid ... ok
+test pdf_validate::tests::rejects_wrong_page_location ... ok
+test pdf_validate::tests::rejects_utf8_byte_range_cutting_an_actual_character ... ok
+test pdf_validate::tests::rejects_review_or_failed_page_claimed_as_whole_document_parsed ... ok
+test pdf_validate::tests::accepts_declared_complete_synthetic_page_and_utf8_region ... ok
+test pdf_validate::tests::rejects_in_bounds_bbox_that_does_not_enclose_its_actual_glyphs ... ok
+test pdf_validate::tests::refuses_whitespace_only_page_claimed_as_parsed ... ok
+test pdf_validate::tests::refuses_multicodepoint_glyph_claimed_as_parsed_despite_consistent_body ... ok
+test pdf_validate::tests::refuses_staggered_disjoint_line_columns_claimed_as_parsed ... ok
+test pdf_validate::tests::rejects_nonfinite_and_out_of_page_coordinates ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 256 filtered out; finished in 0.00s
+

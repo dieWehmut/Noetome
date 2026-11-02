@@ -1,0 +1,39 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.19s
+     Running tests\pdf_parse.rs (target\debug\deps\pdf_parse-605d8a2361f31e2c.exe)
+
+running 7 tests
+test missing_or_relative_runtime_is_explicit_failure_without_creating_a_sandbox ... ok
+test multicodepoint_unicode_mapping_preserves_one_edge_space_and_remains_reviewable ... FAILED
+test inspect_uses_saved_raw_after_input_moves_and_rejects_changed_text ... ok
+test existing_root_unreadable_input_and_unknown_workspace_entries_never_succeed ... ok
+test location_and_body_mutations_fail_even_after_artifact_hashes_are_updated ... ok
+test real_boundary_matrix_preserves_physical_pages_and_honest_nonzero_status ... FAILED
+test real_cli_parses_fixed_single_and_multiple_pages_with_actual_positions ... ok
+
+failures:
+
+---- multicodepoint_unicode_mapping_preserves_one_edge_space_and_remains_reviewable stdout ----
+
+thread 'multicodepoint_unicode_mapping_preserves_one_edge_space_and_remains_reviewable' (47496) panicked at crates\noetome-cli\tests\pdf_parse.rs:420:5:
+assertion `left == right` failed: PDF_TEXT: page 0 body/UTF8 half-open range/order mismatch at 0
+
+  left: String("failed")
+ right: "needs_review"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- real_boundary_matrix_preserves_physical_pages_and_honest_nonzero_status stdout ----
+
+thread 'real_boundary_matrix_preserves_physical_pages_and_honest_nonzero_status' (2972) panicked at crates\noetome-cli\tests\pdf_parse.rs:97:13:
+assertion `left == right` failed: status
+  left: String("parsed")
+ right: String("needs_review")
+
+
+failures:
+    multicodepoint_unicode_mapping_preserves_one_edge_space_and_remains_reviewable
+    real_boundary_matrix_preserves_physical_pages_and_honest_nonzero_status
+
+test result: FAILED. 5 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.11s
+
+error: test failed, to rerun pass `-p noetome-cli --test pdf_parse`

@@ -128,6 +128,16 @@ B03-T01 的具体验收见[实施方案](../execution/B03-T01_PLAN.md)与[协议
 
 真实 PDF 样例分别覆盖文本、扫描、表格、公式和图片；每类记录支持、失败和需要人工复核的结果。扫描失败不能以保留空白文本宣布来源覆盖完成。
 
+B03-T02固定作者自造的14PDF及25个可渲染页，正文、原始页数/SHA、Helvetica baseline/字宽、逐字形/区域和CropBox/Rotate/UserUnit矩阵预期不从解析输出反推。初始样例先于parser实现，独立审查又增错开栏和纯空格页并固定作者预期再做修复红绿。Poppler页数/渲染与agent回看是独立工程证据；pdftotext未提供时记not_run，UserUnit标注图只证明归一位置，不证明渲染物理尺寸。复杂页仅核对真实字形/位置和保守状态，未声明可靠阅读顺序。完成证据见[B03-T02验证](../validation/B03-T02.md)、[adapter红绿](../validation/B03-T02-ADAPTER.md)与[独立支持矩阵](../validation/assets/B03-T02-support-matrix.md)。
+
+真实`tests/pdf_parse.rs`按全部物理页、字面正文/行序、独立glyph和bbox及实际资源字节核验普通CLI，再执行漏页、错页、页内错框、越界、漏正文、错序和Unicode切断等篡改。修改manifest后更新实际artifact SHA/字节总和及JSON/Markdown对应事实，并要求具体PDF语义错误族；陈旧MD或region名称规则提前失败不能替代正文/位置失败证据。空页的实际0字节artifact保留，但非空wire范围必须start<end，unknown空页wire text=null并需复核，不放宽已验收v1。
+
+Core DTO测试与adapter直接Python进程分开记账；Root PDF边界测试另用实际Windows锁、junction/硬链接、目录替换、create_new报告碰撞、stdout/资源限额和已观察存活PID后的timeout/cancel/退出。故障程序只存在于测试调用，普通CLI不接受fake、命令覆盖或故障环境开关。独立`scripts/verify_pdf_parse.py`不导入parser/Core实现，从固定expected检查14次parse、14次只读inspect与实际SHA、计数、正文/位置，保存wall_ms、资源字节及完整产物指纹。小型wall/输出资源测量不是内存、CPU、千页吞吐、24小时稳定或科学指标。
+
+整项code review以额外真实PDF复现了错开栏误parsed、纯空格误parsed和多码点ToUnicode空格规则漂移。必须保留原红灯，逐项补adapter和Core的伪造parsed拒绝；Rust再用实际动态作者CMap核对A+space后B只保留一个空格、needs_review及readonly inspect。该CMap回归不扩大多码点font bbox支持声明。
+
+真实PDF回归须先按[锁定环境](../../sidecars/pdf_parser/README.md)配置NOETOME_PDF_PYTHON绝对路径；既有fake回归用NOETOME_TEST_PYTHON，均不自动下载。每次改adapter后生成并检查`scripts/build_pdf_sidecar.py --check`的源码/payload字节和SHA绑定，避免可读源码测试与实际嵌入代码分叉。普通Rust构建消费提交的payload，不导入Python解析库。
+
 ### 模型 API 与研究
 
 默认用 mock provider 重放已审阅响应，覆盖非法 JSON、空响应、限流、超时、未知计费和能力不足。真实 API 冒烟测试单独、显式启用，设置预算，不进入普通离线回归。

@@ -22,7 +22,7 @@
 | 文件 | 职责 / 接口 |
 | --- | --- |
 | `fixtures/pdf-text-v1/generate_fixtures.py`、`expected.json`、`README.md`、PDF 文件 | 自造字节与 authoring 坐标；在 adapter 运行前固定预期，不导入待测解析器 |
-| `sidecars/pdf_parser/adapter.py`、`requirements-lock.txt`、`README.md`、`licenses/` | 唯一 Python 文本提取与协议响应；固定原始、逐页文本、manifest 资源 |
+| `sidecars/pdf_parser/adapter.py`、`adapter.zlib`、`adapter-payload.json`、`requirements-lock.txt`、`README.md`、`licenses/` | 唯一 Python 文本提取与协议响应；可读源码及字节绑定的压缩嵌入代码、固定资源 |
 | `pdf_model.rs` | 严格 PDF manifest、geometry、glyph、region、visual、report 类型 |
 | `pdf_validate.rs` | `validate_manifest(manifest, response, resource_data, control)`；核对页、完整字符分配、真实文本范围、bbox 包络、阅读顺序和状态 |
 | `pdf_workspace.rs` | 独占外层新根、只读报告守卫、报告 create_new/重读与精确外层清单 |
@@ -33,10 +33,10 @@
 
 ## 1 固定独立样例与红灯
 
-- [ ] 核对官方锁定版本的 README、许可证、requirements 和已安装元数据；记录来源链接及运行时，不自动升级共享环境。
-- [ ] 创建一页/三页单栏、偏移 CropBox、旋转、扫描、空白、损坏、加密、表格、公式、图片、多栏、部分页损坏及绘制顺序样例。PDF authoring 的正文、font、baseline、页数和坐标确定预期；原始 SHA 随固定字节登记。
-- [ ] 用 Poppler 渲染全部可渲染页，核对 authoring 预期的正文和区域；review 记录与预期分开，不宣称人工科学金标准。
-- [ ] 写真实 CLI 红灯：
+- [x] 核对官方锁定版本的 README、许可证、requirements 和已安装元数据；记录来源链接及运行时，不自动升级共享环境。
+- [x] 创建一页/三页单栏、偏移 CropBox、旋转、扫描、空白、损坏、加密、表格、公式、图片、多栏、部分页损坏及绘制顺序样例。PDF authoring 的正文、font、baseline、页数和坐标确定预期；原始 SHA 随固定字节登记。
+- [x] 用 Poppler 渲染全部可渲染页，核对 authoring 预期的正文和区域；review 记录与预期分开，不宣称人工科学金标准。
+- [x] 写真实 CLI 红灯：
 
 ```rust
 let output = Command::new(env!("CARGO_BIN_EXE_noetome"))
@@ -45,25 +45,30 @@ let output = Command::new(env!("CARGO_BIN_EXE_noetome"))
 assert!(output.status.success(), "{}", String::from_utf8_lossy(&output.stderr));
 ```
 
-- [ ] 实跑 `scripts/cargo_local.ps1 test -p noetome-cli --test pdf_parse --locked --offline`，记录因入口缺失而非 typo 失败。Core 定位负例在空验证实现上实跑红灯后再实现。
-- [ ] 聚焦提交固定输入、契约与真实红灯记录。
+- [x] 实跑 `scripts/cargo_local.ps1 test -p noetome-cli --test pdf_parse --locked --offline`，记录因入口缺失而非 typo 失败。Core 定位负例在空验证实现上实跑红灯后再实现。
+- [x] 聚焦提交固定输入、契约与真实红灯记录。
 
 ## 2 Adapter 与 Core 定位验证
 
-- [ ] Python 完整读取并对账请求 SHA；只按固定路径以 exclusive create 写资源。枚举原始页对象之后逐页构建；枚举中断保留已确认前缀并令 page_count=null。
-- [ ] 输出原始 PDF、逐页 UTF8 和 PDF manifest；manifest 自身 SHA 由外层协议声明，不做自引用。原始页和视觉区域引用原 PDF，不声称图片/OCR/公式结构已抽取。
-- [ ] 核对全部物理页、display 页、page_count 与 sidecar units 的双向一一映射；未知页总数附 document 失败单元，不能把前缀当完整清单。
-- [ ] Rust 以逐字符清单重建声明的行分组、全文与 bbox 包络；区域完整分配字符且顺序确定。UTF8 半开范围绑定 page resource ID/SHA，必须与实际正文字符边界一致。
-- [ ] 红/绿覆盖漏页、错页、越界及页内错误 bbox、缺正文、乱序、Unicode 切断、资源路径/SHA、未知字段和不诚实状态。真实独立 expected 另核对实际位置；字符审计一致性不等于一般 PDF 内容正确性。
-- [ ] 扫描/空白、图形/表格/图片、公式与多栏检测按保守策略 needs_review；部分页异常 failed，正文已确认的其他页保留。旋转坐标保留真实变换，旋转阅读顺序仍 needs_review。
-- [ ] 定向检查通过后聚焦提交 adapter 与 Core 验证。
+- [x] Python 完整读取并对账请求 SHA；只按固定路径以 exclusive create 写资源。枚举原始页对象之后逐页构建；枚举中断保留已确认前缀并令 page_count=null。
+- [x] Windows 实际原始 `-c` argv 曾超过 CreateProcess 限额（WinError206）；使用标准库 zlib 的可信压缩源代码 wrapper，`python scripts/build_pdf_sidecar.py --check` 核对解压结果与源码逐字节一致。宿主仍用原生 argv，文档不能选择代码，普通 fake 回归不依赖 parser 库。
+- [x] 输出原始 PDF、逐页 UTF8 和 PDF manifest；manifest 自身 SHA 由外层协议声明，不做自引用。原始页和视觉区域引用原 PDF，不声称图片/OCR/公式结构已抽取。
+- [x] 核对全部物理页、display 页、page_count 与 sidecar units 的双向一一映射；未知页总数附 document 失败单元，不能把前缀当完整清单。
+- [x] Rust 以逐字符清单重建声明的行分组、全文与 bbox 包络；区域完整分配字符且顺序确定。UTF8 半开范围绑定 page resource ID/SHA，必须与实际正文字符边界一致。
+- [x] 红/绿覆盖漏页、错页、越界及页内错误 bbox、缺正文、乱序、Unicode 切断、资源路径/SHA、未知字段和不诚实状态。真实独立 expected 另核对实际位置；字符审计一致性不等于一般 PDF 内容正确性。
+- [x] 扫描/空白、图形/表格/图片、公式与多栏检测按保守策略 needs_review；部分页异常 failed，正文已确认的其他页保留。旋转坐标保留真实变换，旋转阅读顺序仍 needs_review。
+- [x] 定向检查通过后聚焦提交 adapter 与 Core 验证。
 
 ## 3 沙盒重查、故障及验收
 
-- [ ] 新根布局仅 `parser/`、Core `parse-result.json` / `parse-result.md`；失败可保留 `failure.json` 和未确认 parser 现场。所有输出 create_new，不接管既有根。
-- [ ] inspect-pdf 只读重查原始、manifest、所有文本/资源 SHA 和精确清单，以及 Core 重新计算的摘要/Markdown；原文件移动/删除后仍可重查项目外独立沙盒。
-- [ ] 实跑读失败、输入改变、各实际限额、时限/取消、子进程失败、部分页、目标碰撞、路径/junction/硬链接/占用/目录替换；生产 CLI 不暴露 fake 或故障开关。异常保留定位原因，未确认原始/页面不补造。
-- [ ] `scripts/verify_pdf_parse.py` 按事先 expected 核对真实 CLI、全部页和区域；保存支持矩阵、原始 SHA、实际时间/输出资源字节以及未运行的性能/科学项。
-- [ ] 独立 code-review 子代理只审 B03-T02；解决重要问题后运行相应修复回归。
-- [ ] 运行格式、locked 离线 workspace check/test、Python unittest、devlog check、diff check；逐条验收、同步标准/日志、普通提交及推送，核对远端 HEAD。
-- [ ] 本项验收后交接 B03-T03，另轮 start，不将持续目标偷换为 PDF/模型全部已完成。
+- [x] 新根布局仅 `parser/`、Core `parse-result.json` / `parse-result.md`；失败可保留 `failure.json` 和未确认 parser 现场。所有输出 create_new，不接管既有根。
+- [x] inspect-pdf 只读重查原始、manifest、所有文本/资源 SHA 和精确清单，以及 Core 重新计算的摘要/Markdown；原文件移动/删除后仍可重查项目外独立沙盒。
+- [x] 实跑读失败、输入改变、各实际限额、时限/取消、子进程失败、部分页、目标碰撞、路径/junction/硬链接/占用/目录替换；生产 CLI 不暴露 fake 或故障开关。异常保留定位原因，未确认原始/页面不补造。
+- [x] `scripts/verify_pdf_parse.py` 按事先 expected 核对真实 CLI、全部页和区域；保存支持矩阵、原始 SHA、实际时间/输出资源字节以及未运行的性能/科学项。
+- [x] 独立 code-review 子代理只审 B03-T02；解决重要问题后运行相应修复回归。
+- [x] 运行格式、locked离线workspace check/test、Python unittest、devlog check、diff check；364 Rust/43 Python全部通过，实际输出和审查证据已保存。
+- Git交付按作者红灯、实现/保护、最终标准/验收日志拆分提交；全部检查通过后推送当前任务分支并核对远端HEAD，最终结果以Git为准。
+- [x] 本项验收后交接 B03-T03，另轮 start，不将持续目标偷换为 PDF/模型全部已完成。
+
+
+实施和限定复审已完成，逐条真实结果、历史失败及未运行项统一见[B03-T02验收](../validation/B03-T02.md)与[独立审查](../validation/B03-T02-REVIEW.md)。此方案不替代任务账本状态，也不以勾选计划作为验收证据。
