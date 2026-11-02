@@ -368,6 +368,10 @@ fn junction_rejected_with_external_sentinel_unchanged() {
 }
 #[cfg(windows)]
 fn tree(mode: &str, want: Option<&str>) {
+    tree_with_fault(mode, want, false);
+}
+#[cfg(windows)]
+fn tree_with_fault(mode: &str, want: Option<&str>, primary_failure: bool) {
     let (input, workspace, sentinel) = setup();
     let handshake = sentinel.with_file_name("handshake.json");
     let mut cmd = command(mode);
@@ -375,6 +379,7 @@ fn tree(mode: &str, want: Option<&str>) {
     let cancelled = Arc::new(AtomicBool::new(false));
     let token = cancelled.clone();
     let thread = std::thread::spawn(move || {
+        FAIL_PRIMARY_TERMINATE.with(|flag| flag.set(primary_failure));
         run_inner(
             &cmd,
             &input,
@@ -408,11 +413,18 @@ fn tree(mode: &str, want: Option<&str>) {
         pids,
         "root/child/grandchild must be alive before termination"
     );
-    if mode == "tree_cancel" {
+    println!("tree_mode={mode} live_pids={pids:?}");
+    let stop_at = Instant::now();
+    if mode == "tree_cancel" || primary_failure {
         cancelled.store(true, Ordering::SeqCst);
     }
     fs::write(handshake.with_extension("json.go"), b"go").unwrap();
     let result = thread.join().unwrap();
+    let stop_elapsed = stop_at.elapsed();
+    println!(
+        "tree_mode={mode} primary_failure={primary_failure} stop_elapsed_ms={}",
+        stop_elapsed.as_millis()
+    );
     if let Some(code) = want {
         assert_eq!(result.unwrap_err().code, code);
     } else {
@@ -423,6 +435,12 @@ fn tree(mode: &str, want: Option<&str>) {
         "all descendants must exit before host returns"
     );
     assert_eq!(fs::read(sentinel).unwrap(), b"outside sentinel");
+    if primary_failure {
+        assert!(
+            stop_elapsed < Duration::from_secs(1),
+            "termination fallback must run before root wait: {stop_elapsed:?}"
+        );
+    }
 }
 #[cfg(windows)]
 #[test]
@@ -702,4 +720,10 @@ fn review_large_resource_validation_cancel_latency() {
         latency < Duration::from_millis(200),
         "cancel must interrupt unit validation: {latency:?}"
     );
+}
+
+#[cfg(windows)]
+#[test]
+fn review_primary_terminate_failure_reaps_real_tree() {
+    tree_with_fault("tree_fallback", Some("SIDECAR_CLEANUP"), true);
 }

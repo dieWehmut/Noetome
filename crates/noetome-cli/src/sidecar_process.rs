@@ -152,7 +152,10 @@ fn run_inner(
 }
 #[cfg(windows)]
 #[derive(Debug)]
-struct Observer(Arc<win32job::Job>);
+struct Observer {
+    kill: Arc<win32job::Job>,
+    census: Arc<win32job::Job>,
+}
 #[cfg(windows)]
 impl CommandWrapper for Observer {
     fn wrap_child(
@@ -164,10 +167,11 @@ impl CommandWrapper for Observer {
         let handle = child
             .process_handle()
             .ok_or_else(|| std::io::Error::other("no process handle"))?;
-        if let Err(e) = self.0.assign_process(handle.as_raw_handle() as isize) {
-            let _ = child.start_kill();
-            let _ = child.wait();
-            return Err(std::io::Error::other(e.to_string()));
+        for job in [&self.kill, &self.census] {
+            if let Err(e) = job.assign_process(handle.as_raw_handle() as isize) {
+                let _ = child.start_kill();
+                return Err(std::io::Error::other(e.to_string()));
+            }
         }
         Ok(child)
     }
@@ -224,6 +228,8 @@ fn transport(
             win32job::Job::create_with_limit_info(&info)
                 .map_err(|e| SidecarError::new("SIDECAR_START", e))?,
         );
+        let census =
+            Arc::new(win32job::Job::create().map_err(|e| SidecarError::new("SIDECAR_START", e))?);
         let mut wrap = CommandWrap::with_new(&command.program, |c| {
             c.args(&command.args)
                 .stdin(Stdio::piped())
@@ -235,7 +241,10 @@ fn transport(
         let mut flags = CreationFlags(Default::default());
         flags.0.0 = 0x08000000; // CREATE_NO_WINDOW
         wrap.wrap(flags)
-            .wrap(Observer(observer.clone()))
+            .wrap(Observer {
+                kill: observer.clone(),
+                census: census.clone(),
+            })
             .wrap(JobObject);
         let mut child = wrap
             .spawn()
@@ -282,41 +291,65 @@ fn transport(
         }
         // Also terminate leftovers after a successful root exit. No descendants
         // from a single-request parser may outlive the operation.
-        if let Err(e) = child.start_kill() {
+        #[cfg(test)]
+        let terminate_result = if FAIL_PRIMARY_TERMINATE.with(|flag| flag.get()) {
+            Err(std::io::Error::other("injected primary terminate failure"))
+        } else {
+            child.start_kill()
+        };
+        #[cfg(not(test))]
+        let terminate_result = child.start_kill();
+        if let Err(e) = terminate_result {
             failure = Some(SidecarError::new("SIDECAR_CLEANUP", e));
         }
-        match child.inner_mut().wait() {
-            Ok(s) => {
-                if status.is_none() {
-                    status = Some(s);
-                }
-            }
-            Err(e) => failure = Some(SidecarError::new("SIDECAR_CLEANUP", e)),
-        }
-        let cleanup_start = Instant::now();
-        loop {
-            match observer.query_process_id_list() {
-                Ok(pids) if pids.is_empty() => break,
-                Ok(_) => {
-                    if cleanup_start.elapsed() > Duration::from_secs(10) {
-                        failure = Some(SidecarError::new(
-                            "SIDECAR_CLEANUP",
-                            "job still has active processes",
-                        ));
-                        break;
-                    }
-                    thread::sleep(Duration::from_millis(2));
-                }
-                Err(e) => {
-                    failure = Some(SidecarError::new("SIDECAR_CLEANUP", e));
-                    break;
-                }
-            }
-        }
-        // Closing both kill-on-close jobs is a final safety net before joins.
-        drop(child);
+        // Release every handle of the independent kill-on-close job *before*
+        // any root wait. The census job deliberately does not kill on close.
         drop(wrap);
         drop(observer);
+        let cleanup_start = Instant::now();
+        let mut tree_empty = false;
+        loop {
+            if status.is_none() {
+                match child.inner_mut().try_wait() {
+                    Ok(Some(s)) => status = Some(s),
+                    Ok(None) => {}
+                    Err(e) => failure = Some(SidecarError::new("SIDECAR_CLEANUP", e)),
+                }
+            }
+            match census.query_process_id_list() {
+                Ok(pids) => tree_empty = pids.is_empty(),
+                Err(e) => failure = Some(SidecarError::new("SIDECAR_CLEANUP", e)),
+            }
+            if tree_empty && status.is_some() {
+                break;
+            }
+            if cleanup_start.elapsed() >= Duration::from_secs(10) {
+                failure = Some(SidecarError::new(
+                    "SIDECAR_CLEANUP",
+                    "root/job exit not confirmed within cleanup deadline",
+                ));
+                break;
+            }
+            thread::sleep(Duration::from_millis(2));
+        }
+        // Native wait is reached only after native try_wait confirmed exit, so
+        // it uses the cached status rather than an unbounded process wait.
+        if status.is_some() {
+            if let Err(e) = child.inner_mut().wait() {
+                failure = Some(SidecarError::new("SIDECAR_CLEANUP", e));
+            }
+        }
+        drop(child);
+        drop(census);
+        while !(writer.is_finished() && out_thread.is_finished() && err_thread.is_finished()) {
+            if cleanup_start.elapsed() >= Duration::from_secs(10) {
+                return Err(SidecarError::new(
+                    "SIDECAR_CLEANUP",
+                    "IO workers not stopped within cleanup deadline; cleanup incomplete",
+                ));
+            }
+            thread::sleep(Duration::from_millis(2));
+        }
         let write_result = writer.join();
         let out_result = out_thread.join();
         let err_result = err_thread.join();
@@ -452,6 +485,7 @@ mod tests;
 
 #[cfg(test)]
 thread_local! {
+    static FAIL_PRIMARY_TERMINATE: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
     static VALIDATION_CANCEL: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
     static CANCELLED_AT: std::cell::Cell<Option<Instant>> = const { std::cell::Cell::new(None) };
 }
