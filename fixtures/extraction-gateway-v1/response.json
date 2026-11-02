@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "producer": "fake",
+  "concepts": [
+    {
+      "concept_id": "concept-speed",
+      "revision": 1,
+      "canonical_name": "样例 A 速度",
+      "aliases": [],
+      "needs_full_explanation": true
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "evidence-speed",
+      "unit_id": "unit-0",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 94,
+      "excerpt_sha256": "1f3a11c848a615d62df0535a344b02cc4688c1d7640dee13dd89b0928949362e",
+      "quote": "在本夹具的样例 A 中，速度为 10 m/s。条件是温度 20 ℃、仅适用样例 A。"
+    }
+  ],
+  "atoms": [
+    {
+      "atom": {
+        "atom_id": "atom-speed",
+        "revision": 1,
+        "kind": "comparison_value",
+        "concept_ids": [
+          "concept-speed"
+        ],
+        "content": "样例 A 的速度为 10 m/s，条件为温度 20 ℃且仅适用样例 A。",
+        "qualifiers": [
+          "m/s",
+          "温度 20 ℃",
+          "仅适用样例 A"
+        ],
+        "evidence_links": [
+          {
+            "evidence_id": "evidence-speed",
+            "relation": "supports"
+          }
+        ],
+        "required": false,
+        "verification": "unverified",
+        "value_status": "known"
+      },
+      "measurement": {
+        "value_status": "known",
+        "value": "10",
+        "unit": "m/s",
+        "conditions": [
+          "温度 20 ℃",
+          "仅适用样例 A"
+        ]
+      }
+    }
+  ]
+}

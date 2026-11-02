@@ -983,7 +983,7 @@
       "id": "B04-T01",
       "title": "用离线fake验证有界知识抽取网关与来源证据契约",
       "batch": "B04",
-      "status": "todo",
+      "status": "in_progress",
       "depends_on": [
         "B03-T03"
       ],
@@ -1004,7 +1004,17 @@
         "请求/候选/报告只保存到新测试根，来源项目SQL、字节、mtime和清单前后不变；未知既有输出和路径越界拒绝。费用未知不填0，普通测试离线且无真实收费调用。",
         "更新实际交换/设计/测试标准，针对性普通入口和独立行为验证、Rust workspace、Python、devlog及diff检查通过，新鲜审查无未处置重要问题后complete并提交推送。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-02T13:10:33Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "本轮仅推进离线 fake 抽取网关：冻结真实文本/PDF来源证据、有界单请求和严格候选契约；独立gold及普通CLI先RED后实现，保持来源只读。按已接受D07/D08及任务卡执行，不调用付费API。",
+          "validation": [],
+          "artifacts": []
+        }
+      ]
     },
     {
       "id": "B04-T02",

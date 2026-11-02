@@ -1,0 +1,84 @@
+{
+  "expected_red": true,
+  "error": "(['extract', 'fake', 'D:\\\\Noetome\\\\target\\\\compiler-temp\\\\b04-t01-red\\\\project 中文', '27f1a8d9-8159-4a7c-bd76-5c6b428d729f', 'D:\\\\Noetome\\\\target\\\\compiler-temp\\\\b04-t01-red\\\\case-valid', 'D:\\\\Noetome\\\\target\\\\compiler-temp\\\\b04-t01-red\\\\out-valid'], 2, 'CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。\\n', '')",
+  "calls": [
+    {
+      "argv": [
+        "project",
+        "init",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t01-red\\project 中文"
+      ],
+      "exit_code": 0,
+      "stdout": "结果：空项目初始化完成\n项目：D:\\Noetome\\target\\compiler-temp\\b04-t01-red\\project 中文\n项目 ID：34f05ec5-91a8-4b51-a16f-e63e3b4bc15e\nSchema 版本：1\n创建时间：2026-11-02T13:16:21.5467496Z\n状态：initialized（空项目，尚未登记来源）\n配置：D:\\Noetome\\target\\compiler-temp\\b04-t01-red\\project 中文\\project.json\n数据库：D:\\Noetome\\target\\compiler-temp\\b04-t01-red\\project 中文\\project.sqlite\n单份UTF8文本通过source import登记；知识抽取和笔记生成尚未实现。\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "source",
+        "import",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t01-red\\project 中文",
+        "D:\\Noetome\\fixtures\\extraction-gateway-v1\\source.txt"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema_version\": 1,\n  \"project_id\": \"34f05ec5-91a8-4b51-a16f-e63e3b4bc15e\",\n  \"import_id\": \"27f1a8d9-8159-4a7c-bd76-5c6b428d729f\",\n  \"imported_at\": \"2026-11-02T13:16:21.5936965Z\",\n  \"selected_path\": \"D:\\\\Noetome\\\\fixtures\\\\extraction-gateway-v1\\\\source.txt\",\n  \"source_id\": \"6765d933-f9be-4552-8ee5-96e1a426cdf3\",\n  \"version_id\": \"6bdb56c2-a4d1-4b8d-96d9-f284dd235217\",\n  \"status\": \"ready\",\n  \"reused\": false,\n  \"span_count\": 1,\n  \"pending_extraction_count\": 1,\n  \"knowledge_status\": \"pending\",\n  \"version\": {\n    \"source_id\": \"6765d933-f9be-4552-8ee5-96e1a426cdf3\",\n    \"version_id\": \"6bdb56c2-a4d1-4b8d-96d9-f284dd235217\",\n    \"revision\": 1,\n    \"created_at\": \"2026-11-02T13:16:21.5936965Z\",\n    \"media_type\": \"text/plain\",\n    \"display_name\": \"source.txt\",\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"byte_length\": 140,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"normalization_version\": \"utf8-newlines-v1\",\n    \"ingest_status\": \"ready\",\n    \"raw_snapshot\": \".noetome-sources/6bdb56c2-a4d1-4b8d-96d9-f284dd235217/raw.bin\",\n    \"normalized_snapshot\": \".noetome-sources/6bdb56c2-a4d1-4b8d-96d9-f284dd235217/normalized.txt\",\n    \"error\": null\n  },\n  \"spans\": [\n    {\n      \"span_id\": \"db70e7c2-2dc9-4d4e-9863-fa4c5d38a4bc\",\n      \"source_version_id\": \"6bdb56c2-a4d1-4b8d-96d9-f284dd235217\",\n      \"ordinal\": 0,\n      \"kind\": \"text\",\n      \"start_byte\": 0,\n      \"end_byte\": 140,\n      \"start_line\": 1,\n      \"end_line\": 1,\n      \"text_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n      \"parser_version\": \"blocks-v1\",\n      \"parse_status\": \"parsed\"\n    }\n  ],\n  \"error\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "extract",
+        "fake",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t01-red\\project 中文",
+        "27f1a8d9-8159-4a7c-bd76-5c6b428d729f",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t01-red\\case-valid",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t01-red\\out-valid"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。\n"
+    }
+  ],
+  "source_inventory": {
+    ".noetome-sources": {
+      "kind": "directory",
+      "mtime_ns": 1793625381638857200,
+      "length": null,
+      "sha256": null
+    },
+    ".noetome-sources/.owner.json": {
+      "kind": "file",
+      "mtime_ns": 1793625381631093100,
+      "length": 73,
+      "sha256": "d8027ab9ac4a1d5c015357ff3deabe1478e9f18a533c06de52f29132577f1ca5"
+    },
+    ".noetome-sources/6bdb56c2-a4d1-4b8d-96d9-f284dd235217": {
+      "kind": "directory",
+      "mtime_ns": 1793625381650075300,
+      "length": null,
+      "sha256": null
+    },
+    ".noetome-sources/6bdb56c2-a4d1-4b8d-96d9-f284dd235217/normalized.txt": {
+      "kind": "file",
+      "mtime_ns": 1793625381608036100,
+      "length": 140,
+      "sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a"
+    },
+    ".noetome-sources/6bdb56c2-a4d1-4b8d-96d9-f284dd235217/raw.bin": {
+      "kind": "file",
+      "mtime_ns": 1793625381605505400,
+      "length": 140,
+      "sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a"
+    },
+    "project.json": {
+      "kind": "file",
+      "mtime_ns": 1793625381627174100,
+      "length": 167,
+      "sha256": "04f90f62a65c21265f6b5e38ffd8724d59083eae2af0273b30a00f40444db31c"
+    },
+    "project.sqlite": {
+      "kind": "file",
+      "mtime_ns": 1793625381598193500,
+      "length": 69632,
+      "sha256": "ec90a98ede99c2430b62dfe9a686b781f46964a6b1f8c3e7e26f2068e4737c14"
+    }
+  }
+}
