@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "scope": "synthetic offline adapter diagnostic retention",
+  "real_api_calls": 0,
+  "credential_inputs": 0,
+  "adapter_red": {
+    "tests": 30,
+    "failures": 3,
+    "seconds": 6.42
+  },
+  "adapter_green": {
+    "tests": 30,
+    "failures": 0,
+    "seconds": 7.461
+  },
+  "python_all": {
+    "tests": 60,
+    "failures": 0,
+    "seconds": 32.195
+  },
+  "files": [
+    {
+      "path": "sidecars/responses_api/adapter.py",
+      "bytes": 28305,
+      "sha256": "75cdfb65141d2945177bf833394e4ce77e148692ea81a61cb66b9af9ad01f8ee"
+    },
+    {
+      "path": "tests/test_responses_adapter.py",
+      "bytes": 36126,
+      "sha256": "00b4eaa18cb3295b81aed6add8186dcb846e8da22f68c3bfc7f48d0960deeb19"
+    },
+    {
+      "path": "sidecars/responses_api/schema.json",
+      "bytes": 360,
+      "sha256": "0421cac7d779e48c5102472e3304e7746e72fe6c15f83b6640ae407e3087e662"
+    },
+    {
+      "path": "sidecars/responses_api/instructions.txt",
+      "bytes": 723,
+      "sha256": "d43a64004c039cb02a16918081f7a993ee17a48c82257a8899a02fbc69ea38d1"
+    },
+    {
+      "path": "tests/fixtures/responses-api-synthetic-v1/http-request.json",
+      "bytes": 1490,
+      "sha256": "2f6db021721fce01d34a917ca94d17a2efd7fe8ac1f91f871c648125eec57353"
+    },
+    {
+      "path": ".artifacts/B04-T02-response-diagnostics-red.log",
+      "bytes": 16007,
+      "sha256": "8654ea8b0b28c35bffdc7f583c7b26e7338fc5d02b0dcdbf0dcc01ba8f46c761"
+    },
+    {
+      "path": ".artifacts/B04-T02-response-diagnostics-green.log",
+      "bytes": 6080,
+      "sha256": "4d5e33dc14df61b24acd2849dec12f19b3f70a1d32e821e312c28a60bf29066a"
+    },
+    {
+      "path": ".artifacts/B04-T02-response-diagnostics-python-all.log",
+      "bytes": 10579,
+      "sha256": "5a3b40080ce162fa58de9f59b72d8aec238e38b6f9bc7ab9ca86e7bfab228e8c"
+    }
+  ]
+}

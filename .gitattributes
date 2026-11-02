@@ -42,3 +42,8 @@ doc/validation/B04-T02-api-local.json -text whitespace=trailing-space,space-befo
 doc/validation/B04-T02-api-evidence/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 doc/validation/B04-T02-api-evidence/**/*.bin binary
 doc/validation/B04-T02-api-evidence/**/*.sqlite binary
+# The first actual API attempt is a failed call, preserved as original-byte evidence.
+doc/validation/B04-T02-api-attempt-1.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+doc/validation/B04-T02-api-attempt-1-evidence/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+doc/validation/B04-T02-api-attempt-1-evidence/**/*.bin binary
+doc/validation/B04-T02-api-attempt-1-evidence/**/*.sqlite binary

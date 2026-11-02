@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "review_kind": "independent_read_only_diagnostic_patch_review",
+  "blocking_findings": [],
+  "reviewed_files": {
+    "sidecars/responses_api/adapter.py": "75cdfb65141d2945177bf833394e4ce77e148692ea81a61cb66b9af9ad01f8ee",
+    "tests/test_responses_adapter.py": "00b4eaa18cb3295b81aed6add8186dcb846e8da22f68c3bfc7f48d0960deeb19",
+    "crates/noetome-cli/src/model_api_decode.rs": "9b2ffa987161f731c88830e2c38e77c278cc89e4b6461fe972961e42f90d1f58",
+    "crates/noetome-cli/src/model_api_core.rs": "71fdc695582321086b15d6bddb3771df50f79fb41d99090d6fb498300a4442e0",
+    "crates/noetome-cli/src/model_api.rs": "acd97c344be291c8f654b276ef449d4d7da7b713b685a4ba0c29bf77c91e53c5"
+  },
+  "independent_offline_probe": {
+    "boundary_cases_passed": 32,
+    "positive_candidate_cases_passed": 1,
+    "real_https_connection_forbidden": true,
+    "result": ".artifacts/local-key-raw-diagnostic-review/safe-raw-results.json"
+  },
+  "author_test_evidence_read": {
+    "diagnostic_tests_passed": 3,
+    "diagnostic_seconds": 9.9,
+    "diagnostic_log": ".artifacts/B04-T02-core-diagnostic-green.log",
+    "core_tests_passed": 26,
+    "core_seconds": 24.02,
+    "core_log": ".artifacts/B04-T02-core-diagnostic-full-green.log"
+  },
+  "confirmed_boundaries": [
+    "Diagnostic raw retention follows complete bounded strict JSON and credential scanning in the Python producer; the Rust capture repeats credential checking before deriving or storing raw.",
+    "Invalid envelope diagnostics retain original raw bytes but do not assert model, response ID, usage or candidate facts.",
+    "All parsed raw JSON keys and string values retain the NUL and length checks in native derive.",
+    "HTTP request body bytes and observation field set are unchanged from the reviewed HEAD baseline.",
+    "Transport remains one POST with no automatic retry or redirect following.",
+    "Saved reports accept only the current adapter fingerprint or exact historical SHA 61a3f1318a7c2da869f7a2ba3fcc14db1761d84713a4da57a055bbd3aa5d31ae with length 28025.",
+    "Historical reports use native legacy derivation and never execute a saved provenance path; the old raw-absent failure remains readable without inventing raw evidence.",
+    "Raw, body, observation and outcome fingerprints and strict native cross-comparisons remain active."
+  ],
+  "scope_limits": [
+    "Actual remote response, report and credentials were not read by this reviewer.",
+    "No additional real API request was made.",
+    "Author Rust tests were reviewed from their saved logs rather than rerun by this reviewer.",
+    "No product files, existing evidence, ledger or Git state were modified by this reviewer."
+  ]
+}

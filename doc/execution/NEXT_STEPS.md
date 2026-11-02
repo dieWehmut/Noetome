@@ -1,6 +1,6 @@
 # B04近期执行步骤
 
-真实状态以[任务账本](../../dev-log/tasks.json)和[STATUS](../../dev-log/STATUS.md)为准。B03三项已分别验收：有界fake进程、真实文本PDF解析、Schema3来源持久化；历史执行卡见[B03归档](B03_STEPS.md)，最终验证见[B03-T03](../validation/B03-T03.md)。B04-T01已完成离线验收，真实结果见[B04-T01](../validation/B04-T01.md)，契约见[候选协议v1](../technical/MODEL_CANDIDATE_PROTOCOL.md)。T02原[本地边界](../technical/API_PREFLIGHT_BOUNDARY.md)及阻塞历史保留；用户已补齐目标、模型、10M Token预算和虚构R7外发许可，当前执行[唯一Responses计划](B04_T02_API_PLAN.md)及[协议](../technical/RESPONSES_API_PROTOCOL.md)。本地输入真实密钥后才进行最多一次冒烟，未取得合法候选仍不得验收T02；T03等待T02。
+真实状态以[任务账本](../../dev-log/tasks.json)和[STATUS](../../dev-log/STATUS.md)为准。B03三项已分别验收：有界fake进程、真实文本PDF解析、Schema3来源持久化；历史执行卡见[B03归档](B03_STEPS.md)，最终验证见[B03-T03](../validation/B03-T03.md)。B04-T01已完成离线验收，真实结果见[B04-T01](../validation/B04-T01.md)，契约见[候选协议v1](../technical/MODEL_CANDIDATE_PROTOCOL.md)。T02原[本地边界](../technical/API_PREFLIGHT_BOUNDARY.md)及阻塞历史保留；用户已补齐目标、模型、10M Token预算和虚构R7外发许可，当前执行[唯一Responses计划](B04_T02_API_PLAN.md)及[协议](../technical/RESPONSES_API_PROTOCOL.md)。用户已在本机输入密钥完成[首次真实请求](../validation/B04-T02-api-attempt-1.md)：一次POST/HTTP200但响应校验失败、无候选。当前补安全失败诊断与历史只读重载；额外一次生成须另行明确确认，不自动重试。未取得合法候选仍不得验收T02；T03等待T02。
 
 **目标与架构**：先固定有界模型请求，再单次小文本真实API候选抽取，最后独立核对真实证据与样本差异。Rust Core负责明确来源、预算和严格候选验证；Provider只返回领域候选，不控制本地路径或发布。现有fixture IR/NotePlan/Compiler和真实PDF页/区域分别保留原义。
 

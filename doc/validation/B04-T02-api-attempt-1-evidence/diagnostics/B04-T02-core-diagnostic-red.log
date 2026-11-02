@@ -1,0 +1,32 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.64s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-bf755945946c9306.exe)
+
+running 3 tests
+test model_api::tests::diagnostic_safe_rejected_envelope_is_preserved_without_model_usage_or_candidate ... FAILED
+test model_api::tests::diagnostic_legacy_no_raw_failure_remains_readable_only_for_reviewed_fingerprint ... FAILED
+test model_api::tests::diagnostic_malformed_duplicate_or_sensitive_json_is_never_preserved_as_raw ... ok
+
+failures:
+
+---- model_api::tests::diagnostic_safe_rejected_envelope_is_preserved_without_model_usage_or_candidate stdout ----
+
+thread 'model_api::tests::diagnostic_safe_rejected_envelope_is_preserved_without_model_usage_or_candidate' (140428) panicked at crates\noetome-cli\src\model_api.rs:692:13:
+assertion `left == right` failed
+  left: None
+ right: Some(200)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- model_api::tests::diagnostic_legacy_no_raw_failure_remains_readable_only_for_reviewed_fingerprint stdout ----
+
+thread 'model_api::tests::diagnostic_legacy_no_raw_failure_remains_readable_only_for_reviewed_fingerprint' (125604) panicked at crates\noetome-cli\src\model_api.rs:732:65:
+called `Result::unwrap()` on an `Err` value: ModelError { code: "MODEL_API_SAVED_INVALID" }
+
+
+failures:
+    model_api::tests::diagnostic_legacy_no_raw_failure_remains_readable_only_for_reviewed_fingerprint
+    model_api::tests::diagnostic_safe_rejected_envelope_is_preserved_without_model_usage_or_candidate
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 346 filtered out; finished in 8.65s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

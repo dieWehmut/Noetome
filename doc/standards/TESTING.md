@@ -187,3 +187,5 @@ Writer内部另外执行Schema3两树六个实际故障阶段和Prepared/Databas
 唯一adapter离线测试使用synthetic envelope和受控connection，不访问真实服务。补充quoted scalar、多层Unicode转义、前缀JSON、未闭合token凭据回显负例，并保留普通引号/无效literal escape正例；provider临时raw也必须先过滤。Core用显式`NOETOME_TEST_API_PYTHON`覆盖低预算/坏授权/来源篡改/链接准入、守卫、严格raw→canonical→IR、失败receipt、已有根不重试与原生reader路径隔离。masked辅助使用合成子进程，文件共享竞态只影响状态发布，不能重启API。
 
 真实R7冒烟单独等待本机密钥输入，只发送用户许可的1208字节样本、一次POST、1024输出Token/30秒；保存实际模型/用量或unknown、安全审计与unverified候选，再在无key环境只读重读并核对来源/哨兵不变。未跑真实请求不得complete。详细边界见[Responses API协议](../technical/RESPONSES_API_PROTOCOL.md)，原[B04-T02本地历史](../validation/B04-T02-local.md)不改写成真实通过。
+
+首次[真实失败](../validation/B04-T02-api-attempt-1.md)单独记录为一次POST/HTTP200/无候选，不能当T02成功。安全JSON的未知/缺失/错类型envelope应保留失败raw，但不生成canonical或猜测model/ID/usage；凭据回显、重复键、非法UTF8/JSON及非有限数仍不能保存raw。原生reader须核对新旧已审阅资产的实际raw语义，允许旧无raw失败报告，不接受未知hash或以新版策略解释旧版不支持的raw。

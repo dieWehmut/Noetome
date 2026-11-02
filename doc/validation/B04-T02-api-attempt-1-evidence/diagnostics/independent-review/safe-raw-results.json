@@ -1,0 +1,268 @@
+{
+  "synthetic_only": true,
+  "real_network_forbidden": true,
+  "adapter_sha256": "75cdfb65141d2945177bf833394e4ce77e148692ea81a61cb66b9af9ad01f8ee",
+  "baseline_adapter_sha256": "61a3f1318a7c2da869f7a2ba3fcc14db1761d84713a4da57a055bbd3aa5d31ae",
+  "body_unchanged": true,
+  "observation_schema_unchanged": true,
+  "cases_passed": 32,
+  "valid_supported_response_still_accepted": true,
+  "cases": [
+    {
+      "case": "safe_missing_model",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_missing_id",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_missing_usage",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_missing_output",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_bad_envelope_unknown_vendor",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_bad_envelope_temperature",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_bad_envelope_output",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_bad_envelope_usage",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_root_null",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_root_bool",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_root_array",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_root_scalar",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_root_unknown_finite",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_unknown_status_302",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "remote_unknown",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_unknown_status_401",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "authentication",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_unknown_status_429",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "rate_limit",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "safe_unknown_status_408",
+      "raw_available": true,
+      "canonical_available": false,
+      "failure": "timeout",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_unknown_escaped_scalar",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_unknown_escaped_unclosed",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_unknown_escaped_codefence",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_unknown_escaped_nested",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_literal",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_escaped_key",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_duplicate",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_nested_duplicate",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_nonfinite",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_nan",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_truncated",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_invalid_utf8",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_surrogate",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_empty",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "invalid_response",
+      "post_count": 1,
+      "facts_null": true
+    },
+    {
+      "case": "unsafe_oversize",
+      "raw_available": false,
+      "canonical_available": false,
+      "failure": "response_limit",
+      "post_count": 1,
+      "facts_null": true
+    }
+  ]
+}

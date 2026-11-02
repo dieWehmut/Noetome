@@ -74,6 +74,8 @@ API根使用独立schema2、`noetome-api-single-v1`，与旧CandidateReport v1�
 
 report记录源/config/auth/runtime资产指纹、原域wire指纹、无认证头HTTP body、实际安全raw和canonical指纹、reservation、进程事实、receipt、实际模型/用量、明确未知费用、候选身份/成功与固定分类失败。拒绝保存不能确认安全的raw，未知发送结果不重试。
 
+安全raw与合法候选分别判断：完整有界UTF8、严格JSON的重复键/非有限数检查及凭据扫描通过后，原始JSON可作为失败诊断保存；envelope含未知/缺失/不合格字段时仍拒绝候选，并保持model/ID/usage未知。未通过安全检查的字节仍不保存。首次旧adapter将两项判断合并，导致其已丢弃的失败响应无法恢复；历史报告按已审阅的固定资产指纹及原始raw策略重读，不允许任意历史hash，也不执行旧路径。
+
 `inspect`从受保护API库存读取配置/授权副本和实际调用者选定的来源项目，原生核对固定body字段/schema/指令/完整units的语义及raw/canonical与IR关系。extract现场实际body与离线body精确按原字节比较，保存SHA始终绑定保存原字节；reader允许JSON字段顺序和无意义空白差异，不强制单一JSON序列化。报告中的原配置/授权/Python/adapter路径仅为来源记录，不被打开或执行。原配置文件归档或移走不阻止重读。指纹和交叉约束证明当前记录相互一致，不宣称能发现所有外部锚点连同记录一起重写，或代替服务端签名。
 
 ## 验证边界
