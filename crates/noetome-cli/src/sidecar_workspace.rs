@@ -302,10 +302,16 @@ impl Prepared {
             {
                 return Err(err("SIDECAR_RESOURCE", "resource SHA/length mismatch"));
             }
-            if r.kind == ResourceKind::Utf8Text && std::str::from_utf8(&data).is_err() {
-                return Err(err("SIDECAR_RESOURCE", "invalid UTF8 text resource"));
-            }
-            bytes.insert(r.resource_id.clone(), data);
+            let resource = if r.kind == ResourceKind::Utf8Text {
+                ResourceData::Text(
+                    String::from_utf8(data)
+                        .map_err(|_| err("SIDECAR_RESOURCE", "invalid UTF8 text resource"))?,
+                )
+            } else {
+                ResourceData::Binary(data)
+            };
+            control.check()?;
+            bytes.insert(r.resource_id.clone(), resource);
             files.push(guard);
         }
         let mut final_files = BTreeSet::new();
@@ -390,7 +396,7 @@ impl Prepared {
 pub(crate) struct ResourceGuards {
     _files: Vec<GuardedFile>,
     _directories: Vec<Directory>,
-    pub(crate) bytes: BTreeMap<String, Vec<u8>>,
+    pub(crate) bytes: BTreeMap<String, ResourceData>,
 }
 pub(crate) fn valid_id(s: &str) -> bool {
     !s.is_empty()
@@ -398,4 +404,24 @@ pub(crate) fn valid_id(s: &str) -> bool {
         && s.as_bytes()[0].is_ascii_alphanumeric()
         && s.bytes()
             .all(|c| c.is_ascii_alphanumeric() || c == b'_' || c == b'-')
+}
+
+#[derive(Debug)]
+pub(crate) enum ResourceData {
+    Text(String),
+    Binary(Vec<u8>),
+}
+impl ResourceData {
+    pub(crate) fn byte_length(&self) -> usize {
+        match self {
+            Self::Text(text) => text.len(),
+            Self::Binary(bytes) => bytes.len(),
+        }
+    }
+    pub(crate) fn text(&self) -> Option<&str> {
+        match self {
+            Self::Text(text) => Some(text.as_str()),
+            Self::Binary(_) => None,
+        }
+    }
 }

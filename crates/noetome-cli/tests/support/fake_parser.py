@@ -140,6 +140,12 @@ if mode.startswith('resource_') or mode == 'valid_resource':
     if mode=='resource_invalid_utf8':
         root.joinpath(path).write_bytes(b'\xff')
         response['resources'][0]['fingerprint']={'sha256':hashlib.sha256(b'\xff').hexdigest(),'byte_length':1}
+if mode=='many_units_large_resource':
+    data=b'x'*(16*1024*1024)
+    Path(request['workspace']['path'],'text.txt').write_bytes(data)
+    response['resources']=[{'resource_id':'r','relative_path':'text.txt','kind':'utf8_text','fingerprint':{'sha256':hashlib.sha256(data).hexdigest(),'byte_length':len(data)}}]
+    response['units']=[{'unit_id':f'u{i}','ordinal':i,'kind':'text','status':'parsed','text':{'resource_id':'r','start_byte':0,'end_byte':1},'resource_ids':['r']} for i in range(10000)]
+    response['unit_count']=10000
 if mode=='stdout_limit': sys.stdout.write(' '*1000000)
 if mode=='stderr_limit': sys.stderr.write('x'*1000000); sys.stderr.flush()
 if mode=='diagnostics': sys.stderr.buffer.write(b'synthetic diagnostic\n')

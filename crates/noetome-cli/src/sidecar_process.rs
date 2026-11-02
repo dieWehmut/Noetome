@@ -5,7 +5,7 @@ use crate::{
 };
 use process_wrap::std::*;
 use std::{
-    collections::{BTreeMap, BTreeSet},
+    collections::BTreeSet,
     ffi::OsString,
     io::{Read, Write},
     path::Path,
@@ -128,7 +128,14 @@ fn run_inner(
             ));
         }
         let resources = prepared.resources(&response, &control)?;
-        validate_units(&response, &resources, &limits)?;
+        #[cfg(test)]
+        VALIDATION_CANCEL.with(|flag| {
+            if flag.get() {
+                control.cancelled.store(true, Ordering::SeqCst);
+                CANCELLED_AT.with(|time| time.set(Some(Instant::now())));
+            }
+        });
+        validate_units(&response, &resources, &limits, &control)?;
         control.check()?;
         prepared.verify(&control)?;
         Ok(ValidatedResponse {
@@ -350,7 +357,9 @@ fn validate_units(
     response: &Response,
     resources: &ResourceGuards,
     limits: &Limits,
+    control: &Control,
 ) -> Result<(), SidecarError> {
+    control.check()?;
     let fail = |msg| SidecarError::new("SIDECAR_UNITS", msg);
     if response.units.len() > limits.units as usize
         || response.issues.len() > limits.issues as usize
@@ -364,18 +373,15 @@ fn validate_units(
     }
     let mut ids = BTreeSet::new();
     let mut used = BTreeSet::new();
-    let kinds: BTreeMap<_, _> = response
-        .resources
-        .iter()
-        .map(|r| (&r.resource_id, &r.kind))
-        .collect();
     for (ordinal, u) in response.units.iter().enumerate() {
+        control.check()?;
         if u.ordinal as usize != ordinal || !valid_id(&u.unit_id) || !ids.insert(u.unit_id.clone())
         {
             return Err(fail("invalid/duplicate unit or ordinal"));
         }
         let mut refs = BTreeSet::new();
         for r in &u.resource_ids {
+            control.check()?;
             if !resources.bytes.contains_key(r) || !refs.insert(r.clone()) {
                 return Err(fail("invalid/duplicate resource reference"));
             }
@@ -392,14 +398,14 @@ fn validate_units(
                 .bytes
                 .get(&t.resource_id)
                 .ok_or_else(|| fail("unknown text resource"))?;
-            if !refs.contains(&t.resource_id)
-                || kinds.get(&t.resource_id) != Some(&&ResourceKind::Utf8Text)
-            {
+            if !refs.contains(&t.resource_id) {
                 return Err(fail("text reference must name UTF8 resource"));
             }
-            let text = std::str::from_utf8(data).map_err(|_| fail("invalid text bytes"))?;
+            let text = data
+                .text()
+                .ok_or_else(|| fail("text reference must name UTF8 resource"))?;
             if t.start_byte >= t.end_byte
-                || t.end_byte > data.len() as u64
+                || t.end_byte > data.byte_length() as u64
                 || !text.is_char_boundary(t.start_byte as usize)
                 || !text.is_char_boundary(t.end_byte as usize)
             {
@@ -412,24 +418,28 @@ fn validate_units(
     }
     let mut issue_units = BTreeSet::new();
     for i in &response.issues {
+        control.check()?;
         if !valid_id(&i.code) || i.message.trim().is_empty() || i.message.len() > 4096 {
             return Err(fail("invalid structured issue"));
         }
         let mut units = BTreeSet::new();
         let mut refs = BTreeSet::new();
         for id in &i.unit_ids {
+            control.check()?;
             if !ids.contains(id) || !units.insert(id) {
                 return Err(fail("invalid issue unit reference"));
             }
             issue_units.insert(id.clone());
         }
         for id in &i.resource_ids {
+            control.check()?;
             if !resources.bytes.contains_key(id) || !refs.insert(id) {
                 return Err(fail("invalid issue resource reference"));
             }
         }
     }
     for u in &response.units {
+        control.check()?;
         if u.status != ParseStatus::Parsed && !issue_units.contains(&u.unit_id) {
             return Err(fail("failed/review unit requires issue"));
         }
@@ -439,3 +449,9 @@ fn validate_units(
 #[cfg(test)]
 #[path = "../tests/support/sidecar_tests.rs"]
 mod tests;
+
+#[cfg(test)]
+thread_local! {
+    static VALIDATION_CANCEL: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+    static CANCELLED_AT: std::cell::Cell<Option<Instant>> = const { std::cell::Cell::new(None) };
+}

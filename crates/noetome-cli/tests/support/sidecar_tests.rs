@@ -654,3 +654,52 @@ reject!(
     "parser_zero",
     "SIDECAR_UNITS"
 );
+
+#[test]
+fn review_large_resource_timeout_latency() {
+    let now = Instant::now();
+    let result = invoke(
+        "many_units_large_resource",
+        Limits {
+            timeout_ms: 1000,
+            ..Limits::default()
+        },
+    );
+    let elapsed = now.elapsed();
+    println!(
+        "large_resource_timeout elapsed_ms={} result={:?}",
+        elapsed.as_millis(),
+        result.as_ref().err().map(|e| e.code)
+    );
+    match result {
+        Ok(value) => {
+            assert_eq!(value.response.units.len(), 10000);
+            assert!(
+                elapsed < Duration::from_millis(1000),
+                "success must finish before deadline"
+            );
+        }
+        Err(error) => assert_eq!(error.code, "SIDECAR_TIMEOUT"),
+    }
+    assert!(
+        elapsed < Duration::from_millis(1500),
+        "one second deadline must not overrun by repeated resource scans: {elapsed:?}"
+    );
+}
+#[test]
+fn review_large_resource_validation_cancel_latency() {
+    VALIDATION_CANCEL.with(|flag| flag.set(true));
+    let result = invoke("many_units_large_resource", Limits::default());
+    VALIDATION_CANCEL.with(|flag| flag.set(false));
+    let latency = CANCELLED_AT.with(|time| time.take().unwrap().elapsed());
+    println!(
+        "large_resource_validation_cancel latency_ms={} result={:?}",
+        latency.as_millis(),
+        result.as_ref().err().map(|e| e.code)
+    );
+    assert_eq!(result.unwrap_err().code, "SIDECAR_CANCELLED");
+    assert!(
+        latency < Duration::from_millis(200),
+        "cancel must interrupt unit validation: {latency:?}"
+    );
+}
