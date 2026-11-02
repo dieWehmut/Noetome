@@ -1,0 +1,38 @@
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.10s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 3 tests
+test credential_handoff::artifact_scan_tests::duplicate_keys_and_nonfinite_numbers_are_not_folded ... FAILED
+test credential_handoff::artifact_scan_tests::ordinary_complete_json_passes_without_exposing_key ... FAILED
+test credential_handoff::artifact_scan_tests::nested_closed_string_in_truncated_json_does_not_hide_unicode_echo ... FAILED
+
+failures:
+
+---- credential_handoff::artifact_scan_tests::duplicate_keys_and_nonfinite_numbers_are_not_folded stdout ----
+
+thread 'credential_handoff::artifact_scan_tests::duplicate_keys_and_nonfinite_numbers_are_not_folded' (9160) panicked at crates\noetome-cli\src\credential_handoff.rs:116:13:
+assertion failed: strict_json_value(raw).is_err()
+
+---- credential_handoff::artifact_scan_tests::ordinary_complete_json_passes_without_exposing_key stdout ----
+
+thread 'credential_handoff::artifact_scan_tests::ordinary_complete_json_passes_without_exposing_key' (43644) panicked at crates\noetome-cli\src\credential_handoff.rs:103:9:
+assertion failed: key.validate_no_echo(br#"{"status":"completed","value":[1,true,null]}"#).is_ok()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- credential_handoff::artifact_scan_tests::nested_closed_string_in_truncated_json_does_not_hide_unicode_echo stdout ----
+
+thread 'credential_handoff::artifact_scan_tests::nested_closed_string_in_truncated_json_does_not_hide_unicode_echo' (85188) panicked at crates\noetome-cli\src\credential_handoff.rs:111:9:
+assertion `left == right` failed
+  left: "MODEL_CREDENTIAL_JSON_UNIMPLEMENTED"
+ right: "MODEL_CREDENTIAL_ECHO"
+
+
+failures:
+    credential_handoff::artifact_scan_tests::duplicate_keys_and_nonfinite_numbers_are_not_folded
+    credential_handoff::artifact_scan_tests::nested_closed_string_in_truncated_json_does_not_hide_unicode_echo
+    credential_handoff::artifact_scan_tests::ordinary_complete_json_passes_without_exposing_key
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 327 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

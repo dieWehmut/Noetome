@@ -1,0 +1,88 @@
+test_credential_frame_is_not_treated_as_offline_domain_request (test_responses_adapter.OfflineBodyBehaviorTests.test_credential_frame_is_not_treated_as_offline_domain_request) ... ok
+test_offline_body_contains_full_source_once_and_disables_tools (test_responses_adapter.OfflineBodyBehaviorTests.test_offline_body_contains_full_source_once_and_disables_tools) ... ok
+test_candidate_rejects_invented_span_ambiguous_excerpt_bad_shape_and_empty (test_responses_adapter.OfflineDecodeBehaviorTests.test_candidate_rejects_invented_span_ambiguous_excerpt_bad_shape_and_empty) ... ok
+test_completed_response_has_original_wire_sha_actual_model_and_local_evidence (test_responses_adapter.OfflineDecodeBehaviorTests.test_completed_response_has_original_wire_sha_actual_model_and_local_evidence) ... ok
+test_strict_response_rejects_unknown_duplicates_wrong_types_and_bad_unicode (test_responses_adapter.OfflineDecodeBehaviorTests.test_strict_response_rejects_unknown_duplicates_wrong_types_and_bad_unicode) ... ok
+test_bad_frame_zero_requests_and_no_output_files (test_responses_adapter.SingleHttpBehaviorTests.test_bad_frame_zero_requests_and_no_output_files) ... FAIL
+test_complete_live_transport_connects_first_posts_once_and_saves_safe_observation (test_responses_adapter.SingleHttpBehaviorTests.test_complete_live_transport_connects_first_posts_once_and_saves_safe_observation) ... FAIL
+test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text (test_responses_adapter.SingleHttpBehaviorTests.test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text) ... 
+  test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text (test_responses_adapter.SingleHttpBehaviorTests.test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text) (stage='connect_error') ... FAIL
+  test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text (test_responses_adapter.SingleHttpBehaviorTests.test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text) (stage='send_error') ... FAIL
+  test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text (test_responses_adapter.SingleHttpBehaviorTests.test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text) (stage='read_error') ... FAIL
+test_credential_echo_in_raw_decoded_value_or_key_suppresses_entire_response (test_responses_adapter.SingleHttpBehaviorTests.test_credential_echo_in_raw_decoded_value_or_key_suppresses_entire_response) ... ERROR
+test_incomplete_response_retains_actual_model_and_usage_without_canonical (test_responses_adapter.SingleHttpBehaviorTests.test_incomplete_response_retains_actual_model_and_usage_without_canonical) ... ERROR
+test_non_success_status_does_not_create_canonical_outcome (test_responses_adapter.SingleHttpBehaviorTests.test_non_success_status_does_not_create_canonical_outcome) ... ok
+test_redirect_is_not_followed_and_actual_usage_remains_unknown (test_responses_adapter.SingleHttpBehaviorTests.test_redirect_is_not_followed_and_actual_usage_remains_unknown) ... FAIL
+test_request_unknown_duplicate_bad_policy_or_source_hash_fails_offline (test_responses_adapter.SingleHttpBehaviorTests.test_request_unknown_duplicate_bad_policy_or_source_hash_fails_offline) ... ok
+
+======================================================================
+ERROR: test_credential_echo_in_raw_decoded_value_or_key_suppresses_entire_response (test_responses_adapter.SingleHttpBehaviorTests.test_credential_echo_in_raw_decoded_value_or_key_suppresses_entire_response)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_responses_adapter.py", line 305, in test_credential_echo_in_raw_decoded_value_or_key_suppresses_entire_response
+    obs = json.loads(files["http-observation.json"])
+                     ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'http-observation.json'
+
+======================================================================
+ERROR: test_incomplete_response_retains_actual_model_and_usage_without_canonical (test_responses_adapter.SingleHttpBehaviorTests.test_incomplete_response_retains_actual_model_and_usage_without_canonical)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_responses_adapter.py", line 286, in test_incomplete_response_retains_actual_model_and_usage_without_canonical
+    obs = json.loads(files["http-observation.json"])
+                     ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'http-observation.json'
+
+======================================================================
+FAIL: test_bad_frame_zero_requests_and_no_output_files (test_responses_adapter.SingleHttpBehaviorTests.test_bad_frame_zero_requests_and_no_output_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_responses_adapter.py", line 318, in test_bad_frame_zero_requests_and_no_output_files
+    with self.assertRaises(adapter.Invalid):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Invalid not raised
+
+======================================================================
+FAIL: test_complete_live_transport_connects_first_posts_once_and_saves_safe_observation (test_responses_adapter.SingleHttpBehaviorTests.test_complete_live_transport_connects_first_posts_once_and_saves_safe_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_responses_adapter.py", line 234, in test_complete_live_transport_connects_first_posts_once_and_saves_safe_observation
+    self.assertIsNotNone(outcome, "successful single POST must return canonical outcome")
+AssertionError: unexpectedly None : successful single POST must return canonical outcome
+
+======================================================================
+FAIL: test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text (test_responses_adapter.SingleHttpBehaviorTests.test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text) (stage='connect_error')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_responses_adapter.py", line 261, in test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text
+    self.assertIn("http-observation.json", files)
+AssertionError: 'http-observation.json' not found in {}
+
+======================================================================
+FAIL: test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text (test_responses_adapter.SingleHttpBehaviorTests.test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text) (stage='send_error')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_responses_adapter.py", line 261, in test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text
+    self.assertIn("http-observation.json", files)
+AssertionError: 'http-observation.json' not found in {}
+
+======================================================================
+FAIL: test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text (test_responses_adapter.SingleHttpBehaviorTests.test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text) (stage='read_error')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_responses_adapter.py", line 261, in test_connect_send_and_read_failure_states_do_not_retry_or_save_remote_text
+    self.assertIn("http-observation.json", files)
+AssertionError: 'http-observation.json' not found in {}
+
+======================================================================
+FAIL: test_redirect_is_not_followed_and_actual_usage_remains_unknown (test_responses_adapter.SingleHttpBehaviorTests.test_redirect_is_not_followed_and_actual_usage_remains_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_responses_adapter.py", line 275, in test_redirect_is_not_followed_and_actual_usage_remains_unknown
+    self.assertEqual(len(connection.requests), 1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 13 tests in 2.410s
+
+FAILED (failures=6, errors=2)

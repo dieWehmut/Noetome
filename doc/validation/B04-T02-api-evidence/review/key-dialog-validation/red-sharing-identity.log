@@ -1,0 +1,21 @@
+test_replace_sharing_conflict_preserves_owned_identity (test_api_key_dialog.ApiKeyDialogTests.test_replace_sharing_conflict_preserves_owned_identity) ... FAIL
+
+======================================================================
+FAIL: test_replace_sharing_conflict_preserves_owned_identity (test_api_key_dialog.ApiKeyDialogTests.test_replace_sharing_conflict_preserves_owned_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 190, in test_replace_sharing_conflict_preserves_owned_identity
+    self.run_ps("""
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : ParentContainsErrorRecordException: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-iif0r3oi\case-m1wwc_2v\offline.ps1:13
+Line |
+  13 |    $s.Status.AssertOwned()
+     |    ~~~~~~~~~~~~~~~~~~~~~~~
+     | Exception calling "AssertOwned" with "0" argument(s): "status_ownership_lost"
+
+
+----------------------------------------------------------------------
+Ran 1 test in 1.283s
+
+FAILED (failures=1)

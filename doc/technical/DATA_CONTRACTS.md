@@ -327,4 +327,8 @@ SourceSlice绑定已登记project/source/version、原始/规范SHA和明确完�
 
 只读重载重验固定文件和真实项目快照，不调用Provider或累计账单。PDF暂不接受，不把PDF定位套入文本Span；T03另桥接已存parse/page/region/artifact。
 
-API本地预检另有严格`FullTextSummary`命名对象，绑定实际raw/normalized字节、版本、revision和全Span/证据Span计数；它不是调用授权或模型报告。完整输入包含Formatting，而原`SourceSlice`保留明确证据子集。瞬时凭据帧不属于持久数据契约，密钥及其派生指纹不得写入项目或报告；实际提供商、配置/授权指纹和远端调用事实的持久入口尚未实现。见[本地边界](API_PREFLIGHT_BOUNDARY.md)。
+API本地预检另有严格`FullTextSummary`命名对象，绑定实际raw/normalized字节、版本、revision和全Span/证据Span计数；它不是调用授权或模型报告。完整输入包含Formatting，而原`SourceSlice`保留明确证据子集。瞬时凭据帧不属于持久数据契约，密钥及其派生指纹不得写入项目或报告；前一检查点尚未实现实际提供商、配置/授权指纹和远端调用事实的持久入口，历史契约见[本地边界](API_PREFLIGHT_BOUNDARY.md)。当前独立入口采用下述schema2。
+
+### B04-T02 单次Responses审计schema2
+
+当前唯一服务与命名配置/授权、完整来源、预算、无认证HTTP body、receipt、runtime资产和原生只读重建见[Responses API协议](RESPONSES_API_PROTOCOL.md)。API owner/report为独立schema2，旧候选报告v1与项目Schema3不迁移；可选事实字段必须显式null。原配置/授权与运行时路径仅记来源，不授予reader路径能力。候选仍producer=Model/unverified，未知费用为null/unknown，发送未确认记remote_unknown；PID不是POST证明。密钥和其派生指纹不持久保存。

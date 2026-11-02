@@ -1,0 +1,21 @@
+test_terminal_status_waits_for_reader_without_claiming_finished (test_api_key_dialog.ApiKeyDialogTests.test_terminal_status_waits_for_reader_without_claiming_finished) ... FAIL
+
+======================================================================
+FAIL: test_terminal_status_waits_for_reader_without_claiming_finished (test_api_key_dialog.ApiKeyDialogTests.test_terminal_status_waits_for_reader_without_claiming_finished)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 205, in test_terminal_status_waits_for_reader_without_claiming_finished
+    self.run_ps("""
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : Exception: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-ffj5sb8_\case-_xab9xji\offline.ps1:16
+Line |
+  16 |  �� Update-NoetomeKeyRun -Session $s) { throw 'finished_before_publish' }
+     |                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | finished_before_publish
+
+
+----------------------------------------------------------------------
+Ran 1 test in 1.276s
+
+FAILED (failures=1)

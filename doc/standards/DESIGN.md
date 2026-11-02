@@ -240,3 +240,7 @@ B01A-T01的窗口行为遵循用户确认：最小化按钮保持普通Windows�
 `noetome knowledge inspect <项目路径> <候选根>`输出单个JSON，读取已保存的candidate/provider_failed/rejected事实均返回0；非法、被占用、损坏或未知现场给出固定错误并拒绝。不调用模型、不重计费，也不发布笔记。fake统计明确simulated，知识始终unverified；价格未知为null而非0。真实API抽取命令由后续任务独立验收。
 
 报告包含来源绑定、请求/响应指纹、实际PID/耗时、预算预留、一次结算、分类失败或候选ID。诊断正文和凭据不输出；模型内容不能控制路径。结构及证据合法不授予科学正确。
+
+### B04-T02 API命令与开发输入
+
+`api preflight`输出无正文的完整来源/配置/授权/预算指纹，保持只读零API零密钥；`api extract`仅在明确准入后启动一次生成，成功候选显示unverified，分类失败退出3，准入错误退出2。`api inspect`原生只读重建，不重新调用。开发masked密钥框没有密钥参数或持久化，状态只固定阶段/PID/退出码；重复点击不启动第二个请求。完整接口见[Responses API协议](../technical/RESPONSES_API_PROTOCOL.md)。桌面产品尚未接入此API业务。

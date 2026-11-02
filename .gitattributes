@@ -37,3 +37,8 @@ doc/validation/B04-T02-local.json -text whitespace=trailing-space,space-before-t
 doc/validation/B04-T02-local-evidence/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 doc/validation/B04-T02-local-evidence/**/*.bin binary
 doc/validation/B04-T02-local-evidence/**/*.sqlite binary
+# The second T02 checkpoint keeps original offline/API audit evidence bytes.
+doc/validation/B04-T02-api-local.json -text whitespace=trailing-space,space-before-tab,cr-at-eol
+doc/validation/B04-T02-api-evidence/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+doc/validation/B04-T02-api-evidence/**/*.bin binary
+doc/validation/B04-T02-api-evidence/**/*.sqlite binary

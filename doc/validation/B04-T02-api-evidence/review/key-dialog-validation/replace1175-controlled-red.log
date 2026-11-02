@@ -1,0 +1,22 @@
+test_replace_sharing_conflict_preserves_owned_identity (test_api_key_dialog.ApiKeyDialogTests.test_replace_sharing_conflict_preserves_owned_identity) ... 
+  test_replace_sharing_conflict_preserves_owned_identity (test_api_key_dialog.ApiKeyDialogTests.test_replace_sharing_conflict_preserves_owned_identity) (foreign_target=False) ... FAIL
+
+======================================================================
+FAIL: test_replace_sharing_conflict_preserves_owned_identity (test_api_key_dialog.ApiKeyDialogTests.test_replace_sharing_conflict_preserves_owned_identity) (foreign_target=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 285, in test_replace_sharing_conflict_preserves_owned_identity
+    self.run_ps(body, params=params, script_path=script)
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 117, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : Exception: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-h5yh913v\case-k2rvn5sd\retained-owner.synthetic.ps1:217
+Line |
+ 217 |      catch { throw 'status_ownership_lost' }
+     |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | status_ownership_lost
+
+
+----------------------------------------------------------------------
+Ran 1 test in 3.242s
+
+FAILED (failures=1)

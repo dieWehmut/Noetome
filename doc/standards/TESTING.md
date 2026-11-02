@@ -181,3 +181,9 @@ Writer内部另外执行Schema3两树六个实际故障阶段和Prepared/Databas
 完整源预检另需实际证明Formatting和尾部不丢失、规范UTF8的8192/+1边界、BOM/CRLF的raw12290→normalized8192、原件移动、真实登记篡改及持续Windows守卫。瞬时凭据测试只使用合成值，验证固定stdin帧、原请求指纹、SystemRoot环境、严格原始及解码回显抑制、阻塞stdin/超时/取消及独立native退出；未读帧场景不能据PID推定交付或API请求。
 
 实际468项Rust、12项Python、19个合成凭据child与归档项目6次只读重读见[B04-T02本地记录](../validation/B04-T02-local.md)。成功读取真实凭据、唯一实际adapter、配置/外发/预算绑定、远端事实和真实冒烟仍缺，普通回归不得代替T02完整验收。
+
+### B04-T02 Responses本地与真实验收
+
+唯一adapter离线测试使用synthetic envelope和受控connection，不访问真实服务。补充quoted scalar、多层Unicode转义、前缀JSON、未闭合token凭据回显负例，并保留普通引号/无效literal escape正例；provider临时raw也必须先过滤。Core用显式`NOETOME_TEST_API_PYTHON`覆盖低预算/坏授权/来源篡改/链接准入、守卫、严格raw→canonical→IR、失败receipt、已有根不重试与原生reader路径隔离。masked辅助使用合成子进程，文件共享竞态只影响状态发布，不能重启API。
+
+真实R7冒烟单独等待本机密钥输入，只发送用户许可的1208字节样本、一次POST、1024输出Token/30秒；保存实际模型/用量或unknown、安全审计与unverified候选，再在无key环境只读重读并核对来源/哨兵不变。未跑真实请求不得complete。详细边界见[Responses API协议](../technical/RESPONSES_API_PROTOCOL.md)，原[B04-T02本地历史](../validation/B04-T02-local.md)不改写成真实通过。

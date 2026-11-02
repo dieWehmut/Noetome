@@ -1,0 +1,38 @@
+test_bad_hash_before_form_and_zero_child (test_api_key_dialog.ApiKeyDialogTests.test_bad_hash_before_form_and_zero_child) ... ok
+test_button_events_clear_input_disable_retry_and_block_close (test_api_key_dialog.ApiKeyDialogTests.test_button_events_clear_input_disable_retry_and_block_close) ... ok
+test_cancel_before_start_preserves_parent_environment (test_api_key_dialog.ApiKeyDialogTests.test_cancel_before_start_preserves_parent_environment) ... FAIL
+test_child_env_arguments_drain_and_single_call (test_api_key_dialog.ApiKeyDialogTests.test_child_env_arguments_drain_and_single_call) ... ok
+test_existing_status_and_output_not_overwritten (test_api_key_dialog.ApiKeyDialogTests.test_existing_status_and_output_not_overwritten) ... ok
+test_gui_timer_publishes_after_reader_releases_without_restarting_child (test_api_key_dialog.ApiKeyDialogTests.test_gui_timer_publishes_after_reader_releases_without_restarting_child) ... ok
+test_invalid_keys_never_start_child (test_api_key_dialog.ApiKeyDialogTests.test_invalid_keys_never_start_child) ... ok
+test_junction_parent_rejected (test_api_key_dialog.ApiKeyDialogTests.test_junction_parent_rejected) ... ok
+test_non_pe_even_with_matching_hash_rejected (test_api_key_dialog.ApiKeyDialogTests.test_non_pe_even_with_matching_hash_rejected) ... ok
+test_nonzero_is_fixed_status_without_child_body (test_api_key_dialog.ApiKeyDialogTests.test_nonzero_is_fixed_status_without_child_body) ... ok
+test_output_created_while_waiting_is_preserved_and_zero_child (test_api_key_dialog.ApiKeyDialogTests.test_output_created_while_waiting_is_preserved_and_zero_child) ... ok
+test_password_control_and_running_close_guard_without_showing (test_api_key_dialog.ApiKeyDialogTests.test_password_control_and_running_close_guard_without_showing) ... ok
+test_permanent_reader_lock_is_explicit_failure_after_local_publish_deadline (test_api_key_dialog.ApiKeyDialogTests.test_permanent_reader_lock_is_explicit_failure_after_local_publish_deadline) ... ok
+test_replace_sharing_conflict_preserves_owned_identity (test_api_key_dialog.ApiKeyDialogTests.test_replace_sharing_conflict_preserves_owned_identity) ... ok
+test_standalone_shared_cli_refused_before_any_form_or_cli_child (test_api_key_dialog.ApiKeyDialogTests.test_standalone_shared_cli_refused_before_any_form_or_cli_child) ... ok
+test_status_replaced_by_hardlink_is_rejected (test_api_key_dialog.ApiKeyDialogTests.test_status_replaced_by_hardlink_is_rejected) ... ok
+test_terminal_status_waits_for_reader_without_claiming_finished (test_api_key_dialog.ApiKeyDialogTests.test_terminal_status_waits_for_reader_without_claiming_finished) ... ok
+test_verified_cli_cannot_be_changed_while_waiting (test_api_key_dialog.ApiKeyDialogTests.test_verified_cli_cannot_be_changed_while_waiting) ... ok
+
+======================================================================
+FAIL: test_cancel_before_start_preserves_parent_environment (test_api_key_dialog.ApiKeyDialogTests.test_cancel_before_start_preserves_parent_environment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 323, in test_cancel_before_start_preserves_parent_environment
+    self.run_ps("""
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 117, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : Exception: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1:217
+Line |
+ 217 |      catch { throw 'status_ownership_lost' }
+     |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | status_ownership_lost
+
+
+----------------------------------------------------------------------
+Ran 18 tests in 22.220s
+
+FAILED (failures=1)

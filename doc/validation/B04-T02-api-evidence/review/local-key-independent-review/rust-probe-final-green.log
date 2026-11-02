@@ -1,0 +1,50 @@
+   Compiling independent-credential-probe v0.0.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\local-key-independent-review\rust-probe)
+warning: unused import: `std::ffi::OsString`
+ --> src\lib.rs:6:5
+  |
+6 | use std::ffi::OsString;
+  |     ^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::path::Path`
+ --> src\lib.rs:7:5
+  |
+7 | use std::path::Path;
+  |     ^^^^^^^^^^^^^^^
+
+warning: unused imports: `AtomicBool` and `Ordering`
+ --> src\lib.rs:8:25
+  |
+8 | use std::sync::atomic::{AtomicBool, Ordering};
+  |                         ^^^^^^^^^^  ^^^^^^^^
+
+warning: unused imports: `Duration` and `Instant`
+ --> src\lib.rs:9:17
+  |
+9 | use std::time::{Duration, Instant};
+  |                 ^^^^^^^^  ^^^^^^^
+
+warning: `independent-credential-probe` (lib) generated 4 warnings (run `cargo fix --lib -p independent-credential-probe` to apply 4 suggestions)
+warning: `independent-credential-probe` (lib test) generated 4 warnings (4 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.64s
+     Running unittests src\lib.rs (.artifacts/local-key-independent-review/rust-probe/target\debug\deps\independent_credential_probe-ea4a1c1b5ed90c37.exe)
+
+running 8 tests
+test independent_review::full_escaped_secret_in_unterminated_token_must_suppress ... ok
+test independent_review::ordinary_inner_quotes_without_secret_must_remain_accepted ... ok
+test independent_review::natural_quoted_windows_path_without_secret_must_remain_accepted ... ok
+test independent_review::malformed_escape_tail_does_not_hide_already_decodable_secret ... ok
+test independent_review::code_fence_and_prefix_must_not_hide_closed_escaped_secret ... ok
+test independent_review::strict_outer_duplicate_and_nonfinite_json_must_be_rejected ... ok
+test independent_review::utf16_surrogate_pair_escape_with_prefix_and_no_closing_quote_must_suppress ... ok
+test independent_review::quoted_scalar_and_multiple_layers_must_suppress ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests independent_credential_probe
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

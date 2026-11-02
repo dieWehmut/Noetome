@@ -1,0 +1,24 @@
+    Blocking waiting for file lock on build directory
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.80s
+     Running unittests src\lib.rs (D:/Noetome/target\debug\deps\noetome_cli-333232b9c47b2105.exe)
+
+running 2 tests
+test api_cli_tests::api_rejects_missing_implicit_or_duplicate_options_before_io ... ok
+test api_cli_tests::api_commands_admit_only_explicit_runtime_and_exact_paths ... FAILED
+
+failures:
+
+---- api_cli_tests::api_commands_admit_only_explicit_runtime_and_exact_paths stdout ----
+
+thread 'api_cli_tests::api_commands_admit_only_explicit_runtime_and_exact_paths' (84620) panicked at crates\noetome-cli\src\lib.rs:532:13:
+Err("CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    api_cli_tests::api_commands_admit_only_explicit_runtime_and_exact_paths
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 330 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

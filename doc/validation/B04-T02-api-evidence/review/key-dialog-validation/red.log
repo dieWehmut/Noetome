@@ -1,0 +1,204 @@
+test_bad_hash_before_form_and_zero_child (test_api_key_dialog.ApiKeyDialogTests.test_bad_hash_before_form_and_zero_child) ... FAIL
+test_cancel_before_start_preserves_parent_environment (test_api_key_dialog.ApiKeyDialogTests.test_cancel_before_start_preserves_parent_environment) ... FAIL
+test_child_env_arguments_drain_and_single_call (test_api_key_dialog.ApiKeyDialogTests.test_child_env_arguments_drain_and_single_call) ... FAIL
+test_existing_status_and_output_not_overwritten (test_api_key_dialog.ApiKeyDialogTests.test_existing_status_and_output_not_overwritten) ... 
+  test_existing_status_and_output_not_overwritten (test_api_key_dialog.ApiKeyDialogTests.test_existing_status_and_output_not_overwritten) (name='StatusPath') ... FAIL
+  test_existing_status_and_output_not_overwritten (test_api_key_dialog.ApiKeyDialogTests.test_existing_status_and_output_not_overwritten) (name='OutputPath') ... FAIL
+test_invalid_keys_never_start_child (test_api_key_dialog.ApiKeyDialogTests.test_invalid_keys_never_start_child) ... FAIL
+test_junction_parent_rejected (test_api_key_dialog.ApiKeyDialogTests.test_junction_parent_rejected) ... FAIL
+test_non_pe_even_with_matching_hash_rejected (test_api_key_dialog.ApiKeyDialogTests.test_non_pe_even_with_matching_hash_rejected) ... FAIL
+test_nonzero_is_fixed_status_without_child_body (test_api_key_dialog.ApiKeyDialogTests.test_nonzero_is_fixed_status_without_child_body) ... FAIL
+test_password_control_and_running_close_guard_without_showing (test_api_key_dialog.ApiKeyDialogTests.test_password_control_and_running_close_guard_without_showing) ... FAIL
+test_status_replaced_by_hardlink_is_rejected (test_api_key_dialog.ApiKeyDialogTests.test_status_replaced_by_hardlink_is_rejected) ... FAIL
+
+======================================================================
+FAIL: test_bad_hash_before_form_and_zero_child (test_api_key_dialog.ApiKeyDialogTests.test_bad_hash_before_form_and_zero_child)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 143, in test_bad_hash_before_form_and_zero_child
+    self.run_ps("try { $s = New-NoetomeKeySession @params; throw 'bad_hash_accepted' } catch { if ($_.Exception.Message -ne 'cli_hash_mismatch') { throw } }")
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-hxhkf4e5\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+======================================================================
+FAIL: test_cancel_before_start_preserves_parent_environment (test_api_key_dialog.ApiKeyDialogTests.test_cancel_before_start_preserves_parent_environment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 163, in test_cancel_before_start_preserves_parent_environment
+    self.run_ps("""
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-p6srfvx2\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+======================================================================
+FAIL: test_child_env_arguments_drain_and_single_call (test_api_key_dialog.ApiKeyDialogTests.test_child_env_arguments_drain_and_single_call)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 111, in test_child_env_arguments_drain_and_single_call
+    self.run_ps("""
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-e5b2cyi6\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+======================================================================
+FAIL: test_existing_status_and_output_not_overwritten (test_api_key_dialog.ApiKeyDialogTests.test_existing_status_and_output_not_overwritten) (name='StatusPath')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 158, in test_existing_status_and_output_not_overwritten
+    self.run_ps("try { $s = New-NoetomeKeySession @params; throw 'existing_accepted' } catch { if ($_.Exception.Message -ne 'result_root_not_fresh') { throw } }")
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-17iqjo9i\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+======================================================================
+FAIL: test_existing_status_and_output_not_overwritten (test_api_key_dialog.ApiKeyDialogTests.test_existing_status_and_output_not_overwritten) (name='OutputPath')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 158, in test_existing_status_and_output_not_overwritten
+    self.run_ps("try { $s = New-NoetomeKeySession @params; throw 'existing_accepted' } catch { if ($_.Exception.Message -ne 'result_root_not_fresh') { throw } }")
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-17iqjo9i\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+======================================================================
+FAIL: test_invalid_keys_never_start_child (test_api_key_dialog.ApiKeyDialogTests.test_invalid_keys_never_start_child)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 174, in test_invalid_keys_never_start_child
+    self.run_ps("""
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-xg7dpt0e\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+======================================================================
+FAIL: test_junction_parent_rejected (test_api_key_dialog.ApiKeyDialogTests.test_junction_parent_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 221, in test_junction_parent_rejected
+    self.run_ps(f"New-Item -ItemType Junction -Path '{link}' -Target '{target}' | Out-Null\ntry {{ $s = New-NoetomeKeySession @params; throw 'junction_accepted' }} catch {{ if ($_.Exception.Message -ne 'unsafe_path') {{ throw }} }}")
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-6zrtd9c9\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+======================================================================
+FAIL: test_non_pe_even_with_matching_hash_rejected (test_api_key_dialog.ApiKeyDialogTests.test_non_pe_even_with_matching_hash_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 151, in test_non_pe_even_with_matching_hash_rejected
+    self.run_ps("try { $s = New-NoetomeKeySession @params; throw 'non_pe_accepted' } catch { if ($_.Exception.Message -ne 'cli_not_pe') { throw } }")
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-ubsiyqr8\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+======================================================================
+FAIL: test_nonzero_is_fixed_status_without_child_body (test_api_key_dialog.ApiKeyDialogTests.test_nonzero_is_fixed_status_without_child_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 132, in test_nonzero_is_fixed_status_without_child_body
+    self.run_ps("""
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-v1av_bxr\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+======================================================================
+FAIL: test_password_control_and_running_close_guard_without_showing (test_api_key_dialog.ApiKeyDialogTests.test_password_control_and_running_close_guard_without_showing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 188, in test_password_control_and_running_close_guard_without_showing
+    self.run_ps("""
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-dml6jrpz\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+======================================================================
+FAIL: test_status_replaced_by_hardlink_is_rejected (test_api_key_dialog.ApiKeyDialogTests.test_status_replaced_by_hardlink_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 202, in test_status_replaced_by_hardlink_is_rejected
+    self.run_ps("""
+  File "C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\tests\test_api_key_dialog.py", line 100, in run_ps
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : .: C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\.artifacts\synthetic-key-dialog-r6yhf9fc\case-ncmtfozt\offline.ps1:2
+Line |
+   2 |  . 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\in ��
+     |    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | The term 'C:\Users\Lyinn\.codex\worktrees\b03-t01-sidecar\Noetome\scripts\invoke_api_with_key.ps1' is not
+     | recognized as a name of a cmdlet, function, script file, or executable program. Check the spelling of the name,
+     | or if a path was included, verify that the path is correct and try again.
+
+
+----------------------------------------------------------------------
+Ran 10 tests in 4.817s
+
+FAILED (failures=11)

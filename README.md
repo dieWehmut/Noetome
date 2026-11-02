@@ -2,7 +2,7 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、独立文本PDF解析、明确标为fixture的IR与NotePlan契约校验和临时Vault编译，以及帮助和版本命令。文本来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；PDF解析在全新测试根保存原始字节、物理页、区域正文与验证报告，项目登记保存Schema3原始版本和独立解析记录。fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖、独立预期和实际笔记，再保存Run、Release及双报告。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture业务尚未接入桌面；离线候选契约和只读重载已建立，真实模型API尚待单独配置及验收。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、独立文本PDF解析、明确标为fixture的IR与NotePlan契约校验和临时Vault编译，以及帮助和版本命令。文本来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；PDF解析在全新测试根保存原始字节、物理页、区域正文与验证报告，项目登记保存Schema3原始版本和独立解析记录。fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖、独立预期和实际笔记，再保存Run、Release及双报告。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture业务尚未接入桌面；离线候选契约和只读重载已建立，唯一Responses服务的单次短文本API入口已实现，真实冒烟等待本机密钥输入及独立验收。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
 
 单份PDF入口为`noetome source parse-pdf <PDF文件> <尚不存在的测试输出根> --python <绝对解释器路径> [--timeout-ms <0..30000>]`。按[解析器环境说明](sidecars/pdf_parser/README.md)准备锁定Python和八包依赖；调用不安装依赖。全部页可靠文本通过才返回0，需复核或解析未完成返回3；扫描、空白、视觉结构和不可靠阅读顺序保留真实页证据。详细契约见[PDF v2](doc/technical/PDF_PARSE_PROTOCOL.md)。
 
@@ -189,3 +189,5 @@ python -m unittest discover -s tests -p "test_*.py"
 开发时通过start、complete、block、reopen维护状态和证据，工具自动刷新三份清单。具体命令见[日志规则](dev-log/README.md)。不要手动把计划写成已完成。
 
 离线候选使用[独立协议v1](doc/technical/MODEL_CANDIDATE_PROTOCOL.md)，private fake只在测试进程中重放审阅响应。`noetome knowledge inspect <项目路径> <候选根>`只读核对保存的未核验候选或分类失败，不再次调用模型或发布笔记；真实API、PDF模型引用与科学质量仍由后续任务分别验收。
+
+唯一网关的短文本API入口及本地masked密钥输入见[Responses API协议](doc/technical/RESPONSES_API_PROTOCOL.md)：`api preflight/extract/inspect`要求明确配置、源外发授权和预算，候选保持unverified。配置解析、adapter与原生审计重读的离线测试和真实收费冒烟分别验收；T02未取得实际合法候选时尚未完成，实际状态见任务账本。

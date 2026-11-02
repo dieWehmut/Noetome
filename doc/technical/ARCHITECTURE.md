@@ -261,4 +261,8 @@ B01A按用户确认管理窗口关闭事件：×默认隐藏原窗口到托盘�
 
 ## B04-T02 已实现的本地准备
 
-`model_preflight`在选定来源的持续守卫下保留完整规范文本，包括Formatting和尾部字节，供单一真实适配器后续消费；共用来源一致性检查仍复核同项目全部登记快照。CLI的`knowledge preflight`仅输出源摘要和未调用/未授权事实。`credential_handoff`通过现有有界宿主的瞬时stdin帧交接显式凭据，环境仍仅SystemRoot；敏感错误抑制输出正文及指纹。二者尚未连接真实提供商、预算和外发授权，也不写入旧v1候选报告。详细接口及剩余验收见[本地边界](API_PREFLIGHT_BOUNDARY.md)。
+`model_preflight`在选定来源的持续守卫下保留完整规范文本，包括Formatting和尾部字节；共用来源一致性检查仍复核同项目全部登记快照。CLI的`knowledge preflight`仅输出源摘要和未调用/未授权事实。`credential_handoff`通过现有有界宿主的瞬时stdin帧交接显式凭据，环境仍仅SystemRoot；敏感错误抑制输出正文及指纹。前一检查点尚未连接真实提供商、预算和外发授权，历史边界见[本地记录](API_PREFLIGHT_BOUNDARY.md)；当前唯一服务已连接到下述独立API入口，不写入旧v1候选报告。
+
+### 唯一Responses API的本地执行边界
+
+`model_api`负责完整登记来源/config/auth/budget准入、运行时持续守卫和T01解码；`api_store`负责独占schema2库存/原子最后report；Python stdlib adapter只处理固定网关的单次HTTP与紧凑候选。原生`api inspect`不启动进程或打开报告自称路径。开发用masked密钥窗口只给单个Core子进程短暂环境，provider仍走既有三管道和Job。实现契约见[Responses API](RESPONSES_API_PROTOCOL.md)，真实调用验收与离线合成测试分别记录。
