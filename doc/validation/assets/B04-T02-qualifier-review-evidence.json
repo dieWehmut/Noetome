@@ -1,0 +1,4679 @@
+{
+  "base": "8004df0f70dddc38a3f37be192d6928f3970c10e",
+  "head": "fd53462c5217060c40a30a38f40b3bcc2e2b8fc0",
+  "binary_sha256": "514ce3c5414874956dffcc3e612ecd538b59393e0eec71977d011d938f69b236",
+  "runs": {
+    "fix-native-red": {
+      "exit_code": 1,
+      "rows": [
+        [
+          "0",
+          "1",
+          "0"
+        ]
+      ],
+      "python76": false,
+      "warnings": []
+    },
+    "cli-red": {
+      "exit_code": 101,
+      "rows": [
+        [
+          "0",
+          "2",
+          "0"
+        ]
+      ],
+      "python76": false,
+      "warnings": []
+    },
+    "fix-native-green": {
+      "exit_code": 0,
+      "rows": [
+        [
+          "38",
+          "0",
+          "0"
+        ]
+      ],
+      "python76": false,
+      "warnings": []
+    },
+    "fix-cli-green": {
+      "exit_code": 0,
+      "rows": [
+        [
+          "7",
+          "0",
+          "0"
+        ]
+      ],
+      "python76": false,
+      "warnings": []
+    },
+    "fix-fake-green": {
+      "exit_code": 0,
+      "rows": [
+        [
+          "3",
+          "0",
+          "0"
+        ]
+      ],
+      "python76": false,
+      "warnings": []
+    },
+    "python-tests": {
+      "exit_code": 0,
+      "rows": [],
+      "python76": true,
+      "warnings": []
+    },
+    "final-workspace-tests": {
+      "exit_code": 0,
+      "rows": [
+        [
+          "377",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "4",
+          "0",
+          "0"
+        ],
+        [
+          "12",
+          "0",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "0"
+        ],
+        [
+          "7",
+          "0",
+          "0"
+        ],
+        [
+          "20",
+          "0",
+          "0"
+        ],
+        [
+          "7",
+          "0",
+          "0"
+        ],
+        [
+          "19",
+          "0",
+          "0"
+        ],
+        [
+          "13",
+          "0",
+          "0"
+        ],
+        [
+          "3",
+          "0",
+          "0"
+        ],
+        [
+          "19",
+          "0",
+          "0"
+        ],
+        [
+          "15",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "python76": false,
+      "warnings": []
+    },
+    "final-check": {
+      "exit_code": 0,
+      "rows": [],
+      "python76": false,
+      "warnings": []
+    },
+    "final-fmt": {
+      "exit_code": 0,
+      "rows": [],
+      "python76": false,
+      "warnings": []
+    }
+  },
+  "audits": {
+    "api": {
+      "checks": 84,
+      "cli_calls": 90,
+      "local_posts": 54
+    },
+    "fake": {
+      "checks": 54,
+      "cli_calls": 60,
+      "local_posts": 0
+    },
+    "chat": {
+      "checks": 35,
+      "cli_calls": 37,
+      "local_posts": 29
+    }
+  },
+  "checks": [
+    {
+      "name": "current-v5-source:crates/noetome-cli/src/extraction_api_config.rs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-source:crates/noetome-cli/src/extraction_api_config.rs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current-v5-source:crates/noetome-cli/src/extraction_api_schema.rs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-source:crates/noetome-cli/src/extraction_api_schema.rs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current-v5-source:crates/noetome-cli/src/extraction_api_wire/chat.rs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-source:crates/noetome-cli/src/extraction_api_wire/chat.rs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current-v5-source:crates/noetome-cli/tests/extraction_api.rs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "current-debug-binary",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:crates/noetome-cli/src/extraction_api_config.rs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:crates/noetome-cli/src/extraction_api_schema.rs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:crates/noetome-cli/src/extraction_api_wire/chat.rs",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:doc/validation/assets/B04-T02-live-fourth-response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/qualifier-fix-source.patch",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-cli-red.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/qualifier-fix-check.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/qualifier-fix-cli-green.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/qualifier-fix-diff-check.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/qualifier-fix-fake-green.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/qualifier-fix-format.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/qualifier-fix-native-green.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/qualifier-fix-native-red.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "worker-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/qualifier-fix-owned-fmt.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-workspace-tests.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-workspace-summary.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-fmt.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-check.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-api-command.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-fake-command.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-chat-command.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-api-audit.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-fake-audit.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-chat-audit.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-selected-zero-command.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-snapshot-verification.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-cli-red.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-workspace-source.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-snapshot-source.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-live-fifth-controller-source.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-cli-red-source.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive-record:doc/validation/assets/B04-T02-qualifier-final-reports.zip",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded-stream-digest:cli-red:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded-stream-digest:cli-red:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded-stream-digest:python-tests:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded-stream-digest:python-tests:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded-stream-digest:final-workspace-tests:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded-stream-digest:final-workspace-tests:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded-stream-digest:final-check:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded-stream-digest:final-check:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded-stream-digest:final-fmt:stdout",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "recorded-stream-digest:final-fmt:stderr",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final-audit:api",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final-source-sql:api",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final-audit:fake",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final-source-sql:fake",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final-audit:chat",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "final-source-sql:chat",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "chat-missing-unit-rejected",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "snapshot-counts",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "archive716",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-json/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-json/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-json/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-json/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-json/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-json/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-annotations/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-annotations/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-annotations/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-annotations/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-annotations/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-annotations/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-id/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-id/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-id/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-id/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-id/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-id/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-summary/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-summary/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-summary/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-summary/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-summary/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-summary/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-existing/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-existing/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-existing/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-existing/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-existing/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-running/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-running/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-running/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-running/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-running/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-running/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-extra/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-extra/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-extra/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-extra/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-extra/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-extra/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-version/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-version/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-version/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-version/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-version/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-version/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-chinese-boundary/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-chinese-boundary/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-chinese-boundary/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-chinese-boundary/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-chinese-boundary/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-chinese-boundary/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-claimed-review/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-claimed-review/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-claimed-review/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-claimed-review/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-claimed-review/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-claimed-review/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-candidate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-candidate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-candidate/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-candidate/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-candidate/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-candidate/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-wire/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-wire/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-wire/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-wire/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-wire/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-wire/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped-malformed/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped-malformed/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped-malformed/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped-malformed/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped-malformed/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-nested-json/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-nested-json/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-nested-json/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-nested-json/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-nested-json/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-plain/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-plain/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-plain/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-plain/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-plain/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-auth/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-auth/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-auth/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-auth/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-auth/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-auth/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-body/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-body/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-body/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-body/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-body/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-body/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-rate-limit/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-rate-limit/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-rate-limit/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-rate-limit/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-rate-limit/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-rate-limit/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-extra-text/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-extra-text/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-extra-text/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-extra-text/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-extra-text/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-extra-text/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-future-metadata/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-future-metadata/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-future-metadata/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-future-metadata/new output/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-future-metadata/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-future-metadata/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-future-metadata/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-302/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-302/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-302/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-302/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-302/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-302/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-400/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-400/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-400/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-400/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-400/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-400/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-401/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-401/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-401/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-401/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-401/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-401/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-403/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-403/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-403/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-403/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-403/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-403/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-429/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-429/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-429/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-429/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-429/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-429/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-500/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-500/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-500/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-500/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-500/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-500/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-503/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-503/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-503/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-503/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-503/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-503/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-incomplete/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-incomplete/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-incomplete/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-incomplete/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-incomplete/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-incomplete/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-condition/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-condition/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-condition/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-condition/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-condition/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-condition/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-nullable/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-nullable/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-nullable/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-nullable/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-nullable/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-nullable/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-structured_output/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-structured_output/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-structured_output/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-structured_output/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-structured_output/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-text/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-text/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-text/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-text/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-text/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-usage/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-usage/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-usage/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-usage/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-nonzero-source-span/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-nonzero-source-span/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-nonzero-source-span/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-nonzero-source-span/new output/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-nonzero-source-span/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-nonzero-source-span/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-nonzero-source-span/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-output-over-budget/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-output-over-budget/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-output-over-budget/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-output-over-budget/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-output-over-budget/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-output-over-budget/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reasoning-metadata/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reasoning-metadata/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reasoning-metadata/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reasoning-metadata/new output/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reasoning-metadata/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reasoning-metadata/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reasoning-metadata/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-refusal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-refusal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-refusal/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-refusal/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-refusal/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-refusal/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-replay/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-replay/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-replay/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-replay/new output/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-replay/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-replay/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-replay/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reserve-stop/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reserve-stop/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reserve-stop/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reserve-stop/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reserve-stop/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-response-limit/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-response-limit/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-response-limit/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-response-limit/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-response-limit/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-response-limit/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-body/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-body/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-body/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-body/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-body/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-body/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-headers/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-headers/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-headers/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-headers/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-headers/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-headers/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-tool-output/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-tool-output/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-tool-output/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-tool-output/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-tool-output/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-tool-output/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-trailing-wire/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-trailing-wire/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-trailing-wire/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-trailing-wire/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-trailing-wire/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-trailing-wire/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-truncated-http/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-truncated-http/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-truncated-http/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-truncated-http/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-truncated-http/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-truncated-http/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-unknown-price/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-unknown-price/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-unknown-price/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-unknown-price/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-unknown-price/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-detail/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-detail/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-detail/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-detail/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-detail/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-detail/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-fraction/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-fraction/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-fraction/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-fraction/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-fraction/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-fraction/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-negative/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-negative/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-negative/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-negative/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-negative/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-negative/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-no-details/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-no-details/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-no-details/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-no-details/new output/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-no-details/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-no-details/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-no-details/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-over-budget/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-over-budget/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-over-budget/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-over-budget/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-over-budget/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-over-budget/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-sum/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-sum/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-sum/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-sum/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-sum/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-sum/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-valid/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-valid/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-valid/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-valid/new output/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-valid/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-valid/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-valid/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-vision-request/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-vision-request/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-vision-request/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-vision-request/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-vision-request/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-binding/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-binding/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-binding/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-binding/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-binding/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-binding/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-quote/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-quote/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-quote/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-quote/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-quote/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-quote/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-sha/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-sha/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-sha/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-sha/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-sha/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-sha/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-zero-requests/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-zero-requests/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-zero-requests/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-zero-requests/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-zero-requests/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-budget-stop/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-budget-stop/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-budget-stop/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-budget-stop/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-dropped-unit/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-dropped-unit/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-dropped-unit/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-dropped-unit/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-dropped-unit/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-duplicate-field/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-duplicate-field/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-duplicate-field/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-duplicate-field/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-duplicate-field/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-empty/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-empty/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-empty/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-empty/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-excerpt-sha/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-excerpt-sha/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-excerpt-sha/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-excerpt-sha/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-excerpt-sha/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-extra-field/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-extra-field/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-extra-field/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-extra-field/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-extra-field/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-missing-field/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-missing-field/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-missing-field/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-missing-field/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-missing-field/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-missing-measurement/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-missing-measurement/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-missing-measurement/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-missing-measurement/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-missing-measurement/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-needs-review-unknown-value/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-needs-review-unknown-value/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-needs-review-unknown-value/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-needs-review-unknown-value/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-needs-review-unknown-value/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-needs-review-unknown-value/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-json-capability/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-json-capability/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-json-capability/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-json-capability/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-support/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-support/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-support/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-support/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-support/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-text-capability/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-text-capability/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-text-capability/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-no-text-capability/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-non-json/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-non-json/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-non-json/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-non-json/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-non-json/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-output-token-limit/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-output-token-limit/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-output-token-limit/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-output-token-limit/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-output-token-limit/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-manifest-sha/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-manifest-sha/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-manifest-sha/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-manifest-sha/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-manifest-sha/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-unknown-parse/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-unknown-parse/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-unknown-parse/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-unknown-parse/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-unknown-parse/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-valid/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-valid/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-valid/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-valid/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-valid/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-pdf-valid/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-price-unknown/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-price-unknown/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-price-unknown/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-price-unknown/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-quote-mismatch/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-quote-mismatch/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-quote-mismatch/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-quote-mismatch/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-quote-mismatch/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-race-input/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-race-input/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-race-input/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-race-input/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-race-input/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-race-source/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-race-source/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-race-source/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-race-source/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-race-source/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-replay/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-replay/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-replay/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-replay/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-replay/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-replay/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-required-fake/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-required-fake/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-required-fake/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-required-fake/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-required-fake/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-response-limit/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-response-limit/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-response-limit/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-response-limit/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-reviewed-fake/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-reviewed-fake/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-reviewed-fake/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-reviewed-fake/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-reviewed-fake/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-runtime-cancel/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-runtime-cancel/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-runtime-cancel/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-runtime-cancel/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-timeout/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-timeout/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-timeout/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-timeout/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-token-reservation/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-token-reservation/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-token-reservation/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-token-reservation/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-trailing-json/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-trailing-json/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-trailing-json/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-trailing-json/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-trailing-json/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-concept/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-concept/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-concept/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-concept/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-concept/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-parse/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-parse/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-parse/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-parse/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-parse/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-schema/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-schema/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-schema/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-schema/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-schema/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-unit/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-unit/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-unit/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-unit/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-unit/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-value-zero/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-value-zero/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-value-zero/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-value-zero/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-value-zero/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-version/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-version/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-version/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-version/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-unknown-version/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-utf8-boundary/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-utf8-boundary/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-utf8-boundary/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-utf8-boundary/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-utf8-boundary/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-valid/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-valid/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-valid/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-valid/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-valid/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-valid/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-wrong-resource-binding/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-wrong-resource-binding/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-wrong-resource-binding/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-wrong-resource-binding/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-fake/out-wrong-resource-binding/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-auth/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-auth/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-auth/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-auth/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-auth/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-auth/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-auth/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-boolean-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-boolean-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-boolean-usage/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-boolean-usage/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-boolean-usage/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-boolean-usage/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-boolean-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-cancel/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-cancel/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-cancel/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-cancel/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-cancel/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-cancel/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-duplicate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-duplicate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-duplicate/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-duplicate/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-duplicate/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-duplicate/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-duplicate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-extra/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-extra/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-extra/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-extra/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-extra/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-extra/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-extra/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-content-echo/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-content-echo/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-content-echo/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-content-echo/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-content-echo/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-content-echo/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-empty-wire/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-empty-wire/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-empty-wire/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-empty-wire/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-empty-wire/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-empty-wire/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-empty-wire/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-fenced/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-fenced/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-fenced/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-fenced/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-fenced/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-fenced/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-fenced/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-filter/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-filter/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-filter/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-filter/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-filter/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-filter/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-filter/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-framing-cut/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-framing-cut/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-framing-cut/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-framing-cut/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-framing-cut/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-framing-cut/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-framing-cut/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-function/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-function/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-function/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-function/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-function/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-function/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-function/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-length/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-length/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-length/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-length/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-length/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-length/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-length/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-missing-unit-qualifier/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-missing-unit-qualifier/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-missing-unit-qualifier/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-missing-unit-qualifier/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-missing-unit-qualifier/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-missing-unit-qualifier/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-missing-unit-qualifier/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-no-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-no-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-no-usage/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-no-usage/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-no-usage/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-no-usage/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-no-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-normal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-normal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-normal/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-normal/new output/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-normal/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-normal/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-normal/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-normal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-price-unknown/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-price-unknown/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-price-unknown/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-price-unknown/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-price-unknown/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-price-unknown/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-rate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-rate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-rate/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-rate/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-rate/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-rate/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-rate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-reasoning-echo/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-reasoning-echo/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-reasoning-echo/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-reasoning-echo/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-reasoning-echo/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-reasoning-echo/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-refusal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-refusal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-refusal/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-refusal/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-refusal/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-refusal/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-refusal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-replay/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-replay/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-replay/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-replay/new output/candidates.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-replay/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-replay/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-replay/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-replay/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-service/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-service/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-service/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-service/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-service/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-service/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-service/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-timeout/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-timeout/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-timeout/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-timeout/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-timeout/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-timeout/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-timeout/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-tool/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-tool/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-tool/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-tool/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-tool/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-tool/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-tool/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-two-choices/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-two-choices/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-two-choices/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-two-choices/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-two-choices/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-two-choices/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-two-choices/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-duplicate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-duplicate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-duplicate/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-duplicate/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-duplicate/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-duplicate/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-duplicate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-trailing/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-trailing/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-trailing/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-trailing/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-trailing/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-trailing/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-trailing/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-index/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-index/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-index/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-index/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-index/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-index/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-index/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-role/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-role/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-role/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-role/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-role/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-role/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-role/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-total/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-total/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-total/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-total/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-total/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-total/new output/response.bin",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-total/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-zero-budget/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-zero-budget/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-zero-budget/new output/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-zero-budget/new output/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-zero-budget/new output/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-zero-budget/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-pair:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-selected-zero/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-status:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-selected-zero/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-selected-zero/.owner.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-selected-zero/request-body.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "report-artifact:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-selected-zero/request.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "v5-chat-request:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-selected-zero/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-json/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-annotations/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-id/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-bad-output-summary/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-existing/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-cancel-running/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-extra/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-candidate-version/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-chinese-boundary/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-claimed-review/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-candidate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-duplicate-wire/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-escaped-malformed/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-nested-json/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-echo-plain/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-auth/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-body/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-empty-rate-limit/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-extra-text/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-future-metadata/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-302/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-400/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-401/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-403/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-429/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-500/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-http-503/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-incomplete/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-condition/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-nullable/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-structured_output/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-text/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-missing-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-nonzero-source-span/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-output-over-budget/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reasoning-metadata/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-refusal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-replay/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-reserve-stop/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-response-limit/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-body/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-timeout-headers/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-tool-output/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-trailing-wire/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-truncated-http/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-unknown-price/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-detail/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-fraction/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-negative/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-no-details/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-over-budget/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-usage-sum/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-valid/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-vision-request/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-binding/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-quote/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-wrong-sha/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-api/case-zero-requests/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-auth/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-boolean-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-cancel/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-duplicate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-candidate-extra/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-content-echo/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-empty-wire/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-fenced/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-filter/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-framing-cut/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-function/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-length/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-missing-unit-qualifier/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-no-usage/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-normal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-price-unknown/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-rate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-reasoning-echo/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-refusal/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-replay/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-service/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-timeout/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-tool/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-two-choices/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-duplicate/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wire-trailing/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-index/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-role/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-wrong-total/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-final-chat/case-chat-zero-budget/new output/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "request-digests:.superpowers/sdd/B04-T02_GATEWAY_PLAN/root-qualifier-selected-zero/validation.json",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original-fourth-unit-missing",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original-fourth-core-failure",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "original-fourth-digest",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "checks_passed": 899,
+  "checks_failed": 0,
+  "commands_executed": "read-only evidence helper only; no suites, Cargo, builds, UI, network or model calls"
+}

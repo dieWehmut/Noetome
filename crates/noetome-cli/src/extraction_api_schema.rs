@@ -31,8 +31,12 @@ pub(crate) fn request_body(
         }),
     };
     if matches!(strategy, RequestStrategy::TangmaoChat) {
+        input_value["response_schema"]["properties"]["concepts"]["items"]["properties"]["revision"]
+            ["minimum"] = json!(1);
+        input_value["response_schema"]["properties"]["atoms"]["items"]["properties"]["atom"]["properties"]
+            ["revision"]["minimum"] = json!(1);
         input_value["task"] = json!(format!(
-            "{} Each element of atoms must have exactly two top-level keys: atom and measurement. Put all ten Atom fields atom_id, concept_ids, content, evidence_links, kind, qualifiers, required, revision, value_status, verification inside atom. measurement is a sibling of atom: either null or an object with exactly conditions, unit, value, value_status. Do not flatten Atom fields into the outer array element. Associate each claim's conditions and applicability qualifiers with that claim; measurement.conditions must express its actual conditions. Keep source registration, parsing, processing and provenance metadata as evidence context, not as subject knowledge, concepts or scientific claims. Include measurement.unit verbatim in atom.qualifiers when unit is not null. Include every measurement.conditions string verbatim in atom.qualifiers. The measurement fields alone do not satisfy the Atom qualifiers contract.",
+            "{} Each element of atoms must have exactly two top-level keys: atom and measurement. Put all ten Atom fields atom_id, concept_ids, content, evidence_links, kind, qualifiers, required, revision, value_status, verification inside atom. measurement is a sibling of atom: either null or an object with exactly conditions, unit, value, value_status. Do not flatten Atom fields into the outer array element. Associate each claim's conditions and applicability qualifiers with that claim; measurement.conditions must express its actual conditions. Keep source registration, parsing, processing and provenance metadata as evidence context, not as subject knowledge, concepts or scientific claims. Include measurement.unit verbatim in atom.qualifiers when unit is not null. Include every measurement.conditions string verbatim in atom.qualifiers. The measurement fields alone do not satisfy the Atom qualifiers contract. Every concept.revision and atom.revision must be a positive integer; use 1 for a newly extracted candidate. Never use 0.",
             input_value["task"].as_str().expect("selected task")
         ));
     }
@@ -121,7 +125,7 @@ mod tests {
     use super::*;
     use crate::extraction_model::Locator;
     #[test]
-    fn qualifier_fix_chat_task_demands_qualifier_consistency_and_keeps_nesting() {
+    fn revision_fix_chat_task_demands_positive_revision_and_keeps_v5_prefix() {
         let binding: SourceBinding = serde_json::from_value(json!({"project_id":"p","import_id":"i","source_id":"s","version_id":"v","content_sha256":"sha","normalized_sha256":null,"parse_id":null,"manifest_sha256":null})).unwrap();
         let units = [RequestUnit {
             unit_id: "u".into(),
@@ -184,6 +188,9 @@ mod tests {
         assert_eq!(body["messages"][1]["role"], "user");
         let user: Value =
             serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
+        assert!(user["task"].as_str().unwrap().ends_with(
+            " Every concept.revision and atom.revision must be a positive integer; use 1 for a newly extracted candidate. Never use 0."
+        ));
         for phrase in [
             "Include measurement.unit verbatim in atom.qualifiers",
             "Include every measurement.conditions string verbatim in atom.qualifiers",
@@ -199,11 +206,15 @@ mod tests {
             assert!(user["task"].as_str().unwrap().contains(phrase), "{phrase}");
         }
         let previous_user: Value = serde_json::from_str(old["input"].as_str().unwrap()).unwrap();
-        assert!(
-            user["task"]
-                .as_str()
-                .unwrap()
-                .starts_with(previous_user["task"].as_str().unwrap())
+        let v5_task = format!(
+            "{} Each element of atoms must have exactly two top-level keys: atom and measurement. Put all ten Atom fields atom_id, concept_ids, content, evidence_links, kind, qualifiers, required, revision, value_status, verification inside atom. measurement is a sibling of atom: either null or an object with exactly conditions, unit, value, value_status. Do not flatten Atom fields into the outer array element. Associate each claim's conditions and applicability qualifiers with that claim; measurement.conditions must express its actual conditions. Keep source registration, parsing, processing and provenance metadata as evidence context, not as subject knowledge, concepts or scientific claims. Include measurement.unit verbatim in atom.qualifiers when unit is not null. Include every measurement.conditions string verbatim in atom.qualifiers. The measurement fields alone do not satisfy the Atom qualifiers contract.",
+            previous_user["task"].as_str().unwrap()
+        );
+        assert_eq!(
+            user["task"],
+            format!(
+                "{v5_task} Every concept.revision and atom.revision must be a positive integer; use 1 for a newly extracted candidate. Never use 0."
+            )
         );
         assert_eq!(user["request"], previous_user["request"]);
         assert_eq!(
@@ -214,7 +225,22 @@ mod tests {
                 .collect::<Vec<_>>(),
             ["request", "response_schema", "task"]
         );
-        assert_eq!(user["response_schema"], old["text"]["format"]["schema"]);
+        let mut schema_without_revision_minimum = user["response_schema"].clone();
+        for pointer in [
+            "/properties/concepts/items/properties/revision",
+            "/properties/atoms/items/properties/atom/properties/revision",
+        ] {
+            schema_without_revision_minimum
+                .pointer_mut(pointer)
+                .unwrap()
+                .as_object_mut()
+                .unwrap()
+                .remove("minimum");
+        }
+        assert_eq!(
+            schema_without_revision_minimum,
+            old["text"]["format"]["schema"]
+        );
         assert_eq!(
             user["request"]["evidence_anchors"][0]["excerpt_start_byte"],
             123
@@ -224,6 +250,48 @@ mod tests {
             129
         );
         assert_eq!(user["request"]["evidence_anchors"][0]["quote"], "中文");
+    }
+    #[test]
+    fn revision_fix_chat_schema_has_only_two_positive_integer_boundaries() {
+        let binding: SourceBinding = serde_json::from_value(json!({"project_id":"p","import_id":"i","source_id":"s","version_id":"v","content_sha256":"sha","normalized_sha256":null,"parse_id":null,"manifest_sha256":null})).unwrap();
+        let body: Value = serde_json::from_slice(
+            &request_body(
+                RequestStrategy::TangmaoChat,
+                "deepseek-flash",
+                "req",
+                &binding,
+                &[],
+                8192,
+            )
+            .unwrap(),
+        )
+        .unwrap();
+        let user: Value =
+            serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
+        let mut schema = user["response_schema"].clone();
+        for pointer in [
+            "/properties/concepts/items/properties/revision",
+            "/properties/atoms/items/properties/atom/properties/revision",
+        ] {
+            let revision = schema.pointer_mut(pointer).unwrap();
+            assert_eq!(
+                *revision,
+                json!({"type":"integer","minimum":1}),
+                "{pointer}"
+            );
+            revision.as_object_mut().unwrap().remove("minimum");
+        }
+        assert_eq!(schema, candidate_schema());
+        for strategy in [
+            RequestStrategy::OpenAiStrict,
+            RequestStrategy::TangmaoDeepseek,
+        ] {
+            let old: Value = serde_json::from_slice(
+                &request_body(strategy, "deepseek-flash", "req", &binding, &[], 8192).unwrap(),
+            )
+            .unwrap();
+            assert_eq!(old["text"]["format"]["schema"], schema);
+        }
     }
     #[test]
     fn inline_fix_selected_input_contains_task_schema_and_original_absolute_request() {

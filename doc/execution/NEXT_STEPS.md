@@ -4,7 +4,7 @@
 
 B04U-T01 顶部栏已按用户截图验收、安装并推送核对8004df0。当前批次为 **B04R**，进行中仅 **B04-T02**：按[网关计划](B04-T02_GATEWAY_PLAN.md)继续v5限定提示、新鲜审查、最终报告核对和一次有界真实请求；之后才进入B04-T03独立知识核对。保留原任务ID和全部失败/解除/恢复历史。
 
-已保存模型服务和 DPAPI 凭据继续复用。第四次 Chat/v4 实际请求为 HTTP200、完整嵌套 JSON、4783 Token，但 Atom 限定信息缺少测量单位，Core 报 `EXTRACT_QUALIFIERS`；累计 **20314**、余额 **9979686**、pending **0**。四份响应及调用前来源/gold 保持，v5 仅明确已有单位/条件与 Atom qualifiers 的对应规则；真实 RED、原生38/普通API CLI7/fake3、独立Chat35和Python76已通过，最终workspace与新的一次有界真实验证仍待完成。
+已保存模型服务和 DPAPI 凭据继续复用。v5 的原生38/普通API CLI7/fake3、独立Chat35/Python76、相同源码 Rust499/fmt/check、最终API84/fake54/Chat35及128双报告/90请求已完成，899项新鲜审查通过。第五次真实HTTP200/完整JSON仍因三个概念和一个原子的revision=0被Core拒绝 `EXTRACT_KNOWLEDGE`；3479 Token 已结算，当前累计 **23793**、余额 **9976207**、pending **0**。原五份响应及调用前来源/gold保持；继续v6仅为所选Chat声明已有正整数修订约束，RED/GREEN、新鲜审查和下一次有界真实验证按结果记录。
 
 > 执行者：每项start后使用superpowers:subagent-driven-development或superpowers:executing-plans，在当前单一任务内落实接口、真实RED、实现和新鲜审查。子代理只分担当前任务；这里的三张任务卡是顺序验收单元，不能各自并行启动产品阶段。
 

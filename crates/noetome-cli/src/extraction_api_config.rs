@@ -1,6 +1,21 @@
 #[cfg(test)]
 mod tests {
     #[test]
+    fn revision_fix_updates_only_selected_chat_strategy_version() {
+        assert_eq!(
+            super::RequestStrategy::TangmaoChat.version(),
+            "tangmao-deepseek-chat-positive-revision-v6"
+        );
+        assert_eq!(
+            super::RequestStrategy::TangmaoDeepseek.version(),
+            "tangmao-deepseek-responses-inline-json-schema-v2"
+        );
+        assert_eq!(
+            super::RequestStrategy::OpenAiStrict.version(),
+            "openai-responses-strict-json-schema-v1"
+        );
+    }
+    #[test]
     fn chat_fix_exact_selected_and_numeric_test_provider_endpoints_validate() {
         let mut value = config_value();
         value["provider"] = serde_json::json!("openai_chat_completions");
@@ -230,7 +245,7 @@ impl RequestStrategy {
         match self {
             Self::OpenAiStrict => "openai-responses-strict-json-schema-v1",
             Self::TangmaoDeepseek => "tangmao-deepseek-responses-inline-json-schema-v2",
-            Self::TangmaoChat => "tangmao-deepseek-chat-qualifiers-v5",
+            Self::TangmaoChat => "tangmao-deepseek-chat-positive-revision-v6",
         }
     }
 }

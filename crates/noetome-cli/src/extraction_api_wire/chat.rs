@@ -109,6 +109,63 @@ pub(super) fn decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
 mod tests {
     use super::*;
     #[test]
+    fn revision_fix_original_fifth_decodes_with_usage_but_has_four_revision_issues() {
+        let bytes =
+            include_bytes!("../../../../doc/validation/assets/B04-T02-live-fifth-response.bin");
+        assert_eq!(bytes.len(), 2280);
+        assert_eq!(
+            crate::text::sha256(bytes),
+            "b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f"
+        );
+        let metadata = response_metadata(bytes).unwrap();
+        assert_eq!(metadata.usage["input_tokens"], 1283);
+        assert_eq!(metadata.usage["output_tokens"], 2196);
+        assert_eq!(metadata.usage["total_tokens"], 3479);
+        let decoded = decode(bytes).unwrap();
+        assert_eq!(decoded.usage, metadata.usage);
+        assert_eq!(decoded.candidates.concepts.len(), 3);
+        assert_eq!(decoded.candidates.atoms.len(), 1);
+        let candidates = &decoded.candidates;
+        assert!(
+            candidates
+                .concepts
+                .iter()
+                .all(|concept| concept.revision == 0)
+        );
+        assert_eq!(candidates.atoms[0].atom.revision, 0);
+        let atoms = candidates
+            .atoms
+            .iter()
+            .map(|candidate| &candidate.atom)
+            .collect::<Vec<_>>();
+        let issues = crate::fixture_knowledge::validate_basics(
+            &candidates.concepts,
+            candidates
+                .evidence
+                .iter()
+                .map(|entry| entry.evidence_id.as_str()),
+            &atoms,
+        );
+        assert_eq!(issues.len(), 4);
+        assert!(
+            issues
+                .iter()
+                .all(|issue| issue.rule_id == "KNOWLEDGE_REVISION")
+        );
+        assert_eq!(
+            issues
+                .iter()
+                .map(|issue| issue.object_refs.as_slice())
+                .collect::<Vec<_>>(),
+            vec![
+                &["concept-speed".to_owned()][..],
+                &["concept-sample-a".to_owned()][..],
+                &["concept-temperature".to_owned()][..],
+                &["atom-1".to_owned()][..],
+            ]
+        );
+    }
+    #[test]
     fn qualifier_fix_original_fourth_structure_passes_but_unit_stays_missing() {
         let bytes =
             include_bytes!("../../../../doc/validation/assets/B04-T02-live-fourth-response.bin");

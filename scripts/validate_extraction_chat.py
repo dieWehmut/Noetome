@@ -17,7 +17,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from validate_extraction_api import Audit, TEST_KEY, encoded, safe_text, save
 from validate_extraction_gateway import sha
 
-STRATEGY = "tangmao-deepseek-chat-qualifiers-v5"
+STRATEGY = "tangmao-deepseek-chat-positive-revision-v6"
 
 
 class LocalChat:
@@ -133,8 +133,12 @@ class ChatAudit(Audit):
             assert instruction in user["task"]
         for instruction in ("Include measurement.unit verbatim in atom.qualifiers", "Include every measurement.conditions string verbatim in atom.qualifiers"):
             assert instruction in user["task"]
+        assert "Every concept.revision and atom.revision must be a positive integer" in user["task"]
         atom_item = user["response_schema"]["properties"]["atoms"]["items"]
         assert set(atom_item["required"]) == set(atom_item["properties"]) == {"atom", "measurement"}
+        for revision in (user["response_schema"]["properties"]["concepts"]["items"]["properties"]["revision"],
+                         atom_item["properties"]["atom"]["properties"]["revision"]):
+            assert revision["type"] == "integer" and revision["minimum"] == 1
 
         def schema(node):
             if isinstance(node, dict):
@@ -190,6 +194,10 @@ class ChatAudit(Audit):
         self.case("chat-replay", expected=0, check_gold=True, metadata=True)
         self.case("chat-missing-unit-qualifier", code="EXTRACT_QUALIFIERS", metadata=True,
                   server={"candidate_change": lambda p: p["atoms"][0]["atom"]["qualifiers"].remove(p["atoms"][0]["measurement"]["unit"])})
+        self.case("chat-zero-concept-revision", code="EXTRACT_KNOWLEDGE", metadata=True,
+                  server={"candidate_change": lambda p: p["concepts"][0].update(revision=0)})
+        self.case("chat-zero-atom-revision", code="EXTRACT_KNOWLEDGE", metadata=True,
+                  server={"candidate_change": lambda p: p["atoms"][0]["atom"].update(revision=0)})
         choice = lambda wire: wire["choices"][0]
         message = lambda wire: choice(wire)["message"]
         self.case("chat-length", code="EXTRACT_API_INCOMPLETE", metadata=True, server={"wire_change": lambda w: choice(w).update(finish_reason="length")})

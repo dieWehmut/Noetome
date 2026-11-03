@@ -1,0 +1,55 @@
+{
+  "verified_at": "2026-11-03T10:22:01.534486+00:00",
+  "result": "actual_strict_candidate_failure",
+  "request_strategy": "tangmao-deepseek-chat-qualifiers-v5",
+  "error_codes": [
+    "EXTRACT_KNOWLEDGE"
+  ],
+  "invalid_revisions": [
+    {
+      "collection": "concepts",
+      "object_id": "concept-speed",
+      "revision": 0
+    },
+    {
+      "collection": "concepts",
+      "object_id": "concept-sample-a",
+      "revision": 0
+    },
+    {
+      "collection": "concepts",
+      "object_id": "concept-temperature",
+      "revision": 0
+    },
+    {
+      "collection": "atoms",
+      "object_id": "atom-1",
+      "revision": 0
+    }
+  ],
+  "domain_rule": "DATA_CONTRACTS revision is a positive integer; shared validate_basics rejects revision=0",
+  "wire_schema_revision_constraint": {
+    "type": "integer"
+  },
+  "quote_and_anchor_match": true,
+  "measurement_qualifiers_match": true,
+  "response_and_gold_unmodified": true,
+  "source_original_capture_unchanged": true,
+  "raw_response_sha256": "b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f",
+  "raw_response_byte_length": 2280,
+  "reasoning_content_utf8_bytes": 0,
+  "thinking_switch_enforcement": "unverified",
+  "usage": {
+    "prompt_tokens": 1283,
+    "completion_tokens": 2196,
+    "total_tokens": 3479,
+    "prompt_tokens_details": {
+      "cached_tokens": 332
+    }
+  },
+  "cumulative_accounted_tokens": 23793,
+  "remaining_tokens": 9976207,
+  "pending_reserved_tokens": 0,
+  "scientific_quality": "not_run",
+  "next_scope": "selected Chat positive revision schema/prompt; keep DTO/Core and previous routes"
+}

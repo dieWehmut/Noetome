@@ -133,6 +133,14 @@ fn assert_chat_atom_shape(user: &Value) {
     assert!(
         task.contains("Include every measurement.conditions string verbatim in atom.qualifiers")
     );
+    assert!(task.contains("Every concept.revision and atom.revision must be a positive integer"));
+    let concept_revision =
+        &user["response_schema"]["properties"]["concepts"]["items"]["properties"]["revision"];
+    let atom_revision = &item["properties"]["atom"]["properties"]["revision"];
+    for revision in [concept_revision, atom_revision] {
+        assert_eq!(revision["type"], "integer");
+        assert_eq!(revision["minimum"], 1);
+    }
 }
 fn read_body_path(stream: &mut TcpStream, expected_path: &str) -> Vec<u8> {
     // Windows accepted sockets may inherit a nonblocking listener's mode.
@@ -500,7 +508,7 @@ fn ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request
     assert_chat_atom_shape(&user);
     assert_eq!(
         report["request_strategy"],
-        "tangmao-deepseek-chat-qualifiers-v5"
+        "tangmao-deepseek-chat-positive-revision-v6"
     );
     assert!(!example.output.join("candidates.json").exists());
     example.unchanged();
@@ -578,7 +586,7 @@ fn ordinary_chat_local_http_maps_usage_and_accepts_author_candidates() {
     assert_eq!(report["provider"], "openai_chat_completions");
     assert_eq!(
         report["request_strategy"],
-        "tangmao-deepseek-chat-qualifiers-v5"
+        "tangmao-deepseek-chat-positive-revision-v6"
     );
     assert_eq!(report["usage"]["model_usage"]["input_tokens"], 100);
     assert_eq!(report["usage"]["model_usage"]["output_tokens"], 600);

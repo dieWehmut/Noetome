@@ -74,6 +74,12 @@ v4新鲜审查1124项检查/797份指纹、完整Rust498/Python76、API84/fake54
 
 只为Chat task明确既有跨字段约束，策略版本tangmao-deepseek-chat-qualifiers-v5：measurement.unit非null时把完全相同的单位字符串放入atom.qualifiers；每个measurement.conditions字符串也逐字保留在atom.qualifiers。继续保留v4嵌套提示及全部原字段/Schema/系统指令/绝对anchor/端点/限额，不修改验证器、不在实际响应补单位、不生成gold填值模板。原实施者仍只改config/schema及native回归；原第四响应的wire解码可通过，但原实际Core失败和有效4783计量保持，原第三展平响应继续拒绝。controller先普通CLI提示RED，再native RED/GREEN、新鲜窄范围审查、最终相关检查和一次新的有界真实验证。T02仍in_progress，T03仍todo，不把有效模型调用数或完成结构等同于知识验收。
 
+### Task 2 Chat 正整数修订规则修复
+
+v5独立审查899项核对通过，499 Rust与API84/fake54/Chat35、128双报告/90请求均绑定程序514ce3...。第五次实际请求HTTP200/stop，嵌套、单位/条件限定和原始quote/anchor均符合已有规则；但三个概念及一个原子的revision均为0。共享validate_basics按已采纳DATA_CONTRACTS正整数规则拒绝EXTRACT_KNOWLEDGE；有效1283+2196=3479已结算，累计23793、余额9976207、pending0。原五份响应/source/gold不变；实际无reasoning_content不代表网关开关获得普遍保证。
+
+v6仅对所选Chat user.response_schema的concept.revision和atom.revision明确integer/minimum=1，并在完整v5 task后说明正整数及新候选从1开始；策略tangmao-deepseek-chat-positive-revision-v6。旧官方/所选Responses Schema、system、六字段Chat正文、DTO/Core严格验证、合法枚举、来源/绝对anchor、限额和累计预算规则不改。不修补原第五响应、不改gold。controller普通CLI/schema提示先真实RED；实施者native RED/GREEN及原第五有效3479/四个KNOWLEDGE_REVISION回归，独立普通CLI非法revision场景、新鲜窄审查和最终相关检查通过后，只作一次新的有界真实请求，保持T02进行中、T03待开始。
+
 ## Task 3: 累计预算与真实小范围验收
 
 controller 在仓库外当前用户 Noetome 设置目录保存非秘密服务、模型、credential_env/DPAPI引用、累计10000000 Token上限和使用记录。所有后续调用先查剩余额度；已知实际用量累计，未知用量保留工程预留，不把额度每次重置。首冒烟 max_requests=1、max_output_tokens<=8192、max_response_bytes<=1MiB、timeout_ms<=60000，费用未知保持null。

@@ -1,0 +1,7 @@
+{
+  "command": ".\\scripts\\cargo_local.ps1 fmt --all --check",
+  "started_at": "2026-11-03T10:27:11.7949009Z",
+  "finished_at": "2026-11-03T10:27:12.4747092Z",
+  "exit_code": 1,
+  "output": "Diff in \\\\?\\D:\\Noetome\\crates\\noetome-cli\\tests\\extraction_api.rs:134:\r\n         task.contains(\"Include every measurement.conditions string verbatim in atom.qualifiers\")\r\n     );\r\n     assert!(task.contains(\"Every concept.revision and atom.revision must be a positive integer\"));\r\n-    let concept_revision = &user[\"response_schema\"][\"properties\"][\"concepts\"][\"items\"]\r\n-        [\"properties\"][\"revision\"];\r\n+    let concept_revision =\r\n+        &user[\"response_schema\"][\"properties\"][\"concepts\"][\"items\"][\"properties\"][\"revision\"];\r\n     let atom_revision = &item[\"properties\"][\"atom\"][\"properties\"][\"revision\"];\r\n     for revision in [concept_revision, atom_revision] {\r\n         assert_eq!(revision[\"type\"], \"integer\");\r\n"
+}

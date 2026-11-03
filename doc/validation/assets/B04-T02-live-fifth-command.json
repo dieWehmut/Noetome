@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "producer": "actual_selected_gateway_cli_invocation",
+  "invocation_id": "c087468a-672a-4f74-8c5b-ad395ef86ead",
+  "started_at": "2026-11-03T10:13:56.281796+00:00",
+  "completed_at": "2026-11-03T10:14:13.115484+00:00",
+  "elapsed_seconds": 16.843999999997322,
+  "command": [
+    "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+    "-NoLogo",
+    "-NoProfile",
+    "-NonInteractive",
+    "-File",
+    "D:\\Noetome\\scripts\\invoke_api_credential.ps1",
+    "-Binary",
+    "D:\\Noetome\\target\\debug\\noetome.exe",
+    "-Project",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\source-project",
+    "-ImportId",
+    "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+    "-Config",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-chat-config.json",
+    "-OutputRoot",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-live-05",
+    "-CredentialFile",
+    "C:\\Users\\Lyinn\\AppData\\Local\\Noetome\\credentials\\tangmao-deepseek.dpapi"
+  ],
+  "exit_code": 3,
+  "stdout": "{\n  \"actual_model\": \"deepseek-flash\",\n  \"artifacts\": {\n    \".owner.json\": {\n      \"byte_length\": 174,\n      \"sha256\": \"b26dc549456484a9e3083155ca0989ec90dc5b071e603f4d2f669dbc2d6ba09d\"\n    },\n    \"request-body.json\": {\n      \"byte_length\": 7356,\n      \"sha256\": \"ead072c8d2830b245f1b041369564211efc1d25439c159b96287071f8165b367\"\n    },\n    \"request.json\": {\n      \"byte_length\": 2195,\n      \"sha256\": \"35aff866aa4b25c775c5e29a781cc0cfeb6a60ed67c5a951ec67224badb4ab86\"\n    },\n    \"response.bin\": {\n      \"byte_length\": 2280,\n      \"sha256\": \"b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f\"\n    }\n  },\n  \"binding\": {\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"import_id\": \"9f0abe91-99c5-44d0-8e15-2e9ea48da551\",\n    \"manifest_sha256\": null,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"parse_id\": null,\n    \"project_id\": \"2c9dd41b-e63a-4858-bc56-18039ca25f33\",\n    \"source_id\": \"50cf1923-ffea-432e-b37c-199a5223a141\",\n    \"version_id\": \"d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b\"\n  },\n  \"configured_model\": \"deepseek-flash\",\n  \"endpoint\": \"https://ai.1343263.xyz/v1/chat/completions\",\n  \"errors\": [\n    {\n      \"code\": \"EXTRACT_KNOWLEDGE\",\n      \"message\": \"EXTRACT_KNOWLEDGE：候选概念、原子、明文或唯一引用不符合共用严格IR规则。\"\n    }\n  ],\n  \"http_request_id\": \"b7b4d6ba-87d1-458f-bf06-abc88a8091a3\",\n  \"http_status\": 200,\n  \"knowledge_status\": \"pending\",\n  \"producer\": \"api\",\n  \"provider\": \"openai_chat_completions\",\n  \"published\": false,\n  \"report_kind\": \"text_api_extraction\",\n  \"request_id\": \"0f562036-dca9-41ee-88fa-d349fcc2e4c7\",\n  \"request_strategy\": \"tangmao-deepseek-chat-qualifiers-v5\",\n  \"response_complete\": true,\n  \"response_id\": \"c2ada45b-547c-4528-a041-98b0bd78997c\",\n  \"response_receipt\": {\n    \"byte_length\": 2280,\n    \"omission_reason\": null,\n    \"sha256\": \"b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f\"\n  },\n  \"schema_version\": 1,\n  \"scientific_quality\": \"not_run\",\n  \"service_tier\": null,\n  \"source_statuses\": [\n    \"parsed\"\n  ],\n  \"status\": \"failed\",\n  \"transport_mode\": \"live\",\n  \"usage\": {\n    \"input_reserved_tokens\": 8380,\n    \"model_tokenizer\": null,\n    \"model_usage\": {\n      \"input_tokens\": 1283,\n      \"input_tokens_details\": {\n        \"cached_tokens\": 332\n      },\n      \"output_tokens\": 2196,\n      \"total_tokens\": 3479\n    },\n    \"model_usage_status\": \"validated\",\n    \"network_attempts\": 1,\n    \"paid_calls\": null,\n    \"price_usd\": null,\n    \"raw_model_usage\": {\n      \"completion_tokens\": 2196,\n      \"prompt_tokens\": 1283,\n      \"prompt_tokens_details\": {\n        \"cached_tokens\": 332\n      },\n      \"total_tokens\": 3479\n    },\n    \"real_model_calls\": 1,\n    \"request_utf8_bytes\": 7356,\n    \"reservation_policy\": \"request_utf8_bytes_plus_1024_v1\",\n    \"reserved_tokens\": 16572\n  },\n  \"validated_atoms\": 0\n}\n",
+  "stderr": "EXTRACT_KNOWLEDGE：EXTRACT_KNOWLEDGE：候选概念、原子、明文或唯一引用不符合共用严格IR规则。\n",
+  "binary_sha256": "514ce3c5414874956dffcc3e612ecd538b59393e0eec71977d011d938f69b236"
+}

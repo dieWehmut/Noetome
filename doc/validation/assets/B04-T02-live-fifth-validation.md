@@ -1,0 +1,104 @@
+# 单请求文本 API 候选验证
+
+状态："failed"；候选原子：0。知识：pending；发布：false；科学质量：not_run。
+
+配置模型："deepseek-flash"；实际返回模型："deepseek-flash"；HTTP状态：200；完整响应：true。
+
+实际网络尝试：1。input_reserved_tokens 为实际请求UTF8字节加1024的工程预留；实际Token用量只记录已验证的原响应。价格、tokenizer及账单未知。
+
+来源绑定、请求策略、用量、失败诊断及实际文件指纹如下，逐字段对应 validation.json。
+
+```json
+{
+  "actual_model": "deepseek-flash",
+  "artifacts": {
+    ".owner.json": {
+      "byte_length": 174,
+      "sha256": "b26dc549456484a9e3083155ca0989ec90dc5b071e603f4d2f669dbc2d6ba09d"
+    },
+    "request-body.json": {
+      "byte_length": 7356,
+      "sha256": "ead072c8d2830b245f1b041369564211efc1d25439c159b96287071f8165b367"
+    },
+    "request.json": {
+      "byte_length": 2195,
+      "sha256": "35aff866aa4b25c775c5e29a781cc0cfeb6a60ed67c5a951ec67224badb4ab86"
+    },
+    "response.bin": {
+      "byte_length": 2280,
+      "sha256": "b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f"
+    }
+  },
+  "binding": {
+    "content_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+    "import_id": "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+    "manifest_sha256": null,
+    "normalized_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+    "parse_id": null,
+    "project_id": "2c9dd41b-e63a-4858-bc56-18039ca25f33",
+    "source_id": "50cf1923-ffea-432e-b37c-199a5223a141",
+    "version_id": "d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b"
+  },
+  "configured_model": "deepseek-flash",
+  "endpoint": "https://ai.1343263.xyz/v1/chat/completions",
+  "errors": [
+    {
+      "code": "EXTRACT_KNOWLEDGE",
+      "message": "EXTRACT_KNOWLEDGE：候选概念、原子、明文或唯一引用不符合共用严格IR规则。"
+    }
+  ],
+  "http_request_id": "b7b4d6ba-87d1-458f-bf06-abc88a8091a3",
+  "http_status": 200,
+  "knowledge_status": "pending",
+  "producer": "api",
+  "provider": "openai_chat_completions",
+  "published": false,
+  "report_kind": "text_api_extraction",
+  "request_id": "0f562036-dca9-41ee-88fa-d349fcc2e4c7",
+  "request_strategy": "tangmao-deepseek-chat-qualifiers-v5",
+  "response_complete": true,
+  "response_id": "c2ada45b-547c-4528-a041-98b0bd78997c",
+  "response_receipt": {
+    "byte_length": 2280,
+    "omission_reason": null,
+    "sha256": "b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f"
+  },
+  "schema_version": 1,
+  "scientific_quality": "not_run",
+  "service_tier": null,
+  "source_statuses": [
+    "parsed"
+  ],
+  "status": "failed",
+  "transport_mode": "live",
+  "usage": {
+    "input_reserved_tokens": 8380,
+    "model_tokenizer": null,
+    "model_usage": {
+      "input_tokens": 1283,
+      "input_tokens_details": {
+        "cached_tokens": 332
+      },
+      "output_tokens": 2196,
+      "total_tokens": 3479
+    },
+    "model_usage_status": "validated",
+    "network_attempts": 1,
+    "paid_calls": null,
+    "price_usd": null,
+    "raw_model_usage": {
+      "completion_tokens": 2196,
+      "prompt_tokens": 1283,
+      "prompt_tokens_details": {
+        "cached_tokens": 332
+      },
+      "total_tokens": 3479
+    },
+    "real_model_calls": 1,
+    "request_utf8_bytes": 7356,
+    "reservation_policy": "request_utf8_bytes_plus_1024_v1",
+    "reserved_tokens": 16572
+  },
+  "validated_atoms": 0
+}
+```
