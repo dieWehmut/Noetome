@@ -31,6 +31,7 @@
 - Create: `crates/noetome-cli/src/extraction_review.rs`（来源/概念/事实/条件/单位/例外/覆盖及分母纯核对）
 - Modify: `crates/noetome-cli/src/extraction_output.rs`（显式source_review owner与仅捕获结果清除）
 - Modify: `crates/noetome-cli/src/lib.rs`, `src/main.rs`（extract verify参数/帮助/退出码接线）
+- Modify: `.gitattributes`（新作者fixture及本任务原始审计副本的字节/SHA保存）
 - Create: `crates/noetome-cli/tests/extraction_verify.rs`
 - Create: `fixtures/extraction-review-v1/README.md`, `source.txt`, `gold.json`, `review.json`, `decision.json`, `candidates.json`（独立作者含例外基准及明确synthetic回放；动态身份由测试取得）
 

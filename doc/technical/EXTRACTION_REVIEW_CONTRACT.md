@@ -39,7 +39,7 @@ decision Schema1仅有schema_version、unit_id、disposition（included/excluded
 
 原gold先存在于模型调用之前，事实、值、单位、条件及quote只来自它；新解释规则是调用后的自动来源核对，报告必须明示此时间和主体，不能称为新的调用前人工金标准。gold的实际字节SHA钉在review.json中，保存副本也逐字节相同。额外上下文与概念组合规则不会改写gold或候选。
 
-每项gold事实先与真实所选来源核对：quote必须是实际UTF8文本内的非空连续切片，value/unit/每个条件和例外出现在该quote内；concept_name经仅去空白处理后必须等于subject+property。subject/property应被原文支持。显式允许的context必须逐字出现在原quote中，去空白后严格等于“在本夹具的subject中”，只提供该subject的重复范围；不允许任意来源片段充当新增条件。基准内容自身也必须符合下述同一受控语法，否则输入基准无效，不把它用于评分。
+每项gold事实先与真实所选来源核对：quote必须是实际UTF8文本内的非空连续切片，value/unit/每个条件和例外出现在该quote内；concept_name经仅去空白处理后必须等于subject+property。subject/property应被原文支持。显式允许的context必须逐字出现在原quote中，去空白后严格等于“在本夹具的subject中”，只提供该subject的重复范围；不允许任意来源片段充当新增条件。基准内容和实际quote自身也必须符合下述同一受控语法、完整条件/例外与精确值绑定，否则输入基准无效，不把它用于评分；不能凭value10是source110的子串就通过。仅unknown作者样例的原quote另允许声明context加“，property未知”，候选正文仍须subject的property未知。
 
 概念组允许一个已关联的compound concept等于gold.concept_name，或同一原子的关联概念/别名分别完整提供subject和property。额外概念/别名必须来自支持证据中的明文，并且关联合法。计划名称存在但原子未关联时失败。当前第六候选的“样例 A”与“速度”关联组合符合原gold“样例 A 速度”；“夹具”和“温度”只作为来源支持的附加概念记录。
 
@@ -53,7 +53,7 @@ decision Schema1仅有schema_version、unit_id、disposition（included/excluded
 
 新根owner明确producer=source_review、purpose=unpublished_source_review。原candidate、gold、review、decision的字节副本以固定输出文件名保存，来源快照保存实际binding与完整所选units。JSON/Markdown核对报告包含origin、规则/主体/解释时间、实际输入指纹、来源范围、逐对象错误、核对项目、分母、知识状态、scientific_quality=not_run、research_status=not_requested、published=false、network_calls=0及实际产物指纹。Markdown嵌入与JSON相同的完整事实快照，两份都保存重读。
 
-expected_atoms固定1；passed/failed/needs_review/unprocessed互斥且相加等于1。candidate_atoms来自实际候选长度；未预期及语义重复的候选单独计数定位，不藏入分母。条件/单位/例外等类别的分母来自gold实际条目；空例外分母0且not_applicable，不能宣称例外正确率100%。额外源支持概念数与必要概念组数量分别记录。排除审查来自实际decision，本范围excluded恒不通过；遗漏为unprocessed并返回失败。源needs_review或unknown值不能升级为passed。
+expected_atoms固定1；passed/failed/needs_review/unprocessed互斥且相加等于1。candidate_atoms来自实际候选长度；未预期及语义重复的候选单独计数定位，不藏入分母。非法或重复JSON键使实际数量不可确认时保留null，不能用Value的最后同名键恢复为零。条件/单位/例外等类别的分母来自gold实际条目；空例外分母0且not_applicable，不能宣称例外正确率100%。实际已核对的类别失败不被整体pending/needs_review状态改为未处理或复核；首候选的质量按输入数组位置取其实际检查，不能因重复ID借用其他候选的通过项。额外源支持概念数与必要概念组数量分别记录。排除审查来自实际decision，本范围excluded恒不通过；遗漏为unprocessed并返回失败。源needs_review或unknown值不能升级为passed。
 
 只有来源/严格候选/事实/覆盖全部通过且无review/pending，才写 `knowledge-ir.json`。IR使用独立Schema1、producer=source_review、revision=1、原请求/来源绑定、原概念/原子/证据及核对记录；不冒充fixture IR或持久Run/Release。原子verification仍unverified、required=false，IR的source_match=passed只表示本范围基准与来源一致。IR保存重读后核对原内容和指纹；失败报告存在时不得残留成功IR。
 
