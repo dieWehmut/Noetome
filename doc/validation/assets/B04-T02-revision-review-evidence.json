@@ -1,0 +1,449 @@
+{
+  "base": "fd53462c5217060c40a30a38f40b3bcc2e2b8fc0",
+  "head": "ed306efece08c4216760ced086e4b0ba894bfef1",
+  "packageSha256": "95ef220031329b77e6585bf71c941629f8cbf44cd32157f0fcebd87bbd593f66",
+  "packageReadCount": 1,
+  "fileCount": 44,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "added": 5,
+      "deleted": 0
+    },
+    {
+      "path": "crates/noetome-cli/src/extraction_api_config.rs",
+      "added": 16,
+      "deleted": 1
+    },
+    {
+      "path": "crates/noetome-cli/src/extraction_api_schema.rs",
+      "added": 76,
+      "deleted": 8
+    },
+    {
+      "path": "crates/noetome-cli/src/extraction_api_wire/chat.rs",
+      "added": 57,
+      "deleted": 0
+    },
+    {
+      "path": "crates/noetome-cli/tests/extraction_api.rs",
+      "added": 10,
+      "deleted": 2
+    },
+    {
+      "path": "doc/execution/B04-T02_GATEWAY_PLAN.md",
+      "added": 6,
+      "deleted": 0
+    },
+    {
+      "path": "doc/execution/NEXT_STEPS.md",
+      "added": 1,
+      "deleted": 1
+    },
+    {
+      "path": "doc/requirements/MODEL_SERVICE.md",
+      "added": 3,
+      "deleted": 1
+    },
+    {
+      "path": "doc/technical/EXTRACTION_API_CONTRACT.md",
+      "added": 3,
+      "deleted": 1
+    },
+    {
+      "path": "doc/validation/B04-T02.md",
+      "added": 9,
+      "deleted": 1
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-after.json",
+      "added": 35,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-command.json",
+      "added": 32,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-diagnosis-source.json",
+      "added": 6,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-diagnosis.json",
+      "added": 55,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-failure-archive.json",
+      "added": 57,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-request-body.json",
+      "added": 1,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-request.json",
+      "added": 63,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-reservation.json",
+      "added": 198,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-response.bin",
+      "added": 0,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-settlement.json",
+      "added": 193,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-validation.json",
+      "added": 92,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-fifth-validation.md",
+      "added": 104,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-live-sixth-controller-source.json",
+      "added": 6,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-qualifier-review-evidence.json",
+      "added": 4679,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-qualifier-review.md",
+      "added": 41,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-cli-red-source.json",
+      "added": 6,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-cli-red.json",
+      "added": 27,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-artifacts.json",
+      "added": 92,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-check-green.json",
+      "added": 7,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-diff-check-green.json",
+      "added": 7,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-fmt-final-green.json",
+      "added": 8,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-fmt-initial-failure.json",
+      "added": 7,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-focused-green.json",
+      "added": 7,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-native-api-green.json",
+      "added": 7,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-native-empty-target.json",
+      "added": 8,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-native-red.json",
+      "added": 8,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-ordinary-api-fake-green.json",
+      "added": 7,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-owned.patch",
+      "added": 230,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-report.md",
+      "added": 27,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-fix-source-patch.json",
+      "added": 6,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-preparation-source.json",
+      "added": 6,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-python-source.json",
+      "added": 6,
+      "deleted": 0
+    },
+    {
+      "path": "doc/validation/assets/B04-T02-revision-python-tests.json",
+      "added": 26,
+      "deleted": 0
+    },
+    {
+      "path": "scripts/validate_extraction_chat.py",
+      "added": 9,
+      "deleted": 1
+    }
+  ],
+  "reviewedCodePatches": [
+    {
+      "path": "crates/noetome-cli/src/extraction_api_config.rs",
+      "patch": "diff --git a/crates/noetome-cli/src/extraction_api_config.rs b/crates/noetome-cli/src/extraction_api_config.rs\nindex b56f373..5b72326 100644\n--- a/crates/noetome-cli/src/extraction_api_config.rs\n+++ b/crates/noetome-cli/src/extraction_api_config.rs\n@@ -1,12 +1,27 @@\n #[cfg(test)]\n mod tests {\n+    #[test]\n+    fn revision_fix_updates_only_selected_chat_strategy_version() {\n+        assert_eq!(\n+            super::RequestStrategy::TangmaoChat.version(),\n+            \"tangmao-deepseek-chat-positive-revision-v6\"\n+        );\n+        assert_eq!(\n+            super::RequestStrategy::TangmaoDeepseek.version(),\n+            \"tangmao-deepseek-responses-inline-json-schema-v2\"\n+        );\n+        assert_eq!(\n+            super::RequestStrategy::OpenAiStrict.version(),\n+            \"openai-responses-strict-json-schema-v1\"\n+        );\n+    }\n     #[test]\n     fn chat_fix_exact_selected_and_numeric_test_provider_endpoints_validate() {\n         let mut value = config_value();\n         value[\"provider\"] = serde_json::json!(\"openai_chat_completions\");\n         value[\"endpoint\"] = serde_json::json!(\"http://127.0.0.1:1234/v1/chat/completions\");\n         super::validate(&serde_json::from_value(value.clone()).unwrap()).unwrap();\n         value[\"transport_mode\"] = serde_json::json!(\"live\");\n         value[\"endpoint\"] = serde_json::json!(\"https://ai.1343263.xyz/v1/chat/completions\");\n         value[\"model\"] = serde_json::json!(\"deepseek-flash\");\n         super::validate(&serde_json::from_value(value.clone()).unwrap()).unwrap();\n@@ -223,21 +238,21 @@ const SELECTED_CHAT_ENDPOINT: &str = \"https://ai.1343263.xyz/v1/chat/completions\n pub(crate) enum RequestStrategy {\n     OpenAiStrict,\n     TangmaoDeepseek,\n     TangmaoChat,\n }\n impl RequestStrategy {\n     pub(crate) fn version(self) -> &'static str {\n         match self {\n             Self::OpenAiStrict => \"openai-responses-strict-json-schema-v1\",\n             Self::TangmaoDeepseek => \"tangmao-deepseek-responses-inline-json-schema-v2\",\n-            Self::TangmaoChat => \"tangmao-deepseek-chat-qualifiers-v5\",\n+            Self::TangmaoChat => \"tangmao-deepseek-chat-positive-revision-v6\",\n         }\n     }\n }\n impl ApiConfig {\n     // Called only after SelectedConfig validates the exact endpoint/model pair.\n     pub(crate) fn request_strategy(&self) -> RequestStrategy {\n         if self.provider == \"openai_chat_completions\" {\n             RequestStrategy::TangmaoChat\n         } else if self.transport_mode == \"live\" && self.endpoint == SELECTED_GATEWAY_ENDPOINT {\n             RequestStrategy::TangmaoDeepseek\n"
+    },
+    {
+      "path": "crates/noetome-cli/src/extraction_api_schema.rs",
+      "patch": "diff --git a/crates/noetome-cli/src/extraction_api_schema.rs b/crates/noetome-cli/src/extraction_api_schema.rs\nindex 0ed0f24..502807c 100644\n--- a/crates/noetome-cli/src/extraction_api_schema.rs\n+++ b/crates/noetome-cli/src/extraction_api_schema.rs\n@@ -24,22 +24,26 @@ pub(crate) fn request_body(\n     let instructions = \"Extract only evidence-supported concepts and atomic claims from the selected text units. Return one JSON object matching the supplied strict schema, copying request_id and binding exactly. Full-unit evidence_anchors provide exact UTF8 byte offsets in the referenced source resource, quote and SHA256. Copy the resource-absolute start/end offsets from the supplied anchors; preserve the quote and its SHA256. Preserve conditions, exceptions and units. Every atom must have required=false and verification=unverified. Use null for unknown measurement/value/unit and explicit value_status. Do not invent scientific verification or producer provenance.\";\n     let schema = candidate_schema();\n     let mut input_value = match strategy {\n         RequestStrategy::OpenAiStrict => request,\n         RequestStrategy::TangmaoDeepseek | RequestStrategy::TangmaoChat => json!({\n             \"task\":format!(\"{instructions} Return exactly one plain JSON object; no Markdown, code fences, explanations or additional text.\"),\n             \"response_schema\":schema,\"request\":request,\n         }),\n     };\n     if matches!(strategy, RequestStrategy::TangmaoChat) {\n+        input_value[\"response_schema\"][\"properties\"][\"concepts\"][\"items\"][\"properties\"][\"revision\"]\n+            [\"minimum\"] = json!(1);\n+        input_value[\"response_schema\"][\"properties\"][\"atoms\"][\"items\"][\"properties\"][\"atom\"][\"properties\"]\n+            [\"revision\"][\"minimum\"] = json!(1);\n         input_value[\"task\"] = json!(format!(\n-            \"{} Each element of atoms must have exactly two top-level keys: atom and measurement. Put all ten Atom fields atom_id, concept_ids, content, evidence_links, kind, qualifiers, required, revision, value_status, verification inside atom. measurement is a sibling of atom: either null or an object with exactly conditions, unit, value, value_status. Do not flatten Atom fields into the outer array element. Associate each claim's conditions and applicability qualifiers with that claim; measurement.conditions must express its actual conditions. Keep source registration, parsing, processing and provenance metadata as evidence context, not as subject knowledge, concepts or scientific claims. Include measurement.unit verbatim in atom.qualifiers when unit is not null. Include every measurement.conditions string verbatim in atom.qualifiers. The measurement fields alone do not satisfy the Atom qualifiers contract.\",\n+            \"{} Each element of atoms must have exactly two top-level keys: atom and measurement. Put all ten Atom fields atom_id, concept_ids, content, evidence_links, kind, qualifiers, required, revision, value_status, verification inside atom. measurement is a sibling of atom: either null or an object with exactly conditions, unit, value, value_status. Do not flatten Atom fields into the outer array element. Associate each claim's conditions and applicability qualifiers with that claim; measurement.conditions must express its actual conditions. Keep source registration, parsing, processing and provenance metadata as evidence context, not as subject knowledge, concepts or scientific claims. Include measurement.unit verbatim in atom.qualifiers when unit is not null. Include every measurement.conditions string verbatim in atom.qualifiers. The measurement fields alone do not satisfy the Atom qualifiers contract. Every concept.revision and atom.revision must be a positive integer; use 1 for a newly extracted candidate. Never use 0.\",\n             input_value[\"task\"].as_str().expect(\"selected task\")\n         ));\n     }\n     let input = serde_json::to_string(&input_value).map_err(|_| request_error())?;\n     let mut body = json!({\n         \"model\":model,\"instructions\":instructions,\n         \"input\":input,\"text\":{\"format\":{\"type\":\"json_schema\",\"name\":\"noetome_candidates_v1\",\"schema\":schema}},\n         \"max_output_tokens\":max_output_tokens,\"store\":false,\"stream\":false,\n         \"tools\":[],\"tool_choice\":\"none\",\n     });\n@@ -114,21 +118,21 @@ fn candidate_schema() -> Value {\n     let candidate_atom = object(json!({\"atom\":atom,\"measurement\":nullable(measurement)}));\n     object(\n         json!({\"schema_version\":{\"type\":\"integer\",\"enum\":[1]},\"request_id\":string,\"binding\":binding,\"concepts\":array(concept),\"evidence\":array(evidence),\"atoms\":array(candidate_atom)}),\n     )\n }\n #[cfg(test)]\n mod tests {\n     use super::*;\n     use crate::extraction_model::Locator;\n     #[test]\n-    fn qualifier_fix_chat_task_demands_qualifier_consistency_and_keeps_nesting() {\n+    fn revision_fix_chat_task_demands_positive_revision_and_keeps_v5_prefix() {\n         let binding: SourceBinding = serde_json::from_value(json!({\"project_id\":\"p\",\"import_id\":\"i\",\"source_id\":\"s\",\"version_id\":\"v\",\"content_sha256\":\"sha\",\"normalized_sha256\":null,\"parse_id\":null,\"manifest_sha256\":null})).unwrap();\n         let units = [RequestUnit {\n             unit_id: \"u\".into(),\n             locator: Locator::Text {\n                 span_id: \"s\".into(),\n                 ordinal: 1,\n                 resource_sha256: \"resource\".into(),\n             },\n             source_status: \"parsed\".into(),\n             start_byte: 123,\n@@ -177,62 +181,126 @@ mod tests {\n         assert_eq!(body[\"thinking\"], json!({\"type\":\"disabled\"}));\n         assert_eq!(body[\"response_format\"], json!({\"type\":\"json_object\"}));\n         assert_eq!(body[\"max_tokens\"], 8192);\n         assert_eq!(body[\"stream\"], false);\n         assert_eq!(body[\"messages\"].as_array().unwrap().len(), 2);\n         assert_eq!(body[\"messages\"][0][\"role\"], \"system\");\n         assert_eq!(body[\"messages\"][0][\"content\"], old[\"instructions\"]);\n         assert_eq!(body[\"messages\"][1][\"role\"], \"user\");\n         let user: Value =\n             serde_json::from_str(body[\"messages\"][1][\"content\"].as_str().unwrap()).unwrap();\n+        assert!(user[\"task\"].as_str().unwrap().ends_with(\n+            \" Every concept.revision and atom.revision must be a positive integer; use 1 for a newly extracted candidate. Never use 0.\"\n+        ));\n         for phrase in [\n             \"Include measurement.unit verbatim in atom.qualifiers\",\n             \"Include every measurement.conditions string verbatim in atom.qualifiers\",\n         ] {\n             assert!(user[\"task\"].as_str().unwrap().contains(phrase), \"{phrase}\");\n         }\n         for phrase in [\n             \"two top-level keys: atom and measurement\",\n             \"inside atom\",\n             \"sibling of atom\",\n             \"Do not flatten\",\n         ] {\n             assert!(user[\"task\"].as_str().unwrap().contains(phrase), \"{phrase}\");\n         }\n         let previous_user: Value = serde_json::from_str(old[\"input\"].as_str().unwrap()).unwrap();\n-        assert!(\n-            user[\"task\"]\n-                .as_str()\n-                .unwrap()\n-                .starts_with(previous_user[\"task\"].as_str().unwrap())\n+        let v5_task = format!(\n+            \"{} Each element of atoms must have exactly two top-level keys: atom and measurement. Put all ten Atom fields atom_id, concept_ids, content, evidence_links, kind, qualifiers, required, revision, value_status, verification inside atom. measurement is a sibling of atom: either null or an object with exactly conditions, unit, value, value_status. Do not flatten Atom fields into the outer array element. Associate each claim's conditions and applicability qualifiers with that claim; measurement.conditions must express its actual conditions. Keep source registration, parsing, processing and provenance metadata as evidence context, not as subject knowledge, concepts or scientific claims. Include measurement.unit verbatim in atom.qualifiers when unit is not null. Include every measurement.conditions string verbatim in atom.qualifiers. The measurement fields alone do not satisfy the Atom qualifiers contract.\",\n+            previous_user[\"task\"].as_str().unwrap()\n+        );\n+        assert_eq!(\n+            user[\"task\"],\n+            format!(\n+                \"{v5_task} Every concept.revision and atom.revision must be a positive integer; use 1 for a newly extracted candidate. Never use 0.\"\n+            )\n         );\n         assert_eq!(user[\"request\"], previous_user[\"request\"]);\n         assert_eq!(\n             user.as_object()\n                 .unwrap()\n                 .keys()\n                 .map(String::as_str)\n                 .collect::<Vec<_>>(),\n             [\"request\", \"response_schema\", \"task\"]\n         );\n-        assert_eq!(user[\"response_schema\"], old[\"text\"][\"format\"][\"schema\"]);\n+        let mut schema_without_revision_minimum = user[\"response_schema\"].clone();\n+        for pointer in [\n+            \"/properties/concepts/items/properties/revision\",\n+            \"/properties/atoms/items/properties/atom/properties/revision\",\n+        ] {\n+            schema_without_revision_minimum\n+                .pointer_mut(pointer)\n+                .unwrap()\n+                .as_object_mut()\n+                .unwrap()\n+                .remove(\"minimum\");\n+        }\n+        assert_eq!(\n+            schema_without_revision_minimum,\n+            old[\"text\"][\"format\"][\"schema\"]\n+        );\n         assert_eq!(\n             user[\"request\"][\"evidence_anchors\"][0][\"excerpt_start_byte\"],\n             123\n         );\n         assert_eq!(\n             user[\"request\"][\"evidence_anchors\"][0][\"excerpt_end_byte\"],\n             129\n         );\n         assert_eq!(user[\"request\"][\"evidence_anchors\"][0][\"quote\"], \"中文\");\n     }\n     #[test]\n+    fn revision_fix_chat_schema_has_only_two_positive_integer_boundaries() {\n+        let binding: SourceBinding = serde_json::from_value(json!({\"project_id\":\"p\",\"import_id\":\"i\",\"source_id\":\"s\",\"version_id\":\"v\",\"content_sha256\":\"sha\",\"normalized_sha256\":null,\"parse_id\":null,\"manifest_sha256\":null})).unwrap();\n+        let body: Value = serde_json::from_slice(\n+            &request_body(\n+                RequestStrategy::TangmaoChat,\n+                \"deepseek-flash\",\n+                \"req\",\n+                &binding,\n+                &[],\n+                8192,\n+            )\n+            .unwrap(),\n+        )\n+        .unwrap();\n+        let user: Value =\n+            serde_json::from_str(body[\"messages\"][1][\"content\"].as_str().unwrap()).unwrap();\n+        let mut schema = user[\"response_schema\"].clone();\n+        for pointer in [\n+            \"/properties/concepts/items/properties/revision\",\n+            \"/properties/atoms/items/properties/atom/properties/revision\",\n+        ] {\n+            let revision = schema.pointer_mut(pointer).unwrap();\n+            assert_eq!(\n+                *revision,\n+                json!({\"type\":\"integer\",\"minimum\":1}),\n+                \"{pointer}\"\n+            );\n+            revision.as_object_mut().unwrap().remove(\"minimum\");\n+        }\n+        assert_eq!(schema, candidate_schema());\n+        for strategy in [\n+            RequestStrategy::OpenAiStrict,\n+            RequestStrategy::TangmaoDeepseek,\n+        ] {\n+            let old: Value = serde_json::from_slice(\n+                &request_body(strategy, \"deepseek-flash\", \"req\", &binding, &[], 8192).unwrap(),\n+            )\n+            .unwrap();\n+            assert_eq!(old[\"text\"][\"format\"][\"schema\"], schema);\n+        }\n+    }\n+    #[test]\n     fn inline_fix_selected_input_contains_task_schema_and_original_absolute_request() {\n         let binding: SourceBinding = serde_json::from_value(json!({\"project_id\":\"p\",\"import_id\":\"i\",\"source_id\":\"s\",\"version_id\":\"v\",\"content_sha256\":\"sha\",\"normalized_sha256\":null,\"parse_id\":null,\"manifest_sha256\":null})).unwrap();\n         let units = [RequestUnit {\n             unit_id: \"u\".into(),\n             locator: Locator::Text {\n                 span_id: \"s\".into(),\n                 ordinal: 1,\n                 resource_sha256: \"resource\".into(),\n             },\n             source_status: \"parsed\".into(),\n"
+    },
+    {
+      "path": "crates/noetome-cli/src/extraction_api_wire/chat.rs",
+      "patch": "diff --git a/crates/noetome-cli/src/extraction_api_wire/chat.rs b/crates/noetome-cli/src/extraction_api_wire/chat.rs\nindex 858b5f7..a6d7bc5 100644\n--- a/crates/noetome-cli/src/extraction_api_wire/chat.rs\n+++ b/crates/noetome-cli/src/extraction_api_wire/chat.rs\n@@ -102,20 +102,77 @@ pub(super) fn decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {\n         usage: metadata.usage,\n         service_tier: metadata.service_tier,\n         candidates,\n     })\n }\n \n #[cfg(test)]\n mod tests {\n     use super::*;\n     #[test]\n+    fn revision_fix_original_fifth_decodes_with_usage_but_has_four_revision_issues() {\n+        let bytes =\n+            include_bytes!(\"../../../../doc/validation/assets/B04-T02-live-fifth-response.bin\");\n+        assert_eq!(bytes.len(), 2280);\n+        assert_eq!(\n+            crate::text::sha256(bytes),\n+            \"b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f\"\n+        );\n+        let metadata = response_metadata(bytes).unwrap();\n+        assert_eq!(metadata.usage[\"input_tokens\"], 1283);\n+        assert_eq!(metadata.usage[\"output_tokens\"], 2196);\n+        assert_eq!(metadata.usage[\"total_tokens\"], 3479);\n+        let decoded = decode(bytes).unwrap();\n+        assert_eq!(decoded.usage, metadata.usage);\n+        assert_eq!(decoded.candidates.concepts.len(), 3);\n+        assert_eq!(decoded.candidates.atoms.len(), 1);\n+        let candidates = &decoded.candidates;\n+        assert!(\n+            candidates\n+                .concepts\n+                .iter()\n+                .all(|concept| concept.revision == 0)\n+        );\n+        assert_eq!(candidates.atoms[0].atom.revision, 0);\n+        let atoms = candidates\n+            .atoms\n+            .iter()\n+            .map(|candidate| &candidate.atom)\n+            .collect::<Vec<_>>();\n+        let issues = crate::fixture_knowledge::validate_basics(\n+            &candidates.concepts,\n+            candidates\n+                .evidence\n+                .iter()\n+                .map(|entry| entry.evidence_id.as_str()),\n+            &atoms,\n+        );\n+        assert_eq!(issues.len(), 4);\n+        assert!(\n+            issues\n+                .iter()\n+                .all(|issue| issue.rule_id == \"KNOWLEDGE_REVISION\")\n+        );\n+        assert_eq!(\n+            issues\n+                .iter()\n+                .map(|issue| issue.object_refs.as_slice())\n+                .collect::<Vec<_>>(),\n+            vec![\n+                &[\"concept-speed\".to_owned()][..],\n+                &[\"concept-sample-a\".to_owned()][..],\n+                &[\"concept-temperature\".to_owned()][..],\n+                &[\"atom-1\".to_owned()][..],\n+            ]\n+        );\n+    }\n+    #[test]\n     fn qualifier_fix_original_fourth_structure_passes_but_unit_stays_missing() {\n         let bytes =\n             include_bytes!(\"../../../../doc/validation/assets/B04-T02-live-fourth-response.bin\");\n         let metadata = response_metadata(bytes).unwrap();\n         assert_eq!(metadata.usage[\"input_tokens\"], 1712);\n         assert_eq!(metadata.usage[\"output_tokens\"], 3071);\n         assert_eq!(metadata.usage[\"total_tokens\"], 4783);\n         let decoded = decode(bytes).unwrap();\n         assert_eq!(decoded.candidates.atoms.len(), 1);\n         let candidate = &decoded.candidates.atoms[0];\n"
+    },
+    {
+      "path": "crates/noetome-cli/tests/extraction_api.rs",
+      "patch": "diff --git a/crates/noetome-cli/tests/extraction_api.rs b/crates/noetome-cli/tests/extraction_api.rs\nindex f612d22..8003935 100644\n--- a/crates/noetome-cli/tests/extraction_api.rs\n+++ b/crates/noetome-cli/tests/extraction_api.rs\n@@ -126,20 +126,28 @@ fn assert_chat_atom_shape(user: &Value) {\n     assert_eq!(item[\"additionalProperties\"], false);\n     let task = user[\"task\"].as_str().unwrap();\n     assert!(task.contains(\"two top-level keys: atom and measurement\"));\n     assert!(task.contains(\"inside atom\"));\n     assert!(task.contains(\"sibling of atom\"));\n     assert!(task.contains(\"Do not flatten\"));\n     assert!(task.contains(\"Include measurement.unit verbatim in atom.qualifiers\"));\n     assert!(\n         task.contains(\"Include every measurement.conditions string verbatim in atom.qualifiers\")\n     );\n+    assert!(task.contains(\"Every concept.revision and atom.revision must be a positive integer\"));\n+    let concept_revision =\n+        &user[\"response_schema\"][\"properties\"][\"concepts\"][\"items\"][\"properties\"][\"revision\"];\n+    let atom_revision = &item[\"properties\"][\"atom\"][\"properties\"][\"revision\"];\n+    for revision in [concept_revision, atom_revision] {\n+        assert_eq!(revision[\"type\"], \"integer\");\n+        assert_eq!(revision[\"minimum\"], 1);\n+    }\n }\n fn read_body_path(stream: &mut TcpStream, expected_path: &str) -> Vec<u8> {\n     // Windows accepted sockets may inherit a nonblocking listener's mode.\n     stream.set_nonblocking(false).unwrap();\n     stream\n         .set_read_timeout(Some(Duration::from_secs(4)))\n         .unwrap();\n     let mut buffer = Vec::new();\n     let header_end = loop {\n         let mut block = [0; 1024];\n@@ -493,21 +501,21 @@ fn ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request\n     assert_eq!(body[\"messages\"].as_array().unwrap().len(), 2);\n     assert_eq!(body[\"messages\"][0][\"role\"], \"system\");\n     assert_eq!(body[\"messages\"][1][\"role\"], \"user\");\n     let user: Value =\n         serde_json::from_str(body[\"messages\"][1][\"content\"].as_str().unwrap()).unwrap();\n     assert_eq!(user[\"response_schema\"][\"additionalProperties\"], false);\n     assert!(user[\"task\"].as_str().unwrap().contains(\"plain JSON object\"));\n     assert_chat_atom_shape(&user);\n     assert_eq!(\n         report[\"request_strategy\"],\n-        \"tangmao-deepseek-chat-qualifiers-v5\"\n+        \"tangmao-deepseek-chat-positive-revision-v6\"\n     );\n     assert!(!example.output.join(\"candidates.json\").exists());\n     example.unchanged();\n }\n \n #[test]\n fn ordinary_chat_local_http_maps_usage_and_accepts_author_candidates() {\n     let listener = TcpListener::bind(\"127.0.0.1:0\").unwrap();\n     listener.set_nonblocking(true).unwrap();\n     let endpoint = format!(\n@@ -571,21 +579,21 @@ fn ordinary_chat_local_http_maps_usage_and_accepts_author_candidates() {\n         serde_json::from_str(body[\"messages\"][1][\"content\"].as_str().unwrap()).unwrap();\n     assert_chat_atom_shape(&user);\n     assert_eq!(user[\"request\"][\"request_id\"], request[\"request_id\"]);\n     assert_eq!(user[\"request\"][\"binding\"], request[\"binding\"]);\n     assert_eq!(user[\"request\"][\"units\"], request[\"units\"]);\n     let report: Value = serde_json::from_slice(&run.stdout).unwrap();\n     assert_eq!(report[\"status\"], \"candidates_validated\");\n     assert_eq!(report[\"provider\"], \"openai_chat_completions\");\n     assert_eq!(\n         report[\"request_strategy\"],\n-        \"tangmao-deepseek-chat-qualifiers-v5\"\n+        \"tangmao-deepseek-chat-positive-revision-v6\"\n     );\n     assert_eq!(report[\"usage\"][\"model_usage\"][\"input_tokens\"], 100);\n     assert_eq!(report[\"usage\"][\"model_usage\"][\"output_tokens\"], 600);\n     assert_eq!(report[\"usage\"][\"model_usage\"][\"total_tokens\"], 700);\n     assert_eq!(report[\"usage\"][\"network_attempts\"], 1);\n     assert_eq!(report[\"usage\"][\"real_model_calls\"], 0);\n     assert_eq!(report[\"knowledge_status\"], \"pending\");\n     assert_eq!(report[\"scientific_quality\"], \"not_run\");\n     assert_eq!(report[\"published\"], false);\n     assert!(example.output.join(\"candidates.json\").is_file());\n"
+    },
+    {
+      "path": "scripts/validate_extraction_chat.py",
+      "patch": "diff --git a/scripts/validate_extraction_chat.py b/scripts/validate_extraction_chat.py\nindex d652656..3de2d3b 100644\n--- a/scripts/validate_extraction_chat.py\n+++ b/scripts/validate_extraction_chat.py\n@@ -10,21 +10,21 @@ import argparse\n import copy\n import json\n from pathlib import Path\n import threading\n import time\n from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer\n \n from validate_extraction_api import Audit, TEST_KEY, encoded, safe_text, save\n from validate_extraction_gateway import sha\n \n-STRATEGY = \"tangmao-deepseek-chat-qualifiers-v5\"\n+STRATEGY = \"tangmao-deepseek-chat-positive-revision-v6\"\n \n \n class LocalChat:\n     def __init__(self, payload, *, candidate_change=None, wire_change=None,\n                  raw=None, status=200, delay_headers=0.0, delay_body=0.0,\n                  truncated=False, on_request=None, duplicate_candidate=False,\n                  duplicate_wire=False, trailing=False):\n         self.receipts, self.errors = [], []\n         fake = self\n \n@@ -126,22 +126,26 @@ class ChatAudit(Audit):\n         assert body[\"thinking\"] == {\"type\": \"disabled\"}\n         assert body[\"response_format\"] == {\"type\": \"json_object\"} and body[\"max_tokens\"] == 2048\n         assert [m[\"role\"] for m in body[\"messages\"]] == [\"system\", \"user\"]\n         user = json.loads(body[\"messages\"][1][\"content\"])\n         assert set(user) == {\"task\", \"response_schema\", \"request\"}\n         assert user[\"task\"].startswith(body[\"messages\"][0][\"content\"]) and \"plain JSON object\" in user[\"task\"]\n         for instruction in (\"two top-level keys: atom and measurement\", \"inside atom\", \"sibling of atom\", \"Do not flatten\"):\n             assert instruction in user[\"task\"]\n         for instruction in (\"Include measurement.unit verbatim in atom.qualifiers\", \"Include every measurement.conditions string verbatim in atom.qualifiers\"):\n             assert instruction in user[\"task\"]\n+        assert \"Every concept.revision and atom.revision must be a positive integer\" in user[\"task\"]\n         atom_item = user[\"response_schema\"][\"properties\"][\"atoms\"][\"items\"]\n         assert set(atom_item[\"required\"]) == set(atom_item[\"properties\"]) == {\"atom\", \"measurement\"}\n+        for revision in (user[\"response_schema\"][\"properties\"][\"concepts\"][\"items\"][\"properties\"][\"revision\"],\n+                         atom_item[\"properties\"][\"atom\"][\"properties\"][\"revision\"]):\n+            assert revision[\"type\"] == \"integer\" and revision[\"minimum\"] == 1\n \n         def schema(node):\n             if isinstance(node, dict):\n                 if node.get(\"type\") == \"object\" or (isinstance(node.get(\"type\"), list) and \"object\" in node[\"type\"]):\n                     assert node[\"additionalProperties\"] is False\n                     assert set(node[\"required\"]) == set(node[\"properties\"])\n                 for value in node.values():\n                     schema(value)\n             elif isinstance(node, list):\n                 for value in node:\n@@ -183,20 +187,24 @@ class ChatAudit(Audit):\n         assert report[\"usage\"][\"raw_model_usage\"][\"completion_tokens\"] == 600\n         assert report[\"usage\"][\"request_utf8_bytes\"] == len(raw)\n         assert report[\"usage\"][\"input_reserved_tokens\"] == len(raw) + 1024\n         assert report[\"usage\"][\"reserved_tokens\"] == len(raw) + 1024 + body[\"max_tokens\"]\n \n     def matrix(self):\n         self.case(\"chat-normal\", expected=0, check_gold=True, metadata=True)\n         self.case(\"chat-replay\", expected=0, check_gold=True, metadata=True)\n         self.case(\"chat-missing-unit-qualifier\", code=\"EXTRACT_QUALIFIERS\", metadata=True,\n                   server={\"candidate_change\": lambda p: p[\"atoms\"][0][\"atom\"][\"qualifiers\"].remove(p[\"atoms\"][0][\"measurement\"][\"unit\"])})\n+        self.case(\"chat-zero-concept-revision\", code=\"EXTRACT_KNOWLEDGE\", metadata=True,\n+                  server={\"candidate_change\": lambda p: p[\"concepts\"][0].update(revision=0)})\n+        self.case(\"chat-zero-atom-revision\", code=\"EXTRACT_KNOWLEDGE\", metadata=True,\n+                  server={\"candidate_change\": lambda p: p[\"atoms\"][0][\"atom\"].update(revision=0)})\n         choice = lambda wire: wire[\"choices\"][0]\n         message = lambda wire: choice(wire)[\"message\"]\n         self.case(\"chat-length\", code=\"EXTRACT_API_INCOMPLETE\", metadata=True, server={\"wire_change\": lambda w: choice(w).update(finish_reason=\"length\")})\n         self.case(\"chat-filter\", code=\"EXTRACT_API_REFUSAL\", metadata=True, server={\"wire_change\": lambda w: choice(w).update(finish_reason=\"content_filter\")})\n         self.case(\"chat-refusal\", code=\"EXTRACT_API_REFUSAL\", metadata=True, server={\"wire_change\": lambda w: message(w).update(refusal=\"refused\")})\n         self.case(\"chat-tool\", code=\"EXTRACT_API_OUTPUT\", metadata=True, server={\"wire_change\": lambda w: message(w).update(tool_calls=[{\"id\": \"tool\"}])})\n         self.case(\"chat-function\", code=\"EXTRACT_API_OUTPUT\", metadata=True, server={\"wire_change\": lambda w: message(w).update(function_call={\"name\": \"unexpected\"})})\n         self.case(\"chat-two-choices\", code=\"EXTRACT_API_OUTPUT\", metadata=True, server={\"wire_change\": lambda w: w[\"choices\"].append(copy.deepcopy(w[\"choices\"][0]))})\n         self.case(\"chat-wrong-index\", code=\"EXTRACT_API_OUTPUT\", metadata=True, server={\"wire_change\": lambda w: choice(w).update(index=1)})\n         self.case(\"chat-wrong-role\", code=\"EXTRACT_API_OUTPUT\", metadata=True, server={\"wire_change\": lambda w: message(w).update(role=\"user\")})\n"
+    }
+  ],
+  "integrityChecks": [
+    {
+      "check": "embedded-source",
+      "path": ".superpowers/sdd/B04-T02_GATEWAY_PLAN/root-live-fifth-failure.py",
+      "pass": true,
+      "sha256": "596d42ccc1a7b8b478429177405eaa5d43d9e2b1ba56595de40e47234cfe69ce",
+      "bytes": 7523
+    },
+    {
+      "check": "embedded-source",
+      "path": ".superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-cli-red.py",
+      "pass": true,
+      "sha256": "96407ae867ad9fd8bcbc566ac6397fa7c4fdcee2c22736e5b311dbb29b1389b4",
+      "bytes": 1868
+    },
+    {
+      "check": "embedded-source",
+      "path": ".superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-prepare.py",
+      "pass": true,
+      "sha256": "b9be7e3a7f6703764baa33c1c20d0097f0ac5c983cffa0b9c9a41c476482fcf3",
+      "bytes": 5750
+    },
+    {
+      "check": "embedded-source",
+      "path": ".superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-python.py",
+      "pass": true,
+      "sha256": "7069f8d6337cb12ca91a649811b5611cadca8c5c7651ba25f33ae6a180a90283",
+      "bytes": 1758
+    },
+    {
+      "check": "embedded-source",
+      "path": ".superpowers/sdd/B04-T02_GATEWAY_PLAN/revision-fix-owned.patch",
+      "pass": true,
+      "sha256": "e6cd29fc90d1c551b7450a5e2c7db14087fdf75b4370ffac76d86d628515c4ba",
+      "bytes": 13051
+    },
+    {
+      "check": "embedded-source",
+      "path": ".superpowers/sdd/B04-T02_GATEWAY_PLAN/root-live-sixth.py",
+      "pass": true,
+      "sha256": "640d529402f8610346ef7015009d71c03cd1400c2c312883bef8fc543e7808cf",
+      "bytes": 11325
+    },
+    {
+      "check": "archive-content",
+      "path": "doc/validation/assets/B04-T02-live-fifth-request.json",
+      "pass": true
+    },
+    {
+      "check": "archive-content",
+      "path": "doc/validation/assets/B04-T02-live-fifth-request-body.json",
+      "pass": true
+    },
+    {
+      "check": "archive-content",
+      "path": "doc/validation/assets/B04-T02-live-fifth-validation.json",
+      "pass": true
+    },
+    {
+      "check": "archive-content",
+      "path": "doc/validation/assets/B04-T02-live-fifth-validation.md",
+      "pass": true
+    },
+    {
+      "check": "archive-content",
+      "path": "doc/validation/assets/B04-T02-live-fifth-command.json",
+      "pass": true
+    },
+    {
+      "check": "archive-content",
+      "path": "doc/validation/assets/B04-T02-live-fifth-reservation.json",
+      "pass": true
+    },
+    {
+      "check": "archive-content",
+      "path": "doc/validation/assets/B04-T02-live-fifth-settlement.json",
+      "pass": true
+    },
+    {
+      "check": "archive-content",
+      "path": "doc/validation/assets/B04-T02-live-fifth-after.json",
+      "pass": true
+    },
+    {
+      "check": "archive-content",
+      "path": "doc/validation/assets/B04-T02-live-fifth-diagnosis.json",
+      "pass": true
+    },
+    {
+      "check": "JSON-Markdown-match",
+      "path": "B04-T02-live-fifth-validation",
+      "pass": true
+    },
+    {
+      "check": "ledger-sum",
+      "pass": true
+    },
+    {
+      "check": "v5-history-separate",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-native-empty-target.json",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-native-red.json",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-focused-green.json",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-native-api-green.json",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-ordinary-api-fake-green.json",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-check-green.json",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-fmt-initial-failure.json",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-fmt-final-green.json",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-diff-check-green.json",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-report.md",
+      "pass": true
+    },
+    {
+      "check": "component-record-digest",
+      "path": "doc/validation/assets/B04-T02-revision-fix-owned.patch",
+      "pass": true,
+      "method": "Exact archived source_text SHA/length verified; nested +++ patch headers are excluded by generic addition extraction, so source_text is authoritative for this archive."
+    },
+    {
+      "check": "original05-binary",
+      "pass": true,
+      "path": "doc/validation/assets/B04-T02-live-fifth-response.bin",
+      "sha256": "b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f",
+      "bytes": 2280,
+      "method": "Actual public fixture bytes read/hash independently once in earlier reviewer command"
+    }
+  ],
+  "checksPassed": 30,
+  "checksFailed": 0,
+  "original05": {
+    "rawSha256": "b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f",
+    "rawBytes": 2280,
+    "finishReason": "stop",
+    "role": "assistant",
+    "conceptRevisions": [
+      0,
+      0,
+      0
+    ],
+    "atomRevision": 0,
+    "input": 1283,
+    "output": 2196,
+    "total": 3479,
+    "requestBindingMatch": true,
+    "exactQuoteAnchorMatch": true,
+    "measurementQualifiersMatch": true,
+    "cumulative": 23793,
+    "remaining": 9976207,
+    "pending": 0
+  },
+  "testsRerun": 0,
+  "cargoBuilds": 0,
+  "privateStateRead": false,
+  "controllerGates": [
+    "Final immutable v6 source/binary binding and fullworkspace results",
+    "Final API84/fake54/Chat37 matrices and snapshot archive",
+    "Actual06 driver safety and live cumulative ledger/no retry",
+    "Later wholebranch review"
+  ]
+}

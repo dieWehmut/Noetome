@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "producer": "actual_selected_gateway_cli_invocation",
+  "invocation_id": "8638efce-1021-445e-81db-7638e48cf140",
+  "started_at": "2026-11-03T10:44:55.628459+00:00",
+  "completed_at": "2026-11-03T10:45:24.849844+00:00",
+  "elapsed_seconds": 29.235000000000582,
+  "command": [
+    "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+    "-NoLogo",
+    "-NoProfile",
+    "-NonInteractive",
+    "-File",
+    "D:\\Noetome\\scripts\\invoke_api_credential.ps1",
+    "-Binary",
+    "D:\\Noetome\\target\\debug\\noetome.exe",
+    "-Project",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\source-project",
+    "-ImportId",
+    "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+    "-Config",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-chat-config.json",
+    "-OutputRoot",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-live-06",
+    "-CredentialFile",
+    "C:\\Users\\Lyinn\\AppData\\Local\\Noetome\\credentials\\tangmao-deepseek.dpapi"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n  \"actual_model\": \"deepseek-flash\",\n  \"artifacts\": {\n    \".owner.json\": {\n      \"byte_length\": 174,\n      \"sha256\": \"6ea55c13194fea48247ff1d4597a26d5c3d24c35fc84f2c3c35168efee83345d\"\n    },\n    \"candidates.json\": {\n      \"byte_length\": 3503,\n      \"sha256\": \"92fed9123fa6f711ce76df524e4ff79a36aada79a7c4f5fb72f64f68027915fa\"\n    },\n    \"request-body.json\": {\n      \"byte_length\": 7505,\n      \"sha256\": \"a16e16a0a1636a10c54d8869cc171ef79572fe86801ee9b24e4bb154fba75939\"\n    },\n    \"request.json\": {\n      \"byte_length\": 2202,\n      \"sha256\": \"4b8b46d76c3b95f796bbd5945cf371720fbe479c99aff734f51b28589ed955d1\"\n    },\n    \"response.bin\": {\n      \"byte_length\": 19760,\n      \"sha256\": \"019f0ae95e154b230175cd6df31912e8130593f657344db723a4c3da7d8e82ac\"\n    }\n  },\n  \"binding\": {\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"import_id\": \"9f0abe91-99c5-44d0-8e15-2e9ea48da551\",\n    \"manifest_sha256\": null,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"parse_id\": null,\n    \"project_id\": \"2c9dd41b-e63a-4858-bc56-18039ca25f33\",\n    \"source_id\": \"50cf1923-ffea-432e-b37c-199a5223a141\",\n    \"version_id\": \"d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b\"\n  },\n  \"configured_model\": \"deepseek-flash\",\n  \"endpoint\": \"https://ai.1343263.xyz/v1/chat/completions\",\n  \"errors\": [],\n  \"http_request_id\": \"cf562687-a7db-44fa-8eed-cab2b7f0963a\",\n  \"http_status\": 200,\n  \"knowledge_status\": \"pending\",\n  \"producer\": \"api\",\n  \"provider\": \"openai_chat_completions\",\n  \"published\": false,\n  \"report_kind\": \"text_api_extraction\",\n  \"request_id\": \"4bed77a5-3409-4f72-9709-fa35ba0b752f\",\n  \"request_strategy\": \"tangmao-deepseek-chat-positive-revision-v6\",\n  \"response_complete\": true,\n  \"response_id\": \"dce25394bdf24086868a87e11890aa69\",\n  \"response_receipt\": {\n    \"byte_length\": 19760,\n    \"omission_reason\": null,\n    \"sha256\": \"019f0ae95e154b230175cd6df31912e8130593f657344db723a4c3da7d8e82ac\"\n  },\n  \"schema_version\": 1,\n  \"scientific_quality\": \"not_run\",\n  \"service_tier\": null,\n  \"source_statuses\": [\n    \"parsed\"\n  ],\n  \"status\": \"candidates_validated\",\n  \"transport_mode\": \"live\",\n  \"usage\": {\n    \"input_reserved_tokens\": 8529,\n    \"model_tokenizer\": null,\n    \"model_usage\": {\n      \"input_tokens\": 1792,\n      \"output_tokens\": 4512,\n      \"total_tokens\": 6304\n    },\n    \"model_usage_status\": \"validated\",\n    \"network_attempts\": 1,\n    \"paid_calls\": null,\n    \"price_usd\": null,\n    \"raw_model_usage\": {\n      \"completion_tokens\": 4512,\n      \"prompt_tokens\": 1792,\n      \"total_tokens\": 6304\n    },\n    \"real_model_calls\": 1,\n    \"request_utf8_bytes\": 7505,\n    \"reservation_policy\": \"request_utf8_bytes_plus_1024_v1\",\n    \"reserved_tokens\": 16721\n  },\n  \"validated_atoms\": 1\n}\n",
+  "stderr": "",
+  "binary_sha256": "4ce92d8b2e586d20bdc69a1ae63c8cbfcbda2d1ce1217bb0a0888b6ede4fe0f3"
+}

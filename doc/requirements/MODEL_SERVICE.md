@@ -41,8 +41,10 @@ powershell.exe -NoProfile -STA -File .\scripts\set_api_credential.ps1 -Credentia
 
 首次使用作者固定的小文本、来源版本/SHA及调用前gold；Core候选通过不代表知识质量已经独立核对。用户已在本机窗口保存所选密钥，真实DPAPI复用0请求预检通过，后续直接复用。首个Responses请求计量551输入/385输出/936总Token，未返回候选JSON；v2第二次计量1491输入/8192输出/9683总Token，JSON截断。精确Chat策略经独立审查、完整497项Rust回归及127份双报告核对后，已保存为同一服务的活动接口，原profile历史保留。第三次Chat计量1583输入/3329输出/4912总Token，返回完整JSON，但atoms缺少严格Schema要求的atom包装，候选失败。第四次v4在新鲜审查及完整498回归后计量1712输入/3071输出/4783总Token，嵌套结构正确，但Atom qualifiers缺少非空测量单位，Core返回EXTRACT_QUALIFIERS。四份原响应及调用前gold保持；累计20314、余额9979686、pending0，费用未知。第四次仍含reasoning_content，thinking={type:disabled}的实际执行效果未获证明。
 
-v5只明确已有单位/条件与atom.qualifiers的逐字对应规则，严格Core契约不变。最终499项Rust回归、API84/fake54/Chat35和128双报告/90请求核对通过；899项新鲜审查通过后第五次实际计量1283输入/2196输出/3479总Token。完整JSON、嵌套、引文及限定均正确，但三个概念和一个原子的revision为0，Core拒绝EXTRACT_KNOWLEDGE；原第五响应保留。当前累计23793、余额9976207、pending0。第五回包未出现reasoning_content，这个单次观察不构成开关普遍生效或内部模型版本证明。
+v5只明确已有单位/条件与atom.qualifiers的逐字对应规则，严格Core契约不变。最终499项Rust回归、API84/fake54/Chat35和128双报告/90请求核对通过；899项新鲜审查通过后第五次实际计量1283输入/2196输出/3479总Token。完整JSON、嵌套、引文及限定均正确，但三个概念和一个原子的revision为0，Core拒绝EXTRACT_KNOWLEDGE；原第五响应保留。第五次结算后累计23793、余额9976207、pending0。第五回包未出现reasoning_content，这个单次观察不构成开关普遍生效或内部模型版本证明。
 
-用户顶部栏要求已在B04U验收、安装并推送；B04R继续v6所选Chat正整数revision Schema/提示修复，原严格验证及旧Responses保持。相关RED/GREEN、新鲜审查和一次预算内验证仍按真实结果完成。直接复用已保存服务、凭据和累计余额，不重新获得10M，不再次弹出密钥窗口。
+用户顶部栏要求已在B04U验收、安装并推送；B04R的v6所选Chat正整数revision Schema/提示修复保持原严格验证及旧Responses。native41/普通API7/fake3、Python76、完整Rust502/fmt/check、API84/fake54/Chat37及130双报告/92请求通过；30项新鲜组件审查通过后，第六次单次请求HTTP200/stop、CLI exit0，Core接受1个候选原子及1条证据，1792输入/4512输出/6304总Token已结算。当前累计 **30097**、余额 **9969903**、pending **0**。原响应与保存payload一致，前五响应和调用前来源/gold/SQL不变。第六回包含16715字节reasoning_content，thinking开关效果及底层模型版本仍未证明，费用未知。
+
+严格API候选成功仍为knowledge_status=pending、scientific_quality=not_run、published=false；literal gold数值/完整条件集合的诊断匹配为0，独立知识核对留给B04-T03，不以这次API成功代替科学验收。当前只收束T02整分支审查、日志和推送。以后直接复用已保存服务、凭据和累计余额，不重新获得10M，不再次弹出密钥窗口。
 
 真实原响应、使用记录和严格候选核对完成后，才按任务卡验收B04-T02并进入B04-T03。假服务、公开synthetic key测试和0请求预检都不得称作真实模型成功；返回别名也不是网关底层模型版本或收费的独立证明。
