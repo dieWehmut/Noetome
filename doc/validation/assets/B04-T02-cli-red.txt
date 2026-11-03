@@ -1,0 +1,46 @@
+command: ./scripts/cargo_local.ps1 test -p noetome-cli --test extraction_api --locked --offline
+exit_code: 1
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.85s
+     Running tests\extraction_api.rs (target\debug\deps\extraction_api-618991fae500df42.exe)
+
+running 3 tests
+test ordinary_api_zero_budget_stops_before_any_http_request ... FAILED
+test ordinary_api_sends_one_structured_request_and_validates_author_candidate ... FAILED
+test ordinary_api_rate_limit_is_one_attempt_without_retry ... FAILED
+
+failures:
+
+---- ordinary_api_zero_budget_stops_before_any_http_request stdout ----
+
+thread 'ordinary_api_zero_budget_stops_before_any_http_request' (27576) panicked at crates\noetome-cli\tests\extraction_api.rs:266:5:
+assertion `left == right` failed: CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ordinary_api_sends_one_structured_request_and_validates_author_candidate stdout ----
+
+thread 'ordinary_api_sends_one_structured_request_and_validates_author_candidate' (41884) panicked at crates\noetome-cli\tests\extraction_api.rs:206:5:
+CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+
+---- ordinary_api_rate_limit_is_one_attempt_without_retry stdout ----
+
+thread 'ordinary_api_rate_limit_is_one_attempt_without_retry' (44604) panicked at crates\noetome-cli\tests\extraction_api.rs:312:5:
+assertion `left == right` failed: CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+
+
+failures:
+    ordinary_api_rate_limit_is_one_attempt_without_retry
+    ordinary_api_sends_one_structured_request_and_validates_author_candidate
+    ordinary_api_zero_budget_stops_before_any_http_request
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.14s
+
+error: test failed, to rerun pass `-p noetome-cli --test extraction_api`
+
