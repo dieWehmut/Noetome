@@ -7,6 +7,7 @@ use serde::de::{MapAccess, SeqAccess, Visitor};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::fmt;
+mod chat;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -33,6 +34,17 @@ pub(crate) struct ResponseMetadata {
     pub(crate) model: String,
     pub(crate) usage: Value,
     pub(crate) service_tier: Option<String>,
+    pub(crate) raw_usage: Option<Value>,
+}
+pub(crate) fn response_metadata_with_strategy(
+    body: &[u8],
+    strategy: RequestStrategy,
+) -> Result<ResponseMetadata, ProjectError> {
+    if matches!(strategy, RequestStrategy::TangmaoChat) {
+        chat::response_metadata(body)
+    } else {
+        response_metadata(body)
+    }
 }
 pub(crate) fn response_metadata(body: &[u8]) -> Result<ResponseMetadata, ProjectError> {
     // Parse all nesting levels strictly without allowing output/status failures
@@ -48,6 +60,9 @@ pub(crate) fn decode_with_strategy(
     body: &[u8],
     strategy: RequestStrategy,
 ) -> Result<ParsedResponse, ProjectError> {
+    if matches!(strategy, RequestStrategy::TangmaoChat) {
+        return chat::decode(body);
+    }
     let value = envelope(body, strategy)?;
     let status = value["status"]
         .as_str()
@@ -362,6 +377,7 @@ fn metadata(value: &Value) -> Result<ResponseMetadata, ProjectError> {
         id,
         model,
         usage: usage.clone(),
+        raw_usage: None,
         service_tier: value
             .get("service_tier")
             .and_then(Value::as_str)
@@ -372,6 +388,23 @@ fn metadata(value: &Value) -> Result<ResponseMetadata, ProjectError> {
 mod tests {
     use super::*;
     use serde_json::json;
+    #[test]
+    fn chat_fix_valid_single_chat_candidate_requires_chat_decoder() {
+        let value = json!({"id":"chat","model":"returned","object":"chat.completion","created":1,
+            "choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","content":candidate().to_string(),"reasoning_content":null}}],
+            "usage":{"prompt_tokens":12,"completion_tokens":8,"total_tokens":20}});
+        let parsed =
+            super::decode_with_strategy(value.to_string().as_bytes(), RequestStrategy::TangmaoChat)
+                .unwrap();
+        assert_eq!(parsed.candidates.request_id, "req");
+        assert_eq!(parsed.usage["input_tokens"], 12);
+        for strategy in [
+            RequestStrategy::OpenAiStrict,
+            RequestStrategy::TangmaoDeepseek,
+        ] {
+            assert!(super::decode_with_strategy(value.to_string().as_bytes(), strategy).is_err());
+        }
+    }
     fn selected_decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
         super::decode_with_strategy(body, RequestStrategy::TangmaoDeepseek)
     }

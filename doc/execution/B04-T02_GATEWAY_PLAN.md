@@ -44,6 +44,20 @@ Wire按经过精确端点/模式校验的策略分流：仅该所选策略允许
 
 文件责任增加当前wire模块及Core调用处；原Task2实施者只改config/schema/wire/Core内的scoped测试，controller维护普通CLI作者测试、文档、累计记录和真实调用。先保存自足input与selected sparse-envelope的真实RED再实现/GREEN、复审；首个真实非JSON响应应从envelope失败推进到明确candidate失败而仍拒绝，完整metadata936不得丢失。通过离线相关回归和新鲜修复审查后，controller在同一累计额度内仅再执行一次有界验证请求，独立保存第二次原响应与结果，不自动循环或改写gold。
 
+### Task 2 第二次实际失败后的 Chat 关闭思考修复轮
+
+第二次v2真实HTTP200开始生成候选，但返回status=incomplete、incomplete_details.reason=max_output_tokens，8192输出额度中包含31255字节reasoning摘要，assistant JSON在3627字节处截断。Core保持失败；有效input1491/output8192/total9683已结算，累计10619、剩余9989381、pending0。首/第二原响应、来源和调用前gold保持原字节，不接受截断候选。
+
+2026-11-03实际读取DeepSeek Chat Completions及Thinking Mode官方Markdown、上游Sub2API gateway路由。官方Chat参数thinking={type:disabled}明确控制非思考模式，max_tokens限制输出，response_format={type:json_object}需在prompt明确要求JSON；上游公开路由存在/v1/chat/completions。这些是精确协议候选依据，部署是否转发开关、实际模型身份和计费仍须实际响应验收；不把Responses中已观察无效的reasoning.effort=none当成功。
+
+最小迁移已选服务的活动接口为Chat Completions，新增provider=openai_chat_completions及封闭策略tangmao-deepseek-chat-json-object-no-thinking-v3。live仅接受同一已授权origin的https://ai.1343263.xyz/v1/chat/completions与deepseek-flash；本地测试仅数字环回、显式端口、/v1/chat/completions和人工模型/凭据。provider/path不匹配、其他主机/模型/端口/查询/fragment仍请求前失败。旧openai_responses官方/本地及所选v2保持请求/解码/版本，不改变历史配置和响应。
+
+Chat body发送model、messages（system为原完整抽取指令，user为自足task/response_schema/request JSON文本）、thinking={type:disabled}、response_format={type:json_object}、max_tokens（原max_output_tokens限额）、stream=false；字段以官方支持为界，不宣称server强制JSON Schema、不删除代码围栏、不补字段。完整严格候选Schema继续放在user文本内，Core复用现有领域/引文/版本/状态校验。实际序列化正文仍最多256KiB，输入预留仍全部UTF8正文+1024，输出8192、时间60000、响应1MiB和每次最多一次保持。
+
+Chat wire必须严格单对象、无任何层重复key、唯一choices[0]、index=0、finish_reason=stop、assistant普通字符串content；length、content_filter/refusal、tool_calls/function_call、空/额外choice、错误role、非法类型、代码围栏/尾随JSON及候选不合契约均拒绝。允许已知reasoning_content等有正确类型的元数据，不将其当候选；不从开关请求推定思考已关闭。完整HTTP200元数据/usage独立核对，prompt_tokens/completion_tokens/total_tokens以明确映射保存为input/output/total，真实响应原字节保留；有效usage不因候选/length失败丢失，缺/错用量仍null失败。价格与底层模型仍未知或按实际返回别名。
+
+原Task2实施者只编辑config/schema/wire/Core及必要新wire子模块的native测试，controller所有普通CLI作者测试/独立Chat本地HTTP矩阵、文档、profile/累计记录、Git及真实调用。先以新provider端点的普通CLI零预算和本地Chat行为取得真实RED，再实现/nativeGREEN。新鲜组件审查及最终完整回归后，controller保存新的Chat配置/活动profile历史，复用同一DPAPI凭据及9989381累计余额，只执行一次新的有界真实验证。两次失败完整保留，不自动循环、不改变来源/gold、不扩展其他SDK或产品阶段。
+
 ## Task 3: 累计预算与真实小范围验收
 
 controller 在仓库外当前用户 Noetome 设置目录保存非秘密服务、模型、credential_env/DPAPI引用、累计10000000 Token上限和使用记录。所有后续调用先查剩余额度；已知实际用量累计，未知用量保留工程预留，不把额度每次重置。首冒烟 max_requests=1、max_output_tokens<=8192、max_response_bytes<=1MiB、timeout_ms<=60000，费用未知保持null。

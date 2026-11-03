@@ -1,0 +1,15 @@
+{
+  "command": [
+    "D:\\Noetome\\target\\debug\\noetome.exe",
+    "extract",
+    "api",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\source-project",
+    "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-preflight-config.json",
+    "D:\\Noetome\\.superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-v2-selected-zero"
+  ],
+  "exit_code": 3,
+  "stdout": "{\n  \"actual_model\": null,\n  \"artifacts\": {\n    \".owner.json\": {\n      \"byte_length\": 174,\n      \"sha256\": \"38f04f31ea5f909c34cc3bfa7c3b988268f8a979acff0ffc0c17fdb17f54fd36\"\n    },\n    \"request-body.json\": {\n      \"byte_length\": 9475,\n      \"sha256\": \"e3aad8d3f62cc17bafe3e3e44cd3155c84d448d003aa71e65e22c7e416f9a7cb\"\n    },\n    \"request.json\": {\n      \"byte_length\": 2200,\n      \"sha256\": \"0f021950f83e63bb9213e06973368952fae340b71a8a31bf8555e79b09cf3bf0\"\n    }\n  },\n  \"binding\": {\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"import_id\": \"9f0abe91-99c5-44d0-8e15-2e9ea48da551\",\n    \"manifest_sha256\": null,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"parse_id\": null,\n    \"project_id\": \"2c9dd41b-e63a-4858-bc56-18039ca25f33\",\n    \"source_id\": \"50cf1923-ffea-432e-b37c-199a5223a141\",\n    \"version_id\": \"d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b\"\n  },\n  \"configured_model\": \"deepseek-flash\",\n  \"endpoint\": \"https://ai.1343263.xyz/v1/responses\",\n  \"errors\": [\n    {\n      \"code\": \"EXTRACT_BUDGET_STOP\",\n      \"message\": \"EXTRACT_BUDGET_STOP：单次请求次数或预留总量超过明确预算；未调用。\"\n    }\n  ],\n  \"http_request_id\": null,\n  \"http_status\": null,\n  \"knowledge_status\": \"pending\",\n  \"producer\": \"api\",\n  \"provider\": \"openai_responses\",\n  \"published\": false,\n  \"report_kind\": \"text_api_extraction\",\n  \"request_id\": \"04f3c4ae-08c4-4429-b014-ee86ed6fd946\",\n  \"request_strategy\": \"tangmao-deepseek-responses-inline-json-schema-v2\",\n  \"response_complete\": false,\n  \"response_id\": null,\n  \"response_receipt\": null,\n  \"schema_version\": 1,\n  \"scientific_quality\": \"not_run\",\n  \"service_tier\": null,\n  \"source_statuses\": [\n    \"parsed\"\n  ],\n  \"status\": \"failed\",\n  \"transport_mode\": \"live\",\n  \"usage\": {\n    \"input_reserved_tokens\": 10499,\n    \"model_tokenizer\": null,\n    \"model_usage\": null,\n    \"model_usage_status\": \"not_validated\",\n    \"network_attempts\": 0,\n    \"paid_calls\": 0,\n    \"price_usd\": null,\n    \"real_model_calls\": 0,\n    \"request_utf8_bytes\": 9475,\n    \"reservation_policy\": \"request_utf8_bytes_plus_1024_v1\",\n    \"reserved_tokens\": 18691\n  },\n  \"validated_atoms\": 0\n}\n",
+  "stderr": "EXTRACT_BUDGET_STOP：EXTRACT_BUDGET_STOP：单次请求次数或预留总量超过明确预算；未调用。\n",
+  "binary_sha256": "cc520549b4ae924ffe1b63c8f65ebd556d1a330fe9fe6d11f85bb1d2d5915853"
+}

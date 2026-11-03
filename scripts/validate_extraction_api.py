@@ -291,6 +291,9 @@ class Audit:
         assert evidence["quote"] == self.gold["quote"] == excerpt.decode()
         assert evidence["excerpt_sha256"] == sha(excerpt)
 
+    def local_fake(self, payload, **options):
+        return LocalFake(payload, **options)
+
     def case(self, name: str, *, expected=3, code=None, calls=1, config_change=None,
              config_raw=None, server=None, cancel_before=False, cancel_during=False,
              output_existing=False, output_in_source=False, source_injection=False,
@@ -330,7 +333,7 @@ class Audit:
         server_options = {} if server is None else dict(server)
         if cancel_during or source_injection or output_injection:
             server_options["on_request"] = action
-        with LocalFake(self.payload, **server_options) as fake:
+        with self.local_fake(self.payload, **server_options) as fake:
             config = self.config(fake.endpoint)
             if config_change:
                 config_change(config)

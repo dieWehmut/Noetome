@@ -1,0 +1,14 @@
+{
+  "command": [
+    "C:/Users/Lyinn/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe",
+    "-NoLogo",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "& .\\scripts\\cargo_local.ps1 test --locked --offline -p noetome-cli --test extraction_api ordinary_chat '--' --test-threads=1; exit $LASTEXITCODE"
+  ],
+  "elapsed_seconds": 4.0939999999973224,
+  "exit_code": 101,
+  "stdout": "\nrunning 2 tests\ntest ordinary_chat_local_http_maps_usage_and_accepts_author_candidates ... FAILED\ntest ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request ... FAILED\n\nfailures:\n\n---- ordinary_chat_local_http_maps_usage_and_accepts_author_candidates stdout ----\n\nthread 'ordinary_chat_local_http_maps_usage_and_accepts_author_candidates' (62944) panicked at crates\\noetome-cli\\tests\\extraction_api.rs:519:5:\nassertion `left == right` failed: EXTRACT_API_CONFIG：所选配置不符合严格文本API契约或64 KiB边界。\n\n  left: Some(2)\n right: Some(0)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n---- ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request stdout ----\n\nthread 'ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request' (64124) panicked at crates\\noetome-cli\\tests\\extraction_api.rs:462:5:\nassertion `left == right` failed: EXTRACT_API_CONFIG：所选配置不符合严格文本API契约或64 KiB边界。\n\n  left: Some(2)\n right: Some(3)\n\n\nfailures:\n    ordinary_chat_local_http_maps_usage_and_accepts_author_candidates\n    ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request\n\ntest result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 5 filtered out; finished in 2.22s\n\n",
+  "stderr": "   Compiling noetome-cli v0.1.0 (D:\\Noetome\\crates\\noetome-cli)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.39s\n     Running tests\\extraction_api.rs (target\\debug\\deps\\extraction_api-6655d05012451ae6.exe)\nerror: test failed, to rerun pass `-p noetome-cli --test extraction_api`\n"
+}

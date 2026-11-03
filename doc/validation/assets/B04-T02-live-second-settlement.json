@@ -1,0 +1,82 @@
+{
+  "ledger_reference": "C:\\Users\\Lyinn\\AppData\\Local\\Noetome\\model-services\\tangmao-deepseek.usage.json",
+  "ledger_after_settlement": {
+    "schema_version": 1,
+    "approved_total_tokens": 10000000,
+    "accounted_tokens": 10619,
+    "pending_reserved_tokens": 0,
+    "remaining_tokens": 9989381,
+    "model_attempts": 2,
+    "records": [
+      {
+        "invocation_id": "279ccd52-f21d-4e5b-92ed-fdf71c5b1741",
+        "task_id": "B04-T02",
+        "reserved_at": "2026-11-03T06:21:33.309037+00:00",
+        "status": "settled_valid_usage_response_failed",
+        "endpoint": "https://ai.1343263.xyz/v1/responses",
+        "configured_model": "deepseek-flash",
+        "request_strategy": "tangmao-deepseek-responses-json-schema-v1",
+        "reservation_tokens": 65536,
+        "reservation_policy": "bounded_request_total_cap_65536_tokens",
+        "confirmed_total_tokens": 936,
+        "network_attempts": 1,
+        "config_reference": "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-real-config.json",
+        "config_sha256": "2d2ade4e5642d65cb9b536a26a42789fe0202fdbeb526bb96ad52bb9bef39d72",
+        "output_root": "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-live-01",
+        "source_import_id": "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+        "source_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+        "gold_sha256": "7e6decaf0a137f089be668d251ace83fb7ea0f65019f5544cca26d6b1f4c489d",
+        "price_usd": null,
+        "settled_at": "2026-11-03T06:28:17.026475+00:00",
+        "model_usage": {
+          "input_tokens": 551,
+          "output_tokens": 385,
+          "total_tokens": 936
+        },
+        "actual_model": "deepseek-flash",
+        "result_status": "failed",
+        "error_codes": [
+          "EXTRACT_API_RESPONSE"
+        ],
+        "response_id": "1b32e9c459fbd2ff67f674edcb3e7835"
+      },
+      {
+        "invocation_id": "992fe32d-a5f6-4b61-95c5-a1cae3b3fb8f",
+        "task_id": "B04-T02",
+        "reserved_at": "2026-11-03T07:06:23.259459+00:00",
+        "status": "settled_valid_usage_response_failed",
+        "endpoint": "https://ai.1343263.xyz/v1/responses",
+        "configured_model": "deepseek-flash",
+        "request_strategy": "tangmao-deepseek-responses-inline-json-schema-v2",
+        "reservation_tokens": 65536,
+        "reservation_policy": "bounded_request_total_cap_65536_tokens",
+        "confirmed_total_tokens": 9683,
+        "network_attempts": 1,
+        "config_reference": "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-real-config.json",
+        "config_sha256": "2d2ade4e5642d65cb9b536a26a42789fe0202fdbeb526bb96ad52bb9bef39d72",
+        "output_root": "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-live-02",
+        "source_import_id": "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+        "source_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+        "gold_sha256": "7e6decaf0a137f089be668d251ace83fb7ea0f65019f5544cca26d6b1f4c489d",
+        "price_usd": null,
+        "reason": "One v2 verification after the documented first sparse-envelope/nonJSON failure, RED/GREEN, fresh scoped review and final regressions",
+        "model_usage": {
+          "input_tokens": 1491,
+          "output_tokens": 8192,
+          "total_tokens": 9683
+        },
+        "settled_at": "2026-11-03T07:07:09.519257+00:00",
+        "actual_model": "deepseek-flash",
+        "result_status": "failed",
+        "error_codes": [
+          "EXTRACT_API_RESPONSE"
+        ],
+        "response_id": "2d93590e43b2cc89d71134cf429c89ba",
+        "cli_exit_code": 3,
+        "paid_calls": null,
+        "real_model_calls": null
+      }
+    ],
+    "updated_at": "2026-11-03T07:07:09.519257+00:00"
+  }
+}

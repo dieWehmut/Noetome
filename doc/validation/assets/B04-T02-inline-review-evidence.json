@@ -1,0 +1,918 @@
+{
+  "diff": {
+    "sha256": "717622e18caf91d1b95b20c9516a857d4b169ec1f893b74feff7ca0ec91c481d",
+    "byte_length": 272798
+  },
+  "files": [
+    "crates/noetome-cli/src/extraction_api.rs",
+    "crates/noetome-cli/src/extraction_api_config.rs",
+    "crates/noetome-cli/src/extraction_api_schema.rs",
+    "crates/noetome-cli/src/extraction_api_wire.rs",
+    "crates/noetome-cli/tests/extraction_api.rs",
+    "dev-log/DONE.md",
+    "dev-log/STATUS.md",
+    "dev-log/TODO.md",
+    "dev-log/tasks.json",
+    "doc/execution/B04-T02_GATEWAY_PLAN.md",
+    "doc/execution/NEXT_STEPS.md",
+    "doc/requirements/MODEL_SERVICE.md",
+    "doc/technical/EXTRACTION_API_CONTRACT.md",
+    "doc/validation/B04-T02.md",
+    "doc/validation/assets/B04-T02-actual-credential-saved.json",
+    "doc/validation/assets/B04-T02-configured-final-review-command.json",
+    "doc/validation/assets/B04-T02-configured-final-review-evidence.json",
+    "doc/validation/assets/B04-T02-configured-final-review-source.json",
+    "doc/validation/assets/B04-T02-configured-final-review.md",
+    "doc/validation/assets/B04-T02-inline-cli-red.json",
+    "doc/validation/assets/B04-T02-inline-fix-artifact-command.json",
+    "doc/validation/assets/B04-T02-inline-fix-artifact-command2.json",
+    "doc/validation/assets/B04-T02-inline-fix-artifacts.json",
+    "doc/validation/assets/B04-T02-inline-fix-check.json",
+    "doc/validation/assets/B04-T02-inline-fix-cli-green.json",
+    "doc/validation/assets/B04-T02-inline-fix-diff-check.json",
+    "doc/validation/assets/B04-T02-inline-fix-fake-green.json",
+    "doc/validation/assets/B04-T02-inline-fix-fmt-check.json",
+    "doc/validation/assets/B04-T02-inline-fix-native-green.json",
+    "doc/validation/assets/B04-T02-inline-fix-native-green2.json",
+    "doc/validation/assets/B04-T02-inline-fix-native-red.json",
+    "doc/validation/assets/B04-T02-inline-fix-owned-fmt-check.json",
+    "doc/validation/assets/B04-T02-inline-fix-report.md",
+    "doc/validation/assets/B04-T02-inline-fix-source-patch.json",
+    "doc/validation/assets/B04-T02-inline-root-format-review.json",
+    "doc/validation/assets/B04-T02-live-first-command.json",
+    "doc/validation/assets/B04-T02-live-first-request-body.json",
+    "doc/validation/assets/B04-T02-live-first-request.json",
+    "doc/validation/assets/B04-T02-live-first-reservation.json",
+    "doc/validation/assets/B04-T02-live-first-response.bin",
+    "doc/validation/assets/B04-T02-live-first-settlement.json",
+    "doc/validation/assets/B04-T02-live-first-validation.json",
+    "doc/validation/assets/B04-T02-live-first-validation.md",
+    "doc/validation/assets/B04-T02-real-credential-preflight.json"
+  ],
+  "implementer_runs": {
+    "inline-fix-native-red.json": {
+      "command": ".\\scripts\\cargo_local.ps1 test --locked --offline -p noetome-cli --lib inline_fix '--' --test-threads=1",
+      "exit_code": 1,
+      "output": "   Compiling noetome-cli v0.1.0 (D:\\Noetome\\crates\\noetome-cli)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.88s\n     Running unittests src\\lib.rs (target\\debug\\deps\\noetome_cli-8384b21dffc26341.exe)\n\nrunning 3 tests\ntest extraction_api_schema::tests::inline_fix_selected_input_contains_task_schema_and_original_absolute_request ... FAILED\ntest extraction_api_wire::tests::inline_fix_first_actual_plaintext_is_candidate_failure_with_real_usage_preserved ... FAILED\ntest extraction_api_wire::tests::inline_fix_selected_sparse_completed_accepts_candidates_but_default_stays_strict ... FAILED\n\nfailures:\n\n---- extraction_api_schema::tests::inline_fix_selected_input_contains_task_schema_and_original_absolute_request stdout ----\n\nthread 'extraction_api_schema::tests::inline_fix_selected_input_contains_task_schema_and_original_absolute_request' (49696) panicked at crates\\noetome-cli\\src\\extraction_api_schema.rs:180:9:\nassertion `left == right` failed\n  left: [\"binding\", \"evidence_anchors\", \"request_id\", \"units\"]\n right: [\"request\", \"response_schema\", \"task\"]\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n---- extraction_api_wire::tests::inline_fix_first_actual_plaintext_is_candidate_failure_with_real_usage_preserved stdout ----\n\nthread 'extraction_api_wire::tests::inline_fix_first_actual_plaintext_is_candidate_failure_with_real_usage_preserved' (61688) panicked at crates\\noetome-cli\\src\\extraction_api_wire.rs:393:9:\nassertion `left == right` failed\n  left: \"EXTRACT_API_RESPONSE\"\n right: \"EXTRACT_API_CANDIDATES\"\n\n---- extraction_api_wire::tests::inline_fix_selected_sparse_completed_accepts_candidates_but_default_stays_strict stdout ----\n\nthread 'extraction_api_wire::tests::inline_fix_selected_sparse_completed_accepts_candidates_but_default_stays_strict' (63664) panicked at crates\\noetome-cli\\src\\extraction_api_wire.rs:374:46:\ncalled `Result::unwrap()` on an `Err` value: ProjectError { code: \"EXTRACT_API_RESPONSE\", exit_code: 3, message: \"文本 API 响应未通过严格契约校验。\" }\n\n\nfailures:\n    extraction_api_schema::tests::inline_fix_selected_input_contains_task_schema_and_original_absolute_request\n    extraction_api_wire::tests::inline_fix_first_actual_plaintext_is_candidate_failure_with_real_usage_preserved\n    extraction_api_wire::tests::inline_fix_selected_sparse_completed_accepts_candidates_but_default_stays_strict\n\ntest result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 363 filtered out; finished in 0.00s\n\nerror: test failed, to rerun pass `-p noetome-cli --lib`\n",
+      "fingerprint": {
+        "sha256": "1d8dbb3c32f73c8ed94d710c528659293535ad91a599421c5c0da0dd26993d07",
+        "byte_length": 2873
+      }
+    },
+    "inline-cli-red.json": {
+      "command": ".\\scripts\\cargo_local.ps1 test --locked --offline -p noetome-cli --test extraction_api ordinary_selected_gateway '--' --test-threads=1",
+      "exit_code": 1,
+      "output": "   Compiling noetome-cli v0.1.0 (D:\\Noetome\\crates\\noetome-cli)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.62s\n     Running tests\\extraction_api.rs (target\\debug\\deps\\extraction_api-6655d05012451ae6.exe)\n\nrunning 2 tests\ntest ordinary_selected_gateway_rejects_other_authorities_models_and_paths ... ok\ntest ordinary_selected_gateway_zero_budget_keeps_model_strategy_and_never_calls ... FAILED\n\nfailures:\n\n---- ordinary_selected_gateway_zero_budget_keeps_model_strategy_and_never_calls stdout ----\n\nthread 'ordinary_selected_gateway_zero_budget_keeps_model_strategy_and_never_calls' (44704) panicked at crates\\noetome-cli\\tests\\extraction_api.rs:353:5:\nassertion `left == right` failed\n  left: String(\"tangmao-deepseek-responses-json-schema-v1\")\n right: \"tangmao-deepseek-responses-inline-json-schema-v2\"\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    ordinary_selected_gateway_zero_budget_keeps_model_strategy_and_never_calls\n\ntest result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.50s\n\nerror: test failed, to rerun pass `-p noetome-cli --test extraction_api`\n",
+      "fingerprint": {
+        "sha256": "73c935f08e2db7e2fa14d2f390fad8196eb630aedb938e8e3c0b4d47b09b7198",
+        "byte_length": 1465
+      }
+    },
+    "inline-fix-native-green.json": {
+      "command": ".\\scripts\\cargo_local.ps1 test --locked --offline -p noetome-cli --lib extraction_api '--' --test-threads=1",
+      "exit_code": 1,
+      "output": "   Compiling noetome-cli v0.1.0 (D:\\Noetome\\crates\\noetome-cli)\nerror[E0061]: this function takes 2 arguments but 1 argument was supplied\n   --> crates\\noetome-cli\\src\\extraction_api_transport.rs:314:21\n    |\n314 |                     crate::extraction_api_wire::decode(&result.body)\n    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^-------------- argument #2 of type `extraction_api_config::RequestStrategy` is missing\n    |\nnote: function defined here\n   --> crates\\noetome-cli\\src\\extraction_api_wire.rs:43:15\n    |\n 43 | pub(crate) fn decode(\n    |               ^^^^^^\n 44 |     body: &[u8],\n 45 |     strategy: RequestStrategy,\n    |     -------------------------\nhelp: provide the argument\n    |\n314 |                     crate::extraction_api_wire::decode(&result.body, /* extraction_api_config::RequestStrategy */)\n    |                                                                    ++++++++++++++++++++++++++++++++++++++++++++++\n\nFor more information about this error, try `rustc --explain E0061`.\nerror: could not compile `noetome-cli` (lib test) due to 1 previous error\n",
+      "fingerprint": {
+        "sha256": "aa6a41a8490cf887a4d29368e754798eef316e70c32eac441647e26eeb42e565",
+        "byte_length": 1355
+      }
+    },
+    "inline-fix-native-green2.json": {
+      "command": ".\\scripts\\cargo_local.ps1 test --locked --offline -p noetome-cli --lib extraction_api '--' --test-threads=1",
+      "exit_code": 0,
+      "output": "   Compiling noetome-cli v0.1.0 (D:\\Noetome\\crates\\noetome-cli)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.93s\n     Running unittests src\\lib.rs (target\\debug\\deps\\noetome_cli-8384b21dffc26341.exe)\n\nrunning 29 tests\ntest extraction_api::tests::actual_usage_rejects_each_limit_and_overflow_without_zero_defaults ... ok\ntest extraction_api::tests::credential_scan_catches_nested_escaped_and_malformed_strings ... ok\ntest extraction_api_config::tests::endpoint_allows_only_explicit_numeric_loopback_or_official_live ... ok\ntest extraction_api_config::tests::selected_gateway_accepts_only_exact_live_endpoint_and_selected_model ... ok\ntest extraction_api_config::tests::selected_guard_does_not_consume_siblings_and_rejects_hardlinks_and_size ... ok\ntest extraction_api_config::tests::strict_config_rejects_duplicates_extra_missing_and_nullable_omissions ... ok\ntest extraction_api_schema::tests::inline_fix_selected_input_contains_task_schema_and_original_absolute_request ... ok\ntest extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor ... ok\ntest extraction_api_transport::tests::framed_empty_receipts_are_complete_and_keep_http_classification ... ok\ntest extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried ... ok\ntest extraction_api_transport::tests::one_http1_post_preserves_complete_receipt ... ok\ntest extraction_api_transport::tests::pre_cancel_sends_nothing ... ok\ntest extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work ... ok\ntest extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body ... ok\ntest extraction_api_transport::tests::truncated_chunked_and_oversize_receipts_fail ... ok\ntest extraction_api_transport::tests::zero_deadline_counts_no_unstarted_attempt ... ok\ntest extraction_api_wire::tests::actual_metadata_fields_reject_null_or_wrong_types ... ok\ntest extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail ... ok\ntest extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata ... ok\ntest extraction_api_wire::tests::inline_fix_first_actual_plaintext_is_candidate_failure_with_real_usage_preserved ... ok\ntest extraction_api_wire::tests::inline_fix_selected_sparse_completed_accepts_candidates_but_default_stays_strict ... ok\ntest extraction_api_wire::tests::inline_fix_selected_sparse_duplicates_tools_extra_text_and_fences_stay_rejected ... ok\ntest extraction_api_wire::tests::inline_fix_selected_sparse_status_errors_types_and_usage_remain_strict ... ok\ntest extraction_api_wire::tests::metadata_preserves_real_usage_independent_of_candidate_approval ... ok\ntest extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status ... ok\ntest extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected ... ok\ntest extraction_api_wire::tests::rejects_duplicate_keys_at_unknown_nesting_and_trailing_json ... ok\ntest extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail ... ok\ntest extraction_api_wire::tests::valid_metadata_survives_invalid_output_fields_and_decode_rejects_them ... ok\n\ntest result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.78s\n\n",
+      "fingerprint": {
+        "sha256": "39c66e01351210e1cfb9011979e3450bd63f3d0bdd182d6d899bfb5c93e8e920",
+        "byte_length": 3618
+      }
+    },
+    "inline-fix-cli-green.json": {
+      "command": ".\\scripts\\cargo_local.ps1 test --locked --offline -p noetome-cli --test extraction_api '--' --test-threads=1",
+      "exit_code": 0,
+      "output": "   Compiling noetome-cli v0.1.0 (D:\\Noetome\\crates\\noetome-cli)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.03s\n     Running tests\\extraction_api.rs (target\\debug\\deps\\extraction_api-6655d05012451ae6.exe)\n\nrunning 5 tests\ntest ordinary_api_rate_limit_is_one_attempt_without_retry ... ok\ntest ordinary_api_sends_one_structured_request_and_validates_author_candidate ... ok\ntest ordinary_api_zero_budget_stops_before_any_http_request ... ok\ntest ordinary_selected_gateway_rejects_other_authorities_models_and_paths ... ok\ntest ordinary_selected_gateway_zero_budget_keeps_model_strategy_and_never_calls ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.05s\n\n",
+      "fingerprint": {
+        "sha256": "ac7e2ac3e51554e03566f71598ac4f66314bedbe660c785942e92488321bd986",
+        "byte_length": 976
+      }
+    },
+    "inline-fix-fake-green.json": {
+      "command": ".\\scripts\\cargo_local.ps1 test --locked --offline -p noetome-cli --test extraction '--' --test-threads=1",
+      "exit_code": 0,
+      "output": "   Compiling noetome-cli v0.1.0 (D:\\Noetome\\crates\\noetome-cli)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.68s\n     Running tests\\extraction.rs (target\\debug\\deps\\extraction-20a3b5f9795022f1.exe)\n\nrunning 3 tests\ntest ordinary_fake_rejects_chinese_interior_byte_without_candidates ... ok\ntest ordinary_fake_runtime_cancel_does_not_publish ... ok\ntest ordinary_fake_uses_real_source_and_preserves_project ... ok\n\ntest result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.48s\n\n",
+      "fingerprint": {
+        "sha256": "2074a17959e984771194a6e31edf951e39044572bb7c4f5bd7ef4d343a54b715",
+        "byte_length": 775
+      }
+    },
+    "inline-fix-check.json": {
+      "command": ".\\scripts\\cargo_local.ps1 check --workspace --locked --offline",
+      "exit_code": 0,
+      "output": "    Checking noetome-cli v0.1.0 (D:\\Noetome\\crates\\noetome-cli)\n    Checking noetome-desktop v0.1.0 (D:\\Noetome\\crates\\noetome-desktop)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.28s\n",
+      "fingerprint": {
+        "sha256": "68ce6aadcf2b1f736f320fa7f573a5f49d84db672c82db6a3448cf5b2f9e19c1",
+        "byte_length": 398
+      }
+    },
+    "inline-fix-owned-fmt-check.json": {
+      "command": "rustfmt --check --edition 2024 crates/noetome-cli/src/extraction_api_config.rs crates/noetome-cli/src/extraction_api_schema.rs crates/noetome-cli/src/extraction_api_wire.rs crates/noetome-cli/src/extraction_api.rs",
+      "exit_code": 0,
+      "output": "",
+      "fingerprint": {
+        "sha256": "032f2a7b38cf7ea90dfc65c1a57ffd48fa56bd32e4b50721ccba512959ba65d1",
+        "byte_length": 329
+      }
+    },
+    "inline-fix-fmt-check.json": {
+      "command": ".\\scripts\\cargo_local.ps1 fmt --all --check",
+      "exit_code": 1,
+      "output": "Diff in \\\\?\\D:\\Noetome\\crates\\noetome-cli\\tests\\extraction_api.rs:367:\n             .unwrap();\n     assert_eq!(body[\"model\"], \"deepseek-flash\");\n     let inline: Value = serde_json::from_str(body[\"input\"].as_str().unwrap()).unwrap();\n-    assert!(inline[\"task\"].as_str().unwrap().contains(\"Extract only evidence-supported\"));\n+    assert!(\n+        inline[\"task\"]\n+            .as_str()\n+            .unwrap()\n+            .contains(\"Extract only evidence-supported\")\n+    );\n     assert_eq!(inline[\"response_schema\"], body[\"text\"][\"format\"][\"schema\"]);\n     assert_eq!(inline[\"request\"][\"request_id\"], request[\"request_id\"]);\n     assert_eq!(inline[\"request\"][\"binding\"], request[\"binding\"]);\n",
+      "fingerprint": {
+        "sha256": "bc5716c692813b41769415531377b06bbd39eecb90a325e1dc441cfe9bbfe292",
+        "byte_length": 913
+      }
+    }
+  },
+  "first_call_usage": {
+    "input_tokens": 551,
+    "output_tokens": 385,
+    "total_tokens": 936
+  },
+  "source_fingerprints": {
+    ".noetome-sources\\.owner.json": {
+      "sha256": "6a25c889f4d24084db2d85aa8c04b2135edd692ece77a4b4806ed027d21af7bf",
+      "byte_length": 73,
+      "mtime_ns": 1793681902453220700
+    },
+    ".noetome-sources\\d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b\\normalized.txt": {
+      "sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+      "byte_length": 140,
+      "mtime_ns": 1793681902443942500
+    },
+    ".noetome-sources\\d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b\\raw.bin": {
+      "sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+      "byte_length": 140,
+      "mtime_ns": 1793681902442367600
+    },
+    "project.json": {
+      "sha256": "b3a8c024ef127880975b1018e83bc8fee35ec58b097864479f84b3f0f82cfa4f",
+      "byte_length": 167,
+      "mtime_ns": 1793681902451164900
+    },
+    "project.sqlite": {
+      "sha256": "f20dd304e268aa982b317fe3f7fb40b631c2af237390deadb203f24a31c72d65",
+      "byte_length": 69632,
+      "mtime_ns": 1793681902437109900
+    }
+  },
+  "reviewer_cargo_runs": [],
+  "network_model_calls": 0,
+  "actual_secret_or_operator_config_reads": 0,
+  "scope": "e7002e8d47cc3bcee5c244bfacac2e91e143ee86..332fcd97c264ce8c9e88099ae3d0b1179e4f80d6",
+  "captured_at": "2026-11-03T06:59:04.143668+00:00",
+  "checks": [
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "crates/noetome-cli/src/extraction_api.rs",
+        "line": 355,
+        "line_count": 21
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "crates/noetome-cli/src/extraction_api_config.rs",
+        "line": 192,
+        "line_count": 21
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "crates/noetome-cli/src/extraction_api_schema.rs",
+        "line": 13,
+        "line_count": 34
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "crates/noetome-cli/src/extraction_api_schema.rs",
+        "line": 104,
+        "line_count": 21
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "crates/noetome-cli/src/extraction_api_schema.rs",
+        "line": 176,
+        "line_count": 54
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "crates/noetome-cli/src/extraction_api_wire.rs",
+        "line": 1,
+        "line_count": 12
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "crates/noetome-cli/src/extraction_api_wire.rs",
+        "line": 33,
+        "line_count": 29
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "crates/noetome-cli/src/extraction_api_wire.rs",
+        "line": 179,
+        "line_count": 39
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "crates/noetome-cli/src/extraction_api_wire.rs",
+        "line": 365,
+        "line_count": 190
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "crates/noetome-cli/tests/extraction_api.rs",
+        "line": 345,
+        "line_count": 49
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "dev-log/DONE.md",
+        "line": 1,
+        "line_count": 13
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "dev-log/STATUS.md",
+        "line": 1,
+        "line_count": 20
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "dev-log/TODO.md",
+        "line": 1,
+        "line_count": 33
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "dev-log/tasks.json",
+        "line": 1063,
+        "line_count": 21
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "dev-log/tasks.json",
+        "line": 1130,
+        "line_count": 38
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/execution/B04-T02_GATEWAY_PLAN.md",
+        "line": 27,
+        "line_count": 27
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/execution/NEXT_STEPS.md",
+        "line": 44,
+        "line_count": 25
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/requirements/MODEL_SERVICE.md",
+        "line": 32,
+        "line_count": 13
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/technical/EXTRACTION_API_CONTRACT.md",
+        "line": 25,
+        "line_count": 33
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/B04-T02.md",
+        "line": 1,
+        "line_count": 11
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/B04-T02.md",
+        "line": 38,
+        "line_count": 21
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/B04-T02.md",
+        "line": 61,
+        "line_count": 39
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-actual-credential-saved.json",
+        "line": 1,
+        "line_count": 20
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-configured-final-review-command.json",
+        "line": 1,
+        "line_count": 7
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-configured-final-review-evidence.json",
+        "line": 1,
+        "line_count": 917
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-configured-final-review-source.json",
+        "line": 1,
+        "line_count": 10
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-configured-final-review.md",
+        "line": 1,
+        "line_count": 39
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-cli-red.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-artifact-command.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-artifact-command2.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-artifacts.json",
+        "line": 1,
+        "line_count": 78
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-check.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-cli-green.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-diff-check.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-fake-green.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-fmt-check.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-native-green.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-native-green2.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-native-red.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-owned-fmt-check.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-report.md",
+        "line": 1,
+        "line_count": 52
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-fix-source-patch.json",
+        "line": 1,
+        "line_count": 7
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-inline-root-format-review.json",
+        "line": 1,
+        "line_count": 10
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-live-first-command.json",
+        "line": 1,
+        "line_count": 151
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-live-first-request-body.json",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-live-first-request.json",
+        "line": 1,
+        "line_count": 63
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-live-first-reservation.json",
+        "line": 1,
+        "line_count": 55
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-live-first-response.bin",
+        "line": 1,
+        "line_count": 1
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-live-first-settlement.json",
+        "line": 1,
+        "line_count": 46
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-live-first-validation.json",
+        "line": 1,
+        "line_count": 81
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-live-first-validation.md",
+        "line": 1,
+        "line_count": 93
+      }
+    },
+    {
+      "check": "immutable diff hunk matches checkout",
+      "passed": true,
+      "detail": {
+        "path": "doc/validation/assets/B04-T02-real-credential-preflight.json",
+        "line": 1,
+        "line_count": 33
+      }
+    },
+    {
+      "check": "exact reviewed package file count",
+      "passed": true,
+      "detail": [
+        "crates/noetome-cli/src/extraction_api.rs",
+        "crates/noetome-cli/src/extraction_api_config.rs",
+        "crates/noetome-cli/src/extraction_api_schema.rs",
+        "crates/noetome-cli/src/extraction_api_wire.rs",
+        "crates/noetome-cli/tests/extraction_api.rs",
+        "dev-log/DONE.md",
+        "dev-log/STATUS.md",
+        "dev-log/TODO.md",
+        "dev-log/tasks.json",
+        "doc/execution/B04-T02_GATEWAY_PLAN.md",
+        "doc/execution/NEXT_STEPS.md",
+        "doc/requirements/MODEL_SERVICE.md",
+        "doc/technical/EXTRACTION_API_CONTRACT.md",
+        "doc/validation/B04-T02.md",
+        "doc/validation/assets/B04-T02-actual-credential-saved.json",
+        "doc/validation/assets/B04-T02-configured-final-review-command.json",
+        "doc/validation/assets/B04-T02-configured-final-review-evidence.json",
+        "doc/validation/assets/B04-T02-configured-final-review-source.json",
+        "doc/validation/assets/B04-T02-configured-final-review.md",
+        "doc/validation/assets/B04-T02-inline-cli-red.json",
+        "doc/validation/assets/B04-T02-inline-fix-artifact-command.json",
+        "doc/validation/assets/B04-T02-inline-fix-artifact-command2.json",
+        "doc/validation/assets/B04-T02-inline-fix-artifacts.json",
+        "doc/validation/assets/B04-T02-inline-fix-check.json",
+        "doc/validation/assets/B04-T02-inline-fix-cli-green.json",
+        "doc/validation/assets/B04-T02-inline-fix-diff-check.json",
+        "doc/validation/assets/B04-T02-inline-fix-fake-green.json",
+        "doc/validation/assets/B04-T02-inline-fix-fmt-check.json",
+        "doc/validation/assets/B04-T02-inline-fix-native-green.json",
+        "doc/validation/assets/B04-T02-inline-fix-native-green2.json",
+        "doc/validation/assets/B04-T02-inline-fix-native-red.json",
+        "doc/validation/assets/B04-T02-inline-fix-owned-fmt-check.json",
+        "doc/validation/assets/B04-T02-inline-fix-report.md",
+        "doc/validation/assets/B04-T02-inline-fix-source-patch.json",
+        "doc/validation/assets/B04-T02-inline-root-format-review.json",
+        "doc/validation/assets/B04-T02-live-first-command.json",
+        "doc/validation/assets/B04-T02-live-first-request-body.json",
+        "doc/validation/assets/B04-T02-live-first-request.json",
+        "doc/validation/assets/B04-T02-live-first-reservation.json",
+        "doc/validation/assets/B04-T02-live-first-response.bin",
+        "doc/validation/assets/B04-T02-live-first-settlement.json",
+        "doc/validation/assets/B04-T02-live-first-validation.json",
+        "doc/validation/assets/B04-T02-live-first-validation.md",
+        "doc/validation/assets/B04-T02-real-credential-preflight.json"
+      ]
+    },
+    {
+      "check": "implementer immutable native/raw fingerprint",
+      "passed": true,
+      "detail": "crates/noetome-cli/src/extraction_api_config.rs"
+    },
+    {
+      "check": "implementer immutable native/raw fingerprint",
+      "passed": true,
+      "detail": "crates/noetome-cli/src/extraction_api_schema.rs"
+    },
+    {
+      "check": "implementer immutable native/raw fingerprint",
+      "passed": true,
+      "detail": "crates/noetome-cli/src/extraction_api_wire.rs"
+    },
+    {
+      "check": "implementer immutable native/raw fingerprint",
+      "passed": true,
+      "detail": "crates/noetome-cli/src/extraction_api.rs"
+    },
+    {
+      "check": "implementer immutable native/raw fingerprint",
+      "passed": true,
+      "detail": "doc/validation/assets/B04-T02-live-first-response.bin"
+    },
+    {
+      "check": "retained actual command result",
+      "passed": true,
+      "detail": "inline-fix-native-red.json"
+    },
+    {
+      "check": "retained actual command result",
+      "passed": true,
+      "detail": "inline-cli-red.json"
+    },
+    {
+      "check": "retained actual command result",
+      "passed": true,
+      "detail": "inline-fix-native-green.json"
+    },
+    {
+      "check": "retained actual command result",
+      "passed": true,
+      "detail": "inline-fix-native-green2.json"
+    },
+    {
+      "check": "green command has no Rust warnings/errors",
+      "passed": true,
+      "detail": "inline-fix-native-green2.json"
+    },
+    {
+      "check": "retained actual command result",
+      "passed": true,
+      "detail": "inline-fix-cli-green.json"
+    },
+    {
+      "check": "green command has no Rust warnings/errors",
+      "passed": true,
+      "detail": "inline-fix-cli-green.json"
+    },
+    {
+      "check": "retained actual command result",
+      "passed": true,
+      "detail": "inline-fix-fake-green.json"
+    },
+    {
+      "check": "green command has no Rust warnings/errors",
+      "passed": true,
+      "detail": "inline-fix-fake-green.json"
+    },
+    {
+      "check": "retained actual command result",
+      "passed": true,
+      "detail": "inline-fix-check.json"
+    },
+    {
+      "check": "green command has no Rust warnings/errors",
+      "passed": true,
+      "detail": "inline-fix-check.json"
+    },
+    {
+      "check": "retained actual command result",
+      "passed": true,
+      "detail": "inline-fix-owned-fmt-check.json"
+    },
+    {
+      "check": "green command has no Rust warnings/errors",
+      "passed": true,
+      "detail": "inline-fix-owned-fmt-check.json"
+    },
+    {
+      "check": "retained actual command result",
+      "passed": true,
+      "detail": "inline-fix-fmt-check.json"
+    },
+    {
+      "check": "controller format correction recorded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "exact authorized raw response SHA",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "first response selected completed sparse envelope",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "actual first response independent valid usage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "first actual response exactly one candidate text",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "first actual plaintext remains invalid JSON",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "raw output archive equals original live output",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "historical failed report remains v1 with real usage",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "historical first-call original failure preserved",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original v1 request stays flat",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "request real body hash and reservation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "first-call saved provenance matches original output",
+      "passed": true,
+      "detail": "request.json"
+    },
+    {
+      "check": "first-call saved provenance matches original output",
+      "passed": true,
+      "detail": "request-body.json"
+    },
+    {
+      "check": "first-call saved provenance matches original output",
+      "passed": true,
+      "detail": "validation.json"
+    },
+    {
+      "check": "no candidate/IR/Vault emitted by first failed call",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "actual first-call cumulative ledger settlement",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "record binds request, source, model and actual failure",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source fixed before reservation",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "original selected source file SHA length mtime unchanged",
+      "passed": true,
+      "detail": ".noetome-sources\\.owner.json"
+    },
+    {
+      "check": "original selected source file SHA length mtime unchanged",
+      "passed": true,
+      "detail": ".noetome-sources\\d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b\\normalized.txt"
+    },
+    {
+      "check": "original selected source file SHA length mtime unchanged",
+      "passed": true,
+      "detail": ".noetome-sources\\d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b\\raw.bin"
+    },
+    {
+      "check": "original selected source file SHA length mtime unchanged",
+      "passed": true,
+      "detail": "project.json"
+    },
+    {
+      "check": "original selected source file SHA length mtime unchanged",
+      "passed": true,
+      "detail": "project.sqlite"
+    },
+    {
+      "check": "same five selected source files",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "source fixture and saved gold unchanged",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "check": "settlement source/gold hashes match pre-call fixed author data",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "passed": true
+}

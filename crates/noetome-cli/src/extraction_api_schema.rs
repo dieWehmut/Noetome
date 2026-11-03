@@ -25,7 +25,7 @@ pub(crate) fn request_body(
     let schema = candidate_schema();
     let input_value = match strategy {
         RequestStrategy::OpenAiStrict => request,
-        RequestStrategy::TangmaoDeepseek => json!({
+        RequestStrategy::TangmaoDeepseek | RequestStrategy::TangmaoChat => json!({
             "task":format!("{instructions} Return exactly one plain JSON object; no Markdown, code fences, explanations or additional text."),
             "response_schema":schema,"request":request,
         }),
@@ -46,6 +46,10 @@ pub(crate) fn request_body(
         }
         RequestStrategy::TangmaoDeepseek => {
             body["reasoning"] = json!({"effort":"none"});
+        }
+        RequestStrategy::TangmaoChat => {
+            body = json!({"model":model,"messages":[{"role":"system","content":instructions},{"role":"user","content":input}],
+                "thinking":{"type":"disabled"},"response_format":{"type":"json_object"},"max_tokens":max_output_tokens,"stream":false});
         }
     }
     let bytes = serde_json::to_vec(&body).map_err(|_| request_error())?;
@@ -110,6 +114,82 @@ fn candidate_schema() -> Value {
 mod tests {
     use super::*;
     use crate::extraction_model::Locator;
+    #[test]
+    fn chat_fix_disabled_thinking_body_keeps_complete_inline_schema_and_nonzero_anchor() {
+        let binding: SourceBinding = serde_json::from_value(json!({"project_id":"p","import_id":"i","source_id":"s","version_id":"v","content_sha256":"sha","normalized_sha256":null,"parse_id":null,"manifest_sha256":null})).unwrap();
+        let units = [RequestUnit {
+            unit_id: "u".into(),
+            locator: Locator::Text {
+                span_id: "s".into(),
+                ordinal: 1,
+                resource_sha256: "resource".into(),
+            },
+            source_status: "parsed".into(),
+            start_byte: 123,
+            end_byte: 129,
+            text: "中文".into(),
+        }];
+        let body: Value = serde_json::from_slice(
+            &request_body(
+                RequestStrategy::TangmaoChat,
+                "deepseek-flash",
+                "req",
+                &binding,
+                &units,
+                8192,
+            )
+            .unwrap(),
+        )
+        .unwrap();
+        let old: Value = serde_json::from_slice(
+            &request_body(
+                RequestStrategy::TangmaoDeepseek,
+                "deepseek-flash",
+                "req",
+                &binding,
+                &units,
+                8192,
+            )
+            .unwrap(),
+        )
+        .unwrap();
+        assert_eq!(
+            body.as_object()
+                .unwrap()
+                .keys()
+                .map(String::as_str)
+                .collect::<Vec<_>>(),
+            [
+                "max_tokens",
+                "messages",
+                "model",
+                "response_format",
+                "stream",
+                "thinking"
+            ]
+        );
+        assert_eq!(body["thinking"], json!({"type":"disabled"}));
+        assert_eq!(body["response_format"], json!({"type":"json_object"}));
+        assert_eq!(body["max_tokens"], 8192);
+        assert_eq!(body["stream"], false);
+        assert_eq!(body["messages"].as_array().unwrap().len(), 2);
+        assert_eq!(body["messages"][0]["role"], "system");
+        assert_eq!(body["messages"][0]["content"], old["instructions"]);
+        assert_eq!(body["messages"][1]["role"], "user");
+        assert_eq!(body["messages"][1]["content"], old["input"]);
+        let user: Value =
+            serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
+        assert_eq!(user["response_schema"], old["text"]["format"]["schema"]);
+        assert_eq!(
+            user["request"]["evidence_anchors"][0]["excerpt_start_byte"],
+            123
+        );
+        assert_eq!(
+            user["request"]["evidence_anchors"][0]["excerpt_end_byte"],
+            129
+        );
+        assert_eq!(user["request"]["evidence_anchors"][0]["quote"], "中文");
+    }
     #[test]
     fn inline_fix_selected_input_contains_task_schema_and_original_absolute_request() {
         let binding: SourceBinding = serde_json::from_value(json!({"project_id":"p","import_id":"i","source_id":"s","version_id":"v","content_sha256":"sha","normalized_sha256":null,"parse_id":null,"manifest_sha256":null})).unwrap();

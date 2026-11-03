@@ -343,11 +343,16 @@ fn run_selected(
             return Err(fail);
         }
         if receipt.complete && receipt.status == Some(200) {
-            if let Ok(metadata) = extraction_api_wire::response_metadata(&receipt.body) {
+            if let Ok(metadata) =
+                extraction_api_wire::response_metadata_with_strategy(&receipt.body, strategy)
+            {
                 report["actual_model"] = json!(metadata.model);
                 report["response_id"] = json!(metadata.id);
                 report["service_tier"] = json!(metadata.service_tier);
                 report["usage"]["model_usage"] = metadata.usage.clone();
+                if let Some(raw_usage) = metadata.raw_usage {
+                    report["usage"]["raw_model_usage"] = raw_usage;
+                }
                 report["usage"]["model_usage_status"] = json!("validated");
                 if !usage_within_budget(
                     &metadata.usage,

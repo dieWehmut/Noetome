@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "producer": "actual_selected_gateway_cli_invocation",
+  "invocation_id": "992fe32d-a5f6-4b61-95c5-a1cae3b3fb8f",
+  "started_at": "2026-11-03T07:06:23.263468+00:00",
+  "completed_at": "2026-11-03T07:07:09.517255+00:00",
+  "elapsed_seconds": 46.25,
+  "command": [
+    "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+    "-NoLogo",
+    "-NoProfile",
+    "-NonInteractive",
+    "-File",
+    "D:\\Noetome\\scripts\\invoke_api_credential.ps1",
+    "-Binary",
+    "D:\\Noetome\\target\\debug\\noetome.exe",
+    "-Project",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\source-project",
+    "-ImportId",
+    "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+    "-Config",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-real-config.json",
+    "-OutputRoot",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-live-02",
+    "-CredentialFile",
+    "C:\\Users\\Lyinn\\AppData\\Local\\Noetome\\credentials\\tangmao-deepseek.dpapi"
+  ],
+  "exit_code": 3,
+  "stdout": "{\n  \"actual_model\": \"deepseek-flash\",\n  \"artifacts\": {\n    \".owner.json\": {\n      \"byte_length\": 174,\n      \"sha256\": \"c745cdee75f82e0856cc65f7730feb0bd47b17c48f4160f4290b82455d6ab961\"\n    },\n    \"request-body.json\": {\n      \"byte_length\": 9475,\n      \"sha256\": \"15b7e6859283335293746623daddc10c6d39a5ef27ed1fd1252cf3971aebe9ac\"\n    },\n    \"request.json\": {\n      \"byte_length\": 2195,\n      \"sha256\": \"6d01fe11cf0cc0d4abadfea846c4c2c7410e1f8608b5222ea50276a594060eb7\"\n    },\n    \"response.bin\": {\n      \"byte_length\": 36891,\n      \"sha256\": \"f1afb7be3978a2fc7a1b3cf8dd86f63ba508b7a483860eaec881a4cce141435a\"\n    }\n  },\n  \"binding\": {\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"import_id\": \"9f0abe91-99c5-44d0-8e15-2e9ea48da551\",\n    \"manifest_sha256\": null,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"parse_id\": null,\n    \"project_id\": \"2c9dd41b-e63a-4858-bc56-18039ca25f33\",\n    \"source_id\": \"50cf1923-ffea-432e-b37c-199a5223a141\",\n    \"version_id\": \"d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b\"\n  },\n  \"configured_model\": \"deepseek-flash\",\n  \"endpoint\": \"https://ai.1343263.xyz/v1/responses\",\n  \"errors\": [\n    {\n      \"code\": \"EXTRACT_API_RESPONSE\",\n      \"message\": \"EXTRACT_API_RESPONSE：文本 API 响应未通过严格契约校验。\"\n    }\n  ],\n  \"http_request_id\": \"3c6a199c-a12d-4d9c-bdb0-712ef8fe5368\",\n  \"http_status\": 200,\n  \"knowledge_status\": \"pending\",\n  \"producer\": \"api\",\n  \"provider\": \"openai_responses\",\n  \"published\": false,\n  \"report_kind\": \"text_api_extraction\",\n  \"request_id\": \"0632e30b-6a96-4195-8658-7bd3d1f9413c\",\n  \"request_strategy\": \"tangmao-deepseek-responses-inline-json-schema-v2\",\n  \"response_complete\": true,\n  \"response_id\": \"2d93590e43b2cc89d71134cf429c89ba\",\n  \"response_receipt\": {\n    \"byte_length\": 36891,\n    \"omission_reason\": null,\n    \"sha256\": \"f1afb7be3978a2fc7a1b3cf8dd86f63ba508b7a483860eaec881a4cce141435a\"\n  },\n  \"schema_version\": 1,\n  \"scientific_quality\": \"not_run\",\n  \"service_tier\": null,\n  \"source_statuses\": [\n    \"parsed\"\n  ],\n  \"status\": \"failed\",\n  \"transport_mode\": \"live\",\n  \"usage\": {\n    \"input_reserved_tokens\": 10499,\n    \"model_tokenizer\": null,\n    \"model_usage\": {\n      \"input_tokens\": 1491,\n      \"output_tokens\": 8192,\n      \"total_tokens\": 9683\n    },\n    \"model_usage_status\": \"validated\",\n    \"network_attempts\": 1,\n    \"paid_calls\": null,\n    \"price_usd\": null,\n    \"real_model_calls\": null,\n    \"request_utf8_bytes\": 9475,\n    \"reservation_policy\": \"request_utf8_bytes_plus_1024_v1\",\n    \"reserved_tokens\": 18691\n  },\n  \"validated_atoms\": 0\n}\n",
+  "stderr": "EXTRACT_API_RESPONSE：EXTRACT_API_RESPONSE：文本 API 响应未通过严格契约校验。\n",
+  "binary_sha256": "cc520549b4ae924ffe1b63c8f65ebd556d1a330fe9fe6d11f85bb1d2d5915853"
+}

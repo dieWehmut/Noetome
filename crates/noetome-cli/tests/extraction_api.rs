@@ -118,6 +118,9 @@ impl Example {
 }
 
 fn read_body(stream: &mut TcpStream) -> Vec<u8> {
+    read_body_path(stream, "/v1/responses")
+}
+fn read_body_path(stream: &mut TcpStream, expected_path: &str) -> Vec<u8> {
     // Windows accepted sockets may inherit a nonblocking listener's mode.
     stream.set_nonblocking(false).unwrap();
     stream
@@ -135,7 +138,7 @@ fn read_body(stream: &mut TcpStream) -> Vec<u8> {
         }
     };
     let headers = String::from_utf8_lossy(&buffer[..header_end]);
-    assert!(headers.starts_with("POST /v1/responses HTTP/1.1\r\n"));
+    assert!(headers.starts_with(&format!("POST {expected_path} HTTP/1.1\r\n")));
     assert!(
         headers
             .to_ascii_lowercase()
@@ -444,4 +447,131 @@ fn ordinary_selected_gateway_rejects_other_authorities_models_and_paths() {
         assert!(!example.output.exists());
         example.unchanged();
     }
+}
+
+#[test]
+fn ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request() {
+    let example = Example::new("http://127.0.0.1:1234/v1/responses", 0);
+    let mut config: Value = serde_json::from_slice(&fs::read(&example.config).unwrap()).unwrap();
+    config["provider"] = json!("openai_chat_completions");
+    config["transport_mode"] = json!("live");
+    config["endpoint"] = json!("https://ai.1343263.xyz/v1/chat/completions");
+    config["model"] = json!("deepseek-flash");
+    fs::write(&example.config, serde_json::to_vec_pretty(&config).unwrap()).unwrap();
+    let run = example.run();
+    assert_eq!(
+        run.status.code(),
+        Some(3),
+        "{}",
+        String::from_utf8_lossy(&run.stderr)
+    );
+    let report: Value = serde_json::from_slice(&run.stdout).unwrap();
+    assert_eq!(report["errors"][0]["code"], "EXTRACT_BUDGET_STOP");
+    assert_eq!(report["provider"], "openai_chat_completions");
+    assert_eq!(report["usage"]["network_attempts"], 0);
+    assert_eq!(
+        report["request_strategy"],
+        "tangmao-deepseek-chat-json-object-no-thinking-v3"
+    );
+    let body: Value =
+        serde_json::from_slice(&fs::read(example.output.join("request-body.json")).unwrap())
+            .unwrap();
+    assert_eq!(body["thinking"], json!({"type":"disabled"}));
+    assert_eq!(body["response_format"], json!({"type":"json_object"}));
+    assert_eq!(body["max_tokens"], 2048);
+    assert_eq!(body["stream"], false);
+    assert_eq!(body["messages"].as_array().unwrap().len(), 2);
+    assert_eq!(body["messages"][0]["role"], "system");
+    assert_eq!(body["messages"][1]["role"], "user");
+    let user: Value =
+        serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
+    assert_eq!(user["response_schema"]["additionalProperties"], false);
+    assert!(user["task"].as_str().unwrap().contains("plain JSON object"));
+    assert!(!example.output.join("candidates.json").exists());
+    example.unchanged();
+}
+
+#[test]
+fn ordinary_chat_local_http_maps_usage_and_accepts_author_candidates() {
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    listener.set_nonblocking(true).unwrap();
+    let endpoint = format!(
+        "http://{}/v1/chat/completions",
+        listener.local_addr().unwrap()
+    );
+    let example = Example::new(&endpoint, 1);
+    let mut config: Value = serde_json::from_slice(&fs::read(&example.config).unwrap()).unwrap();
+    config["provider"] = json!("openai_chat_completions");
+    fs::write(&example.config, serde_json::to_vec_pretty(&config).unwrap()).unwrap();
+    let server = thread::spawn(move || {
+        let deadline = Instant::now() + Duration::from_secs(2);
+        let mut stream = loop {
+            if let Ok((stream, _)) = listener.accept() {
+                break stream;
+            }
+            if Instant::now() > deadline {
+                return None;
+            }
+            thread::sleep(Duration::from_millis(5));
+        };
+        let raw = read_body_path(&mut stream, "/v1/chat/completions");
+        let body: Value = serde_json::from_slice(&raw).unwrap();
+        let user: Value =
+            serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
+        let input = &user["request"];
+        let mut candidates: Value = serde_json::from_slice(
+            &fs::read(repo().join("fixtures/extraction-gateway-v1/response.json")).unwrap(),
+        )
+        .unwrap();
+        candidates.as_object_mut().unwrap().remove("producer");
+        candidates["request_id"] = input["request_id"].clone();
+        candidates["binding"] = input["binding"].clone();
+        let response = serde_json::to_vec(&json!({
+            "id":"chatcmpl-noetome-test", "object":"chat.completion", "created":1, "model":"noetome-test-model",
+            "choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","content":serde_json::to_string(&candidates).unwrap(),"reasoning_content":null}}],
+            "usage":{"prompt_tokens":100,"completion_tokens":600,"total_tokens":700,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":0}}
+        })).unwrap();
+        let head = format!(
+            "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+            response.len()
+        );
+        stream.write_all(head.as_bytes()).unwrap();
+        stream.write_all(&response).unwrap();
+        Some(body)
+    });
+    let run = example.run();
+    let observed = server.join().unwrap();
+    assert_eq!(
+        run.status.code(),
+        Some(0),
+        "{}",
+        String::from_utf8_lossy(&run.stderr)
+    );
+    let body = observed.expect("one actual local HTTP request");
+    assert_eq!(body["thinking"], json!({"type":"disabled"}));
+    assert_eq!(body["response_format"], json!({"type":"json_object"}));
+    let request: Value =
+        serde_json::from_slice(&fs::read(example.output.join("request.json")).unwrap()).unwrap();
+    let user: Value =
+        serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
+    assert_eq!(user["request"]["request_id"], request["request_id"]);
+    assert_eq!(user["request"]["binding"], request["binding"]);
+    assert_eq!(user["request"]["units"], request["units"]);
+    let report: Value = serde_json::from_slice(&run.stdout).unwrap();
+    assert_eq!(report["status"], "candidates_validated");
+    assert_eq!(report["provider"], "openai_chat_completions");
+    assert_eq!(
+        report["request_strategy"],
+        "tangmao-deepseek-chat-json-object-no-thinking-v3"
+    );
+    assert_eq!(report["usage"]["model_usage"]["input_tokens"], 100);
+    assert_eq!(report["usage"]["model_usage"]["output_tokens"], 600);
+    assert_eq!(report["usage"]["model_usage"]["total_tokens"], 700);
+    assert_eq!(report["usage"]["network_attempts"], 1);
+    assert_eq!(report["usage"]["real_model_calls"], 0);
+    assert_eq!(report["knowledge_status"], "pending");
+    assert_eq!(report["scientific_quality"], "not_run");
+    assert_eq!(report["published"], false);
+    assert!(example.output.join("candidates.json").is_file());
+    example.unchanged();
 }

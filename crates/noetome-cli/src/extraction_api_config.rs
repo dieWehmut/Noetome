@@ -1,6 +1,34 @@
 #[cfg(test)]
 mod tests {
     #[test]
+    fn chat_fix_exact_selected_and_numeric_test_provider_endpoints_validate() {
+        let mut value = config_value();
+        value["provider"] = serde_json::json!("openai_chat_completions");
+        value["endpoint"] = serde_json::json!("http://127.0.0.1:1234/v1/chat/completions");
+        super::validate(&serde_json::from_value(value.clone()).unwrap()).unwrap();
+        value["transport_mode"] = serde_json::json!("live");
+        value["endpoint"] = serde_json::json!("https://ai.1343263.xyz/v1/chat/completions");
+        value["model"] = serde_json::json!("deepseek-flash");
+        super::validate(&serde_json::from_value(value.clone()).unwrap()).unwrap();
+        for endpoint in [
+            "https://api.openai.com/v1/chat/completions",
+            "https://ai.1343263.xyz:443/v1/chat/completions",
+            "https://ai.1343263.xyz/v1/responses",
+            "https://ai.1343263.xyz/v1/chat/completions?x=1",
+            "https://user@ai.1343263.xyz/v1/chat/completions",
+        ] {
+            let mut bad = value.clone();
+            bad["endpoint"] = serde_json::json!(endpoint);
+            assert!(super::validate(&serde_json::from_value(bad).unwrap()).is_err());
+        }
+        let mut wrong_model = value.clone();
+        wrong_model["model"] = serde_json::json!("deepseek-chat");
+        assert!(super::validate(&serde_json::from_value(wrong_model).unwrap()).is_err());
+        let mut mismatch = value;
+        mismatch["provider"] = serde_json::json!("openai_responses");
+        assert!(super::validate(&serde_json::from_value(mismatch).unwrap()).is_err());
+    }
+    #[test]
     fn selected_gateway_accepts_only_exact_live_endpoint_and_selected_model() {
         let mut value = config_value();
         value["transport_mode"] = serde_json::json!("live");
@@ -189,24 +217,29 @@ pub(crate) struct ApiConfig {
     pub(crate) budget: Budget,
 }
 const SELECTED_GATEWAY_ENDPOINT: &str = "https://ai.1343263.xyz/v1/responses";
+const SELECTED_CHAT_ENDPOINT: &str = "https://ai.1343263.xyz/v1/chat/completions";
 
 #[derive(Clone, Copy)]
 pub(crate) enum RequestStrategy {
     OpenAiStrict,
     TangmaoDeepseek,
+    TangmaoChat,
 }
 impl RequestStrategy {
     pub(crate) fn version(self) -> &'static str {
         match self {
             Self::OpenAiStrict => "openai-responses-strict-json-schema-v1",
             Self::TangmaoDeepseek => "tangmao-deepseek-responses-inline-json-schema-v2",
+            Self::TangmaoChat => "tangmao-deepseek-chat-json-object-no-thinking-v3",
         }
     }
 }
 impl ApiConfig {
     // Called only after SelectedConfig validates the exact endpoint/model pair.
     pub(crate) fn request_strategy(&self) -> RequestStrategy {
-        if self.transport_mode == "live" && self.endpoint == SELECTED_GATEWAY_ENDPOINT {
+        if self.provider == "openai_chat_completions" {
+            RequestStrategy::TangmaoChat
+        } else if self.transport_mode == "live" && self.endpoint == SELECTED_GATEWAY_ENDPOINT {
             RequestStrategy::TangmaoDeepseek
         } else {
             RequestStrategy::OpenAiStrict
@@ -236,12 +269,15 @@ fn valid_endpoint(mode: &str, endpoint: &str) -> bool {
     if mode != "local_http_test" {
         return false;
     }
+    numeric_loopback(endpoint, "/v1/responses")
+}
+fn numeric_loopback(endpoint: &str, path: &str) -> bool {
     // Check the actual spelling before URL normalization; abbreviated and named
     // loopback hosts must never acquire authority by parser canonicalization.
     let Some(tail) = endpoint.strip_prefix("http://") else {
         return false;
     };
-    let Some(authority) = tail.strip_suffix("/v1/responses") else {
+    let Some(authority) = tail.strip_suffix(path) else {
         return false;
     };
     let port = authority
@@ -263,7 +299,10 @@ fn validate(config: &ApiConfig) -> Result<(), ProjectError> {
             && s.parse::<f64>().is_ok_and(|n| n.is_finite() && n > 0.0)
     });
     if config.schema_version != 1
-        || config.provider != "openai_responses"
+        || !matches!(
+            config.provider.as_str(),
+            "openai_responses" | "openai_chat_completions"
+        )
         || !matches!(config.transport_mode.as_str(), "live" | "local_http_test")
         || !matches!(config.required_input.as_str(), "text" | "vision")
         || config.model.trim().is_empty()
@@ -289,14 +328,25 @@ fn validate(config: &ApiConfig) -> Result<(), ProjectError> {
     {
         return Err(config_error());
     }
-    if !valid_endpoint(&config.transport_mode, &config.endpoint) {
+    let endpoint_valid = if config.provider == "openai_chat_completions" {
+        (config.transport_mode == "live" && config.endpoint == SELECTED_CHAT_ENDPOINT)
+            || (config.transport_mode == "local_http_test"
+                && numeric_loopback(&config.endpoint, "/v1/chat/completions"))
+    } else {
+        valid_endpoint(&config.transport_mode, &config.endpoint)
+    };
+    if !endpoint_valid {
         return Err(ProjectError::new(
             "EXTRACT_API_ENDPOINT",
             2,
             "端点必须为明确的官方/所选网关HTTPS Responses或数字环回HTTP测试地址。",
         ));
     }
-    if config.endpoint == SELECTED_GATEWAY_ENDPOINT && config.model != "deepseek-flash" {
+    if matches!(
+        config.endpoint.as_str(),
+        SELECTED_GATEWAY_ENDPOINT | SELECTED_CHAT_ENDPOINT
+    ) && config.model != "deepseek-flash"
+    {
         return Err(config_error());
     }
     if config.transport_mode == "local_http_test" && !config.model.starts_with("noetome-test-") {

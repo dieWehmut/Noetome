@@ -4,7 +4,7 @@
 
 ## 单一接口与官方依据
 
-当前只接 Responses 文本协议，既有离线候选为 `POST https://api.openai.com/v1/responses`。2026-11-03 用户已明确选择糖猫云 `https://ai.1343263.xyz/`、`deepseek-flash` 和累计10000000 Token，要求保存并以后复用；新增精确所选端点 `https://ai.1343263.xyz/v1/responses` 的请求策略。凭据通过本机引用使用，实际调用与网关能力仍按结果验收。其他提供商或兼容端点没有验收。原 OpenAI 官方资料实际核查日期 2026-11-03：
+2026-11-03 用户已明确选择糖猫云 `https://ai.1343263.xyz/`、`deepseek-flash` 和累计10000000 Token，要求保存并以后复用。先接 Responses 后保留两次真实失败；针对实际思考开关未确认、输出截断的结果，增加同一服务的精确 Chat Completions 策略。旧官方 `POST https://api.openai.com/v1/responses` 及所选 `/v1/responses` 的策略仍保留；活动接口按本机已核对配置记录，凭据复用同一origin。其他提供商或兼容端点没有验收。原 OpenAI 官方资料实际核查日期 2026-11-03：
 
 - [API 概览与鉴权](https://developers.openai.com/api/reference/overview)：Bearer 凭据；只读取配置指名的环境变量，不保存 Authorization、密钥值或认证错误正文到普通日志。
 - [Responses create](https://developers.openai.com/api/reference/resources/responses/methods/create)：文本 input、instructions、text.format、max_output_tokens、status/output/usage。输出上限包括 reasoning，最小 16；store 默认 true，显式发送 false。service_tier 明确 default；truncation=disabled 仍可用但已标记 deprecated。
@@ -12,15 +12,15 @@
 - [错误](https://developers.openai.com/api/docs/guides/error-codes)：401/403、429 与 5xx 分别保存稳定失败分类；本任务一次请求不自动重试。
 - [价格](https://developers.openai.com/api/docs/pricing)：按百万 Token 区分输入、输出和缓存，模式、上下文及地区会影响价格。未选实际模型/有效价格，不抄一个费率作为所有模型费用；价格、账单和未知付费请求数保留 null。金额预算但价格未知时调用前停止，可按 D08 使用明确 Token/次数控制。
 
-所选服务另外实际核查[糖猫云公开入口](https://ai.1343263.xyz/)、其部署JS中的Sub2API标识、[上游gateway路由](https://github.com/Wei-Shaw/sub2api/blob/main/backend/internal/server/routes/gateway.go)、[DeepSeek Responses参考](https://api-docs.deepseek.com/api/create-response)及[Responses兼容表](https://api-docs.deepseek.com/guides/responses_api)。路由和官方JSON Schema支持是协议依据，不是已部署网关的模型调用证明。兼容表明确不支持的字段会被忽略；所选body移除background/service_tier/truncation和format.strict，配置reasoning.effort=none。费用不能套用官方费率，实际返回模型/用量单独核对。
+所选服务另外实际核查[糖猫云公开入口](https://ai.1343263.xyz/)、其部署JS中的Sub2API标识、[上游gateway路由](https://github.com/Wei-Shaw/sub2api/blob/main/backend/internal/server/routes/gateway.go)、[DeepSeek Responses参考](https://api-docs.deepseek.com/api/create-response)及[Responses兼容表](https://api-docs.deepseek.com/guides/responses_api)。路由和官方JSON Schema支持是协议依据，不是已部署网关的模型调用证明。兼容表明确不支持的字段会被忽略；所选Responses body移除background/service_tier/truncation和format.strict，配置reasoning.effort=none。后续实际读取[Chat Completions](https://api-docs.deepseek.com/api/create-chat-completion)及[Thinking Mode](https://api-docs.deepseek.com/guides/thinking_mode)，核查thinking={type:disabled}、messages、max_tokens、JSON Object输出及prompt/completion用量；公开上游存在/v1/chat/completions。该策略开关是否转发仍按实际响应验收。费用不能套用官方费率，实际返回模型/用量单独核对。
 
 ## CLI 与配置
 
 `noetome extract api <项目> <import-id> <config.json> <全新测试输出根> [--cancel-file <外部普通信号>]`
 
-config.json 只读、最多 64 KiB，严格拒绝重复/额外/缺字段和未知版本。字段为 schema_version=1、provider=openai_responses、transport_mode（live 或 local_http_test）、endpoint、model、credential_env、required_input（text 或 vision）、capabilities（text/structured_output/vision）、selection、limits 和 budget。引用凭据的名称须为 2..64 位大写环境变量标识；不隐式读取默认密钥。
+config.json 只读、最多 64 KiB，严格拒绝重复/额外/缺字段和未知版本。字段为 schema_version=1、provider（openai_responses或精确所选openai_chat_completions）、transport_mode（live 或 local_http_test）、endpoint、model、credential_env、required_input（text 或 vision）、capabilities（text/structured_output/vision）、selection、limits 和 budget。引用凭据的名称须为 2..64 位大写环境变量标识；不隐式读取默认密钥。
 
-live 只允许上述精确 HTTPS 官方端点和用户指定的糖猫云 `/v1/responses`；糖猫云只认已选deepseek-flash，不额外允许其他模型、端口、用户信息、查询串、fragment、重定向或代理继承。local_http_test 只允许数字环回 127.0.0.1/::1、明确端口、HTTP 与 /v1/responses，模型和凭据值必须以 noetome-test- 开头；该模式只发本地假服务请求，真实模型/收费调用为 0，不作为 T02 真实验收。
+live 的Responses只允许上述精确官方端点和糖猫云 `/v1/responses`；Chat只允许糖猫云 `https://ai.1343263.xyz/v1/chat/completions`。糖猫云两种策略只认已选deepseek-flash，不额外允许其他模型、端口、用户信息、查询串、fragment、重定向或代理继承。provider与路径须匹配。local_http_test 只允许数字环回 127.0.0.1/::1、明确端口、HTTP及按provider匹配的/v1/responses或/v1/chat/completions，模型和凭据值必须以noetome-test-开头；该模式只发本地假服务请求，真实模型/收费调用为0，不作为T02真实验收。
 
 required_input=vision 或缺少 text/structured_output 在请求前拒绝；不发图片或猜测 OCR。selection 明确选择已登记文本 Span 或 PDF 的已确认文本区域，最多 4 单位。limits 沿用字段，API 本项限定 max_units=1..4、max_input_bytes=1..64 KiB、max_response_bytes=1..1 MiB、max_output_tokens=16..8192、timeout_ms=1..60000；实际序列化 HTTP 请求最多 256 KiB。budget.max_requests=0..1，max_total_tokens 为明确总预算，max_cost_usd 必须出现，可空；金额为正有限十进制文本。
 
@@ -36,6 +36,8 @@ required_input=vision 或缺少 text/structured_output 在请求前拒绝；不�
 
 Core 先序列化全部正文、提示和 Schema；input_reserved_tokens 为实际 body UTF8 字节数加 1024，reservation_policy=request_utf8_bytes_plus_1024_v1。这是保守工程预留，model_tokenizer=null，并非真实 Token 测量或提供商账单保证。请求前预留 input_reserved_tokens + max_output_tokens；不足停止。返回 usage 再核对 input<=预留、output<=指定上限、input+output=total 且 total<=总预算；违反时保留原响应并失败，不再发下一次请求。缺用量保留 null 并失败，不以 0 补齐。
 
+Chat策略tangmao-deepseek-chat-json-object-no-thinking-v3仅发送model、messages、thinking={type:disabled}、response_format={type:json_object}、max_tokens和stream=false。messages恰好为system原完整抽取指令及user自足task/response_schema/request JSON文本，保留相同Schema、绑定与绝对anchor。JSON Object不是服务器严格Schema承诺；Core继续拒绝非法/围栏/修补候选。max_tokens沿用配置max_output_tokens的16..8192上限，全部正文仍参与同一预留。此接口不发送未核查字段，也不以thinking请求声明证明服务执行了开关。
+
 用户已授权的10000000为累计额度，外部使用记录先查剩余再预留，一次调用配置不能获得新的10M；有有效usage按真实total累计，没有可核实用量则保留该尝试的工程预留和未知状态。当前第一冒烟限制一次，输出最多8192。服务/模型/预算已知，正常复用不再次索要。
 
 evidence_anchors 的 excerpt_start_byte/end_byte 必须复制 unit.start_byte/end_byte，范围在其 locator 指向的真实文本资源内；选中非零起点 Span 或 PDF 区域不能重新从 0 计数。quote 为完整 unit.text，excerpt_sha256 是该切片字节的 SHA；resource_sha256 仍是完整来源资源 SHA，二者不混用。模型直接复制这个 anchor，Core 按原资源字节核对。
@@ -49,6 +51,8 @@ evidence_anchors 的 excerpt_start_byte/end_byte 必须复制 unit.start_byte/en
 API 输出 JSON 严格字段为 schema_version=1、request_id、binding、concepts、evidence、atoms。SourceBinding、Concept、CandidateEvidence、CandidateAtom/Measurement 沿用领域规则；它不携带模型自封的 producer。request_id/binding 必须与 Core 请求完全一致；原子固定 required=false、verification=unverified，有真实 supports、UTF8 范围/quote/SHA 和明确未知值。API 与 fake 共用领域校验函数，API 不伪装为 fake payload。
 
 返回模型与配置模型分别保存，不能从别名推造已验证版本。usage 的 input_tokens/output_tokens/total_tokens 必须为非负整数且加总正确；缓存和 reasoning 细项按真实返回记录，缺失保持 null，不重复计费。记录 request attempts、HTTP 状态、响应 id/模型、策略版本、源码版本/SHA、实际 body 指纹及未知计费。
+
+Chat回包须object=chat.completion、唯一choices[0]且index=0、finish_reason=stop、message.role=assistant、content为非空普通字符串JSON；length、content_filter/refusal、工具/函数字段、额外choice、非法type、重复key和尾随JSON均不能成功。reasoning_content等已知nullable字符串元数据不当候选，原字节不改。完整HTTP200的prompt_tokens/completion_tokens/total_tokens经严格整数与加总核对后，映射为统一input_tokens/output_tokens/total_tokens；usage.raw_model_usage保留该Chat原usage对象，原response.bin也保留字段原字节。独立有效计量即使遇到length或候选失败仍记录；缺/错用量和非200/partial不以0补造。
 
 完整 HTTP 200 的响应 metadata/用量独立核对，候选非法、refusal 或 incomplete 不丢弃已经验证的 id/model/usage；候选成功与用量存在是分别记录的事实。partial 或非 200 的响应不将其片段当作已验证用量，原字节/状态仍保留。确实缺失或无效用量保持 null 并区分 not_validated，不能说已解析的真实计量不存在。
 

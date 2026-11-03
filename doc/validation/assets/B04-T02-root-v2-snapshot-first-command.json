@@ -1,0 +1,7 @@
+{
+  "chunk_id": "ef6c37",
+  "wall_time_seconds": 0.1834799,
+  "exit_code": 1,
+  "original_token_count": 300,
+  "output": "Traceback (most recent call last):\r\n  File \"D:\\Noetome\\.superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-v2-snapshot-check.py\", line 44, in <module>\r\n    audits = {name: read(OUT / (\"root-v2-\" + name) / \"audit.json\") for name in [\"api\", \"fake\"]}\r\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"D:\\Noetome\\.superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-v2-snapshot-check.py\", line 22, in read\r\n    return json.loads(path.read_text(encoding=\"utf-8-sig\"))\r\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\pathlib.py\", line 1027, in read_text\r\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\r\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\pathlib.py\", line 1013, in open\r\n    return io.open(self, mode, buffering, encoding, errors, newline)\r\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\nFileNotFoundError: [Errno 2] No such file or directory: 'D:\\\\Noetome\\\\.superpowers\\\\sdd\\\\B04-T02_GATEWAY_PLAN\\\\root-v2-fake\\\\audit.json'\r\n"
+}
