@@ -1,0 +1,94 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.05s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-b3c381fa74716987.exe)
+
+running 11 tests
+test extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor ... FAILED
+test extraction_api_transport::tests::pre_cancel_sends_nothing ... FAILED
+test extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body ... FAILED
+test extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried ... FAILED
+test extraction_api_transport::tests::truncated_chunked_oversize_and_empty_receipts_fail ... FAILED
+test extraction_api_transport::tests::one_http1_post_preserves_complete_receipt ... FAILED
+test extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata ... FAILED
+test extraction_api_wire::tests::rejects_duplicate_keys_at_unknown_nesting_and_trailing_json ... ok
+test extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected ... FAILED
+test extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail ... FAILED
+test extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail ... FAILED
+
+failures:
+
+---- extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor stdout ----
+
+thread 'extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor' (59500) panicked at crates\noetome-cli\src\extraction_api_schema.rs:16:69:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "EXTRACT_API_REQUEST", exit_code: 3, message: "not implemented" }
+
+---- extraction_api_transport::tests::pre_cancel_sends_nothing stdout ----
+
+thread 'extraction_api_transport::tests::pre_cancel_sends_nothing' (60420) panicked at crates\noetome-cli\src\extraction_api_transport.rs:107:9:
+assertion `left == right` failed
+  left: "EXTRACT_API_TRANSPORT"
+ right: "EXTRACT_CANCELLED"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body stdout ----
+
+thread 'extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body' (15004) panicked at crates\noetome-cli\src\extraction_api_transport.rs:60:40:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "EXTRACT_API_TRANSPORT", exit_code: 3, message: "not implemented" }
+
+---- extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried stdout ----
+
+thread 'extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried' (2068) panicked at crates\noetome-cli\src\extraction_api_transport.rs:60:40:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "EXTRACT_API_TRANSPORT", exit_code: 3, message: "not implemented" }
+
+---- extraction_api_transport::tests::truncated_chunked_oversize_and_empty_receipts_fail stdout ----
+
+thread 'extraction_api_transport::tests::truncated_chunked_oversize_and_empty_receipts_fail' (53444) panicked at crates\noetome-cli\src\extraction_api_transport.rs:60:40:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "EXTRACT_API_TRANSPORT", exit_code: 3, message: "not implemented" }
+
+---- extraction_api_transport::tests::one_http1_post_preserves_complete_receipt stdout ----
+
+thread 'extraction_api_transport::tests::one_http1_post_preserves_complete_receipt' (27876) panicked at crates\noetome-cli\src\extraction_api_transport.rs:60:40:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "EXTRACT_API_TRANSPORT", exit_code: 3, message: "not implemented" }
+
+---- extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata stdout ----
+
+thread 'extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata' (48780) panicked at crates\noetome-cli\src\extraction_api_wire.rs:40:59:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "EXTRACT_API_RESPONSE", exit_code: 3, message: "not implemented" }
+
+---- extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected stdout ----
+
+thread 'extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected' (16080) panicked at crates\noetome-cli\src\extraction_api_wire.rs:53:64:
+assertion `left == right` failed
+  left: "EXTRACT_API_RESPONSE"
+ right: "EXTRACT_API_INCOMPLETE"
+
+---- extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail stdout ----
+
+thread 'extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail' (45840) panicked at crates\noetome-cli\src\extraction_api_wire.rs:75:157:
+assertion `left == right` failed
+  left: "EXTRACT_API_RESPONSE"
+ right: "EXTRACT_API_CANDIDATES"
+
+---- extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail stdout ----
+
+thread 'extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail' (62236) panicked at crates\noetome-cli\src\extraction_api_wire.rs:64:53:
+assertion `left == right` failed
+  left: "EXTRACT_API_RESPONSE"
+ right: "EXTRACT_API_USAGE"
+
+
+failures:
+    extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor
+    extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried
+    extraction_api_transport::tests::one_http1_post_preserves_complete_receipt
+    extraction_api_transport::tests::pre_cancel_sends_nothing
+    extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body
+    extraction_api_transport::tests::truncated_chunked_oversize_and_empty_receipts_fail
+    extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail
+    extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata
+    extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected
+    extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail
+
+test result: FAILED. 1 passed; 10 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.81s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`
