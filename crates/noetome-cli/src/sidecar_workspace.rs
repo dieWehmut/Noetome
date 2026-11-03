@@ -168,7 +168,7 @@ impl GuardedFile {
         Ok(())
     }
 }
-fn check_links(file: &File, code: &'static str) -> Result<(), SidecarError> {
+pub(crate) fn check_links(file: &File, code: &'static str) -> Result<(), SidecarError> {
     #[cfg(windows)]
     let count = winapi_util::file::information(file)
         .map_err(|e| err(code, e))?

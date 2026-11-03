@@ -8,7 +8,7 @@
 
 只接收真实项目中已存在的导入记录。文本使用该版本的真实 SourceSpan；PDF 使用该导入的真实 parse_id、已确认页面/区域、逐页 UTF-8 资源及 SHA。失败获取、失败解析、未确认资源和无文本区域不能产生请求。needs_review 文本保留状态，候选仍需复核。不得将 PDF 伪装为旧文本 Span 或补造 normalized_sha256。
 
-从打开项目到最后保存验收报告，保留配置、SQLite、来源缓存所有权、目录和来源文件的读取能力；重新检查身份、SHA、mtime 和目录清单。来源事务全程只读，不迁移 SQL、不写来源、不改 pending。为该新入口单独限制快照树最多 4096 文件、512 MiB；每文件沿用来源边界，超限明确拒绝，不改变既有来源命令的历史读取规则。未知项目根文件仅核对目录元数据，不读取私人正文。输出与项目、fake 输入目录不能相交，取消路径不得位于这两个输入根或输出根内。
+从打开项目到最后保存验收报告，保留配置、SQLite、来源缓存所有权、目录和来源文件的读取能力；重新检查身份、SHA、mtime 和目录清单。来源事务全程只读，不迁移 SQL、不写来源、不改 pending。为该新入口单独限制 SQLite 128 MiB、快照树最多 4096 文件及512 MiB；每文件沿用来源边界，超限明确拒绝，不改变既有来源命令的历史读取规则。未知项目根文件仅核对目录元数据，不读取私人正文。输出与项目、fake 输入目录不能相交，取消路径不得位于这两个输入根或输出根内。
 
 ## 严格消息
 
@@ -28,7 +28,7 @@ Measurement：value_status、value/unit（必填可空字符串）、conditions�
 
 ## Fake 配置和单请求边界
 
-fake.json 的必填字段：schema_version=1、producer=fake、case_id、selection、capabilities、limits、budget、delay_ms、response_file、binding_override、request_id_override。selection 为非空列表：`{"kind":"text","ordinal":N}` 或 `{"kind":"pdf","page_index":N,"region_id":"实际区域ID"}`。capabilities 包含 text/structured_output/vision 布尔值；本任务只需要 text 与 structured_output，图像能力不用于补造正文。response_file 是根内普通相对文件，禁止越界/链接/未知配置。fake 根文件、身份、SHA 和清单保持只读。
+fake.json 的必填字段：schema_version=1、producer=fake、case_id、selection、capabilities、limits、budget、delay_ms、response_file、binding_override、request_id_override。selection 为非空列表：`{"kind":"text","ordinal":N}` 或 `{"kind":"pdf","page_index":N,"region_id":"实际区域ID"}`。capabilities 包含 text/structured_output/vision 布尔值；本任务只需要 text 与 structured_output，图像能力不用于补造正文。response_file 是根内普通相对文件，禁止越界/链接/未知配置。fake 根最多64文件、16子目录，每文件1 MiB、合计4 MiB，配置本身最多64 KiB；fake 根文件、身份、SHA 和清单保持只读。
 
 limits：max_units（1..64）、max_input_bytes（1..1 MiB）、max_response_bytes（1..1 MiB）、max_output_tokens（1..65536）、timeout_ms（1..30000）。budget：max_requests（0..1）、max_total_tokens、max_cost_usd（必填可空）。这里只运行一次 replay。fake 的计量单位明确为 `fake_utf8_bytes_v1`：输入为单位正文 UTF-8 字节，输出为完整信封 UTF-8 字节，不代表任何真实模型 tokenizer 或使用量。调用前预留 input + max_output_tokens；预算不足、max_requests=0 或带金额上限但价格未知均在调用前停止。价格、模型 tokenizer、真实模型使用量为 null；network_calls/paid_calls=0 是此次离线行为事实。不得以未知价格为零。
 
@@ -38,7 +38,7 @@ limits：max_units（1..64）、max_input_bytes（1..1 MiB）、max_response_byt
 
 成功返回 0，仅表示 `candidates_validated`；所有原子仍 unverified，knowledge_status=pending、published=false、scientific_quality=not_run。语义/预算/超时/取消失败返回 3；路径/配置/找不到来源等输入错误返回 2（已有 ProjectError 读取受阻沿用 3）。失败不保存 candidates.json，不创建 KnowledgeIR、Run、Release 或 Vault。
 
-只有通过来源与配置预检后才建立全新输出根。保存 `.owner.json`、request.json、response.bin（有响应时）、candidates.json（仅验收成功）、validation.json、validation.md。报告记录实际调用数、fake 计量、nullable 价格/模型使用量、错误码、来源状态、绑定和文件 SHA。写入使用 create_new 和能力持有，重读实际文件与双报告；最终复核来源和输入，再允许成功。未知已有输出拒绝；运行期间出现未知文件或身份变化保留现场并报错，不接管、覆盖或递归清理它。
+只有通过来源与配置预检后才建立全新输出根。保存 `.owner.json`、request.json、response.bin（有响应时）、candidates.json（仅验收成功）、validation.json、validation.md，每个本地审计文件最多8 MiB。候选每类实体最多1024项。报告记录实际调用数、fake 计量、nullable 价格/模型使用量、错误码、来源状态、绑定和文件 SHA；Markdown的可读摘要附与JSON逐字段相同的验证快照，独立验证重读两份报告及实际产物指纹。写入使用 create_new 和能力持有，重读实际文件与双报告；最终复核来源和输入，再允许成功。未知已有输出拒绝；运行期间出现未知文件或身份变化保留现场并报错，不接管、覆盖或递归清理它。已捕获结果文件可在失败时按各自能力撤回；无法安全撤回时保留未验收现场并返回非零，不能把残留文件当成成功。
 
 ## 验收与限制
 

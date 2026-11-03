@@ -2,7 +2,7 @@ use std::env;
 use std::io::{self, Write};
 use std::process::ExitCode;
 
-use noetome_cli::{CliCommand, fixture, fixture_compile, pdf_parse, project, source};
+use noetome_cli::{CliCommand, extraction, fixture, fixture_compile, pdf_parse, project, source};
 
 fn main() -> ExitCode {
     // Keep OS-native arguments: malformed Unicode is an input error, not a panic.
@@ -20,6 +20,26 @@ fn main() -> ExitCode {
         CliCommand::Help => noetome_cli::HELP.to_owned(),
         CliCommand::ProjectHelp => noetome_cli::PROJECT_HELP.to_owned(),
         CliCommand::SourceHelp => noetome_cli::SOURCE_HELP.to_owned(),
+        CliCommand::ExtractionHelp => noetome_cli::EXTRACTION_HELP.to_owned(),
+        CliCommand::ExtractFake {
+            project,
+            import_id,
+            case,
+            output,
+            cancel_file,
+        } => match extraction::fake(&project, &import_id, &case, &output, cancel_file.as_deref()) {
+            Ok(output) => {
+                if let Some((code, message)) = output.failure {
+                    let _ = writeln!(io::stderr().lock(), "{code}：{message}");
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
         CliCommand::CaseHelp => noetome_cli::CASE_HELP.to_owned(),
         CliCommand::CaseCompile { case, output } => {
             match fixture_compile::compile(&case, &output) {

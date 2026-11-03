@@ -86,62 +86,26 @@ fn valid_evidence<'a>(case: &'a LoadedCase) -> BTreeMap<&'a str, &'a Evidence> {
         .collect()
 }
 
-pub(crate) fn validate_knowledge(case: &LoadedCase) -> Vec<Issue> {
+/// Shared identity, revision, plain-text and unique-reference rules only.
+/// Source evidence validity and producer-specific required/support policy stay
+/// with each caller; this helper grants no review or publication status.
+pub(crate) fn validate_basics<'a>(
+    concept_entries: &[crate::fixture_model::Concept],
+    evidence_ids: impl Iterator<Item = &'a str>,
+    atom_entries: &[&crate::fixture_model::KnowledgeAtom],
+) -> Vec<Issue> {
     let mut issues = Vec::new();
-    let ir = &case.ir;
-    if ir.revision == 0 {
-        add(
-            &mut issues,
-            "KNOWLEDGE_REVISION",
-            &[&ir.coverage_run_id],
-            "IR修订号必须为正整数。",
-        );
-    }
-    if !is_id(&ir.coverage_run_id) {
-        add(
-            &mut issues,
-            "KNOWLEDGE_ID",
-            &[&ir.coverage_run_id],
-            "覆盖审计作用域必须为有效fixture标识。",
-        );
-    }
-
-    let source_counts = id_counts(ir.sources.iter().map(|source| source.source_id.as_str()));
-    let source_binding_matches = ir.sources.len() == case.manifest.sources.len()
-        && source_counts.values().all(|count| *count == 1)
-        && case.manifest.sources.iter().all(|declared| {
-            ir.sources.iter().any(|source| {
-                source.source_id == declared.source_id
-                    && source.version_id == declared.version_id
-                    && source.content_sha256 == declared.content_sha256
-                    && source.normalized_sha256 == declared.normalized_sha256
-            })
-        });
-    if !source_binding_matches {
-        let refs: Vec<_> = ir
-            .sources
-            .iter()
-            .map(|source| source.source_id.as_str())
-            .collect();
-        add(
-            &mut issues,
-            "KNOWLEDGE_SOURCE_BINDING",
-            &refs,
-            "IR来源集合及每份来源的版本、原始和规范SHA必须与manifest双向一致，不得重复。",
-        );
-    }
-
     let concepts = id_counts(
-        ir.concepts
+        concept_entries
             .iter()
             .map(|concept| concept.concept_id.as_str()),
     );
-    let evidence = id_counts(ir.evidence.iter().map(|entry| entry.evidence_id.as_str()));
-    let atoms = id_counts(ir.atoms.iter().map(|atom| atom.atom_id.as_str()));
+    let evidence = id_counts(evidence_ids);
+    let atoms = id_counts(atom_entries.iter().map(|atom| atom.atom_id.as_str()));
     for counts in [&concepts, &evidence, &atoms] {
         check_ids(counts, &mut issues);
     }
-    for concept in &ir.concepts {
+    for concept in concept_entries {
         if concept.revision == 0 {
             add(
                 &mut issues,
@@ -165,38 +129,7 @@ pub(crate) fn validate_knowledge(case: &LoadedCase) -> Vec<Issue> {
             );
         }
     }
-    for entry in &ir.evidence {
-        let refs = [&entry.evidence_id[..], &entry.source_span_id[..]];
-        if !is_id(&entry.source_span_id) || !bound_span(case, entry) {
-            add(
-                &mut issues,
-                "KNOWLEDGE_EVIDENCE_SPAN",
-                &refs,
-                "证据必须引用实际Span及IR绑定的来源版本。",
-            );
-        }
-        match excerpt(case, entry) {
-            None => add(
-                &mut issues,
-                "KNOWLEDGE_EVIDENCE_RANGE",
-                &refs,
-                "证据范围必须是Span内非空且落在UTF8字符边界的字节半开区间。",
-            ),
-            Some(text) => {
-                if !is_sha(&entry.excerpt_sha256) || sha256(text.as_bytes()) != entry.excerpt_sha256
-                {
-                    add(
-                        &mut issues,
-                        "KNOWLEDGE_EVIDENCE_SHA",
-                        &refs,
-                        "证据SHA与实际原文切片的UTF8字节不符。",
-                    );
-                }
-            }
-        }
-    }
-    let valid_evidence = valid_evidence(case);
-    for atom in &ir.atoms {
+    for atom in atom_entries {
         if atom.revision == 0 {
             add(
                 &mut issues,
@@ -251,6 +184,92 @@ pub(crate) fn validate_knowledge(case: &LoadedCase) -> Vec<Issue> {
                 );
             }
         }
+    }
+    issues
+}
+
+pub(crate) fn validate_knowledge(case: &LoadedCase) -> Vec<Issue> {
+    let mut issues = Vec::new();
+    let ir = &case.ir;
+    if ir.revision == 0 {
+        add(
+            &mut issues,
+            "KNOWLEDGE_REVISION",
+            &[&ir.coverage_run_id],
+            "IR修订号必须为正整数。",
+        );
+    }
+    if !is_id(&ir.coverage_run_id) {
+        add(
+            &mut issues,
+            "KNOWLEDGE_ID",
+            &[&ir.coverage_run_id],
+            "覆盖审计作用域必须为有效fixture标识。",
+        );
+    }
+
+    let source_counts = id_counts(ir.sources.iter().map(|source| source.source_id.as_str()));
+    let source_binding_matches = ir.sources.len() == case.manifest.sources.len()
+        && source_counts.values().all(|count| *count == 1)
+        && case.manifest.sources.iter().all(|declared| {
+            ir.sources.iter().any(|source| {
+                source.source_id == declared.source_id
+                    && source.version_id == declared.version_id
+                    && source.content_sha256 == declared.content_sha256
+                    && source.normalized_sha256 == declared.normalized_sha256
+            })
+        });
+    if !source_binding_matches {
+        let refs: Vec<_> = ir
+            .sources
+            .iter()
+            .map(|source| source.source_id.as_str())
+            .collect();
+        add(
+            &mut issues,
+            "KNOWLEDGE_SOURCE_BINDING",
+            &refs,
+            "IR来源集合及每份来源的版本、原始和规范SHA必须与manifest双向一致，不得重复。",
+        );
+    }
+
+    issues.extend(validate_basics(
+        &ir.concepts,
+        ir.evidence.iter().map(|e| e.evidence_id.as_str()),
+        &ir.atoms.iter().collect::<Vec<_>>(),
+    ));
+    for entry in &ir.evidence {
+        let refs = [&entry.evidence_id[..], &entry.source_span_id[..]];
+        if !is_id(&entry.source_span_id) || !bound_span(case, entry) {
+            add(
+                &mut issues,
+                "KNOWLEDGE_EVIDENCE_SPAN",
+                &refs,
+                "证据必须引用实际Span及IR绑定的来源版本。",
+            );
+        }
+        match excerpt(case, entry) {
+            None => add(
+                &mut issues,
+                "KNOWLEDGE_EVIDENCE_RANGE",
+                &refs,
+                "证据范围必须是Span内非空且落在UTF8字符边界的字节半开区间。",
+            ),
+            Some(text) => {
+                if !is_sha(&entry.excerpt_sha256) || sha256(text.as_bytes()) != entry.excerpt_sha256
+                {
+                    add(
+                        &mut issues,
+                        "KNOWLEDGE_EVIDENCE_SHA",
+                        &refs,
+                        "证据SHA与实际原文切片的UTF8字节不符。",
+                    );
+                }
+            }
+        }
+    }
+    let valid_evidence = valid_evidence(case);
+    for atom in &ir.atoms {
         if atom.required {
             if atom.verification != Verification::FixtureReviewed
                 || atom.value_status != ValueStatus::Known
