@@ -112,9 +112,9 @@ noetome extract fake <项目路径> <import-id> <fake目录> <全新测试输出
 noetome extract api <项目路径> <import-id> <config.json> <全新测试输出根> [--cancel-file <取消信号路径>]
 ```
 
-配置明确提供商、端点、模型、外部凭据变量名称、所选来源和预算。首次只发一次请求；文本模型遇到视觉需求明确拒绝。输入预留是实际请求UTF8字节加1024的工程估算，不能显示成已测Token数；价格未知保持null，只有金额预算且无有效价格时不调用。live与local_http_test分别说明真实配置请求和本地假服务，假服务模型/凭据必须使用人工测试前缀。
+配置明确提供商、端点、模型、外部凭据变量名称、所选来源和预算。用户已提供的糖猫云/deepseek-flash及10M累计额度保存在本机模型设置中，后续复用；独立PowerShell凭据入口使用遮蔽框和CurrentUser DPAPI，保存后由选定子CLI使用，不增加桌面受限命令。首次只发一次请求；文本模型遇到视觉需求明确拒绝。输入预留是实际请求UTF8字节加1024的工程估算，不能显示成已测Token数；价格未知保持null，只有金额预算且无有效价格时不调用。live与local_http_test分别说明真实配置请求和本地假服务，假服务模型/凭据必须使用人工测试前缀。
 
-stdout与validation.json保留相同事实，Markdown显示配置模型与实际返回模型、来源状态、HTTP及完整/partial、实际网络尝试、候选/失败与未知计费，并附完整JSON快照。成功仅表示候选契约核对，知识pending、未发布且科学质量not_run。有效用量独立于候选成功记录；拒答、截断或非法响应不得显示知识完成。正常原响应原样保存；凭据回显时显示收据与省略原因，不展示泄密原文。配置/路径错误返回2，其余抽取失败返回3，已有或人工新增文件保留。完整字段见[文本API契约](../technical/EXTRACTION_API_CONTRACT.md)。
+stdout与validation.json保留相同事实，Markdown显示endpoint/request_strategy、配置模型与实际返回模型、来源状态、HTTP及完整/partial、实际网络尝试、候选/失败与未知计费，并附完整JSON快照。成功仅表示候选契约核对，知识pending、未发布且科学质量not_run。有效用量独立于候选成功记录；拒答、截断或非法响应不得显示知识完成。正常原响应原样保存；凭据回显时显示收据与省略原因，不展示泄密原文。配置/路径错误返回2，其余抽取失败返回3，已有或人工新增文件保留。完整字段见[文本API契约](../technical/EXTRACTION_API_CONTRACT.md)。
 
 ### B02-T02 fixture 检查
 

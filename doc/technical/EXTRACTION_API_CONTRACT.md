@@ -4,7 +4,7 @@
 
 ## 单一接口与官方依据
 
-当前离线接入只实现 OpenAI Responses 的 `POST https://api.openai.com/v1/responses`。实际用户服务、模型、外部凭据引用和预算未提供；这不授权真实收费调用。其他提供商或兼容端点没有验收。官方资料实际核查日期 2026-11-03：
+当前只接 Responses 文本协议，既有离线候选为 `POST https://api.openai.com/v1/responses`。2026-11-03 用户已明确选择糖猫云 `https://ai.1343263.xyz/`、`deepseek-flash` 和累计10000000 Token，要求保存并以后复用；新增精确所选端点 `https://ai.1343263.xyz/v1/responses` 的请求策略。凭据通过本机引用使用，实际调用与网关能力仍按结果验收。其他提供商或兼容端点没有验收。原 OpenAI 官方资料实际核查日期 2026-11-03：
 
 - [API 概览与鉴权](https://developers.openai.com/api/reference/overview)：Bearer 凭据；只读取配置指名的环境变量，不保存 Authorization、密钥值或认证错误正文到普通日志。
 - [Responses create](https://developers.openai.com/api/reference/resources/responses/methods/create)：文本 input、instructions、text.format、max_output_tokens、status/output/usage。输出上限包括 reasoning，最小 16；store 默认 true，显式发送 false。service_tier 明确 default；truncation=disabled 仍可用但已标记 deprecated。
@@ -12,23 +12,31 @@
 - [错误](https://developers.openai.com/api/docs/guides/error-codes)：401/403、429 与 5xx 分别保存稳定失败分类；本任务一次请求不自动重试。
 - [价格](https://developers.openai.com/api/docs/pricing)：按百万 Token 区分输入、输出和缓存，模式、上下文及地区会影响价格。未选实际模型/有效价格，不抄一个费率作为所有模型费用；价格、账单和未知付费请求数保留 null。金额预算但价格未知时调用前停止，可按 D08 使用明确 Token/次数控制。
 
+所选服务另外实际核查[糖猫云公开入口](https://ai.1343263.xyz/)、其部署JS中的Sub2API标识、[上游gateway路由](https://github.com/Wei-Shaw/sub2api/blob/main/backend/internal/server/routes/gateway.go)、[DeepSeek Responses参考](https://api-docs.deepseek.com/api/create-response)及[Responses兼容表](https://api-docs.deepseek.com/guides/responses_api)。路由和官方JSON Schema支持是协议依据，不是已部署网关的模型调用证明。兼容表明确不支持的字段会被忽略；所选body移除background/service_tier/truncation和format.strict，配置reasoning.effort=none。费用不能套用官方费率，实际返回模型/用量单独核对。
+
 ## CLI 与配置
 
 `noetome extract api <项目> <import-id> <config.json> <全新测试输出根> [--cancel-file <外部普通信号>]`
 
 config.json 只读、最多 64 KiB，严格拒绝重复/额外/缺字段和未知版本。字段为 schema_version=1、provider=openai_responses、transport_mode（live 或 local_http_test）、endpoint、model、credential_env、required_input（text 或 vision）、capabilities（text/structured_output/vision）、selection、limits 和 budget。引用凭据的名称须为 2..64 位大写环境变量标识；不隐式读取默认密钥。
 
-live 只允许上述 HTTPS 官方端点，不允许用户信息、查询串、fragment、重定向或代理继承。local_http_test 只允许数字环回 127.0.0.1/::1、明确端口、HTTP 与 /v1/responses，模型和凭据值必须以 noetome-test- 开头；该模式只发本地假服务请求，真实模型/收费调用为 0，不作为 T02 真实验收。
+live 只允许上述精确 HTTPS 官方端点和用户指定的糖猫云 `/v1/responses`；糖猫云只认已选deepseek-flash，不额外允许其他模型、端口、用户信息、查询串、fragment、重定向或代理继承。local_http_test 只允许数字环回 127.0.0.1/::1、明确端口、HTTP 与 /v1/responses，模型和凭据值必须以 noetome-test- 开头；该模式只发本地假服务请求，真实模型/收费调用为 0，不作为 T02 真实验收。
 
 required_input=vision 或缺少 text/structured_output 在请求前拒绝；不发图片或猜测 OCR。selection 明确选择已登记文本 Span 或 PDF 的已确认文本区域，最多 4 单位。limits 沿用字段，API 本项限定 max_units=1..4、max_input_bytes=1..64 KiB、max_response_bytes=1..1 MiB、max_output_tokens=16..8192、timeout_ms=1..60000；实际序列化 HTTP 请求最多 256 KiB。budget.max_requests=0..1，max_total_tokens 为明确总预算，max_cost_usd 必须出现，可空；金额为正有限十进制文本。
 
 配置文件位于来源项目和输出之外，持有读取句柄及身份/mtime/SHA，最终重验。不扫描其父目录的私人正文。输出与整个来源项目不相交，取消信号位于来源/输出之外并不能替代 config.json；存在信号时不调用。只用明确选取的新测试来源，不写生产 Vault。
 
+所选服务非秘密设置及累计使用记录保存到当前用户Noetome设置目录，引用NOETOME_TANGMAO_API_KEY与仓库外CurrentUser DPAPI文件；[模型服务规则](../requirements/MODEL_SERVICE.md)约束后续复用。Core仍只读所选process环境变量，外部脚本在内存解密并注入选定子进程，不给Core增加默认私钥扫描。
+
 ## 请求、预算与 native HTTP
 
-真实 HTTP body 保存为 request-body.json。发送 model、instructions、input（包含 request_id、SourceBinding、真实 units 和 Core 计算的完整单位证据 anchor 的 JSON 文本）、text.format={type:json_schema,name:noetome_candidates_v1,strict:true,schema}、max_output_tokens、store=false、stream=false、background=false、tools=[]、tool_choice=none、service_tier=default、truncation=disabled；不发送 conversation、previous_response_id、搜索或文件上传。
+真实 HTTP body 保存为 request-body.json。旧官方/本地策略openai-responses-strict-json-schema-v1发送 model、instructions、input（包含 request_id、SourceBinding、真实 units 和 Core 计算的完整单位证据 anchor 的 JSON 文本）、text.format={type:json_schema,name:noetome_candidates_v1,strict:true,schema}、max_output_tokens、store=false、stream=false、background=false、tools=[]、tool_choice=none、service_tier=default、truncation=disabled。
+
+所选策略tangmao-deepseek-responses-json-schema-v1沿用相同input/name/schema及输出上限，移除text.format.strict、background/service_tier/truncation，发送reasoning={effort:none}、store=false、stream=false、tools=[]、tool_choice=none。store=false是客户端明确意图，不是网关日志或账单保证；严格schema保证由Core对实际返回候选检查。两种策略均不发送conversation、previous_response_id、搜索或文件上传；request_strategy在请求及JSON/Markdown报告逐字段保存，报告也保存实际endpoint。
 
 Core 先序列化全部正文、提示和 Schema；input_reserved_tokens 为实际 body UTF8 字节数加 1024，reservation_policy=request_utf8_bytes_plus_1024_v1。这是保守工程预留，model_tokenizer=null，并非真实 Token 测量或提供商账单保证。请求前预留 input_reserved_tokens + max_output_tokens；不足停止。返回 usage 再核对 input<=预留、output<=指定上限、input+output=total 且 total<=总预算；违反时保留原响应并失败，不再发下一次请求。缺用量保留 null 并失败，不以 0 补齐。
+
+用户已授权的10000000为累计额度，外部使用记录先查剩余再预留，一次调用配置不能获得新的10M；有有效usage按真实total累计，没有可核实用量则保留该尝试的工程预留和未知状态。当前第一冒烟限制一次，输出最多8192。服务/模型/预算已知，正常复用不再次索要。
 
 evidence_anchors 的 excerpt_start_byte/end_byte 必须复制 unit.start_byte/end_byte，范围在其 locator 指向的真实文本资源内；选中非零起点 Span 或 PDF 区域不能重新从 0 计数。quote 为完整 unit.text，excerpt_sha256 是该切片字节的 SHA；resource_sha256 仍是完整来源资源 SHA，二者不混用。模型直接复制这个 anchor，Core 按原资源字节核对。
 
@@ -56,4 +64,4 @@ JSON 字符串可能内嵌候选 JSON；凭据检查须逐层处理转义后的�
 
 作者使用[T01 受控来源与调用前 gold](../../fixtures/extraction-gateway-v1/README.md)作为第一次小范围来源，选择真实 Span ordinal=0；gold 的 10 m/s、温度 20 ℃、仅适用样例 A 先于模型输出固定。普通本地 HTTP 假服务覆盖成功及配置、401/403、429、5xx、截断/非法/重复 JSON、拒答/incomplete、空输出、能力、缺/错误/超预算用量、预留/金额停止、超时/取消、凭据回显与来源/新根保护。
 
-offline checks 和新鲜审查通过后保存实现证据；真实验收仍需用户提供配置和预算、执行一次实际有界请求并保留原响应/用量/Core 核对。真实门槛未满足时用任务 block 记录明确解除条件，不 complete、不启动依赖的 T03，不把本地假服务当收费模型。
+offline checks 和新鲜审查通过后保存实现证据；服务/模型/预算已由用户提供并保存，真实验收还需本机匹配凭据、执行一次实际有界请求并保留原响应/用量/Core核对。真实门槛未满足时只记录实际缺失条件，不把已经给出的信息重新列为阻塞，不complete、不启动依赖的T03，不把本地假服务当收费模型。

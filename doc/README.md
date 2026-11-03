@@ -15,6 +15,7 @@
 | --- | --- | --- |
 | [产品需求](requirements/PRD.md) | 40组功能及完整产品验收边界 | 产品行为或验收范围变化 |
 | [决策基线](requirements/DECISIONS.md) | D01至D15已采纳建议及执行解释 | 有依据的新决定或实验结果 |
+| [已授权模型服务](requirements/MODEL_SERVICE.md) | 用户选定网关、模型、累计预算、本机凭据及复用入口 | 真实模型调用前复用；用户改变配置时更新 |
 | [架构规范](technical/ARCHITECTURE.md) | 模块边界、技术方向和阶段约束 | 跨模块接口或责任变化 |
 | [数据契约](technical/DATA_CONTRACTS.md) | 当前最小实体、身份、来源和版本语义 | 增加持久字段、Schema或接口 |
 | [Parser sidecar 协议](technical/SIDECAR_PROTOCOL.md) | 单请求 wire、资源能力、限额与进程宿主错误 | parser 协议或生命周期边界变化 |

@@ -229,7 +229,7 @@ Core复核资源的Windows安全相对路径、文件/目录身份、链接数�
 
 B04-T01提供显式离线`extract fake`：只读会话从真实导入选择文本Span或已登记PDF页/区域，网关处理严格候选、单请求预留、超时/取消和全新测试根。fake只重放字节，不运行模型；输出`candidates_validated`仍保持知识pending和科学质量not_run。来源、fake和输出能力分别持有并在保存后重查，不把响应中的身份、quote或已发布声明当作可信事实。具体交换与边界见[抽取契约](EXTRACTION_CONTRACT.md)。
 
-B04-T02沿用只读来源与领域校验，分开实现单一Responses native HTTP/wire/Schema和Core配置、预算、候选与审计保存。HTTP禁用代理继承、重定向和重试，一次POST有时间及实际字节边界；live仅官方HTTPS，本地HTTP假服务与真实服务明确区分。Core在请求前预留、返回后核对实际用量，元数据与候选成功独立，凭据回显不持久化。配置、来源和全新输出能力贯穿保存；具体接口见[文本API契约](EXTRACTION_API_CONTRACT.md)。实际提供商/模型能力和真实抽取仍需D08配置及预算后的单独实测，离线接入不证明它们已通过。
+B04-T02沿用只读来源与领域校验，分开实现单一Responses native HTTP/wire/Schema和Core配置、预算、候选与审计保存。HTTP禁用代理继承、重定向和重试，一次POST有时间及实际字节边界；live限定官方HTTPS及用户明确指定的糖猫云deepseek-flash端点，本地HTTP假服务与真实服务明确区分。封闭请求策略区分旧官方strict与所选DeepSeek JSON Schema/无reasoning，body与报告保存版本，不引入全部模型SDK。Core在请求前预留、返回后核对实际用量，元数据与候选成功独立，凭据回显不持久化。配置、来源和全新输出能力贯穿保存；具体接口见[文本API契约](EXTRACTION_API_CONTRACT.md)。用户已保存服务/模型/10M累计额度，外部PowerShell脚本以CurrentUser DPAPI和子进程环境复用凭据；实际服务能力及抽取仍单独实测，离线接入不证明它们已通过。
 
 模型、网络检索和本地解析是不同能力。联网许可、请求预算、未知费用和证据状态分别记录。重试、并发预留和持久化恢复在长任务启用前补齐，不以单次成功调用代表全部能力已支持。
 

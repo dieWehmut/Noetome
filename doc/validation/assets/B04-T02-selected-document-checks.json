@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "checks": [
+    {
+      "method": "Read 12 changed/new Markdown documents; check relative local file links without browsing remote links",
+      "tool_result": {
+        "chunk_id": "d48fd9",
+        "wall_time_seconds": 0.2313112,
+        "exit_code": 0,
+        "original_token_count": 180,
+        "output": "{\"documents\": 12, \"local_links_checked\": 171, \"missing\": []}\r\nsource-before.json keys=['live_root', 'project', 'import_id', 'source_path', 'source_sha256', 'gold_sha256', 'author_data_fixed_before_model_call', 'model_calls_before_capture', 'captured_at', 'project_files', 'project_sql_sha256']\r\nsource-import.json keys=['schema_version', 'project_id', 'import_id', 'imported_at', 'selected_path', 'source_id', 'version_id', 'status', 'reused', 'span_count', 'pending_extraction_count', 'knowledge_status', 'version', 'spans', 'error']\r\napi-real-config.json keys=['schema_version', 'provider', 'transport_mode', 'endpoint', 'model', 'credential_env', 'required_input', 'capabilities', 'selection', 'limits', 'budget']\r\n"
+      }
+    },
+    {
+      "method": "python scripts/devlog.py check, then git diff --check with explicit exit-code gates",
+      "tool_result": {
+        "chunk_id": "1b59cb",
+        "wall_time_seconds": 0.2790773,
+        "exit_code": 0,
+        "original_token_count": 18,
+        "output": "开发日志检查通过，共 14 项任务；未修改任何文件\r\n"
+      }
+    }
+  ],
+  "note": "Observed earlier doc gate had 171 local links. Final links are checked again after all new artifact links and final task state."
+}

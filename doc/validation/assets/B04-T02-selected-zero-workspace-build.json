@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "producer": "root_workspace_dev_selected_zero_audit",
+  "binary_sha256": "b66463d89114fae5a6743626a34930a51495277755a4fcb7d0cb4268b4ac1f2b",
+  "command": [
+    "D:\\Noetome\\target\\debug\\noetome.exe",
+    "extract",
+    "api",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\source-project",
+    "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-preflight-config.json",
+    "D:\\Noetome\\.superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-selected-zero-workspace-build"
+  ],
+  "exit_code": 3,
+  "stdout": "{\n  \"actual_model\": null,\n  \"artifacts\": {\n    \".owner.json\": {\n      \"byte_length\": 174,\n      \"sha256\": \"c75ad2e956450d4888702a20102f07b7394442c2a85b7ef1aec1609da94dfcf0\"\n    },\n    \"request-body.json\": {\n      \"byte_length\": 5182,\n      \"sha256\": \"661b37da97836d28e846f8ebfdecce70afe18a25073fac5cfe3c77111c3fa0a0\"\n    },\n    \"request.json\": {\n      \"byte_length\": 2192,\n      \"sha256\": \"70d17a661cd5678babd6ef839d74ad2b03c4c80bae5920579fc646acf9acf7b5\"\n    }\n  },\n  \"binding\": {\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"import_id\": \"9f0abe91-99c5-44d0-8e15-2e9ea48da551\",\n    \"manifest_sha256\": null,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"parse_id\": null,\n    \"project_id\": \"2c9dd41b-e63a-4858-bc56-18039ca25f33\",\n    \"source_id\": \"50cf1923-ffea-432e-b37c-199a5223a141\",\n    \"version_id\": \"d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b\"\n  },\n  \"configured_model\": \"deepseek-flash\",\n  \"endpoint\": \"https://ai.1343263.xyz/v1/responses\",\n  \"errors\": [\n    {\n      \"code\": \"EXTRACT_BUDGET_STOP\",\n      \"message\": \"EXTRACT_BUDGET_STOP：单次请求次数或预留总量超过明确预算；未调用。\"\n    }\n  ],\n  \"http_request_id\": null,\n  \"http_status\": null,\n  \"knowledge_status\": \"pending\",\n  \"producer\": \"api\",\n  \"provider\": \"openai_responses\",\n  \"published\": false,\n  \"report_kind\": \"text_api_extraction\",\n  \"request_id\": \"1f83f1e3-570b-4abc-93fa-1342ab61297d\",\n  \"request_strategy\": \"tangmao-deepseek-responses-json-schema-v1\",\n  \"response_complete\": false,\n  \"response_id\": null,\n  \"response_receipt\": null,\n  \"schema_version\": 1,\n  \"scientific_quality\": \"not_run\",\n  \"service_tier\": null,\n  \"source_statuses\": [\n    \"parsed\"\n  ],\n  \"status\": \"failed\",\n  \"transport_mode\": \"live\",\n  \"usage\": {\n    \"input_reserved_tokens\": 6206,\n    \"model_tokenizer\": null,\n    \"model_usage\": null,\n    \"model_usage_status\": \"not_validated\",\n    \"network_attempts\": 0,\n    \"paid_calls\": 0,\n    \"price_usd\": null,\n    \"real_model_calls\": 0,\n    \"request_utf8_bytes\": 5182,\n    \"reservation_policy\": \"request_utf8_bytes_plus_1024_v1\",\n    \"reserved_tokens\": 14398\n  },\n  \"validated_atoms\": 0\n}\n",
+  "stderr": "EXTRACT_BUDGET_STOP：EXTRACT_BUDGET_STOP：单次请求次数或预留总量超过明确预算；未调用。\n",
+  "model_calls": 0,
+  "network_attempts": 0,
+  "source_original_capture_unchanged": true,
+  "source_config_gold_unchanged": true,
+  "output_root": "D:\\Noetome\\.superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-selected-zero-workspace-build"
+}

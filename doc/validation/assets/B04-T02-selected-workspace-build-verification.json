@@ -1,0 +1,1038 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-03T05:54:41.519331+00:00",
+  "build": "cargo build --workspace --locked --offline; no further Cargo builds before actual use",
+  "binary_sha256": "b66463d89114fae5a6743626a34930a51495277755a4fcb7d0cb4268b4ac1f2b",
+  "prior_full_workspace_test_binary_sha256": "c3755d7f5d966c70d78d903745c9bdbbfbe08d04c28b1c77045f41d4c3070f7e",
+  "workspace_source_tests": {
+    "passed": 484,
+    "failed": 0,
+    "ignored": 0,
+    "python_passed": 76
+  },
+  "native_review": "SPEC PASS / QUALITY PASS; 25 native and 5 ordinary API CLI tests; no source changes after review",
+  "sources": {
+    "crates/noetome-cli/src/extraction_api.rs": {
+      "workspace_sha256": "1037f4cce5fd2775b2b7c0fd46b7b5296cdd332675a092ca905957eb0de9d957",
+      "immutable_commit": "27879efc46a2709c2c93f4cf3271c26a4cf0584e",
+      "normalized_bytes_match": true
+    },
+    "crates/noetome-cli/src/extraction_api_config.rs": {
+      "workspace_sha256": "f1db3372efdbebe8f200203ec46062c7e24416cecae6c38fbd38453e3ae3bed3",
+      "immutable_commit": "27879efc46a2709c2c93f4cf3271c26a4cf0584e",
+      "normalized_bytes_match": true
+    },
+    "crates/noetome-cli/src/extraction_api_schema.rs": {
+      "workspace_sha256": "8b840d2b9f54f8b1241b9b286a6c2ed4f04f07beb1719b2f68bf089c09629737",
+      "immutable_commit": "27879efc46a2709c2c93f4cf3271c26a4cf0584e",
+      "normalized_bytes_match": true
+    },
+    "crates/noetome-cli/tests/extraction_api.rs": {
+      "workspace_sha256": "c0ae2edcfdb60b0faf17170d749739c9b1a3b02ea858e674885c036abca43faa",
+      "immutable_commit": "27879efc46a2709c2c93f4cf3271c26a4cf0584e",
+      "normalized_bytes_match": true
+    }
+  },
+  "api_checks_passed": 84,
+  "api_cli_calls": 90,
+  "api_local_posts": 54,
+  "fake_checks_passed": 54,
+  "fake_cli_calls": 60,
+  "source_registered_unchanged": true,
+  "report_snapshot_counts": {
+    "local_http": 59,
+    "selected_zero": 1,
+    "fake": 38
+  },
+  "reports": [
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-bad-json\\new output\\validation.json",
+      "json_sha256": "f0fe77fc7f358088cc0881d72501fa81606cb33ba8dcbe6417d002e4936976f6",
+      "markdown_sha256": "508f35a9bd5545d4022b93a5d3f1c67acde2e9d091315d87284e031d5594b428",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56376/v1/responses",
+      "request_sha256": "f3072ce82ee3d2efaf6c85ad18d1a78bfc78f003d17b9ae4cbb581e709fe044f",
+      "body_sha256": "5adb069779a7edd99b5b0da9dd2844df95d5ecbfa67c8d163d9bf0b5baa495bd",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-bad-output-annotations\\new output\\validation.json",
+      "json_sha256": "6cd254e1896bf3322742d59bb5f5031c2ac4cf1c311b7a8f483426ed90baf173",
+      "markdown_sha256": "aca069f609831a80e1c8ac21d0e673208ec25119c0a7c81968f33e392db548c2",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56395/v1/responses",
+      "request_sha256": "95a1625558f8c286f11d853fddcd5a4d60ad126c56b71f61f67b110cfd397ec4",
+      "body_sha256": "bfaf3f82b35fa1ca5b93f416b20bda8baecc1c1a8a5db74b9b33b643c1e63fdc",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-bad-output-id\\new output\\validation.json",
+      "json_sha256": "0e88367c406e03c35b3b3bb66814bf714e49bf38157fcdf6c97b50d1799d14d0",
+      "markdown_sha256": "d428ec3fd024eb4f8cdd0e5a4c4f4f9a748b79ef634c93a3ccf6c4131503ffa8",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56391/v1/responses",
+      "request_sha256": "77d0ae0c110ca03f0031ebf9707f8a4f569bc08990224b73de21431634ddd958",
+      "body_sha256": "d5a80bf06418dfc5cd5e53c4e0b5f167d6c6bce1fddf06ecb6b9bf9147c74216",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-bad-output-summary\\new output\\validation.json",
+      "json_sha256": "edee9021f3f4669d68d0a7ba962f885557cc99d3a3d2376b9fac293d928c244d",
+      "markdown_sha256": "919a754f82dae154d27d53d02e00cc615cde6e576cd0258b7286e6501fbc4194",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56393/v1/responses",
+      "request_sha256": "bee54020a31a70fbf386226c50f73578895a658482ba85b4dc56abbeed2d95a9",
+      "body_sha256": "fe255871882fc498d3c8a5e2b453c9ee8c3eef9012fd20ad99af678ad11bfee9",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-cancel-existing\\new output\\validation.json",
+      "json_sha256": "12fb6161f6dfb6152027ff9e6898efa1309bf6966f17be61f23bb4867b4dfbe0",
+      "markdown_sha256": "c8ab242d5bcf84749c8c1cf249b084911692fcc4b163396d62faf94b0dfcf8f4",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:64198/v1/responses",
+      "request_sha256": "29bac7d70266dbf0c73cd3d8e714ba9bfab9e9fc510106ec2a5a7d514c1527d0",
+      "body_sha256": "14212ae3b1107b8078711b2a58cd3a7ca5b45b4eaeb764ffeee493e7f29ea792",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-cancel-running\\new output\\validation.json",
+      "json_sha256": "9fffcf2e2b5245de6eb1dfa19791cb700cbffa587a7280fd9b18d9003a3d73b6",
+      "markdown_sha256": "ac0fd310180955ce87f5894a1a95127f276408b9b3c8c10dd740672abc8921bc",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:64196/v1/responses",
+      "request_sha256": "16247924e0df795061e873e6db62f065ab5e066424c653a45b64b243bc15530f",
+      "body_sha256": "a4ac26496e95624ce4bcf6b174bebb40321c928926ce436158412dbc3c7843e1",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-candidate-extra\\new output\\validation.json",
+      "json_sha256": "2dc743d3e981865a8f525032799e4f3569e6e87476b84d9f4b07b7fc765e4d02",
+      "markdown_sha256": "6753e78869839fe6941072ba5b1056517b1bba0f6b44072ba86feb2dbaf7dc84",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56385/v1/responses",
+      "request_sha256": "75be14af6077b021de34a7a9a11057f6757a16d20537123a7c31658a8ed36310",
+      "body_sha256": "f02a2cfae8b9c90e243064b6ba4e08c3bca42d91b84803f7a89020a640dc8894",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-candidate-version\\new output\\validation.json",
+      "json_sha256": "16e136f8b72765e4f9124ca0be0f0f41e180bc0e6db8bb5ab4e3024a24e6d607",
+      "markdown_sha256": "3308804e5e6a21f77036d450d62ee79023b256bb036e35d1da9e6858f776d957",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56387/v1/responses",
+      "request_sha256": "38423961ed2f87941b696a391a9fc79ae76c3eb1e1127d7463f015da76d8442d",
+      "body_sha256": "62c475af9a1444ecbc55918e05fc3d8ac775eefe4d351758006d5a05bed57549",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-chinese-boundary\\new output\\validation.json",
+      "json_sha256": "3949e9ae586460463b86941ee550c9cd3bd39611cc3c07e8bc0924c0493afdc4",
+      "markdown_sha256": "7570b5127e27e1c643c015ed6501936aa1be885d8e4ae0be6d3e589c090cb791",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56402/v1/responses",
+      "request_sha256": "9e64244975a92bf51777f5b475ba72fedc2bfe70c0685cea2f82239a21b35194",
+      "body_sha256": "a760f4aa64fa87dd38ffb7eef2a52a758c935812b226ed5222ff012be48fd908",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-claimed-review\\new output\\validation.json",
+      "json_sha256": "93aa6375c4320180c34211f6fe67a524b7a974a00426c3d962e89e11c5d93998",
+      "markdown_sha256": "0d8e100ffda583c885d266f67b8888d8ce2db2713bfee24e4723bbea8daf48af",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56406/v1/responses",
+      "request_sha256": "e7a4fa0818f0b0a32e81db50ae06a6ebc5da478e77af6620892ecae8c3557a25",
+      "body_sha256": "474c59387e6601a5df4704d2c4c2d162612df0a1ebcceace37966b7e4b35eabf",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-duplicate-candidate\\new output\\validation.json",
+      "json_sha256": "3e0b9f8b7fb4a733fbee68a3527b107d9a617a40a428123713673b802fb75501",
+      "markdown_sha256": "08fcbed773411e7f3099e0710a2a9abaeca0734cccf6c59e4e1b46f66746e7b3",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56383/v1/responses",
+      "request_sha256": "06ea7e456fa604915190959a346d08e0d88b0f4b2ba915f8143cc8936b6acd29",
+      "body_sha256": "2929d4aa754a3754e7ceadeb5f28d711efcd8136b6817a4ada52bed8e0e08f17",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-duplicate-wire\\new output\\validation.json",
+      "json_sha256": "1440cd7c291190ce56e0b66f50414566f9e2a0def3ad8f97b11d09c0b81ff323",
+      "markdown_sha256": "65124902f7b605ff4c6245eb0bc7c010185ae4559a86568af3ceb4061d83376a",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56379/v1/responses",
+      "request_sha256": "d41ce3cdb2dc92051596b38bf882acfa1258983f3312b4887ac03f3659095868",
+      "body_sha256": "c469df45aaf41b1b11a5f8fe58cd2b3915cda85b1ece61f2c34629ad6c10ac2e",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-echo-escaped\\new output\\validation.json",
+      "json_sha256": "a27fdc24596772e07eba2402563991558b93e51ab8bbbac4aa816ae85c3a6d27",
+      "markdown_sha256": "e9ce622dd12ecbe9a45041e9c8cdc0d443fbb4b33fbccac5f16b1cca2f9e2121",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:64240/v1/responses",
+      "request_sha256": "123f87d6e0a46342d39f2ef388ac9e164aa424df66b05fad08626cf995d0177d",
+      "body_sha256": "bd790406dc6a76e1478cd0be225a94d93149cf161bb6b6e997a2512125b0eee4",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-echo-escaped-malformed\\new output\\validation.json",
+      "json_sha256": "bb51736ea017fe4eecea6dffa861e6e0dbf347e0debf52554ad525d334be391f",
+      "markdown_sha256": "c1c992b4ce6a38c39b77ab958074ad5f2941e1fed94e9804939adbeda01a7e93",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:51699/v1/responses",
+      "request_sha256": "54188496140ce41b85ff683591795b0af1fb5081ebdd778cc8ec9fa5dc4dcdca",
+      "body_sha256": "f5a2ccc93fe7a13d29919fd60bb294d61295d61a4d76d54372423b35bc42b94a",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-echo-nested-json\\new output\\validation.json",
+      "json_sha256": "3038e899133c0b43a9b1c1bbb55e543196afc2d9a47ae9d9b05ead64e31eeeef",
+      "markdown_sha256": "437234398d813d1bf73289d66f43f683f54ff99062123a25b9be9434fc3431b9",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:51704/v1/responses",
+      "request_sha256": "ed841ee68fb979197b20b28b4f3c784268684430672c0aeb57c997907db1f8d5",
+      "body_sha256": "b6e14750bb6b000ce84e5bcc6fb0ee084b555fdcb1adccfbf73588b54601f4cd",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-echo-plain\\new output\\validation.json",
+      "json_sha256": "e0f73887e97bfb696a694d2d1bf2c1a565c5408248087a8c20104e5f977efdb0",
+      "markdown_sha256": "0324dc12b5c278f09afec276d082e407b0d7d261bcac595bb75ce5600c4845c4",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:64238/v1/responses",
+      "request_sha256": "7861c312507fd281b8e98f2738e48f36e6dce9c5e0935f1364f29ae06cc9a321",
+      "body_sha256": "24865194a17b545f0ecad473f5445d14d8a8a4ce315595424af18216b56bf4ea",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-empty-auth\\new output\\validation.json",
+      "json_sha256": "8eb847ec67fa1a689263fbcf866044a717f984b54107d29b017aa85bfffe8b3d",
+      "markdown_sha256": "d9304343ee5a971373d8a86d541c920a6bb314b77fc2bc973432ffb1178f8804",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56370/v1/responses",
+      "request_sha256": "eac8fc6d3dbedd15a2ecb3fcab85b1c51b1e2d3852f3d0a24c976d584e7cc20d",
+      "body_sha256": "abeffbec1a4300bfd617741b93c412cb7f85d663dfa4266ca47c836039a162f9",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-empty-body\\new output\\validation.json",
+      "json_sha256": "058ca43e7d683ab758ecaa2b3dfdacf12f2d51bb6af6754956ef192748a09288",
+      "markdown_sha256": "e014bb390d890049102470b22d1c0f09a9baf2e9ca6373d1647a5eb4a363b835",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56374/v1/responses",
+      "request_sha256": "eee81a73a19df5b04a47878f608b9752c5533b6ef8cd607ca5652907c727acf1",
+      "body_sha256": "91354ce50e3fa0173f1a79bc3750ebb872825338c7bf7c8936c18eea298e7b38",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-empty-rate-limit\\new output\\validation.json",
+      "json_sha256": "c990e15ac0c0a411d08676705638636525f97ded3a5984e772d133f5e37c2b48",
+      "markdown_sha256": "42103b9032446de44926182649cbbcaddacd93a0e9e2e79527b7e9a427721043",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56372/v1/responses",
+      "request_sha256": "1f670610327269b968f29388a39479a43552a294d7e7fdb900892086f1dd2b66",
+      "body_sha256": "54f62f72a5808d5863c5caaaa65954c08eee8ae4c2972127bd6509615bf8d50b",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-extra-text\\new output\\validation.json",
+      "json_sha256": "127a86b49a67cee77b03dab62c76fbc43c64de0810bdd7ceaf4045cf47a15239",
+      "markdown_sha256": "0f1b51c783fd60a17e227f5b8c09ccf1bd22cbfd2ff90dc0eadcfc618b7d85ed",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56416/v1/responses",
+      "request_sha256": "003954bcc30d54f3988c7bd69b35e62e28d6b8de4e1f58f5dd0e56e4916eb684",
+      "body_sha256": "50153f86f06b8a3ddfbbb86be74c337dba0e6e76d168be679171c5a6b1ab643c",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-future-metadata\\new output\\validation.json",
+      "json_sha256": "2ebf5a4166b64eb694794358a18c0e0838d196181abae1677f4d1b041a5f9082",
+      "markdown_sha256": "42a86d6061fb944dd186d391adc751adb5219a9077c85d376652a2338be8e36c",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56422/v1/responses",
+      "request_sha256": "9023182ec4dfdebf65da894e204f6993e9d86fb8d24fd52f0fd7e1121b36db8f",
+      "body_sha256": "01af0a5f4f7b3d94fda4495ccb18bd59bde765a73f1a2c4f22c17c0c88322280",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-http-302\\new output\\validation.json",
+      "json_sha256": "36702d1a41eaa061b49d13157ed9fdd2ea45841bba096198de60351f10a7ab30",
+      "markdown_sha256": "57d50cfc8362359a63cd174919197616aaf9bc7662c012ca80f94212712f102c",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56366/v1/responses",
+      "request_sha256": "20708b347fe6722eab72320756fe595f45daf85a70cc52c70f0833e07e8ac268",
+      "body_sha256": "dfbc29a5c1ea0f724dbe89b692a0ef6801193ac9ff1b0ba81cbda9f08e10a801",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-http-400\\new output\\validation.json",
+      "json_sha256": "d7948dcfae2022a9554b14384cb0bf5fba3cd2c58071bb0820c5c5f32ef7dfea",
+      "markdown_sha256": "4b3daaaf6674556873d211b39e896be416736315f01eeb3a76ef61f16c2a9312",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56353/v1/responses",
+      "request_sha256": "adb8e68cefe7b13faf75fde2991014a214b19f805e06b6f459259861b720731c",
+      "body_sha256": "e6247b9aae29bb8f9dfbd5969b8baa306ec0d51fb8d1f7273d41776daa368fa7",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-http-401\\new output\\validation.json",
+      "json_sha256": "5e08dae99f189dcf27c7e2610596afa45d8f4abb8cb993c90a45d0227bee03ef",
+      "markdown_sha256": "4db3728083e4bdc3e51a894a83a5984ad9d952350e964611107d025db74956b8",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56355/v1/responses",
+      "request_sha256": "793357ec8f6aacb0f4b438fe232ccd36656ab425035bd4193b13e52bd96c9697",
+      "body_sha256": "def620b7f6b6c38d18a53bf410e9fdd9b346e16a6315b5396350c5bc76ca2bbe",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-http-403\\new output\\validation.json",
+      "json_sha256": "84d7c222ffe6af01f0c79c4ba8a7463c6edbc2b4920bff646c92f22ac6e83a55",
+      "markdown_sha256": "81faca385f03956b4d85d0e58db349fd61c93c596e80689b86933721670eb9cc",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56357/v1/responses",
+      "request_sha256": "a0084dbe1218be96750cd2934c835a883ae92916f34c8c2ea7c3269674d4667b",
+      "body_sha256": "f19d32a9a014efcf983211fc90903a9bcba681e5c5cd527c129d8196dafda17b",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-http-429\\new output\\validation.json",
+      "json_sha256": "95b291dddaff85ea0ab663b4476302d5ee8d3cded07c303375bed22f38fff62d",
+      "markdown_sha256": "b35669a252ddeb79e3092c45ab50f1e95c872128ca67e12ae743bf36e227568c",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56359/v1/responses",
+      "request_sha256": "7a04fa70abaca2a277cbfc8f9ca3d10815aba7bcd52e822b4c70a204d4ff5c88",
+      "body_sha256": "2ca6ca47a23b43d9c84375a9c9f932af0d76c0e7ec9e7493f2d0b94481156bbd",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-http-500\\new output\\validation.json",
+      "json_sha256": "a5531ad6703f9fd9d7e5c07e8fb0217820156183a1faebfe67ff3dd1d062a8da",
+      "markdown_sha256": "e12e58e7c28e3f5443ac243d4d83b333e9fa5d52beb347bbd897f211749e0db7",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56361/v1/responses",
+      "request_sha256": "56a06190fb7b88a625cccac3b296e86aa9ca18e66d92764d7ec4672d030f7c72",
+      "body_sha256": "e77de18e1b6aa2a1fc049c6df6017623e0a6127b7485ac9fa2982c3c1f3f4b84",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-http-503\\new output\\validation.json",
+      "json_sha256": "7359bd9a7072de3610dc6a6d63ba311fcef67db9baf3f3b9ae187341ef79b1fe",
+      "markdown_sha256": "87cec70b307a608d17e5871583ddebf6479f479f9dd28c8d254e7092c9d23695",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56363/v1/responses",
+      "request_sha256": "4a8f1b7c7dea2e2c0ffa81b3e620a3e281755f480bb2a760e4296580445f33c2",
+      "body_sha256": "51e5e5a35fed56a0ccfab1e0e201fd82c254ca8b592f738ca166371cfdcf293c",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-incomplete\\new output\\validation.json",
+      "json_sha256": "7566e734fabb4aa89ecd65e358a25f24138c3cf2da51b09d57f2f57f3daa994c",
+      "markdown_sha256": "41541ab3137e5c2ce4e3f88450757c743fe1975564836e19ee4de0f92855d6fc",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56414/v1/responses",
+      "request_sha256": "c017897a2c56e94a1a2f107b0987d24696a0822cb19f4bb65a2fc12ae1a16578",
+      "body_sha256": "835e8bde59324830d778b88e74d02a73388cf63d16084fa336a7d3a45b4be2e3",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-missing-condition\\new output\\validation.json",
+      "json_sha256": "07e252851e4c7975f79e688a899db49441786730d3b9fcb5f55536374bed9126",
+      "markdown_sha256": "024e3db1b0995cbf5fe0465421a6679d9df70b4827a4d59dd8c5d556c1184511",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56408/v1/responses",
+      "request_sha256": "4b9fba5069842ab89275df84c11c1f1c92174f36913c71d3345f4a6d1ba4f13b",
+      "body_sha256": "0e1c3b3d927419bf7a53c489d947af1ad793ef7fc892d1d1d2db7af27e9373a4",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-missing-nullable\\new output\\validation.json",
+      "json_sha256": "38380f8de300065276776d5becbbdd5398d72a7fe6cada6145f481afc8cbcd6b",
+      "markdown_sha256": "6b46009ac4e081417e535b0eff20a780a451899d163d7c7133a5175ae15f7428",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56389/v1/responses",
+      "request_sha256": "29d6082b062cfed1298da1deb9badaabd0c9e9acf3f768100474505eb2804524",
+      "body_sha256": "1f5b467352c69e07398288c5a2a104124e9d8b3d68c4971c79674f52cdd7933f",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-missing-structured_output\\new output\\validation.json",
+      "json_sha256": "73c37979ef12e26c3d47e532de24e6ea6c258aa77ac280844c7dfadad5f05a07",
+      "markdown_sha256": "c6c91e57c96a618df613c401819e9b1178d98baa3b99a6d627be8190841db281",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56444/v1/responses",
+      "request_sha256": "a0e9cce566c645774f26f8e9eda327d791486aa3941d474ab2569e3fbda4935a",
+      "body_sha256": "57a905a0667a29d34c1a796811816f3f5c97206eca0fd89427d5e50c8e82585e",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-missing-text\\new output\\validation.json",
+      "json_sha256": "8b388c3b32767763ecb07187011647ef43ae714238344c292e3bdd9695f08f19",
+      "markdown_sha256": "df3690bc8ff57f211600e4ef26023ffb2912e0af08966e723f2bdbbe5dba0a8e",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56443/v1/responses",
+      "request_sha256": "03e138934228210490257798ecc23c2014b04f726bc195d42cd11e24bedd75dc",
+      "body_sha256": "cf5683bd3f13c5b6a2fcdf1305dc9c181c8694f3d02fdccfd7974a6b6478e3f9",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-missing-usage\\new output\\validation.json",
+      "json_sha256": "e31ea015cd05204b7577f38e97f55984e148b53fd9da165f62237537564563c6",
+      "markdown_sha256": "0689ed5e25ead99c17a8da893a4e77dbbfb97d9fd087cb8b46f226f41475bba1",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56424/v1/responses",
+      "request_sha256": "18473f9893b2d693e3ec03222ead1ff5deaa6cbceaaabfb954398216c9ff619d",
+      "body_sha256": "8676dfcf6bbcba64a46941707a8a7a1758bbfac95a2b9a9fd01f6a4f0cf8e86b",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-nonzero-source-span\\new output\\validation.json",
+      "json_sha256": "3cedc5de3dcfd068a1ae2f6694497211e8cae2715b4a8b9ad879e4ab405f5ee0",
+      "markdown_sha256": "10dd5e9bc9f2db5897d4fc8663a4f6bfb1854fac179b7336ad06ec8f7e73c340",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56351/v1/responses",
+      "request_sha256": "e2b6c3a5bf0d45d48c014db8663b7fff54ae76d4a86eb210e806d7de7ea539f7",
+      "body_sha256": "32cb3b86d28b0b81bc8431ac63b2bb8e7d3748b317a5df4e6d60a91b25db5011",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-output-over-budget\\new output\\validation.json",
+      "json_sha256": "bdc8ece377c4de74180e4a3769275d5e44d87e335bd68a0a65ab1bc49cd7d0a8",
+      "markdown_sha256": "385a643bab12bb92c5aa460f6c2ce5144d0305f4f42484496c3951925aaf03bf",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56438/v1/responses",
+      "request_sha256": "adfdb5588c8c4fea554c5d5ca1c596a8c4d7adc245353b6f04cca98485b5831d",
+      "body_sha256": "6a63a30fcc9eada54388ed7ab6ffba85061f1ce57804d2ff7a8c499de36efab6",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-reasoning-metadata\\new output\\validation.json",
+      "json_sha256": "47ba8a33593eebb67cd047d7ba72cc7176c61a37452f9deeb2172a162a5d8f20",
+      "markdown_sha256": "f0caa6b0c495154fefdb0cdac3be865f75f67fa1daea3af95a6c48b0ec04a938",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56420/v1/responses",
+      "request_sha256": "cd987d7ec812bffb4c3e1ecabf51ef5543a82829edbddb04c8c93aa9f290c292",
+      "body_sha256": "ae4343d88b6f956702188aff78f79847dfe100ee92ec32d7abf3b61755db7b89",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-refusal\\new output\\validation.json",
+      "json_sha256": "ae0aa9469feb1b89c00103f3d3c36a19fe353a0d0a1e01abe0335c03d4e2ac04",
+      "markdown_sha256": "bcfd1a5df44c4aeedf84114b80581999a6f297b64f130c59055c4ced73792a71",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56412/v1/responses",
+      "request_sha256": "34dd422d6f6454974308bd22b79b5e230243d8971d21a007523e89d5c57d9e9a",
+      "body_sha256": "b37b16da79ecf8be677b8ac6889c33b4870e1289115174e3a817e60f6b60708a",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-replay\\new output\\validation.json",
+      "json_sha256": "2cb19f005a899ec2db74f7c879bba4bedf2dad7096180ca779f2382447863ac4",
+      "markdown_sha256": "3239482d04927e64292d0c26c9498d6ab19dd8368cea038c9e4ecdbaed4c8340",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56349/v1/responses",
+      "request_sha256": "083bae6e398d413b70f97c09ab3f1cc8728303c36770ca1ba4229c80066e20c6",
+      "body_sha256": "bf0dc8959e0d0fa55389a9ca81023d2baa793f125ee721490f0c16600d107a30",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-reserve-stop\\new output\\validation.json",
+      "json_sha256": "e376156ec3e7a97d1bce7e7850c3c319bdeeca891b8a9183390b628c3ecfa4d9",
+      "markdown_sha256": "92dc6e8a5a0708e046e86faa21485a4f9d5619515bb8e9081641c97d463a013c",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56441/v1/responses",
+      "request_sha256": "ee7992aa8e0cb982afaa45344611a454c530f4858b60361eb4ca40b505cb8526",
+      "body_sha256": "788dc777ff30482d24086dce4d75151c97e99c35443b85ff836e772453b25515",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-response-limit\\new output\\validation.json",
+      "json_sha256": "5b21e107dd77c9c7057f4bd7255c196fca899dad128445c53e06ab836df98523",
+      "markdown_sha256": "44d555e51ad6a1c533a1e22d9afc39bff54c08414e7ea1b451a6eabf66f898c7",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:49675/v1/responses",
+      "request_sha256": "cc026da5fe1aec329b2f313733f4e763170ecbca4bd7c213ae30c8a5da01af00",
+      "body_sha256": "344a873fe82fccffe6016bf3a3a0ecfab5507891b365e6d522825d819e6e4bbf",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-timeout-body\\new output\\validation.json",
+      "json_sha256": "f0cf659d2dd2ba8e872382701d4e1fe63e329ff5e3c56c8a38a88fbfcd686b71",
+      "markdown_sha256": "af636164890ecec89e21e9e427d79a8560c318ea75742cea607f8db7a58f17f4",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:64194/v1/responses",
+      "request_sha256": "9179be4f9d6d51e0427fdc4e8df86c91311f95a0bcaa115ae17105bfb50b2097",
+      "body_sha256": "daf63f3e367820c30d79485f7b1656338ee1363a951357e3f186a1cfa575c396",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-timeout-headers\\new output\\validation.json",
+      "json_sha256": "5fb14e1ebad82db3e539cecdded62a925b1fcbc482572edc434898958553dbc0",
+      "markdown_sha256": "66b8dae778d15dc6ba54c81a60a4b65cb7aa06b886c7f21731d53cd95a533426",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:64191/v1/responses",
+      "request_sha256": "585780b2fd8e1f63d06381e74d348b7f83f32864c5d6607f47b0226655bb98a7",
+      "body_sha256": "5db69b86c6909f00d78176121338663a8886606434f26099c623ae3b3d3cba99",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-tool-output\\new output\\validation.json",
+      "json_sha256": "b0653c540b0f17432eeb5a1605644b0531174117028a76165503c0fe50f58949",
+      "markdown_sha256": "e9e642665e21934163bd03065ee74c888688ce4b928a5036c66adcb6c9820b0c",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56418/v1/responses",
+      "request_sha256": "fd721a6274d31d2250bbb702fc517b7a81c558319259136337ff1dcf2998454c",
+      "body_sha256": "9e2e1f5bf8ec3688a42e1ef2172ac05b96b3bc32dceca9cbbd9a19a8564cd076",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-trailing-wire\\new output\\validation.json",
+      "json_sha256": "25d7d5c761e4e981968f688998d3ceda1cd569a98a951902855f43ac2f67cfca",
+      "markdown_sha256": "b158aff95bff9bfd8200145ef14396a0a89313f2768a85c2441792711c3cf6d5",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56381/v1/responses",
+      "request_sha256": "b6c62d7122a088d8bfa523879816bcdcff7523ae9b56f19488d4c7284274f5ff",
+      "body_sha256": "b8ec72613f1055e7c61832ca994774ad678efb0921227b969e738428fc70d7ac",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-truncated-http\\new output\\validation.json",
+      "json_sha256": "94c795fd4d34785c17c5458267770ca9b1a6410db5f12e243b95571ab8ff2ea1",
+      "markdown_sha256": "3757b9df324b518829b0edd4b8bb204598edc862b625c5e4c186c3a354a4c3c5",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56368/v1/responses",
+      "request_sha256": "bcc24168d89ab537b2ff8e5647f421a844cd9c15f1a23557e284674a1e7490ab",
+      "body_sha256": "27179882018c182b162deeb25abbd6e09219ea6c9651b2b85f017fc2d9e93dd6",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-unknown-price\\new output\\validation.json",
+      "json_sha256": "47647b10f7c46fcb43029b38ca1c7b40cd355fc77dc88b70c38f68ed243aa0a4",
+      "markdown_sha256": "22d48bb98ad24860b0e7e3889b2d3e8a08824093fcd3286fe162092d8eb5fd9d",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56442/v1/responses",
+      "request_sha256": "686c61d8177d71538d31d803b5511706eccac69bbdcfb25bd5fbbe99ccbbed8f",
+      "body_sha256": "399cd8d808d02fdcad38289bede526014c236b98c5b387a20eabacb6fb5262ba",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-usage-detail\\new output\\validation.json",
+      "json_sha256": "5982698822d6a12768fceabad0ae2bbfc3c9c70aa79c3b8e7f1806851615ea87",
+      "markdown_sha256": "775c4498d529c54e91c19d87191ffd6b079c587ba4a579d76c416e5cb006de59",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56432/v1/responses",
+      "request_sha256": "6d0d1aa5ed5772f0f1935723c533e1edd4da8cec291fde19192c25d590288053",
+      "body_sha256": "b61dc994064dbe80b9a8d07e4cb5f3830933558eea296ccb36a85f59f758398b",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-usage-fraction\\new output\\validation.json",
+      "json_sha256": "8e124ccdc48af9442da8d7a9605bb08058b76eb102463883d52d2450d7e74f52",
+      "markdown_sha256": "b30df6e90405160d12e6e7d03cb4e0fcbe32ebf199fbda59ce4c2198dc580ee3",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56430/v1/responses",
+      "request_sha256": "c011908c4981f2b6ed91448b1a3d3411ea1a22c8ae37cd20dc6c790dcd03ee7a",
+      "body_sha256": "3c6c053442ebee2ed52265663f9a84f81cee5fc0e441ab81bc83b14af5ef6e02",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-usage-negative\\new output\\validation.json",
+      "json_sha256": "831439eb9207301853cb3e51fa23c812bfd75298d0f2023cd428b90109d2acbd",
+      "markdown_sha256": "be3c41f6c2dc64645806ec0074493c98c971d50e2c57d856a549c36e40944e0e",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56428/v1/responses",
+      "request_sha256": "ca0d3c10e9941ccd2a80d8d4b6033f9728ff19fabc0ced9ebc4f25be350f9ba7",
+      "body_sha256": "0d9558526b2a50139c6f3dd2c10d5df5a403bb91745eb93b6696a034cad03e72",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-usage-no-details\\new output\\validation.json",
+      "json_sha256": "6242b0f25e36beb709994234ee2132e17fbd33198cbae517e2e9c5c5f1daf360",
+      "markdown_sha256": "6e013a501bfba6382e90c31bf8f22825ca500e23d1c40ea69a0cc1d5d0b1231c",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56434/v1/responses",
+      "request_sha256": "338c18fdc9bcbf284e2429c2b9ba95651055fb054cc35baf4015c4468ba6765d",
+      "body_sha256": "03d87d8d3260b7bf51656af0fd3ed090d97883e19dca8a505bca47fe283f1e79",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-usage-over-budget\\new output\\validation.json",
+      "json_sha256": "20ab41866356b85810fca89ad8b72d0bfb6873496c9c03d26f26409882bf1720",
+      "markdown_sha256": "ce733e15887a1eb5d4de8e069fe5b3aeb14afc72b722e0b1ad07d1a9edc9659a",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56436/v1/responses",
+      "request_sha256": "af8662ad561064346d1dc0bfdd17f861b07ea929a84d9e2dc77bae38a99351da",
+      "body_sha256": "c362e8705964af045ecbcb77da16602d7c02ffcefe9a65a0a9031a19152476bf",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-usage-sum\\new output\\validation.json",
+      "json_sha256": "378119090a465058a5a4888e3940d5b90a0d570b66e8973f1a6266381ec69f30",
+      "markdown_sha256": "b8ca7a4f23643a6cd3fbc3de7faa6d2f8aa80bcec38a9448154d3b0c0d271125",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56426/v1/responses",
+      "request_sha256": "c3bdd8e79d1602c186910891bf3460e449ed6c46d03cde9753c34974b8bd9289",
+      "body_sha256": "0027114a76c2c2ebbf04a7982875030110cefd28161e1560cc964cca34085c57",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-valid\\new output\\validation.json",
+      "json_sha256": "8dbbb458ed14d011fc529f11ac08b8b4e06fb52aa195bf215b82879c8910c45d",
+      "markdown_sha256": "f3d2c46023817358f0f282d240035063ef175e86754f72708f1a69168b533d76",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56347/v1/responses",
+      "request_sha256": "6d70f9bc291cf4e1cbf8587bdc11f98583c7fac740e8f41f8da46ba54b83d95a",
+      "body_sha256": "86467aa962437fb2527098e8d75289e95c794dcc82f7946d58b0d9cb84b60b15",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-vision-request\\new output\\validation.json",
+      "json_sha256": "5c88d7abf9140664d8cdcce47e5fbfa4c7e668ad244ed796261b9b617106305a",
+      "markdown_sha256": "74163b2f99ec336054d784aa2ca2d8e827dfb30941774ca9c6ea19a74c86fea8",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:49672/v1/responses",
+      "request_sha256": "18b52c71adaacf3090487ae440e2f62fd8c807f900133c1f9e7e0dba61c797e0",
+      "body_sha256": "d124395c3e0a79589f19b698f0333ce19af31915bda83b4691929eb1aa98fd9f",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-wrong-binding\\new output\\validation.json",
+      "json_sha256": "07f6ab5ac8cbf068fa863a70446d017b56e39762bc0023dc3b6b190c98eff41c",
+      "markdown_sha256": "0193d4ce841754f83c6543ad3c4dde4221c2a44005ce8702dd091f38c3a3addb",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56398/v1/responses",
+      "request_sha256": "6ba1e394d5d88ba0480529082c0ca9ccd037b77464e82ffd9acb2feee70ce052",
+      "body_sha256": "05d9bb510eda818e47f992f207c0704a2c45c47ffa3daac40117e6da97a6ab9d",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-wrong-quote\\new output\\validation.json",
+      "json_sha256": "ea30e39e9b29ae9b0626ff284f872beb640a7fb7321be3028a48a9798f19d64e",
+      "markdown_sha256": "676cffc2fdd081e1e69b38e70dad67ae63fd71cf9bb3840e31bc603d075fc5b1",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56400/v1/responses",
+      "request_sha256": "80f5a9d147403342ab5df9521d24104c5a6da7b6c7d43b19c3f1ad54621e5c7f",
+      "body_sha256": "4edb5c88ec688124cf2c925f5d975b3e39f5a0d490b7fc0d5297910a36b62bb2",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-wrong-sha\\new output\\validation.json",
+      "json_sha256": "a7d3f9b741a81a4739fabc9fbc0a5aaf50ced32359c63b148ace9e0f79d9e02d",
+      "markdown_sha256": "1a394c7eb64760192abbcdc39b257bedf7ec51072ef340ae26c699fe251a5a57",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56404/v1/responses",
+      "request_sha256": "12c80b8e2ee1a5cd0d4ddbff797572d7bef239ffdefcdf0b36ca638579582dc9",
+      "body_sha256": "e651707c239c33036348088266cfd1209466dc85f6afc1e79ccd6810e2995b3f",
+      "reservation_exact": true
+    },
+    {
+      "kind": "local_http",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-workspace-build\\case-zero-requests\\new output\\validation.json",
+      "json_sha256": "293ea56b804429d087e078b6f40a54ba6ab50ba356fd819bcb2de56c304627a0",
+      "markdown_sha256": "4412c57036ebb74e98d962f9e5cbcad77d41bffcffa429bbcb7a6718df42ebf9",
+      "snapshot_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:56440/v1/responses",
+      "request_sha256": "b8a531d7dc5a352b1e6464e1eed3a2ae2e085b214ee545307b93912d08b81331",
+      "body_sha256": "0f4b2d023bbcbe6a5206a05d7e17e89aab7a65d5679f05397fc25bb7804ea99c",
+      "reservation_exact": true
+    },
+    {
+      "kind": "selected_zero",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-selected-zero-workspace-build\\validation.json",
+      "json_sha256": "8fdf4ca9a82337fff7c93efee4843b7dc7166d026f56ea826767c34f97d8a049",
+      "markdown_sha256": "4b9bad627c026654695e554be1faaa4938b84feeaedd8393ca4882a2c980cdef",
+      "snapshot_equal": true,
+      "request_strategy": "tangmao-deepseek-responses-json-schema-v1",
+      "endpoint": "https://ai.1343263.xyz/v1/responses",
+      "request_sha256": "70d17a661cd5678babd6ef839d74ad2b03c4c80bae5920579fc646acf9acf7b5",
+      "body_sha256": "661b37da97836d28e846f8ebfdecce70afe18a25073fac5cfe3c77111c3fa0a0",
+      "reservation_exact": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-budget-stop\\validation.json",
+      "json_sha256": "0320757d5b4ce4e75804a25e766ebb742ff54b088e1c449cff66010a5573b3a9",
+      "markdown_sha256": "c05ddbd16408ced5d7013bcb7e812c482c6edaec41cf5a1931f1edd6abb11f73",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-dropped-unit\\validation.json",
+      "json_sha256": "0c634252aab596fa894e0b4bff1258cb032377a891ee9e7dbe1f4b31171d3ef2",
+      "markdown_sha256": "05e1a7c2523e611ea95f589b63a8dfa359b061e960f2891cc3c203e79dba75fb",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-duplicate-field\\validation.json",
+      "json_sha256": "7f7e0d4253f1549a2dedb00051edf355e311f008716ba37efa9eb762db803333",
+      "markdown_sha256": "bf3061dbba6839775968e4716ebb115fe78cb591231b88615cc247c19794b530",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-empty\\validation.json",
+      "json_sha256": "01530f7bb347b9ddd04a7a76d8b69d6d8f781da51954624768d4764324243e28",
+      "markdown_sha256": "06b28f0c75d389129f74281078f818f8c042e535190f67be3c2c00c4665b99c7",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-excerpt-sha\\validation.json",
+      "json_sha256": "40107b793ffbb960d90bcd79719e46b08a88b3e72d8db44cbc2e3ef38eb9595d",
+      "markdown_sha256": "efc69cb60ae53d74e54dc2f5d9ccb6c3f6df05ff5f707cfdce9e835ba993ccf1",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-extra-field\\validation.json",
+      "json_sha256": "88ef010c8e267f5ec65ae3b2ac45aaf5e0b831cf2c6e95f7f44b70c888af983b",
+      "markdown_sha256": "f06a4fd92bdcf0e95078cb251af0aae95f220644edf1776f8960e13373fb099b",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-missing-field\\validation.json",
+      "json_sha256": "e09902ee325bbfc04097f8f99f74774df20dade42f3bbb6ddde7a02fd2bd20c5",
+      "markdown_sha256": "a46da2c1b2c7686957bf78502da7f64defaf81a55e37e219d940c4a0a5cf1cb7",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-missing-measurement\\validation.json",
+      "json_sha256": "ff220cac3a31a406a55f5700f7f21a7ee44fb09a4d52341cd28540f40b0fd61e",
+      "markdown_sha256": "9e15a2a22b7b284f730e1d119823c6778f0d026259c74b31b68a8673593c4c7c",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-needs-review-unknown-value\\validation.json",
+      "json_sha256": "dc790f5c548b0178602c79da8fbb5d68f2818a7cbef9cbac699659c8180ffc01",
+      "markdown_sha256": "f2694c6dbb6f3997b3ccade6672464e15d3bf96e839f3ff0cc44216bbccf7b61",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-no-json-capability\\validation.json",
+      "json_sha256": "8e4efa9e21660b4c720e4d6aa179f38145643a0052e670745f27d3dc3c093cd5",
+      "markdown_sha256": "237e856e23522474454f9e1bd61cf36cdf0a80e605bfbe67ca1d16a36875cf95",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-no-support\\validation.json",
+      "json_sha256": "4f416afe6b3763aaf83987599c5851850ddf85a63ba97698584c8813418c327e",
+      "markdown_sha256": "cc58bb8dac3f4bcbdf87aba52a33fcda84a634f4a4b90e7aba82521337cd354f",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-no-text-capability\\validation.json",
+      "json_sha256": "82407725241cf6f60ea98898d7749b95c665e2c96ce1154e77f625c9934f4187",
+      "markdown_sha256": "8fb435d8a2287f832eb48dbc06fd08728e14dc29d0676f6b762d04454debeb3c",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-non-json\\validation.json",
+      "json_sha256": "8c42705aee3d73e26111c53896b797ce550959b00b8a9b344c2a5261113eb670",
+      "markdown_sha256": "15488f223deede1fba4b61451c57c3d9ee0ae15fe11a8fe4182ba5ba8854fde0",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-output-token-limit\\validation.json",
+      "json_sha256": "4ccabfbfe1c211e9f3f7e02e1f02999bf714342c5cd4dd2a2cb9aa739a5dd4c6",
+      "markdown_sha256": "c539bd974efe3d82f4e8696cb803896c290bdec37d77ea2f114671491dd55b45",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-pdf-manifest-sha\\validation.json",
+      "json_sha256": "c52372e4b1c4a3016591c3f58ff08864374ff50b145eb25c9f0453280eef0a6b",
+      "markdown_sha256": "63eb135d7f9279ce0c1bac1e4992ba451ed3d05d3260598adef4908f9a1e1b39",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-pdf-unknown-parse\\validation.json",
+      "json_sha256": "fb37026100ef70ace6ca5452f9ae450c759b210f2e05cd0a8c29dbdadd05aae4",
+      "markdown_sha256": "e1dadb492f53b675cb61cf30c8af6032bbce437ce84a2480e4f941484bb5ef81",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-pdf-valid\\validation.json",
+      "json_sha256": "8d888ab32f393524463c865f054c6a31e9bc3ccd98ef15e4b51ae2cc61945589",
+      "markdown_sha256": "1d6893f486029eba3a017df4320b77b4b996c0e468d4b3ff1d450484b59fa400",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-price-unknown\\validation.json",
+      "json_sha256": "080d4673c14d8111dd3e7f3167496c02253132545d5ffc203a61278e8eb95e6a",
+      "markdown_sha256": "fb8a62b8f7dcfb198b8f42d684b81420b932ef48436fbed911c1c5d5e4132f11",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-quote-mismatch\\validation.json",
+      "json_sha256": "27ba85bc3bfed91419b78b9b2ab85e0b2a180b02f4c4a60f8b6d8b701428cacf",
+      "markdown_sha256": "07c96907e5999f468402fdb31b4f38cda5bad95d27a148aa3044a0f998ffce1d",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-race-input\\validation.json",
+      "json_sha256": "1e64a5d8453b85d0943c459d38fc8650a35cedc5b7c91817d7ee3c8c3e10b36c",
+      "markdown_sha256": "4079eb47b2b13c5873feae4cb935e052ebd7362a204d206cee47f8501b60a328",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-race-source\\validation.json",
+      "json_sha256": "04a022b3ce1ff98a247b102d7db06877f8963e237effe6f109f705b07f993078",
+      "markdown_sha256": "b94a9cd53a8191a573fdf5f93b65e6b5f5e6b22f63dbc0e9cdaeec74f7219b03",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-replay\\validation.json",
+      "json_sha256": "c47178a1c9d88a84dd79678663f1125688e5d3c93ffdd84bd8e0d2eae23d4019",
+      "markdown_sha256": "960d6f87cc14d34b698e474d640722aea710d04dd96a4f3e684f46d764f03534",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-required-fake\\validation.json",
+      "json_sha256": "b4718ec014f0859bd359a1e725d61b720f377a6ac66a4e484c4182663bc5a5cb",
+      "markdown_sha256": "9940b760f47ffbc6fc9d372cefb304d53c2d9376f6d28a99d2153ce76be88ac5",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-response-limit\\validation.json",
+      "json_sha256": "08f26a63d95d192e52c3c44e633f9d61028cc76026b817102aad5bde0cdb441e",
+      "markdown_sha256": "50f1b25c8be20a5169d8ea352e0e00575db2eac2e8dbcdf74d35f6fb50afe38b",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-reviewed-fake\\validation.json",
+      "json_sha256": "d146a64065fe0eaeccbd7701dd6e95a56c2b74b776a5157dc1e72a48b6d33837",
+      "markdown_sha256": "bcb48708e98bb1a298aec7af2b66a8e14169b4e49e72b41abf264f3820341cf1",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-runtime-cancel\\validation.json",
+      "json_sha256": "4f203d875847b7067bf3fb6ae92cf6e3351bad3d78dbf25771a984afe9da940d",
+      "markdown_sha256": "0c4cea66350d2c9f2f29c7557418214ffd846055b24f45c669541517287121d1",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-timeout\\validation.json",
+      "json_sha256": "0e2a3bb6722869e444eef3e1cb04e17e363dd32d751fcdc968b2ccc37abf7043",
+      "markdown_sha256": "dd650cbf39972d78de17e46321a57590b9fe3efc2aec97942584456e8ab873b7",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-token-reservation\\validation.json",
+      "json_sha256": "25eb3c4101caeea1fc20efc06bd73ed6d386e92fe1286432524b5467346782d5",
+      "markdown_sha256": "40bd9fde9b17c52af8df1fd5685955ba6d596003491e668d514a71e03138fdd6",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-trailing-json\\validation.json",
+      "json_sha256": "2e5b003c45de399b96306bd8a46c0a2a5c874c800ca6c895da78a88ccfab7a67",
+      "markdown_sha256": "b6e3c96bca75338723d566379cf461ffa7fdde410fbd7fbf15d929f0fd9a4355",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-unknown-concept\\validation.json",
+      "json_sha256": "16e596b54c5498392289eed92450f5ea3cb38126dc2c46ed9ce647c921fab59e",
+      "markdown_sha256": "38b9b15b824d6add2005311ea7ad1d9028175f3c58a64caf8f5d23c1cbc92410",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-unknown-parse\\validation.json",
+      "json_sha256": "b61cce9cecae45f49de771f9e1656c12202a5b1f2fd5a63b284f43fc02c4839d",
+      "markdown_sha256": "f9928bc4141871dc65bb5e09822a5129b8d718aeb60dbf8c57f60ab550d8fabb",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-unknown-schema\\validation.json",
+      "json_sha256": "ca459d0b6e9751bae97d2638d37ad79619746ccd53ffef259056a80e845a61d8",
+      "markdown_sha256": "b16a7a2904811a62b3b9612a7bafc70793b33ef117c88070f9fc57e4b19c1558",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-unknown-unit\\validation.json",
+      "json_sha256": "d235ffacb83226bc4179c5619093e75aa0bdaf777555f62efa9c6da6353db7e5",
+      "markdown_sha256": "fdee9b54381a68b0c4d8c4eb7c6a5e1c563a5c1b2893ecacdcf311865b720530",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-unknown-value-zero\\validation.json",
+      "json_sha256": "776094babf77327df0f71e9ed5f4bae58816541134553bab9626bf05d249cec2",
+      "markdown_sha256": "c4a0ee932798ce5201ed1006ceb556352a0e4d0f4bf7c85d03eef76a9fa6659d",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-unknown-version\\validation.json",
+      "json_sha256": "09be82109d2be8cd78b8c1dc9f1b28e3bb67113bc32dfd1237a61b626318e391",
+      "markdown_sha256": "92665a9b0bfd0d609fdf9b977116997af8ae24fd84695af06beb0f54faf31278",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-utf8-boundary\\validation.json",
+      "json_sha256": "41b1164a8795ed966561ef940a2d1c4d3900809e6dc1dafcdc1f58569928da94",
+      "markdown_sha256": "44f8bd8713415ecae5dc9af440b4fb081e28cb0fd23be054b50aea829b322c1f",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-valid\\validation.json",
+      "json_sha256": "01a39a795d9b03240788fbf9f79f55ddd31efd6cfb884eb17805ae4a819cce81",
+      "markdown_sha256": "4dcda18512b252272815a79a9149611e9001abbe8578b75c9f5ec938b2baefd2",
+      "snapshot_equal": true
+    },
+    {
+      "kind": "fake",
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-workspace-build\\out-wrong-resource-binding\\validation.json",
+      "json_sha256": "ce95bfe8cc433dc05a2d48e8f317abe5821bd82e9dd49f4739168856b699e4ea",
+      "markdown_sha256": "e5711dd5172c7fce812c699b84b9f099272b7d6d88c66d1f35f95b232f37d33d",
+      "snapshot_equal": true
+    }
+  ],
+  "model_calls": 0,
+  "paid_calls": 0,
+  "scientific_quality": "not_run"
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "provider": "openai_responses",
+  "transport_mode": "live",
+  "endpoint": "https://ai.1343263.xyz/v1/responses",
+  "model": "deepseek-flash",
+  "credential_env": "NOETOME_TANGMAO_API_KEY",
+  "required_input": "text",
+  "capabilities": {
+    "text": true,
+    "structured_output": true,
+    "vision": false
+  },
+  "selection": [
+    {
+      "kind": "text",
+      "ordinal": 0
+    }
+  ],
+  "limits": {
+    "max_units": 1,
+    "max_input_bytes": 65536,
+    "max_response_bytes": 1048576,
+    "max_output_tokens": 8192,
+    "timeout_ms": 60000
+  },
+  "budget": {
+    "max_requests": 1,
+    "max_total_tokens": 65536,
+    "max_cost_usd": null
+  }
+}

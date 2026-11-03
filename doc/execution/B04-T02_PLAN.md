@@ -10,6 +10,8 @@
 
 **Spec**：[EXTRACTION_API_CONTRACT.md](../technical/EXTRACTION_API_CONTRACT.md)，依赖 [T01 验收](../validation/B04-T01.md)和[当前卡](NEXT_STEPS.md)。
 
+本计划保留截至d1a46df的原离线实现与配置缺失历史。2026-11-03用户已经提供所选网关、deepseek-flash和10M累计预算，后续未完成的真实步骤按[已选网关续接计划](B04-T02_GATEWAY_PLAN.md)和[保存的模型设置](../requirements/MODEL_SERVICE.md)执行；下面“配置/预算缺失、只认官方端点”的原裁定不再用于索要已知信息或阻止已授权适配。原Task1/2及离线审查均已完成，不重新派发。
+
 ## 全局约束与裁定
 
 - 当前 codex/b04-t02-text-api 分支从已推送 b4fae25 继续；用户两个旧 docs/PRD 删除保留，不暂存。普通 commit/push 已获用户授权，不再询问。

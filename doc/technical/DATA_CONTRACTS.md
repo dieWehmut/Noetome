@@ -33,11 +33,11 @@ fake按完整UTF8字节计量并在一次回放前预留预算；真实模型tok
 
 独立契约[EXTRACTION_API_CONTRACT.md](EXTRACTION_API_CONTRACT.md)固定配置与API候选Schema1。API输出只有schema_version、request_id、binding、concepts、evidence、atoms；Core保存的候选包装及报告明确producer=api、transport_mode与provider，不让模型自封来源类型，也不转换成fake DTO。领域候选与fake共用同一纯校验，来源绑定及资源内UTF8证据语义沿用T01，非零Span或PDF区域的anchor保留真实绝对起点。
 
-配置只读且严格，凭据为配置指名的外部环境变量引用。live限定官方HTTPS Responses；local_http_test限定数字环回、明确端口与人工noetome-test-模型/凭据。请求正文保存实际字节与SHA；input_reserved_tokens为正文UTF8字节数加1024的工程预留，model_tokenizer=null。一次调用前预留输入加输出，返回用量必须为有效非负整数且总量、输入和输出分别满足限额；未知价格为null，金额预算但价格未知时不请求。
+配置只读且严格，凭据为配置指名的外部环境变量引用。live限定官方HTTPS Responses及用户明确指定的糖猫云deepseek-flash精确端点；local_http_test限定数字环回、明确端口与人工noetome-test-模型/凭据。外部脚本只在内存将CurrentUser DPAPI凭据注入选定子CLI，Core不读取默认认证。请求正文保存实际字节与SHA；input_reserved_tokens为正文UTF8字节数加1024的工程预留，model_tokenizer=null。一次调用前预留输入加输出，返回用量必须为有效非负整数且总量、输入和输出分别满足限额；未知价格为null，金额预算但价格未知时不请求。已授权10M为累计额度，按[保存的模型服务与使用记录](../requirements/MODEL_SERVICE.md)先查剩余再预留，不在每次调用重置。
 
-text_api_extraction报告Schema1区分配置模型和返回模型、实际网络尝试、HTTP状态、完整/partial、原响应收据及已验证用量。完整200响应的元数据核对独立于候选、refusal与incomplete；无效/缺失用量为null，失败不会抹去已经核对的真实计量。安全原响应保持原字节；凭据回显含嵌套/转义JSON时只保存收取长度/SHA和省略原因，不持久化泄密原文或候选。JSON与Markdown携带同一完整验证快照，产物指纹来自实际文件。
+text_api_extraction报告Schema1区分endpoint、request_strategy、配置模型和返回模型、实际网络尝试、HTTP状态、完整/partial、原响应收据及已验证用量。旧官方/本地策略维持strict JSON Schema；所选DeepSeek策略用json_schema/name/schema、reasoning.effort=none并由Core严格核对候选，版本和实际body分别保存。完整200响应的元数据核对独立于候选、refusal与incomplete；无效/缺失用量为null，失败不会抹去已经核对的真实计量。安全原响应保持原字节；凭据回显含嵌套/转义JSON时只保存收取长度/SHA和省略原因，不持久化泄密原文或候选。JSON与Markdown携带同一完整验证快照，产物指纹来自实际文件。
 
-候选成功仍unverified、knowledge_status=pending、published=false、scientific_quality=not_run；本地假HTTP服务的真实模型/付费调用为0。API接入不改来源Schema/SQL/pending，不登记KnowledgeIR/Run/Release。离线通过与真实服务验收分别记录；真实配置和明确预算未提供时不能complete B04-T02。
+候选成功仍unverified、knowledge_status=pending、published=false、scientific_quality=not_run；本地假HTTP服务的真实模型/付费调用为0。API接入不改来源Schema/SQL/pending，不登记KnowledgeIR/Run/Release。离线通过与真实服务验收分别记录；用户服务/预算已保存，取得本机凭据并实际完成有界调用后仍按真实任务卡验收，不以配置文件存在替代模型成功。
 
 ### B03-T01 parser sidecar 协议
 

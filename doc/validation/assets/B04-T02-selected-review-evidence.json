@@ -1,0 +1,1009 @@
+{
+  "recorded_at": "2026-11-03T05:43:26.756673+00:00",
+  "base_commit": "cd01771459d0ae0f55ad8758fa8bd80f95f54512",
+  "head_commit": "27879efc46a2709c2c93f4cf3271c26a4cf0584e",
+  "reviewed_sources": [
+    {
+      "path": "crates/noetome-cli/src/extraction_api.rs",
+      "commit_sha256": "1037f4cce5fd2775b2b7c0fd46b7b5296cdd332675a092ca905957eb0de9d957",
+      "worktree_sha256": "1037f4cce5fd2775b2b7c0fd46b7b5296cdd332675a092ca905957eb0de9d957",
+      "normalized_equal": true
+    },
+    {
+      "path": "crates/noetome-cli/src/extraction_api_config.rs",
+      "commit_sha256": "f1db3372efdbebe8f200203ec46062c7e24416cecae6c38fbd38453e3ae3bed3",
+      "worktree_sha256": "f1db3372efdbebe8f200203ec46062c7e24416cecae6c38fbd38453e3ae3bed3",
+      "normalized_equal": true
+    },
+    {
+      "path": "crates/noetome-cli/src/extraction_api_schema.rs",
+      "commit_sha256": "8b840d2b9f54f8b1241b9b286a6c2ed4f04f07beb1719b2f68bf089c09629737",
+      "worktree_sha256": "8b840d2b9f54f8b1241b9b286a6c2ed4f04f07beb1719b2f68bf089c09629737",
+      "normalized_equal": true
+    },
+    {
+      "path": "crates/noetome-cli/tests/extraction_api.rs",
+      "commit_sha256": "c0ae2edcfdb60b0faf17170d749739c9b1a3b02ea858e674885c036abca43faa",
+      "worktree_sha256": "c0ae2edcfdb60b0faf17170d749739c9b1a3b02ea858e674885c036abca43faa",
+      "normalized_equal": true
+    }
+  ],
+  "spec": "PASS",
+  "quality": "PASS",
+  "actionable_findings": [],
+  "fresh_native_api_tests": {
+    "passed": 25,
+    "failed": 0,
+    "command": ".\\scripts\\cargo_local.ps1 test -p noetome-cli --locked --offline extraction_api '--' --test-threads=1"
+  },
+  "fresh_ordinary_cli_tests": {
+    "passed": 5,
+    "failed": 0,
+    "command": ".\\scripts\\cargo_local.ps1 test -p noetome-cli --locked --offline --test extraction_api '--' --test-threads=1",
+    "log": "task-2-review-cli-tests.txt"
+  },
+  "snapshot_counts": {
+    "local_http": 59,
+    "selected_zero": 1,
+    "fake": 38
+  },
+  "snapshots": [
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-bad-json\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53113/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-bad-output-annotations\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53131/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-bad-output-id\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53127/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-bad-output-summary\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53129/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-cancel-existing\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62182/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-cancel-running\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62180/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-candidate-extra\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53121/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-candidate-version\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53123/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-chinese-boundary\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:60404/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-claimed-review\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62118/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-duplicate-candidate\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53119/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-duplicate-wire\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53115/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-echo-escaped\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62205/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-echo-escaped-malformed\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62207/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-echo-nested-json\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62209/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-echo-plain\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62202/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-empty-auth\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53106/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-empty-body\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53111/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-empty-rate-limit\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53109/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-extra-text\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62126/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-future-metadata\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62132/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-http-302\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53098/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-http-400\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53069/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-http-401\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53078/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-http-403\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53084/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-http-429\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53090/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-http-500\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53092/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-http-503\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53094/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-incomplete\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62124/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-missing-condition\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62120/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-missing-nullable\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53125/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-missing-structured_output\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62160/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-missing-text\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62156/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-missing-usage\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62135/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-nonzero-source-span\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53062/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-output-over-budget\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62151/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-reasoning-metadata\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62130/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-refusal\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62122/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-replay\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53060/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-reserve-stop\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62154/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-response-limit\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62172/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-timeout-body\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62178/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-timeout-headers\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62175/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-tool-output\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62128/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-trailing-wire\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53117/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-truncated-http\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53101/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-unknown-price\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62155/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-usage-detail\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62143/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-usage-fraction\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62141/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-usage-negative\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62139/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-usage-no-details\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62145/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-usage-over-budget\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62147/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-usage-sum\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62137/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-valid\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53058/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-vision-request\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62170/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-wrong-binding\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:53134/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-wrong-quote\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:60402/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-wrong-sha\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:60406/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-api-final\\case-zero-requests\\new output\\validation.json",
+      "kind": "local_http",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "openai-responses-strict-json-schema-v1",
+      "endpoint": "http://127.0.0.1:62153/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-selected-zero-final\\validation.json",
+      "kind": "selected_zero",
+      "sha_equal": true,
+      "json_markdown_equal": true,
+      "request_strategy": "tangmao-deepseek-responses-json-schema-v1",
+      "endpoint": "https://ai.1343263.xyz/v1/responses",
+      "request_receipt_exact": true,
+      "reservation_exact": true,
+      "absolute_anchors_exact": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-budget-stop\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-dropped-unit\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-duplicate-field\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-empty\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-excerpt-sha\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-extra-field\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-missing-field\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-missing-measurement\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-needs-review-unknown-value\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-no-json-capability\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-no-support\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-no-text-capability\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-non-json\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-output-token-limit\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-pdf-manifest-sha\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-pdf-unknown-parse\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-pdf-valid\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-price-unknown\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-quote-mismatch\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-race-input\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-race-source\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-replay\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-required-fake\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-response-limit\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-reviewed-fake\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-runtime-cancel\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-timeout\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-token-reservation\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-trailing-json\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-unknown-concept\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-unknown-parse\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-unknown-schema\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-unknown-unit\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-unknown-value-zero\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-unknown-version\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-utf8-boundary\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-valid\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    },
+    {
+      "path": ".superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-fake-final\\out-wrong-resource-binding\\validation.json",
+      "kind": "fake",
+      "sha_equal": true,
+      "json_markdown_equal": true
+    }
+  ],
+  "regression_evidence_rechecked": [
+    {
+      "kind": "api",
+      "path": "doc\\validation\\assets\\B04-T02-selected-api-final.json",
+      "checks": 84,
+      "cli_calls": 90,
+      "registered_source_inventory_sql_equal": true,
+      "controlled_source_additions": [
+        "human-source-human-scene.txt"
+      ],
+      "local_posts": 54
+    },
+    {
+      "kind": "fake",
+      "path": "doc\\validation\\assets\\B04-T02-selected-fake-final.json",
+      "checks": 54,
+      "cli_calls": 60,
+      "registered_source_inventory_sql_equal": true,
+      "controlled_source_additions": []
+    }
+  ],
+  "preserved_full_native_log": {
+    "passed": 484,
+    "failed": 0,
+    "suites": 14,
+    "raw_byte_length": 46019,
+    "raw_sha256": "d281c355f2aa4b2c5bec610b3201be0c070f0b769d4c5388b70ff728895c6aa6"
+  },
+  "true_red_evidence_rechecked": [
+    {
+      "kind": "native",
+      "exit_code": 1,
+      "expected_failure_text_present": true
+    },
+    {
+      "kind": "cli",
+      "exit_code": 1,
+      "expected_failure_text_present": true
+    }
+  ],
+  "primary_saved_bytes_rechecked": [
+    {
+      "url": "https://api-docs.deepseek.com/api/create-response.md",
+      "sha_length_equal": true
+    },
+    {
+      "url": "https://api-docs.deepseek.com/api/create-response",
+      "sha_length_equal": true
+    },
+    {
+      "url": "https://api-docs.deepseek.com/guides/responses_api.md",
+      "sha_length_equal": true
+    },
+    {
+      "url": "https://api-docs.deepseek.com/quick_start/pricing-details-usd",
+      "sha_length_equal": true
+    }
+  ],
+  "recorded_root_final_binary_sha256": "c3755d7f5d966c70d78d903745c9bdbbfbe08d04c28b1c77045f41d4c3070f7e",
+  "reviewer_package_build_binary_sha256": "a7f51e8efdb545a294de3dc7bb608b4ed76e4faab2102df8f9d56749ec9220cb",
+  "reviewer_audit_history": [
+    "Initial audit exit 1: overbroad inventory equality assertion found the expressly recorded human-source-human-scene.txt addition. Corrected the audit to require every preexisting source entry unchanged and exactly the recorded controlled additions; no product/source change."
+  ],
+  "limits": [
+    "Full 484/Python 76 and independent 84/54 are reviewed saved root evidence, not rerun by reviewer.",
+    "Reviewer focused package tests rebuilt standalone-package feature executable; root must restore and reverify workspace binary before actual smoke.",
+    "No external HTTP, model, paid calls or real credential reads performed.",
+    "No deployment equivalence, actual selected response, provider billing, broad compatibility or scientific correctness claim."
+  ]
+}
