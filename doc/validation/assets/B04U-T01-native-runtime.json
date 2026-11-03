@@ -1,0 +1,10 @@
+{
+  "url": "http://tauri.localhost/",
+  "ipc": true,
+  "runtime": "桌面应用版本\n0.1.0\nCLI 版本\n0.1.0\n构建目标\nx86_64-pc-windows-msvc\n已接入能力\nhelp · version",
+  "status": "连接正常",
+  "help": "Noetome — 个人学科学习知识编译器\n\n用法：noetome [选项]\n      noetome project <init|inspect> <路径>\n      noetome source import <项目路径> <MD/TXT/PDF文件> [--source-id <既有ID>] [--reparse]\n      noetome source inspect <项目路径> <import-id>\n      noetome source parse-pdf <PDF文件> <尚不存在的测试根>\n      noetome source inspect-pdf <PDF测试根>\n      noetome extract fake <项目路径> <import-id> <fake目录> <尚不存在的测试输出根>\n      noetome extract api <项目路径> <import-id> <config.json> <尚不存在的测试输出根>\n      noetome case verify <fixture目录>\n      noetome case compile <fixture目录> <尚不存在的测试输出根>\n\n当前支持：\n  -h, --help       显示帮助\n  -V, --version    显示版本\n  project init <路径>     在尚不存在的目录初始化空项目\n  project inspect <路径>  只读检查已有项目\n  source import           登记单份文本或PDF的原始版本、解析状态及可追溯位置\n  source inspect          只读核对导入记录和真实快照\n  source parse-pdf        单份PDF解析到全新测试根，完整物理页/区域及需复核原因\n  source inspect-pdf      只读核对已保存PDF、文本、位置和双报告\n  extract fake            离线回放并核对选定来源的候选、证据与单请求预算\n  extract api             按明确配置与预算发送一次文本API请求并核对候选\n  case verify             只读校验明确fixture的来源、IR、计划与独立预期\n  case compile            将已校验fixture编译到全新临时Vault并保存双报告\n\n不传参数时显示帮助；project --help、source --help 或 extract --help 查看命令说明。\n当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。\n完整知识编译与生产Vault增量发布尚未实现。\n",
+  "version": "noetome 0.1.0\n",
+  "close_behavior": "hide_to_tray",
+  "settings_status": "当前设置：隐藏到托盘。"
+}

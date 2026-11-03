@@ -1,0 +1,70 @@
+{
+  "mode": "browser",
+  "started_at": "2026-11-03T09:22:13.623Z",
+  "url": "http://127.0.0.1:1420/",
+  "checks": [
+    {
+      "name": "toolbar: removal, three controls, four menus, initial history bounds",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:\n\n[\n  'File',\n  'Edit',\n  'View',\n  'Help'\n]\n"
+    },
+    {
+      "name": "history: sidebar and main actions, back/forward, no duplicate and branch truncation",
+      "passed": true
+    },
+    {
+      "name": "sidebar: hidden width released, actual aria state, View restore",
+      "passed": true
+    },
+    {
+      "name": "keyboard: roving menubar, first/last, arrows, Escape focus restore",
+      "passed": true
+    },
+    {
+      "name": "keyboard: Enter/Space activation, disabled item skip, Tab exit",
+      "passed": true
+    },
+    {
+      "name": "dismissal: pointer outside and focus outside",
+      "passed": true
+    },
+    {
+      "name": "File: workspace and window settings focus, actual settings state",
+      "passed": true
+    },
+    {
+      "name": "Help: help and version invoke existing runtime with honest result",
+      "passed": true
+    },
+    {
+      "name": "Edit: select main content; controlled clipboard success and failure",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:\n\n[\n  'YOUR KNOWLEDGE SPACE\\n' +\n    '\\n' +\n    '为理解，留一个空间。\\n' +\n    '从资料出发，让知识逐渐成为你的体系。\\n' +\n    '\\n' +\n    '✳\\n' +\n    '认识你的工作台\\n' +\n    '把阅读的线索，\\n' +\n    '连接成清晰的知识。\\n' +\n    'Noetome 面向个人学科学习，将资料整理为\\n' +\n    '可追溯、可维护的 Obsidian 知识库。\\n' +\n    '\\n' +\n    '检查本地运行环境\\n' +\n    '让理解慢慢生长\\n' +\n    '当前可以做什么\\n' +\n    '从小而可靠的能力开始\\n' +\n    '已接入\\n' +\n    '查看帮助与版本\\n' +\n    '通过本地组件查看 CLI 用法与版本，确认桌面应用连接状态。\\n' +\n    '\\n' +\n    '打开运行检查\\n' +\n    '尚未接入\\n' +\n    '建立学习项目\\n' +\n    '桌面项目入口尚未接入，资料导入仍在开发中。当前工作台尚未载入项目。\\n' +\n    '\\n' +\n    '完成后将在这里开始\\n' +\n    '这是一份桌面应用骨架。资料解析、知识抽取与笔记生成尚未就绪。'\n]\n"
+    },
+    {
+      "name": "layout: 360px toolbar and all dropdowns within viewport",
+      "passed": true
+    },
+    {
+      "name": "layout: 640px toolbar and all dropdowns within viewport",
+      "passed": true
+    },
+    {
+      "name": "layout: 1200px toolbar and all dropdowns within viewport",
+      "passed": true
+    },
+    {
+      "name": "no uncaught application JavaScript errors",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "D:/Noetome/doc/validation/assets/B04U-T01-browser-360.png",
+    "D:/Noetome/doc/validation/assets/B04U-T01-browser-640.png",
+    "D:/Noetome/doc/validation/assets/B04U-T01-browser-1200.png"
+  ],
+  "errors": [],
+  "finished_at": "2026-11-03T09:22:15.478Z",
+  "passed": false,
+  "verifier_sha256": "76531a3421d9581b6231c449da72487a476e25b4fe9a2b51302a7a0638bb98a1"
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B04",
+  "current_batch": "B04U",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -36,6 +36,13 @@
       "from_batch": "B03",
       "to_batch": "B04",
       "note": "B03三项均以实际实现、独立行为验证和审查修复验收；仅滚动展开B04最多三项：fake知识抽取契约、单个有预算真实文本API、独立知识/证据核对。本次切换不start产品任务，不触发真实API或OCR。"
+    },
+    {
+      "at": "2026-11-03T09:12:10Z",
+      "action": "batch",
+      "from_batch": "B04",
+      "to_batch": "B04U",
+      "note": "按用户新截图先处理顶部菜单栏；原模型任务ID和历史保留于B04R，服务凭据与累计余额复用。"
     }
   ],
   "tasks": [
@@ -1069,8 +1076,8 @@
     {
       "id": "B04-T02",
       "title": "接入单个可配置文本API并执行有预算的真实小范围抽取冒烟",
-      "batch": "B04",
-      "status": "in_progress",
+      "batch": "B04R",
+      "status": "blocked",
       "depends_on": [
         "B04-T01"
       ],
@@ -1155,13 +1162,22 @@
           "note": "从CurrentUser DPAPI只读复用真实凭据，先0请求预检，再记录累计预算预留并执行一次固定作者来源的真实有界请求；原响应、实际返回模型/用量和Core候选按真实结果验收，保留来源/gold/旧审查证据。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-03T09:06:01Z",
+          "action": "block",
+          "from_status": "in_progress",
+          "to_status": "blocked",
+          "note": "用户新增截图顶部栏调整要求，先处理B04U-T01；本任务待界面修改后的最终workspace与单次真实v5验证。服务、DPAPI凭据和10M累计预算已保存，四次实际用量共20314、余额9979686、pending0。v5原生38/API CLI7/fake3和独立Chat35已通过；原四响应/source/gold保留。界面任务验收后自动reopen/start，复用同一配置和余额，无需用户再次提供设置。",
+          "validation": [],
+          "artifacts": []
         }
       ]
     },
     {
       "id": "B04-T03",
       "title": "对真实模型候选做独立来源证据与条件化知识核对",
-      "batch": "B04",
+      "batch": "B04R",
       "status": "todo",
       "depends_on": [
         "B04-T02"
@@ -1184,6 +1200,34 @@
         "普通CLI、独立验证脚本、来源/证据/新根保护、完整回归、日志和新鲜审查实际通过后complete并提交推送；B04收束后仅滚动规划下一批最多三项。"
       ],
       "history": []
+    },
+    {
+      "id": "B04U-T01",
+      "title": "按用户截图移除顶部面包屑并采用 Codex 菜单栏",
+      "batch": "B04U",
+      "status": "in_progress",
+      "depends_on": [
+        "B01A-T01"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "按用户第二张截图移除 Noetome / 工作台 面包屑及同栏早期桌面版标签，顶部显示浅灰紧凑后退、前进、侧栏开关和 File / Edit / View / Help。",
+        "后退和前进使用实际页面历史，初始及边界状态正确；侧栏可以隐藏和恢复，菜单接入现有工作台、运行检查、窗口设置、帮助和版本功能。",
+        "菜单支持键盘、Escape 和点击外部关闭，控件有可见焦点和可访问名称；最小窗口尺寸及常用尺寸不出现顶部溢出。",
+        "实际浏览器行为、TypeScript/Vite构建和安装后桌面运行验证通过；保留现有窗口关闭设置及已保存模型配置，不扩展资料导入或模型调用 GUI。",
+        "独立新鲜审查、相关 Rust/Python/devlog/diff 检查通过，保存截图及实际验证记录，分步提交并推送核对远端。"
+      ],
+      "history": [
+        {
+          "at": "2026-11-03T09:12:11Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "移除顶部面包屑及版本标签，按Codex截图接入紧凑菜单栏、实际导航历史和侧栏开关，验证键盘及安装后桌面行为。",
+          "validation": [],
+          "artifacts": []
+        }
+      ]
     }
   ]
 }
