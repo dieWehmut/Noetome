@@ -14,6 +14,8 @@ B03-T02另提供项目外PDF解析沙盒，只表达有限文本页、原始证�
 
 B03-T03将明确选定的PDF登记到来源项目，显示独立原始版本、解析尝试与获取/解析状态；重复导入、重解析及只读重查沿用CLI，知识仍pending。验收范围和原始证据见[B03-T03](../validation/B03-T03.md)。
 
+B04-T01提供离线fake知识候选验证。输出说明真实来源范围、候选合同核对及原始来源状态；`candidates_validated`仅表示工程契约通过，原子仍unverified、知识pending、published=false、科学质量not_run。真实模型尚未调用。
+
 ## 2 信息优先级
 
 用户首先应看见结果和下一步动作，其次是范围、问题和细节。
@@ -93,6 +95,16 @@ PDF导入使用受保护的Schema3，原始版本与解析尝试分别显示ID�
 stdout为schema_version=2、report_kind=source_pdf_import的纯JSON，知识状态pending；原始获取状态、解析状态、实际页/区域数量、parser身份、选项、缓存键与问题各自明确。完整原始字节后的解析失败仍有原始版本；未读全时version/parse为空，页总数未知、区域数0。报告不得把原始获取成功或区域数解释为知识抽取完成。
 
 PDF只有parsed返回0，needs_review、failed及not_attempted返回3；只读inspect保留同一状态和退出码，从已保存原始与完整解析资源核对结果，原文件移动/删除后仍可重查。旧文本inspect仍按原规则返回0表示核对完成。未知Schema、额外缓存、owner变化、文件篡改、占用或未完成写入按已有稳定错误码拒绝；现场标记和备份用于后续检查，重查不自动修复。
+
+### B04-T01 fake抽取候选
+
+```text
+noetome extract fake <项目路径> <import-id> <fake目录> <全新测试输出根> [--cancel-file <取消信号路径>]
+```
+
+帮助只输出用法。fake.json明确选定Span ordinal或PDF物理页/区域，配置单请求能力、输入/输出边界、时限和预算；动词后可用`--`支持以`-`开头的路径。输出父目录须已有，旧输出或与来源/fake重叠的目标拒绝。取消信号位于输入/输出根外，仅作为停止标记，不读取其正文。
+
+成功stdout与validation.json是同一严格报告，Markdown先显示状态、来源版本/状态、候选数量和真实fake计量，再附与JSON逐字段相同的验证快照。unknown输出量、真实模型用量/tokenizer与价格保留null；fake计量是UTF8字节，不表示真实模型Token。原始来源needs_review明确保留。失败报告定位实际错误，原响应可保存，candidates.json只在候选验收成功时存在；没有KnowledgeIR、Run、Release或Vault。配置/路径错误返回2，候选、预算、超时/取消及运行期间变化返回3。
 
 ### B02-T02 fixture 检查
 

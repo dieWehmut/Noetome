@@ -196,6 +196,7 @@ noetome project init <project-path>
 noetome project inspect <project-path>
 noetome source import <project-path> <MD/TXT-file> [--source-id <existing-id>]
 noetome source inspect <project-path> <import-id>
+noetome extract fake <project-path> <import-id> <fake-root> <new-output-root> [--cancel-file <signal-path>]
 noetome case verify <case-root>
 noetome case compile <case-root> <new-output-root>
 ```
@@ -224,7 +225,9 @@ Core复核资源的Windows安全相对路径、文件/目录身份、链接数�
 
 ### 模型 API
 
-先验证一次低风险结构化响应、错误处理和用量记录，再引入真实抽取。模型返回候选领域数据，不能自行写库或发布文件。fixture 与真实 provider 共用同一验证入口。
+先验证一次低风险结构化响应、错误处理和用量记录，再引入真实抽取。模型返回候选领域数据，不能自行写库或发布文件。共用知识结构规则与来源证据核对，producer各自的审阅和发布政策不能混用。
+
+B04-T01提供显式离线`extract fake`：只读会话从真实导入选择文本Span或已登记PDF页/区域，网关处理严格候选、单请求预留、超时/取消和全新测试根。fake只重放字节，不运行模型；输出`candidates_validated`仍保持知识pending和科学质量not_run。来源、fake和输出能力分别持有并在保存后重查，不把响应中的身份、quote或已发布声明当作可信事实。具体交换与边界见[抽取契约](EXTRACTION_CONTRACT.md)。
 
 模型、网络检索和本地解析是不同能力。联网许可、请求预算、未知费用和证据状态分别记录。重试、并发预留和持久化恢复在长任务启用前补齐，不以单次成功调用代表全部能力已支持。
 

@@ -983,7 +983,7 @@
       "id": "B04-T01",
       "title": "用离线fake验证有界知识抽取网关与来源证据契约",
       "batch": "B04",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B03-T03"
       ],
@@ -1013,6 +1013,56 @@
           "note": "本轮仅推进离线 fake 抽取网关：冻结真实文本/PDF来源证据、有界单请求和严格候选契约；独立gold及普通CLI先RED后实现，保持来源只读。按已接受D07/D08及任务卡执行，不调用付费API。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-03T02:26:07Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "离线fake抽取网关、严格候选、真实文本/PDF来源只读、新根及预算/超时/取消保护已验收。契约与RED e6537a5、实现5969b43、独立验证72bca91；标准和完成日志另同步。真实模型、费用及科学质量仍未验收。",
+          "validation": [
+            "cargo fmt --all --check、cargo_local check --workspace --locked --offline通过；cargo_local test --workspace --locked --offline -- --test-threads=4实际454通过0失败，原默认线程时限失败和隔离复跑已如实记录；Python unittest实际44通过0失败。",
+            "独立validate_extraction_gateway实际54场景60次普通CLI调用通过；最终binary SHA561839d6e584d5d31d7f8dcc72ca7d925d6d75af4449436cd1125cbcfb26c883，来源SQL/字节/mtime/清单及JSON/Markdown对账；本项真实模型/网络收费调用0。",
+            "来源/DTO及最终集成新鲜审查通过，无未处置重要问题；硬链接提前读取、SQLite连接关闭和双报告快照均先真实RED再GREEN；devlog check及git diff --check通过。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/extraction.rs",
+              "sha256": "e808694a5cf4845f08a0afbe4a1b57174796cce6508458c0b78cebd871581aa9"
+            },
+            {
+              "path": "crates/noetome-cli/src/extraction_source.rs",
+              "sha256": "0c4efcbeee67284aa8c73484de7268b0314f8c57c25b543993ca64d3ee6ecab8"
+            },
+            {
+              "path": "crates/noetome-cli/tests/extraction.rs",
+              "sha256": "01bcafecf4081429422722224ab69181dce6394c2c7885c18a5b59c3cce93fb7"
+            },
+            {
+              "path": "scripts/validate_extraction_gateway.py",
+              "sha256": "1067c87df6c337d98973142fa6e3085069d938a6ff822e2c0f2742828b5cb173"
+            },
+            {
+              "path": "fixtures/extraction-gateway-v1/expected.json",
+              "sha256": "7e6decaf0a137f089be668d251ace83fb7ea0f65019f5544cca26d6b1f4c489d"
+            },
+            {
+              "path": "doc/technical/EXTRACTION_CONTRACT.md",
+              "sha256": "859d6f46dde436714ce51fd8e96b69023c0028ea96654fc3fd7a604b28f434b3"
+            },
+            {
+              "path": "doc/validation/B04-T01.md",
+              "sha256": "d28910b0ed9fa2f4c6e515d07adad6a27e24789e4beaf067f1e690f5289a41b8"
+            },
+            {
+              "path": "doc/validation/assets/B04-T01-cli-final.json",
+              "sha256": "85676168e33cacca55cb552a461c9e3c4b1b35509b6914ecfc409dadc4e556c2"
+            },
+            {
+              "path": "doc/validation/assets/B04-T01-workspace-tests.txt",
+              "sha256": "005b292a9904a209a7192a7ab478a0f4f228256953c0c20ad3ad93dccd946ff9"
+            }
+          ]
         }
       ]
     },

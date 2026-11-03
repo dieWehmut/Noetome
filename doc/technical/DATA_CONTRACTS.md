@@ -1,6 +1,6 @@
 # Noetome 最小数据契约
 
-本文件定义空项目、桌面窗口偏好、文本与PDF来源登记、独立PDF解析沙盒及fixture闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
+本文件定义空项目、桌面窗口偏好、文本与PDF来源登记、独立PDF解析沙盒、离线fake候选及fixture闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
 
 实现状态以[任务账本](../../dev-log/tasks.json)和对应验证记录为准；本文件的字段清单本身不是能力验收记录。后续真实解析、模型与研究能力必须通过带版本的扩展进入，不能把缺失值编造成已有结果。
 
@@ -18,6 +18,16 @@
 - 列表有序性按字段声明；步骤、章节和表格行顺序有意义，引用集合不能依赖数据库返回顺序。
 
 ## 2 输入包
+
+### B04-T01 离线知识抽取网关
+
+交换消息独立使用`schema_version=1`，完整字段和限额见[有界抽取契约](EXTRACTION_CONTRACT.md)。`producer=fake`只用于显式`extract fake`入口，与parser测试fake及作者fixture的审阅标记分开。来源项目继续支持Schema1/2/3；抽取不迁移、不改SQL或pending、不建立KnowledgeIR/Run/Release。
+
+每次请求绑定实际project/import/source/version及原始SHA。文本单位固定实际SourceSpan及规范全文SHA；PDF固定实际parse_id、manifest SHA、物理页/区域、逐页资源SHA与bbox，规范文本字段保持null。证据使用资源内UTF8非空字节半开区间、真实切片quote及其SHA。来源的`needs_review`保留在请求和报告，不能借严格候选通过升级为知识已核验。
+
+候选复用Concept/KnowledgeAtom的通用ID、修订、明文及唯一引用规则；fake原子固定required=false、verification=unverified且有有效supports。measurement必填可空，unknown数值为null并保留已知单位，条件和单位保留在qualifiers。所有DTO拒绝未知版本/枚举、多余或重复字段、缺少必填nullable项和尾随JSON。
+
+fake按完整UTF8字节计量并在一次回放前预留预算；真实模型tokenizer、模型用量和价格为null，网络及付费调用实测为0。来源和fake输入守卫贯穿验证及保存，缓存硬链接在语义读取前拒绝；最终核对身份、字节、mtime及清单。新输出根仅保存请求、原响应、成功候选和JSON/Markdown验证快照；失败不保存candidates.json，不发布知识。
 
 ### B03-T01 parser sidecar 协议
 

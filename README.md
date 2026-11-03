@@ -88,6 +88,22 @@ Windows 路径、文件占用、真实初始化中断与恢复测试及命令输
 
 本机Windows完整来源验证、失败保护、独立SQLite/快照检查和正常完整性CLI副本实测见[B02-T01验证记录](doc/validation/B02-T01.md)。可用`scripts/verify_text_source.py`按记录中的命令在另一个全新测试根复现；输入全部自造，不调用模型，不生成IR或笔记。
 
+## 离线 fake 知识候选验证
+
+用仓库的[受控作者样例](fixtures/extraction-gateway-v1/README.md)导入真实文本，再对该import-id重放fake候选。输出父目录须已存在，目标为新测试根。
+
+```powershell
+./target/debug/noetome.exe extract --help
+./target/debug/noetome.exe source import '<测试项目路径>' './fixtures/extraction-gateway-v1/source.txt'
+./target/debug/noetome.exe extract fake '<测试项目路径>' '<上次返回的import_id>' './fixtures/extraction-gateway-v1' '<尚不存在的测试输出根>'
+```
+
+fake.json明确选择Span ordinal或已登记PDF页/区域，并声明一次请求的能力、输入/响应/输出边界、时限和预算。Core只读核对真实来源身份、版本、资源SHA、UTF8范围、quote、严格候选及条件/单位；不更新来源SQL或pending，不写生产Vault。
+
+保存request.json、原响应response.bin、仅成功时的candidates.json与validation.json/validation.md。双报告包含相同的来源、状态、实际fake计量、错误和文件指纹。成功`candidates_validated`仍保持原子unverified、知识pending、published=false、科学质量not_run；fake使用UTF8字节计量，真实模型用量和价格未知，网络及付费调用为0。
+
+旧输出、路径重叠或越界拒绝。预算不足、价格未知而设置金额上限、能力不足、无效候选、超时和取消返回非零，失败不保存已验收候选。`--cancel-file`指定输入/输出根外的普通停止信号，可在运行期间创建。契约与独立普通CLI验证见[抽取契约](doc/technical/EXTRACTION_CONTRACT.md)及`scripts/validate_extraction_gateway.py`。
+
 ## 只读 fixture 契约校验
 
 仓库提供[自造案例](fixtures/text-compare-v1/README.md)：两个虚构容器、12个完整来源Span、4个必要原子、两份计划笔记和比较表。来源、IR、计划与独立expected均明确声明`producer=fixture`，不会被当成模型抽取结果。
