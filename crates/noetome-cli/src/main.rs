@@ -3,7 +3,8 @@ use std::io::{self, Write};
 use std::process::ExitCode;
 
 use noetome_cli::{
-    CliCommand, extraction, extraction_api, fixture, fixture_compile, pdf_parse, project, source,
+    CliCommand, extraction, extraction_api, extraction_verify, fixture, fixture_compile, pdf_parse,
+    project, source,
 };
 
 fn main() -> ExitCode {
@@ -23,6 +24,23 @@ fn main() -> ExitCode {
         CliCommand::ProjectHelp => noetome_cli::PROJECT_HELP.to_owned(),
         CliCommand::SourceHelp => noetome_cli::SOURCE_HELP.to_owned(),
         CliCommand::ExtractionHelp => noetome_cli::EXTRACTION_HELP.to_owned(),
+        CliCommand::ExtractVerify {
+            project,
+            import_id,
+            case,
+            output,
+        } => match extraction_verify::run(&project, &import_id, &case, &output) {
+            Ok(output) => {
+                if output.failed {
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
         CliCommand::ExtractApi {
             project,
             import_id,

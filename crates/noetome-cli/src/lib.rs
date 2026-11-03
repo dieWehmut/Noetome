@@ -13,7 +13,10 @@ mod extraction_api_wire;
 mod extraction_fake;
 mod extraction_model;
 mod extraction_output;
+mod extraction_review;
+mod extraction_review_model;
 mod extraction_source;
+pub mod extraction_verify;
 pub mod fixture;
 pub mod fixture_compile;
 mod fixture_input;
@@ -50,6 +53,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome source inspect-pdf <PDF测试根>
       noetome extract fake <项目路径> <import-id> <fake目录> <尚不存在的测试输出根>
       noetome extract api <项目路径> <import-id> <config.json> <尚不存在的测试输出根>
+      noetome extract verify <项目路径> <import-id> <review目录> <尚不存在的测试输出根>
       noetome case verify <fixture目录>
       noetome case compile <fixture目录> <尚不存在的测试输出根>
 
@@ -64,6 +68,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   source inspect-pdf      只读核对已保存PDF、文本、位置和双报告
   extract fake            离线回放并核对选定来源的候选、证据与单请求预算
   extract api             按明确配置与预算发送一次文本API请求并核对候选
+  extract verify          离线复核保存候选与原gold的有界来源事实
   case verify             只读校验明确fixture的来源、IR、计划与独立预期
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
 
@@ -128,6 +133,7 @@ pub const EXTRACTION_HELP: &str = "Noetome 有界知识候选验证
 
 用法：noetome extract fake <项目路径> <import-id> <fake目录> <尚不存在的测试输出根> [--cancel-file <取消信号路径>]
       noetome extract api <项目路径> <import-id> <config.json> <尚不存在的测试输出根> [--cancel-file <取消信号路径>]
+      noetome extract verify <项目路径> <import-id> <review目录> <尚不存在的测试输出根>
 
 api读取明确配置、外部环境变量凭据引用、模型能力、选定范围与预算，单次请求且不自动重试。
 live只支持官方HTTPS OpenAI Responses；local_http_test只向数字环回HTTP假服务发送人工测试凭据/模型。
@@ -187,6 +193,12 @@ pub enum CliCommand {
         output: PathBuf,
         cancel_file: Option<PathBuf>,
     },
+    ExtractVerify {
+        project: PathBuf,
+        import_id: String,
+        case: PathBuf,
+        output: PathBuf,
+    },
     CaseHelp,
     CaseVerify(PathBuf),
     CaseCompile {
@@ -232,12 +244,12 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
 fn extraction_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     if args.is_empty()
         || matches!(args, [help] if help == "--help" || help == "-h")
-        || matches!(args, [verb, help] if (verb == "fake" || verb == "api") && (help == "--help" || help == "-h"))
+        || matches!(args, [verb, help] if (verb == "fake" || verb == "api" || verb == "verify") && (help == "--help" || help == "-h"))
     {
         return Ok(CliCommand::ExtractionHelp);
     }
     let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
-    if verb != "fake" && verb != "api" {
+    if verb != "fake" && verb != "api" && verb != "verify" {
         return Err(INVALID_ARGUMENT);
     }
     let (tail, separator) = if tail.first().is_some_and(|arg| arg == "--") {
@@ -259,6 +271,17 @@ fn extraction_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     };
     if ![project, case, output].iter().all(|path| valid_path(path)) || id.is_empty() {
         return Err(INVALID_ARGUMENT);
+    }
+    if verb == "verify" {
+        if cancel_file.is_some() {
+            return Err(INVALID_ARGUMENT);
+        }
+        return Ok(CliCommand::ExtractVerify {
+            project: project.into(),
+            import_id: id.to_str().ok_or(INVALID_ARGUMENT)?.into(),
+            case: case.into(),
+            output: output.into(),
+        });
     }
     if verb == "api" {
         return Ok(CliCommand::ExtractApi {

@@ -55,3 +55,12 @@ doc/validation/assets/B04-T02-live-sixth-response.bin binary
 doc/validation/assets/B04-T02-revision-*.patch -text whitespace=cr-at-eol
 doc/validation/assets/B04-T02-gateway-*.json -text whitespace=cr-at-eol
 doc/validation/assets/B04-T02-gateway-*.md -text whitespace=-blank-at-eof,cr-at-eol
+# Source-review fixtures and byte-bound audit copies keep their original bytes.
+fixtures/extraction-review-v1/** -text whitespace=cr-at-eol
+doc/validation/assets/B04-T03-*.json -text whitespace=cr-at-eol
+doc/validation/assets/B04-T03-*.md -text whitespace=-blank-at-eof,cr-at-eol
+doc/validation/assets/B04-T03-*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+doc/validation/assets/B04-T03-*.py -text whitespace=cr-at-eol
+doc/validation/assets/B04-T03-*.rs -text whitespace=cr-at-eol
+doc/validation/assets/B04-T03-*.patch -text whitespace=cr-at-eol
+doc/validation/assets/B04-T03-*.zip binary

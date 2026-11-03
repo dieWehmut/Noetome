@@ -71,9 +71,15 @@ impl Artifact {
     }
 
     fn read(&self) -> Result<Vec<u8>, ProjectError> {
+        self.read_with_links(false)
+    }
+
+    fn read_with_links(&self, owned_cleanup: bool) -> Result<Vec<u8>, ProjectError> {
         project::check_components(&self.path).map_err(|_| changed())?;
         project::checked_file(&self.path).map_err(|_| changed())?;
-        check_links(&self.file, "EXTRACT_OUTPUT_CHANGED").map_err(|_| changed())?;
+        if !owned_cleanup {
+            check_links(&self.file, "EXTRACT_OUTPUT_CHANGED").map_err(|_| changed())?;
+        }
         if same_file::Handle::from_path(&self.path).map_err(|_| changed())? != self.identity {
             return Err(changed());
         }
@@ -100,7 +106,14 @@ impl Artifact {
     }
 
     fn remove(self) -> Result<(), ProjectError> {
-        self.verify()?;
+        self.remove_with_links(false)
+    }
+
+    fn remove_with_links(self, owned_cleanup: bool) -> Result<(), ProjectError> {
+        // A newly added hardlink invalidates the run but must not prevent
+        // removing this captured pathname. Preserve the new alias; still
+        // prove original bytes, timestamp, parent and file identity here.
+        self.read_with_links(owned_cleanup)?;
         // Keep a path identity receipt while releasing only our deny-write/
         // deny-delete aliases. Parent directory capability remains alive.
         let receipt = same_file::Handle::from_path(&self.path).map_err(|_| changed())?;
@@ -141,6 +154,10 @@ impl OutputRoot {
         Self::create_owned(path, request_id, Some(transport_mode))
     }
 
+    pub(crate) fn create_review(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
+        Self::create_owned(path, request_id, Some("source_review"))
+    }
+
     fn create_owned(
         path: &Path,
         request_id: &str,
@@ -167,8 +184,9 @@ impl OutputRoot {
             directory,
             files: BTreeMap::new(),
         };
-        let mut owner = serde_json::json!({"schema_version":1,"producer":if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":"unpublished_extraction_test"});
-        if let Some(mode) = mode {
+        let review = mode == Some("source_review");
+        let mut owner = serde_json::json!({"schema_version":1,"producer":if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
+        if let Some(mode) = mode.filter(|_| !review) {
             owner["transport_mode"] = serde_json::json!(mode);
         }
         let owner = serde_json::to_vec_pretty(&owner).map_err(|_| changed())?;
@@ -230,6 +248,21 @@ impl OutputRoot {
     }
 
     pub(crate) fn discard_result(&mut self) -> Result<(), ProjectError> {
+        self.discard_names(&["candidates.json", "validation.json", "validation.md"])
+    }
+
+    pub(crate) fn discard_review_result(&mut self) -> Result<(), ProjectError> {
+        self.discard_names_inner(
+            &["knowledge-ir.json", "verification.json", "verification.md"],
+            true,
+        )
+    }
+
+    fn discard_names(&mut self, names: &[&str]) -> Result<(), ProjectError> {
+        self.discard_names_inner(names, false)
+    }
+
+    fn discard_names_inner(&mut self, names: &[&str], review: bool) -> Result<(), ProjectError> {
         self.parent
             .verify("EXTRACT_OUTPUT_CHANGED")
             .map_err(|_| changed())?;
@@ -238,9 +271,13 @@ impl OutputRoot {
             .map_err(|_| changed())?;
         // Remove only captured result artifacts. Never enumerate/delegate a
         // deletion of unknown files, and never recursively clean a failed run.
-        for name in ["candidates.json", "validation.json", "validation.md"] {
-            if let Some(file) = self.files.remove(name) {
-                file.remove()?;
+        for name in names {
+            if let Some(file) = self.files.remove(*name) {
+                if review {
+                    file.remove_with_links(true)?;
+                } else {
+                    file.remove()?;
+                }
             }
         }
         Ok(())
