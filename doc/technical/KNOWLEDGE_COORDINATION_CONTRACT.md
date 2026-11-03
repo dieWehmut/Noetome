@@ -85,9 +85,11 @@ v1 成功仅表示 `explicit_identity_duplicate_complement_v1` 范围内的来�
 
 ## 7 限额、保护和失败
 
-协调 manifest 和映射各最多 64 KiB，concepts/concept_mappings/atom_mappings 各最多 1024 项；字符串最多 1024 UTF-8 字节（input ID 与 UUID 更严格），条件与例外各最多 8 项。候选最多 1 MiB；review/gold/decision 各 64 KiB；owner 4 KiB；source-snapshot 4 MiB；IR、JSON 报告、Markdown 各 8 MiB。全部选定 case/映射/依据字节合计最多 96 MiB。总体控制 30000 ms，并在每个来源重开前后、保存前后检查；SourceSession 的已有更严格资源限额继续生效。
+协调 manifest 和映射各最多 64 KiB，concepts/concept_mappings/atom_mappings 各最多 1024 项；身份、规则、映射、候选及 gold 的文本字段最多 1024 UTF-8 字节（input ID 与 UUID 更严格），条件与例外各最多 8 项。真实 `RequestUnit.text` 沿用单来源所选正文最多 1 MiB，不按元数据字符串截断；其 JSON 转义后仍受快照和输出单件限额约束。候选最多 1 MiB；review/gold/decision 各 64 KiB；owner 4 KiB；source-snapshot 4 MiB；IR、JSON 报告、Markdown 各 8 MiB。全部选定 case/映射/依据字节合计最多 96 MiB。总体控制 30000 ms，并在每个来源重开前后、保存前后检查；SourceSession 的已有更严格资源限额继续生效。
 
-参数错误为 CLI_INVALID_ARGUMENT/2。协调结构、路径、版本、类型、指纹、身份映射、额外清单分别为 `COORD_SCHEMA`、`COORD_INPUT_PATH`、`COORD_FINGERPRINT`、`COORD_IDENTITY`、`COORD_INPUT_LIMIT`/2；原来源依据重新核对失败为 `COORD_SOURCE_REVIEW`/3，并附 input_id 和实际原因。源项目的既有错误码可以原样传播，必须明确失败。复制同一来源单位为 COORD_DUPLICATE_INPUT/2；只读输入变化为 COORD_INPUT_CHANGED/3；超时为 COORD_TIMEOUT/3。
+参数错误为 CLI_INVALID_ARGUMENT/2。case、映射和保存依据包的结构、版本、类型、未知/重复字段及额外清单均为 `COORD_SCHEMA`/2；路径为 `COORD_INPUT_PATH`/2，指纹为 `COORD_FINGERPRINT`/2，身份映射为 `COORD_IDENTITY`/2，输入限额为 `COORD_INPUT_LIMIT`/2。合法结构中的原来源依据或语义重新核对失败为 `COORD_SOURCE_REVIEW`/3，并附 input_id 和实际原因；不能将已经明确的结构错误统一重标为来源核对错误。源项目的既有错误码可以原样传播，必须明确失败。复制同一来源单位为 COORD_DUPLICATE_INPUT/2；只读输入变化为 COORD_INPUT_CHANGED/3；超时为 COORD_TIMEOUT/3。
+
+新保存的 IR、JSON 和 Markdown 也受已有 `Artifact::create` 的 8 MiB 单件限制，超过时在该结果文件创建前拒绝 `EXTRACT_SAVE_LIMIT`/3。原输入副本遵守对应原文件限额和合计96 MiB限制，不将该保存限制改成截断输出。限额错误仍需按捕获能力撤去当前三个结果并保留原输入、owner和未知内容。
 
 输出重叠、已有根和父目录错误复用已验收的 EXTRACT_OUTPUT_* 保护，不以字符串前缀代替真实目录身份。写入之前拒绝与项目、case、依据和映射重叠或包含它们的目标。来源、输入、哨兵、原 IR/gold 以及未知人工文件始终保留。
 
@@ -95,7 +97,7 @@ v1 成功仅表示 `explicit_identity_duplicate_complement_v1` 范围内的来�
 
 ## 8 独立验收
 
-先冻结 [三来源作者样例](../../fixtures/knowledge-coordination-v1/README.md) 的原文、身份决定和 expected，再构造明确标记 local_http_test 的候选，通过真实 source import 和 extract verify 保存依据。第一次普通 knowledge coordinate 测试必须在生产实现前因外部行为缺失而 RED；不能把编译、路径或缺失依赖错误称为行为 RED。
+先冻结 [三来源作者样例](../../fixtures/knowledge-coordination-v1/README.md) 的原文、身份决定和 expected，再构造明确标记 local_http_test 的候选，通过真实 source import 和 extract verify 保存依据。现有 source import 会按完整内容 SHA 复用来源，不能假定同字节不同文件自动获得独立 ID；准备 B 时先用独特种子正文登记普通来源身份，再对该已有 source_id 显式导入冻结的相同正文，仅最后 A/B/C 的成功单原子依据参与协调。种子版本保持原样、不是第四项知识输入，也不能据此宣称真实书目独立性。第一次普通 knowledge coordinate 测试必须因外部行为缺失而 RED；不能把编译、路径或缺失依赖错误称为行为 RED。若准备不满足三个不同 source_id，应保留失败并在已提交的实现前源码快照重放修正的普通 CLI RED，明确记录其实际时间，不能倒推原准备正确。
 
 正常样例必须得到 2 个事实、3 个来源出现、3 个不同 source_id、3 条支持证据和 1 个冗余出现，速度事实保留 a/b 两份位置，质量事实保留 c 位置。独立 Python 只读实际 SQLite/资源、冻结 gold、四原输入、保存 IR/双报告和显式映射，从事实与出现重建分母，不以 Rust 报告的 passed/计数作为 oracle。先以可接受伪报告的临时骨架运行故意破坏的行为测试观察 RED，再实现验证。
 

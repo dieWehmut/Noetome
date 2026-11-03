@@ -37,6 +37,7 @@
 | `crates/noetome-cli/src/extraction_output.rs` | 新 owner 模式和只撤去协调三个结果的守卫行为 |
 | `crates/noetome-cli/src/lib.rs`、`src/main.rs` | 最小正常参数解析/帮助/调用与非零退出 |
 | `crates/noetome-cli/tests/knowledge_coordinate.rs` | 普通 CLI RED、真实来源依据、失败与保护集成；记录实际 root |
+| `crates/noetome-cli/tests/support/coordination_case.rs` | PreparedCase 的普通CLI准备、作者冻结、变异与保护证据辅助；不改生产协议 |
 | `fixtures/knowledge-coordination-v1` | 已冻结的三来源作者 gold、身份映射和外部 expected，不改为实际输出 |
 | `scripts/verify_knowledge_coordination.py` | 独立只读验证与普通 CLI 有界审计驱动 |
 | `tests/test_knowledge_coordination_verifier.py` | 假成功、完整伪造、分母、身份和原证据破坏的行为测试 |
@@ -110,7 +111,7 @@ impl OutputRoot {
 }
 ```
 
-所有新 DTO 名称为 `CoordinationCase,InputSpec,IdentityMap,CanonicalConcept,ConceptMapping,AtomMapping,CoordinatedFacts,CoordinationInput,Occurrence,Fact,Relation,CoordinationTotals,CoordinationReport,CoordinationIr`。字段及固定值逐项按 Spec 第2/3/6节，不添加宽松 Value 元数据容器；SourceBinding/RequestUnit/CandidateAtom/Concept/Evidence/Check/Fingerprint沿用原严格类型。用于固定 String 或 1 的 serde deserialize_with 与已有 DTO 保持同一形式。
+共享的新 DTO 名称为 `CoordinationCase,InputSpec,IdentityMap,CanonicalConcept,ConceptMapping,AtomMapping,CoordinatedFacts,CoordinationInput,Occurrence,Fact,Relation,CoordinationTotals,CoordinationReport,CoordinationIr`。加载层另使用私有 `Owner` DTO，仅核对 Spec 第4节原 source_review owner 的四个严格字段；不为此扩大旧 output 接口。字段及固定值逐项按 Spec 第2/3/6节，不添加宽松 Value 元数据容器；SourceBinding/RequestUnit/CandidateAtom/Concept/Evidence/Check/Fingerprint沿用原严格类型。用于固定 String 或 1 的 serde deserialize_with 与已有 DTO 保持同一形式。
 
 - [ ] **Step 1: 写普通 CLI 首个行为测试并实际观察 RED。** 辅助 `PreparedCase` 保存 root/project/case/output/作者原字节和保护指纹，`PreparedCase::baseline()` 先读取 fixture 的原文、三个gold、map、expected并记录其SHA，再用普通 project init、source import、extract verify 准备九文件依据；所有 CLI stdout/stderr/exit 保存到 root。按实际 import 返回构建 SourceBinding；候选 request_id 为 `synthetic-coordination-<input_id>`，两个concept ID为 `<id>-subject`、`<id>-property`，原子/证据 ID按冻结map/expected；全文支持quote采用真实 UTF8开始/结束和SHA，decision included、单atom。review subject=样例 A、property为速度/质量、allowed_contexts=[]、timing=before_synthetic_response。每份 extract verify 必须退出0，再冻结 manifest 九指纹。
 
@@ -133,7 +134,9 @@ fn ordinary_cli_coalesces_duplicate_preserving_three_sources() {
 }
 ```
 
-运行 `scripts/cargo_local.ps1 test -p noetome-cli --test knowledge_coordinate ordinary_cli_coalesces_duplicate_preserving_three_sources -- '--test-threads=1'`，PowerShell把 Cargo 分隔符写为字面 `'--'`。记录真实 CLI缺失行为的失败（预期CLI_INVALID_ARGUMENT/2）；编译/路径错误不能算 RED。此时不改生产解析/协调逻辑。
+现有 source import 按内容 SHA 复用来源。B 输入先导入独特种子短文取得独立既有 source_id，再导入冻结的、与 A 逐字节相同的 source-b.txt，显式使用 `--source-id <B 的真实ID>`。种子版本不进入协调inputs。准备完必须断言 A/B/C 有3个不同 source_id 且 A/B 的 content_sha256 相同，再调用coordinate。
+
+运行 `& scripts/cargo_local.ps1 test -p noetome-cli --test knowledge_coordinate ordinary_cli_coalesces_duplicate_preserving_three_sources '--' --test-threads=1`。记录真实 CLI缺失行为的失败（预期CLI_INVALID_ARGUMENT/2）；编译/路径错误不能算 RED。此时不改生产解析/协调逻辑。首次准备若只有两个来源 ID，应保留原 RED、随后正确的重复输入拒绝，并将修正的测试复制到一个独占新目录内的 `git archive` 实现前源码快照，核对旧生产字节后重放 ordinary CLI RED；该重放在发现后执行，不能记成最初准备已正确。
 
 - [ ] **Step 2: 实现严格模型与保存依据重验。** CaseInputs先捕获根/父目录/manifest/map，严格unique JSON+DTO，再核对单层清单和声明限额。VerifiedReview依次capture九文件、复查指纹、解析owner+四原输入，SourceSession按manifest绑定import/原review selection重开；控制检查每阶段执行。旧报告 helper 从原 report 构造提取，原 run 继续调用同 helper，原source_reviewMarkdown字符串逐字节保持。完整 assess/IR/snapshot/report/MD重建不读取 passed 作为oracle。
 
