@@ -92,11 +92,15 @@ pub(crate) fn request_body(
 
 - [x] 独立本地 HTTP 服务记录实际 POST 数、无认证 body、结构化 Schema/限制，普通 CLI 覆盖 spec 失败矩阵；直接 SQL/文件 SHA/mtime/清单核对来源，检查双报告快照和真实产物。保留失败证据并复现修复。
 - [ ] 配置/预算收到后核查用户选定模型的官方能力/当前价格规则，只运行一次指定 Span ordinal=0 的有界真实调用。保存实际原响应/返回模型/用量和 Core 核对；未经这些条件不调用、不算完成。
-- [ ] 运行 cargo fmt/check/workspace test（显式 4 test threads）、Python unittest、独立 CLI、devlog/diff；fresh broad spec+quality review，无未处置重要问题。
-- [ ] 实际 gate 满足才 devlog complete；否则对离线已实现/检查和缺少的 provider/endpoint/model/env ref/预算作具体记录，devlog block。普通检查通过后分步提交并 push 当前分支，核对远端 HEAD。不把 block 写成 complete，不启动依赖 T03。
+- [x] 运行 cargo fmt/check/workspace test（显式 4 test threads）、Python unittest、独立 CLI、devlog/diff；fresh broad spec+quality review，无未处置重要问题。
+- [x] 实际 gate 满足才 devlog complete；否则对离线已实现/检查和缺少的 provider/endpoint/model/env ref/预算作具体记录，devlog block。不把 block 写成 complete，不启动依赖 T03。
+
+普通检查与最后账本提交后，按已授权流程push当前分支并核对远端HEAD；远端结果以实际工具返回和本轮汇报为准，不以计划勾选代替推送证据。
 
 ## 自检
 
 Task1 的 send/decode/request_body 三签名在 Task2 原样消费；Task1/Task2 顺序改 lib.rs，不并发编辑。Task3 用普通入口和固定作者 gold，报告只读核对而不调用生产 validator 作知识 oracle。T02 真实 gate 在 spec、任务卡、计划和账本一致；配置缺失只限制实际付费步骤，不能掩盖工程工作或改写验收。
 
 Task1组件18项及Task2静态审查/帮助复审通过；最终workspace480、Python44、独立API84/90CLI/54本地POST和旧fake54/60CLI均通过。前述checkbox仅指已实际完成的离线工作，真实调用门槛仍未满足。组件/审计失败历史、文件指纹和实际最终二进制见[验证记录](../validation/B04-T02.md)。
+
+整分支审查完成，独立重查59份实际报告/231个产物指纹。首选审查模型的连接失败不计通过，新的可用审查者给出无重要问题的离线结论。真实调用checkbox继续未勾选；最后block与Git记录由工具维护，不触发依赖任务。

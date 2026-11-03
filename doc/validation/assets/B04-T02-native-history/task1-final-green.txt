@@ -1,0 +1,66 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.64s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-8384b21dffc26341.exe)
+
+running 15 tests
+test extraction_api_transport::tests::pre_cancel_sends_nothing ... ok
+test extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor ... ok
+test extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body ... FAILED
+test extraction_api_transport::tests::one_http1_post_preserves_complete_receipt ... FAILED
+test extraction_api_transport::tests::truncated_chunked_oversize_and_empty_receipts_fail ... FAILED
+test extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried ... FAILED
+test extraction_api_transport::tests::zero_deadline_counts_no_unstarted_attempt ... ok
+test extraction_api_wire::tests::metadata_preserves_real_usage_independent_of_candidate_approval ... ok
+test extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata ... ok
+test extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status ... ok
+test extraction_api_wire::tests::present_nonnullable_metadata_fields_reject_null_or_wrong_types ... ok
+test extraction_api_wire::tests::rejects_duplicate_keys_at_unknown_nesting_and_trailing_json ... ok
+test extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected ... ok
+test extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail ... ok
+test extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail ... ok
+
+failures:
+
+---- extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body stdout ----
+
+thread '<unnamed>' (60056) panicked at crates\noetome-cli\src\extraction_api_transport.rs:161:47:
+called `Result::unwrap()` on an `Err` value: Os { code: 10035, kind: WouldBlock, message: "无法立即完成一个非阻止性套接字操作。" }
+
+thread 'extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body' (4344) panicked at crates\noetome-cli\src\extraction_api_transport.rs:183:23:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+
+---- extraction_api_transport::tests::one_http1_post_preserves_complete_receipt stdout ----
+
+thread '<unnamed>' (21376) panicked at crates\noetome-cli\src\extraction_api_transport.rs:161:47:
+called `Result::unwrap()` on an `Err` value: Os { code: 10035, kind: WouldBlock, message: "无法立即完成一个非阻止性套接字操作。" }
+
+thread 'extraction_api_transport::tests::one_http1_post_preserves_complete_receipt' (8900) panicked at crates\noetome-cli\src\extraction_api_transport.rs:183:23:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+
+---- extraction_api_transport::tests::truncated_chunked_oversize_and_empty_receipts_fail stdout ----
+
+thread '<unnamed>' (19660) panicked at crates\noetome-cli\src\extraction_api_transport.rs:161:47:
+called `Result::unwrap()` on an `Err` value: Os { code: 10035, kind: WouldBlock, message: "无法立即完成一个非阻止性套接字操作。" }
+
+thread 'extraction_api_transport::tests::truncated_chunked_oversize_and_empty_receipts_fail' (64364) panicked at crates\noetome-cli\src\extraction_api_transport.rs:183:23:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+
+---- extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried stdout ----
+
+thread '<unnamed>' (35204) panicked at crates\noetome-cli\src\extraction_api_transport.rs:161:47:
+called `Result::unwrap()` on an `Err` value: Os { code: 10035, kind: WouldBlock, message: "无法立即完成一个非阻止性套接字操作。" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried' (58984) panicked at crates\noetome-cli\src\extraction_api_transport.rs:183:23:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+
+
+failures:
+    extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried
+    extraction_api_transport::tests::one_http1_post_preserves_complete_receipt
+    extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body
+    extraction_api_transport::tests::truncated_chunked_oversize_and_empty_receipts_fail
+
+test result: FAILED. 11 passed; 4 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

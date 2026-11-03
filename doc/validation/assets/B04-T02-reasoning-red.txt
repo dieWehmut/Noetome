@@ -1,0 +1,22 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.87s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-8384b21dffc26341.exe)
+
+running 1 test
+test extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status ... FAILED
+
+failures:
+
+---- extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status stdout ----
+
+thread 'extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status' (48748) panicked at crates\noetome-cli\src\extraction_api_wire.rs:355:42:
+called `Result::unwrap_err()` on an `Ok` value: ParsedResponse { id: "resp", model: "returned-model", usage: Object {"input_tokens": Number(12), "output_tokens": Number(8), "total_tokens": Number(20)}, service_tier: None, candidates: ApiCandidates { schema_version: 1, request_id: "req", binding: SourceBinding { project_id: "p", import_id: "i", source_id: "s", version_id: "v", content_sha256: "sha", normalized_sha256: None, parse_id: None, manifest_sha256: None }, concepts: [Concept { concept_id: "concept-speed", revision: 1, canonical_name: "样例 A 速度", aliases: [], needs_full_explanation: true }], evidence: [CandidateEvidence { evidence_id: "evidence-speed", unit_id: "unit-0", excerpt_start_byte: 0, excerpt_end_byte: 94, excerpt_sha256: "1f3a11c848a615d62df0535a344b02cc4688c1d7640dee13dd89b0928949362e", quote: "在本夹具的样例 A 中，速度为 10 m/s。条件是温度 20 ℃、仅适用样例 A。" }], atoms: [CandidateAtom { atom: KnowledgeAtom { atom_id: "atom-speed", revision: 1, kind: ComparisonValue, concept_ids: ["concept-speed"], content: "样例 A 的速度为 10 m/s，条件为温度 20 ℃且仅适用样例 A。", qualifiers: ["m/s", "温度 20 ℃", "仅适用样例 A"], evidence_links: [EvidenceLink { evidence_id: "evidence-speed", relation: Supports }], required: false, verification: Unverified, value_status: Known }, measurement: Some(Measurement { value_status: Known, value: Some("10"), unit: Some("m/s"), conditions: ["温度 20 ℃", "仅适用样例 A"] }) }] } }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 353 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

@@ -1,0 +1,23 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.59s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-8384b21dffc26341.exe)
+
+running 16 tests
+test extraction_api_transport::tests::pre_cancel_sends_nothing ... ok
+test extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor ... ok
+test extraction_api_transport::tests::one_http1_post_preserves_complete_receipt ... ok
+test extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried ... ok
+test extraction_api_transport::tests::zero_deadline_counts_no_unstarted_attempt ... ok
+test extraction_api_transport::tests::truncated_chunked_oversize_and_empty_receipts_fail ... ok
+test extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata ... ok
+test extraction_api_wire::tests::metadata_preserves_real_usage_independent_of_candidate_approval ... ok
+test extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail ... ok
+test extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status ... ok
+test extraction_api_wire::tests::present_nonnullable_metadata_fields_reject_null_or_wrong_types ... ok
+test extraction_api_wire::tests::rejects_duplicate_keys_at_unknown_nesting_and_trailing_json ... ok
+test extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected ... ok
+test extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail ... ok
+test extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work ... ok
+test extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 339 filtered out; finished in 0.41s

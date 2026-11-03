@@ -1,0 +1,22 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.76s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-8384b21dffc26341.exe)
+
+running 1 test
+test extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work ... FAILED
+
+failures:
+
+---- extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work stdout ----
+
+thread 'extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work' (41044) panicked at crates\noetome-cli\src\extraction_api_transport.rs:332:34:
+shutdown waited 302.3282ms
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 354 filtered out; finished in 0.30s
+
+error: test failed, to rerun pass `-p noetome-cli --lib`

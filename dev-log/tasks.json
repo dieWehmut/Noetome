@@ -1070,7 +1070,7 @@
       "id": "B04-T02",
       "title": "接入单个可配置文本API并执行有预算的真实小范围抽取冒烟",
       "batch": "B04",
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [
         "B04-T01"
       ],
@@ -1099,6 +1099,15 @@
           "from_status": "todo",
           "to_status": "in_progress",
           "note": "继续当前批次，先按OpenAI官方Responses文本接口完成单适配器离线配置、预算预留和本地HTTP假服务RED/GREEN；真实服务/模型/外部凭据引用及明确预算仍等待用户提供，在满足D08前不执行真实收费请求。只读所选测试来源，不保存密钥，保留单次真实冒烟验收门槛。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-03T03:51:43Z",
+          "action": "block",
+          "from_status": "in_progress",
+          "to_status": "blocked",
+          "note": "单一Responses离线适配、来源/配置/新根保护、预算与严格候选均已完成并新鲜审查通过；实际workspace480/Python44、独立API84场景90CLI54本地POST与旧fake54场景60CLI通过，最终binary与59报告/231产物指纹已独立核对，证据doc/validation/B04-T02.md及assets/B04-T02-final-review.md。真实提供商/端点/模型/外部凭据环境变量引用及明确调用次数、输入/输出/总Token或费用预算尚未由用户提供，D08真实调用门槛未满足；本轮真实模型/收费请求0，不complete、不启动B04-T03。提供配置及预算后reopen/start，按固定作者来源gold只执行一次真实有界冒烟。",
           "validation": [],
           "artifacts": []
         }
