@@ -35,4 +35,3 @@ Minor: none requiring a change within this task.
 - Read the supplied immutable diff once, including its context. No changed source was read separately and no cut-off hunk required expansion.
 - Read the brief, plan, report, reviewer rubric, current task/status and relevant standards; viewed only the explicitly selected Codex reference image for screenshot-shape comparison.
 - No broader source traversal or additional outside-diff code checks were needed. No tests/builds were rerun, no network/model/credential access occurred, and no git mutation or subagent dispatch occurred. The only write is this review artifact.
-
