@@ -43,25 +43,73 @@ function ConvertTo-NativeArgument {
     return '"' + [regex]::Replace([regex]::Replace($Value, '(\\*)"', '$1$1\"'), '(\\+)$', '$1$1') + '"'
 }
 
+function Open-CredentialReadGuard {
+    param([string]$Path)
+    if (-not ('Noetome.CredentialReadGuard' -as [type])) {
+        Add-Type -TypeDefinition @'
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
+namespace Noetome {
+    public static class CredentialReadGuard {
+        [StructLayout(LayoutKind.Sequential)]
+        private struct FileInformation {
+            public uint Attributes;
+            public uint CreationLow, CreationHigh, AccessLow, AccessHigh;
+            public uint WriteLow, WriteHigh, VolumeSerial, SizeHigh, SizeLow;
+            public uint Links, IndexHigh, IndexLow;
+        }
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GetFileInformationByHandle(
+            SafeFileHandle file, out FileInformation information);
+        public static bool IsSingleOrdinaryFile(SafeFileHandle file) {
+            FileInformation information;
+            if (!GetFileInformationByHandle(file, out information))
+                throw new Win32Exception(Marshal.GetLastWin32Error());
+            return information.Links == 1 &&
+                (information.Attributes & (0x10u | 0x400u)) == 0;
+        }
+    }
+}
+'@
+    }
+    # Inspect only this selected handle. Deny writers/deletion during inspection/read.
+    $guard = [IO.File]::Open($Path, [IO.FileMode]::Open, [IO.FileAccess]::Read, [IO.FileShare]::Read)
+    try {
+        if (-not [Noetome.CredentialReadGuard]::IsSingleOrdinaryFile($guard.SafeFileHandle)) { throw 'path-link' }
+        return $guard
+    }
+    catch {
+        $guard.Dispose()
+        throw
+    }
+}
+
 $secure = $null
 $pointer = [IntPtr]::Zero
 $plaintext = $null
 $process = $null
 $start = $null
 $environmentName = $null
+$credentialGuard = $null
+$credentialReader = $null
 $diagnostic = 'operation-failed'
 try {
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT) { $diagnostic = 'windows-required'; throw 'stop' }
     $diagnostic = 'path-rejected'
     $credentialPath = Assert-CredentialPath $CredentialFile
+    $credentialGuard = Open-CredentialReadGuard $credentialPath
     $diagnostic = 'configuration-invalid'
     if ((Get-Item -LiteralPath $Config).Length -gt 65536) { throw 'stop' }
     $configuration = [IO.File]::ReadAllText($Config) | ConvertFrom-Json
     $environmentName = $configuration.credential_env
     if ($environmentName -isnot [string] -or $environmentName -cnotmatch '^[A-Z][A-Z0-9_]{1,63}$') { throw 'stop' }
     $diagnostic = 'credential-invalid'
-    if ((Get-Item -LiteralPath $credentialPath).Length -gt 65536) { throw 'stop' }
-    $secure = [IO.File]::ReadAllText($credentialPath) | ConvertTo-SecureString
+    if ($credentialGuard.Length -gt 65536) { throw 'stop' }
+    $credentialReader = New-Object IO.StreamReader($credentialGuard, [Text.Encoding]::UTF8, $true, 1024, $true)
+    $secure = $credentialReader.ReadToEnd() | ConvertTo-SecureString
     if ($secure.Length -lt 1 -or $secure.Length -gt 8192) { throw 'stop' }
     $pointer = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure)
     for ($index = 0; $index -lt $secure.Length; $index++) {
@@ -108,4 +156,6 @@ finally {
     if ($pointer -ne [IntPtr]::Zero) { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($pointer) }
     if ($null -ne $secure) { $secure.Dispose() }
     if ($null -ne $process) { $process.Dispose() }
+    if ($null -ne $credentialReader) { $credentialReader.Dispose() }
+    if ($null -ne $credentialGuard) { $credentialGuard.Dispose() }
 }

@@ -61,6 +61,7 @@ class CredentialChecks:
         # Python treats the existing `extract` entry as its script. No service is used.
         (self.work / "extract").write_text(
             "import json, os, sys\n"
+            "from pathlib import Path\nPath('child-invoked').write_bytes(b'public-child-marker')\n"
             f"value = os.environ.get('{CHILD_ENV}', '')\n"
             f"print(json.dumps({{'args': sys.argv[1:], 'key_matches': value == os.environ['{INPUT_ENV}']}}))\n"
             "print(value)\nprint(value, file=sys.stderr)\n"
@@ -144,6 +145,25 @@ class CredentialChecks:
         result = self.run_ps(self.invoke_code(credential=link / "key.dpapi"))
         self.assertNotEqual(result.returncode, 0)
 
+    def test_hardlinked_credential_rejected_before_child(self):
+        self.assertEqual(self.save().returncode, 0)
+        self.make_child()
+        alias = self.work / "public-hardlink.dpapi"
+        os.link(self.credential, alias)
+        self.assertEqual(self.credential.stat().st_nlink, 2)
+        original_bytes = self.credential.read_bytes()
+        marker = self.work / "child-invoked"
+        for selected in (self.credential, alias):
+            with self.subTest(selected_name=selected.name):
+                marker.unlink(missing_ok=True)
+                result = self.run_ps(self.invoke_code(credential=selected) + "; exit $LASTEXITCODE")
+                # Marker checks actual launch, independently of the child's stdout.
+                self.assertFalse(marker.exists(), "hard-linked credential launched child")
+                self.assertEqual(result.returncode, 2)
+                self.assertEqual(result.stderr.strip(), "credential-invoke: path-rejected")
+                self.assertEqual(result.stdout, "")
+                self.assertEqual(self.credential.read_bytes(), original_bytes)
+
     def test_child_gets_explicit_environment_arguments_redaction_and_exit_code(self):
         self.assertEqual(self.save().returncode, 0)
         self.make_child()
@@ -169,6 +189,23 @@ class CredentialChecks:
             result = self.run_ps(code)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("restoration-ok", result.stdout)
+
+    def test_native_arguments_preserve_embedded_quotes_and_backslashes(self):
+        self.assertEqual(self.save().returncode, 0)
+        self.make_child()
+        project = 'public project \\ with "quoted" segment\\'
+        import_id = 'public\\\\"quoted-id\\'
+        output = 'public-output\\'
+        code = (
+            f"& {ps_quote(INVOKER)} -Binary {ps_quote(sys.executable)} "
+            f"-Project {ps_quote(project)} -ImportId {ps_quote(import_id)} "
+            f"-Config {ps_quote(self.config)} -OutputRoot {ps_quote(output)} "
+            f"-CredentialFile {ps_quote(self.credential)}; exit $LASTEXITCODE"
+        )
+        result = self.run_ps(code)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout.splitlines()[0])["args"],
+                         ["api", project, import_id, str(self.config), output])
 
     def test_invalid_environment_and_corrupt_credential_stop_before_child(self):
         self.assertEqual(self.save().returncode, 0)
