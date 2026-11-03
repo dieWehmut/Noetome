@@ -324,3 +324,66 @@ class KnowledgeVerifierTests(unittest.TestCase):
         self.coherent_report(lambda r: next(x for x in r["checks"] if x["category"] == "evidence_identity").update(start_byte=False))
         with self.assertRaisesRegex(AssertionError, "diagnostic"):
             self.verify()
+
+    def raw_candidate_output(self, name, raw):
+        """Actual CLI schema rejection, retaining original bytes and receipts."""
+        case, output = self.output / (name + "-inputs"), self.output / (name + "-output")
+        case.mkdir()
+        inputs = dict(self.inputs, **{"candidates.json": raw})
+        for filename, data in inputs.items():
+            (case / filename).write_bytes(data)
+        source_before, sql_before = audit.inventory(self.project), audit.sql_snapshot(self.project)
+        run = subprocess.run([str(self.binary), "extract", "verify", str(self.project), self.source["binding"]["import_id"], str(case), str(output)], capture_output=True, timeout=40)
+        audit.save(self.output / (name + "-cli-receipt.json"), {"argv": run.args, "exit": run.returncode, "stdout": run.stdout.decode(), "stderr": run.stderr.decode(), "binary": audit.fingerprint(self.binary.read_bytes()), "source_before": source_before, "source_after": audit.inventory(self.project), "sql_before": sql_before, "sql_after": audit.sql_snapshot(self.project)})
+        self.assertEqual(run.returncode, 3)
+        self.assertEqual(audit.inventory(self.project), source_before)
+        self.assertEqual(audit.sql_snapshot(self.project), sql_before)
+        self.assertEqual((output / "candidates-original.json").read_bytes(), raw)
+        self.assertFalse((output / "knowledge-ir.json").exists())
+        return output, inputs, json.loads((output / "verification.json").read_bytes())
+
+    def test_final_fix_missing_array_counts_remain_unknown(self):
+        cases = {"missing-payload": {}, "missing-atoms": {"payload": {}},
+                 "null-payload": {"payload": None}, "null-atoms": {"payload": {"atoms": None}},
+                 "object-atoms": {"payload": {"atoms": {}}}, "string-atoms": {"payload": {"atoms": "[]"}}}
+        for name, candidate in cases.items():
+            with self.subTest(name=name):
+                output, inputs, report = self.raw_candidate_output(name, audit.encoded(candidate))
+                for key in ("candidate_atoms", "unexpected_atoms", "duplicate_atoms"):
+                    self.assertIsNone(report["totals"][key])
+                self.assertEqual(report["candidate_results"], [])
+                verified = audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+                self.assertIsNone(verified["candidate_atoms"])
+
+    def test_final_fix_coherent_fabricated_zero_count_is_rejected(self):
+        output, inputs, report = self.raw_candidate_output("forged-zero", b"{}")
+        self.assertIsNone(report["totals"]["candidate_atoms"])
+        self.assertIsNone(report["totals"]["unexpected_atoms"])
+        report["totals"].update(candidate_atoms=0, unexpected_atoms=0)
+        audit.save(output / "verification.json", report)
+        (output / "verification.md").write_text("```json\n" + json.dumps(report, ensure_ascii=False) + "\n```\n", encoding="utf-8")
+        self.assertEqual(report["origin"]["input_fingerprints"]["candidates.json"], audit.fingerprint(b"{}"))
+        self.assertEqual(report["artifacts"]["candidates-original.json"], audit.fingerprint(b"{}"))
+        with self.assertRaisesRegex(AssertionError, "actual candidate count"):
+            audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+
+    def test_final_fix_actual_empty_arrays_keep_known_zero(self):
+        valid = copy.deepcopy(self.candidate)
+        valid["payload"]["atoms"] = []
+        for name, candidate, duplicate in (("schema-invalid-empty", {"payload": {"atoms": []}}, None), ("valid-empty", valid, 0)):
+            with self.subTest(name=name):
+                output, inputs, report = self.raw_candidate_output(name, audit.encoded(candidate))
+                self.assertEqual(report["totals"]["candidate_atoms"], 0)
+                self.assertEqual(report["totals"]["unexpected_atoms"], 0)
+                self.assertEqual(report["totals"]["duplicate_atoms"], duplicate)
+                verified = audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+                self.assertEqual(verified["candidate_atoms"], 0)
+
+    def test_final_fix_schema_invalid_array_elements_keep_actual_length(self):
+        output, inputs, report = self.raw_candidate_output("bad-elements", audit.encoded({"payload": {"atoms": [None, {}]}}))
+        self.assertEqual(report["totals"]["candidate_atoms"], 2)
+        self.assertEqual(report["totals"]["unexpected_atoms"], 1)
+        self.assertIsNone(report["totals"]["duplicate_atoms"])
+        self.assertEqual(len(report["candidate_results"]), 2)
+        verified = audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+        self.assertEqual(verified["candidate_atoms"], 2)

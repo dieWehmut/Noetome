@@ -1,0 +1,86 @@
+.FFFFFFF.
+======================================================================
+FAIL: test_final_fix_coherent_fabricated_zero_count_is_rejected (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_final_fix_coherent_fabricated_zero_count_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 367, in test_final_fix_coherent_fabricated_zero_count_is_rejected
+    with self.assertRaisesRegex(AssertionError, "actual candidate count"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_final_fix_missing_array_counts_remain_unknown (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_final_fix_missing_array_counts_remain_unknown) (name='missing-payload')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 355, in test_final_fix_missing_array_counts_remain_unknown
+    verified = audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_extraction_knowledge.py", line 513, in verify_report
+    assert totals["candidate_atoms"] == count and totals["unexpected_atoms"] == (max(0, count - 1) if count is not None else None), "actual candidate count"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual candidate count
+
+======================================================================
+FAIL: test_final_fix_missing_array_counts_remain_unknown (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_final_fix_missing_array_counts_remain_unknown) (name='missing-atoms')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 355, in test_final_fix_missing_array_counts_remain_unknown
+    verified = audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_extraction_knowledge.py", line 513, in verify_report
+    assert totals["candidate_atoms"] == count and totals["unexpected_atoms"] == (max(0, count - 1) if count is not None else None), "actual candidate count"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual candidate count
+
+======================================================================
+FAIL: test_final_fix_missing_array_counts_remain_unknown (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_final_fix_missing_array_counts_remain_unknown) (name='null-payload')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 355, in test_final_fix_missing_array_counts_remain_unknown
+    verified = audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_extraction_knowledge.py", line 513, in verify_report
+    assert totals["candidate_atoms"] == count and totals["unexpected_atoms"] == (max(0, count - 1) if count is not None else None), "actual candidate count"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual candidate count
+
+======================================================================
+FAIL: test_final_fix_missing_array_counts_remain_unknown (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_final_fix_missing_array_counts_remain_unknown) (name='null-atoms')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 355, in test_final_fix_missing_array_counts_remain_unknown
+    verified = audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_extraction_knowledge.py", line 513, in verify_report
+    assert totals["candidate_atoms"] == count and totals["unexpected_atoms"] == (max(0, count - 1) if count is not None else None), "actual candidate count"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual candidate count
+
+======================================================================
+FAIL: test_final_fix_missing_array_counts_remain_unknown (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_final_fix_missing_array_counts_remain_unknown) (name='object-atoms')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 355, in test_final_fix_missing_array_counts_remain_unknown
+    verified = audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_extraction_knowledge.py", line 513, in verify_report
+    assert totals["candidate_atoms"] == count and totals["unexpected_atoms"] == (max(0, count - 1) if count is not None else None), "actual candidate count"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual candidate count
+
+======================================================================
+FAIL: test_final_fix_missing_array_counts_remain_unknown (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_final_fix_missing_array_counts_remain_unknown) (name='string-atoms')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 355, in test_final_fix_missing_array_counts_remain_unknown
+    verified = audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_extraction_knowledge.py", line 513, in verify_report
+    assert totals["candidate_atoms"] == count and totals["unexpected_atoms"] == (max(0, count - 1) if count is not None else None), "actual candidate count"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual candidate count
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.327s
+
+FAILED (failures=7)

@@ -507,7 +507,7 @@ def verify_report(output, candidate_bytes, gold_bytes, actual_source, inputs):
             pass
     payload = candidate.get("payload", {}) if isinstance(candidate, dict) else {}
     raw_atoms = payload.get("atoms") if isinstance(payload, dict) else None
-    count = len(raw_atoms) if isinstance(raw_atoms, list) else (0 if syntax else None)
+    count = len(raw_atoms) if isinstance(raw_atoms, list) else None
     totals = report["totals"]
     assert totals["expected_atoms"] == 1 and totals["required_concept_groups"] == 1, "author denominator"
     assert totals["candidate_atoms"] == count and totals["unexpected_atoms"] == (max(0, count - 1) if count is not None else None), "actual candidate count"
