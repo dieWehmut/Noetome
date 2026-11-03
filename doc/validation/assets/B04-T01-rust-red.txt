@@ -1,0 +1,43 @@
+warning: struct `SourceBinding` is never constructed
+ --> crates\noetome-cli\src\extraction_model.rs:5:19
+  |
+5 | pub(crate) struct SourceBinding {
+  |                   ^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib) generated 1 warning
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.58s
+     Running tests\extraction.rs (target\debug\deps\extraction-530a29d24e2d8472.exe)
+
+running 3 tests
+
+thread 'ordinary_fake_rejects_chinese_interior_byte_without_candidates' (25856) panicked at crates\noetome-cli\tests\extraction.rs:103:5:
+assertion `left == right` failed: CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test ordinary_fake_rejects_chinese_interior_byte_without_candidates ... FAILED
+
+thread 'ordinary_fake_uses_real_source_and_preserves_project' (52176) panicked at crates\noetome-cli\tests\extraction.rs:83:5:
+CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+test ordinary_fake_uses_real_source_and_preserves_project ... FAILED
+
+thread 'ordinary_fake_runtime_cancel_does_not_publish' (52856) panicked at crates\noetome-cli\tests\extraction.rs:121:13:
+gateway ended before request: exit code: 2; CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+test ordinary_fake_runtime_cancel_does_not_publish ... FAILED
+
+failures:
+
+failures:
+    ordinary_fake_rejects_chinese_interior_byte_without_candidates
+    ordinary_fake_runtime_cancel_does_not_publish
+    ordinary_fake_uses_real_source_and_preserves_project
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+error: test failed, to rerun pass `-p noetome-cli --test extraction`
