@@ -1419,7 +1419,7 @@
       "id": "B05-T01",
       "title": "多来源重复归并与互补事实保留",
       "batch": "B05",
-      "status": "todo",
+      "status": "in_progress",
       "depends_on": [
         "B04-T03"
       ],
@@ -1439,7 +1439,17 @@
         "只写新的协调测试根，保留原IR、gold、来源项目和外部哨兵；JSON/Markdown同事实，实际输入/事实/证据分母分别可对账，未知保持未知，科学未运行且未发布，不写生产Vault或调用模型。",
         "普通协调CLI与独立Python校验实际通过，运行相关Rust/Python回归、日志及Git检查，新鲜审查修复后complete并分步提交推送；本项仅实现明确身份的有界重复/互补，不宣称完整概念归并撤销或三本真实教材融合。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-03T16:23:21Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结显式身份映射与多来源重复／互补协调契约；只读重验已有 source_review 依据，离线实现普通 CLI 和独立验证，不推进 B05-T02/T03。",
+          "validation": [],
+          "artifacts": []
+        }
+      ]
     },
     {
       "id": "B05-T02",

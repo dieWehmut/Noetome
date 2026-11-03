@@ -24,6 +24,7 @@
 | [知识抽取网关契约](technical/EXTRACTION_CONTRACT.md) | 严格候选、真实来源绑定、单请求预算、失败审计及离线fake边界 | 抽取请求、候选、provider或输出保护变化 |
 | [单请求文本API契约](technical/EXTRACTION_API_CONTRACT.md) | Responses配置、外部凭据引用、预算预留、原响应及API候选报告 | 文本API、用量、HTTP故障或凭据保护变化 |
 | [有界来源知识核对](technical/EXTRACTION_REVIEW_CONTRACT.md) | 已保存候选、独立作者gold、真实来源证据及离线测量核对 | extract verify输入、判据、分母或输出保护变化 |
+| [有界多来源知识协调](technical/KNOWLEDGE_COORDINATION_CONTRACT.md) | 显式身份映射、来源依据重验、重复/互补保留与待复核分母 | knowledge coordinate输入、关系或保护变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
 | [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |
@@ -35,7 +36,7 @@
 
 当前有界来源核对的真实CLI、独立校验、完整回归与保存输入保护见[B04-T03验证](validation/B04-T03.md)；用户追加的移除系统标题行、单行菜单与实际安装窗口操作见[窗口验证](validation/B04-T03-ui-single-row.md)。验证记录保留实际结果和收束状态，不替代任务账本。
 
-B04R收束提交已普通推送并核对远端，执行卡归档于[B04R步骤](execution/B04R_STEPS.md)。当前[B05近期步骤](execution/NEXT_STEPS.md)只规划重复/互补、条件/历史和冲突/证据不足三项；状态均为todo，未将计划文件或命令当作已实现协调能力。
+B04R收束提交已普通推送并核对远端，执行卡归档于[B04R步骤](execution/B04R_STEPS.md)。[B05近期步骤](execution/NEXT_STEPS.md)规定重复/互补、条件/历史和冲突/证据不足三项；当前协调实施依据见[B05-T01计划](execution/B05-T01_COORDINATION_PLAN.md)，状态仍由账本生成，计划中的命令和预期不算验收证据。
 
 `requirements/PRD.html` 是由 Markdown 生成的阅读版；只修改 Markdown 后重新构建。其他标准文件以 Markdown 为准。旧 `docs` 路径仅保留迁移入口。
 
