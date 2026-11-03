@@ -295,7 +295,8 @@ impl VerifiedReview {
         Self::open_inner(project, input, case, c, cancel).map_err(|e| {
             if matches!(
                 e.code(),
-                "COORD_INPUT_PATH"
+                "COORD_SCHEMA"
+                    | "COORD_INPUT_PATH"
                     | "COORD_INPUT_LIMIT"
                     | "COORD_FINGERPRINT"
                     | "COORD_INPUT_CHANGED"

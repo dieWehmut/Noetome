@@ -48,6 +48,79 @@ fn repin(f: &PreparedCase) {
     }
     write(&p, &v);
 }
+// These mutate saved source-review packages and refresh manifest fingerprints,
+// exercising the source-review wrapper boundary rather than case parsing or SHA rejection.
+fn reject_saved_bundle_schema(kind: &str) {
+    let f = PreparedCase::baseline();
+    let bundle = f.case.join("bundle-b");
+    match kind {
+        "inventory" => fs::write(bundle.join("human-extra.txt"), b"keep extra content").unwrap(),
+        "malformed" => fs::write(bundle.join(".owner.json"), b"{\"schema_version\":").unwrap(),
+        "unknown" => {
+            let path = bundle.join("gold-original.json");
+            let mut value = read(&path);
+            value["unknown_field"] = json!(true);
+            write(&path, &value);
+        }
+        "duplicate" => {
+            let path = bundle.join("candidates-original.json");
+            let bytes = fs::read_to_string(&path).unwrap();
+            let bytes = bytes.replacen("\"payload\": {", "\"payload\": {\"schema_version\":1,", 1);
+            assert_ne!(bytes, fs::read_to_string(&path).unwrap());
+            fs::write(path, bytes).unwrap();
+        }
+        "nullable" => {
+            let path = bundle.join("candidates-original.json");
+            let mut value = read(&path);
+            value["binding"].as_object_mut().unwrap().remove("parse_id");
+            write(&path, &value);
+        }
+        "type" => {
+            let path = bundle.join("source-snapshot.json");
+            let mut value = read(&path);
+            value["units"] = json!(1);
+            write(&path, &value);
+        }
+        "version" => {
+            let path = bundle.join("knowledge-ir.json");
+            let mut value = read(&path);
+            value["schema_version"] = json!(2);
+            write(&path, &value);
+        }
+        _ => panic!("unknown test case"),
+    }
+    repin(&f);
+    println!("saved-bundle-schema kind={kind} root={}", f.root.display());
+    reject(f, 2, "COORD_SCHEMA");
+}
+#[test]
+fn saved_bundle_extra_inventory_is_schema_exit_two() {
+    reject_saved_bundle_schema("inventory");
+}
+#[test]
+fn saved_bundle_malformed_json_is_schema_exit_two() {
+    reject_saved_bundle_schema("malformed");
+}
+#[test]
+fn saved_bundle_unknown_field_is_schema_exit_two() {
+    reject_saved_bundle_schema("unknown");
+}
+#[test]
+fn saved_bundle_nested_duplicate_key_is_schema_exit_two() {
+    reject_saved_bundle_schema("duplicate");
+}
+#[test]
+fn saved_bundle_missing_nullable_is_schema_exit_two() {
+    reject_saved_bundle_schema("nullable");
+}
+#[test]
+fn saved_bundle_invalid_type_is_schema_exit_two() {
+    reject_saved_bundle_schema("type");
+}
+#[test]
+fn saved_bundle_unsupported_version_is_schema_exit_two() {
+    reject_saved_bundle_schema("version");
+}
 fn refresh_old_fingerprints(f: &PreparedCase) {
     let dir = f.case.join("bundle-b");
     let p = dir.join("verification.json");
