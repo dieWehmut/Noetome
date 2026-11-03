@@ -261,3 +261,11 @@ B01A按用户确认管理窗口关闭事件：×默认隐藏原窗口到托盘�
 B04-T03在现有只读SourceSession和严格ApiCandidates之上增加普通 `extract verify`。review/decision/gold各自严格解析，受控中文单测量判据分开核对来源、关联概念、正文事实、measurement、必要条件/单位/例外、覆盖和排除。仅全部通过保存source_review IR；unknown、来源needs_review和pending仍无成功IR。报告包含实际输入与产物SHA、逐对象四状态和真实分母，不把API传输成功提升为科学正确。
 
 [独立审计脚本](../../scripts/verify_extraction_knowledge.py)不导入Rust验证器：在调用前冻结作者gold，直接从只读SQLite重建来源身份，读取规范文本或实际登记PDF的资源、范围和bbox，再独立计算知识判据/数量及校验IR和双报告。工程矩阵包含一个先作者化中文句子、后经现有解析器登记的真实文本PDF；这仅证明受控样本闭环，不证明通用PDF语义、OCR或正式科学质量。实际验证范围见[B04-T03](../validation/B04-T03.md)。
+
+## 有界多来源知识协调
+
+B05-T01增加普通 `knowledge coordinate`，消费同项目2至3份已保存的单原子source_review依据。[严格模型](../../crates/noetome-cli/src/knowledge_coordination_model.rs)声明版本、显式身份、原出现、事实、关系和分母；[输入核对](../../crates/noetome-cli/src/knowledge_coordinate_input.rs)逐份重开SourceSession并重建原来源核对，不能以保存报告的passed标志替代实际SQL、资源、原文和九件依据。[事实协调](../../crates/noetome-cli/src/knowledge_coordinate_facts.rs)按明确对象/属性UUID及完整值、单位、条件、例外分组，保留所有原概念、原子、支持证据和实际来源位置。
+
+[入口与保存](../../crates/noetome-cli/src/knowledge_coordinate.rs)持有输入守卫至三个结果保存后，仅撤去本轮可确认的结果文件；未知内容、原输入及来源项目不被接管。完整同键才去重，不按相同内容SHA合并另一实际来源身份，不按显示名称推断身份。无法处理的同对象/属性差异及同来源版本差异保留待复核，无成功IR。完整交换见[协调契约](KNOWLEDGE_COORDINATION_CONTRACT.md)，实际证明与仍未完成范围见[B05-T01记录](../validation/B05-T01.md)。
+
+[独立协调审计](../../scripts/verify_knowledge_coordination.py)从外部作者gold、明确映射、只读实际来源及原source_review重新计算事实键、出处ID、关系和全部分母，然后核对JSON、Markdown、IR及原件副本；不共享Rust协调算法。当前是公开自造材料的离线明确身份原型，科学not_run、研究not_requested、知识pending、published=false。条件/历史变体和正式冲突分类由后续任务分别验收。

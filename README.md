@@ -2,7 +2,7 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-Rust CLI提供空项目初始化、单份MD/TXT/PDF来源登记与只读重查、文本PDF解析/重解析、fixture IR与NotePlan校验及新测试Vault编译，以及单请求文本API候选与有界来源知识核对。来源版本、PDF解析尝试、真实位置与原始资源独立保留，来源知识仍pending；fixture明确标作者输入，API候选工程通过与来源核对、科学质量和发布分别表达。现有pdfplumber sidecar用于有界文本PDF，扫描和复杂版面保守需复核。桌面提供帮助、版本、本地连接检查、单行菜单及托盘/关闭设置；项目、资料和知识业务仍通过CLI。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+Rust CLI提供空项目初始化、单份MD/TXT/PDF来源登记与只读重查、文本PDF解析/重解析、fixture IR与NotePlan校验及新测试Vault编译，以及单请求文本API候选、有界来源知识核对和明确身份的多来源重复/互补协调。来源版本、PDF解析尝试、真实位置与原始资源独立保留，来源知识仍pending；fixture明确标作者输入，API候选工程通过与来源核对、科学质量和发布分别表达。现有pdfplumber sidecar用于有界文本PDF，扫描和复杂版面保守需复核。桌面提供帮助、版本、本地连接检查、单行菜单及托盘/关闭设置；项目、资料和知识业务仍通过CLI。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
 
 ## 开始开发
 
@@ -99,6 +99,18 @@ noetome extract verify <项目路径> <import-id> <review-case> <全新输出根
 review-case严格包含review、原候选、独立作者gold和纳入/排除依据；单个实际来源单位、UTF8引文及一个受控测量事实逐项核对概念、内容、数值、条件、单位、例外和覆盖。只有全部通过才生成未发布的source_review IR，原atom仍unverified/required=false。失败报告保存实际分母和逐对象诊断，JSON/Markdown同事实，已有输出或人工新增文件不覆盖。普通verify不读取模型服务/密钥/预算，也不发API请求。
 
 [B04-T03实际验证](doc/validation/B04-T03.md)包含原第六保存模型候选、调用前gold与源SQL/字节核对，以及负例、独立校验器和完整回归。本能力仅支持契约声明的有界受控语法，scientific_quality=not_run、knowledge_status=pending、published=false；它不代替正式准确率、完整自然语言/PDF或知识发布。输入字段、原子分母及保护规则见[来源核对契约](doc/technical/EXTRACTION_REVIEW_CONTRACT.md)。
+
+## 明确身份的多来源重复与互补协调
+
+```text
+noetome knowledge coordinate <项目路径> <coordination-case> <全新输出根>
+python scripts/verify_knowledge_coordination.py check <项目路径> <coordination-case> <保存输出根> <独立gold>
+python scripts/verify_knowledge_coordination.py audit <实际CLI绝对路径> <全新测试根>
+```
+
+case明确选取同项目2至3份已通过的单原子source_review，并给出对象/属性的规范身份映射。协调重新打开实际来源、原gold/候选、IR和双报告；完整值、单位、条件与例外相同才去重，所有原ID和每个出处仍保留。正常作者样例中两个速度事实归并、第三个质量事实独立保留，形成2个事实和3个实际来源出现；这是自造结构样例的预期，实际验证见[B05-T01](doc/validation/B05-T01.md)。
+
+成功保存未发布coordination-ir.json以及coordination.json/coordination.md。未处理的条件、单位或来源版本差异返回待复核、保留原组，canonical_facts为null且没有成功IR。显示名称或排序不改变身份，相同资源SHA也不自动合并另一已登记来源；同一实际来源单位不能重复计数。独立Python从作者预期与真实SQL/资源重建结果，再核对全部保存内容。范围、严格字段、错误分类和保护限额见[协调契约](doc/technical/KNOWLEDGE_COORDINATION_CONTRACT.md)。科学not_run、研究not_requested、知识pending、published=false；正式条件/历史变体及冲突分类有后续独立任务。
 
 ## 离线 fake 知识候选验证
 

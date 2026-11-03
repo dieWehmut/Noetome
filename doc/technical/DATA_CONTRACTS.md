@@ -357,3 +357,11 @@ B04-T03增加普通 `extract verify <project> <import-id> <review-case> <new-out
 `expected_atoms=1`来自冻结作者基准，四状态互斥分区；实际candidate/unexpected/semantic duplicate另计。candidate与unexpected仅在明确存在实际atoms数组时恢复，真实空数组为0；缺失、null、非数组或重复JSON键保持未知，语法合法不等于已知零。Schema非法但实际数组存在时保留原始长度，duplicate仍需类型化候选才能确认。每类quality分母来自作者条目，空例外为0/not_applicable。checks和结果含原对象、单位与UTF8范围；实际失败不会因整体pending/review而消失，重复ID也不能借用另一数组位置的通过项。
 
 JSON和Markdown嵌入完整同事实快照。四原输入副本逐字节保留；source-snapshot保存实际来源绑定/单位。仅全部通过产生knowledge-ir.json，producer=source_review/source_match=passed，原概念/原子/证据不改写，atom仍unverified/required=false，知识pending、科学not_run、研究not_requested、published=false。独立Python从只读SQLite/实际资源、冻结gold和原candidate重建事实及分母，再检查副本、指纹、双报告和IR；实际范围与未完成验收见[B04-T03记录](../validation/B04-T03.md)。
+
+## 有界多来源协调交换
+
+B05-T01的 `knowledge coordinate <project> <case> <new-output>` 使用独立Schema1，不向B04严格IR混入字段。case固定2至3份单原子source_review、每份完整binding与九文件指纹，以及明确concept/atom身份映射。对象/属性使用不同的规范UUID，显示名称与输入顺序不参与身份。输出保留每份原概念、原子及supports；一个事实可以关联多个实际来源出现。完整结构、紧凑JSON派生ID和边界见[协调契约](KNOWLEDGE_COORDINATION_CONTRACT.md)。
+
+`input_atoms`、`source_occurrences`、`evidence_links`、`independent_sources`、`retained_fact_groups`与`canonical_facts`分开表达。四状态按原出现互斥分区；待复核时canonical_facts为null，保留全部原组与来源，不生成coordination-ir.json。真实空值与未知不能互换，bool不作整数，重复输入不能增加独立来源数。同SHA的不同已登记source_id保留各自出处，但这个结构计数不证明真实文献独立性。
+
+成功和待复核保存coordination.json/coordination.md，Markdown嵌入完整同事实JSON；仅成功另存未发布coordination-ir.json。case、身份文件和每份九件依据逐字节复制，owner限定本轮用途。保存依据的严格结构错误返回COORD_SCHEMA/2；有效类型的来源或语义不符返回COORD_SOURCE_REVIEW/3。模型预算、来源SQL、Run/Release及生产Vault不被修改。当前实际证据见[B05-T01记录](../validation/B05-T01.md)。

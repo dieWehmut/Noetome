@@ -4,7 +4,7 @@
 
 B04-T03已完成日志、审查修复、实际安装和普通推送；收束提交`b3d40a02b0eb3a8905c190b2b78442a4c9121c29`与远端相等。最后完整Rust532、Python108、前端10及原生16项和用户托盘/拖动确认有真实证据。所选模型配置/DPAPI继续保存并复用：累计30097、余额9969903、pending0，T03新增模型请求0。
 
-下一批 **B05** 只含下面三张顺序执行卡，均为todo。本次只规划及切批次，不start；这些文件、命令与预期行为是后续实施目标，未作为已通过能力记录。
+当前批次 **B05** 只含下面三张顺序执行卡。B05-T01已经完成作者化输入、Rust协调、独立Python及任务内审查修复，完整Rust558/Python138和33场景/56次普通CLI有真实记录；整分支审查、日志完成和推送正在收束。B05-T02/T03仍为todo，本轮不start；完成状态由账本生成，详见[B05-T01验证](../validation/B05-T01.md)。
 
 **目标**：在已验收的受控单来源核对上，先合并重复并保留互补，再区分条件和历史，最后呈现真正冲突与证据不足。
 
@@ -40,13 +40,13 @@ B04-T03已完成日志、审查修复、实际安装和普通推送；收束提�
 
 **顺序与验收**：
 
-- [ ] 作者先固定三份公开工程短文、明确canonical ID和gold，再生成synthetic候选并用实际`extract verify`取得三份依据。两个同对象/属性/值/单位/完整条件/例外的事实应归并，第三个不同属性的互补事实应保留：规范事实2、独立来源出现3。
-- [ ] 写普通CLI测试并在接线前取得真实行为RED；正确样例预期exit0和完整证据集合，错误样例必须有具体失败或需复核。编译/设置失败单独记录。
-- [ ] 实现有界守卫与显式身份协调；规范ID不依赖显示名称/输入顺序，原ID可追。跨来源同SHA保留各自身份，同一输入重复引用不能冒充独立来源。未处理的条件/单位/时间差异保持需复核。
-- [ ] 独立Python从固定gold和实际源SQL/资源核对两事实/三来源及JSON/Markdown/IR；篡改错来源/引文、丢第二证据、错误归并、数量填零、重复输入和既有/内嵌/链接输出必须被检测。输入和源前后不变。
+- [x] 作者先固定三份公开工程短文、明确canonical ID和gold，再生成synthetic候选并用实际`extract verify`取得三份依据。两个同对象/属性/值/单位/完整条件/例外的事实应归并，第三个不同属性的互补事实应保留：规范事实2、独立来源出现3。
+- [x] 写普通CLI测试并在接线前取得真实行为RED；正确样例预期exit0和完整证据集合，错误样例必须有具体失败或需复核。编译/设置失败单独记录。
+- [x] 实现有界守卫与显式身份协调；规范ID不依赖显示名称/输入顺序，原ID可追。跨来源同SHA保留各自身份，同一输入重复引用不能冒充独立来源。未处理的条件/单位/时间差异保持需复核。
+- [x] 独立Python从固定gold和实际源SQL/资源核对两事实/三来源及JSON/Markdown/IR；篡改错来源/引文、丢第二证据、错误归并、数量填零、重复输入和既有/内嵌/链接输出必须被检测。输入和源前后不变。
 - [ ] 运行针对性普通入口、独立脚本及必要完整回归，新鲜审查修复后用devlog complete附代码/真实产物，分步提交推送并核对远端。此时不把明确身份原型算成通用实体识别/归并撤销或真实教材质量验收。
 
-预定行为验证：`./scripts/cargo_local.ps1 test -p noetome-cli --locked --offline --test knowledge_coordinate '--' --test-threads=4`；`python scripts/verify_knowledge_coordination.py --binary <absolute-noetome> --output <nonexistent-root>`；独立校验器用真实一致伪造报告先RED再GREEN。
+预定行为验证：`./scripts/cargo_local.ps1 test -p noetome-cli --locked --offline --test knowledge_coordinate '--' --test-threads=4`；`python scripts/verify_knowledge_coordination.py audit <absolute-noetome> <nonexistent-root>`；保存后只读复核为 `check <project> <case> <output> <gold>`。独立校验器用真实一致伪造报告先RED再GREEN。
 
 ## B05-T02 条件差异与历史观点的并列变体
 
@@ -99,4 +99,4 @@ python scripts/devlog.py check
 git diff --check
 ```
 
-Python使用本轮工具实际选定解释器；路径不硬编码进仓库程序。完整回归在相应产品改动后执行，不用重复B04实机安装证明新协调功能。每卡独立完成并推送后再start下一卡；当前仅规划，B05-T01是下次执行入口。
+Python使用本轮工具实际选定解释器；路径不硬编码进仓库程序。完整回归在相应产品改动后执行，不用重复B04实机安装证明新协调功能。每卡独立完成并推送后再start下一卡；当前进行中及下个入口以任务账本和生成STATUS为准。
