@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- 当前唯一活动任务B04-T03；不推进GUI/OCR/完整图谱或生产Vault。
+- 当前唯一活动任务B04-T03；用户2026-11-03明确要求去掉系统标题栏、仅保留菜单一行，追加下述Task3窗口栏纠正。除此以外不推进GUI/OCR/完整图谱或生产Vault。
 - 普通CLI四路径参数；新输出根；原来源、原gold、六次响应和已保存预算只读不变；本任务新网络/付费调用0。
 - Schema1 review/decision/保存API包装严格，gold1保持原调用前字节；gold2专用于独立作者例外/未知工程样例。
 - selection恰一单位；候选1 MiB、其余文件64 KiB；每类候选实体1024；条件/例外每类8、字符串1024 UTF8字节；来源输入1 MiB；30秒。
@@ -118,5 +118,30 @@ git diff --check
 只在实际本任务完整检查/独立原六核对/新鲜whole-branch review通过后用devlog complete附真实代码/验收产物，分步commit；`git push -u origin codex/b04-t03-knowledge-verify`后核对ls-remote与HEAD。B04R全部完成后最多展开下一批三项并batch，只规划不自动start。SDD暂存恢复归档保留；此前清理策略拒绝不重试或绕过。
 
 ## 根预检及审查安排
+
+### 用户追加 Task 3：只保留一行窗口栏
+
+用户的最新完整窗口截图显示第一行仍是带Noetome标题及原生按钮的Windows标题栏，第二行才是已实现的Codex菜单。用户明确要求“只要第二行”，因此先前B04U-T01保留原生decorations的选择不再适用。这一纠正在当前唯一活动任务内独立实现、验证和提交；不另行启动后续产品阶段。Task2审查修复只改Python/测试，Task3只改桌面前端及窗口配置，文件和运行资源分别约束，Git暂存/提交由控制代理串行协调。
+
+**单一结果**：已安装Noetome窗口的顶部只有现有36px菜单栏，Windows的Noetome原生标题行消失；同一行右侧保留最小化、最大化/还原、关闭按钮，空白处可拖动窗口。
+
+**Files:**
+- Modify: `crates/noetome-desktop/tauri.conf.json`（main窗口decorations=false）
+- Modify: `crates/noetome-desktop/capabilities/main.json`（仅main窗口所需的最小窗口操作权限）
+- Modify: `apps/desktop/src/AppMenuBar.tsx`, `styles.css`（现有菜单同行的拖动空白及窗口按钮）
+- Create if needed: `apps/desktop/src/WindowControls.tsx`（有界窗口操作/失败反馈，不扩大现有App逻辑）
+- Create: `doc/validation/B04-T03-ui-single-row.md`、`doc/validation/assets/B04-T03-ui-*`（实际RED/前端/原生窗口及安装证据）
+- Root updates: `doc/standards/DESIGN.md`及本计划、最终完成日志；不改API/source/知识契约或桌面Rust窗口关闭偏好逻辑。
+
+**Interfaces and acceptance:**
+- 使用已锁定@tauri-apps/api2.12.4的getCurrentWindow及最小window权限；close仍触发现有CloseRequested和隐藏托盘/直接退出偏好，minimize保持任务栏语义。
+- 拖动只来自菜单以外的空白区域，菜单、导航、窗口按钮及下拉项不能启动拖动。空白双击可最大化/还原。三个按钮保持可键盘使用的明文名称与焦点；还原图标/名称随真实窗口状态更新。
+- 浏览器预览无Tauri宿主时窗口按钮禁用或隐去，不伪报原生操作成功；原生失败保留可见反馈。既有File/Edit/View/Help、历史导航和侧栏仍可用。
+- 实机验收检查完整窗口及操作系统窗口装饰状态，不能只裁剪WebView菜单行作“一行”证据。记录修正前真实标题栏存在的RED，修正后完整顶部截图、拖动、最小化、最大化/还原、关闭/托盘与原菜单至少一条真实IPC。
+
+**Sequence:**
+- [ ] Fresh implementer先保存现有配置/实际UI的单行目标RED，再做最小改动；只运行针对性TypeScript/前端检查，保留日志与源指纹。不得运行cargo或安装、修改独立Python、dev-log、凭据、预算；Git提交待root协调。
+- [ ] 新鲜Task3 spec+quality审查并修复必要问题，根执行实际NSIS构建/更新安装、完整窗口/操作验证与现有菜单回归，保存原生证据及被测程序指纹。
+- [ ] 最终完整Rust/Python检查及most-capable整分支审查包含这一用户纠正；仅在知识验收和单行窗口栏均满足后complete当前卡、提交推送。随后最多规划下一批三项。
 
 Task1→Task2仅外部CLI/严格JSON接口相依，文件责任不重叠，按顺序fresh implementer/fresh task reviewer。真实gold之前已存在，新语法只声明来源解释规则并明示时间；本范围拒绝排除源内已纳入事实。独立判据允许文本相同含义的受控标点/空白/条件连接符，不增大正式准确率声明。最终review使用most-capable模型只读精确提交diff/证据，禁止额外网络或生产资料访问。
