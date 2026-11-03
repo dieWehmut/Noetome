@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-11-03T16:03:56.843094+00:00",
+  "scope": "B04 closure rolling plan only, not B05 product validation",
+  "current_batch": "B05",
+  "task_ids": [
+    "B05-T01",
+    "B05-T02",
+    "B05-T03"
+  ],
+  "all_new_tasks_todo_empty_history": true,
+  "in_progress": 0,
+  "done": 15,
+  "all_prior_tasks_and_history_unchanged": true,
+  "single_tool_batch_event_appended": true,
+  "dependency_chain": {
+    "B05-T01": [
+      "B04-T03"
+    ],
+    "B05-T02": [
+      "B05-T01"
+    ],
+    "B05-T03": [
+      "B05-T02"
+    ]
+  },
+  "ledger_before_sha256": "893875ecb8b399e2f8537c280de1ffa76c1a85f16382bb0a8ebf925cdde57921",
+  "ledger_after_sha256": "22e5340963ad470e2cfb85be1ec1110f0591a1c9740cb4f694332426cf14d261",
+  "spec_self_review": {
+    "FR-08": "T01 uses explicit opaque identity mapping and preserves original IDs/evidence; automatic entity recognition/reversal remains outside this bounded batch",
+    "FR-09": "T02 retains condition/exception/unit/time variants and distinguishes unknown from not_applicable",
+    "FR-10": "T01/T02/T03 cover the six relation classes in order; default retains opposing evidence without authority voting",
+    "FR-26_FR-40": "Selected actual source/SQL/UTF8 identity and same-fact dual reports with per-object issues required",
+    "scope": "2 to 3 one-atom source_review inputs, no model/network/production Vault/scientific claim",
+    "interfaces": "All cards retain one planned knowledge coordinate command; strict coordination contract is frozen in T01 before production wiring",
+    "placeholders": "No TBD or undefined method references; only clearly unstarted task checkboxes and planned files/commands"
+  },
+  "tested_product_source_files_unchanged": 81,
+  "new_product_task_started": false,
+  "new_model_calls": 0,
+  "passed": true
+}

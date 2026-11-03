@@ -1,0 +1,96 @@
+# B04/B04R 执行步骤（已归档）
+
+本文件保留B04及B04R执行范围。B04-T03日志与远端收束已实际完成；[远端收据](../validation/assets/B04-T03-final-closure-remote.json)核对提交`b3d40a02b0eb3a8905c190b2b78442a4c9121c29`。当前批次入口见[近期步骤](NEXT_STEPS.md)，本归档中的先前进行中表述保留其当时背景。
+
+真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B03的三张执行卡归档于[B03步骤](B03_STEPS.md)，PDF来源登记的实际验收、失败修复和证据见[B03-T03](../validation/B03-T03.md)。
+
+B04U-T01 顶部栏已按用户截图验收、安装并推送核对8004df0。当前批次为 **B04R**，**B04-T02 已经真实API验收、完整检查和最终审查完成**，收束提交bdae557已推送并核对远端相同。B04-T03已通过日志工具start，按[有界来源核对契约](../technical/EXTRACTION_REVIEW_CONTRACT.md)和[独立核对计划](B04-T03_REVIEW_PLAN.md)实施；保留原任务ID和全部失败/解除/恢复历史。
+
+已保存模型服务和 DPAPI 凭据继续复用。v6 的native41/普通API7/fake3/Python76、完整Rust502/fmt/check、API84/fake54/Chat37和130双报告/92请求已通过；组件30及最终整分支469断言/55指纹审查通过。第六次单次真实请求HTTP200/CLI exit0，严格候选1原子/1证据通过，原始payload、双报告、来源/gold/SQL及预算独立核对通过；6304 Token 已结算，当前累计 **30097**、余额 **9969903**、pending **0**。前五失败和原六份响应保留；T02完成日志已记录，推送核对后进行T03独立知识核对。literal gold测量集合诊断没有匹配项，知识/科学/发布状态仍为pending/not_run/false。
+
+> 执行者：每项start后使用superpowers:subagent-driven-development或superpowers:executing-plans，在当前单一任务内落实接口、真实RED、实现和新鲜审查。子代理只分担当前任务；这里的三张任务卡是顺序验收单元，不能各自并行启动产品阶段。
+
+**目标**：从已确认来源链进入第一次小范围知识抽取，顺序完成离线fake契约、单个有预算的真实API调用、独立证据核对。
+
+**架构**：Rust继续保护来源项目与严格数据契约；provider只返回候选，Core核对版本、范围、状态和预算。真实请求与普通离线回归分开，候选和调用证据只保存到新的测试根。
+
+**技术**：现有Rust workspace、SQLite来源读取器、严格JSON及Python标准库验证工具；先一个fake，再一个经官方接口核查的API适配器。
+
+**依据**：[PRD](../requirements/PRD.md)的FR-02/04/09/35/36/37/38/40、[D07/D08/D14基线](../requirements/DECISIONS.md)、[数据契约](../technical/DATA_CONTRACTS.md)、[测试标准](../standards/TESTING.md)。
+
+## 全局约束
+
+- 同时最多一个in_progress，每项完成必要修复、实际验证、日志和小步提交推送后再进入下一项。
+- 来源项目Schema1/2/3、文本报告v1、PDF报告v2与独立compile.sqlite Schema1分开演进；新增交换契约先明确版本，不给旧读取器塞未知字段。
+- fake必须显式标记；候选、来源解析通过和区域数均不能代替真实知识质量或完整覆盖。
+- 测试默认离线、不产生真实费用；真实收费调用前必须有用户提供的配置和明确预算。密钥使用外部凭据引用，不写入仓库或报告。
+- 只读取明确选定的测试来源，只写新的测试根；人工保护未验收前不写生产Vault，不扫描未选取资料。
+- 原 B04 模型批次不扩展GUI、全部模型SDK、OCR、检索Agent、完整知识图谱或长时间批量任务。B04U 仅落实用户明确要求的现有桌面顶部栏，沿用原 IPC 和窗口行为。
+
+## B04-T01 离线fake知识抽取网关与证据契约
+
+**单一结果**：普通CLI在明确的fake测试模式中生成严格候选报告；来源版本、UTF8证据和预算/失败状态可独立核对，来源项目保持只读。
+
+**依赖**：B03-T03。范围关联FR-02/04/09/37/38/40，知识与预算均为工程契约验证。
+
+**文件责任**：新增`doc/technical/EXTRACTION_CONTRACT.md`和本项实施计划；在`crates/noetome-cli/src`新增抽取契约/网关及单一fake provider模块，在`crates/noetome-cli/tests/extraction.rs`增加普通入口验证。受控样例放`fixtures/extraction-gateway-v1`，独立核对脚本与验收记录放`scripts`和`doc/validation`。复用现有source_model/pdf_source_model只读接口、CLI分发及严格IR验证，不建立空的多provider框架。
+
+**顺序与验收**：
+
+- [x] 先冻结单请求/响应、状态与错误契约；请求引用真实project_id、source_id、version_id及选定文本Span或PDF parse_id/逐页资源SHA/UTF8范围，候选携带知识对象、条件、单位、证据和核验状态。nullable与unknown规则、单请求限额、超时、取消和预算停止分别固定。
+- [x] 作者先写少量受控定义、带条件数值、例外及独立gold，再写fake重放响应。先保存真实失败测试，后实现最小网关；候选producer=fake，实际模型/计费字段保持其真实缺失状态，费用未知不填0。
+- [x] 普通CLI分别验证有效响应、非法/多余JSON、缺字段、未知版本/parse、错误SHA、中文UTF8边界、引文不符、失败PDF输入、能力不足、空响应、超限、超时/取消及预算停止。所有失败均不得登记知识已完成或发布成功。
+- [x] 保存请求、候选和核对报告到新根；同输入的规范内容可重复，审计身份单独生成。对来源项目的SQL、字节、mtime与清单做前后核对，未知/已有输出和路径越界拒绝。
+- [x] 更新契约/设计/测试标准，实跑针对性普通入口与workspace/Python/日志检查；新鲜审查通过后complete、提交并推送。本项验收不触发真实网络请求。
+
+实际行为、失败修复和新鲜审查见[B04-T01验证记录](../validation/B04-T01.md)，完成记录由账本工具维护。
+
+## B04-T02 一个可配置API适配器与有预算真实冒烟
+
+**单一结果**：用户配置的一个文本模型对明确选定的小范围来源完成一次真实请求，保留可核对的模型/策略/用量、原响应及候选；失败不损坏来源项目。
+
+**依赖**：B04-T01。用户已在2026-11-03提供[所选模型服务与10M累计预算](../requirements/MODEL_SERVICE.md)，要求保存并以后复用；本轮按[网关续接计划](B04-T02_GATEWAY_PLAN.md)补齐精确端点请求策略和本机凭据入口。实际凭据/模型调用按结果验收，不重复索要已给出的配置或预算，不能以fake代替真实验收。
+
+**文件责任**：沿用T01冻结交换契约，新增单一API适配模块与配置读取/预算控制，在`tests/extraction_api.rs`使用本地HTTP假服务验证；官方接口核查、真实调用证据及文档单独保存。只在需要的模块增加锁定依赖，不批量引入各厂商SDK。
+
+**顺序与验收**：
+
+- [x] 按2026-11-03官方资料核查OpenAI Responses及所选DeepSeek Responses的鉴权、JSON Schema、Token用量、错误与价格边界；精确端点及两种策略固定在[文本API契约](../technical/EXTRACTION_API_CONTRACT.md)。用户服务/模型已指定，网关实际路由与有效价格仍待真实调用核对；文本模型遇到视觉需求请求前拒绝。
+- [x] 在网络请求前校验服务配置、来源版本与证据范围，并预留明确预算、限定输出。未配置价格显示费用未知；预算耗尽停止新请求。首冒烟只执行一次有界请求，不自动进入批量、并发或无限重试。
+- [x] 初始糖猫云deepseek-flash Responses策略及本机DPAPI遮蔽输入/复用工具已新鲜审查；32项Windows凭据测试、25项API native、5项普通API CLI和0调用预检实际通过。用户已本机保存真实密钥并通过复用预检，配置/累计10M直接复用，后续不再弹保存窗口。
+- [x] 本地假HTTP服务先形成真实RED并覆盖无效配置、鉴权错误、429、5xx、截断/非法响应、超时、能力不足、用量缺失及超预算；不得泄露密钥或将失败候选直接写入知识库。本轮完整workspace484/Python76、独立API84与旧fake54实际通过，最终程序指纹及98份JSON/Markdown快照已对账，失败历史见[验证记录](../validation/B04-T02.md)。
+- [x] 在已提供配置和预算下完成严格候选的真实小文本调用。前五次分别计量936、9683、4912、4783、3479 Token，失败为无JSON、截断、展平包装、缺单位限定及revision=0，全部原响应/配置历史/source/gold保持。v6的native41/API7/fake3/Python76、Rust502/fmt/check、API84/fake54/Chat37、130双报告/92请求及新鲜组件审查通过后，第六次实际1792+4512=6304 Token、HTTP200/exit0，Core接受1原子/1证据。当前累计30097、余额9969903、pending0；原响应与保存候选及双报告一致，来源/SQL/gold保持。别名、候选数量和API成功不替代T03独立知识验收。
+- [x] 本轮续接实现、标准、预算保存和调用前准备的新鲜整分支审查通过，独立1631项断言、71份提交文件与98份报告核对无未处置问题；[最终审查](../validation/assets/B04-T02-configured-final-review.md)保留实际方法。后续真实调用证据仍须单独核对，只按真实缺失条件维护日志。
+- [x] 已满足D08的保存配置和累计预算下真实请求及独立原响应/用量/Core核对、最终整分支审查与日志complete完成。
+- [x] 收束提交bdae557已经推送、ls-remote与本地完整提交一致；B04-T03独立start。复用原第六候选及调用前gold，不新增T02模型请求。
+
+## B04-T03 真实候选的独立证据与知识核对
+
+Task1普通CLI及fresh scoped复核、Task2修复后的28项focused及52场景/60次离线矩阵已有实际证据。根进一步完成含原六输入的53场景/61次CLI、最后workspace程序1次原六复核、完整Rust532/Python104，以及用户追加的单行窗口栏实际安装/原生操作和用户确认的托盘恢复/拖动，见[B04-T03记录](../validation/B04-T03.md)及[窗口记录](../validation/B04-T03-ui-single-row.md)。整分支唯一Important R1经`02e8ab2`最小计数修复解决；focused4/4、模块32/32、最终完整Python108/108及新鲜限定复审均通过，窗口状态提示Minor R2明确延期。来源/SQL/gold/原六响应/保存配置与累计预算前后保持；新模型调用0。B04-T03已由devlog complete并check；收束提交b3d40a0已正常推送，ls-remote与本地完整SHA相等，下一批只规划。
+
+**单一结果**：T02保存的真实模型候选与调用前固定的作者gold、来源证据逐项核对，输出小范围知识IR及同事实JSON/Markdown报告。
+
+**依赖**：B04-T02。范围关联FR-02/04/09/35/40与NFR-03；本项小样本不代替PRD正式质量基准。
+
+**文件责任**：扩展严格候选/IR验证及独立expected核对器，增加`tests/extraction_verify.rs`和独立验证脚本；实际候选、gold来源范围及验证记录保存在明确测试资产与新根。沿用原调用证据，不修改原响应、原始资料或已有版本。
+
+**顺序与验收**：
+
+- [x] 从T02的固定来源与调用前gold核对概念、事实、条件、单位、例外、明确排除和需复核项；对照实际source/parse版本和UTF8引文范围，错误解析版本或同SHA跨来源不得误映射。
+- [x] 先用删除条件/单位/例外、改写事实、错引范围、遗漏/重复原子和不成立排除形成真实RED；仅引用正确、原子数量相同或计划包含概念都不能使这些变体通过。
+- [x] 对真实候选执行严格IR、来源证据与独立gold核对，失败明确指出对象和范围；若需人工修订，保留原候选及独立修订依据，不用gold反写原模型输出。
+- [x] 双报告分别表达来源范围、知识核对、质量检查与研究未请求状态；实际分母、通过、失败、需复核和未处理数量可对账，未知数保留未知。小样本结果不宣布98%正式准确率或完整知识覆盖。
+- [x] 执行真实普通CLI和独立核对脚本，保留来源/证据及输出保护验证，运行完整回归、日志检查和新鲜审查；complete并提交推送。B04全部验收后仅滚动展开下一批最多三项。
+
+## 统一检查与交接
+
+```text
+cargo fmt --all --check
+./scripts/cargo_local.ps1 check --workspace --locked --offline
+./scripts/cargo_local.ps1 test --workspace --locked --offline
+python -m unittest discover -s tests -p 'test_*.py'
+python scripts/devlog.py check
+git diff --check
+```
+
+Python指本轮选定解释器；工作区运行时使用工具返回的绝对路径。各项在自己的计划中固定实际普通CLI命令与独立行为验证。账本状态通过devlog工具维护，每项的完成证据是实际实现、真实检查和文件产物。

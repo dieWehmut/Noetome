@@ -12,7 +12,7 @@
 
 ## Global Constraints
 
-- 当前唯一活动任务B04-T03；用户2026-11-03明确要求去掉系统标题栏、仅保留菜单一行，追加下述Task3窗口栏纠正。除此以外不推进GUI/OCR/完整图谱或生产Vault。
+- 本计划执行期间唯一活动任务B04-T03；用户2026-11-03明确要求去掉系统标题栏、仅保留菜单一行，追加下述Task3窗口栏纠正。除此以外不推进GUI/OCR/完整图谱或生产Vault。
 - 普通CLI四路径参数；新输出根；原来源、原gold、六次响应和已保存预算只读不变；本任务新网络/付费调用0。
 - Schema1 review/decision/保存API包装严格，gold1保持原调用前字节；gold2专用于独立作者例外/未知工程样例。
 - selection恰一单位；候选1 MiB、其余文件64 KiB；每类候选实体1024；条件/例外每类8、字符串1024 UTF8字节；来源输入1 MiB；30秒。
@@ -104,7 +104,7 @@ with self.assertRaises(AssertionError):
 
 - [x] **Step 4: 更新标准并提供实际验证报告。** independent单元GREEN和矩阵普通CLI实际运行后填B04-T03，不写未跑数字。Task2提交脚本/测试/标准与真实小证据；最终完整Rust/Python、真实原源/六响应/模型保存配置+预算的前后不变、鲜审查由根执行并归档。脚本审查不重跑模型或解密凭据。
 
-- [ ] **Step 5: 根最终完成。**
+- [x] **Step 5: 根最终完成。**
 
 ```text
 ./scripts/cargo_local.ps1 fmt --all --check
@@ -144,6 +144,8 @@ git diff --check
 **Sequence:**
 - [x] Fresh implementer先保存现有配置/实际UI的单行目标RED，再做最小改动；只运行针对性TypeScript/前端检查，保留日志与源指纹。不得运行cargo或安装、修改独立Python、dev-log、凭据、预算；Git提交待root协调。
 - [x] 新鲜Task3 spec+quality审查并修复必要问题，根执行实际NSIS构建/更新安装、完整窗口/操作验证与现有菜单回归，保存原生证据及被测程序指纹。
-- [ ] 最终完整Rust/Python检查及most-capable整分支审查包含这一用户纠正；仅在知识验收和单行窗口栏均满足后complete当前卡、提交推送。随后最多规划下一批三项。
+- [x] 最终完整Rust/Python检查及most-capable整分支审查包含这一用户纠正；仅在知识验收和单行窗口栏均满足后complete当前卡、提交推送。随后最多规划下一批三项。
 
 Task1→Task2仅外部CLI/严格JSON接口相依，文件责任不重叠，按顺序fresh implementer/fresh task reviewer。真实gold之前已存在，新语法只声明来源解释规则并明示时间；本范围拒绝排除源内已纳入事实。独立判据允许文本相同含义的受控标点/空白/条件连接符，不增大正式准确率声明。最终review使用most-capable模型只读精确提交diff/证据，禁止额外网络或生产资料访问。
+
+最终收束：devlog complete及check实际通过，提交`b3d40a02b0eb3a8905c190b2b78442a4c9121c29`已正常推送并以ls-remote核对相同，[远端收据](../validation/assets/B04-T03-final-closure-remote.json)保留实际命令。B04R全部完成后仅新增下一批三张todo卡并切批次，不start产品实现；见[近期步骤](NEXT_STEPS.md)。
