@@ -1,6 +1,6 @@
 # Noetome 最小数据契约
 
-本文件定义空项目、桌面窗口偏好、文本与PDF来源登记、独立PDF解析沙盒、离线fake候选及fixture闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
+本文件定义空项目、桌面窗口偏好、文本与PDF来源登记、独立PDF解析沙盒、离线fake与文本API候选及fixture闭环所需的逻辑字段、引用和不变量。它不是完整数据库 DDL，也不冻结未来所有学科对象。产品语义见 [PRD](../requirements/PRD.md)，处理顺序见 [工程架构](ARCHITECTURE.md)。
 
 实现状态以[任务账本](../../dev-log/tasks.json)和对应验证记录为准；本文件的字段清单本身不是能力验收记录。后续真实解析、模型与研究能力必须通过带版本的扩展进入，不能把缺失值编造成已有结果。
 
@@ -28,6 +28,16 @@
 候选复用Concept/KnowledgeAtom的通用ID、修订、明文及唯一引用规则；fake原子固定required=false、verification=unverified且有有效supports。measurement必填可空，unknown数值为null并保留已知单位，条件和单位保留在qualifiers。所有DTO拒绝未知版本/枚举、多余或重复字段、缺少必填nullable项和尾随JSON。
 
 fake按完整UTF8字节计量并在一次回放前预留预算；真实模型tokenizer、模型用量和价格为null，网络及付费调用实测为0。来源和fake输入守卫贯穿验证及保存，缓存硬链接在语义读取前拒绝；最终核对身份、字节、mtime及清单。新输出根仅保存请求、原响应、成功候选和JSON/Markdown验证快照；失败不保存candidates.json，不发布知识。
+
+### B04-T02 单请求文本API
+
+独立契约[EXTRACTION_API_CONTRACT.md](EXTRACTION_API_CONTRACT.md)固定配置与API候选Schema1。API输出只有schema_version、request_id、binding、concepts、evidence、atoms；Core保存的候选包装及报告明确producer=api、transport_mode与provider，不让模型自封来源类型，也不转换成fake DTO。领域候选与fake共用同一纯校验，来源绑定及资源内UTF8证据语义沿用T01，非零Span或PDF区域的anchor保留真实绝对起点。
+
+配置只读且严格，凭据为配置指名的外部环境变量引用。live限定官方HTTPS Responses；local_http_test限定数字环回、明确端口与人工noetome-test-模型/凭据。请求正文保存实际字节与SHA；input_reserved_tokens为正文UTF8字节数加1024的工程预留，model_tokenizer=null。一次调用前预留输入加输出，返回用量必须为有效非负整数且总量、输入和输出分别满足限额；未知价格为null，金额预算但价格未知时不请求。
+
+text_api_extraction报告Schema1区分配置模型和返回模型、实际网络尝试、HTTP状态、完整/partial、原响应收据及已验证用量。完整200响应的元数据核对独立于候选、refusal与incomplete；无效/缺失用量为null，失败不会抹去已经核对的真实计量。安全原响应保持原字节；凭据回显含嵌套/转义JSON时只保存收取长度/SHA和省略原因，不持久化泄密原文或候选。JSON与Markdown携带同一完整验证快照，产物指纹来自实际文件。
+
+候选成功仍unverified、knowledge_status=pending、published=false、scientific_quality=not_run；本地假HTTP服务的真实模型/付费调用为0。API接入不改来源Schema/SQL/pending，不登记KnowledgeIR/Run/Release。离线通过与真实服务验收分别记录；真实配置和明确预算未提供时不能complete B04-T02。
 
 ### B03-T01 parser sidecar 协议
 

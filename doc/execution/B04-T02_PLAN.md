@@ -67,11 +67,11 @@ pub(crate) fn request_body(
 ) -> Result<Vec<u8>, crate::project::ProjectError>;
 ```
 
-- [ ] 写本地 TCP listener 和 wire 变异测试，实跑 RED：一 POST/HTTP 错误，超时/partial，重复 key、缺用量、refusal/incomplete、非法候选 nullable。先确认失败来自新增行为。
-- [ ] 实现默认验证 native TLS、no_proxy/redirect none/retry never、HTTP1、future 与 5 ms 停止检查；完整/partial 实际字节由 TransportResult 保留。静态错误码：EXTRACT_API_TRANSPORT、EXTRACT_API_TRUNCATED、EXTRACT_RESPONSE_LIMIT、EXTRACT_API_HTTP_AUTH、EXTRACT_API_HTTP_RATE_LIMIT、EXTRACT_API_HTTP_SERVER、EXTRACT_API_HTTP_STATUS；control 的原 EXTRACT_TIMEOUT/CANCELLED 保持。
-- [ ] Schema 给真实单位提供完整 quote/字节边界/SHA anchor，start/end 复制 unit.start_byte/end_byte，是引用资源内的绝对 UTF8 范围，不从 unit.text 的 0 重新计数；加入非零起点 RED。输出严格 SourceBinding/领域对象，全部对象 required+additionalProperties=false、measurement 可空；不在 output 请求 fake producer。发送 spec 列出的实际参数。
-- [ ] 完整 wire 允许未来元数据但拒绝所有重复 key/尾随 JSON。completed/error-null/incomplete-null、一个 assistant output_text；reasoning 元数据可保留，不接受工具。用量基础整数加总正确；详细项有则验证类型，缺则保持缺失。错误码 EXTRACT_API_RESPONSE/STATUS/INCOMPLETE/REFUSAL/OUTPUT/USAGE/CANDIDATES。
-- [ ] targeted cargo tests GREEN；worker 自检并写报告到本计划 SDD workspace。controller 派 fresh task reviewer，重要问题复现修复后提交此能力。
+- [x] 写本地 TCP listener 和 wire 变异测试，实跑 RED：一 POST/HTTP 错误，超时/partial，重复 key、缺用量、refusal/incomplete、非法候选 nullable。先确认失败来自新增行为。
+- [x] 实现默认验证 native TLS、no_proxy/redirect none/retry never、HTTP1、future 与 5 ms 停止检查；完整/partial 实际字节由 TransportResult 保留。静态错误码：EXTRACT_API_TRANSPORT、EXTRACT_API_TRUNCATED、EXTRACT_RESPONSE_LIMIT、EXTRACT_API_HTTP_AUTH、EXTRACT_API_HTTP_RATE_LIMIT、EXTRACT_API_HTTP_SERVER、EXTRACT_API_HTTP_STATUS；control 的原 EXTRACT_TIMEOUT/CANCELLED 保持。
+- [x] Schema 给真实单位提供完整 quote/字节边界/SHA anchor，start/end 复制 unit.start_byte/end_byte，是引用资源内的绝对 UTF8 范围，不从 unit.text 的 0 重新计数；加入非零起点 RED。输出严格 SourceBinding/领域对象，全部对象 required+additionalProperties=false、measurement 可空；不在 output 请求 fake producer。发送 spec 列出的实际参数。
+- [x] 完整 wire 允许未来元数据但拒绝所有重复 key/尾随 JSON。completed/error-null/incomplete-null、一个 assistant output_text；reasoning 元数据可保留，不接受工具。用量基础整数加总正确；详细项有则验证类型，缺则保持缺失。错误码 EXTRACT_API_RESPONSE/STATUS/INCOMPLETE/REFUSAL/OUTPUT/USAGE/CANDIDATES。
+- [x] targeted cargo tests GREEN；worker 自检并写报告到本计划 SDD workspace。controller 派 fresh task reviewer，重要问题复现修复后提交此能力。
 
 ## Task 2：配置、Core 校验、报告与普通入口
 
@@ -79,18 +79,18 @@ pub(crate) fn request_body(
 
 **接口**：公开 `extraction_api::run(project:&Path, import_id:&str, config:&Path, output:&Path, cancel:Option<&Path>) -> Result<source::CommandOutput, ProjectError>`。source::CommandOutput 复用 json 与 failure；fake::fake 的签名和 v1 交换保持原样。共享 `validate_candidates(units, concepts, evidence, atoms, control, cancelled, signal)` 使用领域切片，不造 producer=fake 的 API payload。
 
-- [ ] 阅读作者普通 CLI RED。为 config 严格 DTO/环回与官方 endpoint/明确外部凭据、secret echo/预算停止补 meaningful RED；配置以普通读取守卫持有至最后，不能扫描目录正文。
-- [ ] 加载来源并预检路径、取消和凭据；组装 Task1 body，实际 bytes+1024 预留，不足/金额未知 0 次请求。secret 含于 request 时调用前拒绝；local test 的人工 key/model 强制前缀。
-- [ ] 使用 send 一次，记录真实 attempts/status/partial；响应含凭据或 JSON 转义回显时省略原文，只保存已收 SHA/长度及错误，绝不保存候选。稳定诊断不含远端错误正文。
-- [ ] 对完整 200 response 先独立 response_metadata 核对 id/model/usage，候选/refusal/incomplete 失败也保留已验证计量；partial/non-200 不信任片段用量。随后 decode，核对 input/output/total 预算、request_id/真实 binding。共享严格领域校验通过后 candidates_validated；所有原子 unverified、pending、published=false。
-- [ ] 使用 API owner 与全新 OutputRoot 保存 request.json、request-body.json、原 response.bin、仅成功 candidates.json、同事实 JSON/MD 验证快照和实际指纹。保存前后 verify source/config/output，失败按已捕获能力 discard_result，人工文件保留。
-- [ ] 接线 `extract api`、help 与 native 路径/--cancel-file；实跑作者 tests/extraction_api.rs 和旧 extract fake/fixture GREEN。fresh task review 后提交。
+- [x] 阅读作者普通 CLI RED。为 config 严格 DTO/环回与官方 endpoint/明确外部凭据、secret echo/预算停止补 meaningful RED；配置以普通读取守卫持有至最后，不能扫描目录正文。
+- [x] 加载来源并预检路径、取消和凭据；组装 Task1 body，实际 bytes+1024 预留，不足/金额未知 0 次请求。secret 含于 request 时调用前拒绝；local test 的人工 key/model 强制前缀。
+- [x] 使用 send 一次，记录真实 attempts/status/partial；响应含凭据或 JSON 转义回显时省略原文，只保存已收 SHA/长度及错误，绝不保存候选。稳定诊断不含远端错误正文。
+- [x] 对完整 200 response 先独立 response_metadata 核对 id/model/usage，候选/refusal/incomplete 失败也保留已验证计量；partial/non-200 不信任片段用量。随后 decode，核对 input/output/total 预算、request_id/真实 binding。共享严格领域校验通过后 candidates_validated；所有原子 unverified、pending、published=false。
+- [x] 使用 API owner 与全新 OutputRoot 保存 request.json、request-body.json、原 response.bin、仅成功 candidates.json、同事实 JSON/MD 验证快照和实际指纹。保存前后 verify source/config/output，失败按已捕获能力 discard_result，人工文件保留。
+- [x] 接线 `extract api`、help 与 native 路径/--cancel-file；实跑作者 tests/extraction_api.rs 和旧 extract fake/fixture GREEN。fresh task review 后提交。
 
 ## Task 3：独立离线审计、真实 gate 与收尾
 
 **文件**：controller 新增 scripts/validate_extraction_api.py、doc/validation/B04-T02.md 与脱敏资产，更新 DESIGN/TESTING/ARCHITECTURE/DATA_CONTRACTS/docREADME/NEXT_STEPS；测试来源/gold沿用冻结的 fixtures/extraction-gateway-v1，不能以本次输出重写期待值。
 
-- [ ] 独立本地 HTTP 服务记录实际 POST 数、无认证 body、结构化 Schema/限制，普通 CLI 覆盖 spec 失败矩阵；直接 SQL/文件 SHA/mtime/清单核对来源，检查双报告快照和真实产物。保留失败证据并复现修复。
+- [x] 独立本地 HTTP 服务记录实际 POST 数、无认证 body、结构化 Schema/限制，普通 CLI 覆盖 spec 失败矩阵；直接 SQL/文件 SHA/mtime/清单核对来源，检查双报告快照和真实产物。保留失败证据并复现修复。
 - [ ] 配置/预算收到后核查用户选定模型的官方能力/当前价格规则，只运行一次指定 Span ordinal=0 的有界真实调用。保存实际原响应/返回模型/用量和 Core 核对；未经这些条件不调用、不算完成。
 - [ ] 运行 cargo fmt/check/workspace test（显式 4 test threads）、Python unittest、独立 CLI、devlog/diff；fresh broad spec+quality review，无未处置重要问题。
 - [ ] 实际 gate 满足才 devlog complete；否则对离线已实现/检查和缺少的 provider/endpoint/model/env ref/预算作具体记录，devlog block。普通检查通过后分步提交并 push 当前分支，核对远端 HEAD。不把 block 写成 complete，不启动依赖 T03。
@@ -98,3 +98,5 @@ pub(crate) fn request_body(
 ## 自检
 
 Task1 的 send/decode/request_body 三签名在 Task2 原样消费；Task1/Task2 顺序改 lib.rs，不并发编辑。Task3 用普通入口和固定作者 gold，报告只读核对而不调用生产 validator 作知识 oracle。T02 真实 gate 在 spec、任务卡、计划和账本一致；配置缺失只限制实际付费步骤，不能掩盖工程工作或改写验收。
+
+Task1组件18项及Task2静态审查/帮助复审通过；最终workspace480、Python44、独立API84/90CLI/54本地POST和旧fake54/60CLI均通过。前述checkbox仅指已实际完成的离线工作，真实调用门槛仍未满足。组件/审计失败历史、文件指纹和实际最终二进制见[验证记录](../validation/B04-T02.md)。
