@@ -195,3 +195,10 @@ T13/T14另外通过测试构建的内部callback和真实子进程覆盖：实�
 首闭环验收必须同时具备：可复现离线运行、审阅过的 fixture、全部必需矩阵通过、无未批准写入、无已知必要覆盖缺口、真实报告和清楚的未实现能力列表。
 
 允许交付一个范围很小但可信的闭环；不允许通过跳过保护、隐藏失败或把模拟能力当成真实能力扩大完成声明。
+## B04-T03独立来源核对验收
+
+独立审计器的测试必须在实现前对真实普通CLI输出的伪造副本取得行为RED。不能用报告自身passed/数量/readonly作为依据；作者gold在任何CLI/synthetic响应前冻结，直接核对只读SQLite、实际资源SHA和UTF8切片。错误事实保留正确quote/measurement仍须失败；必要condition/unit/exception同时从相关字段删除也须检测。逐对象身份/状态、附加概念数量、错误成功或错误失败、IR替换、输入副本指纹与JSON/Markdown不一致都须独立识别。
+
+运行 `python scripts/verify_extraction_knowledge.py --binary <absolute-noetome> --output <nonexistent-root>`。脚本用当前Python解释器启动现有PDF parser，需同一运行时具备既有PDF依赖和ReportLab；仓库不硬编码本机运行时路径。矩阵分别统计工程场景与知识样本，每份报告的expected分母为1；正确拒绝是工程通过，不能算知识通过。实际重复JSON键数量保留null，空例外denominator0/not_applicable，pending/review保留已观察失败。原第六保存live输入仅由最终控制流程使用四个成组 `--live-*` 参数，在调用前读固定gold/candidate，并复核其确切SHA；不新增模型调用。
+
+本轮Task2已实际通过19项focused Python测试和52场景/60次普通CLI离线矩阵，其中真实作者中文文本PDF按固定句子、物理页、实际登记资源/SQL区域/bbox对账。完整Rust/Python、原六输入、日志和整分支新鲜审查仍由根执行，不能由这些局部数字推定完成。原始RED/失败根/最终矩阵证据和局限见[B04-T03验证](../validation/B04-T03.md)。

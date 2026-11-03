@@ -1,0 +1,41 @@
+...FF...........FF.
+======================================================================
+FAIL: test_false_additional_concept_count (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_false_additional_concept_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 169, in test_false_additional_concept_count
+    with self.assertRaisesRegex(AssertionError, "concept.*count"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_false_failure_of_correct_candidate (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_false_failure_of_correct_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 186, in test_false_failure_of_correct_candidate
+    with self.assertRaisesRegex(AssertionError, "independent.*status"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_wrong_candidate_result_identity (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_wrong_candidate_result_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 174, in test_wrong_candidate_result_identity
+    with self.assertRaisesRegex(AssertionError, "result.*identity"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_wrong_candidate_result_state (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_wrong_candidate_result_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 179, in test_wrong_candidate_result_state
+    with self.assertRaisesRegex(AssertionError, "result.*state"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.292s
+
+FAILED (failures=4)

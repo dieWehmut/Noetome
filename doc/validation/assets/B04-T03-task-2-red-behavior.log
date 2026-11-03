@@ -1,0 +1,131 @@
+.FFFFFFFFFFFFFF
+======================================================================
+FAIL: test_fabricated_actual_counts (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_fabricated_actual_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 122, in test_fabricated_actual_counts
+    with self.assertRaisesRegex(AssertionError, "count"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_fabricated_denominator (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_fabricated_denominator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 117, in test_fabricated_denominator
+    with self.assertRaisesRegex(AssertionError, "denominator"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_false_provenance (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_false_provenance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 159, in test_false_provenance
+    with self.assertRaisesRegex(AssertionError, "origin|provenance"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_false_source_binding (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_false_source_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 134, in test_false_source_binding
+    with self.assertRaisesRegex(AssertionError, "binding|source"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_false_source_sha (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_false_source_sha)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 144, in test_false_source_sha
+    with self.assertRaisesRegex(AssertionError, "source|SHA"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_false_source_slice (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_false_source_slice)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 139, in test_false_source_slice
+    with self.assertRaisesRegex(AssertionError, "source|slice"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_forged_pass_missing_conditions (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_forged_pass_missing_conditions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 107, in test_forged_pass_missing_conditions
+    with self.assertRaisesRegex(AssertionError, "condition|IR"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_forged_pass_missing_exception (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_forged_pass_missing_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 112, in test_forged_pass_missing_exception
+    with self.assertRaisesRegex(AssertionError, "exception|IR"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_forged_pass_wrong_fact (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_forged_pass_wrong_fact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 97, in test_forged_pass_wrong_fact
+    with self.assertRaisesRegex(AssertionError, "fact|content|IR"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_forged_pass_wrong_unit (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_forged_pass_wrong_unit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 102, in test_forged_pass_wrong_unit
+    with self.assertRaisesRegex(AssertionError, "unit|IR"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_json_markdown_mismatch (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_json_markdown_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 154, in test_json_markdown_mismatch
+    with self.assertRaisesRegex(AssertionError, "Markdown"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_swapped_ir (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_swapped_ir)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 129, in test_swapped_ir
+    with self.assertRaisesRegex(AssertionError, "IR|fingerprint"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_unknown_state_cannot_keep_ir (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_unknown_state_cannot_keep_ir)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 164, in test_unknown_state_cannot_keep_ir
+    with self.assertRaisesRegex(AssertionError, "IR|status"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_wrong_copied_input_fingerprint (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_wrong_copied_input_fingerprint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 149, in test_wrong_copied_input_fingerprint
+    with self.assertRaisesRegex(AssertionError, "fingerprint"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.261s
+
+FAILED (failures=14)

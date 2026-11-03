@@ -256,3 +256,8 @@ B01A按用户确认管理窗口关闭事件：×默认隐藏原窗口到托盘�
 下一步只引入一个新的不确定因素，例如真实 PDF 解析或单一 API 抽取。对每项能力先用小样本建立支持和失败边界，再扩大资料规模；不以提前搭完整 GUI 取代核心验证。
 
 测试门槛与 fixture 管理见 [测试标准](../standards/TESTING.md)。任何改变 PRD 硬约束的工程简化都必须明确记录，不能只改实现并让文档自动失效。
+## 有界离线来源核对
+
+B04-T03在现有只读SourceSession和严格ApiCandidates之上增加普通 `extract verify`。review/decision/gold各自严格解析，受控中文单测量判据分开核对来源、关联概念、正文事实、measurement、必要条件/单位/例外、覆盖和排除。仅全部通过保存source_review IR；unknown、来源needs_review和pending仍无成功IR。报告包含实际输入与产物SHA、逐对象四状态和真实分母，不把API传输成功提升为科学正确。
+
+[独立审计脚本](../../scripts/verify_extraction_knowledge.py)不导入Rust验证器：在调用前冻结作者gold，直接从只读SQLite重建来源身份，读取规范文本或实际登记PDF的资源、范围和bbox，再独立计算知识判据/数量及校验IR和双报告。工程矩阵包含一个先作者化中文句子、后经现有解析器登记的真实文本PDF；这仅证明受控样本闭环，不证明通用PDF语义、OCR或正式科学质量。实际验证范围见[B04-T03](../validation/B04-T03.md)。
