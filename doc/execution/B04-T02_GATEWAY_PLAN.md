@@ -60,6 +60,14 @@ Chat wire必须严格单对象、无任何层重复key、唯一choices[0]、inde
 
 Chat新鲜组件审查另指出一项minor：同时返回prompt_cache_hit_tokens与prompt_cache_miss_tokens时，官方约定两者加总为prompt_tokens。主prompt/completion/total计量与累计预算不受此缺口影响；controller裁定在最终全仓检查前补齐该已文档化的一致性校验。只改Chat wire及一个涵盖有效/不一致/缺一项/非法值的native回归，先真实RED再GREEN；缺省仍未知、不生成缓存Token、不改任何原响应或已结算记录，之后作窄范围关闭审查。
 
+### Task 2 Chat 实际候选包装层修复
+
+第三次真实Chat请求HTTP200、finish_reason=stop，返回完整JSON，有效prompt1583/completion3329/total4912已结算；累计15531、余额9984469、pending0。response.message仍有10305字节reasoning_content，不能声称thinking开关已生效。候选atoms数组把Atom字段展开到了数组元素本身，缺少Schema要求的{atom,measurement}包装；因此Core严格DTO拒绝EXTRACT_API_CANDIDATES，原响应SHA6ed4b15a330aeb8d552d8bd7ef2d684345427d662cbb54b2aae4b1a5732fb04b保留。实际statement/not_applicable属于现有合法enum，不改枚举。
+
+仅对所选Chat补充清晰的包装层提示，策略版本更新为tangmao-deepseek-chat-nested-atoms-v4。user仍恰好task/response_schema/request，原Schema、source/binding/units/anchor、system基础指令、endpoint/provider/thinking/JSON Object和全部限额保持。task明确每个atoms元素只含atom与measurement两个键，atom_id等十个Atom字段全部放在atom内，measurement只作同级对象或null；遵循原Schema，不修补实际响应、不通过展平/包裹后处理使其成功。条件留在对应事实/qualifiers/measurement.conditions，来源署名等元信息不作为学科知识；不写入gold中的具体事实作为输出模板。
+
+原实施者只改config版本及schema提示/native测试，必要时加入授权原第三响应的严格拒绝回归；controller维护普通CLI/独立Chat验证的版本断言。提示先编译真实RED再实现，第三原响应仍必须拒绝且有效4912不得丢失。新鲜窄范围审查后运行最终相关回归，在同一累计余额内只执行一次新请求，保持三次失败、原配置与调用前gold。T02尚未complete，T03仍todo。
+
 ## Task 3: 累计预算与真实小范围验收
 
 controller 在仓库外当前用户 Noetome 设置目录保存非秘密服务、模型、credential_env/DPAPI引用、累计10000000 Token上限和使用记录。所有后续调用先查剩余额度；已知实际用量累计，未知用量保留工程预留，不把额度每次重置。首冒烟 max_requests=1、max_output_tokens<=8192、max_response_bytes<=1MiB、timeout_ms<=60000，费用未知保持null。

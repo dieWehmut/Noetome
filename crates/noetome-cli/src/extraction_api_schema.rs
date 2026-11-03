@@ -23,13 +23,19 @@ pub(crate) fn request_body(
     let request = json!({"request_id":request_id,"binding":binding,"units":units,"evidence_anchors":evidence_anchors});
     let instructions = "Extract only evidence-supported concepts and atomic claims from the selected text units. Return one JSON object matching the supplied strict schema, copying request_id and binding exactly. Full-unit evidence_anchors provide exact UTF8 byte offsets in the referenced source resource, quote and SHA256. Copy the resource-absolute start/end offsets from the supplied anchors; preserve the quote and its SHA256. Preserve conditions, exceptions and units. Every atom must have required=false and verification=unverified. Use null for unknown measurement/value/unit and explicit value_status. Do not invent scientific verification or producer provenance.";
     let schema = candidate_schema();
-    let input_value = match strategy {
+    let mut input_value = match strategy {
         RequestStrategy::OpenAiStrict => request,
         RequestStrategy::TangmaoDeepseek | RequestStrategy::TangmaoChat => json!({
             "task":format!("{instructions} Return exactly one plain JSON object; no Markdown, code fences, explanations or additional text."),
             "response_schema":schema,"request":request,
         }),
     };
+    if matches!(strategy, RequestStrategy::TangmaoChat) {
+        input_value["task"] = json!(format!(
+            "{} Each element of atoms must have exactly two top-level keys: atom and measurement. Put all ten Atom fields atom_id, concept_ids, content, evidence_links, kind, qualifiers, required, revision, value_status, verification inside atom. measurement is a sibling of atom: either null or an object with exactly conditions, unit, value, value_status. Do not flatten Atom fields into the outer array element. Associate each claim's conditions and applicability qualifiers with that claim; measurement.conditions must express its actual conditions. Keep source registration, parsing, processing and provenance metadata as evidence context, not as subject knowledge, concepts or scientific claims.",
+            input_value["task"].as_str().expect("selected task")
+        ));
+    }
     let input = serde_json::to_string(&input_value).map_err(|_| request_error())?;
     let mut body = json!({
         "model":model,"instructions":instructions,
@@ -115,7 +121,7 @@ mod tests {
     use super::*;
     use crate::extraction_model::Locator;
     #[test]
-    fn chat_fix_disabled_thinking_body_keeps_complete_inline_schema_and_nonzero_anchor() {
+    fn shape_fix_chat_task_demands_nested_atom_measurement_and_keeps_request() {
         let binding: SourceBinding = serde_json::from_value(json!({"project_id":"p","import_id":"i","source_id":"s","version_id":"v","content_sha256":"sha","normalized_sha256":null,"parse_id":null,"manifest_sha256":null})).unwrap();
         let units = [RequestUnit {
             unit_id: "u".into(),
@@ -176,9 +182,32 @@ mod tests {
         assert_eq!(body["messages"][0]["role"], "system");
         assert_eq!(body["messages"][0]["content"], old["instructions"]);
         assert_eq!(body["messages"][1]["role"], "user");
-        assert_eq!(body["messages"][1]["content"], old["input"]);
         let user: Value =
             serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
+        for phrase in [
+            "two top-level keys: atom and measurement",
+            "inside atom",
+            "sibling of atom",
+            "Do not flatten",
+        ] {
+            assert!(user["task"].as_str().unwrap().contains(phrase), "{phrase}");
+        }
+        let previous_user: Value = serde_json::from_str(old["input"].as_str().unwrap()).unwrap();
+        assert!(
+            user["task"]
+                .as_str()
+                .unwrap()
+                .starts_with(previous_user["task"].as_str().unwrap())
+        );
+        assert_eq!(user["request"], previous_user["request"]);
+        assert_eq!(
+            user.as_object()
+                .unwrap()
+                .keys()
+                .map(String::as_str)
+                .collect::<Vec<_>>(),
+            ["request", "response_schema", "task"]
+        );
         assert_eq!(user["response_schema"], old["text"]["format"]["schema"]);
         assert_eq!(
             user["request"]["evidence_anchors"][0]["excerpt_start_byte"],

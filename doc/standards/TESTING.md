@@ -166,7 +166,7 @@ Writer在准备、版本发布、parse发布、数据库发布、配置发布、
 
 本机凭据脚本以公开synthetic key在Windows PowerShell5.1/7实跑DPAPI往返、仓库外新文件/链接保护、真实硬链接拒绝、同一句柄有界读取、子入口参数/环境/退出码、输出回显遮蔽及父环境保持。WPF控件创建和无效Save事件只能证明该入口行为，不能代替操作者真实输入/保存，也不能表示模型调用成功。所有真实key不进入参数、仓库或测试输出；后续调用先核对保存的累计剩余额度，未知用量保留预留。
 
-实际保存进程与0请求DPAPI复用独立于上述synthetic测试。所选Responses两次真实失败的用量分别936和9683，原响应保持；v2原生自足输入/稀疏completed先RED后GREEN、新鲜98项审查及完整488回归不代替真实候选成功。Chat精确入口以两个普通CLI真实RED和native RED开始，`scripts/validate_extraction_chat.py`共用原独立来源/新根检查，另核对messages中完整Schema/绝对anchor、thinking disabled、JSON Object、原始及规范prompt/completion计量。34场景覆盖length/拒答/工具/多choice/重复候选/非法用量、费用未知停止、凭据回显与来源人工场景；所有live拒绝场景设0预算，不向外部服务发送回归请求。最终程序变化后用新根绑定实际指纹，再执行一次预算内真实验证，不把截断JSON修补成候选。
+实际保存进程与0请求DPAPI复用独立于上述synthetic测试。所选Responses两次真实失败的用量分别936和9683，原响应保持；v2原生自足输入/稀疏completed先RED后GREEN、新鲜98项审查及完整488回归不代替真实候选成功。Chat精确入口以两个普通CLI真实RED和native RED开始，`scripts/validate_extraction_chat.py`共用原独立来源/新根检查，另核对messages中完整Schema/绝对anchor、thinking disabled、JSON Object、原始及规范prompt/completion计量。34场景覆盖length/拒答/工具/多choice/重复候选/非法用量、费用未知停止、凭据回显与来源人工场景；所有live拒绝场景设0预算，不向外部服务发送回归请求。第三次Chat完整JSON展平Atom字段，有效4912仍保留且严格候选失败；v4先以缺少嵌套提示取得真实RED，仅改提示，不放宽{atom,measurement}结构、合法枚举或原响应。最终程序变化后用新根绑定实际指纹，再执行一次预算内真实验证，不把截断或错误结构修补成候选。
 
 ### 模型 API 与研究
 

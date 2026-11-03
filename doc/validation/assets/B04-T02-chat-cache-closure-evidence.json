@@ -1,0 +1,108 @@
+{
+  "base": "1b699d2bc9e30342953d7a687a4385a0bcb74eee",
+  "head": "94b0ebb40bb43cb5cdb72d924a40cf2d0893fa10",
+  "finding": "optional cache pair checked sum",
+  "finding_verdict": "ADDRESSED",
+  "scoped_verdict": "PASS",
+  "new_breakage": [],
+  "checks": [
+    {
+      "name": "only Chat wire source changes",
+      "passed": true
+    },
+    {
+      "name": "both-present checked sum is in immutable fix",
+      "passed": true
+    },
+    {
+      "name": "scoped source matches retained fingerprint",
+      "passed": true
+    },
+    {
+      "name": "source patch matches retained fingerprint",
+      "passed": true
+    },
+    {
+      "name": "retained red",
+      "passed": true
+    },
+    {
+      "name": "retained green",
+      "passed": true
+    },
+    {
+      "name": "GREEN has no Rust warning",
+      "passed": true
+    },
+    {
+      "name": "retained owned-fmt",
+      "passed": true
+    },
+    {
+      "name": "retained diff-check",
+      "passed": true
+    },
+    {
+      "name": "task phase unchanged",
+      "passed": true
+    }
+  ],
+  "fingerprints": {
+    ".superpowers/sdd/B04-T02_GATEWAY_PLAN/review-1b699d2..94b0ebb.diff": {
+      "sha256": "48612cae0ab173eaa692b28e977e6b49eedf727420409ddefaa41c53198acb6b",
+      "bytes": 23270
+    },
+    "doc/validation/assets/B04-T02-chat-cache-fix-artifacts.json": {
+      "sha256": "2dc7ba95683d7c42deb5a524b9d33ce57d0b2d98cf1414264770ea205caf22d3",
+      "bytes": 228
+    },
+    "crates/noetome-cli/src/extraction_api_wire/chat.rs": {
+      "sha256": "81d25f2d69f5ebe4dcea6878513149c1bc809b1216b0199f40b63cff74181612",
+      "bytes": 11311
+    },
+    "doc/validation/assets/B04-T02-chat-cache-fix-source-patch.json": {
+      "sha256": "5d237d8417e7195839699d14912a66f6331d09341ee6dc8df7756d585b46001c",
+      "bytes": 3231
+    },
+    "doc/validation/assets/B04-T02-chat-cache-fix-red.json": {
+      "sha256": "bb76be38ed264e4d309b86dbcc01993618a3e299c6be0d8f44d243feefc1c1dd",
+      "bytes": 2074
+    },
+    "doc/validation/assets/B04-T02-chat-cache-fix-green.json": {
+      "sha256": "314c54fbbb371d3a19f616560573a61747dc8492a49e706172fd217affa25b09",
+      "bytes": 1065
+    },
+    "doc/validation/assets/B04-T02-chat-cache-fix-owned-fmt.json": {
+      "sha256": "fd95292782348030edef6fc3891d022975ee0c58e2faf1fec469d038db8a2706",
+      "bytes": 197
+    },
+    "doc/validation/assets/B04-T02-chat-cache-fix-diff-check.json": {
+      "sha256": "749f09117fda30fba5d13bee95b9e3928ff165329397a73983d8e12e59a67480",
+      "bytes": 331
+    },
+    "dev-log/tasks.json": {
+      "sha256": "2f547357b5f955c0957367c463cebb3fc24422e2fa1979c24bae9c78e26b6de5",
+      "bytes": 72690
+    }
+  },
+  "retained_results": {
+    "red": {
+      "exit_code": 1,
+      "test_summary": "0 passed; 1 failed"
+    },
+    "green": {
+      "exit_code": 0,
+      "test_summary": "4 passed; 0 failed"
+    },
+    "owned-fmt": {
+      "exit_code": 0,
+      "test_summary": null
+    },
+    "diff-check": {
+      "exit_code": 0,
+      "test_summary": null
+    }
+  },
+  "reviewer_tests_builds_network_private_reads": 0,
+  "limits": "One finding and fix diff only; no full component, workspace or real-call acceptance."
+}

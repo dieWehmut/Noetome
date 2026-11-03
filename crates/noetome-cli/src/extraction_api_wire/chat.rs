@@ -109,6 +109,16 @@ pub(super) fn decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
 mod tests {
     use super::*;
     #[test]
+    fn shape_fix_original_third_flattened_candidate_stays_rejected_with_usage() {
+        let bytes =
+            include_bytes!("../../../../doc/validation/assets/B04-T02-live-third-response.bin");
+        let parsed = response_metadata(bytes).unwrap();
+        assert_eq!(parsed.usage["input_tokens"], 1583);
+        assert_eq!(parsed.usage["output_tokens"], 3329);
+        assert_eq!(parsed.usage["total_tokens"], 4912);
+        assert_eq!(decode(bytes).unwrap_err().code(), "EXTRACT_API_CANDIDATES");
+    }
+    #[test]
     fn cache_pair_requires_checked_prompt_sum_without_inventing_absent_counters() {
         let mut v = response();
         v["usage"]["prompt_cache_hit_tokens"] = json!(8);

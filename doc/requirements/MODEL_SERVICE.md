@@ -4,12 +4,12 @@
 
 | 项目 | 已授权值 |
 | --- | --- |
-| 接口 | OpenAI Responses |
+| 当前接口 | OpenAI Chat Completions；原 Responses 配置及调用历史保留 |
 | 服务 | 糖猫云，`https://ai.1343263.xyz/` |
-| 实际请求端点 | `https://ai.1343263.xyz/v1/responses` |
+| 当前请求端点 | `https://ai.1343263.xyz/v1/chat/completions` |
 | 配置模型 | `deepseek-flash` |
 | 累计模型预算 | `10000000` Token；输入、输出及返回的 reasoning 都按实际 usage 对账 |
-| 当前首冒烟 | 一次有界请求；不自动重试或批量 |
+| 单次验证限制 | 一次有界请求；不自动重试或批量 |
 | 凭据环境变量引用 | `NOETOME_TANGMAO_API_KEY` |
 | 价格和费用 | 网关有效价格尚未核实，保持未知；使用已授权 Token 控制 |
 
@@ -39,6 +39,6 @@ powershell.exe -NoProfile -STA -File .\scripts\set_api_credential.ps1 -Credentia
 
 ## 真实验收范围
 
-首次使用作者固定的小文本、来源版本/SHA及调用前gold；Core候选通过不代表知识质量已经独立核对。用户已在本机窗口保存所选密钥，真实DPAPI复用0请求预检通过，后续直接复用。首个真实请求返回别名deepseek-flash和有效551输入/385输出/936总Token，未返回候选JSON；v2第二次返回有效1491输入/8192输出/9683总Token，但思考摘要占用输出额度，候选JSON截断。两次失败原响应均保留，累计10619、余额9989381、pending0，费用未知。按官方Chat的thinking={type:disabled}补齐同一服务的精确Chat策略，独立审查和最终检查后才保存新活动接口并再执行一个有界验证；原配置/来源/gold保持，不重新获得10M。
+首次使用作者固定的小文本、来源版本/SHA及调用前gold；Core候选通过不代表知识质量已经独立核对。用户已在本机窗口保存所选密钥，真实DPAPI复用0请求预检通过，后续直接复用。首个Responses请求计量551输入/385输出/936总Token，未返回候选JSON；v2第二次计量1491输入/8192输出/9683总Token，JSON截断。精确Chat策略经独立审查、完整497项Rust回归及127份双报告核对后，已保存为同一服务的活动接口，原profile历史保留。第三次Chat计量1583输入/3329输出/4912总Token，返回完整JSON，但atoms缺少严格Schema要求的atom包装，候选失败。三份原响应及调用前gold保持；累计15531、余额9984469、pending0，费用未知。第三次仍含reasoning_content，thinking={type:disabled}的实际执行效果未获证明。后续仅补清楚嵌套结构提示，复核后在同一剩余额度内执行一个新的有界验证，不重新获得10M。
 
 真实原响应、使用记录和严格候选核对完成后，才按任务卡验收B04-T02并进入B04-T03。假服务、公开synthetic key测试和0请求预检都不得称作真实模型成功；返回别名也不是网关底层模型版本或收费的独立证明。

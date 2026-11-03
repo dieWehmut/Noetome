@@ -1,0 +1,20 @@
+DONE for the scoped packaging-prompt fix against HEAD94b0ebb40bb43cb5cdb72d924a40cf2d0893fa10. Selected Chat strategy is now `tangmao-deepseek-chat-nested-atoms-v4`. Only the strategy string, Chat task hint and internal regression tests were changed in extraction_api_config.rs, extraction_api_schema.rs and extraction_api_wire/chat.rs. No wire production, cache-sum check, enums, schema, DTO or strict decoding was changed. statement and not_applicable remain valid existing enums. Controller files/docs/logs/task state/Git and originals were not edited.
+
+The user content remains exactly task/response_schema/request. Task retains the original prefix, then explicitly says each atoms element has “two top-level keys: atom and measurement”; all ten Atom fields are “inside atom”, measurement is a “sibling of atom” containing conditions/unit/value/value_status or null, and “Do not flatten”. Generic guidance associates each claim's conditions/qualifiers with that claim and keeps source registration/parsing/processing/provenance as evidence context instead of subject knowledge. No concrete gold values or filled output template was introduced. Original system instructions, schema, binding/units/nonzero UTF8 anchors, six Chat body fields, selected endpoint/model, disabled-thinking intent, JSON Object, budgets/limits and original official/local/selected Responses v2 bodies/versions remain.
+
+Compiled genuine native RED preceded implementation: `.\scripts\cargo_local.ps1 test --locked --offline -p noetome-cli --lib shape_fix_chat_task '--' --test-threads=1` exited1,0 passed /1 failed specifically because the existing production Chat task lacked “two top-level keys: atom and measurement”. Raw output is shape-fix-native-red.json. Pre-edit source/raw fingerprints were saved as shape-fix-before.json. Controller's prior genuine compiled ordinary CLI RED0 passed /2 failed remains root-shape-cli-red.json.
+
+After minimal implementation, the native request test checks all required nesting phrases, unchanged original task prefix, exact three user keys, unchanged request/schema/system and absolute Chinese UTF8 anchor. An exact raw third-response regression verifies independent input1583/output3329/total4912 then still requires EXTRACT_API_CANDIDATES. It reads only the explicitly authorized author-source fixture and does not wrap/repair it. Original response SHA remains6ed4b15a330aeb8d552d8bd7ef2d684345427d662cbb54b2aae4b1a5732fb04b.
+
+Actual scoped verification (all exits0, no test failures/ignored):
+
+| Command | Result | Immediate raw evidence |
+| --- | --- | --- |
+| `.\scripts\cargo_local.ps1 test --locked --offline -p noetome-cli --lib extraction_api '--' --test-threads=1` |37passed|shape-fix-native-green.json|
+| `.\scripts\cargo_local.ps1 test --locked --offline -p noetome-cli --test extraction_api '--' --test-threads=1` |7passed, including controller nesting oracles|shape-fix-cli-green.json|
+| `.\scripts\cargo_local.ps1 test --locked --offline -p noetome-cli --test extraction '--' --test-threads=1` |3passed prior fake|shape-fix-fake-green.json|
+| `.\scripts\cargo_local.ps1 check --workspace --locked --offline` |passed|shape-fix-check.json|
+| `rustfmt --check --edition 2024` with the3owned paths |passed|shape-fix-owned-fmt.json|
+| `git diff --check --` with the3owned paths |passed; only Windows LF/CRLF notices|shape-fix-diff-check.json|
+
+Complete scoped patch is shape-fix-source.patch. Exact patch/source/evidence hashes and lengths, including the original third response and preserved controller RED, are in shape-fix-artifacts.json; generation command/output is shape-fix-artifact-command.json. No actual credential/profile/private read, network/model call, fullworkspace tests, independent matrix, cleanup, commit/push or delegation occurred. Controller retains fresh review and complete acceptance/any later actual request. The third actual candidate stays rejected and reasoning-switch compliance, live knowledge quality and B04-T02 completion are not claimed. No remaining concern was observed in these scoped checks.

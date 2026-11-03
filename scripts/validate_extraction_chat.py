@@ -17,7 +17,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from validate_extraction_api import Audit, TEST_KEY, encoded, safe_text, save
 from validate_extraction_gateway import sha
 
-STRATEGY = "tangmao-deepseek-chat-json-object-no-thinking-v3"
+STRATEGY = "tangmao-deepseek-chat-nested-atoms-v4"
 
 
 class LocalChat:
@@ -129,6 +129,10 @@ class ChatAudit(Audit):
         user = json.loads(body["messages"][1]["content"])
         assert set(user) == {"task", "response_schema", "request"}
         assert user["task"].startswith(body["messages"][0]["content"]) and "plain JSON object" in user["task"]
+        for instruction in ("two top-level keys: atom and measurement", "inside atom", "sibling of atom", "Do not flatten"):
+            assert instruction in user["task"]
+        atom_item = user["response_schema"]["properties"]["atoms"]["items"]
+        assert set(atom_item["required"]) == set(atom_item["properties"]) == {"atom", "measurement"}
 
         def schema(node):
             if isinstance(node, dict):

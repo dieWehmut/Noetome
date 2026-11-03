@@ -120,6 +120,16 @@ impl Example {
 fn read_body(stream: &mut TcpStream) -> Vec<u8> {
     read_body_path(stream, "/v1/responses")
 }
+fn assert_chat_atom_shape(user: &Value) {
+    let item = &user["response_schema"]["properties"]["atoms"]["items"];
+    assert_eq!(item["required"], json!(["atom", "measurement"]));
+    assert_eq!(item["additionalProperties"], false);
+    let task = user["task"].as_str().unwrap();
+    assert!(task.contains("two top-level keys: atom and measurement"));
+    assert!(task.contains("inside atom"));
+    assert!(task.contains("sibling of atom"));
+    assert!(task.contains("Do not flatten"));
+}
 fn read_body_path(stream: &mut TcpStream, expected_path: &str) -> Vec<u8> {
     // Windows accepted sockets may inherit a nonblocking listener's mode.
     stream.set_nonblocking(false).unwrap();
@@ -469,10 +479,6 @@ fn ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request
     assert_eq!(report["errors"][0]["code"], "EXTRACT_BUDGET_STOP");
     assert_eq!(report["provider"], "openai_chat_completions");
     assert_eq!(report["usage"]["network_attempts"], 0);
-    assert_eq!(
-        report["request_strategy"],
-        "tangmao-deepseek-chat-json-object-no-thinking-v3"
-    );
     let body: Value =
         serde_json::from_slice(&fs::read(example.output.join("request-body.json")).unwrap())
             .unwrap();
@@ -487,6 +493,11 @@ fn ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request
         serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
     assert_eq!(user["response_schema"]["additionalProperties"], false);
     assert!(user["task"].as_str().unwrap().contains("plain JSON object"));
+    assert_chat_atom_shape(&user);
+    assert_eq!(
+        report["request_strategy"],
+        "tangmao-deepseek-chat-nested-atoms-v4"
+    );
     assert!(!example.output.join("candidates.json").exists());
     example.unchanged();
 }
@@ -554,6 +565,7 @@ fn ordinary_chat_local_http_maps_usage_and_accepts_author_candidates() {
         serde_json::from_slice(&fs::read(example.output.join("request.json")).unwrap()).unwrap();
     let user: Value =
         serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
+    assert_chat_atom_shape(&user);
     assert_eq!(user["request"]["request_id"], request["request_id"]);
     assert_eq!(user["request"]["binding"], request["binding"]);
     assert_eq!(user["request"]["units"], request["units"]);
@@ -562,7 +574,7 @@ fn ordinary_chat_local_http_maps_usage_and_accepts_author_candidates() {
     assert_eq!(report["provider"], "openai_chat_completions");
     assert_eq!(
         report["request_strategy"],
-        "tangmao-deepseek-chat-json-object-no-thinking-v3"
+        "tangmao-deepseek-chat-nested-atoms-v4"
     );
     assert_eq!(report["usage"]["model_usage"]["input_tokens"], 100);
     assert_eq!(report["usage"]["model_usage"]["output_tokens"], 600);
