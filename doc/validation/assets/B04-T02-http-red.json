@@ -1,0 +1,100 @@
+{
+  "expected_red": true,
+  "error": "(['extract', 'api', 'D:\\\\Noetome\\\\target\\\\compiler-temp\\\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\\\project 中文', '46fb5605-1cc1-4462-8f6c-662843e5acea', 'D:\\\\Noetome\\\\target\\\\compiler-temp\\\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\\\case-valid\\\\api-config.json', 'D:\\\\Noetome\\\\target\\\\compiler-temp\\\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\\\case-valid\\\\new output'], 2, 'CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。\\n', '')",
+  "checks": [],
+  "calls": [
+    {
+      "argv": [
+        "project",
+        "init",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\project 中文"
+      ],
+      "exit_code": 0,
+      "stdout": "结果：空项目初始化完成\n项目：D:\\Noetome\\target\\compiler-temp\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\project 中文\n项目 ID：85022177-e045-40b8-9a08-2397581bf628\nSchema 版本：1\n创建时间：2026-11-03T02:50:39.474224Z\n状态：initialized（空项目，尚未登记来源）\n配置：D:\\Noetome\\target\\compiler-temp\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\project 中文\\project.json\n数据库：D:\\Noetome\\target\\compiler-temp\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\project 中文\\project.sqlite\n单份UTF8文本通过source import登记；知识抽取和笔记生成尚未实现。\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "source",
+        "import",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\project 中文",
+        "D:\\Noetome\\fixtures\\extraction-gateway-v1\\source.txt"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema_version\": 1,\n  \"project_id\": \"85022177-e045-40b8-9a08-2397581bf628\",\n  \"import_id\": \"46fb5605-1cc1-4462-8f6c-662843e5acea\",\n  \"imported_at\": \"2026-11-03T02:50:39.5181979Z\",\n  \"selected_path\": \"D:\\\\Noetome\\\\fixtures\\\\extraction-gateway-v1\\\\source.txt\",\n  \"source_id\": \"5bbd4d07-cf0e-431e-99fe-6fad552dbe71\",\n  \"version_id\": \"b055c425-10a8-4f12-b451-fd87b3ca1543\",\n  \"status\": \"ready\",\n  \"reused\": false,\n  \"span_count\": 1,\n  \"pending_extraction_count\": 1,\n  \"knowledge_status\": \"pending\",\n  \"version\": {\n    \"source_id\": \"5bbd4d07-cf0e-431e-99fe-6fad552dbe71\",\n    \"version_id\": \"b055c425-10a8-4f12-b451-fd87b3ca1543\",\n    \"revision\": 1,\n    \"created_at\": \"2026-11-03T02:50:39.5181979Z\",\n    \"media_type\": \"text/plain\",\n    \"display_name\": \"source.txt\",\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"byte_length\": 140,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"normalization_version\": \"utf8-newlines-v1\",\n    \"ingest_status\": \"ready\",\n    \"raw_snapshot\": \".noetome-sources/b055c425-10a8-4f12-b451-fd87b3ca1543/raw.bin\",\n    \"normalized_snapshot\": \".noetome-sources/b055c425-10a8-4f12-b451-fd87b3ca1543/normalized.txt\",\n    \"error\": null\n  },\n  \"spans\": [\n    {\n      \"span_id\": \"534d6920-f620-403e-a6e1-0b5ac825861d\",\n      \"source_version_id\": \"b055c425-10a8-4f12-b451-fd87b3ca1543\",\n      \"ordinal\": 0,\n      \"kind\": \"text\",\n      \"start_byte\": 0,\n      \"end_byte\": 140,\n      \"start_line\": 1,\n      \"end_line\": 1,\n      \"text_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n      \"parser_version\": \"blocks-v1\",\n      \"parse_status\": \"parsed\"\n    }\n  ],\n  \"error\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "extract",
+        "api",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\project 中文",
+        "46fb5605-1cc1-4462-8f6c-662843e5acea",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\case-valid\\api-config.json",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-red-1f578a53327546a8a5a728a822f3c1ab\\case-valid\\new output"
+      ],
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。\n"
+    }
+  ],
+  "source_inventory": {
+    ".noetome-sources": {
+      "kind": "directory",
+      "mtime_ns": 1793674239541215800,
+      "length": null,
+      "sha256": null
+    },
+    ".noetome-sources/.owner.json": {
+      "kind": "file",
+      "mtime_ns": 1793674239538211100,
+      "length": 73,
+      "sha256": "4ded8c1a9141cc2cd76dcbf320e14a8a6be6b25a861035e90e0d6f028a238710"
+    },
+    ".noetome-sources/b055c425-10a8-4f12-b451-fd87b3ca1543": {
+      "kind": "directory",
+      "mtime_ns": 1793674239547216600,
+      "length": null,
+      "sha256": null
+    },
+    ".noetome-sources/b055c425-10a8-4f12-b451-fd87b3ca1543/normalized.txt": {
+      "kind": "file",
+      "mtime_ns": 1793674239527196200,
+      "length": 140,
+      "sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a"
+    },
+    ".noetome-sources/b055c425-10a8-4f12-b451-fd87b3ca1543/raw.bin": {
+      "kind": "file",
+      "mtime_ns": 1793674239525197600,
+      "length": 140,
+      "sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a"
+    },
+    "project.json": {
+      "kind": "file",
+      "mtime_ns": 1793674239535706200,
+      "length": 166,
+      "sha256": "39286b67ad3d4ca868479b515106eb8983f659d3019e380b7da0e12c0ced99b2"
+    },
+    "project.sqlite": {
+      "kind": "file",
+      "mtime_ns": 1793674239520687900,
+      "length": 69632,
+      "sha256": "4bbca0bfa9c2a5400659b6d3ccef0726459745836c3fd4a37ee6dc925234fb5e"
+    }
+  },
+  "source_sql": [
+    "BEGIN TRANSACTION;",
+    "CREATE TABLE project_metadata (\n    singleton INTEGER PRIMARY KEY CHECK (singleton = 1),\n    project_id TEXT NOT NULL UNIQUE,\n    schema_version INTEGER NOT NULL CHECK (schema_version = 2),\n    created_at TEXT NOT NULL,\n    state TEXT NOT NULL CHECK (state = 'initialized')\n);",
+    "INSERT INTO \"project_metadata\" VALUES(1,'85022177-e045-40b8-9a08-2397581bf628',2,'2026-11-03T02:50:39.474224Z','initialized');",
+    "CREATE TABLE source_imports (\n    import_id TEXT PRIMARY KEY NOT NULL,\n    imported_at TEXT NOT NULL,\n    selected_path TEXT NOT NULL,\n    source_id TEXT REFERENCES sources(source_id),\n    version_id TEXT,\n    status TEXT NOT NULL CHECK (status IN ('ready', 'failed')),\n    reused INTEGER NOT NULL CHECK (reused IN (0, 1)),\n    span_count INTEGER NOT NULL CHECK (span_count >= 0),\n    pending_extraction_count INTEGER NOT NULL CHECK (pending_extraction_count = span_count),\n    knowledge_status TEXT NOT NULL CHECK (knowledge_status = 'pending'),\n    error_code TEXT,\n    error_message TEXT,\n    FOREIGN KEY (version_id, source_id) REFERENCES source_versions(version_id, source_id),\n    CHECK ((status = 'ready' AND source_id IS NOT NULL AND version_id IS NOT NULL AND error_code IS NULL AND error_message IS NULL)\n        OR (status = 'failed' AND error_code IS NOT NULL AND error_message IS NOT NULL)),\n    CHECK (version_id IS NOT NULL OR (reused = 0 AND span_count = 0))\n);",
+    "INSERT INTO \"source_imports\" VALUES('46fb5605-1cc1-4462-8f6c-662843e5acea','2026-11-03T02:50:39.5181979Z','D:\\Noetome\\fixtures\\extraction-gateway-v1\\source.txt','5bbd4d07-cf0e-431e-99fe-6fad552dbe71','b055c425-10a8-4f12-b451-fd87b3ca1543','ready',0,1,1,'pending',NULL,NULL);",
+    "CREATE TABLE source_spans (\n    span_id TEXT PRIMARY KEY NOT NULL,\n    source_version_id TEXT NOT NULL REFERENCES source_versions(version_id),\n    ordinal INTEGER NOT NULL CHECK (ordinal >= 0),\n    kind TEXT NOT NULL CHECK (kind IN ('heading', 'text', 'code', 'formatting')),\n    start_byte INTEGER NOT NULL CHECK (start_byte >= 0),\n    end_byte INTEGER NOT NULL CHECK (end_byte > start_byte),\n    start_line INTEGER NOT NULL CHECK (start_line > 0),\n    end_line INTEGER NOT NULL CHECK (end_line >= start_line),\n    text_sha256 TEXT NOT NULL CHECK (length(text_sha256) = 64 AND text_sha256 NOT GLOB '*[^0-9a-f]*'),\n    parser_version TEXT NOT NULL,\n    parse_status TEXT NOT NULL CHECK (parse_status IN ('parsed', 'failed', 'needs_review')),\n    UNIQUE (source_version_id, ordinal)\n);",
+    "INSERT INTO \"source_spans\" VALUES('534d6920-f620-403e-a6e1-0b5ac825861d','b055c425-10a8-4f12-b451-fd87b3ca1543',0,'text',0,140,1,1,'35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a','blocks-v1','parsed');",
+    "CREATE TABLE source_versions (\n    version_id TEXT PRIMARY KEY NOT NULL,\n    source_id TEXT NOT NULL REFERENCES sources(source_id),\n    revision INTEGER NOT NULL CHECK (revision > 0),\n    created_at TEXT NOT NULL,\n    media_type TEXT NOT NULL CHECK (media_type IN ('text/plain', 'text/markdown')),\n    display_name TEXT NOT NULL,\n    content_sha256 TEXT NOT NULL CHECK (length(content_sha256) = 64 AND content_sha256 NOT GLOB '*[^0-9a-f]*'),\n    byte_length INTEGER NOT NULL CHECK (byte_length >= 0),\n    normalized_sha256 TEXT,\n    normalization_version TEXT,\n    ingest_status TEXT NOT NULL CHECK (ingest_status IN ('ready', 'failed')),\n    raw_snapshot TEXT NOT NULL,\n    normalized_snapshot TEXT,\n    error_code TEXT,\n    error_message TEXT,\n    UNIQUE (source_id, content_sha256),\n    UNIQUE (source_id, revision),\n    UNIQUE (version_id, source_id),\n    CHECK ((ingest_status = 'ready' AND normalized_sha256 IS NOT NULL AND normalization_version IS NOT NULL AND normalized_snapshot IS NOT NULL AND error_code IS NULL AND error_message IS NULL)\n        OR (ingest_status = 'failed' AND normalized_sha256 IS NULL AND normalization_version IS NULL AND normalized_snapshot IS NULL AND error_code IS NOT NULL AND error_message IS NOT NULL))\n);",
+    "INSERT INTO \"source_versions\" VALUES('b055c425-10a8-4f12-b451-fd87b3ca1543','5bbd4d07-cf0e-431e-99fe-6fad552dbe71',1,'2026-11-03T02:50:39.5181979Z','text/plain','source.txt','35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a',140,'35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a','utf8-newlines-v1','ready','.noetome-sources/b055c425-10a8-4f12-b451-fd87b3ca1543/raw.bin','.noetome-sources/b055c425-10a8-4f12-b451-fd87b3ca1543/normalized.txt',NULL,NULL);",
+    "CREATE TABLE sources (\n    source_id TEXT PRIMARY KEY NOT NULL,\n    created_at TEXT NOT NULL\n);",
+    "INSERT INTO \"sources\" VALUES('5bbd4d07-cf0e-431e-99fe-6fad552dbe71','2026-11-03T02:50:39.5181979Z');",
+    "COMMIT;"
+  ],
+  "real_model_calls": 0
+}

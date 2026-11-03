@@ -54,6 +54,11 @@ pub(crate) struct ParsedResponse {
     pub(crate) candidates: ApiCandidates,
 }
 pub(crate) fn decode(body: &[u8]) -> Result<ParsedResponse, crate::project::ProjectError>;
+pub(crate) struct ResponseMetadata {
+    pub(crate) id: String, pub(crate) model: String,
+    pub(crate) usage: serde_json::Value, pub(crate) service_tier: Option<String>,
+}
+pub(crate) fn response_metadata(body: &[u8]) -> Result<ResponseMetadata, crate::project::ProjectError>;
 // schema.rs
 pub(crate) fn request_body(
     model: &str, request_id: &str,
@@ -64,7 +69,7 @@ pub(crate) fn request_body(
 
 - [ ] 写本地 TCP listener 和 wire 变异测试，实跑 RED：一 POST/HTTP 错误，超时/partial，重复 key、缺用量、refusal/incomplete、非法候选 nullable。先确认失败来自新增行为。
 - [ ] 实现默认验证 native TLS、no_proxy/redirect none/retry never、HTTP1、future 与 5 ms 停止检查；完整/partial 实际字节由 TransportResult 保留。静态错误码：EXTRACT_API_TRANSPORT、EXTRACT_API_TRUNCATED、EXTRACT_RESPONSE_LIMIT、EXTRACT_API_HTTP_AUTH、EXTRACT_API_HTTP_RATE_LIMIT、EXTRACT_API_HTTP_SERVER、EXTRACT_API_HTTP_STATUS；control 的原 EXTRACT_TIMEOUT/CANCELLED 保持。
-- [ ] Schema 给真实单位提供完整 quote/字节边界/SHA anchor，输出严格 SourceBinding/领域对象，全部对象 required+additionalProperties=false、measurement 可空；不在 output 请求 fake producer。发送 spec 列出的实际参数。
+- [ ] Schema 给真实单位提供完整 quote/字节边界/SHA anchor，start/end 复制 unit.start_byte/end_byte，是引用资源内的绝对 UTF8 范围，不从 unit.text 的 0 重新计数；加入非零起点 RED。输出严格 SourceBinding/领域对象，全部对象 required+additionalProperties=false、measurement 可空；不在 output 请求 fake producer。发送 spec 列出的实际参数。
 - [ ] 完整 wire 允许未来元数据但拒绝所有重复 key/尾随 JSON。completed/error-null/incomplete-null、一个 assistant output_text；reasoning 元数据可保留，不接受工具。用量基础整数加总正确；详细项有则验证类型，缺则保持缺失。错误码 EXTRACT_API_RESPONSE/STATUS/INCOMPLETE/REFUSAL/OUTPUT/USAGE/CANDIDATES。
 - [ ] targeted cargo tests GREEN；worker 自检并写报告到本计划 SDD workspace。controller 派 fresh task reviewer，重要问题复现修复后提交此能力。
 
@@ -77,7 +82,7 @@ pub(crate) fn request_body(
 - [ ] 阅读作者普通 CLI RED。为 config 严格 DTO/环回与官方 endpoint/明确外部凭据、secret echo/预算停止补 meaningful RED；配置以普通读取守卫持有至最后，不能扫描目录正文。
 - [ ] 加载来源并预检路径、取消和凭据；组装 Task1 body，实际 bytes+1024 预留，不足/金额未知 0 次请求。secret 含于 request 时调用前拒绝；local test 的人工 key/model 强制前缀。
 - [ ] 使用 send 一次，记录真实 attempts/status/partial；响应含凭据或 JSON 转义回显时省略原文，只保存已收 SHA/长度及错误，绝不保存候选。稳定诊断不含远端错误正文。
-- [ ] decode 完整 200 response，记录配置/返回模型、真实 usage 与 null 费用；核对 input/output/total 预算、request_id/真实 binding。共享严格领域校验通过后 candidates_validated；所有原子 unverified、pending、published=false。
+- [ ] 对完整 200 response 先独立 response_metadata 核对 id/model/usage，候选/refusal/incomplete 失败也保留已验证计量；partial/non-200 不信任片段用量。随后 decode，核对 input/output/total 预算、request_id/真实 binding。共享严格领域校验通过后 candidates_validated；所有原子 unverified、pending、published=false。
 - [ ] 使用 API owner 与全新 OutputRoot 保存 request.json、request-body.json、原 response.bin、仅成功 candidates.json、同事实 JSON/MD 验证快照和实际指纹。保存前后 verify source/config/output，失败按已捕获能力 discard_result，人工文件保留。
 - [ ] 接线 `extract api`、help 与 native 路径/--cancel-file；实跑作者 tests/extraction_api.rs 和旧 extract fake/fixture GREEN。fresh task review 后提交。
 

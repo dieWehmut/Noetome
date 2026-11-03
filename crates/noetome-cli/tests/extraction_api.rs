@@ -118,6 +118,8 @@ impl Example {
 }
 
 fn read_body(stream: &mut TcpStream) -> Vec<u8> {
+    // Windows accepted sockets may inherit a nonblocking listener's mode.
+    stream.set_nonblocking(false).unwrap();
     stream
         .set_read_timeout(Some(Duration::from_secs(4)))
         .unwrap();

@@ -30,6 +30,8 @@ required_input=vision 或缺少 text/structured_output 在请求前拒绝；不�
 
 Core 先序列化全部正文、提示和 Schema；input_reserved_tokens 为实际 body UTF8 字节数加 1024，reservation_policy=request_utf8_bytes_plus_1024_v1。这是保守工程预留，model_tokenizer=null，并非真实 Token 测量或提供商账单保证。请求前预留 input_reserved_tokens + max_output_tokens；不足停止。返回 usage 再核对 input<=预留、output<=指定上限、input+output=total 且 total<=总预算；违反时保留原响应并失败，不再发下一次请求。缺用量保留 null 并失败，不以 0 补齐。
 
+evidence_anchors 的 excerpt_start_byte/end_byte 必须复制 unit.start_byte/end_byte，范围在其 locator 指向的真实文本资源内；选中非零起点 Span 或 PDF 区域不能重新从 0 计数。quote 为完整 unit.text，excerpt_sha256 是该切片字节的 SHA；resource_sha256 仍是完整来源资源 SHA，二者不混用。模型直接复制这个 anchor，Core 按原资源字节核对。
+
 使用锁定 reqwest 0.13.5、tokio 1.54.1、futures-util 0.3.34，native TLS 校验证书与主机，不禁用验证。禁用重定向、客户端重试和自动代理，只建一次客户端/一次 POST。current-thread runtime 中用请求 future 与每 5 ms 的停止检查竞争，超时/取消丢弃请求 future 并结束 runtime，保持已收字节为 partial，不能当完整响应成功。HTTP body 有实际字节上限，断开的 Content-Length/chunked 响应明确失败。
 
 ## 响应与 Core 候选
@@ -40,7 +42,11 @@ API 输出 JSON 严格字段为 schema_version=1、request_id、binding、concep
 
 返回模型与配置模型分别保存，不能从别名推造已验证版本。usage 的 input_tokens/output_tokens/total_tokens 必须为非负整数且加总正确；缓存和 reasoning 细项按真实返回记录，缺失保持 null，不重复计费。记录 request attempts、HTTP 状态、响应 id/模型、策略版本、源码版本/SHA、实际 body 指纹及未知计费。
 
+完整 HTTP 200 的响应 metadata/用量独立核对，候选非法、refusal 或 incomplete 不丢弃已经验证的 id/model/usage；候选成功与用量存在是分别记录的事实。partial 或非 200 的响应不将其片段当作已验证用量，原字节/状态仍保留。确实缺失或无效用量保持 null 并区分 not_validated，不能说已解析的真实计量不存在。
+
 在持久化 request/body/响应之前检查是否含所引用凭据（含 JSON 转义字符串）。请求包含凭据时调用前拒绝；响应回显时不保存泄密正文，仅记录已收长度/SHA 和 omitted_credential_echo，非零且没有候选。stderr/报告只用不含服务原始错误正文的稳定诊断；不记录认证头。原响应在正常无凭据回显时不改写。
+
+JSON 字符串可能内嵌候选 JSON；凭据检查须逐层处理转义后的字符串，不能只扫描最外层字节或一次解码。完整空 HTTP 正文仍为 response_complete=true，200 的空 JSON 在语义层失败，空 401/429 保留对应 HTTP 分类；只有实际 framing/读取中断才标 partial。
 
 ## 输出与验收门槛
 
