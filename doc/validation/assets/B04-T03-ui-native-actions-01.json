@@ -1,0 +1,690 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-11-03T14:24:06.523Z",
+  "tested_executable": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+  "executable_sha256": "870efa1a55bc33d48a731765150834f2caf06fe6be8f8294af6b1086dfb476c7",
+  "pid": 35996,
+  "url": "http://tauri.localhost/",
+  "transport": "installed WebView CDP 127.0.0.1:9243",
+  "os_metadata": "read-only GetWindowRect/IsWindowVisible/IsIconic/IsZoomed",
+  "physical_drag_verified": false,
+  "physical_tray_restore_verified": false,
+  "input_scope": "actual DOM controls and CDP keyboard/mouse events; no OS input injection",
+  "checks": [
+    {
+      "name": "one_native_top_row_and_same_row_controls",
+      "passed": true,
+      "detail": {
+        "os": {
+          "hwnd": 25694958,
+          "pid": 35996,
+          "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+          "title": "Noetome",
+          "style": 349110272,
+          "style_hex": "0x14cf0000",
+          "caption_present": true,
+          "caption_field_means_style_bits_only": true,
+          "visible": true,
+          "minimized": false,
+          "maximized": false,
+          "window_rect": [
+            360,
+            116,
+            1573,
+            924
+          ],
+          "client_rect": [
+            0,
+            0,
+            1200,
+            800
+          ],
+          "client_origin_screen": [
+            367,
+            117
+          ],
+          "client_top_offset": 1,
+          "left_border": 7,
+          "right_border": 6,
+          "native_title_band_height": 0
+        },
+        "dom": {
+          "native": true,
+          "header": {
+            "x": 0,
+            "y": 0,
+            "width": 1185,
+            "height": 36,
+            "right": 1185
+          },
+          "menus": [
+            "File",
+            "Edit",
+            "View",
+            "Help"
+          ],
+          "controls": [
+            {
+              "label": "最小化",
+              "disabled": false,
+              "rect": {
+                "x": 1047,
+                "y": 0,
+                "width": 46,
+                "height": 35,
+                "right": 1093
+              }
+            },
+            {
+              "label": "最大化",
+              "disabled": false,
+              "rect": {
+                "x": 1093,
+                "y": 0,
+                "width": 46,
+                "height": 35,
+                "right": 1139
+              }
+            },
+            {
+              "label": "关闭窗口",
+              "disabled": false,
+              "rect": {
+                "x": 1139,
+                "y": 0,
+                "width": 46,
+                "height": 35,
+                "right": 1185
+              }
+            }
+          ],
+          "viewport_width": 1200
+        }
+      }
+    },
+    {
+      "name": "actual_maximize_button_and_native_state",
+      "passed": true,
+      "detail": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 365887488,
+        "style_hex": "0x15cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": true,
+        "minimized": false,
+        "maximized": true,
+        "window_rect": [
+          -7,
+          -7,
+          1926,
+          1038
+        ],
+        "client_rect": [
+          0,
+          0,
+          1920,
+          1032
+        ],
+        "client_origin_screen": [
+          0,
+          0
+        ],
+        "client_top_offset": 7,
+        "left_border": 7,
+        "right_border": 6,
+        "native_title_band_height": 0
+      }
+    },
+    {
+      "name": "keyboard_restore_button_and_native_state",
+      "passed": true,
+      "detail": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 349110272,
+        "style_hex": "0x14cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": true,
+        "minimized": false,
+        "maximized": false,
+        "window_rect": [
+          360,
+          116,
+          1573,
+          924
+        ],
+        "client_rect": [
+          0,
+          0,
+          1200,
+          800
+        ],
+        "client_origin_screen": [
+          367,
+          117
+        ],
+        "client_top_offset": 1,
+        "left_border": 7,
+        "right_border": 6,
+        "native_title_band_height": 0
+      }
+    },
+    {
+      "name": "actual_minimize_button_preserves_visible_window_object",
+      "passed": true,
+      "detail": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 885981184,
+        "style_hex": "0x34cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": true,
+        "minimized": true,
+        "maximized": false,
+        "window_rect": [
+          -16000,
+          -16000,
+          -15843,
+          -15975
+        ],
+        "client_rect": [
+          0,
+          0,
+          144,
+          17
+        ],
+        "client_origin_screen": [
+          -15994,
+          -15999
+        ],
+        "client_top_offset": 1,
+        "left_border": 6,
+        "right_border": 7,
+        "native_title_band_height": null
+      }
+    },
+    {
+      "name": "existing_toggle_maximize_api_restores_minimized_window",
+      "passed": true,
+      "detail": {
+        "os": {
+          "hwnd": 25694958,
+          "pid": 35996,
+          "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+          "title": "Noetome",
+          "style": 365887488,
+          "style_hex": "0x15cf0000",
+          "caption_present": true,
+          "caption_field_means_style_bits_only": true,
+          "visible": true,
+          "minimized": false,
+          "maximized": true,
+          "window_rect": [
+            -7,
+            -7,
+            1926,
+            1038
+          ],
+          "client_rect": [
+            0,
+            0,
+            1920,
+            1032
+          ],
+          "client_origin_screen": [
+            0,
+            0
+          ],
+          "client_top_offset": 7,
+          "left_border": 7,
+          "right_border": 6,
+          "native_title_band_height": 0
+        },
+        "method": "existing DOM button click delivered over CDP while minimized; no physical taskbar click claimed"
+      }
+    },
+    {
+      "name": "blank_region_double_click_handler_changes_real_native_state_once",
+      "passed": true,
+      "detail": {
+        "os": {
+          "hwnd": 25694958,
+          "pid": 35996,
+          "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+          "title": "Noetome",
+          "style": 365887488,
+          "style_hex": "0x15cf0000",
+          "caption_present": true,
+          "caption_field_means_style_bits_only": true,
+          "visible": true,
+          "minimized": false,
+          "maximized": true,
+          "window_rect": [
+            -7,
+            -7,
+            1926,
+            1038
+          ],
+          "client_rect": [
+            0,
+            0,
+            1920,
+            1032
+          ],
+          "client_origin_screen": [
+            0,
+            0
+          ],
+          "client_top_offset": 7,
+          "left_border": 7,
+          "right_border": 6,
+          "native_title_band_height": 0
+        },
+        "event": "DOM mousedown detail=2 over CDP, physical double-click not claimed"
+      }
+    },
+    {
+      "name": "sidebar_toggle_and_file_keyboard_menu",
+      "passed": true,
+      "detail": {
+        "sidebar_restored": true,
+        "menu_keyboard": "ArrowDown focuses first enabled item; Escape closes"
+      }
+    },
+    {
+      "name": "help_menu_actual_version_ipc",
+      "passed": true,
+      "detail": {
+        "output": "noetome 0.1.0\n",
+        "actual_native_host": true
+      }
+    },
+    {
+      "name": "help_menu_actual_help_ipc_and_runtime_check",
+      "passed": true,
+      "detail": {
+        "output_sha256": "03b7b7bce24f97e4be810f9f0c0e6f4a80cc98cd9710d463a73aa196818188d0",
+        "runtime": "桌面应用版本0.1.0CLI 版本0.1.0构建目标x86_64-pc-windows-msvc已接入能力help · version"
+      }
+    },
+    {
+      "name": "navigation_edit_select_all_and_sticky_single_row",
+      "passed": true,
+      "detail": {
+        "selected_characters": 303,
+        "y": 0,
+        "height": 36,
+        "scroll_y": 60,
+        "clipboard_writes": 0
+      }
+    },
+    {
+      "name": "close_button_hides_to_tray_without_exiting",
+      "passed": true,
+      "detail": {
+        "os": {
+          "hwnd": 25694958,
+          "pid": 35996,
+          "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+          "title": "Noetome",
+          "style": 80674816,
+          "style_hex": "0x04cf0000",
+          "caption_present": true,
+          "caption_field_means_style_bits_only": true,
+          "visible": false,
+          "minimized": false,
+          "maximized": false,
+          "window_rect": [
+            360,
+            116,
+            1573,
+            924
+          ],
+          "client_rect": [
+            0,
+            0,
+            1200,
+            800
+          ],
+          "client_origin_screen": [
+            367,
+            117
+          ],
+          "client_top_offset": 1,
+          "left_border": 7,
+          "right_border": 6,
+          "native_title_band_height": 0
+        },
+        "native_process_alive": true,
+        "tray_restore_physical_click_pending": true
+      }
+    },
+    {
+      "name": "existing_api_restores_hidden_window_and_original_close_preference",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(os.visible && os.maximized && !os.minimized)\n\n    at file:///D:/Noetome/.superpowers/sdd/B04-T03_REVIEW_PLAN/task-3-native-actions.mjs:143:46\n    at async check (file:///D:/Noetome/.superpowers/sdd/B04-T03_REVIEW_PLAN/task-3-native-actions.mjs:29:24)\n    at async file:///D:/Noetome/.superpowers/sdd/B04-T03_REVIEW_PLAN/task-3-native-actions.mjs:140:3"
+    }
+  ],
+  "observations": [
+    {
+      "label": "initial",
+      "file": "task-3-native-actions-01-initial.json",
+      "sha256": "f71cb60e4a50b59fe3be40f3423ca49ef076b16d6d25b00fb6a6bc1480092dbd",
+      "window": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 349110272,
+        "style_hex": "0x14cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": true,
+        "minimized": false,
+        "maximized": false,
+        "window_rect": [
+          360,
+          116,
+          1573,
+          924
+        ],
+        "client_rect": [
+          0,
+          0,
+          1200,
+          800
+        ],
+        "client_origin_screen": [
+          367,
+          117
+        ],
+        "client_top_offset": 1,
+        "left_border": 7,
+        "right_border": 6,
+        "native_title_band_height": 0
+      }
+    },
+    {
+      "label": "maximized",
+      "file": "task-3-native-actions-01-maximized.json",
+      "sha256": "1d0dd3a92bca155c52632a55de122e6d9cbc2e864115452b8650c41417a97a17",
+      "window": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 365887488,
+        "style_hex": "0x15cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": true,
+        "minimized": false,
+        "maximized": true,
+        "window_rect": [
+          -7,
+          -7,
+          1926,
+          1038
+        ],
+        "client_rect": [
+          0,
+          0,
+          1920,
+          1032
+        ],
+        "client_origin_screen": [
+          0,
+          0
+        ],
+        "client_top_offset": 7,
+        "left_border": 7,
+        "right_border": 6,
+        "native_title_band_height": 0
+      }
+    },
+    {
+      "label": "keyboard-restored",
+      "file": "task-3-native-actions-01-keyboard-restored.json",
+      "sha256": "a9cce33eaa21e4cc490f1c6b8b0be4c4a11322f43f23c1720b6fefb2bf606124",
+      "window": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 349110272,
+        "style_hex": "0x14cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": true,
+        "minimized": false,
+        "maximized": false,
+        "window_rect": [
+          360,
+          116,
+          1573,
+          924
+        ],
+        "client_rect": [
+          0,
+          0,
+          1200,
+          800
+        ],
+        "client_origin_screen": [
+          367,
+          117
+        ],
+        "client_top_offset": 1,
+        "left_border": 7,
+        "right_border": 6,
+        "native_title_band_height": 0
+      }
+    },
+    {
+      "label": "minimized",
+      "file": "task-3-native-actions-01-minimized.json",
+      "sha256": "2cba69bd8a0e30a36e45bc257b0d404e11f6c5026239020a47a20360f47c77dd",
+      "window": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 885981184,
+        "style_hex": "0x34cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": true,
+        "minimized": true,
+        "maximized": false,
+        "window_rect": [
+          -16000,
+          -16000,
+          -15843,
+          -15975
+        ],
+        "client_rect": [
+          0,
+          0,
+          144,
+          17
+        ],
+        "client_origin_screen": [
+          -15994,
+          -15999
+        ],
+        "client_top_offset": 1,
+        "left_border": 6,
+        "right_border": 7,
+        "native_title_band_height": null
+      }
+    },
+    {
+      "label": "restore-from-minimize",
+      "file": "task-3-native-actions-01-restore-from-minimize.json",
+      "sha256": "0765d8d7e8a65b8529c9ed4e0b8340a9a17e26de968a503ffaf0c548d2edfbd3",
+      "window": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 365887488,
+        "style_hex": "0x15cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": true,
+        "minimized": false,
+        "maximized": true,
+        "window_rect": [
+          -7,
+          -7,
+          1926,
+          1038
+        ],
+        "client_rect": [
+          0,
+          0,
+          1920,
+          1032
+        ],
+        "client_origin_screen": [
+          0,
+          0
+        ],
+        "client_top_offset": 7,
+        "left_border": 7,
+        "right_border": 6,
+        "native_title_band_height": 0
+      }
+    },
+    {
+      "label": "blank-detail-two",
+      "file": "task-3-native-actions-01-blank-detail-two.json",
+      "sha256": "3decd3fa559b58163793b5ee584d0d8267c2db6807e3a9178dbaffdb9e5b4aa6",
+      "window": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 365887488,
+        "style_hex": "0x15cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": true,
+        "minimized": false,
+        "maximized": true,
+        "window_rect": [
+          -7,
+          -7,
+          1926,
+          1038
+        ],
+        "client_rect": [
+          0,
+          0,
+          1920,
+          1032
+        ],
+        "client_origin_screen": [
+          0,
+          0
+        ],
+        "client_top_offset": 7,
+        "left_border": 7,
+        "right_border": 6,
+        "native_title_band_height": 0
+      }
+    },
+    {
+      "label": "close-hidden",
+      "file": "task-3-native-actions-01-close-hidden.json",
+      "sha256": "6b1410dfd514959df1d36d6af5ffb4cbc0b3706cc4917780ee84b582d0d300dd",
+      "window": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 80674816,
+        "style_hex": "0x04cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": false,
+        "minimized": false,
+        "maximized": false,
+        "window_rect": [
+          360,
+          116,
+          1573,
+          924
+        ],
+        "client_rect": [
+          0,
+          0,
+          1200,
+          800
+        ],
+        "client_origin_screen": [
+          367,
+          117
+        ],
+        "client_top_offset": 1,
+        "left_border": 7,
+        "right_border": 6,
+        "native_title_band_height": 0
+      }
+    },
+    {
+      "label": "restore-from-hidden",
+      "file": "task-3-native-actions-01-restore-from-hidden.json",
+      "sha256": "159f09bd25922e89b135ccf51324113b28a48550d64e7a9fc7eb986fe1384aaa",
+      "window": {
+        "hwnd": 25694958,
+        "pid": 35996,
+        "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "title": "Noetome",
+        "style": 80674816,
+        "style_hex": "0x04cf0000",
+        "caption_present": true,
+        "caption_field_means_style_bits_only": true,
+        "visible": false,
+        "minimized": false,
+        "maximized": false,
+        "window_rect": [
+          360,
+          116,
+          1573,
+          924
+        ],
+        "client_rect": [
+          0,
+          0,
+          1200,
+          800
+        ],
+        "client_origin_screen": [
+          367,
+          117
+        ],
+        "client_top_offset": 1,
+        "left_border": 7,
+        "right_border": 6,
+        "native_title_band_height": 0
+      }
+    }
+  ],
+  "errors": [],
+  "verifier_sha256": "74c39d58ad2506386d329df1ccf0e312a34afb37383d1ecf11161396f258b8cf",
+  "original_close_behavior": "hide_to_tray",
+  "failure": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(os.visible && os.maximized && !os.minimized)\n\n    at file:///D:/Noetome/.superpowers/sdd/B04-T03_REVIEW_PLAN/task-3-native-actions.mjs:143:46\n    at async check (file:///D:/Noetome/.superpowers/sdd/B04-T03_REVIEW_PLAN/task-3-native-actions.mjs:29:24)\n    at async file:///D:/Noetome/.superpowers/sdd/B04-T03_REVIEW_PLAN/task-3-native-actions.mjs:140:3",
+  "finished_at": "2026-11-03T14:24:10.823Z",
+  "passed": false
+}

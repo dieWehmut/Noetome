@@ -1,0 +1,862 @@
+{
+  "schema_version": 1,
+  "label": "integration-diff-check",
+  "command": [
+    "git",
+    "diff",
+    "--check"
+  ],
+  "cwd": "D:\\Noetome",
+  "timeout_seconds": 600,
+  "started_at": "2026-11-03T15:02:21.468132+00:00",
+  "head_before": "634d6382b687b706b7bd34396ee5f386c57ef67e",
+  "code_before": {
+    "crates/noetome-cli/src/compile_model.rs": {
+      "sha256": "b5a5f95487d3fae73bd421dee7434874b2d5c63e261ad3a213200e8d7fad1d74",
+      "byte_length": 2379,
+      "mtime_ns": 1793525324182292000
+    },
+    "crates/noetome-cli/src/compile_report.rs": {
+      "sha256": "976609342b6b90286814118816f582b0d7f627b70b0c513412633f2608c0e1e2",
+      "byte_length": 12359,
+      "mtime_ns": 1793527254172123500
+    },
+    "crates/noetome-cli/src/compile_store.rs": {
+      "sha256": "a1a67f747a220e67c0b946e6e62158d87fbbd792891f928ed1a4bd11e8d41382",
+      "byte_length": 81464,
+      "mtime_ns": 1793526931024221200
+    },
+    "crates/noetome-cli/src/extraction.rs": {
+      "sha256": "5afb2c70884a3367ab9a94903a3c728a60b9c06adc5d8a7f9cf5415fe3cf25a2",
+      "byte_length": 19278,
+      "mtime_ns": 1793675965356190400
+    },
+    "crates/noetome-cli/src/extraction_api.rs": {
+      "sha256": "f853d0aaa9db22ae3474ad61e0294d63f9354eb9116c0adc416b61779434f92e",
+      "byte_length": 19306,
+      "mtime_ns": 1793690407316330400
+    },
+    "crates/noetome-cli/src/extraction_api_config.rs": {
+      "sha256": "8e47cb055879add102a408d137c4ea7526d1ecfd501ea5769d557a703c6cc3eb",
+      "byte_length": 18997,
+      "mtime_ns": 1793701578349308600
+    },
+    "crates/noetome-cli/src/extraction_api_schema.rs": {
+      "sha256": "839d39ae80252b3350d433afce8edd061d6b24908b720f7aeb01e4bc110579c6",
+      "byte_length": 22400,
+      "mtime_ns": 1793701580963376500
+    },
+    "crates/noetome-cli/src/extraction_api_transport.rs": {
+      "sha256": "01ef199a3214b6419813fa68b3a5ac902fb5ba7830572e5d1bef75fd08815054",
+      "byte_length": 14630,
+      "mtime_ns": 1793674809156891500
+    },
+    "crates/noetome-cli/src/extraction_api_wire/chat.rs": {
+      "sha256": "910c6eb14da93ba4a575694d27875732972c33d4b7f7796c61f5baf32bb91e74",
+      "byte_length": 15023,
+      "mtime_ns": 1793701509480381600
+    },
+    "crates/noetome-cli/src/extraction_api_wire.rs": {
+      "sha256": "8a12efbefadc606fd37e862b5ad531cec05144e76deda409eaf194dea0c488f7",
+      "byte_length": 30222,
+      "mtime_ns": 1793690543057130600
+    },
+    "crates/noetome-cli/src/extraction_fake.rs": {
+      "sha256": "63f58d337e9e0c3d9f2b677ca58efb9e51b996e39deb840076c10a83d8554c35",
+      "byte_length": 10776,
+      "mtime_ns": 1793670435742310400
+    },
+    "crates/noetome-cli/src/extraction_model.rs": {
+      "sha256": "018f266b9979eefe8711051afb620f0146715c1d9ea0196bdeb91af36de519df",
+      "byte_length": 8505,
+      "mtime_ns": 1793626211114062100
+    },
+    "crates/noetome-cli/src/extraction_output.rs": {
+      "sha256": "9c32b4a21a5d2bcefffae9d39352f82911eac23f195d473d9964c1de74d6032d",
+      "byte_length": 10880,
+      "mtime_ns": 1793706468550584500
+    },
+    "crates/noetome-cli/src/extraction_review.rs": {
+      "sha256": "a54494f3e08496104253f446ac97f3a143302155aace69a6f6352421cf0e6a6b",
+      "byte_length": 24615,
+      "mtime_ns": 1793707928040850200
+    },
+    "crates/noetome-cli/src/extraction_review_model.rs": {
+      "sha256": "ee6a79ce60d87cdfb3552fb2d4200e75b492f33791c9b85087eca9b11a05532d",
+      "byte_length": 7992,
+      "mtime_ns": 1793706316717309800
+    },
+    "crates/noetome-cli/src/extraction_source.rs": {
+      "sha256": "0c4efcbeee67284aa8c73484de7268b0314f8c57c25b543993ca64d3ee6ecab8",
+      "byte_length": 29101,
+      "mtime_ns": 1793670952021733300
+    },
+    "crates/noetome-cli/src/extraction_verify.rs": {
+      "sha256": "aacc16076e44df180d296ce78719c6d22abc8d7ca3259d9393d59c4164451ffc",
+      "byte_length": 29574,
+      "mtime_ns": 1793707928056887900
+    },
+    "crates/noetome-cli/src/fixture.rs": {
+      "sha256": "d904907dc79bbae8b759e19c01818d811a473e1b1a32372ae45bfaf43e288930",
+      "byte_length": 2983,
+      "mtime_ns": 1793522546301288600
+    },
+    "crates/noetome-cli/src/fixture_compile.rs": {
+      "sha256": "bfeed5d868c7378164a7bd5e80890d4c1ea634f6c2dd5328915ff4b96a96c50c",
+      "byte_length": 39280,
+      "mtime_ns": 1793527254581024000
+    },
+    "crates/noetome-cli/src/fixture_input.rs": {
+      "sha256": "352bbd19fd3aabc40ca382dfcbff6fd6be5c4be5770ba673162792aa90087e64",
+      "byte_length": 18886,
+      "mtime_ns": 1793525725423254800
+    },
+    "crates/noetome-cli/src/fixture_knowledge.rs": {
+      "sha256": "c90800a55b80457b5eaed9b48336635c06ad6674b0f98b03a671f90b2daf84c7",
+      "byte_length": 42104,
+      "mtime_ns": 1793626211140727500
+    },
+    "crates/noetome-cli/src/fixture_model.rs": {
+      "sha256": "f64fdd30c4ba095bf7d156b0e243e1efddebcc84940673cff693568e758f9475",
+      "byte_length": 8254,
+      "mtime_ns": 1793523210468790600
+    },
+    "crates/noetome-cli/src/fixture_plan.rs": {
+      "sha256": "3a3199430d3c5fec7cbea3665447edf910f7cc2f6b0e7b5c91c43c8fe9285ab2",
+      "byte_length": 65699,
+      "mtime_ns": 1793523654918209100
+    },
+    "crates/noetome-cli/src/fixture_render.rs": {
+      "sha256": "9db8d24b43c83ae20171cc0360dda2d19817fc91ae8d3ddbd40db0802dfc76dd",
+      "byte_length": 61763,
+      "mtime_ns": 1793526483628066000
+    },
+    "crates/noetome-cli/src/lib.rs": {
+      "sha256": "af77fad374efdf921a426fa6643b5067164015e38d3921ff5c8d87113c4776a9",
+      "byte_length": 19941,
+      "mtime_ns": 1793705825856381700
+    },
+    "crates/noetome-cli/src/main.rs": {
+      "sha256": "e641b6e38a5b34464d25c85e85a9e7c6579ab72daa538b4e35f2ee19bceb9d30",
+      "byte_length": 9202,
+      "mtime_ns": 1793705573750922700
+    },
+    "crates/noetome-cli/src/pdf_model.rs": {
+      "sha256": "2c9271239417ab8e75bb7816c49d2d9100ef241ad8b89fabeb26af238ed0917c",
+      "byte_length": 4020,
+      "mtime_ns": 1793609226271881000
+    },
+    "crates/noetome-cli/src/pdf_parse.rs": {
+      "sha256": "76ccdd7f0d12d620a22baba706d5baf451e8f3db8eeeea933adb9534cf6e6efc",
+      "byte_length": 17315,
+      "mtime_ns": 1793619839903460600
+    },
+    "crates/noetome-cli/src/pdf_source.rs": {
+      "sha256": "6b4d79bff75371b65936a26176daeb78ad94bf939ecda5733821d149b91b6091",
+      "byte_length": 26117,
+      "mtime_ns": 1793619839954642600
+    },
+    "crates/noetome-cli/src/pdf_source_model.rs": {
+      "sha256": "da7020d5c70c3cc134ba5511e3454b8482ae7332d44d0393891b0a3a3a98df45",
+      "byte_length": 68853,
+      "mtime_ns": 1793618747493391300
+    },
+    "crates/noetome-cli/src/pdf_validate.rs": {
+      "sha256": "ec2092f86e96d7a8eb6da4df8a6c884e9b21b81d23b344b4d7c3d4c517c33298",
+      "byte_length": 20051,
+      "mtime_ns": 1793611695283151900
+    },
+    "crates/noetome-cli/src/pdf_workspace.rs": {
+      "sha256": "d540098c1275fab0e3ddaa261b890f94e41628723df43a3272080c850a6ab8f1",
+      "byte_length": 12929,
+      "mtime_ns": 1793619839909477100
+    },
+    "crates/noetome-cli/src/project.rs": {
+      "sha256": "8d5382097ad9aafe23bbbc3faccaef68bf695df0f9e7fe30b54dbc08edfa15c5",
+      "byte_length": 52530,
+      "mtime_ns": 1793616883284170100
+    },
+    "crates/noetome-cli/src/sidecar_model.rs": {
+      "sha256": "1a3d65cac3f710d6e91868b318fcb3f3845f3ac57f3b9886e9aec4ecc9f9c79e",
+      "byte_length": 4375,
+      "mtime_ns": 1793601257763753300
+    },
+    "crates/noetome-cli/src/sidecar_process.rs": {
+      "sha256": "07be66b29835fc930a5d5b26bf756be6ef529537144738265f1160d96c2b10e5",
+      "byte_length": 23381,
+      "mtime_ns": 1793619839890905100
+    },
+    "crates/noetome-cli/src/sidecar_workspace.rs": {
+      "sha256": "b56c3f42cee2762e2b70bd0ad31710f6e6eee61d816d5d6b1da5d0293ff9b975",
+      "byte_length": 17416,
+      "mtime_ns": 1793626253910051000
+    },
+    "crates/noetome-cli/src/source.rs": {
+      "sha256": "acb162d12db26c4811b2f1e855421d2e7d5827f0e74109a9a6fc4816fd300ece",
+      "byte_length": 25934,
+      "mtime_ns": 1793619839921503300
+    },
+    "crates/noetome-cli/src/source_model.rs": {
+      "sha256": "77f7841e1b141af76719bfff29eb649c8d02eac3c4f80d9e1f94b474f653e31c",
+      "byte_length": 58045,
+      "mtime_ns": 1793621927362516600
+    },
+    "crates/noetome-cli/src/source_schema.rs": {
+      "sha256": "c0edd0fa39891681331256a8eca8804beb4690dc5e9ffb7394c33532dbab8171",
+      "byte_length": 17348,
+      "mtime_ns": 1793617512665053100
+    },
+    "crates/noetome-cli/src/source_schema3_tests.rs": {
+      "sha256": "f6a165b74a43cd4350378c5108e75b50d0cb67a88a1ca63b23c46dcc800c4e6f",
+      "byte_length": 30641,
+      "mtime_ns": 1793617450248611900
+    },
+    "crates/noetome-cli/src/source_write.rs": {
+      "sha256": "f287bc171014477204bc7b0d5cf5bf852cbe2e92544e32d75267e9601063fbcc",
+      "byte_length": 68354,
+      "mtime_ns": 1793619839940046100
+    },
+    "crates/noetome-cli/src/text.rs": {
+      "sha256": "d435ab083930558646596fc796930be71eb92b00f8dd49ebf66b280c5322c00e",
+      "byte_length": 16720,
+      "mtime_ns": 1793518572029240000
+    },
+    "crates/noetome-cli/tests/cli.rs": {
+      "sha256": "bca2a2252f563d6c77998de744dce24c7244be4c503f71ca363d4fdcf2cba42b",
+      "byte_length": 5929,
+      "mtime_ns": 1793500777372395800
+    },
+    "crates/noetome-cli/tests/compile.rs": {
+      "sha256": "6d8c3608e06d58f769efb0940111bacbd3b7dc4556220fdc3a1d007bcd4b29dd",
+      "byte_length": 61022,
+      "mtime_ns": 1793527152971727400
+    },
+    "crates/noetome-cli/tests/extraction.rs": {
+      "sha256": "01bcafecf4081429422722224ab69181dce6394c2c7885c18a5b59c3cce93fb7",
+      "byte_length": 8086,
+      "mtime_ns": 1793670435982360300
+    },
+    "crates/noetome-cli/tests/extraction_api.rs": {
+      "sha256": "2f58b668506cc2557d83b03a70a8c017610c37c094265ea9638d95812ab8bd6c",
+      "byte_length": 25506,
+      "mtime_ns": 1793701688726576900
+    },
+    "crates/noetome-cli/tests/extraction_verify.rs": {
+      "sha256": "0b62bf65aaa74388e9bf19478bb836920547f222742861fa81bb8e26d9e5a471",
+      "byte_length": 27681,
+      "mtime_ns": 1793707928314968600
+    },
+    "crates/noetome-cli/tests/fixture.rs": {
+      "sha256": "4672ef35e29d9d35c2d4178bc3b7e88329ef012c15e64e0872a26ea2770a1164",
+      "byte_length": 46115,
+      "mtime_ns": 1793524127065195800
+    },
+    "crates/noetome-cli/tests/pdf_parse.rs": {
+      "sha256": "a1350ad10c73a2fd3c649d93d18687b9e6acfaf529b93ecdd445084b4d063777",
+      "byte_length": 22610,
+      "mtime_ns": 1793611497492302400
+    },
+    "crates/noetome-cli/tests/pdf_source.rs": {
+      "sha256": "b2da169bd3cd82067b3333243155dcea284ac034ac92ba3181ffea83c23b16e5",
+      "byte_length": 69122,
+      "mtime_ns": 1793618809538805000
+    },
+    "crates/noetome-cli/tests/project.rs": {
+      "sha256": "0acaaa952bc5fe5535605bdf0575a82116e390d9578a5baddc2ca31e5c3d8c65",
+      "byte_length": 28741,
+      "mtime_ns": 1793518750293294400
+    },
+    "crates/noetome-cli/tests/sidecar.rs": {
+      "sha256": "286cbceae06aedf17bd129e395cb0b9876ef38ba61a45a081feea1d77ab6e35f",
+      "byte_length": 2793,
+      "mtime_ns": 1793599437975119300
+    },
+    "crates/noetome-cli/tests/source.rs": {
+      "sha256": "96793226921f731c3f317e1ad4ef501173985292f87a3a8760b31ab1483cd42f",
+      "byte_length": 39009,
+      "mtime_ns": 1793621018596577600
+    },
+    "crates/noetome-cli/tests/support/compile_expectations.rs": {
+      "sha256": "090cbcab6e074853f063cf60099f48fdbe57725be2c8831ff9ec59b11b065e24",
+      "byte_length": 2585,
+      "mtime_ns": 1793526041888327200
+    },
+    "crates/noetome-cli/tests/support/pdf_parse_tests.rs": {
+      "sha256": "f74445303afbc8f3709908b3f3f18cb2dc41b7ddc398a20f6c7ef66ec72eff0c",
+      "byte_length": 17698,
+      "mtime_ns": 1793619839959143600
+    },
+    "crates/noetome-cli/tests/support/pdf_source_model_tests.rs": {
+      "sha256": "c72cbddd210fc0db99310bf4ca44fbd14a692f024b1d5f889500264fd9c6a9d5",
+      "byte_length": 42164,
+      "mtime_ns": 1793620804539740000
+    },
+    "crates/noetome-cli/tests/support/pdf_source_write_tests.rs": {
+      "sha256": "52c2da6c3f011378e318c426c1ad15ec0b102ba1b00be544041b8ab6ee8d49dd",
+      "byte_length": 30452,
+      "mtime_ns": 1793619290201849000
+    },
+    "crates/noetome-cli/tests/support/pdf_validate_tests.rs": {
+      "sha256": "3865791b30c38bc69544ee4a974fc726f74d5011088da7c3c8a04cda058db93d",
+      "byte_length": 12104,
+      "mtime_ns": 1793611497405625000
+    },
+    "crates/noetome-cli/tests/support/sidecar_tests.rs": {
+      "sha256": "c276e272bf74a30706f383839ac9be8e4918230674626b078f1dda7528f4dc1f",
+      "byte_length": 21854,
+      "mtime_ns": 1793601257816156500
+    },
+    "crates/noetome-cli/tests/support/source_cache_race_tests.rs": {
+      "sha256": "45dc7f4309f445567ef72ffa75cfb1d1bd56c2f639bd36048513610fd995c3e0",
+      "byte_length": 9469,
+      "mtime_ns": 1793620969572269500
+    },
+    "crates/noetome-desktop/build.rs": {
+      "sha256": "a360e6343f14c016745f1aa3161f70b5906752e98e12812f13f0731b598dc0f7",
+      "byte_length": 147,
+      "mtime_ns": 1793492932421655500
+    },
+    "crates/noetome-desktop/src/main.rs": {
+      "sha256": "12bca3cac88fb96314e1b7495bab266995423c562cc7f83dd3ba9a2ab225b362",
+      "byte_length": 15612,
+      "mtime_ns": 1793505526061887600
+    },
+    "crates/noetome-desktop/src/preferences.rs": {
+      "sha256": "12168b65e5aa28ed524cfa3f9ff7ab3e3850f429cf31d90815748b4862bd6df7",
+      "byte_length": 25194,
+      "mtime_ns": 1793505557708347500
+    },
+    "crates/noetome-cli/Cargo.toml": {
+      "sha256": "a2c7e101f0e06a755f71f8a718b67f68fea66757cf4e70621f920d327b0b5bb7",
+      "byte_length": 1078,
+      "mtime_ns": 1793673926338943500
+    },
+    "crates/noetome-desktop/Cargo.toml": {
+      "sha256": "5f503bd43c2a14c649d8ce5ebd451bd19ae58857982c94632082ea81032a2f7d",
+      "byte_length": 655,
+      "mtime_ns": 1793503129719765600
+    },
+    "apps/desktop/src/vite-env.d.ts": {
+      "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+      "byte_length": 38,
+      "mtime_ns": 1793493043250713000
+    },
+    "apps/desktop/src/App.tsx": {
+      "sha256": "571f18747de09756563520b425d3ff4630c0a4020ab28b854464512f85aa000a",
+      "byte_length": 22185,
+      "mtime_ns": 1793697424396427500
+    },
+    "apps/desktop/src/AppMenuBar.tsx": {
+      "sha256": "32d88e7c8c11b64183b231e949a25d150af06ca8c3f26c17811462cf5e8dd6e0",
+      "byte_length": 8150,
+      "mtime_ns": 1793712821485263100
+    },
+    "apps/desktop/src/main.tsx": {
+      "sha256": "87887cd7de3ec2867d6a96c001cceb1e8dc88f5f6bdb234f933c6411e8588b81",
+      "byte_length": 333,
+      "mtime_ns": 1793492958295132600
+    },
+    "apps/desktop/src/WindowControls.tsx": {
+      "sha256": "37ecb87a46251577db621877d5432fc66dc501d90d28cca59c7a4ba0096daf26",
+      "byte_length": 4754,
+      "mtime_ns": 1793712935359473300
+    },
+    "apps/desktop/src/styles.css": {
+      "sha256": "11e0016f1a5ac0b467a0d17f2021cbb7cda0fbe8a7c1ca3e7098ba6135710c4d",
+      "byte_length": 18246,
+      "mtime_ns": 1793712821485769400
+    },
+    "Cargo.toml": {
+      "sha256": "685a4e91efc75448a9a11425677b8a0248599d821462720bfa0d189fbe91b023",
+      "byte_length": 213,
+      "mtime_ns": 1793492932004239800
+    },
+    "Cargo.lock": {
+      "sha256": "b738c6b39c8a30b85f3e1922cd41ee25d378e94aafc2ed270e3587d3da540de9",
+      "byte_length": 115012,
+      "mtime_ns": 1793673938721999600
+    },
+    "scripts/cargo_local.ps1": {
+      "sha256": "eada4c3d73121f41c34ec8efb76f1503757c4f18354c64d9f774d2566039ada5",
+      "byte_length": 1313,
+      "mtime_ns": 1793502064191770400
+    },
+    "scripts/verify_extraction_knowledge.py": {
+      "sha256": "6f9760ef8379f5cba459a6989d0544f760200ff24c47493f91d6c3b1411a0b43",
+      "byte_length": 65793,
+      "mtime_ns": 1793713026689465500
+    },
+    "tests/test_extraction_knowledge_verifier.py": {
+      "sha256": "398633c5dcec0582f58e1ad6e667bad3ed635fcfc754603bf0eaa2e7200e3546",
+      "byte_length": 18482,
+      "mtime_ns": 1793712993595410400
+    },
+    "crates/noetome-desktop/tauri.conf.json": {
+      "sha256": "0536be1f229d7814649e41ea73940f83d09ed017fb2ffe647a1866661abce2c3",
+      "byte_length": 1472,
+      "mtime_ns": 1793712821486423600
+    },
+    "crates/noetome-desktop/capabilities/main.json": {
+      "sha256": "d7460698d384408095b359a985a5e339860e64df7a73094240111ab88b9e6b9f",
+      "byte_length": 592,
+      "mtime_ns": 1793712821486423600
+    },
+    "package.json": {
+      "sha256": "a3f172603c0b56eb007c2dacadf8c22682a846798982f5f5f760df50f925a0a3",
+      "byte_length": 876,
+      "mtime_ns": 1793493112192391800
+    },
+    "package-lock.json": {
+      "sha256": "e4af643b0619bec0481172b3691274e2657ff3fdb0cab28ddb529975e5fcb3e5",
+      "byte_length": 49340,
+      "mtime_ns": 1793493112203927900
+    },
+    ".gitattributes": {
+      "sha256": "309730c1535ed4c13f8d82383a3125d1bb7c8526f033382a91054f62ccdb65b8",
+      "byte_length": 4293,
+      "mtime_ns": 1793713345320515600
+    }
+  },
+  "binary_before": {
+    "sha256": "7a1eb3cae1fef5e9485848304d59dfd5c7804299190465a0aa126acfd6b56241",
+    "byte_length": 16985600,
+    "mtime_ns": 1793715791878738100
+  },
+  "python": "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+  "effective_temp_parent": "D:\\Noetome\\target\\compiler-temp",
+  "runner_sha256": "9a3a98cfc6900bb4dd552f0316eb7d1176998b39db3cf5cac1ad699e57fede89",
+  "stdout": "root-integration-diff-check-stdout.log",
+  "stderr": "root-integration-diff-check-stderr.log",
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 0.062,
+  "finished_at": "2026-11-03T15:02:21.551063+00:00",
+  "head_after": "634d6382b687b706b7bd34396ee5f386c57ef67e",
+  "code_after": {
+    "crates/noetome-cli/src/compile_model.rs": {
+      "sha256": "b5a5f95487d3fae73bd421dee7434874b2d5c63e261ad3a213200e8d7fad1d74",
+      "byte_length": 2379,
+      "mtime_ns": 1793525324182292000
+    },
+    "crates/noetome-cli/src/compile_report.rs": {
+      "sha256": "976609342b6b90286814118816f582b0d7f627b70b0c513412633f2608c0e1e2",
+      "byte_length": 12359,
+      "mtime_ns": 1793527254172123500
+    },
+    "crates/noetome-cli/src/compile_store.rs": {
+      "sha256": "a1a67f747a220e67c0b946e6e62158d87fbbd792891f928ed1a4bd11e8d41382",
+      "byte_length": 81464,
+      "mtime_ns": 1793526931024221200
+    },
+    "crates/noetome-cli/src/extraction.rs": {
+      "sha256": "5afb2c70884a3367ab9a94903a3c728a60b9c06adc5d8a7f9cf5415fe3cf25a2",
+      "byte_length": 19278,
+      "mtime_ns": 1793675965356190400
+    },
+    "crates/noetome-cli/src/extraction_api.rs": {
+      "sha256": "f853d0aaa9db22ae3474ad61e0294d63f9354eb9116c0adc416b61779434f92e",
+      "byte_length": 19306,
+      "mtime_ns": 1793690407316330400
+    },
+    "crates/noetome-cli/src/extraction_api_config.rs": {
+      "sha256": "8e47cb055879add102a408d137c4ea7526d1ecfd501ea5769d557a703c6cc3eb",
+      "byte_length": 18997,
+      "mtime_ns": 1793701578349308600
+    },
+    "crates/noetome-cli/src/extraction_api_schema.rs": {
+      "sha256": "839d39ae80252b3350d433afce8edd061d6b24908b720f7aeb01e4bc110579c6",
+      "byte_length": 22400,
+      "mtime_ns": 1793701580963376500
+    },
+    "crates/noetome-cli/src/extraction_api_transport.rs": {
+      "sha256": "01ef199a3214b6419813fa68b3a5ac902fb5ba7830572e5d1bef75fd08815054",
+      "byte_length": 14630,
+      "mtime_ns": 1793674809156891500
+    },
+    "crates/noetome-cli/src/extraction_api_wire/chat.rs": {
+      "sha256": "910c6eb14da93ba4a575694d27875732972c33d4b7f7796c61f5baf32bb91e74",
+      "byte_length": 15023,
+      "mtime_ns": 1793701509480381600
+    },
+    "crates/noetome-cli/src/extraction_api_wire.rs": {
+      "sha256": "8a12efbefadc606fd37e862b5ad531cec05144e76deda409eaf194dea0c488f7",
+      "byte_length": 30222,
+      "mtime_ns": 1793690543057130600
+    },
+    "crates/noetome-cli/src/extraction_fake.rs": {
+      "sha256": "63f58d337e9e0c3d9f2b677ca58efb9e51b996e39deb840076c10a83d8554c35",
+      "byte_length": 10776,
+      "mtime_ns": 1793670435742310400
+    },
+    "crates/noetome-cli/src/extraction_model.rs": {
+      "sha256": "018f266b9979eefe8711051afb620f0146715c1d9ea0196bdeb91af36de519df",
+      "byte_length": 8505,
+      "mtime_ns": 1793626211114062100
+    },
+    "crates/noetome-cli/src/extraction_output.rs": {
+      "sha256": "9c32b4a21a5d2bcefffae9d39352f82911eac23f195d473d9964c1de74d6032d",
+      "byte_length": 10880,
+      "mtime_ns": 1793706468550584500
+    },
+    "crates/noetome-cli/src/extraction_review.rs": {
+      "sha256": "a54494f3e08496104253f446ac97f3a143302155aace69a6f6352421cf0e6a6b",
+      "byte_length": 24615,
+      "mtime_ns": 1793707928040850200
+    },
+    "crates/noetome-cli/src/extraction_review_model.rs": {
+      "sha256": "ee6a79ce60d87cdfb3552fb2d4200e75b492f33791c9b85087eca9b11a05532d",
+      "byte_length": 7992,
+      "mtime_ns": 1793706316717309800
+    },
+    "crates/noetome-cli/src/extraction_source.rs": {
+      "sha256": "0c4efcbeee67284aa8c73484de7268b0314f8c57c25b543993ca64d3ee6ecab8",
+      "byte_length": 29101,
+      "mtime_ns": 1793670952021733300
+    },
+    "crates/noetome-cli/src/extraction_verify.rs": {
+      "sha256": "aacc16076e44df180d296ce78719c6d22abc8d7ca3259d9393d59c4164451ffc",
+      "byte_length": 29574,
+      "mtime_ns": 1793707928056887900
+    },
+    "crates/noetome-cli/src/fixture.rs": {
+      "sha256": "d904907dc79bbae8b759e19c01818d811a473e1b1a32372ae45bfaf43e288930",
+      "byte_length": 2983,
+      "mtime_ns": 1793522546301288600
+    },
+    "crates/noetome-cli/src/fixture_compile.rs": {
+      "sha256": "bfeed5d868c7378164a7bd5e80890d4c1ea634f6c2dd5328915ff4b96a96c50c",
+      "byte_length": 39280,
+      "mtime_ns": 1793527254581024000
+    },
+    "crates/noetome-cli/src/fixture_input.rs": {
+      "sha256": "352bbd19fd3aabc40ca382dfcbff6fd6be5c4be5770ba673162792aa90087e64",
+      "byte_length": 18886,
+      "mtime_ns": 1793525725423254800
+    },
+    "crates/noetome-cli/src/fixture_knowledge.rs": {
+      "sha256": "c90800a55b80457b5eaed9b48336635c06ad6674b0f98b03a671f90b2daf84c7",
+      "byte_length": 42104,
+      "mtime_ns": 1793626211140727500
+    },
+    "crates/noetome-cli/src/fixture_model.rs": {
+      "sha256": "f64fdd30c4ba095bf7d156b0e243e1efddebcc84940673cff693568e758f9475",
+      "byte_length": 8254,
+      "mtime_ns": 1793523210468790600
+    },
+    "crates/noetome-cli/src/fixture_plan.rs": {
+      "sha256": "3a3199430d3c5fec7cbea3665447edf910f7cc2f6b0e7b5c91c43c8fe9285ab2",
+      "byte_length": 65699,
+      "mtime_ns": 1793523654918209100
+    },
+    "crates/noetome-cli/src/fixture_render.rs": {
+      "sha256": "9db8d24b43c83ae20171cc0360dda2d19817fc91ae8d3ddbd40db0802dfc76dd",
+      "byte_length": 61763,
+      "mtime_ns": 1793526483628066000
+    },
+    "crates/noetome-cli/src/lib.rs": {
+      "sha256": "af77fad374efdf921a426fa6643b5067164015e38d3921ff5c8d87113c4776a9",
+      "byte_length": 19941,
+      "mtime_ns": 1793705825856381700
+    },
+    "crates/noetome-cli/src/main.rs": {
+      "sha256": "e641b6e38a5b34464d25c85e85a9e7c6579ab72daa538b4e35f2ee19bceb9d30",
+      "byte_length": 9202,
+      "mtime_ns": 1793705573750922700
+    },
+    "crates/noetome-cli/src/pdf_model.rs": {
+      "sha256": "2c9271239417ab8e75bb7816c49d2d9100ef241ad8b89fabeb26af238ed0917c",
+      "byte_length": 4020,
+      "mtime_ns": 1793609226271881000
+    },
+    "crates/noetome-cli/src/pdf_parse.rs": {
+      "sha256": "76ccdd7f0d12d620a22baba706d5baf451e8f3db8eeeea933adb9534cf6e6efc",
+      "byte_length": 17315,
+      "mtime_ns": 1793619839903460600
+    },
+    "crates/noetome-cli/src/pdf_source.rs": {
+      "sha256": "6b4d79bff75371b65936a26176daeb78ad94bf939ecda5733821d149b91b6091",
+      "byte_length": 26117,
+      "mtime_ns": 1793619839954642600
+    },
+    "crates/noetome-cli/src/pdf_source_model.rs": {
+      "sha256": "da7020d5c70c3cc134ba5511e3454b8482ae7332d44d0393891b0a3a3a98df45",
+      "byte_length": 68853,
+      "mtime_ns": 1793618747493391300
+    },
+    "crates/noetome-cli/src/pdf_validate.rs": {
+      "sha256": "ec2092f86e96d7a8eb6da4df8a6c884e9b21b81d23b344b4d7c3d4c517c33298",
+      "byte_length": 20051,
+      "mtime_ns": 1793611695283151900
+    },
+    "crates/noetome-cli/src/pdf_workspace.rs": {
+      "sha256": "d540098c1275fab0e3ddaa261b890f94e41628723df43a3272080c850a6ab8f1",
+      "byte_length": 12929,
+      "mtime_ns": 1793619839909477100
+    },
+    "crates/noetome-cli/src/project.rs": {
+      "sha256": "8d5382097ad9aafe23bbbc3faccaef68bf695df0f9e7fe30b54dbc08edfa15c5",
+      "byte_length": 52530,
+      "mtime_ns": 1793616883284170100
+    },
+    "crates/noetome-cli/src/sidecar_model.rs": {
+      "sha256": "1a3d65cac3f710d6e91868b318fcb3f3845f3ac57f3b9886e9aec4ecc9f9c79e",
+      "byte_length": 4375,
+      "mtime_ns": 1793601257763753300
+    },
+    "crates/noetome-cli/src/sidecar_process.rs": {
+      "sha256": "07be66b29835fc930a5d5b26bf756be6ef529537144738265f1160d96c2b10e5",
+      "byte_length": 23381,
+      "mtime_ns": 1793619839890905100
+    },
+    "crates/noetome-cli/src/sidecar_workspace.rs": {
+      "sha256": "b56c3f42cee2762e2b70bd0ad31710f6e6eee61d816d5d6b1da5d0293ff9b975",
+      "byte_length": 17416,
+      "mtime_ns": 1793626253910051000
+    },
+    "crates/noetome-cli/src/source.rs": {
+      "sha256": "acb162d12db26c4811b2f1e855421d2e7d5827f0e74109a9a6fc4816fd300ece",
+      "byte_length": 25934,
+      "mtime_ns": 1793619839921503300
+    },
+    "crates/noetome-cli/src/source_model.rs": {
+      "sha256": "77f7841e1b141af76719bfff29eb649c8d02eac3c4f80d9e1f94b474f653e31c",
+      "byte_length": 58045,
+      "mtime_ns": 1793621927362516600
+    },
+    "crates/noetome-cli/src/source_schema.rs": {
+      "sha256": "c0edd0fa39891681331256a8eca8804beb4690dc5e9ffb7394c33532dbab8171",
+      "byte_length": 17348,
+      "mtime_ns": 1793617512665053100
+    },
+    "crates/noetome-cli/src/source_schema3_tests.rs": {
+      "sha256": "f6a165b74a43cd4350378c5108e75b50d0cb67a88a1ca63b23c46dcc800c4e6f",
+      "byte_length": 30641,
+      "mtime_ns": 1793617450248611900
+    },
+    "crates/noetome-cli/src/source_write.rs": {
+      "sha256": "f287bc171014477204bc7b0d5cf5bf852cbe2e92544e32d75267e9601063fbcc",
+      "byte_length": 68354,
+      "mtime_ns": 1793619839940046100
+    },
+    "crates/noetome-cli/src/text.rs": {
+      "sha256": "d435ab083930558646596fc796930be71eb92b00f8dd49ebf66b280c5322c00e",
+      "byte_length": 16720,
+      "mtime_ns": 1793518572029240000
+    },
+    "crates/noetome-cli/tests/cli.rs": {
+      "sha256": "bca2a2252f563d6c77998de744dce24c7244be4c503f71ca363d4fdcf2cba42b",
+      "byte_length": 5929,
+      "mtime_ns": 1793500777372395800
+    },
+    "crates/noetome-cli/tests/compile.rs": {
+      "sha256": "6d8c3608e06d58f769efb0940111bacbd3b7dc4556220fdc3a1d007bcd4b29dd",
+      "byte_length": 61022,
+      "mtime_ns": 1793527152971727400
+    },
+    "crates/noetome-cli/tests/extraction.rs": {
+      "sha256": "01bcafecf4081429422722224ab69181dce6394c2c7885c18a5b59c3cce93fb7",
+      "byte_length": 8086,
+      "mtime_ns": 1793670435982360300
+    },
+    "crates/noetome-cli/tests/extraction_api.rs": {
+      "sha256": "2f58b668506cc2557d83b03a70a8c017610c37c094265ea9638d95812ab8bd6c",
+      "byte_length": 25506,
+      "mtime_ns": 1793701688726576900
+    },
+    "crates/noetome-cli/tests/extraction_verify.rs": {
+      "sha256": "0b62bf65aaa74388e9bf19478bb836920547f222742861fa81bb8e26d9e5a471",
+      "byte_length": 27681,
+      "mtime_ns": 1793707928314968600
+    },
+    "crates/noetome-cli/tests/fixture.rs": {
+      "sha256": "4672ef35e29d9d35c2d4178bc3b7e88329ef012c15e64e0872a26ea2770a1164",
+      "byte_length": 46115,
+      "mtime_ns": 1793524127065195800
+    },
+    "crates/noetome-cli/tests/pdf_parse.rs": {
+      "sha256": "a1350ad10c73a2fd3c649d93d18687b9e6acfaf529b93ecdd445084b4d063777",
+      "byte_length": 22610,
+      "mtime_ns": 1793611497492302400
+    },
+    "crates/noetome-cli/tests/pdf_source.rs": {
+      "sha256": "b2da169bd3cd82067b3333243155dcea284ac034ac92ba3181ffea83c23b16e5",
+      "byte_length": 69122,
+      "mtime_ns": 1793618809538805000
+    },
+    "crates/noetome-cli/tests/project.rs": {
+      "sha256": "0acaaa952bc5fe5535605bdf0575a82116e390d9578a5baddc2ca31e5c3d8c65",
+      "byte_length": 28741,
+      "mtime_ns": 1793518750293294400
+    },
+    "crates/noetome-cli/tests/sidecar.rs": {
+      "sha256": "286cbceae06aedf17bd129e395cb0b9876ef38ba61a45a081feea1d77ab6e35f",
+      "byte_length": 2793,
+      "mtime_ns": 1793599437975119300
+    },
+    "crates/noetome-cli/tests/source.rs": {
+      "sha256": "96793226921f731c3f317e1ad4ef501173985292f87a3a8760b31ab1483cd42f",
+      "byte_length": 39009,
+      "mtime_ns": 1793621018596577600
+    },
+    "crates/noetome-cli/tests/support/compile_expectations.rs": {
+      "sha256": "090cbcab6e074853f063cf60099f48fdbe57725be2c8831ff9ec59b11b065e24",
+      "byte_length": 2585,
+      "mtime_ns": 1793526041888327200
+    },
+    "crates/noetome-cli/tests/support/pdf_parse_tests.rs": {
+      "sha256": "f74445303afbc8f3709908b3f3f18cb2dc41b7ddc398a20f6c7ef66ec72eff0c",
+      "byte_length": 17698,
+      "mtime_ns": 1793619839959143600
+    },
+    "crates/noetome-cli/tests/support/pdf_source_model_tests.rs": {
+      "sha256": "c72cbddd210fc0db99310bf4ca44fbd14a692f024b1d5f889500264fd9c6a9d5",
+      "byte_length": 42164,
+      "mtime_ns": 1793620804539740000
+    },
+    "crates/noetome-cli/tests/support/pdf_source_write_tests.rs": {
+      "sha256": "52c2da6c3f011378e318c426c1ad15ec0b102ba1b00be544041b8ab6ee8d49dd",
+      "byte_length": 30452,
+      "mtime_ns": 1793619290201849000
+    },
+    "crates/noetome-cli/tests/support/pdf_validate_tests.rs": {
+      "sha256": "3865791b30c38bc69544ee4a974fc726f74d5011088da7c3c8a04cda058db93d",
+      "byte_length": 12104,
+      "mtime_ns": 1793611497405625000
+    },
+    "crates/noetome-cli/tests/support/sidecar_tests.rs": {
+      "sha256": "c276e272bf74a30706f383839ac9be8e4918230674626b078f1dda7528f4dc1f",
+      "byte_length": 21854,
+      "mtime_ns": 1793601257816156500
+    },
+    "crates/noetome-cli/tests/support/source_cache_race_tests.rs": {
+      "sha256": "45dc7f4309f445567ef72ffa75cfb1d1bd56c2f639bd36048513610fd995c3e0",
+      "byte_length": 9469,
+      "mtime_ns": 1793620969572269500
+    },
+    "crates/noetome-desktop/build.rs": {
+      "sha256": "a360e6343f14c016745f1aa3161f70b5906752e98e12812f13f0731b598dc0f7",
+      "byte_length": 147,
+      "mtime_ns": 1793492932421655500
+    },
+    "crates/noetome-desktop/src/main.rs": {
+      "sha256": "12bca3cac88fb96314e1b7495bab266995423c562cc7f83dd3ba9a2ab225b362",
+      "byte_length": 15612,
+      "mtime_ns": 1793505526061887600
+    },
+    "crates/noetome-desktop/src/preferences.rs": {
+      "sha256": "12168b65e5aa28ed524cfa3f9ff7ab3e3850f429cf31d90815748b4862bd6df7",
+      "byte_length": 25194,
+      "mtime_ns": 1793505557708347500
+    },
+    "crates/noetome-cli/Cargo.toml": {
+      "sha256": "a2c7e101f0e06a755f71f8a718b67f68fea66757cf4e70621f920d327b0b5bb7",
+      "byte_length": 1078,
+      "mtime_ns": 1793673926338943500
+    },
+    "crates/noetome-desktop/Cargo.toml": {
+      "sha256": "5f503bd43c2a14c649d8ce5ebd451bd19ae58857982c94632082ea81032a2f7d",
+      "byte_length": 655,
+      "mtime_ns": 1793503129719765600
+    },
+    "apps/desktop/src/vite-env.d.ts": {
+      "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+      "byte_length": 38,
+      "mtime_ns": 1793493043250713000
+    },
+    "apps/desktop/src/App.tsx": {
+      "sha256": "571f18747de09756563520b425d3ff4630c0a4020ab28b854464512f85aa000a",
+      "byte_length": 22185,
+      "mtime_ns": 1793697424396427500
+    },
+    "apps/desktop/src/AppMenuBar.tsx": {
+      "sha256": "32d88e7c8c11b64183b231e949a25d150af06ca8c3f26c17811462cf5e8dd6e0",
+      "byte_length": 8150,
+      "mtime_ns": 1793712821485263100
+    },
+    "apps/desktop/src/main.tsx": {
+      "sha256": "87887cd7de3ec2867d6a96c001cceb1e8dc88f5f6bdb234f933c6411e8588b81",
+      "byte_length": 333,
+      "mtime_ns": 1793492958295132600
+    },
+    "apps/desktop/src/WindowControls.tsx": {
+      "sha256": "37ecb87a46251577db621877d5432fc66dc501d90d28cca59c7a4ba0096daf26",
+      "byte_length": 4754,
+      "mtime_ns": 1793712935359473300
+    },
+    "apps/desktop/src/styles.css": {
+      "sha256": "11e0016f1a5ac0b467a0d17f2021cbb7cda0fbe8a7c1ca3e7098ba6135710c4d",
+      "byte_length": 18246,
+      "mtime_ns": 1793712821485769400
+    },
+    "Cargo.toml": {
+      "sha256": "685a4e91efc75448a9a11425677b8a0248599d821462720bfa0d189fbe91b023",
+      "byte_length": 213,
+      "mtime_ns": 1793492932004239800
+    },
+    "Cargo.lock": {
+      "sha256": "b738c6b39c8a30b85f3e1922cd41ee25d378e94aafc2ed270e3587d3da540de9",
+      "byte_length": 115012,
+      "mtime_ns": 1793673938721999600
+    },
+    "scripts/cargo_local.ps1": {
+      "sha256": "eada4c3d73121f41c34ec8efb76f1503757c4f18354c64d9f774d2566039ada5",
+      "byte_length": 1313,
+      "mtime_ns": 1793502064191770400
+    },
+    "scripts/verify_extraction_knowledge.py": {
+      "sha256": "6f9760ef8379f5cba459a6989d0544f760200ff24c47493f91d6c3b1411a0b43",
+      "byte_length": 65793,
+      "mtime_ns": 1793713026689465500
+    },
+    "tests/test_extraction_knowledge_verifier.py": {
+      "sha256": "398633c5dcec0582f58e1ad6e667bad3ed635fcfc754603bf0eaa2e7200e3546",
+      "byte_length": 18482,
+      "mtime_ns": 1793712993595410400
+    },
+    "crates/noetome-desktop/tauri.conf.json": {
+      "sha256": "0536be1f229d7814649e41ea73940f83d09ed017fb2ffe647a1866661abce2c3",
+      "byte_length": 1472,
+      "mtime_ns": 1793712821486423600
+    },
+    "crates/noetome-desktop/capabilities/main.json": {
+      "sha256": "d7460698d384408095b359a985a5e339860e64df7a73094240111ab88b9e6b9f",
+      "byte_length": 592,
+      "mtime_ns": 1793712821486423600
+    },
+    "package.json": {
+      "sha256": "a3f172603c0b56eb007c2dacadf8c22682a846798982f5f5f760df50f925a0a3",
+      "byte_length": 876,
+      "mtime_ns": 1793493112192391800
+    },
+    "package-lock.json": {
+      "sha256": "e4af643b0619bec0481172b3691274e2657ff3fdb0cab28ddb529975e5fcb3e5",
+      "byte_length": 49340,
+      "mtime_ns": 1793493112203927900
+    },
+    ".gitattributes": {
+      "sha256": "309730c1535ed4c13f8d82383a3125d1bb7c8526f033382a91054f62ccdb65b8",
+      "byte_length": 4293,
+      "mtime_ns": 1793713345320515600
+    }
+  },
+  "code_unchanged": true,
+  "head_unchanged": true,
+  "binary_after": {
+    "sha256": "7a1eb3cae1fef5e9485848304d59dfd5c7804299190465a0aa126acfd6b56241",
+    "byte_length": 16985600,
+    "mtime_ns": 1793715791878738100
+  },
+  "log_fingerprints": {
+    "root-integration-diff-check-stdout.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0,
+      "mtime_ns": 1793718141551063600
+    },
+    "root-integration-diff-check-stderr.log": {
+      "sha256": "fd4d4a82456042701be1c1f9fcbe98fb424d8dcb969c842225bfad609865e730",
+      "byte_length": 117,
+      "mtime_ns": 1793718141551063600
+    }
+  },
+  "passed": true
+}

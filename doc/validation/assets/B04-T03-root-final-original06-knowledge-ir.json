@@ -1,0 +1,474 @@
+{
+  "schema_version": 1,
+  "producer": "source_review",
+  "revision": 1,
+  "request_id": "4bed77a5-3409-4f72-9709-fa35ba0b752f",
+  "binding": {
+    "project_id": "2c9dd41b-e63a-4858-bc56-18039ca25f33",
+    "import_id": "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+    "source_id": "50cf1923-ffea-432e-b37c-199a5223a141",
+    "version_id": "d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b",
+    "content_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+    "normalized_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+    "parse_id": null,
+    "manifest_sha256": null
+  },
+  "source_match": "passed",
+  "concepts": [
+    {
+      "concept_id": "concept-fixture",
+      "revision": 1,
+      "canonical_name": "夹具",
+      "aliases": [],
+      "needs_full_explanation": false
+    },
+    {
+      "concept_id": "concept-sample-a",
+      "revision": 1,
+      "canonical_name": "样例 A",
+      "aliases": [],
+      "needs_full_explanation": false
+    },
+    {
+      "concept_id": "concept-speed",
+      "revision": 1,
+      "canonical_name": "速度",
+      "aliases": [],
+      "needs_full_explanation": false
+    },
+    {
+      "concept_id": "concept-temperature",
+      "revision": 1,
+      "canonical_name": "温度",
+      "aliases": [],
+      "needs_full_explanation": false
+    }
+  ],
+  "atoms": [
+    {
+      "atom": {
+        "atom_id": "atom-1",
+        "revision": 1,
+        "kind": "statement",
+        "concept_ids": [
+          "concept-fixture",
+          "concept-sample-a",
+          "concept-speed",
+          "concept-temperature"
+        ],
+        "content": "在本夹具的样例 A 中，速度为 10 m/s；条件为温度 20 ℃，且仅适用样例 A。",
+        "qualifiers": [
+          "在本夹具的样例 A 中",
+          "温度 20 ℃",
+          "仅适用样例 A",
+          "m/s"
+        ],
+        "evidence_links": [
+          {
+            "evidence_id": "ev-1",
+            "relation": "supports"
+          }
+        ],
+        "required": false,
+        "verification": "unverified",
+        "value_status": "known"
+      },
+      "measurement": {
+        "value_status": "known",
+        "value": "10",
+        "unit": "m/s",
+        "conditions": [
+          "在本夹具的样例 A 中",
+          "温度 20 ℃",
+          "仅适用样例 A"
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "ev-1",
+      "unit_id": "unit-0",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 140,
+      "excerpt_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+      "quote": "在本夹具的样例 A 中，速度为 10 m/s。条件是温度 20 ℃、仅适用样例 A。此句是作者编写的工程测试数据。\n"
+    }
+  ],
+  "checks": [
+    {
+      "category": "schema",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": "strict_schema_1",
+      "actual": null
+    },
+    {
+      "category": "source",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": "parsed",
+      "actual": "parsed"
+    },
+    {
+      "category": "exclusion",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": "included",
+      "actual": "included"
+    },
+    {
+      "category": "coverage",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "atom_count": 1,
+        "unit_id": "unit-0"
+      },
+      "actual": {
+        "candidate_ids": [
+          "atom-1"
+        ],
+        "decision": {
+          "atom_ids": [
+            "atom-1"
+          ],
+          "disposition": "included",
+          "exclusion_reason": null,
+          "schema_version": 1,
+          "unit_id": "unit-0"
+        }
+      }
+    },
+    {
+      "category": "binding",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "binding": {
+          "content_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+          "import_id": "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+          "manifest_sha256": null,
+          "normalized_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+          "parse_id": null,
+          "project_id": "2c9dd41b-e63a-4858-bc56-18039ca25f33",
+          "source_id": "50cf1923-ffea-432e-b37c-199a5223a141",
+          "version_id": "d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b"
+        },
+        "request_id": "4bed77a5-3409-4f72-9709-fa35ba0b752f"
+      },
+      "actual": {
+        "binding": {
+          "content_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+          "import_id": "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+          "manifest_sha256": null,
+          "normalized_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+          "parse_id": null,
+          "project_id": "2c9dd41b-e63a-4858-bc56-18039ca25f33",
+          "source_id": "50cf1923-ffea-432e-b37c-199a5223a141",
+          "version_id": "d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b"
+        },
+        "request_id": "4bed77a5-3409-4f72-9709-fa35ba0b752f"
+      }
+    },
+    {
+      "category": "duplicate",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": "unique_semantic_atom",
+      "actual": "在本夹具的样例 A 中，速度为 10 m/s；条件为温度 20 ℃，且仅适用样例 A。"
+    },
+    {
+      "category": "evidence_identity",
+      "object_id": "ev-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "end_byte": 140,
+        "start_byte": 0,
+        "unit_id": "unit-0"
+      },
+      "actual": {
+        "evidence_id": "ev-1",
+        "excerpt_end_byte": 140,
+        "excerpt_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+        "excerpt_start_byte": 0,
+        "quote": "在本夹具的样例 A 中，速度为 10 m/s。条件是温度 20 ℃、仅适用样例 A。此句是作者编写的工程测试数据。\n",
+        "unit_id": "unit-0"
+      }
+    },
+    {
+      "category": "evidence",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "end_byte": 94,
+        "quote": "在本夹具的样例 A 中，速度为 10 m/s。条件是温度 20 ℃、仅适用样例 A。",
+        "start_byte": 0
+      },
+      "actual": [
+        {
+          "evidence_id": "ev-1",
+          "excerpt_end_byte": 140,
+          "excerpt_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+          "excerpt_start_byte": 0,
+          "quote": "在本夹具的样例 A 中，速度为 10 m/s。条件是温度 20 ℃、仅适用样例 A。此句是作者编写的工程测试数据。\n",
+          "unit_id": "unit-0"
+        }
+      ]
+    },
+    {
+      "category": "concept",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "components": [
+          "样例 A",
+          "速度"
+        ],
+        "compound": "样例 A 速度"
+      },
+      "actual": {
+        "additional_source_concepts": 2,
+        "linked": [
+          {
+            "aliases": [],
+            "canonical_name": "夹具",
+            "concept_id": "concept-fixture",
+            "needs_full_explanation": false,
+            "revision": 1
+          },
+          {
+            "aliases": [],
+            "canonical_name": "样例 A",
+            "concept_id": "concept-sample-a",
+            "needs_full_explanation": false,
+            "revision": 1
+          },
+          {
+            "aliases": [],
+            "canonical_name": "速度",
+            "concept_id": "concept-speed",
+            "needs_full_explanation": false,
+            "revision": 1
+          },
+          {
+            "aliases": [],
+            "canonical_name": "温度",
+            "concept_id": "concept-temperature",
+            "needs_full_explanation": false,
+            "revision": 1
+          }
+        ]
+      }
+    },
+    {
+      "category": "content",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": "样例 A 的速度为 10 m/s，条件为温度 20 ℃且仅适用样例 A。",
+      "actual": "在本夹具的样例 A 中，速度为 10 m/s；条件为温度 20 ℃，且仅适用样例 A。"
+    },
+    {
+      "category": "fact",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "value": "10",
+        "value_status": "known"
+      },
+      "actual": {
+        "conditions": [
+          "在本夹具的样例 A 中",
+          "温度 20 ℃",
+          "仅适用样例 A"
+        ],
+        "unit": "m/s",
+        "value": "10",
+        "value_status": "known"
+      }
+    },
+    {
+      "category": "unit",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": "m/s",
+      "actual": {
+        "measurement": "m/s",
+        "qualifiers": [
+          "在本夹具的样例 A 中",
+          "温度 20 ℃",
+          "仅适用样例 A",
+          "m/s"
+        ]
+      }
+    },
+    {
+      "category": "condition",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": "温度 20 ℃",
+      "actual": {
+        "body": [
+          "温度20℃",
+          "仅适用样例A"
+        ],
+        "measurement": [
+          "在本夹具的样例 A 中",
+          "温度 20 ℃",
+          "仅适用样例 A"
+        ],
+        "qualifiers": [
+          "在本夹具的样例 A 中",
+          "温度 20 ℃",
+          "仅适用样例 A",
+          "m/s"
+        ]
+      }
+    },
+    {
+      "category": "condition",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": "仅适用样例 A",
+      "actual": {
+        "body": [
+          "温度20℃",
+          "仅适用样例A"
+        ],
+        "measurement": [
+          "在本夹具的样例 A 中",
+          "温度 20 ℃",
+          "仅适用样例 A"
+        ],
+        "qualifiers": [
+          "在本夹具的样例 A 中",
+          "温度 20 ℃",
+          "仅适用样例 A",
+          "m/s"
+        ]
+      }
+    },
+    {
+      "category": "condition_set",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "allowed_contexts": [
+          "在本夹具的样例 A 中"
+        ],
+        "required": [
+          "温度 20 ℃",
+          "仅适用样例 A"
+        ]
+      },
+      "actual": {
+        "body": [
+          "温度20℃",
+          "仅适用样例A"
+        ],
+        "measurement": [
+          "在本夹具的样例 A 中",
+          "温度 20 ℃",
+          "仅适用样例 A"
+        ]
+      }
+    },
+    {
+      "category": "exception_set",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": [],
+      "actual": []
+    },
+    {
+      "category": "qualifiers",
+      "object_id": "atom-1",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 140,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "conditions": [
+          "温度 20 ℃",
+          "仅适用样例 A"
+        ],
+        "contexts": [
+          "在本夹具的样例 A 中"
+        ],
+        "exceptions": [],
+        "unit": "m/s"
+      },
+      "actual": [
+        "在本夹具的样例 A 中",
+        "温度 20 ℃",
+        "仅适用样例 A",
+        "m/s"
+      ]
+    }
+  ]
+}

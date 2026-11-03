@@ -201,4 +201,6 @@ T13/T14另外通过测试构建的内部callback和真实子进程覆盖：实�
 
 运行 `python scripts/verify_extraction_knowledge.py --binary <absolute-noetome> --output <nonexistent-root>`。脚本用当前Python解释器启动现有PDF parser，需同一运行时具备既有PDF依赖和ReportLab；仓库不硬编码本机运行时路径。矩阵分别统计工程场景与知识样本，每份报告的expected分母为1；正确拒绝是工程通过，不能算知识通过。实际重复JSON键数量保留null，空例外denominator0/not_applicable，pending/review保留已观察失败。原第六保存live输入仅由最终控制流程使用四个成组 `--live-*` 参数，在调用前读固定gold/candidate，并复核其确切SHA；不新增模型调用。
 
-本轮Task2已实际通过19项focused Python测试和52场景/60次普通CLI离线矩阵，其中真实作者中文文本PDF按固定句子、物理页、实际登记资源/SQL区域/bbox对账。完整Rust/Python、原六输入、日志和整分支新鲜审查仍由根执行，不能由这些局部数字推定完成。原始RED/失败根/最终矩阵证据和局限见[B04-T03验证](../validation/B04-T03.md)。
+Task2经过两项真实伪造的审查修复，最终28项focused Python及52场景/60次普通CLI离线矩阵通过；真实作者中文文本PDF按固定句子、物理页、实际资源/SQL区域/bbox对账。根另实际执行含原第六保存候选的53场景/61次CLI及完整Rust532/Python104；workspace重新链接后的最后程序只追加1次原六CLI与独立核对，不重复无关矩阵。原六expected1来源匹配通过，不把重测算为新独立样本，不改原gold/候选。原始RED/失败根、类型/诊断修复、完整回归、输入/预算前后保护与局限见[B04-T03验证](../validation/B04-T03.md)。整分支新鲜审查、日志complete和推送仍按真实结果收束。
+
+用户追加的单行顶部须同时验证完整原生窗口与客户端/边框几何、同行控制和真实菜单IPC，不能仅凭WebView截图或WS_CAPTION位。托盘恢复和空白拖动在桌面自动工具不可用时由用户实机确认，并保存直接用户答复；CDP合成双击事件不能宣称物理双击。真实直接退出须有关闭前绑定的进程退出证据，最后恢复原关闭偏好并普通启动。具体结果和测试辅助脚本的失败记录见[窗口验证](../validation/B04-T03-ui-single-row.md)。

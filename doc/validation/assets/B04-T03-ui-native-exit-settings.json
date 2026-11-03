@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "phase": "exit",
+  "exit_watcher_attempt": 2,
+  "started_at": "2026-11-03T14:45:30.603Z",
+  "original_close_behavior": "hide_to_tray",
+  "launch": {
+    "schema_version": 1,
+    "started_at": "2026-11-03T14:03:58.893498+00:00",
+    "label": "native-debug-01",
+    "pid": 35996,
+    "executable": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+    "executable_sha256": "870efa1a55bc33d48a731765150834f2caf06fe6be8f8294af6b1086dfb476c7",
+    "executable_bytes": 11101184,
+    "debug_port": 9243,
+    "debug_address": "127.0.0.1",
+    "isolated_webview_directory": "D:\\Noetome\\target\\compiler-temp\\B04-T03-native-debug-01-webview",
+    "normal_visible_app_window_requested": true,
+    "source_sha256": "667a622c319f8f08fe7a9b74ff9d04cfb7e09bc9b5265c7bb99a3bbb849bf427"
+  },
+  "preferences_before": {
+    "path": "C:\\Users\\Lyinn\\AppData\\Local\\com.noetome.desktop\\desktop-preferences.json",
+    "sha256": "97b4d8605596904e25850007501284e6d243a3de3c111cd0beac0a9ad1fd346c",
+    "value": {
+      "schema_version": 1,
+      "close_behavior": "exit"
+    }
+  },
+  "checks": [
+    {
+      "name": "user_restored_window_and_original_preference_and_no_error",
+      "passed": true,
+      "detail": {
+        "selected_window_visible": true,
+        "human_confirmation": "task-3-native-user-confirmation.json",
+        "original_close_behavior": "hide_to_tray"
+      }
+    },
+    {
+      "name": "save_exit_and_fresh_settings_read_confirms_persistence",
+      "passed": true,
+      "detail": {
+        "path": "C:\\Users\\Lyinn\\AppData\\Local\\com.noetome.desktop\\desktop-preferences.json",
+        "sha256": "97b4d8605596904e25850007501284e6d243a3de3c111cd0beac0a9ad1fd346c",
+        "value": {
+          "schema_version": 1,
+          "close_behavior": "exit"
+        }
+      }
+    },
+    {
+      "name": "actual_close_button_with_exit_preference_terminates_selected_process",
+      "passed": true,
+      "detail": {
+        "pid": 35996,
+        "executable": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+        "executable_sha256": "870efa1a55bc33d48a731765150834f2caf06fe6be8f8294af6b1086dfb476c7",
+        "handle_bound_before_close": true,
+        "started_at": "2026-11-03T14:45:30.950906+00:00",
+        "source_sha256": "1799a557ae9a1de385de7c44466a606dbe4f01a0d76d46a22ff46fe0bfe82250",
+        "process_mutations": 0,
+        "wait_result": 0,
+        "exited": true,
+        "exit_code": 0,
+        "finished_at": "2026-11-03T14:45:31.179371+00:00",
+        "passed": true
+      }
+    }
+  ],
+  "verifier_sha256": "52636d9aab488a74207482d34282c3f27f07c08666cab0bb0154a7e1b7698243",
+  "physical_os_inputs": 0,
+  "exit_saved_preferences": {
+    "path": "C:\\Users\\Lyinn\\AppData\\Local\\com.noetome.desktop\\desktop-preferences.json",
+    "sha256": "97b4d8605596904e25850007501284e6d243a3de3c111cd0beac0a9ad1fd346c",
+    "value": {
+      "schema_version": 1,
+      "close_behavior": "exit"
+    }
+  },
+  "finished_at": "2026-11-03T14:45:31.190Z",
+  "preferences_after": {
+    "path": "C:\\Users\\Lyinn\\AppData\\Local\\com.noetome.desktop\\desktop-preferences.json",
+    "sha256": "97b4d8605596904e25850007501284e6d243a3de3c111cd0beac0a9ad1fd346c",
+    "value": {
+      "schema_version": 1,
+      "close_behavior": "exit"
+    }
+  },
+  "passed": true
+}

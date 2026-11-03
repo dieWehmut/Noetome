@@ -2,7 +2,7 @@
 
 面向个人学科学习的知识编译器，将多份电子资料整合为可追溯、可维护的 Obsidian 知识库。
 
-Rust CLI 提供空项目初始化、单份UTF8 MD/TXT来源登记及只读检查、独立新测试根中的单份文本PDF解析与页/区域重查、明确标为fixture的IR与NotePlan契约校验和临时Vault编译，以及帮助和版本命令。来源登记保存不可变版本、原始/规范文本快照和完整Span清单，知识处理仍为pending；fixture的知识与计划由作者声明，程序核对来源、证据、完整覆盖、独立预期和实际笔记，再保存Run、Release及双报告。PDF采用锁定的单一pdfplumber sidecar，Core复核原始、全部物理页、真实CropBox位置与逐页UTF8；扫描和复杂版面保守需复核，PDF尚未登记进来源项目。fake只用于协议测试。桌面骨架提供帮助、版本、本地连接检查和托盘设置，项目、来源及fixture/PDF业务尚未接入桌面；模型抽取仍在开发中。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
+Rust CLI提供空项目初始化、单份MD/TXT/PDF来源登记与只读重查、文本PDF解析/重解析、fixture IR与NotePlan校验及新测试Vault编译，以及单请求文本API候选与有界来源知识核对。来源版本、PDF解析尝试、真实位置与原始资源独立保留，来源知识仍pending；fixture明确标作者输入，API候选工程通过与来源核对、科学质量和发布分别表达。现有pdfplumber sidecar用于有界文本PDF，扫描和复杂版面保守需复核。桌面提供帮助、版本、本地连接检查、单行菜单及托盘/关闭设置；项目、资料和知识业务仍通过CLI。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
 
 ## 开始开发
 
@@ -87,6 +87,18 @@ Windows 路径、文件占用、真实初始化中断与恢复测试及命令输
 升级和导入使用独占`.noetome-writing`目录保存候选、旧配置/数据库备份及操作说明，发布前后重读验证。普通失败只有在身份和字节仍属于本次写入时才恢复与清理；中断、未知内容、替换或无法确认的清理保留现场并报告未完成。遇该目录时公开inspect拒绝，不能把事务残留显示为成功。目前未提供自动恢复入口，也未承诺任意外部并发或任意断电下多文件原子提交。
 
 本机Windows完整来源验证、失败保护、独立SQLite/快照检查和正常完整性CLI副本实测见[B02-T01验证记录](doc/validation/B02-T01.md)。可用`scripts/verify_text_source.py`按记录中的命令在另一个全新测试根复现；输入全部自造，不调用模型，不生成IR或笔记。
+
+## 已保存API候选的来源知识核对
+
+单请求文本API及用户已保存的网关、模型、外部凭据引用和累计额度见[模型服务](doc/requirements/MODEL_SERVICE.md)与[API契约](doc/technical/EXTRACTION_API_CONTRACT.md)。保存配置与累计账本可复用，不把密钥写入仓库，不在每轮重置预算。
+
+```text
+noetome extract verify <项目路径> <import-id> <review-case> <全新输出根>
+```
+
+review-case严格包含review、原候选、独立作者gold和纳入/排除依据；单个实际来源单位、UTF8引文及一个受控测量事实逐项核对概念、内容、数值、条件、单位、例外和覆盖。只有全部通过才生成未发布的source_review IR，原atom仍unverified/required=false。失败报告保存实际分母和逐对象诊断，JSON/Markdown同事实，已有输出或人工新增文件不覆盖。普通verify不读取模型服务/密钥/预算，也不发API请求。
+
+[B04-T03实际验证](doc/validation/B04-T03.md)包含原第六保存模型候选、调用前gold与源SQL/字节核对，以及负例、独立校验器和完整回归。本能力仅支持契约声明的有界受控语法，scientific_quality=not_run、knowledge_status=pending、published=false；它不代替正式准确率、完整自然语言/PDF或知识发布。输入字段、原子分母及保护规则见[来源核对契约](doc/technical/EXTRACTION_REVIEW_CONTRACT.md)。
 
 ## 离线 fake 知识候选验证
 
@@ -210,7 +222,9 @@ npm run desktop:build
 
 关于页的“窗口行为”设置提供“关闭窗口时：隐藏到托盘 / 直接退出”，未配置时默认隐藏到托盘；成功保存的选择在重启后保留。打开设置及失败后的“重新读取”都实际重读设置文件，读取成功后显示并采用当前值；读取或保存失败明确报告，保留此前已生效的关闭行为，不把未保存的选择显示为已生效。启动时无法读取设置且尚无有效值时，明确报告后安全采用隐藏到托盘；这不表示默认值已保存。托盘创建、隐藏或恢复失败应报告稳定错误码及处理建议。
 
-窗口 × 在决策前也重新读取已保存的设置，避免驻留实例沿用另一个窗口保存前的缓存。最终安装版已通过本机Windows原生验收：任务栏最小化恢复、×隐藏后的两种托盘恢复及输出保留、托盘退出与快捷方式重启，以及保存直接退出后的×终止和正常快捷方式重启持久性。实际安装、用户反馈和测试上下文诊断见 [B01A-T01 设置重读验证记录](doc/validation/B01A-T01-settings-refresh.md)，[第一修正版](doc/validation/B01A-T01-close-settings.md)及[首次托盘记录](doc/validation/B01A-T01.md)保留旧行为与历史证据。
+窗口 × 在决策前也重新读取已保存的设置，避免驻留实例沿用另一个窗口保存前的缓存。B01A最终安装版实际验收任务栏最小化恢复、×隐藏后的两种托盘恢复及输出保留、托盘退出与快捷方式重启，以及保存直接退出后的×终止和重启持久性。历史上下文见[B01A-T01设置重读记录](doc/validation/B01A-T01-settings-refresh.md)。
+
+按用户最新截图，当前顶部移除`Noetome / 工作台`与Windows系统Noetome标题行，仅保留一行File/Edit/View/Help、历史/侧栏和右侧窗口按钮。实际更新安装、完整窗口、菜单IPC、原生最小化/最大化/还原/关闭、直接退出/重启持久化，以及用户确认的托盘恢复/空白拖动见[单行窗口验证](doc/validation/B04-T03-ui-single-row.md)。
 
 开发调试使用 `npm run desktop:dev`。只预览前端使用 `npm run web:dev`；前端预览没有 Tauri Rust 运行时，点击运行检查会显示连接失败。
 

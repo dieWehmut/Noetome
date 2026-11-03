@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-11-03T14:52:11.809936+00:00",
+  "command": [
+    "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+    ".superpowers/sdd/B04-T03_REVIEW_PLAN/task-3-native-window-probe.py",
+    "--exe",
+    "C:\\Users\\Lyinn\\AppData\\Local/Programs/Noetome/noetome-desktop.exe",
+    "--pid",
+    "53980",
+    "--label",
+    "final-normal-app",
+    "--expect-title-band-absent"
+  ],
+  "source_sha256": "3bef503043c2fd1276ec96e0549a53f7cf2d09580924338d16afb13a2957d0ae",
+  "exe_sha256": "870efa1a55bc33d48a731765150834f2caf06fe6be8f8294af6b1086dfb476c7",
+  "exe_bytes": 11101184,
+  "windows": [
+    {
+      "hwnd": 10556170,
+      "pid": 53980,
+      "exe": "C:\\Users\\Lyinn\\AppData\\Local\\Programs\\Noetome\\noetome-desktop.exe",
+      "title": "Noetome",
+      "style": 349110272,
+      "style_hex": "0x14cf0000",
+      "caption_present": true,
+      "caption_field_means_style_bits_only": true,
+      "visible": true,
+      "minimized": false,
+      "maximized": false,
+      "window_rect": [
+        360,
+        116,
+        1573,
+        924
+      ],
+      "client_rect": [
+        0,
+        0,
+        1200,
+        800
+      ],
+      "client_origin_screen": [
+        367,
+        117
+      ],
+      "client_top_offset": 1,
+      "left_border": 7,
+      "right_border": 6,
+      "native_title_band_height": 0
+    }
+  ],
+  "checks": [
+    {
+      "name": "unique_selected_installed_window",
+      "passed": true,
+      "actual": 1,
+      "expected": 1
+    },
+    {
+      "name": "no_extra_native_title_band",
+      "passed": true,
+      "actual": 0,
+      "maximum": 2
+    }
+  ],
+  "passed": true,
+  "app_inputs": 0,
+  "ui_automation_calls": 0,
+  "app_state_changes": 0
+}
