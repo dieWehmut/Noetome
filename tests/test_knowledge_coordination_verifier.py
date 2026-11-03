@@ -297,6 +297,152 @@ class CoordinationVerifierTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             verify_report(self.project, self.case, self.output, self.gold_bytes)
 
+    def sync_original_roles(self):
+        """Synchronize every provenance/artifact pin, leaving source and facts fixed."""
+        directory = self.case / "bundle-a"
+        review = json.loads((directory / "review-original.json").read_bytes())
+        gold_raw = (directory / "gold-original.json").read_bytes()
+        review["gold_sha256"] = fp(gold_raw)["sha256"]
+        (directory / "review-original.json").write_bytes(encoded(review))
+        source_report = json.loads((directory / "verification.json").read_bytes())
+        source_report["origin"].update(gold_sha256=review["gold_sha256"], reviewer=review["reviewer"], interpretation_timing=review["interpretation_timing"])
+        source_report["rules"].update(reviewer=review["reviewer"], interpretation_timing=review["interpretation_timing"])
+        for role, original in (("review.json", "review-original.json"), (review["gold_file"], "gold-original.json"), (review["candidate_file"], "candidates-original.json"), (review["decision_file"], "decision-original.json")):
+            source_report["origin"]["input_fingerprints"][role] = fp((directory / original).read_bytes())
+        for name in source_report["artifacts"]:
+            source_report["artifacts"][name] = fp((directory / name).read_bytes())
+        (directory / "verification.json").write_bytes(encoded(source_report))
+        md = directory / "verification.md"
+        md.write_bytes(md.read_bytes().split(b"```json\n", 1)[0] + b"```json\n" + encoded(source_report).rstrip() + b"\n```\n")
+        self.repin_bundle()
+        self.rewrite()
+
+    def test_fix1_source_visible_publication_is_rejected(self):
+        self.test_baseline()
+        path = self.case / "bundle-a/verification.md"
+        before = path.read_bytes()
+        changed = before.replace("发布：false".encode(), "发布：true".encode(), 1)
+        self.assertNotEqual(changed, before)
+        path.write_bytes(changed)
+        self.repin_bundle()
+        self.refuse()
+
+    def test_fix1_coordination_trailing_publication_is_rejected(self):
+        self.test_baseline()
+        path = self.output / "coordination.md"
+        path.write_bytes(path.read_bytes() + "\n发布：true；科学质量：passed。\n".encode())
+        with self.assertRaises(AssertionError):
+            verify_report(self.project, self.case, self.output, self.gold_bytes)
+
+    def test_fix1_coherent_gold_author_types(self):
+        self.test_baseline()
+        directory = self.case / "bundle-a"
+        originals = {p.name: p.read_bytes() for p in directory.iterdir()}
+        for value in (False, 17, None, "", "   "):
+            with self.subTest(author=value):
+                for name, raw in originals.items():
+                    (directory / name).write_bytes(raw)
+                path = directory / "gold-original.json"
+                gold = json.loads(path.read_bytes()); gold["author"] = value
+                path.write_bytes(encoded(gold))
+                self.sync_original_roles()
+                with self.assertRaises(AssertionError):
+                    verify_report(self.project, self.case, self.output, self.gold_bytes)
+
+    def test_fix1_coherent_reviewer_types_and_fixed_enum(self):
+        self.test_baseline()
+        directory = self.case / "bundle-a"
+        originals = {p.name: p.read_bytes() for p in directory.iterdir()}
+        for value in (False, 17, None, "", "   ", "unapproved_reviewer"):
+            with self.subTest(reviewer=value):
+                for name, raw in originals.items():
+                    (directory / name).write_bytes(raw)
+                path = directory / "review-original.json"
+                review = json.loads(path.read_bytes()); review["reviewer"] = value
+                path.write_bytes(encoded(review))
+                self.sync_original_roles()
+                with self.assertRaises(AssertionError):
+                    verify_report(self.project, self.case, self.output, self.gold_bytes)
+
+    def test_fix1_original_role_declared_field_types(self):
+        from verify_knowledge_coordination import source_roles_schema
+        directory = self.case / "bundle-a"
+        originals = [json.loads((directory / (role + "-original.json")).read_bytes()) for role in ("review", "gold", "decision")]
+        source_roles_schema(*originals)
+        text_fields = [
+            (0, "purpose candidate_file gold_file decision_file gold_sha256 subject property reviewer interpretation_timing"),
+            (1, "author producer scientific_quality concept_name atom_content value unit quote verification knowledge_status value_status"),
+            (2, "unit_id disposition"),
+        ]
+        for index, names in text_fields:
+            for field in names.split():
+                for value in (False, 17, None, "", "   "):
+                    with self.subTest(role=index, field=field, value=value):
+                        roles = copy.deepcopy(originals); roles[index][field] = value
+                        with self.assertRaises(AssertionError):
+                            source_roles_schema(*roles)
+        for index, field in ((0, "allowed_contexts"), (0, "selection"), (1, "conditions"), (1, "exceptions"), (2, "atom_ids")):
+            for value in (False, 17, None, "", [False], [17], [None], [""]):
+                with self.subTest(role=index, array=field, value=value):
+                    roles = copy.deepcopy(originals); roles[index][field] = value
+                    with self.assertRaises(AssertionError):
+                        source_roles_schema(*roles)
+        for index, field in ((0, "schema_version"), (1, "schema_version"), (1, "required"), (1, "published"), (2, "schema_version")):
+            for value in (0, 1.0, None, "1", True):
+                with self.subTest(role=index, fixed=field, value=value):
+                    roles = copy.deepcopy(originals); roles[index][field] = value
+                    with self.assertRaises(AssertionError):
+                        source_roles_schema(*roles)
+        for value in (False, 17, "", "   "):
+            with self.subTest(nullable_reason=value):
+                roles = copy.deepcopy(originals); roles[2]["exclusion_reason"] = value
+                with self.assertRaises(AssertionError):
+                    source_roles_schema(*roles)
+        for value in (False, 17.0, None, "0", -1):
+            with self.subTest(ordinal=value):
+                roles = copy.deepcopy(originals); roles[0]["selection"][0]["ordinal"] = value
+                with self.assertRaises(AssertionError):
+                    source_roles_schema(*roles)
+        for index, field, value in ((0, "subject", "<script>"), (1, "author", "[[hidden]]"), (2, "unit_id", "%%hidden%%")):
+            roles = copy.deepcopy(originals); roles[index][field] = value
+            with self.assertRaises(AssertionError):
+                source_roles_schema(*roles)
+
+    def test_fix1_original_roles_allow_documented_empty_and_nullable_values(self):
+        from verify_knowledge_coordination import source_roles_schema
+        directory = self.case / "bundle-a"
+        review, gold, decision = [json.loads((directory / (role + "-original.json")).read_bytes()) for role in ("review", "gold", "decision")]
+        # Wire schemas permit these values. Their applicability is assessed later.
+        review["allowed_contexts"] = []; gold["conditions"] = []; gold["exceptions"] = []
+        decision.update(atom_ids=[], disposition="pending", exclusion_reason=None)
+        source_roles_schema(review, gold, decision)
+        gold.update(value_status="unknown", value=None, unit=None)
+        source_roles_schema(review, gold, decision)
+        decision.update(disposition="excluded", exclusion_reason="explicit engineering reason")
+        source_roles_schema(review, gold, decision)
+        gold.update(value_status="known", value="10", unit="m/s")
+        gold.pop("value_status"); gold.pop("exceptions"); gold["schema_version"] = 1
+        source_roles_schema(review, gold, decision)
+        # The unchanged saved baseline remains a valid passed coordinate input.
+        self.assertEqual(verify_report(self.project, self.case, self.output, self.gold_bytes)["status"], "passed")
+
+    def test_fix1_source_envelope_and_suffix_are_consumed(self):
+        self.test_baseline()
+        path = self.case / "bundle-a/verification.md"
+        original = path.read_bytes()
+        mutations = [
+            original + "\n发布：true；科学质量：passed。\n".encode(),
+            original.replace(b"not_run", b"passed", 1),
+            original.replace(b"not_requested", b"requested", 1),
+            original.replace(b"automated_source_review", b"other_reviewer", 1),
+            original.replace(b'"before_synthetic_response"', b'"after_model_response"', 1),
+        ]
+        for index, raw in enumerate(mutations):
+            with self.subTest(envelope=index):
+                path.write_bytes(raw)
+                self.repin_bundle()
+                self.refuse()
+
 
 if __name__ == "__main__":
     unittest.main()

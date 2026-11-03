@@ -150,6 +150,100 @@ def metadata(value):
             metadata(item)
 
 
+def role_text(value):
+    """Declared bounded plain text, not merely an already-string limit check."""
+    text(value)
+    assert not any(marker in value for marker in ("%%", "[[", "![")), "source role hidden/link text"
+    assert not re.search(r"<[A-Za-z/!?]|\]\s*[(\[:]", value), "source role rich text"
+
+
+def source_roles_schema(review, gold, decision):
+    """Validate every field of the upstream original roles before rebuilding.
+
+    Wire-valid unknown gold and empty decision arrays are representable here;
+    coordination's passed/known/single-atom requirement is checked separately.
+    """
+    def enum(value, choices):
+        role_text(value)
+        assert value in choices, "source role enum"
+
+    def array(value, maximum):
+        assert type(value) is list and len(value) <= maximum, "source role array type/limit"
+        for item in value:
+            role_text(item)
+
+    fields(review, "schema_version purpose candidate_file gold_file decision_file gold_sha256 subject property allowed_contexts selection reviewer interpretation_timing")
+    exact(review["schema_version"], 1, "review version")
+    enum(review["purpose"], ("single_measurement_source_review",))
+    enum(review["reviewer"], ("automated_source_review",))
+    enum(review["interpretation_timing"], ("before_synthetic_response", "after_model_response"))
+    for key in ("subject", "property"):
+        role_text(review[key])
+    for key in ("candidate_file", "gold_file", "decision_file"):
+        safe_name(review[key])
+    assert type(review["gold_sha256"]) is str and re.fullmatch("[a-f0-9]{64}", review["gold_sha256"]), "review gold SHA type"
+    strings(review["allowed_contexts"])
+    for context in review["allowed_contexts"]:
+        role_text(context)
+    assert type(review["selection"]) is list and len(review["selection"]) == 1, "review selection type/count"
+    selection = review["selection"][0]
+    assert type(selection) is dict, "review selection object"
+    enum(selection.get("kind"), ("text", "pdf"))
+    if selection["kind"] == "text":
+        fields(selection, "kind ordinal")
+        integer(selection["ordinal"])
+    else:
+        fields(selection, "kind page_index region_id")
+        integer(selection["page_index"])
+        role_text(selection["region_id"])
+
+    assert type(gold) is dict and type(gold.get("schema_version")) is int and gold["schema_version"] in (1, 2), "source gold version"
+    fields(gold, "schema_version author producer scientific_quality concept_name atom_content value unit conditions quote verification required knowledge_status published" + (" exceptions value_status" if gold["schema_version"] == 2 else ""))
+    for key in ("author", "concept_name", "atom_content", "quote"):
+        role_text(gold[key])
+    for key, fixed in (("producer", "fake"), ("scientific_quality", "not_run"), ("verification", "unverified"), ("knowledge_status", "pending")):
+        enum(gold[key], (fixed,))
+    exact(gold["required"], False, "source gold required")
+    exact(gold["published"], False, "source gold published")
+    strings(gold["conditions"])
+    for condition in gold["conditions"]:
+        role_text(condition)
+    if gold["schema_version"] == 2:
+        enum(gold["value_status"], ("known", "unknown"))
+        strings(gold["exceptions"])
+        for exception in gold["exceptions"]:
+            role_text(exception)
+        for key in ("value", "unit"):
+            if gold[key] is not None:
+                role_text(gold[key])
+        if gold["value_status"] == "unknown":
+            assert gold["value"] is None, "unknown source value must be null"
+        else:
+            role_text(gold["value"]); role_text(gold["unit"])
+    else:
+        role_text(gold["value"]); role_text(gold["unit"])
+
+    fields(decision, "schema_version unit_id disposition atom_ids exclusion_reason")
+    exact(decision["schema_version"], 1, "decision version")
+    role_text(decision["unit_id"])
+    enum(decision["disposition"], ("included", "excluded", "needs_review", "pending"))
+    array(decision["atom_ids"], 1024)
+    if decision["exclusion_reason"] is not None:
+        role_text(decision["exclusion_reason"])
+    if decision["disposition"] == "excluded":
+        role_text(decision["exclusion_reason"])
+
+
+def verify_markdown(raw, preamble, expected, label):
+    """Consume the complete envelope and single JSON fence, including its end."""
+    document = raw.decode("utf-8")
+    assert document.startswith(preamble + "```json\n"), label + ": visible envelope"
+    body = document[len(preamble) + len("```json\n"):]
+    assert body.endswith("\n```\n"), label + ": closing fence/end"
+    body = body[:-len("\n```\n")]
+    exact(strict_json(body), expected, label + ": independent facts")
+
+
 def selected_source_paths(project, import_id, selection):
     """Check registered paths before the existing helper opens resource bytes."""
     project = project.resolve()
@@ -223,6 +317,7 @@ def source_bundle(project, directory, pin):
     exact(pin, {name: fingerprint(body) for name, body in raw.items()}, "nine source fingerprints")
     parsed = {name: strict_json(body) for name, body in raw.items() if name.endswith(".json")}
     review, candidate, gold, decision = (parsed[name + "-original.json"] for name in ("review", "candidates", "gold", "decision"))
+    source_roles_schema(review, gold, decision)
     for obj in (review, candidate, gold, decision):
         metadata(obj)
     fields(review, "schema_version purpose candidate_file gold_file decision_file gold_sha256 subject property allowed_contexts selection reviewer interpretation_timing")
@@ -276,9 +371,12 @@ def source_bundle(project, directory, pin):
     exact(parsed["source-snapshot.json"], dict(schema_version=1, binding=source["binding"], units=source["units"]), "source snapshot")
     expected_report = rebuild_source_report(candidate, gold, review, decision, source, inputs, raw)
     exact(r, expected_report, "complete source report reconstruction")
-    blocks = re.findall(r"```json\n(.*?)\n```", raw["verification.md"].decode(), re.S)
-    assert len(blocks) == 1, "source Markdown fact block"
-    exact(strict_json(blocks[0]), expected_report, "source Markdown strict facts")
+    source_preamble = ("# 有界来源知识核对\n\n状态：passed；知识状态：pending；发布：false。\n\n"
+                       "科学质量：not_run；研究：not_requested；网络与付费调用：0。\n\n"
+                       "规则：controlled_measurement_zh_v1；复核主体：automated_source_review；解释时间："
+                       + json.dumps(review["interpretation_timing"], ensure_ascii=False) + "。\n\n"
+                       "来源范围、对象、问题码、逐类别检查与分母见以下完整事实快照，与 verification.json 一致。\n\n")
+    verify_markdown(raw["verification.md"], source_preamble, expected_report, "source Markdown")
     return raw, r, candidate, gold, review, source
 
 
@@ -500,14 +598,11 @@ def _verify(project, case, output, gold_bytes):
         assert (output / name).read_bytes() == body, "saved original bytes: " + name
     expected = dict(shared, report_kind="knowledge_coordination", status=status, network_calls=0, paid_calls=0, artifacts={name: fingerprint(body) for name, body in copied.items()})
     exact(report, expected, "coordination report independent reconstruction")
-    md = read(output / "coordination.md", 8388608).decode("utf-8")
+    md = read(output / "coordination.md", 8388608)
     preamble = ("# 有界多来源知识协调\n\n状态：" + status + "；知识状态：pending；发布：false。\n\n"
                 "科学质量：not_run；研究：not_requested；网络与付费调用：0。\n\n"
                 "显式身份重复／互补范围；完整来源、原对象、证据与分母见以下事实，与 coordination.json 一致。\n\n")
-    assert md.split("```json\n", 1)[0] == preamble, "Markdown visible status/provenance"
-    blocks = re.findall(r"```json\n(.*?)\n```", md, re.S)
-    assert len(blocks) == 1, "Markdown fact block"
-    exact(strict_json(blocks[0]), expected, "Markdown independent facts")
+    verify_markdown(md, preamble, expected, "coordination Markdown")
     assert [inventory(p) for p in (project, case, output)] == before, "read-only inventory changed"
     assert time.monotonic() - started <= 30, "verification time limit"
     return dict(status=status, independently_verified=True, totals=totals, inputs=[i["input_id"] for i in inputs])
@@ -750,6 +845,23 @@ class Audit:
             m = strict_json((c / "coordination.json").read_bytes()); mutation(m, c)
             (c / "coordination.json").write_bytes(encoded(m))
             self.rejected(name, project, c, folder / (name + "-output"), code, issue)
+        # Fresh original-role wire failures: no expectations are taken from CLI.
+        for role, field, values in (("gold", "author", (False, 17, None)), ("review", "reviewer", (False, 17, None)), ("decision", "unit_id", (False,))):
+            for index, value in enumerate(values):
+                name = f"original-{role}-{field}-type-{index}"
+                c = folder / (name + "-case"); shutil.copytree(case, c)
+                m = strict_json((c / "coordination.json").read_bytes())
+                self.coherent_role_change(m, c, role, field, value)
+                (c / "coordination.json").write_bytes(encoded(m))
+                self.rejected(name, project, c, folder / (name + "-output"), 2, "COORD_SCHEMA")
+        source_md_case = folder / "source-visible-publication-case"; shutil.copytree(case, source_md_case)
+        m = strict_json((source_md_case / "coordination.json").read_bytes())
+        item = m["inputs"][0]; bundle = source_md_case / item["review_bundle"]
+        md_path = bundle / "verification.md"
+        md_path.write_bytes(md_path.read_bytes().replace("发布：false".encode(), "发布：true".encode(), 1))
+        item["artifacts"] = {name: fingerprint((bundle / name).read_bytes()) for name in FILES}
+        (source_md_case / "coordination.json").write_bytes(encoded(m))
+        self.rejected("source-visible-publication", project, source_md_case, folder / "source-visible-publication-output", 3, "COORD_SOURCE_REVIEW")
         duplicate = folder / "duplicate-json-case"; shutil.copytree(case, duplicate)
         p = duplicate / "coordination.json"
         p.write_bytes(p.read_bytes().replace(b'"schema_version": 1', b'"schema_version": 1, "schema_version": 1', 1))
@@ -794,6 +906,20 @@ class Audit:
             self.check_protected()
             self.rows.append(dict(name=name, kind="independent_coherent_forgery_rejection", project=str(project), case=str(case), output=str(forged), diagnostic=diagnostic))
             self.flush()
+        forged = folder / "forged-trailing-publication"; shutil.copytree(output, forged)
+        md = forged / "coordination.md"
+        md.write_bytes(md.read_bytes() + "\n发布：true；科学质量：passed。\n".encode())
+        before = inventory(forged)
+        try:
+            verify_report(project, case, forged, gold)
+        except AssertionError as exc:
+            diagnostic = str(exc)
+        else:
+            raise AssertionError("trailing Markdown publication accepted")
+        exact(before, inventory(forged), "trailing Markdown readonly")
+        self.check_protected()
+        self.rows.append(dict(name="trailing-publication", kind="independent_coherent_forgery_rejection", project=str(project), case=str(case), output=str(forged), diagnostic=diagnostic))
+        self.flush()
         after = self.check_protected()
         summary = dict(schema_version=1, root=str(self.root), cli=str(self.cli), cli_fingerprint=self.cli_fp, scenarios=self.rows, scenario_count=len(self.rows), calls=self.calls,
                        command_count=len(self.calls), protected_before=self.protected, protected_after=after, protection_passed=True, network_calls=0, paid_calls=0,
@@ -806,6 +932,30 @@ class Audit:
         item = manifest["inputs"][0]; folder = case / item["review_bundle"]
         path = folder / file; obj = strict_json(path.read_bytes()); mutation(obj); path.write_bytes(encoded(obj))
         # Re-pin all nine bytes. Even a coherent fingerprint manifest is no oracle.
+        item["artifacts"] = {name: fingerprint((folder / name).read_bytes()) for name in FILES}
+
+    @staticmethod
+    def coherent_role_change(manifest, case, role, field, value):
+        item = manifest["inputs"][0]; folder = case / item["review_bundle"]
+        path = folder / (role + "-original.json")
+        obj = strict_json(path.read_bytes()); obj[field] = value; path.write_bytes(encoded(obj))
+        review = strict_json((folder / "review-original.json").read_bytes())
+        review["gold_sha256"] = fingerprint((folder / "gold-original.json").read_bytes())["sha256"]
+        (folder / "review-original.json").write_bytes(encoded(review))
+        report = strict_json((folder / "verification.json").read_bytes())
+        report["origin"].update(gold_sha256=review["gold_sha256"], reviewer=review["reviewer"])
+        report["rules"]["reviewer"] = review["reviewer"]
+        for name, saved in (("review.json", "review-original.json"), (review["gold_file"], "gold-original.json"), (review["decision_file"], "decision-original.json")):
+            report["origin"]["input_fingerprints"][name] = fingerprint((folder / saved).read_bytes())
+        if role == "decision":
+            next(c for c in report["checks"] if c["category"] == "coverage")["actual"]["decision"] = obj
+            ir = strict_json((folder / "knowledge-ir.json").read_bytes()); ir["checks"] = report["checks"]
+            (folder / "knowledge-ir.json").write_bytes(encoded(ir))
+        for name in report["artifacts"]:
+            report["artifacts"][name] = fingerprint((folder / name).read_bytes())
+        (folder / "verification.json").write_bytes(encoded(report))
+        md = folder / "verification.md"
+        md.write_bytes(md.read_bytes().split(b"```json\n", 1)[0] + b"```json\n" + encoded(report).rstrip() + b"\n```\n")
         item["artifacts"] = {name: fingerprint((folder / name).read_bytes()) for name in FILES}
 
     @staticmethod
