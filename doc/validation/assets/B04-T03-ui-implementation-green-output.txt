@@ -1,0 +1,50 @@
+{
+  "phase": "green",
+  "at": "2026-11-03T13:34:07.707Z",
+  "native_os_proof": false,
+  "results": [
+    {
+      "name": "native configuration removes system title row",
+      "status": "passed"
+    },
+    {
+      "name": "browser host absence disables all three same-row controls at 640px",
+      "status": "passed"
+    },
+    {
+      "name": "header remains visible when real page content scrolls",
+      "status": "passed"
+    },
+    {
+      "name": "blank drag surface excludes interactive descendants and Tauri automatic handler",
+      "status": "passed"
+    },
+    {
+      "name": "existing menu keyboard and sidebar toggle still work without native host",
+      "status": "passed"
+    },
+    {
+      "name": "maximize state and restore name follow native query and resize",
+      "status": "passed"
+    },
+    {
+      "name": "keyboard min/close emit current-window commands and exclude dragging",
+      "status": "passed"
+    },
+    {
+      "name": "blank double click toggles once; menu and navigation never drag",
+      "status": "passed"
+    },
+    {
+      "name": "native failure is visible below fixed 36px header and retry recovers",
+      "status": "passed"
+    }
+  ],
+  "sources": {
+    "apps/desktop/src/AppMenuBar.tsx": "32d88e7c8c11b64183b231e949a25d150af06ca8c3f26c17811462cf5e8dd6e0",
+    "apps/desktop/src/styles.css": "11e0016f1a5ac0b467a0d17f2021cbb7cda0fbe8a7c1ca3e7098ba6135710c4d",
+    "crates/noetome-desktop/tauri.conf.json": "0536be1f229d7814649e41ea73940f83d09ed017fb2ffe647a1866661abce2c3",
+    "crates/noetome-desktop/capabilities/main.json": "d7460698d384408095b359a985a5e339860e64df7a73094240111ab88b9e6b9f",
+    "apps/desktop/src/WindowControls.tsx": "6a7f020b174e902bdf85fb3dbfd79983614508d386ad42130ed73c2dc2131cc9"
+  }
+}

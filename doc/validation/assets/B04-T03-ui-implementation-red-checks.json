@@ -1,0 +1,57 @@
+{
+  "phase": "red",
+  "at": "2026-11-03T13:32:55.419Z",
+  "native_os_proof": false,
+  "results": [
+    {
+      "name": "native configuration removes system title row",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\ntrue !== false\n"
+    },
+    {
+      "name": "browser host absence disables all three same-row controls at 640px",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\n0 !== 3\n"
+    },
+    {
+      "name": "header remains visible when real page content scrolls",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\n-196 !== 0\n"
+    },
+    {
+      "name": "blank drag surface excludes interactive descendants and Tauri automatic handler",
+      "status": "failed",
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    },
+    {
+      "name": "existing menu keyboard and sidebar toggle still work without native host",
+      "status": "passed"
+    },
+    {
+      "name": "maximize state and restore name follow native query and resize",
+      "status": "failed",
+      "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '最大化', exact: true }) to be visible\u001b[22m\n"
+    },
+    {
+      "name": "keyboard min/close emit current-window commands and exclude dragging",
+      "status": "failed",
+      "error": "locator.focus: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '最小化', exact: true })\u001b[22m\n"
+    },
+    {
+      "name": "blank double click toggles once; menu and navigation never drag",
+      "status": "failed",
+      "error": "locator.dblclick: Timeout 2500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.app-window-drag-area')\u001b[22m\n"
+    },
+    {
+      "name": "native failure is visible below fixed 36px header and retry recovers",
+      "status": "failed",
+      "error": "locator.click: Timeout 2500ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '最小化', exact: true })\u001b[22m\n"
+    }
+  ],
+  "sources": {
+    "apps/desktop/src/AppMenuBar.tsx": "1637ae7eefe255a6653a69e3dad18ee9d906e08a89146634928408841512553c",
+    "apps/desktop/src/styles.css": "3a23ed237720490e764dcbf3b22a80089333aa2f298af74237406580f8376891",
+    "crates/noetome-desktop/tauri.conf.json": "f81bed4b98b312edcce2f26eb6e7e11b07c861abc5261cb1ea1941e873c056ae",
+    "crates/noetome-desktop/capabilities/main.json": "095dce35a45be0401b2523accca94d50964ea249cf7b53188a67c5546e454eba"
+  }
+}

@@ -1,0 +1,18 @@
+
+> noetome@0.1.0 web:build
+> npm run web:check && vite build --config apps/desktop/vite.config.ts
+
+
+> noetome@0.1.0 web:check
+> tsc --project apps/desktop/tsconfig.json --noEmit
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 24 modules transformed.
+rendering chunks...
+computing gzip size...
+apps/desktop/dist/index.html                   0.50 kB │ gzip:  0.31 kB
+apps/desktop/dist/assets/index-BKEy9gJd.css   15.63 kB │ gzip:  4.13 kB
+apps/desktop/dist/assets/index-DVlVjMm6.js   260.44 kB │ gzip: 80.04 kB
+
+✓ built in 109ms
