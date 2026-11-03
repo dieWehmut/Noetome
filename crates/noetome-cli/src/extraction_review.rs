@@ -188,8 +188,10 @@ impl Checker<'_> {
         });
     }
     fn result(&self, id: &str, status: Option<&str>) -> ObjectResult {
-        let issues = self
-            .checks
+        self.result_from(id, status, &self.checks)
+    }
+    fn result_from(&self, id: &str, status: Option<&str>, checks: &[Check]) -> ObjectResult {
+        let issues = checks
             .iter()
             .filter(|c| c.object_id == id && c.status == "failed")
             .filter_map(|c| c.code.clone())
@@ -202,10 +204,15 @@ impl Checker<'_> {
             start_byte: self.unit.start_byte,
             end_byte: self.unit.end_byte,
             status: status
-                .unwrap_or(if issues.is_empty() {
-                    "passed"
-                } else {
+                .unwrap_or(if !issues.is_empty() {
                     "failed"
+                } else if checks
+                    .iter()
+                    .any(|check| check.object_id == id && check.status == "needs_review")
+                {
+                    "needs_review"
+                } else {
+                    "passed"
                 })
                 .into(),
             issue_codes: issues,
@@ -245,6 +252,9 @@ pub(crate) fn assess(
         json!("parsed"),
         json!(u.source_status),
     );
+    if u.source_status == "needs_review" {
+        a.checks.last_mut().unwrap().status = "needs_review".into();
+    }
     a.add(
         "exclusion",
         expected_id,
@@ -253,6 +263,11 @@ pub(crate) fn assess(
         json!("included"),
         json!(d.disposition),
     );
+    match d.disposition {
+        Disposition::Pending => a.checks.last_mut().unwrap().status = "unprocessed".into(),
+        Disposition::NeedsReview => a.checks.last_mut().unwrap().status = "needs_review".into(),
+        _ => {}
+    }
     let ids = atoms
         .iter()
         .map(|c| c.atom.atom_id.clone())
@@ -286,6 +301,7 @@ pub(crate) fn assess(
     let mut seen = BTreeSet::new();
     let mut duplicates = 0;
     let mut additional_concepts = 0;
+    let mut primary_end = None;
     if let Some(c) = c {
         a.add(
             "binding",
@@ -297,7 +313,8 @@ pub(crate) fn assess(
             json!({"request_id":c.request_id,"binding":actual_binding}),
             json!({"request_id":c.payload.request_id,"binding":c.payload.binding}),
         );
-        for ca in &c.payload.atoms {
+        for (index, ca) in c.payload.atoms.iter().enumerate() {
+            let candidate_start = a.checks.len();
             let id = &ca.atom.atom_id;
             if let Some(err) = strict_error {
                 a.add(
@@ -450,23 +467,28 @@ pub(crate) fn assess(
                 json!(ca.atom.content),
             );
             let m = ca.measurement.as_ref();
+            let fact_matches = m.is_some_and(|m| {
+                m.value == g.value
+                    && m.value_status
+                        == if g.unknown {
+                            ValueStatus::Unknown
+                        } else {
+                            ValueStatus::Known
+                        }
+            }) && parsed.is_some();
             a.add(
                 "fact",
                 id,
-                m.is_some_and(|m| {
-                    m.value == g.value
-                        && m.value_status
-                            == if g.unknown {
-                                ValueStatus::Unknown
-                            } else {
-                                ValueStatus::Known
-                            }
-                }) && !g.unknown
-                    && parsed.is_some(),
+                fact_matches && !g.unknown,
                 "VERIFY_FACT",
                 json!({"value":g.value,"value_status":if g.unknown{"unknown"}else{"known"}}),
                 json!(m),
             );
+            if g.unknown && fact_matches {
+                let check = a.checks.last_mut().unwrap();
+                check.status = "needs_review".into();
+                check.code = Some("VERIFY_UNKNOWN".into());
+            }
             let qualifiers = &ca.atom.qualifiers;
             let unit_ok = m.is_some_and(|m| m.unit == g.unit)
                 && g.unit.as_ref().is_none_or(|unit| {
@@ -570,7 +592,11 @@ pub(crate) fn assess(
                 .len()
                 == qualifiers.len();
             a.add("qualifiers",id,qvalid,"VERIFY_CONDITION",json!({"unit":g.unit,"conditions":g.conditions,"exceptions":g.exceptions,"contexts":r.allowed_contexts}),json!(qualifiers));
-            candidate_results.push(a.result(id, None));
+            let candidate_range = candidate_start..a.checks.len();
+            candidate_results.push(a.result_from(id, None, &a.checks[candidate_range.clone()]));
+            if index == 0 {
+                primary_end = Some(candidate_range.end);
+            }
         }
     }
     let mut status = if a.checks.iter().all(|c| c.status == "passed") {
@@ -588,7 +614,9 @@ pub(crate) fn assess(
     }
     if status == "needs_review" || status == "unprocessed" {
         for result in &mut candidate_results {
-            result.status = status.into();
+            if result.status == "passed" {
+                result.status = status.into();
+            }
         }
     }
     let mut result = a.result(expected_id, Some(status));
@@ -615,27 +643,22 @@ pub(crate) fn assess(
         ("coverage", 1),
         ("exclusion", 1),
     ] {
-        let matching = a
-            .checks
+        let matching = a.checks[..primary_end.unwrap_or(a.checks.len())]
             .iter()
-            .filter(|check| {
-                check.category == category
-                    && (check.object_id == expected_id
-                        || atoms
-                            .first()
-                            .is_some_and(|atom| check.object_id == atom.atom.atom_id))
-            })
+            .filter(|check| check.category == category)
             .collect::<Vec<_>>();
-        let passed = if status == "unprocessed" || status == "needs_review" {
-            0
-        } else {
+        let count_status = |state: &str| {
             matching
                 .iter()
-                .filter(|c| c.status == "passed")
+                .take(n)
+                .filter(|check| check.status == state)
                 .count()
-                .min(n)
         };
-        quality.insert(category,json!({"expected":n,"passed":passed,"failed":if status=="unprocessed"||status=="needs_review"{0}else{n-passed},"needs_review":if status=="needs_review"{n}else{0},"unprocessed":if status=="unprocessed"{n}else{0},"status":if n==0{"not_applicable"}else if status=="needs_review"{"needs_review"}else if status=="unprocessed"{"unprocessed"}else if passed==n{"passed"}else{"failed"}}));
+        let passed = count_status("passed");
+        let failed = count_status("failed");
+        let needs_review = count_status("needs_review");
+        let unprocessed = n - passed - failed - needs_review;
+        quality.insert(category,json!({"expected":n,"passed":passed,"failed":failed,"needs_review":needs_review,"unprocessed":unprocessed,"status":if n==0{"not_applicable"}else if failed>0{"failed"}else if needs_review>0{"needs_review"}else if unprocessed>0{"unprocessed"}else{"passed"}}));
     }
     Assessment {
         checks: a.checks,

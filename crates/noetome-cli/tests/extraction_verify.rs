@@ -168,6 +168,11 @@ impl Case {
         }
         v
     }
+    fn replace_input(&mut self, name: &str, bytes: Vec<u8>) {
+        let path = self.case.join(name);
+        fs::write(&path, &bytes).unwrap();
+        self.inputs.iter_mut().find(|(p, _)| *p == path).unwrap().1 = bytes;
+    }
     fn rejected(&self, expected: &str) {
         let report = self.report(3);
         assert!(report.to_string().contains(expected), "{report}");
@@ -508,4 +513,157 @@ fn real_needs_review_source_remains_review() {
     assert_eq!(r["scope"]["units"][0]["source_status"], "needs_review");
     assert_eq!(r["totals"]["needs_review"], 1);
     assert!(!c.output.join("knowledge-ir.json").exists());
+}
+
+#[test]
+fn fix1_workflow_preserves_observed_category_failures() {
+    for (disposition, status) in [("pending", "unprocessed"), ("needs_review", "needs_review")] {
+        let c = Case::new(|c, d| {
+            c["payload"]["atoms"][0]["measurement"]["value"] = json!("11");
+            d["disposition"] = json!(disposition);
+        });
+        let r = c.report(3);
+        assert_eq!(r["status"], status);
+        assert_eq!(r["quality"]["fact"]["failed"], 1);
+        assert_eq!(r["quality"]["fact"]["passed"], 0);
+        assert_eq!(r["quality"]["fact"]["unprocessed"], 0);
+        assert_eq!(r["quality"]["fact"]["needs_review"], 0);
+        assert_eq!(r["quality"]["evidence"]["passed"], 1);
+        assert_eq!(r["candidate_results"][0]["status"], "failed");
+        assert!(!c.output.join("knowledge-ir.json").exists());
+        let c = Case::new(|c, d| {
+            c["binding"]["source_id"] = json!("wrong");
+            c["payload"]["binding"]["source_id"] = json!("wrong");
+            d["disposition"] = json!(disposition);
+        });
+        let r = c.report(3);
+        assert_eq!(r["status"], status);
+        assert_eq!(r["quality"]["binding"]["failed"], 1);
+        assert_eq!(r["candidate_results"][0]["status"], "failed");
+        assert!(!c.output.join("knowledge-ir.json").exists());
+    }
+}
+#[test]
+fn fix1_source_and_unknown_review_preserve_known_condition_failure() {
+    let fixture = repo().join("fixtures/extraction-review-v1");
+    let gold_bytes = fs::read(fixture.join("gold.json")).unwrap();
+    let source = format!(
+        "```\n{}",
+        fs::read_to_string(fixture.join("source.txt")).unwrap()
+    );
+    let c = Case::custom(&source, &gold_bytes, 0, |c, _| {
+        c["payload"]["atoms"][0]["measurement"]["value"] = json!("11")
+    });
+    let r = c.report(3);
+    assert_eq!(r["status"], "needs_review");
+    assert_eq!(r["quality"]["fact"]["failed"], 1);
+    assert_eq!(r["quality"]["source"]["needs_review"], 1);
+    assert!(!c.output.join("knowledge-ir.json").exists());
+    let mut g: Value = serde_json::from_slice(&gold_bytes).unwrap();
+    g["value_status"] = json!("unknown");
+    g["value"] = Value::Null;
+    g["unit"] = Value::Null;
+    g["atom_content"] =
+        json!("样例 A 的速度未知，条件为温度 20 ℃且仅适用样例 A；例外为结冰时不适用。");
+    g["quote"] =
+        json!("在本夹具的样例 A 中，速度未知。条件是温度 20 ℃、仅适用样例 A；例外为结冰时不适用。");
+    let source = g["quote"].as_str().unwrap().to_owned();
+    let c = Case::custom(&source, &serde_json::to_vec(&g).unwrap(), 0, |c, _| {
+        c["payload"]["atoms"][0]["atom"]["content"] = g["atom_content"].clone();
+        c["payload"]["atoms"][0]["atom"]["value_status"] = json!("unknown");
+        c["payload"]["atoms"][0]["measurement"] =
+            json!({"value_status":"unknown","value":null,"unit":null,"conditions":[]});
+        c["payload"]["atoms"][0]["atom"]["qualifiers"] = json!(["结冰时不适用"]);
+    });
+    let r = c.report(3);
+    assert_eq!(r["status"], "needs_review");
+    assert_eq!(r["quality"]["condition"]["expected"], 2);
+    assert_eq!(r["quality"]["condition"]["failed"], 2);
+    assert_eq!(r["quality"]["fact"]["needs_review"], 1);
+    assert_eq!(r["quality"]["fact"]["failed"], 0);
+    assert_eq!(r["candidate_results"][0]["status"], "failed");
+    assert!(!c.output.join("knowledge-ir.json").exists());
+}
+#[test]
+fn fix1_same_id_primary_checks_cannot_borrow_passes() {
+    let c = Case::new(|c, _| {
+        let good = c["payload"]["atoms"][0].clone();
+        c["payload"]["atoms"][0]["measurement"]["conditions"] = json!([]);
+        c["payload"]["atoms"][0]["atom"]["qualifiers"] = json!(["m/s", "结冰时不适用"]);
+        c["payload"]["atoms"].as_array_mut().unwrap().push(good);
+    });
+    let r = c.report(3);
+    assert_eq!(r["totals"]["candidate_atoms"], 2);
+    assert_eq!(r["totals"]["duplicate_atoms"], 1);
+    assert_eq!(r["quality"]["condition"]["expected"], 2);
+    assert_eq!(r["quality"]["condition"]["passed"], 0);
+    assert_eq!(r["quality"]["condition"]["failed"], 2);
+    assert_eq!(
+        r["candidate_results"][0]["object_id"],
+        r["candidate_results"][1]["object_id"]
+    );
+    assert_eq!(r["candidate_results"].as_array().unwrap().len(), 2);
+    assert!(
+        !r["candidate_results"][1]["issue_codes"]
+            .as_array()
+            .unwrap()
+            .contains(&json!("VERIFY_CONDITION"))
+    );
+    assert!(!c.output.join("knowledge-ir.json").exists());
+}
+#[test]
+fn fix1_duplicate_json_keys_keep_actual_counts_unknown() {
+    for target in ["payload", "atoms"] {
+        for same_value in [false, true] {
+            let mut c = Case::new(|_, _| {});
+            let old: Value =
+                serde_json::from_slice(&fs::read(c.case.join("candidates.json")).unwrap()).unwrap();
+            let original = serde_json::to_string(&old).unwrap();
+            let mut last_payload = old["payload"].clone();
+            if !same_value {
+                last_payload["atoms"] = json!([]);
+            }
+            let bad = if target == "payload" {
+                format!(
+                    "{},\"payload\":{}}}",
+                    original.strip_suffix('}').unwrap(),
+                    serde_json::to_string(&last_payload).unwrap()
+                )
+            } else {
+                let p = serde_json::to_string(&old["payload"]).unwrap();
+                let duplicated = format!(
+                    "{},\"atoms\":{}}}",
+                    p.strip_suffix('}').unwrap(),
+                    serde_json::to_string(&last_payload["atoms"]).unwrap()
+                );
+                let mut outer = old.clone();
+                outer.as_object_mut().unwrap().remove("payload");
+                let outer = serde_json::to_string(&outer).unwrap();
+                format!(
+                    "{},\"payload\":{duplicated}}}",
+                    outer.strip_suffix('}').unwrap()
+                )
+            };
+            assert!(
+                serde_json::from_str::<Value>(&bad).is_ok(),
+                "readable duplicate-key fixture"
+            );
+            c.replace_input("candidates.json", bad.into_bytes());
+            let r = c.report(3);
+            assert_eq!(
+                r["totals"]["candidate_atoms"],
+                Value::Null,
+                "{target} same={same_value}"
+            );
+            assert_eq!(r["totals"]["unexpected_atoms"], Value::Null);
+            assert_eq!(r["totals"]["duplicate_atoms"], Value::Null);
+            assert_eq!(r["candidate_results"], json!([]));
+            assert!(r.to_string().contains("VERIFY_SCHEMA"));
+            assert!(!c.output.join("knowledge-ir.json").exists());
+            assert_eq!(
+                fs::read(c.output.join("candidates-original.json")).unwrap(),
+                fs::read(c.case.join("candidates.json")).unwrap()
+            );
+        }
+    }
 }

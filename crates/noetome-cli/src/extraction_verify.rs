@@ -10,7 +10,7 @@ use crate::{
     sidecar_workspace::{Directory, GuardedFile},
     text::sha256,
 };
-use serde::{Serialize, de::DeserializeOwned};
+use serde::{Deserialize, Serialize, de::DeserializeOwned};
 use serde_json::{Value, json};
 use std::{
     fs,
@@ -27,6 +27,64 @@ fn encoded<T: Serialize>(v: &T) -> Result<Vec<u8>, ProjectError> {
 }
 fn parse<T: DeserializeOwned>(b: &[u8]) -> Result<T, ProjectError> {
     serde_json::from_slice(b).map_err(|e| err("VERIFY_SCHEMA", 2, e))
+}
+// Count recovery is permitted only after every object key is unambiguous,
+// including keys in schema-invalid/unknown nested metadata. Never trust Value's
+// last-key-wins representation to establish which candidate array was supplied.
+struct UniqueKeys;
+impl<'de> Deserialize<'de> for UniqueKeys {
+    fn deserialize<D: serde::Deserializer<'de>>(de: D) -> Result<Self, D::Error> {
+        struct Syntax;
+        impl<'de> serde::de::Visitor<'de> for Syntax {
+            type Value = UniqueKeys;
+            fn expecting(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+                f.write_str("JSON with unique object keys")
+            }
+            fn visit_bool<E: serde::de::Error>(self, _: bool) -> Result<UniqueKeys, E> {
+                Ok(UniqueKeys)
+            }
+            fn visit_i64<E: serde::de::Error>(self, _: i64) -> Result<UniqueKeys, E> {
+                Ok(UniqueKeys)
+            }
+            fn visit_u64<E: serde::de::Error>(self, _: u64) -> Result<UniqueKeys, E> {
+                Ok(UniqueKeys)
+            }
+            fn visit_f64<E: serde::de::Error>(self, _: f64) -> Result<UniqueKeys, E> {
+                Ok(UniqueKeys)
+            }
+            fn visit_str<E: serde::de::Error>(self, _: &str) -> Result<UniqueKeys, E> {
+                Ok(UniqueKeys)
+            }
+            fn visit_unit<E: serde::de::Error>(self) -> Result<UniqueKeys, E> {
+                Ok(UniqueKeys)
+            }
+            fn visit_seq<A: serde::de::SeqAccess<'de>>(
+                self,
+                mut access: A,
+            ) -> Result<UniqueKeys, A::Error> {
+                while access.next_element::<UniqueKeys>()?.is_some() {}
+                Ok(UniqueKeys)
+            }
+            fn visit_map<A: serde::de::MapAccess<'de>>(
+                self,
+                mut access: A,
+            ) -> Result<UniqueKeys, A::Error> {
+                let mut keys = std::collections::BTreeSet::new();
+                while let Some(key) = access.next_key::<String>()? {
+                    if !keys.insert(key) {
+                        return Err(serde::de::Error::custom("duplicate JSON key"));
+                    }
+                    access.next_value::<UniqueKeys>()?;
+                }
+                Ok(UniqueKeys)
+            }
+        }
+        de.deserialize_any(Syntax)
+    }
+}
+fn recover_unambiguous_json(bytes: &[u8]) -> Result<Value, serde_json::Error> {
+    serde_json::from_slice::<UniqueKeys>(bytes)?;
+    serde_json::from_slice(bytes)
 }
 struct Input {
     path: PathBuf,
@@ -285,7 +343,7 @@ fn run_inner(
         assessment.totals["unexpected_atoms"] = Value::Null;
         assessment.totals["duplicate_atoms"] = Value::Null;
         // Syntax-invalid candidates are unprocessed objects; raw counts remain explicit when syntactically recoverable.
-        if let Ok(raw) = serde_json::from_slice::<Value>(inputs.bytes(1)) {
+        if let Ok(raw) = recover_unambiguous_json(inputs.bytes(1)) {
             if let Some(atoms) = raw
                 .get("payload")
                 .and_then(|p| p.get("atoms"))
