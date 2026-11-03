@@ -2,7 +2,7 @@
 
 真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B03的三张执行卡归档于[B03步骤](B03_STEPS.md)，PDF来源登记的实际验收、失败修复和证据见[B03-T03](../validation/B03-T03.md)。
 
-2026-11-03 用户新增截图界面要求，当前批次切为 **B04U**，仅进行 **B04U-T01 顶部菜单栏**。按[顶部栏计划](B04U-T01_HEADER_PLAN.md)移除 `Noetome / 工作台` 与同栏版本标签，采用 Codex 截图的浅灰后退/前进/侧栏及 File / Edit / View / Help；功能、键盘和安装后桌面验收后提交推送。以下原 B04 步骤保留，未完成的 B04-T02/T03 已移至 **B04R**，ID 和失败历史不变。UI 完成后切换 B04R、reopen/start B04-T02 继续，最多一个进行中。
+2026-11-03 用户新增截图界面要求，当前批次 **B04U** 的 **B04U-T01 顶部菜单栏** 已通过实际界面、安装及独立审查验收，完成记录已由工具保存。按[顶部栏计划](B04U-T01_HEADER_PLAN.md)移除 `Noetome / 工作台` 与同栏版本标签，采用 Codex 截图的浅灰后退/前进/侧栏及 File / Edit / View / Help；功能、键盘和安装后桌面验收后提交推送。以下原 B04 步骤保留，未完成的 B04-T02/T03 已移至 **B04R**，ID 和失败历史不变。UI 完成后切换 B04R、reopen/start B04-T02 继续，最多一个进行中。
 
 已保存模型服务和 DPAPI 凭据继续复用。第四次 Chat/v4 实际请求为 HTTP200、完整嵌套 JSON、4783 Token，但 Atom 限定信息缺少测量单位，Core 报 `EXTRACT_QUALIFIERS`；累计 **20314**、余额 **9979686**、pending **0**。四份响应及调用前来源/gold 保持，v5 仅明确已有单位/条件与 Atom qualifiers 的对应规则；真实 RED、原生38/普通API CLI7/fake3、独立Chat35和Python76已通过，最终workspace与新的一次有界真实验证仍待完成。
 
