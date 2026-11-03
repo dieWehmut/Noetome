@@ -7,7 +7,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::extraction_fake::{self, FakeInput};
 use crate::extraction_model::{
-    CandidatePayload, ExtractionRequest, Producer, ResponseEnvelope, SourceBinding,
+    CandidateAtom, CandidateEvidence, ExtractionRequest, Producer, RequestUnit, ResponseEnvelope,
+    SourceBinding,
 };
 use crate::extraction_output::{self, OutputRoot};
 use crate::extraction_source::SourceSession;
@@ -182,20 +183,39 @@ fn validate(
         ));
     }
     let payload = &response.payload;
-    if payload.concepts.len() > 1024 || payload.evidence.len() > 1024 || payload.atoms.len() > 1024
-    {
+    validate_candidates(
+        &request.units,
+        &payload.concepts,
+        &payload.evidence,
+        &payload.atoms,
+        control,
+        cancelled,
+        signal,
+    )
+}
+
+pub(crate) fn validate_candidates(
+    request_units: &[RequestUnit],
+    concepts: &[crate::fixture_model::Concept],
+    evidence: &[CandidateEvidence],
+    candidates: &[CandidateAtom],
+    control: &Control,
+    cancelled: &AtomicBool,
+    signal: Option<&Path>,
+) -> Result<(), ProjectError> {
+    if concepts.len() > 1024 || evidence.len() > 1024 || candidates.len() > 1024 {
         return Err(error("EXTRACT_CANDIDATE_LIMIT", "每类候选实体最多1024项。"));
     }
-    if payload.atoms.is_empty() {
+    if candidates.is_empty() {
         return Err(error(
             "EXTRACT_EMPTY_CANDIDATES",
             "响应没有任何可验证候选原子。",
         ));
     }
-    let atoms = payload.atoms.iter().map(|c| &c.atom).collect::<Vec<_>>();
+    let atoms = candidates.iter().map(|c| &c.atom).collect::<Vec<_>>();
     let issues = crate::fixture_knowledge::validate_basics(
-        &payload.concepts,
-        payload.evidence.iter().map(|e| e.evidence_id.as_str()),
+        concepts,
+        evidence.iter().map(|e| e.evidence_id.as_str()),
         &atoms,
     );
     if !issues.is_empty() {
@@ -204,13 +224,12 @@ fn validate(
             "候选概念、原子、明文或唯一引用不符合共用严格IR规则。",
         ));
     }
-    let units = request
-        .units
+    let units = request_units
         .iter()
         .map(|u| (u.unit_id.as_str(), u))
         .collect::<BTreeMap<_, _>>();
     let mut evidence_ids = BTreeSet::new();
-    for entry in &payload.evidence {
+    for entry in evidence {
         extraction_fake::check(control, cancelled, signal)?;
         let unit = units.get(entry.unit_id.as_str()).ok_or_else(|| {
             error(
@@ -250,25 +269,25 @@ fn validate(
         }
         evidence_ids.insert(entry.evidence_id.as_str());
     }
-    validate_atoms(payload, &evidence_ids, control, cancelled, signal)?;
+    validate_atoms(candidates, &evidence_ids, control, cancelled, signal)?;
     extraction_fake::check(control, cancelled, signal)
 }
 
 fn validate_atoms(
-    payload: &CandidatePayload,
+    candidates: &[CandidateAtom],
     evidence_ids: &BTreeSet<&str>,
     control: &Control,
     cancelled: &AtomicBool,
     signal: Option<&Path>,
 ) -> Result<(), ProjectError> {
     let plain = |s: &str| crate::fixture_model::nonempty(s) && crate::fixture_plan::plain_text(s);
-    for candidate in &payload.atoms {
+    for candidate in candidates {
         extraction_fake::check(control, cancelled, signal)?;
         let atom = &candidate.atom;
         if atom.required || atom.verification != Verification::Unverified {
             return Err(error(
                 "EXTRACT_VERIFICATION",
-                "fake候选必须保持unverified且required=false。",
+                "候选必须保持unverified且required=false。",
             ));
         }
         if !atom.evidence_links.iter().any(|link| {

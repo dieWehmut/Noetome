@@ -5,6 +5,8 @@ mod compile_model;
 mod compile_report;
 mod compile_store;
 pub mod extraction;
+pub mod extraction_api;
+mod extraction_api_config;
 mod extraction_api_schema;
 mod extraction_api_transport;
 mod extraction_api_wire;
@@ -47,6 +49,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome source parse-pdf <PDF文件> <尚不存在的测试根>
       noetome source inspect-pdf <PDF测试根>
       noetome extract fake <项目路径> <import-id> <fake目录> <尚不存在的测试输出根>
+      noetome extract api <项目路径> <import-id> <config.json> <尚不存在的测试输出根>
       noetome case verify <fixture目录>
       noetome case compile <fixture目录> <尚不存在的测试输出根>
 
@@ -60,11 +63,13 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   source parse-pdf        单份PDF解析到全新测试根，完整物理页/区域及需复核原因
   source inspect-pdf      只读核对已保存PDF、文本、位置和双报告
   extract fake            离线回放并核对选定来源的候选、证据与单请求预算
+  extract api             按明确配置与预算发送一次文本API请求并核对候选
   case verify             只读校验明确fixture的来源、IR、计划与独立预期
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
 
 不传参数时显示帮助；project --help、source --help 或 extract --help 查看命令说明。
-当前来源由用户明确选取；fake只验证候选工程契约，知识保持pending。fixture知识与计划由作者声明，真实模型抽取尚未实现。
+当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
+完整知识编译与生产Vault增量发布尚未实现。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -98,7 +103,8 @@ parse-pdf：用NOETOME_PDF_PYTHON指定的锁定Python解释器解析一份明�
 保存原始PDF、完整物理页/区域、逐页UTF8及双报告；扫描/空白/复杂版式需复核，返回非零。
 inspect-pdf：只读重查测试根的实际SHA、位置、正文与报告，原文件移动后仍可核对；不修复残留。
 PDF物理索引从0开始、显示页为索引+1，印刷页号未知；不以行号或文件名代替页码。
-source导入不生成IR或Vault；已审阅fixture通过case compile输出临时Vault。模型抽取尚未实现。
+source导入不生成IR或Vault；已审阅fixture通过case compile输出临时Vault。
+候选抽取通过extract fake或extract api；API本地HTTP假服务仅验证工程契约，实际模型冒烟与科学质量尚未验收。
 ";
 
 pub const CASE_HELP: &str = "Noetome fixture契约校验
@@ -118,9 +124,15 @@ compile只使用父目录已存在的新测试根，已有目标、输入输出�
 以 - 开头的路径可在动词后加 -- 分隔符，包含空格的路径作为单独参数。
 ";
 
-pub const EXTRACTION_HELP: &str = "Noetome 离线 fake 知识候选验证
+pub const EXTRACTION_HELP: &str = "Noetome 有界知识候选验证
 
 用法：noetome extract fake <项目路径> <import-id> <fake目录> <尚不存在的测试输出根> [--cancel-file <取消信号路径>]
+      noetome extract api <项目路径> <import-id> <config.json> <尚不存在的测试输出根> [--cancel-file <取消信号路径>]
+
+api读取明确配置、外部环境变量凭据引用、模型能力、选定范围与预算，单次请求且不自动重试。
+live只支持官方HTTPS OpenAI Responses；local_http_test只向数字环回HTTP假服务发送人工测试凭据/模型。
+API保存实际request-body.json、安全原响应、真实用量与未知价格；本地假服务不证明真实模型冒烟或科学质量通过。
+配置在来源/输出之外且不保存凭据值；实际来源只读，输出须为全新测试根。
 
 只读取指定导入的真实文本Span或PDF页/区域；fake.json明确选择范围、能力、单请求限制及预算。
 fake回放原样候选JSON，Core核对严格契约、来源版本、UTF8证据、条件与未知值表达。
@@ -130,7 +142,7 @@ fake回放原样候选JSON，Core核对严格契约、来源版本、UTF8证据�
 fake以UTF8字节计量，价格及真实模型用量未知，网络和付费调用为0；预算不足或超时明确停止。
 --cancel-file指定输入/输出根外的停止信号，运行期间创建该普通文件可取消请求。
 语义、预算、超时与取消失败返回3；参数或配置错误返回2；失败不保存已验收候选。
-以 - 开头的路径可在fake后加 -- 分隔符，中文和空格路径作为单独参数。
+以 - 开头的路径可在fake或api后加 -- 分隔符，中文和空格路径作为单独参数。
 ";
 
 #[derive(Debug)]
@@ -165,6 +177,13 @@ pub enum CliCommand {
         project: PathBuf,
         import_id: String,
         case: PathBuf,
+        output: PathBuf,
+        cancel_file: Option<PathBuf>,
+    },
+    ExtractApi {
+        project: PathBuf,
+        import_id: String,
+        config: PathBuf,
         output: PathBuf,
         cancel_file: Option<PathBuf>,
     },
@@ -213,12 +232,12 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
 fn extraction_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     if args.is_empty()
         || matches!(args, [help] if help == "--help" || help == "-h")
-        || matches!(args, [verb, help] if verb == "fake" && (help == "--help" || help == "-h"))
+        || matches!(args, [verb, help] if (verb == "fake" || verb == "api") && (help == "--help" || help == "-h"))
     {
         return Ok(CliCommand::ExtractionHelp);
     }
     let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
-    if verb != "fake" {
+    if verb != "fake" && verb != "api" {
         return Err(INVALID_ARGUMENT);
     }
     let (tail, separator) = if tail.first().is_some_and(|arg| arg == "--") {
@@ -240,6 +259,15 @@ fn extraction_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     };
     if ![project, case, output].iter().all(|path| valid_path(path)) || id.is_empty() {
         return Err(INVALID_ARGUMENT);
+    }
+    if verb == "api" {
+        return Ok(CliCommand::ExtractApi {
+            project: project.into(),
+            import_id: id.to_str().ok_or(INVALID_ARGUMENT)?.into(),
+            config: case.into(),
+            output: output.into(),
+            cancel_file,
+        });
     }
     Ok(CliCommand::ExtractFake {
         project: project.into(),

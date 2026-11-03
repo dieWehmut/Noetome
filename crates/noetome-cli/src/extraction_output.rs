@@ -130,6 +130,22 @@ pub(crate) struct OutputRoot {
 
 impl OutputRoot {
     pub(crate) fn create(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
+        Self::create_owned(path, request_id, None)
+    }
+
+    pub(crate) fn create_api(
+        path: &Path,
+        request_id: &str,
+        transport_mode: &str,
+    ) -> Result<Self, ProjectError> {
+        Self::create_owned(path, request_id, Some(transport_mode))
+    }
+
+    fn create_owned(
+        path: &Path,
+        request_id: &str,
+        mode: Option<&str>,
+    ) -> Result<Self, ProjectError> {
         let root = project::check_components(path)?;
         if project::exists(&root)? {
             return Err(ProjectError::new(
@@ -151,7 +167,11 @@ impl OutputRoot {
             directory,
             files: BTreeMap::new(),
         };
-        let owner = serde_json::to_vec_pretty(&serde_json::json!({"schema_version":1,"producer":"fake","request_id":request_id,"purpose":"unpublished_extraction_test"})).map_err(|_|changed())?;
+        let mut owner = serde_json::json!({"schema_version":1,"producer":if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":"unpublished_extraction_test"});
+        if let Some(mode) = mode {
+            owner["transport_mode"] = serde_json::json!(mode);
+        }
+        let owner = serde_json::to_vec_pretty(&owner).map_err(|_| changed())?;
         value.add(".owner.json", &owner)?;
         Ok(value)
     }
