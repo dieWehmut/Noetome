@@ -1,7 +1,15 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "main",
-  "description": "本地工作台仅调用两个只读应用命令，无文件、网络或进程插件权限。",
+  "description": "本地工作台使用既有应用命令；仅主窗口可读取最大化状态、监听窗口事件、拖动、最小化、最大化/还原及请求关闭，无文件、网络或进程插件权限。",
   "windows": ["main"],
-  "permissions": []
+  "permissions": [
+    "core:window:allow-is-maximized",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-close",
+    "core:window:allow-start-dragging",
+    "core:event:allow-listen",
+    "core:event:allow-unlisten"
+  ]
 }

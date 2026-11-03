@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
+import WindowControls from "./WindowControls";
 
 export interface MenuAction {
   id: string;
@@ -36,6 +37,7 @@ function NavigationIcon({ name }: { name: "back" | "forward" | "sidebar" }) {
 
 export default function AppMenuBar(props: AppMenuBarProps) {
   const [openMenu, setOpenMenu] = useState<number | null>(null);
+  const [windowError, setWindowError] = useState("");
   const [activeTrigger, setActiveTrigger] = useState(0);
   const [position, setPosition] = useState({ left: 8, top: 36 });
   const menubarRef = useRef<HTMLDivElement>(null);
@@ -136,6 +138,7 @@ export default function AppMenuBar(props: AppMenuBarProps) {
   }
 
   return (
+    <>
     <header className="app-menu-bar" aria-label="应用菜单栏">
       <div className="app-navigation" aria-label="页面导航">
         <button className="app-navigation-button" aria-label="后退" title="后退" disabled={!props.canGoBack} onClick={props.onBack}><NavigationIcon name="back" /></button>
@@ -156,6 +159,9 @@ export default function AppMenuBar(props: AppMenuBarProps) {
           </div>
         )}
       </div>
+      <WindowControls onError={setWindowError} />
     </header>
+    {windowError && <div className="app-window-error" role="alert">{windowError}</div>}
+    </>
   );
 }

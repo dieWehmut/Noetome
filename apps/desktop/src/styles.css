@@ -24,7 +24,16 @@ h1, h2, h3, p { margin: 0; }
 h1, h2, h3 { font-weight: 600; }
 .app-layout { min-height: 100vh; display: flex; flex-direction: column; }
 .app-body { display: flex; flex: 1; min-width: 0; }
-.app-menu-bar { height: 36px; flex: 0 0 36px; display: flex; align-items: center; gap: 9px; padding: 0 3px; color: #858585; background: #f3f3f3; border-bottom: 1px solid #dedede; }
+.app-menu-bar { position: sticky; top: 0; z-index: 30; height: 36px; flex: 0 0 36px; display: flex; align-items: center; gap: 9px; padding: 0 0 0 3px; color: #858585; background: #f3f3f3; border-bottom: 1px solid #dedede; }
+.app-navigation, .app-menubar { flex-shrink: 0; }
+.app-window-drag-area { align-self: stretch; flex: 1; min-width: 24px; user-select: none; }
+.app-window-controls { align-self: stretch; display: flex; flex-shrink: 0; }
+.app-window-button { width: 46px; height: 35px; display: grid; place-items: center; padding: 0; border: 0; background: transparent; color: #666; }
+.app-window-button svg { width: 14px; height: 14px; }
+.app-window-button:hover:not(:disabled) { background: #e3e3e3; }
+.app-window-close:hover:not(:disabled) { color: #fff; background: #c42b1c; }
+.app-window-button:disabled { opacity: .35; cursor: default; }
+.app-window-error { position: fixed; top: 36px; left: 8px; right: 8px; z-index: 40; padding: 10px 14px; color: #a36249; background: #f8ede7; border: 1px solid #e9c9ba; border-radius: 0 0 6px 6px; font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
 .app-navigation { display: flex; align-items: center; gap: 0; }
 .app-menubar { display: flex; align-items: center; gap: 12px; }
 .app-navigation-button { width: 34px; height: 28px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 4px; background: transparent; color: #858585; }
