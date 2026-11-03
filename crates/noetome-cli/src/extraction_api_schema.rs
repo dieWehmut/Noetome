@@ -1,8 +1,10 @@
 //! Strict structured-output schema and the exact request body used for reservation.
+use crate::extraction_api_config::RequestStrategy;
 use crate::extraction_model::{RequestUnit, SourceBinding};
 use crate::project::ProjectError;
 use serde_json::{Value, json};
 pub(crate) fn request_body(
+    strategy: RequestStrategy,
     model: &str,
     request_id: &str,
     binding: &SourceBinding,
@@ -20,12 +22,23 @@ pub(crate) fn request_body(
         .collect();
     let input = serde_json::to_string(&json!({"request_id":request_id,"binding":binding,"units":units,"evidence_anchors":evidence_anchors}))
         .map_err(|_| request_error())?;
-    let body = json!({
+    let mut body = json!({
         "model":model,"instructions":"Extract only evidence-supported concepts and atomic claims from the selected text units. Return one JSON object matching the supplied strict schema, copying request_id and binding exactly. Full-unit evidence_anchors provide exact UTF8 byte offsets in the referenced source resource, quote and SHA256. Copy the resource-absolute start/end offsets from the supplied anchors; preserve the quote and its SHA256. Preserve conditions, exceptions and units. Every atom must have required=false and verification=unverified. Use null for unknown measurement/value/unit and explicit value_status. Do not invent scientific verification or producer provenance.",
-        "input":input,"text":{"format":{"type":"json_schema","name":"noetome_candidates_v1","strict":true,"schema":candidate_schema()}},
-        "max_output_tokens":max_output_tokens,"store":false,"stream":false,"background":false,
-        "tools":[],"tool_choice":"none","service_tier":"default","truncation":"disabled",
+        "input":input,"text":{"format":{"type":"json_schema","name":"noetome_candidates_v1","schema":candidate_schema()}},
+        "max_output_tokens":max_output_tokens,"store":false,"stream":false,
+        "tools":[],"tool_choice":"none",
     });
+    match strategy {
+        RequestStrategy::OpenAiStrict => {
+            body["text"]["format"]["strict"] = json!(true);
+            body["background"] = json!(false);
+            body["service_tier"] = json!("default");
+            body["truncation"] = json!("disabled");
+        }
+        RequestStrategy::TangmaoDeepseek => {
+            body["reasoning"] = json!({"effort":"none"});
+        }
+    }
     let bytes = serde_json::to_vec(&body).map_err(|_| request_error())?;
     if bytes.len() > 256 * 1024 {
         return Err(request_error());
@@ -89,6 +102,96 @@ mod tests {
     use super::*;
     use crate::extraction_model::Locator;
     #[test]
+    fn selected_strategy_keeps_bounded_schema_input_and_absolute_anchor_without_unsupported_fields()
+    {
+        let binding: SourceBinding = serde_json::from_value(json!({"project_id":"p","import_id":"i","source_id":"s","version_id":"v","content_sha256":"sha","normalized_sha256":null,"parse_id":null,"manifest_sha256":null})).unwrap();
+        let units = [RequestUnit {
+            unit_id: "u".into(),
+            locator: Locator::Text {
+                span_id: "s".into(),
+                ordinal: 1,
+                resource_sha256: "resource".into(),
+            },
+            source_status: "parsed".into(),
+            start_byte: 123,
+            end_byte: 129,
+            text: "中文".into(),
+        }];
+        let selected: Value = serde_json::from_slice(
+            &request_body(
+                RequestStrategy::TangmaoDeepseek,
+                "deepseek-flash",
+                "req",
+                &binding,
+                &units,
+                8192,
+            )
+            .unwrap(),
+        )
+        .unwrap();
+        let official: Value = serde_json::from_slice(
+            &request_body(
+                RequestStrategy::OpenAiStrict,
+                "deepseek-flash",
+                "req",
+                &binding,
+                &units,
+                8192,
+            )
+            .unwrap(),
+        )
+        .unwrap();
+        let keys: Vec<&str> = selected
+            .as_object()
+            .unwrap()
+            .keys()
+            .map(String::as_str)
+            .collect();
+        assert_eq!(
+            keys,
+            [
+                "input",
+                "instructions",
+                "max_output_tokens",
+                "model",
+                "reasoning",
+                "store",
+                "stream",
+                "text",
+                "tool_choice",
+                "tools"
+            ]
+        );
+        assert_eq!(selected["model"], "deepseek-flash");
+        assert_eq!(selected["reasoning"], json!({"effort":"none"}));
+        assert_eq!(selected["max_output_tokens"], 8192);
+        assert_eq!(selected["store"], false);
+        assert_eq!(selected["stream"], false);
+        assert_eq!(selected["tools"], json!([]));
+        assert_eq!(selected["tool_choice"], "none");
+        let format = &selected["text"]["format"];
+        assert_eq!(format["type"], "json_schema");
+        assert_eq!(format["name"], "noetome_candidates_v1");
+        assert!(format.get("strict").is_none());
+        assert_eq!(format["schema"]["additionalProperties"], false);
+        assert_eq!(format["schema"], official["text"]["format"]["schema"]);
+        assert_eq!(selected["input"], official["input"]);
+        assert_eq!(selected["instructions"], official["instructions"]);
+        let input: Value = serde_json::from_str(selected["input"].as_str().unwrap()).unwrap();
+        assert_eq!(input["request_id"], "req");
+        assert_eq!(input["binding"], serde_json::to_value(binding).unwrap());
+        assert_eq!(
+            input["evidence_anchors"][0],
+            json!({"unit_id":"u","excerpt_start_byte":123,"excerpt_end_byte":129,"excerpt_sha256":"72726d8818f693066ceb69afa364218b692e62ea92b385782363780f47529c21","quote":"中文"})
+        );
+        // A model name alone never changes the official endpoint's strategy.
+        assert_eq!(official["text"]["format"]["strict"], true);
+        assert_eq!(official["background"], false);
+        assert_eq!(official["service_tier"], "default");
+        assert_eq!(official["truncation"], "disabled");
+        assert!(official.get("reasoning").is_none());
+    }
+    #[test]
     fn request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor() {
         let binding:SourceBinding=serde_json::from_value(json!({"project_id":"p","import_id":"i","source_id":"s","version_id":"v","content_sha256":"sha","normalized_sha256":null,"parse_id":null,"manifest_sha256":null})).unwrap();
         let unit = RequestUnit {
@@ -103,7 +206,15 @@ mod tests {
             end_byte: 129,
             text: "中文".into(),
         };
-        let bytes = request_body("model", "req", &binding, &[unit], 2048).unwrap();
+        let bytes = request_body(
+            RequestStrategy::OpenAiStrict,
+            "model",
+            "req",
+            &binding,
+            &[unit],
+            2048,
+        )
+        .unwrap();
         let body: Value = serde_json::from_slice(&bytes).unwrap();
         for field in ["store", "stream", "background"] {
             assert_eq!(body[field], false);

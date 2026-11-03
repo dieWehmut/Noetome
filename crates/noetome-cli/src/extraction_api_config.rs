@@ -1,5 +1,49 @@
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn selected_gateway_accepts_only_exact_live_endpoint_and_selected_model() {
+        let mut value = config_value();
+        value["transport_mode"] = serde_json::json!("live");
+        value["endpoint"] = serde_json::json!("https://ai.1343263.xyz/v1/responses");
+        value["model"] = serde_json::json!("deepseek-flash");
+        let config: super::ApiConfig = serde_json::from_value(value.clone()).unwrap();
+        super::validate(&config).unwrap();
+        for endpoint in [
+            "https://ai.1343263.xyz:443/v1/responses",
+            "http://ai.1343263.xyz/v1/responses",
+            "https://ai.1343263.xyz/v1/responses/",
+            "https://ai.1343263.xyz/v1/responses?x=1",
+            "https://ai.1343263.xyz/v1/responses#x",
+            "https://user@ai.1343263.xyz/v1/responses",
+            "https://AI.1343263.xyz/v1/responses",
+            "https://ai.1343263.xyz.other.example/v1/responses",
+            "https://ai.1343263.xyz/v1/chat/completions",
+        ] {
+            let mut invalid = value.clone();
+            invalid["endpoint"] = serde_json::json!(endpoint);
+            let config = serde_json::from_value(invalid).unwrap();
+            assert_eq!(
+                super::validate(&config).unwrap_err().code(),
+                "EXTRACT_API_ENDPOINT",
+                "{endpoint}"
+            );
+        }
+        for model in [
+            "deepseek-chat",
+            "deepseek-flash ",
+            "DeepSeek-Flash",
+            "noetome-test-model",
+        ] {
+            let mut invalid = value.clone();
+            invalid["model"] = serde_json::json!(model);
+            let config = serde_json::from_value(invalid).unwrap();
+            assert_eq!(
+                super::validate(&config).unwrap_err().code(),
+                "EXTRACT_API_CONFIG",
+                "{model}"
+            );
+        }
+    }
     fn config_value() -> serde_json::Value {
         serde_json::json!({"schema_version":1,"provider":"openai_responses","transport_mode":"local_http_test",
             "endpoint":"http://127.0.0.1:1234/v1/responses","model":"noetome-test-model","credential_env":"NOETOME_TEST_CREDENTIAL",
@@ -144,6 +188,31 @@ pub(crate) struct ApiConfig {
     pub(crate) limits: ExtractionLimits,
     pub(crate) budget: Budget,
 }
+const SELECTED_GATEWAY_ENDPOINT: &str = "https://ai.1343263.xyz/v1/responses";
+
+#[derive(Clone, Copy)]
+pub(crate) enum RequestStrategy {
+    OpenAiStrict,
+    TangmaoDeepseek,
+}
+impl RequestStrategy {
+    pub(crate) fn version(self) -> &'static str {
+        match self {
+            Self::OpenAiStrict => "openai-responses-strict-json-schema-v1",
+            Self::TangmaoDeepseek => "tangmao-deepseek-responses-json-schema-v1",
+        }
+    }
+}
+impl ApiConfig {
+    // Called only after SelectedConfig validates the exact endpoint/model pair.
+    pub(crate) fn request_strategy(&self) -> RequestStrategy {
+        if self.transport_mode == "live" && self.endpoint == SELECTED_GATEWAY_ENDPOINT {
+            RequestStrategy::TangmaoDeepseek
+        } else {
+            RequestStrategy::OpenAiStrict
+        }
+    }
+}
 fn config_error() -> ProjectError {
     ProjectError::new(
         "EXTRACT_API_CONFIG",
@@ -161,7 +230,8 @@ fn changed() -> ProjectError {
 
 fn valid_endpoint(mode: &str, endpoint: &str) -> bool {
     if mode == "live" {
-        return endpoint == "https://api.openai.com/v1/responses";
+        return matches!(endpoint, "https://api.openai.com/v1/responses")
+            || endpoint == SELECTED_GATEWAY_ENDPOINT;
     }
     if mode != "local_http_test" {
         return false;
@@ -223,8 +293,11 @@ fn validate(config: &ApiConfig) -> Result<(), ProjectError> {
         return Err(ProjectError::new(
             "EXTRACT_API_ENDPOINT",
             2,
-            "端点必须为明确的官方HTTPS Responses或数字环回HTTP测试地址。",
+            "端点必须为明确的官方/所选网关HTTPS Responses或数字环回HTTP测试地址。",
         ));
+    }
+    if config.endpoint == SELECTED_GATEWAY_ENDPOINT && config.model != "deepseek-flash" {
+        return Err(config_error());
     }
     if config.transport_mode == "local_http_test" && !config.model.starts_with("noetome-test-") {
         return Err(config_error());

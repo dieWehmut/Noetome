@@ -239,7 +239,9 @@ fn run_selected(
         }
     }
     let request_id = uuid::Uuid::new_v4().to_string();
+    let strategy = cfg.request_strategy();
     let body = extraction_api_schema::request_body(
+        strategy,
         &cfg.model,
         &request_id,
         &source.binding,
@@ -255,7 +257,7 @@ fn run_selected(
     // Neither the selected credential value nor authorization headers enter DTOs.
     let request = json!({"schema_version":1,"producer":"api","provider":cfg.provider,"transport_mode":cfg.transport_mode,
         "request_id":request_id,"binding":source.binding,"units":source.units,"configured_model":cfg.model,
-        "endpoint":cfg.endpoint,"config":{"path":selected.path.display().to_string(),"fingerprint":selected.fingerprint()},
+        "endpoint":cfg.endpoint,"request_strategy":strategy.version(),"config":{"path":selected.path.display().to_string(),"fingerprint":selected.fingerprint()},
         "credential_env":cfg.credential_env,"limits":cfg.limits,"budget":cfg.budget,
         "reservation_policy":"request_utf8_bytes_plus_1024_v1","input_reserved_tokens":input_reserved,"reserved_tokens":reserved,
         "model_tokenizer":null,"request_body":{"sha256":sha256(&body),"byte_length":body.len()}});
@@ -273,6 +275,7 @@ fn run_selected(
     let check = || extraction_fake::check(&control, &cancelled, signal.as_deref());
     let mut report = json!({"schema_version":1,"report_kind":"text_api_extraction","producer":"api","provider":cfg.provider,
         "transport_mode":cfg.transport_mode,"request_id":request_id,"binding":source.binding,
+        "endpoint":cfg.endpoint,"request_strategy":strategy.version(),
         "configured_model":cfg.model,"actual_model":null,"response_id":null,"service_tier":null,"http_request_id":null,
         "http_status":null,"response_complete":false,"status":"failed","knowledge_status":"pending","published":false,
         "scientific_quality":"not_run","source_statuses":source.units.iter().map(|u|&u.source_status).collect::<Vec<_>>(),"validated_atoms":0,

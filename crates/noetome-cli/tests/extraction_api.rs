@@ -328,3 +328,105 @@ fn ordinary_api_rate_limit_is_one_attempt_without_retry() {
     assert!(example.root.exists());
     example.unchanged();
 }
+
+#[test]
+fn ordinary_selected_gateway_zero_budget_keeps_model_strategy_and_never_calls() {
+    // This is a local preflight with a public synthetic key and an explicit zero
+    // call budget. It must not send an HTTP request to the configured live URL.
+    let example = Example::new("http://127.0.0.1:1234/v1/responses", 0);
+    let mut config: Value = serde_json::from_slice(&fs::read(&example.config).unwrap()).unwrap();
+    config["transport_mode"] = json!("live");
+    config["endpoint"] = json!("https://ai.1343263.xyz/v1/responses");
+    config["model"] = json!("deepseek-flash");
+    fs::write(&example.config, serde_json::to_vec_pretty(&config).unwrap()).unwrap();
+    let run = example.run();
+    assert_eq!(
+        run.status.code(),
+        Some(3),
+        "{}",
+        String::from_utf8_lossy(&run.stderr)
+    );
+    let report: Value = serde_json::from_slice(&run.stdout).unwrap();
+    assert_eq!(report["errors"][0]["code"], "EXTRACT_BUDGET_STOP");
+    assert_eq!(report["configured_model"], "deepseek-flash");
+    assert_eq!(report["actual_model"], Value::Null);
+    assert_eq!(
+        report["request_strategy"],
+        "tangmao-deepseek-responses-json-schema-v1"
+    );
+    assert_eq!(report["usage"]["network_attempts"], 0);
+    assert_eq!(report["usage"]["real_model_calls"], 0);
+    assert_eq!(report["usage"]["model_usage"], Value::Null);
+    assert_eq!(report["knowledge_status"], "pending");
+    assert_eq!(report["published"], false);
+    let request: Value =
+        serde_json::from_slice(&fs::read(example.output.join("request.json")).unwrap()).unwrap();
+    assert_eq!(request["request_strategy"], report["request_strategy"]);
+    let body: Value =
+        serde_json::from_slice(&fs::read(example.output.join("request-body.json")).unwrap())
+            .unwrap();
+    assert_eq!(body["model"], "deepseek-flash");
+    assert_eq!(body["reasoning"]["effort"], "none");
+    assert_eq!(body["text"]["format"]["type"], "json_schema");
+    assert_eq!(body["text"]["format"]["name"], "noetome_candidates_v1");
+    assert!(body["text"]["format"].get("strict").is_none());
+    assert_eq!(
+        body["text"]["format"]["schema"]["additionalProperties"],
+        false
+    );
+    assert_eq!(body["stream"], false);
+    assert_eq!(body["tools"], json!([]));
+    assert_eq!(body["tool_choice"], "none");
+    assert_eq!(body["store"], false);
+    for unsupported in ["background", "service_tier", "truncation"] {
+        assert!(body.get(unsupported).is_none(), "{unsupported}");
+    }
+    assert!(!example.output.join("candidates.json").exists());
+    example.unchanged();
+}
+
+#[test]
+fn ordinary_selected_gateway_rejects_other_authorities_models_and_paths() {
+    let example = Example::new("http://127.0.0.1:1234/v1/responses", 0);
+    let base: Value = serde_json::from_slice(&fs::read(&example.config).unwrap()).unwrap();
+    for (endpoint, model) in [
+        ("https://ai.1343263.xyz:443/v1/responses", "deepseek-flash"),
+        ("http://ai.1343263.xyz/v1/responses", "deepseek-flash"),
+        (
+            "https://ai.1343263.xyz/v1/chat/completions",
+            "deepseek-flash",
+        ),
+        ("https://ai.1343263.xyz/responses", "deepseek-flash"),
+        ("https://ai.1343263.xyz/v1/responses?x=1", "deepseek-flash"),
+        ("https://ai.1343263.xyz/v1/responses#x", "deepseek-flash"),
+        ("https://user@ai.1343263.xyz/v1/responses", "deepseek-flash"),
+        (
+            "https://ai.1343263.xyz.other.example/v1/responses",
+            "deepseek-flash",
+        ),
+        (
+            "https://api.openai.com@ai.1343263.xyz/v1/responses",
+            "deepseek-flash",
+        ),
+        ("https://127.0.0.1/v1/responses", "deepseek-flash"),
+        ("https://other.example/v1/responses", "deepseek-flash"),
+        ("https://ai.1343263.xyz/v1/responses", "deepseek-chat"),
+        ("https://ai.1343263.xyz/v1/responses", "deepseek-flash "),
+    ] {
+        let mut config = base.clone();
+        config["transport_mode"] = json!("live");
+        config["endpoint"] = json!(endpoint);
+        config["model"] = json!(model);
+        fs::write(&example.config, serde_json::to_vec_pretty(&config).unwrap()).unwrap();
+        let run = example.run();
+        assert_eq!(run.status.code(), Some(2), "{endpoint} / {model}");
+        let diagnostic = String::from_utf8_lossy(&run.stderr);
+        assert!(
+            diagnostic.contains("EXTRACT_API_ENDPOINT")
+                || diagnostic.contains("EXTRACT_API_CONFIG"),
+            "{diagnostic}"
+        );
+        assert!(!example.output.exists());
+        example.unchanged();
+    }
+}
