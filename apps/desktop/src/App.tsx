@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { invoke, isTauri } from "@tauri-apps/api/core";
+import AppMenuBar from "./AppMenuBar";
+import type { AppMenu } from "./AppMenuBar";
 
 type Page = "workspace" | "runtime" | "about";
 type Phase = "idle" | "running" | "success" | "error";
@@ -124,7 +126,7 @@ function WindowBehaviorSettings() {
 
   return (
     <section className="window-settings" aria-labelledby="window-settings-title" aria-busy={busy}>
-      <h2 id="window-settings-title">窗口行为</h2>
+      <h2 id="window-settings-title" tabIndex={-1}>窗口行为</h2>
       <p className="settings-description" id="window-behavior-description">关闭按钮按此设置操作。最小化后仍显示在任务栏；托盘菜单“退出”始终结束程序。</p>
       <div className="settings-controls">
         <div className="settings-field">
@@ -150,11 +152,96 @@ function WindowBehaviorSettings() {
 }
 
 export default function App() {
-  const [page, setPage] = useState<Page>("workspace");
+  const [history, setHistory] = useState<{ entries: Page[]; index: number }>({ entries: ["workspace"], index: 0 });
+  const page = history.entries[history.index];
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [focusTarget, setFocusTarget] = useState<{ id: string; request: number } | null>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  const [hasSelection, setHasSelection] = useState(false);
+  const [editFeedback, setEditFeedback] = useState<{ message: string; error: boolean } | null>(null);
   const [runtimePhase, setRuntimePhase] = useState<Phase>("idle");
   const [runtimeInfo, setRuntimeInfo] = useState<RuntimeInfo | null>(null);
   const [runtimeError, setRuntimeError] = useState("");
   const [preview, setPreview] = useState<Preview>({ phase: "idle", output: "", error: "" });
+
+  function requestFocus(id = "main-content") {
+    setFocusTarget((previous) => ({ id, request: (previous?.request ?? 0) + 1 }));
+  }
+
+  function navigate(target: Page, focusId = "main-content") {
+    setHistory((previous) => {
+      if (previous.entries[previous.index] === target) return previous;
+      const entries = [...previous.entries.slice(0, previous.index + 1), target].slice(-64);
+      return { entries, index: entries.length - 1 };
+    });
+    setEditFeedback(null);
+    requestFocus(focusId);
+  }
+
+  function moveHistory(direction: -1 | 1) {
+    const next = history.index + direction;
+    if (next < 0 || next >= history.entries.length) return;
+    setHistory((previous) => ({ ...previous, index: previous.index + direction }));
+    setEditFeedback(null);
+    requestFocus();
+  }
+
+  useEffect(() => {
+    if (!focusTarget) return;
+    const target = document.getElementById(focusTarget.id) ?? mainRef.current;
+    target?.focus({ preventScroll: true });
+    if (target === mainRef.current) window.scrollTo({ top: 0 });
+    else target?.scrollIntoView({ block: "start" });
+  }, [page, focusTarget]);
+
+  function toggleSidebar() {
+    if (sidebarVisible && document.getElementById("app-sidebar")?.contains(document.activeElement)) {
+      mainRef.current?.focus({ preventScroll: true });
+    }
+    setSidebarVisible((visible) => !visible);
+  }
+
+  function selectedMainText() {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed || !mainRef.current || !selection.rangeCount) return "";
+    const range = selection.getRangeAt(0);
+    if (!mainRef.current.contains(range.startContainer) || !mainRef.current.contains(range.endContainer)) return "";
+    return selection.toString();
+  }
+
+  useEffect(() => {
+    function updateSelection() { setHasSelection(selectedMainText().length > 0); }
+    document.addEventListener("selectionchange", updateSelection);
+    return () => document.removeEventListener("selectionchange", updateSelection);
+  }, []);
+
+  function selectAllContent() {
+    const main = mainRef.current;
+    const selection = window.getSelection();
+    if (!main || !selection) return;
+    main.focus({ preventScroll: true });
+    const range = document.createRange();
+    range.selectNodeContents(main);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    setHasSelection(selectedMainText().length > 0);
+  }
+
+  async function copySelectedContent() {
+    const text = selectedMainText();
+    if (!text) {
+      setEditFeedback({ message: "请先选中当前内容中需要复制的文字。", error: true });
+      return;
+    }
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error("当前环境不支持剪贴板写入。请使用系统复制快捷键。");
+      await navigator.clipboard.writeText(text);
+      setEditFeedback({ message: "已复制选中的文字。", error: false });
+    } catch (cause) {
+      const detail = cause instanceof Error ? cause.message : String(cause);
+      setEditFeedback({ message: `复制失败：${detail}`, error: true });
+    }
+  }
 
   async function checkRuntime() {
     setRuntimePhase("running");
@@ -171,6 +258,7 @@ export default function App() {
   }
 
   async function runPreview(option: PreviewOption) {
+    if (preview.phase === "running") return;
     setPreview({ phase: "running", option, output: "", error: "" });
     try {
       const output = await invoke<string>("cli_preview", { option });
@@ -180,12 +268,33 @@ export default function App() {
     }
   }
 
-  const title = { workspace: "工作台", runtime: "运行检查", about: "关于 Noetome" }[page];
+  const menus: AppMenu[] = [
+    { label: "File", actions: [
+      { id: "workspace", label: "工作台", onSelect: () => navigate("workspace") },
+      { id: "runtime", label: "运行检查", onSelect: () => navigate("runtime") },
+      { id: "settings", label: "窗口设置", onSelect: () => navigate("about", "window-settings-title") },
+    ] },
+    { label: "Edit", actions: [
+      { id: "select-all", label: "全选", onSelect: selectAllContent },
+      { id: "copy", label: "复制", disabled: !hasSelection, onSelect: () => void copySelectedContent() },
+    ] },
+    { label: "View", actions: [
+      { id: "sidebar", label: "显示侧栏", checked: sidebarVisible, onSelect: toggleSidebar },
+      ...pages.map((item) => ({ id: item.id, label: item.label, onSelect: () => navigate(item.id) })),
+    ] },
+    { label: "Help", actions: [
+      { id: "help", label: "查看帮助", disabled: preview.phase === "running", onSelect: () => { navigate("runtime", "command-title"); void runPreview("help"); } },
+      { id: "version", label: "查看版本", disabled: preview.phase === "running", onSelect: () => { navigate("runtime", "command-title"); void runPreview("version"); } },
+      { id: "about", label: "关于 Noetome", onSelect: () => navigate("about") },
+    ] },
+  ];
 
   return (
     <div className="app-layout">
-      <aside className="sidebar" aria-label="应用导航">
-        <a className="brand" href="#workspace" onClick={(event) => { event.preventDefault(); setPage("workspace"); }} aria-label="Noetome 工作台">
+      <AppMenuBar canGoBack={history.index > 0} canGoForward={history.index < history.entries.length - 1} sidebarVisible={sidebarVisible} onBack={() => moveHistory(-1)} onForward={() => moveHistory(1)} onToggleSidebar={toggleSidebar} menus={menus} />
+      <div className="app-body">
+      <aside id="app-sidebar" className="sidebar" aria-label="应用导航" hidden={!sidebarVisible}>
+        <a className="brand" href="#workspace" onClick={(event) => { event.preventDefault(); navigate("workspace"); }} aria-label="Noetome 工作台">
           <img src="/app-icon.png" alt="" className="brand-icon" />
           <span>Noetome<small>个人知识工作台</small></span>
         </a>
@@ -193,7 +302,7 @@ export default function App() {
         <div className="nav-section-label">你的空间</div>
         <nav>
           {pages.map((item) => (
-            <button key={item.id} className={`nav-item ${page === item.id ? "is-active" : ""}`} aria-current={page === item.id ? "page" : undefined} onClick={() => setPage(item.id)}>
+            <button key={item.id} className={`nav-item ${page === item.id ? "is-active" : ""}`} aria-current={page === item.id ? "page" : undefined} onClick={() => navigate(item.id)}>
               <Icon name={item.icon} /><span>{item.label}</span>{page === item.id && <span className="nav-active-dot" />}
             </button>
           ))}
@@ -207,24 +316,20 @@ export default function App() {
       </aside>
 
       <div className="main-layout">
-        <header className="topbar">
-          <div className="breadcrumb">Noetome<span>/</span><strong>{title}</strong></div>
-          <span className="build-tag">早期桌面版</span>
-        </header>
-
-        <main id="main-content" className="main-content">
+        <main id="main-content" className="main-content" tabIndex={-1} ref={mainRef}>
+          {editFeedback && <p className={editFeedback.error ? "error-message edit-feedback" : "edit-feedback"} role={editFeedback.error ? "alert" : "status"}>{editFeedback.message}</p>}
           {page === "workspace" && (
             <>
               <div className="page-heading"><div><p className="eyebrow">YOUR KNOWLEDGE SPACE</p><h1>为理解，留一个空间。</h1><p className="page-description">从资料出发，让知识逐渐成为你的体系。</p></div><span className="heading-decoration" aria-hidden="true">✳</span></div>
 
               <section className="welcome-card" aria-labelledby="welcome-title">
-                <div className="welcome-copy"><span className="section-kicker">认识你的工作台</span><h2 id="welcome-title">把阅读的线索，<br />连接成清晰的知识。</h2><p>Noetome 面向个人学科学习，将资料整理为<br className="desktop-break" />可追溯、可维护的 Obsidian 知识库。</p><button className="button button-primary" onClick={() => setPage("runtime")}>检查本地运行环境<Icon name="arrow" /></button></div>
+                <div className="welcome-copy"><span className="section-kicker">认识你的工作台</span><h2 id="welcome-title">把阅读的线索，<br />连接成清晰的知识。</h2><p>Noetome 面向个人学科学习，将资料整理为<br className="desktop-break" />可追溯、可维护的 Obsidian 知识库。</p><button className="button button-primary" onClick={() => navigate("runtime")}>检查本地运行环境<Icon name="arrow" /></button></div>
                 <div className="welcome-art" aria-hidden="true"><div className="art-ring art-ring-outer" /><div className="art-ring art-ring-inner" /><img src="/app-icon.png" alt="" /><span className="art-label">让理解慢慢生长</span></div>
               </section>
 
               <div className="section-title-row"><h2>当前可以做什么</h2><span>从小而可靠的能力开始</span></div>
               <div className="capability-grid">
-                <section className="capability-card"><div className="card-icon"><Icon name="terminal" /></div><span className="small-badge available">已接入</span><h3>查看帮助与版本</h3><p>通过本地组件查看 CLI 用法与版本，确认桌面应用连接状态。</p><button className="text-button" onClick={() => setPage("runtime")}>打开运行检查<Icon name="arrow" /></button></section>
+                <section className="capability-card"><div className="card-icon"><Icon name="terminal" /></div><span className="small-badge available">已接入</span><h3>查看帮助与版本</h3><p>通过本地组件查看 CLI 用法与版本，确认桌面应用连接状态。</p><button className="text-button" onClick={() => navigate("runtime")}>打开运行检查<Icon name="arrow" /></button></section>
                 <section className="capability-card"><div className="card-icon muted"><Icon name="book" /></div><span className="small-badge pending">尚未接入</span><h3>建立学习项目</h3><p>桌面项目入口尚未接入，资料导入仍在开发中。当前工作台尚未载入项目。</p><span className="quiet-note">完成后将在这里开始</span></section>
               </div>
 
@@ -249,7 +354,7 @@ export default function App() {
               </section>
 
               <section className="command-card" aria-labelledby="command-title">
-                <div className="command-heading"><div><h2 id="command-title">试运行 CLI</h2><p>显示帮助或版本，结果直接来自本地组件。</p></div><div className="command-actions"><button className="button button-secondary" disabled={preview.phase === "running"} onClick={() => runPreview("help")}>查看帮助</button><button className="button button-secondary" disabled={preview.phase === "running"} onClick={() => runPreview("version")}>查看版本</button></div></div>
+                <div className="command-heading"><div><h2 id="command-title" tabIndex={-1}>试运行 CLI</h2><p>显示帮助或版本，结果直接来自本地组件。</p></div><div className="command-actions"><button className="button button-secondary" disabled={preview.phase === "running"} onClick={() => runPreview("help")}>查看帮助</button><button className="button button-secondary" disabled={preview.phase === "running"} onClick={() => runPreview("version")}>查看版本</button></div></div>
                 <div className="console-panel"><div className="console-heading"><span><Icon name="terminal" />{preview.option ? `noetome --${preview.option}` : "命令输出"}</span><span className={`console-status ${preview.phase}`} role="status" aria-live="polite">{{ idle: "未运行", running: "运行中", success: "执行成功", error: "执行失败" }[preview.phase]}</span></div><pre aria-label="CLI 运行结果" tabIndex={0}>{preview.phase === "idle" ? "选择上方命令，查看实际输出。" : preview.phase === "running" ? "等待本地组件返回…" : preview.phase === "error" ? preview.error : preview.output}</pre></div>
               </section>
               <section className="scope-note"><span className="scope-marker" aria-hidden="true" /><p>帮助和版本检查不执行资料解析、模型调用或 Vault 写入。</p></section>
@@ -260,13 +365,14 @@ export default function App() {
             <>
               <div className="page-heading"><div><p className="eyebrow">ABOUT NOETOME</p><h1>让知识，有迹可循。</h1><p className="page-description">一款为个人学科学习而构建的知识编译器。</p></div></div>
               <section className="about-card"><img src="/app-icon.png" alt="Noetome 应用图标" className="about-icon" /><div><span className="section-kicker">PERSONAL KNOWLEDGE COMPILER</span><h2>Noetome</h2><p>从电子资料到 Obsidian 知识库，<br />让整理有依据，让理解能延续。</p><span className="about-version">{runtimeInfo ? `桌面应用 ${runtimeInfo.app_version}` : "早期桌面版 · 版本尚未读取"}</span></div></section>
-              <div className="about-details"><section><h2>现在的 Noetome</h2><p>当前桌面提供帮助、版本和运行连接检查。空项目初始化与只读检查通过 CLI 使用，尚未接入桌面；资料导入和知识生成仍在开发中。</p><button className="text-button" onClick={() => setPage("runtime")}>查看实际运行信息<Icon name="arrow" /></button></section><section><h2>在你的电脑上</h2><p>应用界面和图标随安装包提供，不需要外部字体或网页服务。运行信息与窗口设置由本地组件管理，不发起模型请求。</p><span className="local-label"><span />本地运行</span></section></div>
+              <div className="about-details"><section><h2>现在的 Noetome</h2><p>当前桌面提供帮助、版本和运行连接检查。空项目初始化与只读检查通过 CLI 使用，尚未接入桌面；资料导入和知识生成仍在开发中。</p><button className="text-button" onClick={() => navigate("runtime")}>查看实际运行信息<Icon name="arrow" /></button></section><section><h2>在你的电脑上</h2><p>应用界面和图标随安装包提供，不需要外部字体或网页服务。运行信息与窗口设置由本地组件管理，不发起模型请求。</p><span className="local-label"><span />本地运行</span></section></div>
               <WindowBehaviorSettings />
             </>
           )}
         </main>
 
         <footer className="app-footer"><span>Noetome · 为个人学习而构建</span><span>从清晰的来源，走向持续的理解。</span></footer>
+      </div>
       </div>
     </div>
   );
