@@ -58,6 +58,8 @@ Chat wire必须严格单对象、无任何层重复key、唯一choices[0]、inde
 
 原Task2实施者只编辑config/schema/wire/Core及必要新wire子模块的native测试，controller所有普通CLI作者测试/独立Chat本地HTTP矩阵、文档、profile/累计记录、Git及真实调用。先以新provider端点的普通CLI零预算和本地Chat行为取得真实RED，再实现/nativeGREEN。新鲜组件审查及最终完整回归后，controller保存新的Chat配置/活动profile历史，复用同一DPAPI凭据及9989381累计余额，只执行一次新的有界真实验证。两次失败完整保留，不自动循环、不改变来源/gold、不扩展其他SDK或产品阶段。
 
+Chat新鲜组件审查另指出一项minor：同时返回prompt_cache_hit_tokens与prompt_cache_miss_tokens时，官方约定两者加总为prompt_tokens。主prompt/completion/total计量与累计预算不受此缺口影响；controller裁定在最终全仓检查前补齐该已文档化的一致性校验。只改Chat wire及一个涵盖有效/不一致/缺一项/非法值的native回归，先真实RED再GREEN；缺省仍未知、不生成缓存Token、不改任何原响应或已结算记录，之后作窄范围关闭审查。
+
 ## Task 3: 累计预算与真实小范围验收
 
 controller 在仓库外当前用户 Noetome 设置目录保存非秘密服务、模型、credential_env/DPAPI引用、累计10000000 Token上限和使用记录。所有后续调用先查剩余额度；已知实际用量累计，未知用量保留工程预留，不把额度每次重置。首冒烟 max_requests=1、max_output_tokens<=8192、max_response_bytes<=1MiB、timeout_ms<=60000，费用未知保持null。

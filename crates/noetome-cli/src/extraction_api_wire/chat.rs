@@ -32,6 +32,14 @@ fn chat_metadata(value: &Value) -> Result<ResponseMetadata, ProjectError> {
             return Err(error("EXTRACT_API_USAGE"));
         }
     }
+    if let (Some(hit), Some(miss)) = (
+        raw.get("prompt_cache_hit_tokens").and_then(Value::as_u64),
+        raw.get("prompt_cache_miss_tokens").and_then(Value::as_u64),
+    ) {
+        if hit.checked_add(miss) != Some(input) {
+            return Err(error("EXTRACT_API_USAGE"));
+        }
+    }
     let mut normalized = value.clone();
     normalized["usage"] = usage;
     let mut parsed = metadata(&normalized)?;
@@ -100,6 +108,46 @@ pub(super) fn decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn cache_pair_requires_checked_prompt_sum_without_inventing_absent_counters() {
+        let mut v = response();
+        v["usage"]["prompt_cache_hit_tokens"] = json!(8);
+        v["usage"]["prompt_cache_miss_tokens"] = json!(8);
+        assert_eq!(
+            response_metadata(v.to_string().as_bytes())
+                .unwrap_err()
+                .code(),
+            "EXTRACT_API_USAGE"
+        );
+        v["usage"]["prompt_cache_miss_tokens"] = json!(4);
+        let parsed = response_metadata(v.to_string().as_bytes()).unwrap();
+        assert_eq!(parsed.raw_usage, Some(v["usage"].clone()));
+        for absent in ["prompt_cache_hit_tokens", "prompt_cache_miss_tokens"] {
+            let mut partial = v.clone();
+            partial["usage"].as_object_mut().unwrap().remove(absent);
+            let parsed = response_metadata(partial.to_string().as_bytes()).unwrap();
+            assert!(parsed.raw_usage.unwrap().get(absent).is_none());
+        }
+        v["usage"]["prompt_cache_hit_tokens"] = json!("8");
+        assert_eq!(
+            response_metadata(v.to_string().as_bytes())
+                .unwrap_err()
+                .code(),
+            "EXTRACT_API_USAGE"
+        );
+        v["usage"]["prompt_tokens"] = json!(u64::MAX);
+        v["usage"]["completion_tokens"] = json!(0);
+        v["usage"]["total_tokens"] = json!(u64::MAX);
+        v["usage"]["completion_tokens_details"] = json!({"reasoning_tokens":0});
+        v["usage"]["prompt_cache_hit_tokens"] = json!(u64::MAX);
+        v["usage"]["prompt_cache_miss_tokens"] = json!(1);
+        assert_eq!(
+            response_metadata(v.to_string().as_bytes())
+                .unwrap_err()
+                .code(),
+            "EXTRACT_API_USAGE"
+        );
+    }
     fn response() -> Value {
         let mut candidate: Value = serde_json::from_str(include_str!(
             "../../../../fixtures/extraction-gateway-v1/response.json"
