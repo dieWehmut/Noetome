@@ -1084,7 +1084,7 @@
       "id": "B04-T02",
       "title": "接入单个可配置文本API并执行有预算的真实小范围抽取冒烟",
       "batch": "B04R",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B04-T01"
       ],
@@ -1196,6 +1196,52 @@
           "note": "继续v5原生38/CLI7/fake3、独立Chat35和已完成workspace499的源码绑定；新鲜审查、最终API/fake/Chat矩阵后仅执行一个新输出根的真实请求，原四失败及source/gold保持。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-03T11:05:54Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成单一已选文本服务、外部DPAPI复用、累计预算和真实有界API严格候选验收；原五次失败及第六原响应保持。v6实际1原子/1证据通过，后续独立知识核对为B04-T03。顶部栏已在B04U独立完成并推送。",
+          "validation": [
+            "Windows x64实际Rust workspace502通过0失败/忽略，fmt/check通过；Python76通过。native41/API CLI7/fake3，最终API84/90CLI/fake54/60CLI/Chat37/39CLI全部通过，130双报告/92请求/728原文件与最终源码/程序4ce92d8...绑定。",
+            "真实第六次单次HTTP200/stop、CLI exit0、candidates_validated1原子/1证据；1792+4512=6304有效Token结算，累计30097/剩余9969903/pending0。独立原payload/UTF8quote/SHA/正整数/单位条件/双报告/预算及source/gold/SQL/前五响应保护通过。价格、底层模型及thinking开关未知；知识pending/科学not_run/发布false，literal gold诊断0不冒充T03通过。",
+            "v5 scoped899、v6 scoped30和最终不可变8004df0..bee1603审查469项实际断言/55指纹全部通过，无Critical/Important；旧v5下一步段落已修正。167本地链接、devlog check及git diff检查通过，零项误目标/首fmt失败和其他真实失败历史均保留，不重跑相同通过套件。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/extraction_api_schema.rs",
+              "sha256": "839d39ae80252b3350d433afce8edd061d6b24908b720f7aeb01e4bc110579c6"
+            },
+            {
+              "path": "scripts/invoke_api_credential.ps1",
+              "sha256": "c71022c74449ccc51c213613020071bb735e208a4d3eb6aecb83d788ee3de504"
+            },
+            {
+              "path": "scripts/validate_extraction_chat.py",
+              "sha256": "b75fbf15a0927189b1d98012879b7f72f9409cd68d6080bbfa9fd1b7b69bee69"
+            },
+            {
+              "path": "doc/validation/B04-T02.md",
+              "sha256": "62784d4602e24ac438f4f9b7f5619a142dbc3bd1f38d6d54e0d8b650c257183e"
+            },
+            {
+              "path": "doc/validation/assets/B04-T02-live-sixth-response.bin",
+              "sha256": "019f0ae95e154b230175cd6df31912e8130593f657344db723a4c3da7d8e82ac"
+            },
+            {
+              "path": "doc/validation/assets/B04-T02-live-sixth-verification.json",
+              "sha256": "c1515cad5e92733e91ae13b04ad68b624f333f73dd6ce2a6259dca19a51d3677"
+            },
+            {
+              "path": "doc/validation/assets/B04-T02-revision-final-snapshot-verification.json",
+              "sha256": "a49fd4552446d536c9c03b636055224794ea19f0c99e7801054065c254730574"
+            },
+            {
+              "path": "doc/validation/assets/B04-T02-gateway-final-review.md",
+              "sha256": "be3512f20159113ca39d32c2a5e4edac02ae7092ececf738afe8358465d8256b"
+            }
+          ]
         }
       ]
     },

@@ -45,6 +45,6 @@ v5只明确已有单位/条件与atom.qualifiers的逐字对应规则，严格Co
 
 用户顶部栏要求已在B04U验收、安装并推送；B04R的v6所选Chat正整数revision Schema/提示修复保持原严格验证及旧Responses。native41/普通API7/fake3、Python76、完整Rust502/fmt/check、API84/fake54/Chat37及130双报告/92请求通过；30项新鲜组件审查通过后，第六次单次请求HTTP200/stop、CLI exit0，Core接受1个候选原子及1条证据，1792输入/4512输出/6304总Token已结算。当前累计 **30097**、余额 **9969903**、pending **0**。原响应与保存payload一致，前五响应和调用前来源/gold/SQL不变。第六回包含16715字节reasoning_content，thinking开关效果及底层模型版本仍未证明，费用未知。
 
-严格API候选成功仍为knowledge_status=pending、scientific_quality=not_run、published=false；literal gold数值/完整条件集合的诊断匹配为0，独立知识核对留给B04-T03，不以这次API成功代替科学验收。当前只收束T02整分支审查、日志和推送。以后直接复用已保存服务、凭据和累计余额，不重新获得10M，不再次弹出密钥窗口。
+严格API候选成功仍为knowledge_status=pending、scientific_quality=not_run、published=false；literal gold数值/完整条件集合的诊断匹配为0，独立知识核对留给B04-T03，不以这次API成功代替科学验收。T02最终整分支469项断言/55指纹审查通过，已通过日志工具complete；提交/推送核对后进入T03。以后直接复用已保存服务、凭据和累计余额，不重新获得10M，不再次弹出密钥窗口。
 
 真实原响应、使用记录和严格候选核对完成后，才按任务卡验收B04-T02并进入B04-T03。假服务、公开synthetic key测试和0请求预检都不得称作真实模型成功；返回别名也不是网关底层模型版本或收费的独立证明。

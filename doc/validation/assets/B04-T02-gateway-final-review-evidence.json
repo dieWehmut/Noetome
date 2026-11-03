@@ -1,0 +1,2120 @@
+{
+  "reviewed_base": "8004df0f70dddc38a3f37be192d6928f3970c10e",
+  "reviewed_head": "bee1603bde81d555d11c7b9646c1ff5cb4cd5378",
+  "at": "2026-11-03T11:02:05.379398+00:00",
+  "methods": [
+    "static immutable supplied diff review",
+    "captured JSON unique-key parsing and arithmetic",
+    "SHA256 and byte counts",
+    "ZIP CRC/read without extraction",
+    "captured test-output result parsing; no test or build execution"
+  ],
+  "assertions": 469,
+  "failures": [],
+  "checks": [
+    {
+      "name": "current reviewed source hash: crates/noetome-cli/src/extraction_api_config.rs",
+      "passed": true
+    },
+    {
+      "name": "current reviewed source hash: crates/noetome-cli/src/extraction_api_schema.rs",
+      "passed": true
+    },
+    {
+      "name": "current reviewed source hash: crates/noetome-cli/src/extraction_api_wire/chat.rs",
+      "passed": true
+    },
+    {
+      "name": "current reviewed source hash: crates/noetome-cli/tests/extraction_api.rs",
+      "passed": true
+    },
+    {
+      "name": "current reviewed source hash: scripts/validate_extraction_chat.py",
+      "passed": true
+    },
+    {
+      "name": "final executable binding",
+      "passed": true
+    },
+    {
+      "name": "revision-final-archive binary",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-workspace-tests.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-workspace-summary.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-fmt.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-check.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-api-command.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-fake-command.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-chat-command.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-api-audit.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-fake-audit.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-chat-audit.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-selected-zero-command.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-snapshot-verification.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-cli-red.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-workspace-source.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-snapshot-source.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-controller-source.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-cli-red-source.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-final-reports.zip",
+      "passed": true
+    },
+    {
+      "name": "live-sixth-archive binary",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-request.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-request-body.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-response.bin",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-candidates.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-validation.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-validation.md",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-command.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-reservation.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-settlement.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-after.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-verification.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-review.md",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-revision-review-evidence.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-verification-source.json",
+      "passed": true
+    },
+    {
+      "name": "manifest bytes: doc/validation/assets/B04-T02-live-sixth-archive-source.json",
+      "passed": true
+    },
+    {
+      "name": "revision-final-workspace-tests actual result rows",
+      "passed": true
+    },
+    {
+      "name": "revision-final-workspace-tests recorded exit",
+      "passed": true
+    },
+    {
+      "name": "revision-fix-native-red actual result rows",
+      "passed": true
+    },
+    {
+      "name": "revision-fix-native-red recorded exit",
+      "passed": true
+    },
+    {
+      "name": "revision-cli-red actual result rows",
+      "passed": true
+    },
+    {
+      "name": "revision-cli-red recorded exit",
+      "passed": true
+    },
+    {
+      "name": "revision-final-workspace-tests stdout exact captured hash",
+      "passed": true
+    },
+    {
+      "name": "revision-final-workspace-tests stderr exact captured hash",
+      "passed": true
+    },
+    {
+      "name": "revision-python-tests stdout exact captured hash",
+      "passed": true
+    },
+    {
+      "name": "revision-python-tests stderr exact captured hash",
+      "passed": true
+    },
+    {
+      "name": "revision-cli-red stdout exact captured hash",
+      "passed": true
+    },
+    {
+      "name": "revision-cli-red stderr exact captured hash",
+      "passed": true
+    },
+    {
+      "name": "Python 76 recorded pass",
+      "passed": true
+    },
+    {
+      "name": "revision-final-fmt exit",
+      "passed": true
+    },
+    {
+      "name": "revision-final-check exit",
+      "passed": true
+    },
+    {
+      "name": "mistaken empty target retained separately",
+      "passed": true
+    },
+    {
+      "name": "initial formatting failure retained",
+      "passed": true
+    },
+    {
+      "name": "api matrix binding/counts",
+      "passed": true
+    },
+    {
+      "name": "api matrix all passed",
+      "passed": true
+    },
+    {
+      "name": "api source SQL unchanged",
+      "passed": true
+    },
+    {
+      "name": "api local POST count",
+      "passed": true
+    },
+    {
+      "name": "api no model calls",
+      "passed": true
+    },
+    {
+      "name": "fake matrix binding/counts",
+      "passed": true
+    },
+    {
+      "name": "fake matrix all passed",
+      "passed": true
+    },
+    {
+      "name": "fake source SQL unchanged",
+      "passed": true
+    },
+    {
+      "name": "chat matrix binding/counts",
+      "passed": true
+    },
+    {
+      "name": "chat matrix all passed",
+      "passed": true
+    },
+    {
+      "name": "chat source SQL unchanged",
+      "passed": true
+    },
+    {
+      "name": "chat local POST count",
+      "passed": true
+    },
+    {
+      "name": "chat no model calls",
+      "passed": true
+    },
+    {
+      "name": "chat-missing-unit-qualifier strict failure",
+      "passed": true
+    },
+    {
+      "name": "chat-zero-concept-revision strict failure",
+      "passed": true
+    },
+    {
+      "name": "chat-zero-atom-revision strict failure",
+      "passed": true
+    },
+    {
+      "name": "728 archived unique files",
+      "passed": true
+    },
+    {
+      "name": "archive CRC integrity",
+      "passed": true
+    },
+    {
+      "name": "130 report records and 92 request records",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-json/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-json/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-output-annotations/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-output-annotations/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-output-id/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-output-id/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-output-summary/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-output-summary/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-cancel-existing/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-cancel-existing/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-cancel-running/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-cancel-running/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-candidate-extra/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-candidate-extra/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-candidate-version/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-candidate-version/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-chinese-boundary/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-chinese-boundary/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-claimed-review/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-claimed-review/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-duplicate-candidate/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-duplicate-candidate/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-duplicate-wire/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-duplicate-wire/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-escaped/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-escaped/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-escaped-malformed/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-escaped-malformed/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-nested-json/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-nested-json/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-plain/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-plain/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-empty-auth/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-empty-auth/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-empty-body/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-empty-body/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-empty-rate-limit/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-empty-rate-limit/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-extra-text/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-extra-text/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-future-metadata/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-future-metadata/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-302/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-302/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-400/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-400/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-401/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-401/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-403/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-403/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-429/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-429/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-500/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-500/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-503/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-503/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-incomplete/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-incomplete/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-condition/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-condition/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-nullable/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-nullable/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-structured_output/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-structured_output/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-text/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-text/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-usage/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-usage/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-nonzero-source-span/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-nonzero-source-span/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-output-over-budget/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-output-over-budget/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-reasoning-metadata/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-reasoning-metadata/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-refusal/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-refusal/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-replay/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-replay/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-reserve-stop/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-reserve-stop/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-response-limit/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-response-limit/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-timeout-body/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-timeout-body/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-timeout-headers/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-timeout-headers/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-tool-output/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-tool-output/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-trailing-wire/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-trailing-wire/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-truncated-http/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-truncated-http/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-unknown-price/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-unknown-price/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-detail/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-detail/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-fraction/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-fraction/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-negative/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-negative/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-no-details/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-no-details/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-over-budget/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-over-budget/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-sum/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-sum/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-valid/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-valid/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-vision-request/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-vision-request/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-wrong-binding/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-wrong-binding/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-wrong-quote/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-wrong-quote/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-wrong-sha/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-wrong-sha/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-zero-requests/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-zero-requests/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-budget-stop/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-budget-stop/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-dropped-unit/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-dropped-unit/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-duplicate-field/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-duplicate-field/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-empty/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-empty/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-excerpt-sha/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-excerpt-sha/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-extra-field/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-extra-field/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-missing-field/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-missing-field/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-missing-measurement/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-missing-measurement/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-needs-review-unknown-value/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-needs-review-unknown-value/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-no-json-capability/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-no-json-capability/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-no-support/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-no-support/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-no-text-capability/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-no-text-capability/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-non-json/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-non-json/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-output-token-limit/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-output-token-limit/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-pdf-manifest-sha/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-pdf-manifest-sha/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-pdf-unknown-parse/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-pdf-unknown-parse/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-pdf-valid/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-pdf-valid/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-price-unknown/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-price-unknown/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-quote-mismatch/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-quote-mismatch/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-race-input/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-race-input/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-race-source/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-race-source/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-replay/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-replay/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-required-fake/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-required-fake/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-response-limit/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-response-limit/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-reviewed-fake/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-reviewed-fake/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-runtime-cancel/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-runtime-cancel/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-timeout/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-timeout/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-token-reservation/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-token-reservation/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-trailing-json/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-trailing-json/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-concept/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-concept/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-parse/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-parse/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-schema/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-schema/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-unit/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-unit/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-value-zero/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-value-zero/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-version/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-unknown-version/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-utf8-boundary/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-utf8-boundary/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-valid/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-valid/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-wrong-resource-binding/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-fake/out-wrong-resource-binding/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-auth/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-auth/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-boolean-usage/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-boolean-usage/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-cancel/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-cancel/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-candidate-duplicate/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-candidate-duplicate/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-candidate-extra/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-candidate-extra/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-content-echo/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-content-echo/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-empty-wire/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-empty-wire/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-fenced/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-fenced/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-filter/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-filter/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-framing-cut/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-framing-cut/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-function/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-function/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-length/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-length/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-missing-unit-qualifier/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-missing-unit-qualifier/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-no-usage/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-no-usage/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-normal/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-normal/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-price-unknown/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-price-unknown/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-rate/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-rate/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-reasoning-echo/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-reasoning-echo/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-refusal/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-refusal/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-replay/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-replay/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-service/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-service/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-timeout/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-timeout/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-tool/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-tool/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-two-choices/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-two-choices/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wire-duplicate/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wire-duplicate/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wire-trailing/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wire-trailing/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wrong-index/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wrong-index/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wrong-role/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wrong-role/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wrong-total/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wrong-total/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-zero-atom-revision/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-zero-atom-revision/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-zero-budget/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-zero-budget/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-zero-concept-revision/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-zero-concept-revision/new output/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-selected-zero/validation.json",
+      "passed": true
+    },
+    {
+      "name": "paired report equality: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-selected-zero/validation.json",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-json/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-output-annotations/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-output-id/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-bad-output-summary/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-cancel-existing/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-cancel-running/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-candidate-extra/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-candidate-version/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-chinese-boundary/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-claimed-review/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-duplicate-candidate/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-duplicate-wire/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-escaped/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-escaped-malformed/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-nested-json/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-echo-plain/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-empty-auth/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-empty-body/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-empty-rate-limit/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-extra-text/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-future-metadata/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-302/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-400/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-401/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-403/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-429/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-500/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-http-503/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-incomplete/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-condition/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-nullable/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-structured_output/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-text/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-missing-usage/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-nonzero-source-span/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-output-over-budget/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-reasoning-metadata/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-refusal/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-replay/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-reserve-stop/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-response-limit/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-timeout-body/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-timeout-headers/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-tool-output/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-trailing-wire/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-truncated-http/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-unknown-price/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-detail/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-fraction/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-negative/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-no-details/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-over-budget/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-usage-sum/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-valid/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-vision-request/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-wrong-binding/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-wrong-quote/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-wrong-sha/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-api/case-zero-requests/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-auth/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-boolean-usage/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-cancel/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-candidate-duplicate/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-candidate-extra/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-content-echo/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-empty-wire/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-fenced/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-filter/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-framing-cut/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-function/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-length/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-missing-unit-qualifier/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-no-usage/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-normal/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-price-unknown/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-rate/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-reasoning-echo/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-refusal/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-replay/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-service/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-timeout/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-tool/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-two-choices/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wire-duplicate/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wire-trailing/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wrong-index/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wrong-role/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-wrong-total/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-zero-atom-revision/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-zero-budget/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-final-chat/case-chat-zero-concept-revision/new output",
+      "passed": true
+    },
+    {
+      "name": "request archive hashes: .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-revision-selected-zero",
+      "passed": true
+    },
+    {
+      "name": "same six Chat body fields",
+      "passed": true
+    },
+    {
+      "name": "bounded intended request controls",
+      "passed": true
+    },
+    {
+      "name": "unchanged system instructions",
+      "passed": true
+    },
+    {
+      "name": "v5 prefix and exact new suffix",
+      "passed": true
+    },
+    {
+      "name": "only two schema additions",
+      "passed": true
+    },
+    {
+      "name": "unchanged source request binding",
+      "passed": true
+    },
+    {
+      "name": "unchanged source request units",
+      "passed": true
+    },
+    {
+      "name": "unchanged source request evidence_anchors",
+      "passed": true
+    },
+    {
+      "name": "single stopped assistant response",
+      "passed": true
+    },
+    {
+      "name": "original content equals saved payload",
+      "passed": true
+    },
+    {
+      "name": "CLI report equality",
+      "passed": true
+    },
+    {
+      "name": "live identity and API success",
+      "passed": true
+    },
+    {
+      "name": "honest knowledge boundary",
+      "passed": true
+    },
+    {
+      "name": "unknown billing",
+      "passed": true
+    },
+    {
+      "name": "single live model/network attempt",
+      "passed": true
+    },
+    {
+      "name": "positive concept and atom revisions",
+      "passed": true
+    },
+    {
+      "name": "exact measurement qualifiers",
+      "passed": true
+    },
+    {
+      "name": "exact source UTF8 quote and SHA",
+      "passed": true
+    },
+    {
+      "name": "reasoning retained and bounded count",
+      "passed": true
+    },
+    {
+      "name": "source SHA binding",
+      "passed": true
+    },
+    {
+      "name": "live JSON Markdown equality",
+      "passed": true
+    },
+    {
+      "name": "live report declared artifact: candidates.json",
+      "passed": true
+    },
+    {
+      "name": "live report declared artifact: request-body.json",
+      "passed": true
+    },
+    {
+      "name": "live report declared artifact: request.json",
+      "passed": true
+    },
+    {
+      "name": "live report declared artifact: response.bin",
+      "passed": true
+    },
+    {
+      "name": "preserved five settled records",
+      "passed": true
+    },
+    {
+      "name": "six actual usage totals",
+      "passed": true
+    },
+    {
+      "name": "external pre-call reserved arithmetic",
+      "passed": true
+    },
+    {
+      "name": "settled cumulative arithmetic",
+      "passed": true
+    },
+    {
+      "name": "live response usage mapping",
+      "passed": true
+    },
+    {
+      "name": "serialized body reservation exact",
+      "passed": true
+    },
+    {
+      "name": "captured settled record binds original response",
+      "passed": true
+    },
+    {
+      "name": "original first response",
+      "passed": true
+    },
+    {
+      "name": "original second response",
+      "passed": true
+    },
+    {
+      "name": "original third response",
+      "passed": true
+    },
+    {
+      "name": "original fourth response",
+      "passed": true
+    },
+    {
+      "name": "original fifth response",
+      "passed": true
+    },
+    {
+      "name": "live-sixth-controller-source executable source archive hash",
+      "passed": true
+    },
+    {
+      "name": "live-sixth-verification-source executable source archive hash",
+      "passed": true
+    },
+    {
+      "name": "single T02 current task and T03 pending",
+      "passed": true
+    }
+  ],
+  "fingerprints": {
+    ".superpowers/sdd/B04-T02_GATEWAY_PLAN/review-8004df0..bee1603.diff": {
+      "sha256": "a8fffec11bb258ab97a65ede75914099cf3b83efa54129f4d4f0858e65914c88",
+      "bytes": 7552033
+    },
+    "doc/validation/assets/B04-T02-revision-final-workspace-summary.json": {
+      "sha256": "24f2a59287a48820ace24666448c9408111e105b44007a13139c857a039af76c",
+      "bytes": 1773
+    },
+    "crates/noetome-cli/src/extraction_api_config.rs": {
+      "sha256": "8e47cb055879add102a408d137c4ea7526d1ecfd501ea5769d557a703c6cc3eb",
+      "bytes": 18997
+    },
+    "crates/noetome-cli/src/extraction_api_schema.rs": {
+      "sha256": "839d39ae80252b3350d433afce8edd061d6b24908b720f7aeb01e4bc110579c6",
+      "bytes": 22400
+    },
+    "crates/noetome-cli/src/extraction_api_wire/chat.rs": {
+      "sha256": "910c6eb14da93ba4a575694d27875732972c33d4b7f7796c61f5baf32bb91e74",
+      "bytes": 15023
+    },
+    "crates/noetome-cli/tests/extraction_api.rs": {
+      "sha256": "2f58b668506cc2557d83b03a70a8c017610c37c094265ea9638d95812ab8bd6c",
+      "bytes": 25506
+    },
+    "scripts/validate_extraction_chat.py": {
+      "sha256": "b75fbf15a0927189b1d98012879b7f72f9409cd68d6080bbfa9fd1b7b69bee69",
+      "bytes": 16714
+    },
+    "target/debug/noetome.exe": {
+      "sha256": "4ce92d8b2e586d20bdc69a1ae63c8cbfcbda2d1ce1217bb0a0888b6ede4fe0f3",
+      "bytes": 15690240
+    },
+    "doc/validation/assets/B04-T02-revision-final-archive.json": {
+      "sha256": "fd93ca4d586f2d137e3ca77d19be8c78e96b05b15fa0dc696b40447990f2b747",
+      "bytes": 3992
+    },
+    "doc/validation/assets/B04-T02-revision-final-workspace-tests.json": {
+      "sha256": "f0325e21f1565fd0855206efc8828197beb9f4ffff2d58ee39cfef5b09757ec5",
+      "bytes": 48761
+    },
+    "doc/validation/assets/B04-T02-revision-final-fmt.json": {
+      "sha256": "71d25b489d7163f5fb0739b963ccd81d035991d0a0cc18430214ca5be3ea05fc",
+      "bytes": 621
+    },
+    "doc/validation/assets/B04-T02-revision-final-check.json": {
+      "sha256": "38d94d9f786013b9b390fbe702d1f29fab1286f6de73bf08074ff5b1b3b20ccb",
+      "bytes": 713
+    },
+    "doc/validation/assets/B04-T02-revision-final-api-command.json": {
+      "sha256": "3279ffac756170d8ea3afa84f891246274f192959fd16415bc2e1a64df53542e",
+      "bytes": 975
+    },
+    "doc/validation/assets/B04-T02-revision-final-fake-command.json": {
+      "sha256": "d6f557789681ad9f67ae7ad13678e00693a49a7eaec022df3d9d33177ffa7914",
+      "bytes": 979
+    },
+    "doc/validation/assets/B04-T02-revision-final-chat-command.json": {
+      "sha256": "c55f6f856bf6d71368e860d8044cd8296c91a32be48d662da2661b85f04a2af3",
+      "bytes": 982
+    },
+    "doc/validation/assets/B04-T02-revision-final-api-audit.json": {
+      "sha256": "26954e79be785eb5bcb579639a8f3193d5becf5acd31102807ab1c6544ebd558",
+      "bytes": 1177324
+    },
+    "doc/validation/assets/B04-T02-revision-final-fake-audit.json": {
+      "sha256": "d9474f6535d6afae0c941b97731df80b538cb000aca4dfd635071a490b0f29d1",
+      "bytes": 247250
+    },
+    "doc/validation/assets/B04-T02-revision-final-chat-audit.json": {
+      "sha256": "13d8a5c88c3c25027532dd77e0037e300112fe5a1a2c2d0a9abdda66fab0b610",
+      "bytes": 434567
+    },
+    "doc/validation/assets/B04-T02-revision-final-selected-zero-command.json": {
+      "sha256": "ba7376bcf10ce11e16da64afe1c7fabcb74bc36f79e983fa7f6a23cb8b890aeb",
+      "bytes": 3161
+    },
+    "doc/validation/assets/B04-T02-revision-final-snapshot-verification.json": {
+      "sha256": "a49fd4552446d536c9c03b636055224794ea19f0c99e7801054065c254730574",
+      "bytes": 81946
+    },
+    "doc/validation/assets/B04-T02-revision-cli-red.json": {
+      "sha256": "52e4a6afa4cfc5a135f4e7681c7d505b6418ad2393baf6c94f5f3afd9108e3a6",
+      "bytes": 2424
+    },
+    "doc/validation/assets/B04-T02-revision-final-workspace-source.json": {
+      "sha256": "9377b178819b01a179a177cb048bf2d8b4cf014bf63f73459efe258b67463b30",
+      "bytes": 4129
+    },
+    "doc/validation/assets/B04-T02-revision-final-snapshot-source.json": {
+      "sha256": "a02405e68217186a855e94ea31ce8f3f66d8694438aaf99a99efec9df2e6111d",
+      "bytes": 9230
+    },
+    "doc/validation/assets/B04-T02-live-sixth-controller-source.json": {
+      "sha256": "93aaa9e8d63e24940eaa6fb3830dc80684b22f88c08d2df82c1b8d07b5c491e3",
+      "bytes": 12202
+    },
+    "doc/validation/assets/B04-T02-revision-cli-red-source.json": {
+      "sha256": "b16a094127b0b83799a7a3fc5f2186ff496aa76f0d5d7862b4b3b5530d90f86f",
+      "bytes": 2207
+    },
+    "doc/validation/assets/B04-T02-revision-final-reports.zip": {
+      "sha256": "db33b8206c95ffa1ed2101cb0ae8490689c48fe1fc0db8917f070818625098a2",
+      "bytes": 964824
+    },
+    "doc/validation/assets/B04-T02-live-sixth-archive.json": {
+      "sha256": "c5d20253439e3d5ca35ff3407e168206c30cd37899958bbf61309c44e821eaec",
+      "bytes": 3415
+    },
+    "doc/validation/assets/B04-T02-live-sixth-request.json": {
+      "sha256": "4b8b46d76c3b95f796bbd5945cf371720fbe479c99aff734f51b28589ed955d1",
+      "bytes": 2202
+    },
+    "doc/validation/assets/B04-T02-live-sixth-request-body.json": {
+      "sha256": "a16e16a0a1636a10c54d8869cc171ef79572fe86801ee9b24e4bb154fba75939",
+      "bytes": 7505
+    },
+    "doc/validation/assets/B04-T02-live-sixth-response.bin": {
+      "sha256": "019f0ae95e154b230175cd6df31912e8130593f657344db723a4c3da7d8e82ac",
+      "bytes": 19760
+    },
+    "doc/validation/assets/B04-T02-live-sixth-candidates.json": {
+      "sha256": "92fed9123fa6f711ce76df524e4ff79a36aada79a7c4f5fb72f64f68027915fa",
+      "bytes": 3503
+    },
+    "doc/validation/assets/B04-T02-live-sixth-validation.json": {
+      "sha256": "2da36b130dc979740179d73dbf11eba7f72d6ec10ecb7a2a2c456f2b64943664",
+      "bytes": 2759
+    },
+    "doc/validation/assets/B04-T02-live-sixth-validation.md": {
+      "sha256": "5a7071568fa5eb92372d9d1b84cbea4ddb767da3932a37ad79bf304a121af442",
+      "bytes": 3343
+    },
+    "doc/validation/assets/B04-T02-live-sixth-command.json": {
+      "sha256": "2e418021838de942f880b24ea8f52d9c4ba4ee944b5f9f5dcc5268ed04d03944",
+      "bytes": 4335
+    },
+    "doc/validation/assets/B04-T02-live-sixth-reservation.json": {
+      "sha256": "d014f7ba66ff73687ba78317834054eca16517d7107a428f0f9b838067307793",
+      "bytes": 12718
+    },
+    "doc/validation/assets/B04-T02-live-sixth-settlement.json": {
+      "sha256": "7883dfcaf3b8dca25f3f3144f15ac8f3a3177003648abd67fd47f4d0254d0760",
+      "bytes": 11638
+    },
+    "doc/validation/assets/B04-T02-live-sixth-after.json": {
+      "sha256": "19ca6065436aa34b41bea345990cde34f84278f1182c86469c61286139482457",
+      "bytes": 1332
+    },
+    "doc/validation/assets/B04-T02-live-sixth-verification.json": {
+      "sha256": "c1515cad5e92733e91ae13b04ad68b624f333f73dd6ce2a6259dca19a51d3677",
+      "bytes": 2142
+    },
+    "doc/validation/assets/B04-T02-revision-review.md": {
+      "sha256": "ba5f98d9f6ac7e1736f4786ba3287297b3ed2c3e912653eccb51b87316718d00",
+      "bytes": 8932
+    },
+    "doc/validation/assets/B04-T02-revision-review-evidence.json": {
+      "sha256": "78519ea5a79c04bf7fda32bc71ccae5a0a2f54b9c68da2516e98b20d0336f41c",
+      "bytes": 41484
+    },
+    "doc/validation/assets/B04-T02-live-sixth-verification-source.json": {
+      "sha256": "440bd8744103b3dea89930e2a770e11069d7ce02943288d3789529f6745710ae",
+      "bytes": 12927
+    },
+    "doc/validation/assets/B04-T02-live-sixth-archive-source.json": {
+      "sha256": "4943824da242cac5b16d5d67eeba562d215cd0d60e5057f2e1ab868b18c22ada",
+      "bytes": 4413
+    },
+    "doc/validation/assets/B04-T02-revision-fix-native-red.json": {
+      "sha256": "c2f3d9acecdb4f8b5e1731737a5f10e48fc0949be1afc68a458d6121900e8a33",
+      "bytes": 3078
+    },
+    "doc/validation/assets/B04-T02-revision-python-tests.json": {
+      "sha256": "62740acbde531285c0c1bb91ba4844121651925e0eb9740abd690b8bd3a18001",
+      "bytes": 888
+    },
+    "doc/validation/assets/B04-T02-revision-fix-native-empty-target.json": {
+      "sha256": "ba15e5edbe6b224cf98a6e4a14b707c1197b59305aafc132abbb4ff406dfc4d2",
+      "bytes": 668
+    },
+    "doc/validation/assets/B04-T02-revision-fix-fmt-initial-failure.json": {
+      "sha256": "e26be5ff23f727ec27cc034fb1619760377c6ba7e0b1d4d38c4915bbacd45707",
+      "bytes": 997
+    },
+    "doc/validation/assets/B04-T02-live-fifth-request-body.json": {
+      "sha256": "ead072c8d2830b245f1b041369564211efc1d25439c159b96287071f8165b367",
+      "bytes": 7356
+    },
+    "fixtures/extraction-gateway-v1/source.txt": {
+      "sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+      "bytes": 140
+    },
+    "doc/validation/assets/B04-T02-live-fifth-settlement.json": {
+      "sha256": "1fc6ddde4d39ccd0f5c05da939fa9708c8d8121d15c7371ea827f10d18412573",
+      "bytes": 9717
+    },
+    "doc/validation/assets/B04-T02-live-first-response.bin": {
+      "sha256": "73de263b3d469facd25f3a80244c430165d0383b309efb37630fd280dab81d9b",
+      "bytes": 2210
+    },
+    "doc/validation/assets/B04-T02-live-second-response.bin": {
+      "sha256": "f1afb7be3978a2fc7a1b3cf8dd86f63ba508b7a483860eaec881a4cce141435a",
+      "bytes": 36891
+    },
+    "doc/validation/assets/B04-T02-live-third-response.bin": {
+      "sha256": "6ed4b15a330aeb8d552d8bd7ef2d684345427d662cbb54b2aae4b1a5732fb04b",
+      "bytes": 14489
+    },
+    "doc/validation/assets/B04-T02-live-fourth-response.bin": {
+      "sha256": "a6081c965ef7f64416639b4cb3ade403ae72bd97331a3af0f8627927f954cbe9",
+      "bytes": 13739
+    },
+    "doc/validation/assets/B04-T02-live-fifth-response.bin": {
+      "sha256": "b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f",
+      "bytes": 2280
+    },
+    "dev-log/tasks.json": {
+      "sha256": "2fc723d94848f8900180a9cf4fc8f219e785d3c1712a205ab6672010baed366e",
+      "bytes": 78860
+    }
+  },
+  "limits": [
+    "No network/model calls",
+    "No private profile, external live ledger, or DPAPI reads",
+    "Source SQL preservation evaluated from captured controller verification, not rerun",
+    "No independent knowledge/scientific assessment"
+  ]
+}
