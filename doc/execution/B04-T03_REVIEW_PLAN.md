@@ -117,6 +117,8 @@ git diff --check
 
 只在实际本任务完整检查/独立原六核对/新鲜whole-branch review通过后用devlog complete附真实代码/验收产物，分步commit；`git push -u origin codex/b04-t03-knowledge-verify`后核对ls-remote与HEAD。B04R全部完成后最多展开下一批三项并batch，只规划不自动start。SDD暂存恢复归档保留；此前清理策略拒绝不重试或绕过。
 
+实际最终门槛：most-capable整分支审查`bdae557..cccd784`找到唯一Important R1；`02e8ab2`一处计数表达式修复后真实RED4/7、focused4/4、模块32/32及完整Python108/108。一次新鲜限定复审确认R1 ADDRESSED、没有修复引入的重要问题。此前Rust532/前端10/原六和已安装原生验收继续绑定未变源码/程序；状态恢复提示Minor R2接受延期。详见[最终审查链](../validation/B04-T03.md)。下述收束复选框在实际日志和远端同步完成后标记。
+
 ## 根预检及审查安排
 
 ### 用户追加 Task 3：只保留一行窗口栏

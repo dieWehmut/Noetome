@@ -10,7 +10,7 @@
 
 `tauri.conf.json`设main窗口decorations=false；仅main capability增加5个必需窗口命令及event listen/unlisten。新的WindowControls只处理当前窗口状态和三个操作，关闭继续走既有CloseRequested与托盘/退出偏好，最小化保持普通Windows行为。拖动来自菜单以外的空白区域；菜单、导航和窗口按钮不会启动拖动。双击空白只走一次toggleMaximize，未叠加自动drag-region处理。
 
-实际浏览器RED为1通过/8失败，第一版GREEN9/9；窗口查询恢复新增RED9通过/1失败，最后GREEN10/10。TypeScript检查与Vite生产构建exit0。[保留的浏览器检查](assets/B04-T03-ui-implementation-check.mjs)明确标native_os_proof=false；浏览器结果用于键盘/布局/错误/IPC边界，不代替原生窗口操作。新鲜[Task3审查](assets/B04-T03-root-task-3-review.md)SPEC/QUALITY通过，没有重要问题。一个非阻断建议是失败的状态读取恢复后可精确清除旧状态读取提示；现有提示可在下一次窗口操作时清除，最终审查仍须审阅这个延后项。
+实际浏览器RED为1通过/8失败，第一版GREEN9/9；窗口查询恢复新增RED9通过/1失败，最后GREEN10/10。TypeScript检查与Vite生产构建exit0。[保留的浏览器检查](assets/B04-T03-ui-implementation-check.mjs)明确标native_os_proof=false；浏览器结果用于键盘/布局/错误/IPC边界，不代替原生窗口操作。新鲜[Task3审查](assets/B04-T03-root-task-3-review.md)SPEC/QUALITY通过，没有重要问题。一个非阻断建议是失败的状态读取恢复后可精确清除旧状态读取提示；现有提示可在下一次窗口操作时清除，[最终整分支审查](assets/B04-T03-final-review.md)已确认该Minor R2可继续延期。
 
 ## 实际构建、更新安装与完整窗口
 
@@ -36,4 +36,4 @@
 
 进程观察驱动第一次因CRLF未识别ready而没发送close，等待超时；失败及原驱动保留。修正测试驱动后真实exit0，未改产品。两个结束的调试进程stderr各有7条libpng iCCP profile警告，图标资源本项没有修改；这些警告未计作窗口操作失败，也未声称日志完全无警告。
 
-完整Rust532、Python104与前端10项均已实际通过，详见[B04-T03主验证](B04-T03.md)。最后整分支审查、日志complete和远端推送尚待收束；本记录不把构建、WebView裁切、Tauri样式位或此前旧版安装结果代替当前原生验收。
+完整Rust532、前端10项及计数修复后的最终Python108项均已实际通过，详见[B04-T03主验证](B04-T03.md)。整分支唯一Important是独立Python数量真实性，最小修复及新鲜限定复审已通过，未改动当前已安装的单行窗口；状态读取提示Minor继续延期。日志及远端同步以实际工具记录为准。本记录的原生证据来自当前实际安装及用户直接确认。

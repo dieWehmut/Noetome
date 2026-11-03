@@ -64,7 +64,7 @@ B04U-T01 顶部栏已按用户截图验收、安装并推送核对8004df0。当�
 
 ## B04-T03 真实候选的独立证据与知识核对
 
-Task1普通CLI及fresh scoped复核、Task2修复后的28项focused及52场景/60次离线矩阵已有实际证据。根进一步完成含原六输入的53场景/61次CLI、最后workspace程序1次原六复核、完整Rust532/Python104，以及用户追加的单行窗口栏实际安装/原生操作和用户确认的托盘恢复/拖动，见[B04-T03记录](../validation/B04-T03.md)及[窗口记录](../validation/B04-T03-ui-single-row.md)。来源/SQL/gold/原六响应/保存配置与累计预算前后保持；新模型调用0。当前账本仍in_progress；最后整分支新鲜审查、日志complete和推送仍待收束。
+Task1普通CLI及fresh scoped复核、Task2修复后的28项focused及52场景/60次离线矩阵已有实际证据。根进一步完成含原六输入的53场景/61次CLI、最后workspace程序1次原六复核、完整Rust532/Python104，以及用户追加的单行窗口栏实际安装/原生操作和用户确认的托盘恢复/拖动，见[B04-T03记录](../validation/B04-T03.md)及[窗口记录](../validation/B04-T03-ui-single-row.md)。整分支唯一Important R1经`02e8ab2`最小计数修复解决；focused4/4、模块32/32、最终完整Python108/108及新鲜限定复审均通过，窗口状态提示Minor R2明确延期。来源/SQL/gold/原六响应/保存配置与累计预算前后保持；新模型调用0。当前待实际日志complete和普通提交推送收束，下一批只规划。
 
 **单一结果**：T02保存的真实模型候选与调用前固定的作者gold、来源证据逐项核对，输出小范围知识IR及同事实JSON/Markdown报告。
 

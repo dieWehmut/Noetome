@@ -354,6 +354,6 @@ Release 保存 `release_id`、`run_id`、IR 与计划版本、渲染器版本、
 
 B04-T03增加普通 `extract verify <project> <import-id> <review-case> <new-output>`，可在四路径前加 `--`。它消费原保存API包装和严格review/decision、原gold1或独立作者gold2，持有实际来源与四份输入，输出独立Schema1的source_review报告和成功时的未发布IR。完整字段与受控中文语法见[来源核对契约](EXTRACTION_REVIEW_CONTRACT.md)。它不登记Run/Release或修改模型预算。
 
-`expected_atoms=1`来自冻结作者基准，四状态互斥分区；实际candidate/unexpected/semantic duplicate另计，重复JSON键使数量不可确认时保留null。每类quality分母来自作者条目，空例外为0/not_applicable。checks和结果含原对象、单位与UTF8范围；实际失败不会因整体pending/review而消失，重复ID也不能借用另一数组位置的通过项。
+`expected_atoms=1`来自冻结作者基准，四状态互斥分区；实际candidate/unexpected/semantic duplicate另计。candidate与unexpected仅在明确存在实际atoms数组时恢复，真实空数组为0；缺失、null、非数组或重复JSON键保持未知，语法合法不等于已知零。Schema非法但实际数组存在时保留原始长度，duplicate仍需类型化候选才能确认。每类quality分母来自作者条目，空例外为0/not_applicable。checks和结果含原对象、单位与UTF8范围；实际失败不会因整体pending/review而消失，重复ID也不能借用另一数组位置的通过项。
 
 JSON和Markdown嵌入完整同事实快照。四原输入副本逐字节保留；source-snapshot保存实际来源绑定/单位。仅全部通过产生knowledge-ir.json，producer=source_review/source_match=passed，原概念/原子/证据不改写，atom仍unverified/required=false，知识pending、科学not_run、研究not_requested、published=false。独立Python从只读SQLite/实际资源、冻结gold和原candidate重建事实及分母，再检查副本、指纹、双报告和IR；实际范围与未完成验收见[B04-T03记录](../validation/B04-T03.md)。

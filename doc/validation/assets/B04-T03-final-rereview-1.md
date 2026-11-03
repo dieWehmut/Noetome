@@ -1,0 +1,23 @@
+- **R1 — Unknown raw candidate count coerced to zero** — **ADDRESSED**, [scripts/verify_extraction_knowledge.py:510](D:/Noetome/scripts/verify_extraction_knowledge.py:510) now derives a count only from an actual list and otherwise returns `None`. The existing count assertion at line 513 rejects coherent fabricated zero counts. Missing payload/atoms and non-array atoms retain unknown candidate/unexpected/duplicate counts; real empty arrays retain zero; schema-invalid `[null, {}]` retains actual length 2. The four new boundary tests at [tests/test_extraction_knowledge_verifier.py:345](D:/Noetome/tests/test_extraction_knowledge_verifier.py:345), :358, :370 and :382 cover these distinctions. The original saved truthful-null probe is accepted and its exact two-count zero fabrication is rejected with `actual candidate count` in the retained fixed execution.
+
+### New Breakage in the Fix Diff
+
+None.
+
+### Out-of-Scope Observations
+
+None. Accepted Minor R2 remains deferred; it was not re-reviewed.
+
+### Checks Audited
+
+- Checked supplied immutable base `cccd784f607d506d0b6c8b0a12aea7973fadeb57` / head `02e8ab24d29814d427a45ac12aeb1fbffd001dd4`; all eight changed files and both supplied diff packages match SHA-256 and byte length. Reviewed the source/test diff once, current count expression by AST, four added test methods and six evidence assets. Current verifier SHA `3e79c6bef75a592d0f3246900187d4d0587bd72f577d810be60daec04baad0c4`, test SHA `d94d665cdc75698210de0e4f82ef2da0c0d8835588031ddfb72fe8c457aed7e1` and unchanged CLI SHA `7a1eb3cae1fef5e9485848304d59dfd5c7804299190465a0aa126acfd6b56241` agree with retained tested receipts.
+- Parsed actual RED/GREEN logs and matched SDK, archive and readable committed copies: RED 4 tests / 7 behavior failures, comprising six truthful-null false rejections and one false acceptance; focused GREEN 4/4; verifier module GREEN 32/32. No RED setup error appears. Existing 28 methods remain present.
+- Counted raw retained calls: 9 setup + 30 new boundary + 4 existing negative receipts = **43**, partitioned **13 + 13 + 17**. Checked exit codes, actual stdout and exact candidate/artifact fingerprints. All 30 new boundary receipts show unchanged source inventory/SQL and the unchanged CLI fingerprint. The four legacy negative receipts contain argv/exit/stdout/stderr only; they are not claimed to contain per-receipt binary/source/SQL fields.
+- Read and SHA/size/CRC-checked all **884** ZIP members, checked unique safe member names and exact manifest inventory, and compared all **884** explicit manifest-listed paths byte-for-byte. Archive SHA `901f5c85c791a90a4d1ef312351bfd9af5465c28e3f2ea611cf3e41a5a0b1d6b`, **1,079,965 bytes**. No extraction or broad directory discovery occurred.
+- Matched the original reviewer’s eight base64 null-case files, exact zero-case JSON and coherent Markdown against retained copies and fixed outcomes. The JSON variants differ solely in candidate/unexpected count values; candidate and artifact fingerprints remain coherent. Checked all nine original final-original06 output fingerprints and exact committed report equality: retained fixed verification remains passed, expected/candidate 1, exception denominator 0, with zero new CLI/model calls. Original review evidence SHA remains `2ae8465c7d1f2c94a37f4dace0636f954769e28a24fcbe23dcb323717909f1ea`.
+- Read the controller’s completed full Python command receipt and raw log bytes: **108 tests / 0 failures, exit 0**, command elapsed 62.75 s; supplied before/after snapshots of **81** product files, HEAD and CLI match. This is the controller’s run, not a reviewer rerun or an expansion of scoped code review.
+- Executed only the new standard-library read-only [audit helper](D:/Noetome/.superpowers/sdd/B04-T03_REVIEW_PLAN/final-fix-1-rereview-audit.py), finally exit 0. Its three initial assumption corrections—valid empty array status `unprocessed`, Windows Markdown CRLF and narrower legacy receipt fields—are retained in [evidence JSON](D:/Noetome/.superpowers/sdd/B04-T03_REVIEW_PLAN/final-fix-1-rereview-evidence.json). No product tests, module, suite, matrix, CLI, Git, Rust/build/install/UI, network/model/credential/private scan or cleanup was executed by this reviewer; no new verifier probe was necessary.
+
+### Verdict
+
+**Fix round: All findings addressed, no new Critical/Important breakage.** Sole Important R1 is resolved. The previous whole-branch review remains historical WithFixes; accepted Minor R2 remains deferred. Controller owns standards/ledger closure and push. These checks establish failure-accounting integrity for this bounded fix, with no new scientific-quality, general NLP, PDF/OCR or performance claim.

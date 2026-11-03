@@ -1249,7 +1249,7 @@
       "id": "B04-T03",
       "title": "对真实模型候选做独立来源证据与条件化知识核对",
       "batch": "B04R",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B04-T02"
       ],
@@ -1280,6 +1280,61 @@
           "note": "顺序执行已推送T02后的独立知识核对；复用原第六API候选、调用前作者gold及来源版本/UTF8证据，先查真实差异并冻结IR/核对契约与行为RED。只读原来源/响应/gold，仅写新测试根，当前不发新模型请求。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-03T15:49:24Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成原第六真实候选的有界独立来源/条件/单位核对、严格失败数量和source_review未发布IR；完成用户追加的单行菜单栏实际安装与实机托盘/拖动验收。唯一Important已最小修复并新鲜限定复审，Minor状态恢复提示延期。",
+          "validation": [
+            "完整Rust fmt/check locked/offline exit0，workspace532通过/0失败/0忽略；最终Python unittest108通过/0失败，81源码、HEAD和最终CLI指纹保持；前端10/10及TypeScript/Vite exit0。",
+            "普通CLI独立53工程场景/61调用/35报告对账，6为有界知识样本；最终7a1eb3ca程序仅追加1次原六复核exit0，expected1/passed1。原来源SQL/资源/gold/候选/6响应/保存配置与预算前后相等，新模型0；累计30097/余额9969903/pending0。",
+            "NSIS构建/安装exit0；实际单行顶部36px且native title band0，已安装程序SHA870efa1a55bc33d48a731765150834f2caf06fe6be8f8294af6b1086dfb476c7。16实际自动结果及用户直接确认托盘恢复/拖动；真实绑定进程exit0，关闭偏好恢复hide_to_tray，最后普通启动无调试端口/目录。",
+            "整分支8452审计发现唯一Important R1，02e8ab2修复前4tests/7行为失败、修复后4/4和模块32/32，43实际CLI；新鲜限定复审R1 ADDRESSED无新增重要问题，884归档成员及884明确路径核对。最终证据25成员/11副本/37保存核对，10文档177本地链接、devlog check、git diff及34文件staged diff check实际exit0；R2非阻断延期。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/extraction_verify.rs",
+              "sha256": "aacc16076e44df180d296ce78719c6d22abc8d7ca3259d9393d59c4164451ffc"
+            },
+            {
+              "path": "scripts/verify_extraction_knowledge.py",
+              "sha256": "3e79c6bef75a592d0f3246900187d4d0587bd72f577d810be60daec04baad0c4"
+            },
+            {
+              "path": "tests/test_extraction_knowledge_verifier.py",
+              "sha256": "d94d665cdc75698210de0e4f82ef2da0c0d8835588031ddfb72fe8c457aed7e1"
+            },
+            {
+              "path": "apps/desktop/src/WindowControls.tsx",
+              "sha256": "37ecb87a46251577db621877d5432fc66dc501d90d28cca59c7a4ba0096daf26"
+            },
+            {
+              "path": "doc/validation/B04-T03.md",
+              "sha256": "b07c63ac0ec57fdacc7011c23d67f88873cc318addfd9cf1cbf784723cef854b"
+            },
+            {
+              "path": "doc/validation/B04-T03-ui-single-row.md",
+              "sha256": "f4e34760c5930a5e270baa1d3f4763ab8aed5e42cd9b6381efb4be335c73def9"
+            },
+            {
+              "path": "doc/validation/assets/B04-T03-final-evidence-01-manifest.json",
+              "sha256": "562e23befb37335f2feffae4af14aa73ce96f58b72ed064c0dac771fe783af51"
+            },
+            {
+              "path": "doc/validation/assets/B04-T03-final-rereview-1.md",
+              "sha256": "3c21d211baa2725e7061a8dbb960d9283d10b09696d4038acdf68c8f618ba943"
+            },
+            {
+              "path": "doc/validation/assets/B04-T03-final-python-command.json",
+              "sha256": "f60dce2a2cc4a8120e226b46654437552e9d6e1cbdbc3b24efebf8f45b0bdcf6"
+            },
+            {
+              "path": "doc/validation/assets/B04-T03-ui-native-full-window.png",
+              "sha256": "72157be01d08f7e3cd2315b6b57988086e9049ae4d0cb9809620b5f87c1aeafc"
+            }
+          ]
         }
       ]
     },
