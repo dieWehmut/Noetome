@@ -109,6 +109,32 @@ pub(super) fn decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
 mod tests {
     use super::*;
     #[test]
+    fn qualifier_fix_original_fourth_structure_passes_but_unit_stays_missing() {
+        let bytes =
+            include_bytes!("../../../../doc/validation/assets/B04-T02-live-fourth-response.bin");
+        let metadata = response_metadata(bytes).unwrap();
+        assert_eq!(metadata.usage["input_tokens"], 1712);
+        assert_eq!(metadata.usage["output_tokens"], 3071);
+        assert_eq!(metadata.usage["total_tokens"], 4783);
+        let decoded = decode(bytes).unwrap();
+        assert_eq!(decoded.candidates.atoms.len(), 1);
+        let candidate = &decoded.candidates.atoms[0];
+        let measurement = candidate.measurement.as_ref().unwrap();
+        assert_eq!(measurement.unit.as_deref(), Some("m/s"));
+        assert!(
+            !candidate
+                .atom
+                .qualifiers
+                .contains(measurement.unit.as_ref().unwrap())
+        );
+        assert!(
+            measurement
+                .conditions
+                .iter()
+                .all(|condition| candidate.atom.qualifiers.contains(condition))
+        );
+    }
+    #[test]
     fn shape_fix_original_third_flattened_candidate_stays_rejected_with_usage() {
         let bytes =
             include_bytes!("../../../../doc/validation/assets/B04-T02-live-third-response.bin");

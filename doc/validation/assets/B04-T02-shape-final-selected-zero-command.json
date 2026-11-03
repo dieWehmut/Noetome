@@ -1,0 +1,15 @@
+{
+  "command": [
+    "D:\\Noetome\\target\\debug\\noetome.exe",
+    "extract",
+    "api",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\source-project",
+    "9f0abe91-99c5-44d0-8e15-2e9ea48da551",
+    "D:\\Noetome\\target\\compiler-temp\\b04-t02-live-v2-d62b632edc08458eb7dcccdfc7a68556\\api-chat-preflight-config.json",
+    "D:\\Noetome\\.superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-shape-selected-zero"
+  ],
+  "exit_code": 3,
+  "stdout": "{\n  \"actual_model\": null,\n  \"artifacts\": {\n    \".owner.json\": {\n      \"byte_length\": 174,\n      \"sha256\": \"0a303b169efe54dad4ea2c84ddda4e881b0425d8f608cc8775510f369eceb447\"\n    },\n    \"request-body.json\": {\n      \"byte_length\": 7133,\n      \"sha256\": \"a51b6e634c447da28d5dde3fef86cc6532b1f05ec90e3b35fe4aa9b79e44fb03\"\n    },\n    \"request.json\": {\n      \"byte_length\": 2207,\n      \"sha256\": \"18736e6273e359a9f9cd0513d874dde5240dc853c7a31276672a4614be19e077\"\n    }\n  },\n  \"binding\": {\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"import_id\": \"9f0abe91-99c5-44d0-8e15-2e9ea48da551\",\n    \"manifest_sha256\": null,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"parse_id\": null,\n    \"project_id\": \"2c9dd41b-e63a-4858-bc56-18039ca25f33\",\n    \"source_id\": \"50cf1923-ffea-432e-b37c-199a5223a141\",\n    \"version_id\": \"d944ab9b-0eaa-4d17-a9df-53bb4a8fba1b\"\n  },\n  \"configured_model\": \"deepseek-flash\",\n  \"endpoint\": \"https://ai.1343263.xyz/v1/chat/completions\",\n  \"errors\": [\n    {\n      \"code\": \"EXTRACT_BUDGET_STOP\",\n      \"message\": \"EXTRACT_BUDGET_STOP：单次请求次数或预留总量超过明确预算；未调用。\"\n    }\n  ],\n  \"http_request_id\": null,\n  \"http_status\": null,\n  \"knowledge_status\": \"pending\",\n  \"producer\": \"api\",\n  \"provider\": \"openai_chat_completions\",\n  \"published\": false,\n  \"report_kind\": \"text_api_extraction\",\n  \"request_id\": \"06637f67-0276-490d-b0fa-a0aad8e2e1c3\",\n  \"request_strategy\": \"tangmao-deepseek-chat-nested-atoms-v4\",\n  \"response_complete\": false,\n  \"response_id\": null,\n  \"response_receipt\": null,\n  \"schema_version\": 1,\n  \"scientific_quality\": \"not_run\",\n  \"service_tier\": null,\n  \"source_statuses\": [\n    \"parsed\"\n  ],\n  \"status\": \"failed\",\n  \"transport_mode\": \"live\",\n  \"usage\": {\n    \"input_reserved_tokens\": 8157,\n    \"model_tokenizer\": null,\n    \"model_usage\": null,\n    \"model_usage_status\": \"not_validated\",\n    \"network_attempts\": 0,\n    \"paid_calls\": 0,\n    \"price_usd\": null,\n    \"real_model_calls\": 0,\n    \"request_utf8_bytes\": 7133,\n    \"reservation_policy\": \"request_utf8_bytes_plus_1024_v1\",\n    \"reserved_tokens\": 16349\n  },\n  \"validated_atoms\": 0\n}\n",
+  "stderr": "EXTRACT_BUDGET_STOP：EXTRACT_BUDGET_STOP：单次请求次数或预留总量超过明确预算；未调用。\n",
+  "binary_sha256": "5797c708b0f7815c8ab0c774a17bd2522b666729f64e87be89e11f1651c491c1"
+}

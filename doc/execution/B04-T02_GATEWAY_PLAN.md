@@ -68,6 +68,12 @@ Chat新鲜组件审查另指出一项minor：同时返回prompt_cache_hit_tokens
 
 原实施者只改config版本及schema提示/native测试，必要时加入授权原第三响应的严格拒绝回归；controller维护普通CLI/独立Chat验证的版本断言。提示先编译真实RED再实现，第三原响应仍必须拒绝且有效4912不得丢失。新鲜窄范围审查后运行最终相关回归，在同一累计余额内只执行一次新请求，保持三次失败、原配置与调用前gold。T02尚未complete，T03仍todo。
 
+### Task 2 Chat 跨字段限定信息修复
+
+v4新鲜审查1124项检查/797份指纹、完整Rust498/Python76、API84/fake54/Chat34及127份双报告/89份请求通过，最终程序SHA5797c708b0f7815c8ab0c774a17bd2522b666729f64e87be89e11f1651c491c1。第四次真实请求HTTP200/stop，完整候选正确使用{atom,measurement}，但measurement.unit="m/s"未同时出现在atom.qualifiers。现有extraction.rs:338-350要求非null单位和每个measurement.conditions字符串都精确保留在qualifiers；不是JSON Schema枚举或包装问题。Core原规则拒绝EXTRACT_QUALIFIERS，1712+3071=4783有效Token已结算；累计20314、余额9979686、pending0。第四原响应SHAa6081c965ef7f64416639b4cb3ade403ae72bd97331a3af0f8627927f954cbe9保持，原四次响应/source/gold不变。
+
+只为Chat task明确既有跨字段约束，策略版本tangmao-deepseek-chat-qualifiers-v5：measurement.unit非null时把完全相同的单位字符串放入atom.qualifiers；每个measurement.conditions字符串也逐字保留在atom.qualifiers。继续保留v4嵌套提示及全部原字段/Schema/系统指令/绝对anchor/端点/限额，不修改验证器、不在实际响应补单位、不生成gold填值模板。原实施者仍只改config/schema及native回归；原第四响应的wire解码可通过，但原实际Core失败和有效4783计量保持，原第三展平响应继续拒绝。controller先普通CLI提示RED，再native RED/GREEN、新鲜窄范围审查、最终相关检查和一次新的有界真实验证。T02仍in_progress，T03仍todo，不把有效模型调用数或完成结构等同于知识验收。
+
 ## Task 3: 累计预算与真实小范围验收
 
 controller 在仓库外当前用户 Noetome 设置目录保存非秘密服务、模型、credential_env/DPAPI引用、累计10000000 Token上限和使用记录。所有后续调用先查剩余额度；已知实际用量累计，未知用量保留工程预留，不把额度每次重置。首冒烟 max_requests=1、max_output_tokens<=8192、max_response_bytes<=1MiB、timeout_ms<=60000，费用未知保持null。

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B04U",
+  "current_batch": "B04R",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -43,6 +43,13 @@
       "from_batch": "B04",
       "to_batch": "B04U",
       "note": "按用户新截图先处理顶部菜单栏；原模型任务ID和历史保留于B04R，服务凭据与累计余额复用。"
+    },
+    {
+      "at": "2026-11-03T09:54:42Z",
+      "action": "batch",
+      "from_batch": "B04U",
+      "to_batch": "B04R",
+      "note": "B04U顶部栏已真实验收、完成并推送核对8004df0；按持续开发指令继续保留ID的模型任务，复用服务、凭据和累计余额。"
     }
   ],
   "tasks": [
@@ -1077,7 +1084,7 @@
       "id": "B04-T02",
       "title": "接入单个可配置文本API并执行有预算的真实小范围抽取冒烟",
       "batch": "B04R",
-      "status": "blocked",
+      "status": "in_progress",
       "depends_on": [
         "B04-T01"
       ],
@@ -1169,6 +1176,24 @@
           "from_status": "in_progress",
           "to_status": "blocked",
           "note": "用户新增截图顶部栏调整要求，先处理B04U-T01；本任务待界面修改后的最终workspace与单次真实v5验证。服务、DPAPI凭据和10M累计预算已保存，四次实际用量共20314、余额9979686、pending0。v5原生38/API CLI7/fake3和独立Chat35已通过；原四响应/source/gold保留。界面任务验收后自动reopen/start，复用同一配置和余额，无需用户再次提供设置。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-03T09:54:43Z",
+          "action": "reopen",
+          "from_status": "blocked",
+          "to_status": "todo",
+          "note": "顶部栏任务已验收并推送，恢复先前保留的v5限定信息修复和一次真实有界验证；现有服务及凭据可复用，累计余额9979686不重置。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-03T09:54:44Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "继续v5原生38/CLI7/fake3、独立Chat35和已完成workspace499的源码绑定；新鲜审查、最终API/fake/Chat矩阵后仅执行一个新输出根的真实请求，原四失败及source/gold保持。",
           "validation": [],
           "artifacts": []
         }

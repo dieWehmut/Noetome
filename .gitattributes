@@ -32,9 +32,18 @@ doc/validation/assets/B04-T02-chat-profile-activation.json -text whitespace=cr-a
 doc/validation/assets/B04-T02-live-third-*.json -text whitespace=cr-at-eol
 doc/validation/assets/B04-T02-live-fourth-*.json -text whitespace=cr-at-eol
 doc/validation/assets/B04-T02-shape-*.json -text whitespace=cr-at-eol
+doc/validation/assets/B04-T02-qualifier-*.json -text whitespace=cr-at-eol
+doc/validation/assets/B04-T02-live-fifth-*.json -text whitespace=cr-at-eol
 doc/validation/assets/B04-T02-live-third-response.bin binary
+doc/validation/assets/B04-T02-live-fourth-response.bin binary
+doc/validation/assets/B04-T02-live-fifth-response.bin binary
 doc/validation/assets/B04-T02-chat-final-reports.zip binary
 # Keep this task's original command output and executable verification source.
 doc/validation/assets/B04U-T01-*.json -text whitespace=cr-at-eol
 doc/validation/assets/B04U-T01-*.mjs -text whitespace=cr-at-eol
 doc/validation/assets/B04U-T01-*.py -text whitespace=cr-at-eol
+# New model-call archives retain their original Markdown and CRLF as well.
+doc/validation/assets/B04-T02-shape-*.md -text whitespace=-blank-at-eof,cr-at-eol
+doc/validation/assets/B04-T02-qualifier-*.md -text whitespace=-blank-at-eof,cr-at-eol
+doc/validation/assets/B04-T02-live-fourth-*.md -text whitespace=-blank-at-eof,cr-at-eol
+doc/validation/assets/B04-T02-live-fifth-*.md -text whitespace=-blank-at-eof,cr-at-eol

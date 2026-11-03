@@ -1,0 +1,9 @@
+{
+  "command": "selected Python -X utf8 .superpowers/sdd/B04-T02_GATEWAY_PLAN/root-shape-stage-check.py",
+  "exit_code": 1,
+  "output": "Traceback (most recent call last):\r\n  File \"D:\\Noetome\\.superpowers\\sdd\\B04-T02_GATEWAY_PLAN\\root-shape-stage-check.py\", line 21, in <module>\r\n    assert raw == blob, \"archive line endings or bytes changed in index: \" + path\r\n           ^^^^^^^^^^^\r\nAssertionError: archive line endings or bytes changed in index: doc/validation/assets/B04-T02-chat-cache-closure-command.json\r\n",
+  "source": "retained actual exec_command tool output; not a rerun",
+  "reason": "Git retained the previously staged normalized blob after adding scoped byte-preservation attributes; explicitly renormalize only selected staged archive paths before repeating the guard",
+  "commit_created": false,
+  "model_calls": 0
+}

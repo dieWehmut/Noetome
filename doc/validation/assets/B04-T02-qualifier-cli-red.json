@@ -1,0 +1,27 @@
+{
+  "command": [
+    "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+    "-NoLogo",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "& .\\scripts\\cargo_local.ps1 test --test extraction_api ordinary_chat_ --locked --offline '--' --test-threads=4; exit $LASTEXITCODE"
+  ],
+  "started_at": "2026-11-03T08:42:38.584132+00:00",
+  "elapsed_seconds": 1.812000000005355,
+  "exit_code": 101,
+  "stdout": "\nrunning 2 tests\ntest ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request ... FAILED\ntest ordinary_chat_local_http_maps_usage_and_accepts_author_candidates ... FAILED\n\nfailures:\n\n---- ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request stdout ----\n\nthread 'ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request' (40952) panicked at crates\\noetome-cli\\tests\\extraction_api.rs:132:5:\nassertion failed: task.contains(\"Include measurement.unit verbatim in atom.qualifiers\")\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n---- ordinary_chat_local_http_maps_usage_and_accepts_author_candidates stdout ----\n\nthread 'ordinary_chat_local_http_maps_usage_and_accepts_author_candidates' (53868) panicked at crates\\noetome-cli\\tests\\extraction_api.rs:132:5:\nassertion failed: task.contains(\"Include measurement.unit verbatim in atom.qualifiers\")\n\n\nfailures:\n    ordinary_chat_local_http_maps_usage_and_accepts_author_candidates\n    ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request\n\ntest result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.27s\n\n",
+  "stderr": "   Compiling noetome-cli v0.1.0 (D:\\Noetome\\crates\\noetome-cli)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.04s\n     Running tests\\extraction_api.rs (target\\debug\\deps\\extraction_api-351b4392797b3e62.exe)\nerror: test failed, to rerun pass `-p noetome-cli --test extraction_api`\n",
+  "stdout_sha256": "4184cb360bc233f45ca17a12894b27a73fba865ba884528a50051fa907d1d395",
+  "stderr_sha256": "f8eda6220acb04eac2488a8c40859e123394d51bc5f3c69a49282d4977473fb2",
+  "result_rows": [
+    [
+      "0",
+      "2",
+      "0"
+    ]
+  ],
+  "model_calls": 0,
+  "paid_calls": 0,
+  "production_base": "25bcff5b474611fdb2b1c1f96eb0a33caae42e4d"
+}

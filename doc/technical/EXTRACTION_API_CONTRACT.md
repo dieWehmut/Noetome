@@ -36,7 +36,9 @@ required_input=vision 或缺少 text/structured_output 在请求前拒绝；不�
 
 Core 先序列化全部正文、提示和 Schema；input_reserved_tokens 为实际 body UTF8 字节数加 1024，reservation_policy=request_utf8_bytes_plus_1024_v1。这是保守工程预留，model_tokenizer=null，并非真实 Token 测量或提供商账单保证。请求前预留 input_reserved_tokens + max_output_tokens；不足停止。返回 usage 再核对 input<=预留、output<=指定上限、input+output=total 且 total<=总预算；违反时保留原响应并失败，不再发下一次请求。缺用量保留 null 并失败，不以 0 补齐。
 
-Chat策略tangmao-deepseek-chat-nested-atoms-v4沿用v3的六字段正文：model、messages、thinking={type:disabled}、response_format={type:json_object}、max_tokens和stream=false。messages恰好为system原完整抽取指令及user自足task/response_schema/request JSON文本，保留相同Schema、绑定与绝对anchor。v4只补充task中的atoms包装说明：每项只含atom和measurement，十个Atom字段全部在atom对象内，measurement为同级对象或null；条件与所属事实关联，来源元信息不作为学科知识。第三次v3原响应展平了Atom字段，仍由原严格DTO拒绝；不修改Schema、合法枚举或原响应，也不通过后处理包裹使其成功。JSON Object不是服务器严格Schema承诺；Core继续拒绝非法/围栏/修补候选。max_tokens沿用配置max_output_tokens的16..8192上限，全部正文仍参与同一预留。thinking只是请求意图，三次实际回包仍含reasoning信息，不能宣称开关已生效。
+Chat当前策略tangmao-deepseek-chat-qualifiers-v5沿用v3/v4的六字段正文：model、messages、thinking={type:disabled}、response_format={type:json_object}、max_tokens和stream=false。messages恰好为system原完整抽取指令及user自足task/response_schema/request JSON文本，保留相同Schema、绑定与绝对anchor。v4只补充task中的atoms包装说明：每项只含atom和measurement，十个Atom字段全部在atom对象内，measurement为同级对象或null；条件与所属事实关联，来源元信息不作为学科知识。第三次v3原响应展平了Atom字段，仍由原严格DTO拒绝；不修改Schema、合法枚举或原响应，也不通过后处理包裹使其成功。JSON Object不是服务器严格Schema承诺；Core继续拒绝非法/围栏/修补候选。max_tokens沿用配置max_output_tokens的16..8192上限，全部正文仍参与同一预留。thinking只是请求意图，四次实际回包仍含reasoning信息，不能宣称开关已生效。
+
+v5仅在完整v4包装/条件提示后明确已有跨字段规则：非null measurement.unit必须逐字出现在atom.qualifiers，每个measurement.conditions字符串也须逐字保留；measurement字段本身不能代替Atom限定信息。原第四响应仍因缺单位限定被Core拒绝，不修补原响应、Schema、合法枚举或严格验证器。
 
 用户已授权的10000000为累计额度，外部使用记录先查剩余再预留，一次调用配置不能获得新的10M；有有效usage按真实total累计，没有可核实用量则保留该尝试的工程预留和未知状态。当前第一冒烟限制一次，输出最多8192。服务/模型/预算已知，正常复用不再次索要。
 

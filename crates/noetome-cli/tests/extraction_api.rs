@@ -129,6 +129,10 @@ fn assert_chat_atom_shape(user: &Value) {
     assert!(task.contains("inside atom"));
     assert!(task.contains("sibling of atom"));
     assert!(task.contains("Do not flatten"));
+    assert!(task.contains("Include measurement.unit verbatim in atom.qualifiers"));
+    assert!(
+        task.contains("Include every measurement.conditions string verbatim in atom.qualifiers")
+    );
 }
 fn read_body_path(stream: &mut TcpStream, expected_path: &str) -> Vec<u8> {
     // Windows accepted sockets may inherit a nonblocking listener's mode.
@@ -496,7 +500,7 @@ fn ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request
     assert_chat_atom_shape(&user);
     assert_eq!(
         report["request_strategy"],
-        "tangmao-deepseek-chat-nested-atoms-v4"
+        "tangmao-deepseek-chat-qualifiers-v5"
     );
     assert!(!example.output.join("candidates.json").exists());
     example.unchanged();
@@ -574,7 +578,7 @@ fn ordinary_chat_local_http_maps_usage_and_accepts_author_candidates() {
     assert_eq!(report["provider"], "openai_chat_completions");
     assert_eq!(
         report["request_strategy"],
-        "tangmao-deepseek-chat-nested-atoms-v4"
+        "tangmao-deepseek-chat-qualifiers-v5"
     );
     assert_eq!(report["usage"]["model_usage"]["input_tokens"], 100);
     assert_eq!(report["usage"]["model_usage"]["output_tokens"], 600);

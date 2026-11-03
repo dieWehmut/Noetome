@@ -32,7 +32,7 @@ pub(crate) fn request_body(
     };
     if matches!(strategy, RequestStrategy::TangmaoChat) {
         input_value["task"] = json!(format!(
-            "{} Each element of atoms must have exactly two top-level keys: atom and measurement. Put all ten Atom fields atom_id, concept_ids, content, evidence_links, kind, qualifiers, required, revision, value_status, verification inside atom. measurement is a sibling of atom: either null or an object with exactly conditions, unit, value, value_status. Do not flatten Atom fields into the outer array element. Associate each claim's conditions and applicability qualifiers with that claim; measurement.conditions must express its actual conditions. Keep source registration, parsing, processing and provenance metadata as evidence context, not as subject knowledge, concepts or scientific claims.",
+            "{} Each element of atoms must have exactly two top-level keys: atom and measurement. Put all ten Atom fields atom_id, concept_ids, content, evidence_links, kind, qualifiers, required, revision, value_status, verification inside atom. measurement is a sibling of atom: either null or an object with exactly conditions, unit, value, value_status. Do not flatten Atom fields into the outer array element. Associate each claim's conditions and applicability qualifiers with that claim; measurement.conditions must express its actual conditions. Keep source registration, parsing, processing and provenance metadata as evidence context, not as subject knowledge, concepts or scientific claims. Include measurement.unit verbatim in atom.qualifiers when unit is not null. Include every measurement.conditions string verbatim in atom.qualifiers. The measurement fields alone do not satisfy the Atom qualifiers contract.",
             input_value["task"].as_str().expect("selected task")
         ));
     }
@@ -121,7 +121,7 @@ mod tests {
     use super::*;
     use crate::extraction_model::Locator;
     #[test]
-    fn shape_fix_chat_task_demands_nested_atom_measurement_and_keeps_request() {
+    fn qualifier_fix_chat_task_demands_qualifier_consistency_and_keeps_nesting() {
         let binding: SourceBinding = serde_json::from_value(json!({"project_id":"p","import_id":"i","source_id":"s","version_id":"v","content_sha256":"sha","normalized_sha256":null,"parse_id":null,"manifest_sha256":null})).unwrap();
         let units = [RequestUnit {
             unit_id: "u".into(),
@@ -184,6 +184,12 @@ mod tests {
         assert_eq!(body["messages"][1]["role"], "user");
         let user: Value =
             serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
+        for phrase in [
+            "Include measurement.unit verbatim in atom.qualifiers",
+            "Include every measurement.conditions string verbatim in atom.qualifiers",
+        ] {
+            assert!(user["task"].as_str().unwrap().contains(phrase), "{phrase}");
+        }
         for phrase in [
             "two top-level keys: atom and measurement",
             "inside atom",

@@ -230,7 +230,7 @@ impl RequestStrategy {
         match self {
             Self::OpenAiStrict => "openai-responses-strict-json-schema-v1",
             Self::TangmaoDeepseek => "tangmao-deepseek-responses-inline-json-schema-v2",
-            Self::TangmaoChat => "tangmao-deepseek-chat-nested-atoms-v4",
+            Self::TangmaoChat => "tangmao-deepseek-chat-qualifiers-v5",
         }
     }
 }
