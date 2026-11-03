@@ -1,0 +1,857 @@
+{
+  "expected_red": false,
+  "error": "",
+  "checks": [
+    {
+      "name": "valid",
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "local_post_count": 1,
+      "elapsed_seconds": 0.079,
+      "config_sha256_before": "d5ab19f6b022c658b5377c2bf63f4de7a794a8ed3bd8a517e0f1a248b71c7ba7",
+      "config_sha256_after": "d5ab19f6b022c658b5377c2bf63f4de7a794a8ed3bd8a517e0f1a248b71c7ba7",
+      "config_mtime_before": 1793676279313701400,
+      "config_mtime_after": 1793676279313701400,
+      "source_inventory_sha256_before": "4bfb120f0fbb12345609439295520287da1c735a7403c8494211bfb776cc3f44",
+      "source_inventory_sha256_after": "4bfb120f0fbb12345609439295520287da1c735a7403c8494211bfb776cc3f44",
+      "source_root_mtime_before": 1793676279301181000,
+      "source_root_mtime_after": 1793676279301181000,
+      "source_sql_sha256_before": "95f75eaa9c47484cb1c56be9c72929ab1dfa22fa8d73687255eb2d830b9bd478",
+      "source_sql_sha256_after": "95f75eaa9c47484cb1c56be9c72929ab1dfa22fa8d73687255eb2d830b9bd478",
+      "controlled_scene": {},
+      "server_receipts": [
+        {
+          "method": "POST",
+          "path": "/v1/responses",
+          "authorization_matches_artificial_test_key": true,
+          "body_sha256": "2cf6aa1ac3eae11c1b1a8130ce57d536e285105f6cc296de6697dcd365b19285",
+          "body_length": 5238,
+          "request": {
+            "background": false,
+            "input": "{\"binding\":{\"content_sha256\":\"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\"import_id\":\"d8445223-d6b6-4a4a-81a2-3ae5d71c32b5\",\"manifest_sha256\":null,\"normalized_sha256\":\"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\"parse_id\":null,\"project_id\":\"82defdee-04ab-4759-b0d5-839d7923fcbf\",\"source_id\":\"c436d987-2fff-4e01-8462-28478c310be4\",\"version_id\":\"4091ec76-1b06-42d3-8630-817c67140209\"},\"evidence_anchors\":[{\"excerpt_end_byte\":140,\"excerpt_sha256\":\"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\"excerpt_start_byte\":0,\"quote\":\"在本夹具的样例 A 中，速度为 10 m/s。条件是温度 20 ℃、仅适用样例 A。此句是作者编写的工程测试数据。\\n\",\"unit_id\":\"unit-0\"}],\"request_id\":\"08b2c01a-acad-453b-b011-706b7911fd48\",\"units\":[{\"end_byte\":140,\"locator\":{\"kind\":\"text\",\"ordinal\":0,\"resource_sha256\":\"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\"span_id\":\"6a248038-3ce3-4618-a195-a610fe447315\"},\"source_status\":\"parsed\",\"start_byte\":0,\"text\":\"在本夹具的样例 A 中，速度为 10 m/s。条件是温度 20 ℃、仅适用样例 A。此句是作者编写的工程测试数据。\\n\",\"unit_id\":\"unit-0\"}]}",
+            "instructions": "Extract only evidence-supported concepts and atomic claims from the selected text units. Return one JSON object matching the supplied strict schema, copying request_id and binding exactly. Full-unit evidence_anchors provide exact UTF8 byte offsets in the referenced source resource, quote and SHA256. Copy the resource-absolute start/end offsets from the supplied anchors; preserve the quote and its SHA256. Preserve conditions, exceptions and units. Every atom must have required=false and verification=unverified. Use null for unknown measurement/value/unit and explicit value_status. Do not invent scientific verification or producer provenance.",
+            "max_output_tokens": 2048,
+            "model": "noetome-test-model",
+            "service_tier": "default",
+            "store": false,
+            "stream": false,
+            "text": {
+              "format": {
+                "name": "noetome_candidates_v1",
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "atoms": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "atom": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "atom_id": {
+                                "type": "string"
+                              },
+                              "concept_ids": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "content": {
+                                "type": "string"
+                              },
+                              "evidence_links": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "evidence_id": {
+                                      "type": "string"
+                                    },
+                                    "relation": {
+                                      "enum": [
+                                        "supports",
+                                        "refutes",
+                                        "qualifies"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "evidence_id",
+                                    "relation"
+                                  ],
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "kind": {
+                                "enum": [
+                                  "definition",
+                                  "statement",
+                                  "comparison_value"
+                                ],
+                                "type": "string"
+                              },
+                              "qualifiers": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "required": {
+                                "enum": [
+                                  false
+                                ],
+                                "type": "boolean"
+                              },
+                              "revision": {
+                                "type": "integer"
+                              },
+                              "value_status": {
+                                "enum": [
+                                  "known",
+                                  "unknown",
+                                  "not_applicable"
+                                ],
+                                "type": "string"
+                              },
+                              "verification": {
+                                "enum": [
+                                  "unverified"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "atom_id",
+                              "concept_ids",
+                              "content",
+                              "evidence_links",
+                              "kind",
+                              "qualifiers",
+                              "required",
+                              "revision",
+                              "value_status",
+                              "verification"
+                            ],
+                            "type": "object"
+                          },
+                          "measurement": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "conditions": {
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "unit": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "value_status": {
+                                    "enum": [
+                                      "known",
+                                      "unknown",
+                                      "not_applicable"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "conditions",
+                                  "unit",
+                                  "value",
+                                  "value_status"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "atom",
+                          "measurement"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "binding": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "content_sha256": {
+                          "type": "string"
+                        },
+                        "import_id": {
+                          "type": "string"
+                        },
+                        "manifest_sha256": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "normalized_sha256": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "parse_id": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "project_id": {
+                          "type": "string"
+                        },
+                        "source_id": {
+                          "type": "string"
+                        },
+                        "version_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "content_sha256",
+                        "import_id",
+                        "manifest_sha256",
+                        "normalized_sha256",
+                        "parse_id",
+                        "project_id",
+                        "source_id",
+                        "version_id"
+                      ],
+                      "type": "object"
+                    },
+                    "concepts": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "aliases": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "canonical_name": {
+                            "type": "string"
+                          },
+                          "concept_id": {
+                            "type": "string"
+                          },
+                          "needs_full_explanation": {
+                            "type": "boolean"
+                          },
+                          "revision": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "aliases",
+                          "canonical_name",
+                          "concept_id",
+                          "needs_full_explanation",
+                          "revision"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "evidence": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "evidence_id": {
+                            "type": "string"
+                          },
+                          "excerpt_end_byte": {
+                            "type": "integer"
+                          },
+                          "excerpt_sha256": {
+                            "type": "string"
+                          },
+                          "excerpt_start_byte": {
+                            "type": "integer"
+                          },
+                          "quote": {
+                            "type": "string"
+                          },
+                          "unit_id": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "evidence_id",
+                          "excerpt_end_byte",
+                          "excerpt_sha256",
+                          "excerpt_start_byte",
+                          "quote",
+                          "unit_id"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "request_id": {
+                      "type": "string"
+                    },
+                    "schema_version": {
+                      "enum": [
+                        1
+                      ],
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "atoms",
+                    "binding",
+                    "concepts",
+                    "evidence",
+                    "request_id",
+                    "schema_version"
+                  ],
+                  "type": "object"
+                },
+                "strict": true,
+                "type": "json_schema"
+              }
+            },
+            "tool_choice": "none",
+            "tools": [],
+            "truncation": "disabled"
+          },
+          "response_sha256": "53575cdb97e1c431dfb86058a7b6302d58205e5cad8e9068afeb74b50dea53e5",
+          "response_length": 2108,
+          "advertised_status": 200
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "replay",
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "local_post_count": 1,
+      "elapsed_seconds": 0.078,
+      "config_sha256_before": "87012cf573a147c7195f37d40bff8809efac0b633480425f23f66b8236f96548",
+      "config_sha256_after": "87012cf573a147c7195f37d40bff8809efac0b633480425f23f66b8236f96548",
+      "config_mtime_before": 1793676279402808900,
+      "config_mtime_after": 1793676279402808900,
+      "source_inventory_sha256_before": "4bfb120f0fbb12345609439295520287da1c735a7403c8494211bfb776cc3f44",
+      "source_inventory_sha256_after": "4bfb120f0fbb12345609439295520287da1c735a7403c8494211bfb776cc3f44",
+      "source_root_mtime_before": 1793676279301181000,
+      "source_root_mtime_after": 1793676279301181000,
+      "source_sql_sha256_before": "95f75eaa9c47484cb1c56be9c72929ab1dfa22fa8d73687255eb2d830b9bd478",
+      "source_sql_sha256_after": "95f75eaa9c47484cb1c56be9c72929ab1dfa22fa8d73687255eb2d830b9bd478",
+      "controlled_scene": {},
+      "server_receipts": [
+        {
+          "method": "POST",
+          "path": "/v1/responses",
+          "authorization_matches_artificial_test_key": true,
+          "body_sha256": "5145de2868fe6feb3ac8022b3cf4c861cdfe7025c17c773bd8cd6ecfe466f83b",
+          "body_length": 5238,
+          "request": {
+            "background": false,
+            "input": "{\"binding\":{\"content_sha256\":\"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\"import_id\":\"d8445223-d6b6-4a4a-81a2-3ae5d71c32b5\",\"manifest_sha256\":null,\"normalized_sha256\":\"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\"parse_id\":null,\"project_id\":\"82defdee-04ab-4759-b0d5-839d7923fcbf\",\"source_id\":\"c436d987-2fff-4e01-8462-28478c310be4\",\"version_id\":\"4091ec76-1b06-42d3-8630-817c67140209\"},\"evidence_anchors\":[{\"excerpt_end_byte\":140,\"excerpt_sha256\":\"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\"excerpt_start_byte\":0,\"quote\":\"在本夹具的样例 A 中，速度为 10 m/s。条件是温度 20 ℃、仅适用样例 A。此句是作者编写的工程测试数据。\\n\",\"unit_id\":\"unit-0\"}],\"request_id\":\"82198223-dbb0-4d43-94ac-75cd8ef99db7\",\"units\":[{\"end_byte\":140,\"locator\":{\"kind\":\"text\",\"ordinal\":0,\"resource_sha256\":\"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\"span_id\":\"6a248038-3ce3-4618-a195-a610fe447315\"},\"source_status\":\"parsed\",\"start_byte\":0,\"text\":\"在本夹具的样例 A 中，速度为 10 m/s。条件是温度 20 ℃、仅适用样例 A。此句是作者编写的工程测试数据。\\n\",\"unit_id\":\"unit-0\"}]}",
+            "instructions": "Extract only evidence-supported concepts and atomic claims from the selected text units. Return one JSON object matching the supplied strict schema, copying request_id and binding exactly. Full-unit evidence_anchors provide exact UTF8 byte offsets in the referenced source resource, quote and SHA256. Copy the resource-absolute start/end offsets from the supplied anchors; preserve the quote and its SHA256. Preserve conditions, exceptions and units. Every atom must have required=false and verification=unverified. Use null for unknown measurement/value/unit and explicit value_status. Do not invent scientific verification or producer provenance.",
+            "max_output_tokens": 2048,
+            "model": "noetome-test-model",
+            "service_tier": "default",
+            "store": false,
+            "stream": false,
+            "text": {
+              "format": {
+                "name": "noetome_candidates_v1",
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "atoms": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "atom": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "atom_id": {
+                                "type": "string"
+                              },
+                              "concept_ids": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "content": {
+                                "type": "string"
+                              },
+                              "evidence_links": {
+                                "items": {
+                                  "additionalProperties": false,
+                                  "properties": {
+                                    "evidence_id": {
+                                      "type": "string"
+                                    },
+                                    "relation": {
+                                      "enum": [
+                                        "supports",
+                                        "refutes",
+                                        "qualifies"
+                                      ],
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "evidence_id",
+                                    "relation"
+                                  ],
+                                  "type": "object"
+                                },
+                                "type": "array"
+                              },
+                              "kind": {
+                                "enum": [
+                                  "definition",
+                                  "statement",
+                                  "comparison_value"
+                                ],
+                                "type": "string"
+                              },
+                              "qualifiers": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "required": {
+                                "enum": [
+                                  false
+                                ],
+                                "type": "boolean"
+                              },
+                              "revision": {
+                                "type": "integer"
+                              },
+                              "value_status": {
+                                "enum": [
+                                  "known",
+                                  "unknown",
+                                  "not_applicable"
+                                ],
+                                "type": "string"
+                              },
+                              "verification": {
+                                "enum": [
+                                  "unverified"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "atom_id",
+                              "concept_ids",
+                              "content",
+                              "evidence_links",
+                              "kind",
+                              "qualifiers",
+                              "required",
+                              "revision",
+                              "value_status",
+                              "verification"
+                            ],
+                            "type": "object"
+                          },
+                          "measurement": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "conditions": {
+                                    "items": {
+                                      "type": "string"
+                                    },
+                                    "type": "array"
+                                  },
+                                  "unit": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "value": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "value_status": {
+                                    "enum": [
+                                      "known",
+                                      "unknown",
+                                      "not_applicable"
+                                    ],
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "conditions",
+                                  "unit",
+                                  "value",
+                                  "value_status"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "atom",
+                          "measurement"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "binding": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "content_sha256": {
+                          "type": "string"
+                        },
+                        "import_id": {
+                          "type": "string"
+                        },
+                        "manifest_sha256": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "normalized_sha256": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "parse_id": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "project_id": {
+                          "type": "string"
+                        },
+                        "source_id": {
+                          "type": "string"
+                        },
+                        "version_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "content_sha256",
+                        "import_id",
+                        "manifest_sha256",
+                        "normalized_sha256",
+                        "parse_id",
+                        "project_id",
+                        "source_id",
+                        "version_id"
+                      ],
+                      "type": "object"
+                    },
+                    "concepts": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "aliases": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "canonical_name": {
+                            "type": "string"
+                          },
+                          "concept_id": {
+                            "type": "string"
+                          },
+                          "needs_full_explanation": {
+                            "type": "boolean"
+                          },
+                          "revision": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": [
+                          "aliases",
+                          "canonical_name",
+                          "concept_id",
+                          "needs_full_explanation",
+                          "revision"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "evidence": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "evidence_id": {
+                            "type": "string"
+                          },
+                          "excerpt_end_byte": {
+                            "type": "integer"
+                          },
+                          "excerpt_sha256": {
+                            "type": "string"
+                          },
+                          "excerpt_start_byte": {
+                            "type": "integer"
+                          },
+                          "quote": {
+                            "type": "string"
+                          },
+                          "unit_id": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "evidence_id",
+                          "excerpt_end_byte",
+                          "excerpt_sha256",
+                          "excerpt_start_byte",
+                          "quote",
+                          "unit_id"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "request_id": {
+                      "type": "string"
+                    },
+                    "schema_version": {
+                      "enum": [
+                        1
+                      ],
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "atoms",
+                    "binding",
+                    "concepts",
+                    "evidence",
+                    "request_id",
+                    "schema_version"
+                  ],
+                  "type": "object"
+                },
+                "strict": true,
+                "type": "json_schema"
+              }
+            },
+            "tool_choice": "none",
+            "tools": [],
+            "truncation": "disabled"
+          },
+          "response_sha256": "5e56f8f33f48f5f4d97b31250934fc5c7403c285eaedb8e5fa6df4e6b6478bd7",
+          "response_length": 2108,
+          "advertised_status": 200
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "calls": [
+    {
+      "argv": [
+        "project",
+        "init",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\project 中文"
+      ],
+      "exit_code": 0,
+      "stdout": "结果：空项目初始化完成\n项目：D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\project 中文\n项目 ID：82defdee-04ab-4759-b0d5-839d7923fcbf\nSchema 版本：1\n创建时间：2026-11-03T03:24:39.2008862Z\n状态：initialized（空项目，尚未登记来源）\n配置：D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\project 中文\\project.json\n数据库：D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\project 中文\\project.sqlite\n单份UTF8文本通过source import登记；知识抽取和笔记生成尚未实现。\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "source",
+        "import",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\project 中文",
+        "D:\\Noetome\\fixtures\\extraction-gateway-v1\\source.txt"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema_version\": 1,\n  \"project_id\": \"82defdee-04ab-4759-b0d5-839d7923fcbf\",\n  \"import_id\": \"d8445223-d6b6-4a4a-81a2-3ae5d71c32b5\",\n  \"imported_at\": \"2026-11-03T03:24:39.2404008Z\",\n  \"selected_path\": \"D:\\\\Noetome\\\\fixtures\\\\extraction-gateway-v1\\\\source.txt\",\n  \"source_id\": \"c436d987-2fff-4e01-8462-28478c310be4\",\n  \"version_id\": \"4091ec76-1b06-42d3-8630-817c67140209\",\n  \"status\": \"ready\",\n  \"reused\": false,\n  \"span_count\": 1,\n  \"pending_extraction_count\": 1,\n  \"knowledge_status\": \"pending\",\n  \"version\": {\n    \"source_id\": \"c436d987-2fff-4e01-8462-28478c310be4\",\n    \"version_id\": \"4091ec76-1b06-42d3-8630-817c67140209\",\n    \"revision\": 1,\n    \"created_at\": \"2026-11-03T03:24:39.2404008Z\",\n    \"media_type\": \"text/plain\",\n    \"display_name\": \"source.txt\",\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"byte_length\": 140,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"normalization_version\": \"utf8-newlines-v1\",\n    \"ingest_status\": \"ready\",\n    \"raw_snapshot\": \".noetome-sources/4091ec76-1b06-42d3-8630-817c67140209/raw.bin\",\n    \"normalized_snapshot\": \".noetome-sources/4091ec76-1b06-42d3-8630-817c67140209/normalized.txt\",\n    \"error\": null\n  },\n  \"spans\": [\n    {\n      \"span_id\": \"6a248038-3ce3-4618-a195-a610fe447315\",\n      \"source_version_id\": \"4091ec76-1b06-42d3-8630-817c67140209\",\n      \"ordinal\": 0,\n      \"kind\": \"text\",\n      \"start_byte\": 0,\n      \"end_byte\": 140,\n      \"start_line\": 1,\n      \"end_line\": 1,\n      \"text_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n      \"parser_version\": \"blocks-v1\",\n      \"parse_status\": \"parsed\"\n    }\n  ],\n  \"error\": null\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "extract",
+        "api",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\project 中文",
+        "d8445223-d6b6-4a4a-81a2-3ae5d71c32b5",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\case-valid\\api-config.json",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\case-valid\\new output"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"actual_model\": \"noetome-test-model\",\n  \"artifacts\": {\n    \".owner.json\": {\n      \"byte_length\": 185,\n      \"sha256\": \"6214de5328a9632bd84bff926862f336181af1d0bea5c698e1928792246d15d9\"\n    },\n    \"candidates.json\": {\n      \"byte_length\": 2753,\n      \"sha256\": \"2a72b3723d1d5d717479f838b046ae1c80a04fd326e966650b22bf8eb7b4fd85\"\n    },\n    \"request-body.json\": {\n      \"byte_length\": 5238,\n      \"sha256\": \"2cf6aa1ac3eae11c1b1a8130ce57d536e285105f6cc296de6697dcd365b19285\"\n    },\n    \"request.json\": {\n      \"byte_length\": 2140,\n      \"sha256\": \"353bb9d37dcb2de62d6e40757a4ffdbf9045dcab796362a7d29746fcf8c503d6\"\n    },\n    \"response.bin\": {\n      \"byte_length\": 2108,\n      \"sha256\": \"53575cdb97e1c431dfb86058a7b6302d58205e5cad8e9068afeb74b50dea53e5\"\n    }\n  },\n  \"binding\": {\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"import_id\": \"d8445223-d6b6-4a4a-81a2-3ae5d71c32b5\",\n    \"manifest_sha256\": null,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"parse_id\": null,\n    \"project_id\": \"82defdee-04ab-4759-b0d5-839d7923fcbf\",\n    \"source_id\": \"c436d987-2fff-4e01-8462-28478c310be4\",\n    \"version_id\": \"4091ec76-1b06-42d3-8630-817c67140209\"\n  },\n  \"configured_model\": \"noetome-test-model\",\n  \"errors\": [],\n  \"http_request_id\": \"req_noetome_test\",\n  \"http_status\": 200,\n  \"knowledge_status\": \"pending\",\n  \"producer\": \"api\",\n  \"provider\": \"openai_responses\",\n  \"published\": false,\n  \"report_kind\": \"text_api_extraction\",\n  \"request_id\": \"08b2c01a-acad-453b-b011-706b7911fd48\",\n  \"response_complete\": true,\n  \"response_id\": \"resp_noetome_test\",\n  \"response_receipt\": {\n    \"byte_length\": 2108,\n    \"omission_reason\": null,\n    \"sha256\": \"53575cdb97e1c431dfb86058a7b6302d58205e5cad8e9068afeb74b50dea53e5\"\n  },\n  \"schema_version\": 1,\n  \"scientific_quality\": \"not_run\",\n  \"service_tier\": \"default\",\n  \"source_statuses\": [\n    \"parsed\"\n  ],\n  \"status\": \"candidates_validated\",\n  \"transport_mode\": \"local_http_test\",\n  \"usage\": {\n    \"input_reserved_tokens\": 6262,\n    \"model_tokenizer\": null,\n    \"model_usage\": {\n      \"input_tokens\": 100,\n      \"input_tokens_details\": {\n        \"cache_write_tokens\": 0,\n        \"cached_tokens\": 0\n      },\n      \"output_tokens\": 600,\n      \"output_tokens_details\": {\n        \"reasoning_tokens\": 0\n      },\n      \"total_tokens\": 700\n    },\n    \"model_usage_status\": \"validated\",\n    \"network_attempts\": 1,\n    \"paid_calls\": 0,\n    \"price_usd\": null,\n    \"real_model_calls\": 0,\n    \"request_utf8_bytes\": 5238,\n    \"reservation_policy\": \"request_utf8_bytes_plus_1024_v1\",\n    \"reserved_tokens\": 8310\n  },\n  \"validated_atoms\": 1\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "extract",
+        "api",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\project 中文",
+        "d8445223-d6b6-4a4a-81a2-3ae5d71c32b5",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\case-replay\\api-config.json",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\case-replay\\new output"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"actual_model\": \"noetome-test-model\",\n  \"artifacts\": {\n    \".owner.json\": {\n      \"byte_length\": 185,\n      \"sha256\": \"3132f61fbe5fffdb715de08d2e40521f36aca3533606bfa8849105dc4fce3b27\"\n    },\n    \"candidates.json\": {\n      \"byte_length\": 2753,\n      \"sha256\": \"92563d222b9e3531ad923ad766899379764dc3215fc75fbbc8b4a66ff7ec3af8\"\n    },\n    \"request-body.json\": {\n      \"byte_length\": 5238,\n      \"sha256\": \"5145de2868fe6feb3ac8022b3cf4c861cdfe7025c17c773bd8cd6ecfe466f83b\"\n    },\n    \"request.json\": {\n      \"byte_length\": 2141,\n      \"sha256\": \"8beb55724fa99e21d0a0be4934c4634eecf31c9f8b6e9d8386a80b2515c42fe6\"\n    },\n    \"response.bin\": {\n      \"byte_length\": 2108,\n      \"sha256\": \"5e56f8f33f48f5f4d97b31250934fc5c7403c285eaedb8e5fa6df4e6b6478bd7\"\n    }\n  },\n  \"binding\": {\n    \"content_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"import_id\": \"d8445223-d6b6-4a4a-81a2-3ae5d71c32b5\",\n    \"manifest_sha256\": null,\n    \"normalized_sha256\": \"35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a\",\n    \"parse_id\": null,\n    \"project_id\": \"82defdee-04ab-4759-b0d5-839d7923fcbf\",\n    \"source_id\": \"c436d987-2fff-4e01-8462-28478c310be4\",\n    \"version_id\": \"4091ec76-1b06-42d3-8630-817c67140209\"\n  },\n  \"configured_model\": \"noetome-test-model\",\n  \"errors\": [],\n  \"http_request_id\": \"req_noetome_test\",\n  \"http_status\": 200,\n  \"knowledge_status\": \"pending\",\n  \"producer\": \"api\",\n  \"provider\": \"openai_responses\",\n  \"published\": false,\n  \"report_kind\": \"text_api_extraction\",\n  \"request_id\": \"82198223-dbb0-4d43-94ac-75cd8ef99db7\",\n  \"response_complete\": true,\n  \"response_id\": \"resp_noetome_test\",\n  \"response_receipt\": {\n    \"byte_length\": 2108,\n    \"omission_reason\": null,\n    \"sha256\": \"5e56f8f33f48f5f4d97b31250934fc5c7403c285eaedb8e5fa6df4e6b6478bd7\"\n  },\n  \"schema_version\": 1,\n  \"scientific_quality\": \"not_run\",\n  \"service_tier\": \"default\",\n  \"source_statuses\": [\n    \"parsed\"\n  ],\n  \"status\": \"candidates_validated\",\n  \"transport_mode\": \"local_http_test\",\n  \"usage\": {\n    \"input_reserved_tokens\": 6262,\n    \"model_tokenizer\": null,\n    \"model_usage\": {\n      \"input_tokens\": 100,\n      \"input_tokens_details\": {\n        \"cache_write_tokens\": 0,\n        \"cached_tokens\": 0\n      },\n      \"output_tokens\": 600,\n      \"output_tokens_details\": {\n        \"reasoning_tokens\": 0\n      },\n      \"total_tokens\": 700\n    },\n    \"model_usage_status\": \"validated\",\n    \"network_attempts\": 1,\n    \"paid_calls\": 0,\n    \"price_usd\": null,\n    \"real_model_calls\": 0,\n    \"request_utf8_bytes\": 5238,\n    \"reservation_policy\": \"request_utf8_bytes_plus_1024_v1\",\n    \"reserved_tokens\": 8310\n  },\n  \"validated_atoms\": 1\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "project",
+        "init",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\nonzero project"
+      ],
+      "exit_code": 0,
+      "stdout": "结果：空项目初始化完成\n项目：D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\nonzero project\n项目 ID：7d741786-76d3-4746-a923-178240cef2eb\nSchema 版本：1\n创建时间：2026-11-03T03:24:39.5018974Z\n状态：initialized（空项目，尚未登记来源）\n配置：D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\nonzero project\\project.json\n数据库：D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\nonzero project\\project.sqlite\n单份UTF8文本通过source import登记；知识抽取和笔记生成尚未实现。\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "source",
+        "import",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\nonzero project",
+        "D:\\Noetome\\target\\compiler-temp\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\nonzero-source.txt"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema_version\": 1,\n  \"project_id\": \"7d741786-76d3-4746-a923-178240cef2eb\",\n  \"import_id\": \"8a9fbf1c-061e-4f8b-b3e4-4b51acb01524\",\n  \"imported_at\": \"2026-11-03T03:24:39.5405137Z\",\n  \"selected_path\": \"D:\\\\Noetome\\\\target\\\\compiler-temp\\\\b04-t02-http-green-27e0cee4e8e248c192e54a0740cd20e1\\\\nonzero-source.txt\",\n  \"source_id\": \"afbd65a3-5d64-4870-b521-e55135393544\",\n  \"version_id\": \"08ed85c5-03db-48bf-942a-a67d7609685a\",\n  \"status\": \"ready\",\n  \"reused\": false,\n  \"span_count\": 3,\n  \"pending_extraction_count\": 3,\n  \"knowledge_status\": \"pending\",\n  \"version\": {\n    \"source_id\": \"afbd65a3-5d64-4870-b521-e55135393544\",\n    \"version_id\": \"08ed85c5-03db-48bf-942a-a67d7609685a\",\n    \"revision\": 1,\n    \"created_at\": \"2026-11-03T03:24:39.5405137Z\",\n    \"media_type\": \"text/plain\",\n    \"display_name\": \"nonzero-source.txt\",\n    \"content_sha256\": \"ba817dd09ed935cd8bd550117f33f8f381ed8e24292140ee7c6b83ab467f05ee\",\n    \"byte_length\": 123,\n    \"normalized_sha256\": \"ba817dd09ed935cd8bd550117f33f8f381ed8e24292140ee7c6b83ab467f05ee\",\n    \"normalization_version\": \"utf8-newlines-v1\",\n    \"ingest_status\": \"ready\",\n    \"raw_snapshot\": \".noetome-sources/08ed85c5-03db-48bf-942a-a67d7609685a/raw.bin\",\n    \"normalized_snapshot\": \".noetome-sources/08ed85c5-03db-48bf-942a-a67d7609685a/normalized.txt\",\n    \"error\": null\n  },\n  \"spans\": [\n    {\n      \"span_id\": \"61e4f203-72a9-449b-af5c-262516be2042\",\n      \"source_version_id\": \"08ed85c5-03db-48bf-942a-a67d7609685a\",\n      \"ordinal\": 0,\n      \"kind\": \"text\",\n      \"start_byte\": 0,\n      \"end_byte\": 28,\n      \"start_line\": 1,\n      \"end_line\": 1,\n      \"text_sha256\": \"7022e0841c8b36dd9d808524c19d12c8dfa4482373b2d75e7babb60777b7df71\",\n      \"parser_version\": \"blocks-v1\",\n      \"parse_status\": \"parsed\"\n    },\n    {\n      \"span_id\": \"028dc097-bce5-468d-b292-eddf9c2e79dd\",\n      \"source_version_id\": \"08ed85c5-03db-48bf-942a-a67d7609685a\",\n      \"ordinal\": 1,\n      \"kind\": \"formatting\",\n      \"start_byte\": 28,\n      \"end_byte\": 29,\n      \"start_line\": 2,\n      \"end_line\": 2,\n      \"text_sha256\": \"01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b\",\n      \"parser_version\": \"blocks-v1\",\n      \"parse_status\": \"parsed\"\n    },\n    {\n      \"span_id\": \"110f7b29-c3b0-40ea-960c-ae88ca8be485\",\n      \"source_version_id\": \"08ed85c5-03db-48bf-942a-a67d7609685a\",\n      \"ordinal\": 2,\n      \"kind\": \"text\",\n      \"start_byte\": 29,\n      \"end_byte\": 123,\n      \"start_line\": 3,\n      \"end_line\": 3,\n      \"text_sha256\": \"1f3a11c848a615d62df0535a344b02cc4688c1d7640dee13dd89b0928949362e\",\n      \"parser_version\": \"blocks-v1\",\n      \"parse_status\": \"parsed\"\n    }\n  ],\n  \"error\": null\n}\n",
+      "stderr": ""
+    }
+  ],
+  "source_inventory": {
+    ".noetome-sources": {
+      "kind": "directory",
+      "mtime_ns": 1793676279265155100,
+      "length": null,
+      "sha256": null
+    },
+    ".noetome-sources/.owner.json": {
+      "kind": "file",
+      "mtime_ns": 1793676279262155500,
+      "length": 73,
+      "sha256": "0abd7233e48997925d13917ae580abf1d3cded43fae5a221af50d0305b135483"
+    },
+    ".noetome-sources/4091ec76-1b06-42d3-8630-817c67140209": {
+      "kind": "directory",
+      "mtime_ns": 1793676279270155200,
+      "length": null,
+      "sha256": null
+    },
+    ".noetome-sources/4091ec76-1b06-42d3-8630-817c67140209/normalized.txt": {
+      "kind": "file",
+      "mtime_ns": 1793676279250623300,
+      "length": 140,
+      "sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a"
+    },
+    ".noetome-sources/4091ec76-1b06-42d3-8630-817c67140209/raw.bin": {
+      "kind": "file",
+      "mtime_ns": 1793676279249623000,
+      "length": 140,
+      "sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a"
+    },
+    "project.json": {
+      "kind": "file",
+      "mtime_ns": 1793676279260155200,
+      "length": 167,
+      "sha256": "c9bf66ad2f8f5acc88cbdb3f2a5eed7a35cbc71a4d17248ef7419bd3bc471f85"
+    },
+    "project.sqlite": {
+      "kind": "file",
+      "mtime_ns": 1793676279244618800,
+      "length": 69632,
+      "sha256": "c68ce309ccd7ce8d1ede872db49b9e7e74eceacf74a1dfd1b71d53e0f7a5f4b3"
+    }
+  },
+  "source_sql": [
+    "BEGIN TRANSACTION;",
+    "CREATE TABLE project_metadata (\n    singleton INTEGER PRIMARY KEY CHECK (singleton = 1),\n    project_id TEXT NOT NULL UNIQUE,\n    schema_version INTEGER NOT NULL CHECK (schema_version = 2),\n    created_at TEXT NOT NULL,\n    state TEXT NOT NULL CHECK (state = 'initialized')\n);",
+    "INSERT INTO \"project_metadata\" VALUES(1,'82defdee-04ab-4759-b0d5-839d7923fcbf',2,'2026-11-03T03:24:39.2008862Z','initialized');",
+    "CREATE TABLE source_imports (\n    import_id TEXT PRIMARY KEY NOT NULL,\n    imported_at TEXT NOT NULL,\n    selected_path TEXT NOT NULL,\n    source_id TEXT REFERENCES sources(source_id),\n    version_id TEXT,\n    status TEXT NOT NULL CHECK (status IN ('ready', 'failed')),\n    reused INTEGER NOT NULL CHECK (reused IN (0, 1)),\n    span_count INTEGER NOT NULL CHECK (span_count >= 0),\n    pending_extraction_count INTEGER NOT NULL CHECK (pending_extraction_count = span_count),\n    knowledge_status TEXT NOT NULL CHECK (knowledge_status = 'pending'),\n    error_code TEXT,\n    error_message TEXT,\n    FOREIGN KEY (version_id, source_id) REFERENCES source_versions(version_id, source_id),\n    CHECK ((status = 'ready' AND source_id IS NOT NULL AND version_id IS NOT NULL AND error_code IS NULL AND error_message IS NULL)\n        OR (status = 'failed' AND error_code IS NOT NULL AND error_message IS NOT NULL)),\n    CHECK (version_id IS NOT NULL OR (reused = 0 AND span_count = 0))\n);",
+    "INSERT INTO \"source_imports\" VALUES('d8445223-d6b6-4a4a-81a2-3ae5d71c32b5','2026-11-03T03:24:39.2404008Z','D:\\Noetome\\fixtures\\extraction-gateway-v1\\source.txt','c436d987-2fff-4e01-8462-28478c310be4','4091ec76-1b06-42d3-8630-817c67140209','ready',0,1,1,'pending',NULL,NULL);",
+    "CREATE TABLE source_spans (\n    span_id TEXT PRIMARY KEY NOT NULL,\n    source_version_id TEXT NOT NULL REFERENCES source_versions(version_id),\n    ordinal INTEGER NOT NULL CHECK (ordinal >= 0),\n    kind TEXT NOT NULL CHECK (kind IN ('heading', 'text', 'code', 'formatting')),\n    start_byte INTEGER NOT NULL CHECK (start_byte >= 0),\n    end_byte INTEGER NOT NULL CHECK (end_byte > start_byte),\n    start_line INTEGER NOT NULL CHECK (start_line > 0),\n    end_line INTEGER NOT NULL CHECK (end_line >= start_line),\n    text_sha256 TEXT NOT NULL CHECK (length(text_sha256) = 64 AND text_sha256 NOT GLOB '*[^0-9a-f]*'),\n    parser_version TEXT NOT NULL,\n    parse_status TEXT NOT NULL CHECK (parse_status IN ('parsed', 'failed', 'needs_review')),\n    UNIQUE (source_version_id, ordinal)\n);",
+    "INSERT INTO \"source_spans\" VALUES('6a248038-3ce3-4618-a195-a610fe447315','4091ec76-1b06-42d3-8630-817c67140209',0,'text',0,140,1,1,'35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a','blocks-v1','parsed');",
+    "CREATE TABLE source_versions (\n    version_id TEXT PRIMARY KEY NOT NULL,\n    source_id TEXT NOT NULL REFERENCES sources(source_id),\n    revision INTEGER NOT NULL CHECK (revision > 0),\n    created_at TEXT NOT NULL,\n    media_type TEXT NOT NULL CHECK (media_type IN ('text/plain', 'text/markdown')),\n    display_name TEXT NOT NULL,\n    content_sha256 TEXT NOT NULL CHECK (length(content_sha256) = 64 AND content_sha256 NOT GLOB '*[^0-9a-f]*'),\n    byte_length INTEGER NOT NULL CHECK (byte_length >= 0),\n    normalized_sha256 TEXT,\n    normalization_version TEXT,\n    ingest_status TEXT NOT NULL CHECK (ingest_status IN ('ready', 'failed')),\n    raw_snapshot TEXT NOT NULL,\n    normalized_snapshot TEXT,\n    error_code TEXT,\n    error_message TEXT,\n    UNIQUE (source_id, content_sha256),\n    UNIQUE (source_id, revision),\n    UNIQUE (version_id, source_id),\n    CHECK ((ingest_status = 'ready' AND normalized_sha256 IS NOT NULL AND normalization_version IS NOT NULL AND normalized_snapshot IS NOT NULL AND error_code IS NULL AND error_message IS NULL)\n        OR (ingest_status = 'failed' AND normalized_sha256 IS NULL AND normalization_version IS NULL AND normalized_snapshot IS NULL AND error_code IS NOT NULL AND error_message IS NOT NULL))\n);",
+    "INSERT INTO \"source_versions\" VALUES('4091ec76-1b06-42d3-8630-817c67140209','c436d987-2fff-4e01-8462-28478c310be4',1,'2026-11-03T03:24:39.2404008Z','text/plain','source.txt','35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a',140,'35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a','utf8-newlines-v1','ready','.noetome-sources/4091ec76-1b06-42d3-8630-817c67140209/raw.bin','.noetome-sources/4091ec76-1b06-42d3-8630-817c67140209/normalized.txt',NULL,NULL);",
+    "CREATE TABLE sources (\n    source_id TEXT PRIMARY KEY NOT NULL,\n    created_at TEXT NOT NULL\n);",
+    "INSERT INTO \"sources\" VALUES('c436d987-2fff-4e01-8462-28478c310be4','2026-11-03T03:24:39.2404008Z');",
+    "COMMIT;"
+  ],
+  "real_model_calls": 0
+}

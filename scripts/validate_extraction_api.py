@@ -373,6 +373,8 @@ class Audit:
         if expected != 0:
             assert not (output / "candidates.json").exists(), name
         report = self.reports(output, expected)
+        if expected == 0 or (calls and not source_injection and not output_injection):
+            assert report is not None, (name, "required persisted audit report is absent")
         if report is not None:
             assert json.loads(run.stdout) == report
             assert report["usage"]["network_attempts"] == calls
@@ -424,7 +426,13 @@ class Audit:
         imported_run = self.call(["source", "import", str(project), str(source)], expected=0)
         imported = json.loads(imported_run.stdout)
         start = len(prefix.encode())
-        assert imported["spans"][1]["start_byte"] == start
+        # blocks-v1 inventories the blank line as a formatting Span. The
+        # independently authored quote is therefore Span2, after that line.
+        ordinal = 2
+        assert len(imported["spans"]) == 3
+        assert imported["spans"][1]["kind"] == "formatting"
+        assert imported["spans"][ordinal]["start_byte"] == start
+        assert imported["spans"][ordinal]["end_byte"] == start + len(quote.encode())
 
         def absolute_evidence(candidate):
             candidate["evidence"][0].update(
@@ -432,9 +440,9 @@ class Audit:
             )
         self.case(
             "nonzero-source-span", expected=0, metadata=True, check_gold=True,
-            config_change=lambda c: c.update(selection=[{"kind": "text", "ordinal": 1}]),
+            config_change=lambda c: c.update(selection=[{"kind": "text", "ordinal": ordinal}]),
             server={"candidate_change": absolute_evidence}, project=project,
-            import_id=imported["import_id"], gold_context=(imported, 1),
+            import_id=imported["import_id"], gold_context=(imported, ordinal),
         )
 
     def request_secret(self):
