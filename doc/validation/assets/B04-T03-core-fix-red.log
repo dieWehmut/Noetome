@@ -1,0 +1,51 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.71s
+     Running tests\extraction_verify.rs (target\debug\deps\extraction_verify-232809558d7e9ca5.exe)
+
+running 4 tests
+test fix1_duplicate_json_keys_keep_actual_counts_unknown ... FAILED
+test fix1_source_and_unknown_review_preserve_known_condition_failure ... FAILED
+test fix1_workflow_preserves_observed_category_failures ... FAILED
+test fix1_same_id_primary_checks_cannot_borrow_passes ... FAILED
+
+failures:
+
+---- fix1_duplicate_json_keys_keep_actual_counts_unknown stdout ----
+
+thread 'fix1_duplicate_json_keys_keep_actual_counts_unknown' (61544) panicked at crates\noetome-cli\tests\extraction_verify.rs:529:1021:
+assertion `left == right` failed: payload same=false
+  left: Number(0)
+ right: Null
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- fix1_source_and_unknown_review_preserve_known_condition_failure stdout ----
+
+thread 'fix1_source_and_unknown_review_preserve_known_condition_failure' (49308) panicked at crates\noetome-cli\tests\extraction_verify.rs:522:370:
+assertion `left == right` failed
+  left: Number(0)
+ right: 1
+
+---- fix1_workflow_preserves_observed_category_failures stdout ----
+
+thread 'fix1_workflow_preserves_observed_category_failures' (42908) panicked at crates\noetome-cli\tests\extraction_verify.rs:517:34:
+assertion `left == right` failed
+  left: Number(0)
+ right: 1
+
+---- fix1_same_id_primary_checks_cannot_borrow_passes stdout ----
+
+thread 'fix1_same_id_primary_checks_cannot_borrow_passes' (55260) panicked at crates\noetome-cli\tests\extraction_verify.rs:526:427:
+assertion `left == right` failed
+  left: Number(2)
+ right: 0
+
+
+failures:
+    fix1_duplicate_json_keys_keep_actual_counts_unknown
+    fix1_same_id_primary_checks_cannot_borrow_passes
+    fix1_source_and_unknown_review_preserve_known_condition_failure
+    fix1_workflow_preserves_observed_category_failures
+
+test result: FAILED. 0 passed; 4 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.27s
+
+error: test failed, to rerun pass `-p noetome-cli --test extraction_verify`

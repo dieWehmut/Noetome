@@ -1,0 +1,116 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\crates\noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.28s
+     Running tests\extraction_verify.rs (target\debug\deps\extraction_verify-232809558d7e9ca5.exe)
+
+running 11 tests
+test broken_concept_link_fails ... FAILED
+test excluded_pending_and_review_are_not_passed ... FAILED
+test author_exception_passes_ordinary_cli ... FAILED
+test missing_exception_fails ... FAILED
+test missing_both_unit_fields_fails ... FAILED
+test missing_both_condition_fields_fails ... FAILED
+test omitted_candidate_is_unprocessed ... FAILED
+test existing_embedded_and_hardlinked_paths_rejected ... ok
+test right_quote_wrong_fact_fails ... FAILED
+test semantic_duplicate_new_id_fails ... FAILED
+test strict_candidate_and_evidence_errors_have_reports ... FAILED
+
+failures:
+
+---- broken_concept_link_fails stdout ----
+
+thread 'broken_concept_link_fails' (60364) panicked at crates\noetome-cli\tests\extraction_verify.rs:36:59:
+assertion `left == right` failed: stdout= stderr=CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- excluded_pending_and_review_are_not_passed stdout ----
+
+thread 'excluded_pending_and_review_are_not_passed' (66484) panicked at crates\noetome-cli\tests\extraction_verify.rs:36:59:
+assertion `left == right` failed: stdout= stderr=CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+
+---- author_exception_passes_ordinary_cli stdout ----
+
+thread 'author_exception_passes_ordinary_cli' (66472) panicked at crates\noetome-cli\tests\extraction_verify.rs:36:59:
+assertion `left == right` failed: stdout= stderr=CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(0)
+
+---- missing_exception_fails stdout ----
+
+thread 'missing_exception_fails' (63676) panicked at crates\noetome-cli\tests\extraction_verify.rs:36:59:
+assertion `left == right` failed: stdout= stderr=CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+
+---- missing_both_unit_fields_fails stdout ----
+
+thread 'missing_both_unit_fields_fails' (48780) panicked at crates\noetome-cli\tests\extraction_verify.rs:36:59:
+assertion `left == right` failed: stdout= stderr=CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+
+---- missing_both_condition_fields_fails stdout ----
+
+thread 'missing_both_condition_fields_fails' (61020) panicked at crates\noetome-cli\tests\extraction_verify.rs:36:59:
+assertion `left == right` failed: stdout= stderr=CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+
+---- omitted_candidate_is_unprocessed stdout ----
+
+thread 'omitted_candidate_is_unprocessed' (21604) panicked at crates\noetome-cli\tests\extraction_verify.rs:36:59:
+assertion `left == right` failed: stdout= stderr=CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+
+---- right_quote_wrong_fact_fails stdout ----
+
+thread 'right_quote_wrong_fact_fails' (32868) panicked at crates\noetome-cli\tests\extraction_verify.rs:36:59:
+assertion `left == right` failed: stdout= stderr=CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+
+---- semantic_duplicate_new_id_fails stdout ----
+
+thread 'semantic_duplicate_new_id_fails' (15004) panicked at crates\noetome-cli\tests\extraction_verify.rs:36:59:
+assertion `left == right` failed: stdout= stderr=CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+
+---- strict_candidate_and_evidence_errors_have_reports stdout ----
+
+thread 'strict_candidate_and_evidence_errors_have_reports' (64868) panicked at crates\noetome-cli\tests\extraction_verify.rs:36:59:
+assertion `left == right` failed: stdout= stderr=CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+
+  left: Some(2)
+ right: Some(3)
+
+
+failures:
+    author_exception_passes_ordinary_cli
+    broken_concept_link_fails
+    excluded_pending_and_review_are_not_passed
+    missing_both_condition_fields_fails
+    missing_both_unit_fields_fails
+    missing_exception_fails
+    omitted_candidate_is_unprocessed
+    right_quote_wrong_fact_fails
+    semantic_duplicate_new_id_fails
+    strict_candidate_and_evidence_errors_have_reports
+
+test result: FAILED. 1 passed; 10 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.67s
+
+error: test failed, to rerun pass `-p noetome-cli --test extraction_verify`
