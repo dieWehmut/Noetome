@@ -158,6 +158,19 @@ impl OutputRoot {
         Self::create_owned(path, request_id, Some("source_review"))
     }
 
+    pub(crate) fn create_coordination(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
+        Self::create_owned(path, request_id, Some("knowledge_coordination"))
+    }
+    pub(crate) fn discard_coordination_result(&mut self) -> Result<(), ProjectError> {
+        self.discard_names_inner(
+            &[
+                "coordination-ir.json",
+                "coordination.json",
+                "coordination.md",
+            ],
+            true,
+        )
+    }
     fn create_owned(
         path: &Path,
         request_id: &str,
@@ -184,9 +197,10 @@ impl OutputRoot {
             directory,
             files: BTreeMap::new(),
         };
+        let coordination = mode == Some("knowledge_coordination");
         let review = mode == Some("source_review");
-        let mut owner = serde_json::json!({"schema_version":1,"producer":if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
-        if let Some(mode) = mode.filter(|_| !review) {
+        let mut owner = serde_json::json!({"schema_version":1,"producer":if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
+        if let Some(mode) = mode.filter(|_| !review && !coordination) {
             owner["transport_mode"] = serde_json::json!(mode);
         }
         let owner = serde_json::to_vec_pretty(&owner).map_err(|_| changed())?;

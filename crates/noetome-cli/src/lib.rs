@@ -24,6 +24,10 @@ mod fixture_knowledge;
 mod fixture_model;
 mod fixture_plan;
 mod fixture_render;
+pub mod knowledge_coordinate;
+mod knowledge_coordinate_facts;
+mod knowledge_coordinate_input;
+mod knowledge_coordination_model;
 mod pdf_model;
 pub mod pdf_parse;
 mod pdf_source;
@@ -54,6 +58,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome extract fake <项目路径> <import-id> <fake目录> <尚不存在的测试输出根>
       noetome extract api <项目路径> <import-id> <config.json> <尚不存在的测试输出根>
       noetome extract verify <项目路径> <import-id> <review目录> <尚不存在的测试输出根>
+      noetome knowledge coordinate <项目路径> <coordination-case> <尚不存在的测试输出根>
       noetome case verify <fixture目录>
       noetome case compile <fixture目录> <尚不存在的测试输出根>
 
@@ -154,6 +159,12 @@ fake以UTF8字节计量，价格及真实模型用量未知，网络和付费调
 #[derive(Debug)]
 pub enum CliCommand {
     Help,
+    KnowledgeHelp,
+    KnowledgeCoordinate {
+        project: PathBuf,
+        case: PathBuf,
+        output: PathBuf,
+    },
     ProjectHelp,
     Version,
     ProjectInit(PathBuf),
@@ -209,6 +220,9 @@ pub enum CliCommand {
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
 pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.first().is_some_and(|arg| arg == "knowledge") {
+        return knowledge_command(&args[1..]);
+    }
     if args.first().is_some_and(|arg| arg == "case") {
         return case_command(&args[1..]);
     }
@@ -464,6 +478,47 @@ pub fn render(args: &[OsString]) -> Result<String, &'static str> {
         [] => Ok(HELP.to_owned()),
         [arg] if arg == "--help" || arg == "-h" => Ok(HELP.to_owned()),
         [arg] if arg == "--version" || arg == "-V" => Ok(format!("noetome {VERSION}\n")),
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const KNOWLEDGE_HELP:&str="Noetome 有界多来源知识协调
+
+用法：noetome knowledge coordinate <项目路径> <coordination-case> <尚不存在的测试输出根>
+
+只重新核对同项目2至3份成功的单原子来源依据，通过显式组件身份映射保留重复／互补事实和全部出处。
+未知语义差异保持needs_review；不调用模型或研究服务。知识pending，published=false，scientific_quality=not_run。
+输出必须为已有父目录下的新测试根；以连字符开头的路径在coordinate后加 --，中文和空格路径作为单独参数。
+";
+fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.is_empty()
+        || matches!(args,[h] if h=="--help"||h=="-h")
+        || matches!(args,[v,h] if v=="coordinate"&&(h=="--help"||h=="-h"))
+    {
+        return Ok(CliCommand::KnowledgeHelp);
+    }
+    let (v, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if v != "coordinate" {
+        return Err(INVALID_ARGUMENT);
+    }
+    let (tail, sep) = if tail.first().is_some_and(|v| v == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    match tail {
+        [p, c, o]
+            if [p, c, o].iter().all(|s| {
+                s.to_str()
+                    .is_some_and(|s| !s.is_empty() && (sep || !s.starts_with('-')))
+            }) =>
+        {
+            Ok(CliCommand::KnowledgeCoordinate {
+                project: p.into(),
+                case: c.into(),
+                output: o.into(),
+            })
+        }
         _ => Err(INVALID_ARGUMENT),
     }
 }

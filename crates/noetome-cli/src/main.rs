@@ -20,6 +20,23 @@ fn main() -> ExitCode {
 
     let mut result_code = 0;
     let output = match command {
+        CliCommand::KnowledgeHelp => noetome_cli::KNOWLEDGE_HELP.to_owned(),
+        CliCommand::KnowledgeCoordinate {
+            project,
+            case,
+            output,
+        } => match noetome_cli::knowledge_coordinate::run(&project, &case, &output) {
+            Ok(output) => {
+                if output.failed {
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
         CliCommand::Help => noetome_cli::HELP.to_owned(),
         CliCommand::ProjectHelp => noetome_cli::PROJECT_HELP.to_owned(),
         CliCommand::SourceHelp => noetome_cli::SOURCE_HELP.to_owned(),

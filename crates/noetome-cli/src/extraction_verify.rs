@@ -82,7 +82,7 @@ impl<'de> Deserialize<'de> for UniqueKeys {
         de.deserialize_any(Syntax)
     }
 }
-fn recover_unambiguous_json(bytes: &[u8]) -> Result<Value, serde_json::Error> {
+pub(crate) fn recover_unambiguous_json(bytes: &[u8]) -> Result<Value, serde_json::Error> {
     serde_json::from_slice::<UniqueKeys>(bytes)?;
     serde_json::from_slice(bytes)
 }
@@ -440,12 +440,7 @@ fn run_inner(
         )?;
         let bytes = encoded(&report)?;
         let facts = String::from_utf8(bytes.clone()).map_err(|e| err("VERIFY_ENCODING", 3, e))?;
-        let markdown = format!(
-            "# 有界来源知识核对\n\n状态：{}；知识状态：pending；发布：false。\n\n科学质量：not_run；研究：not_requested；网络与付费调用：0。\n\n规则：controlled_measurement_zh_v1；复核主体：automated_source_review；解释时间：{}。\n\n来源范围、对象、问题码、逐类别检查与分母见以下完整事实快照，与 verification.json 一致。\n\n```json\n{}\n```\n",
-            report.status,
-            json!(report.rules.interpretation_timing),
-            facts
-        );
+        let markdown = review_markdown(&report)?;
         output.add("verification.json", &bytes)?;
         output.add("verification.md", markdown.as_bytes())?;
         let saved: ReviewReport = serde_json::from_slice(&output.read("verification.json")?)
@@ -483,10 +478,23 @@ fn report(
         .map(|f| {
             (
                 f.path.file_name().unwrap().to_string_lossy().into_owned(),
-                json!({"sha256":sha256(&f.bytes),"byte_length":f.bytes.len()}),
+                crate::sidecar_model::Fingerprint {
+                    sha256: sha256(&f.bytes),
+                    byte_length: f.bytes.len() as u64,
+                },
             )
         })
-        .collect::<std::collections::BTreeMap<_, _>>();
+        .collect();
+    report_from_fingerprints(r, s, a, c, fingerprints, artifacts)
+}
+pub(crate) fn report_from_fingerprints(
+    r: &Review,
+    s: &SourceSession,
+    a: &Assessment,
+    c: Option<&SavedCandidate>,
+    fingerprints: std::collections::BTreeMap<String, crate::sidecar_model::Fingerprint>,
+    artifacts: std::collections::BTreeMap<String, crate::sidecar_model::Fingerprint>,
+) -> Result<ReviewReport, ProjectError> {
     serde_json::from_value(json!({"schema_version":1,"report_kind":"source_knowledge_verification","producer":"source_review","request_id":c.map(|c|&c.request_id),"status":a.expected[0].status,"knowledge_status":"pending","published":false,"scientific_quality":"not_run","research_status":"not_requested","network_calls":0,"paid_calls":0,"scope":{"purpose":r.purpose,"selection":r.selection,"binding":s.binding,"units":s.units,"expected_atoms":1},"binding":s.binding,"origin":{"producer":c.map(|c|&c.producer),"transport_mode":c.map(|c|&c.transport_mode),"reviewer":r.reviewer,"interpretation_timing":r.interpretation_timing,"input_fingerprints":fingerprints,"gold_sha256":r.gold_sha256},"rules":{"grammar":"controlled_measurement_zh_v1","subject":r.subject,"property":r.property,"allowed_contexts":r.allowed_contexts,"reviewer":r.reviewer,"interpretation_timing":r.interpretation_timing},"expected_results":a.expected,"candidate_results":a.candidates,"checks":a.checks,"totals":a.totals,"quality":a.quality,"artifacts":artifacts})).map_err(|e|err("VERIFY_REPORT",3,e))
 }
 
@@ -759,4 +767,14 @@ mod guard_tests {
         assert!(!f.output.exists());
         f.unchanged();
     }
+}
+
+pub(crate) fn review_markdown(report: &ReviewReport) -> Result<String, ProjectError> {
+    let facts = String::from_utf8(encoded(report)?).map_err(|e| err("VERIFY_ENCODING", 3, e))?;
+    Ok(format!(
+        "# 有界来源知识核对\n\n状态：{}；知识状态：pending；发布：false。\n\n科学质量：not_run；研究：not_requested；网络与付费调用：0。\n\n规则：controlled_measurement_zh_v1；复核主体：automated_source_review；解释时间：{}。\n\n来源范围、对象、问题码、逐类别检查与分母见以下完整事实快照，与 verification.json 一致。\n\n```json\n{}\n```\n",
+        report.status,
+        json!(report.rules.interpretation_timing),
+        facts
+    ))
 }
