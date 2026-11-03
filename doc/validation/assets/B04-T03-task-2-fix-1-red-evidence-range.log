@@ -1,0 +1,19 @@
+F
+======================================================================
+FAIL: test_fix1_actual_invalid_evidence_range_is_preserved (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_fix1_actual_invalid_evidence_range_is_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 317, in test_fix1_actual_invalid_evidence_range_is_preserved
+    output, inputs = self.failed_condition_output(lambda c: c["payload"]["evidence"][0].update(excerpt_end_byte=self.source["units"][0]["end_byte"] + 1))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 259, in failed_condition_output
+    audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+  File "D:\Noetome\scripts\verify_extraction_knowledge.py", line 532, in verify_report
+    assert check["status"] in STATES and check["unit_id"] == unit["unit_id"] and unit["start_byte"] <= check["start_byte"] < check["end_byte"] <= unit["end_byte"], "check location/state"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: check location/state
+
+----------------------------------------------------------------------
+Ran 1 test in 0.297s
+
+FAILED (failures=1)

@@ -159,34 +159,89 @@ def actual_source(project, import_id, selection):
 
 
 def candidate_schema(candidate):
+    """Exact wire types, enums and nullable fields; no bool-as-int coercion.
+
+    Typed decoding is kept separate from semantic binding/ID/measurement rules
+    and raw count recovery. This covers the entire declared saved API schema.
+    """
+    def string(value, nullable=False):
+        assert type(value) is str or (nullable and value is None), "candidate string type"
+
+    def integer(value, maximum=(1 << 64) - 1):
+        assert type(value) is int and 0 <= value <= maximum, "candidate integer type"
+
+    def boolean(value):
+        assert type(value) is bool, "candidate boolean type"
+
+    def strings(value):
+        assert type(value) is list, "candidate string array type"
+        for item in value:
+            string(item)
+
+    def enum(value, choices):
+        string(value)
+        assert value in choices, "candidate schema enum"
+
+    def binding(value):
+        fields(value, "project_id import_id source_id version_id content_sha256 normalized_sha256 parse_id manifest_sha256")
+        for key in ("project_id", "import_id", "source_id", "version_id", "content_sha256"):
+            string(value[key])
+        for key in ("normalized_sha256", "parse_id", "manifest_sha256"):
+            string(value[key], nullable=True)
+
     fields(candidate, "schema_version producer transport_mode request_id binding payload")
-    assert candidate["schema_version"] == 1 and candidate["producer"] == "api"
-    assert candidate["transport_mode"] in ("live", "local_http_test")
-    binding_fields = "project_id import_id source_id version_id content_sha256 normalized_sha256 parse_id manifest_sha256"
-    fields(candidate["binding"], binding_fields)
+    integer(candidate["schema_version"], (1 << 32) - 1)
+    assert candidate["schema_version"] == 1, "candidate schema version"
+    enum(candidate["producer"], ("api",))
+    enum(candidate["transport_mode"], ("live", "local_http_test"))
+    string(candidate["request_id"])
+    binding(candidate["binding"])
     payload = candidate["payload"]
     fields(payload, "schema_version request_id binding concepts atoms evidence")
-    fields(payload["binding"], binding_fields)
-    assert payload["schema_version"] == 1 and isinstance(payload["request_id"], str)
+    binding(payload["binding"])
+    integer(payload["schema_version"], (1 << 32) - 1)
+    assert payload["schema_version"] == 1, "candidate schema version"
+    string(payload["request_id"])
     for category in ("concepts", "atoms", "evidence"):
-        assert isinstance(payload[category], list) and len(payload[category]) <= 1024
+        assert type(payload[category]) is list and len(payload[category]) <= 1024, "candidate entity array type/limit"
     for c in payload["concepts"]:
         fields(c, "concept_id revision canonical_name aliases needs_full_explanation")
-        assert type(c["revision"]) is int and c["revision"] > 0
+        string(c["concept_id"])
+        integer(c["revision"])
+        string(c["canonical_name"])
+        strings(c["aliases"])
+        boolean(c["needs_full_explanation"])
     for e in payload["evidence"]:
         fields(e, "evidence_id unit_id excerpt_start_byte excerpt_end_byte excerpt_sha256 quote")
+        for key in ("evidence_id", "unit_id", "excerpt_sha256", "quote"):
+            string(e[key])
+        integer(e["excerpt_start_byte"])
+        integer(e["excerpt_end_byte"])
     for item in payload["atoms"]:
         fields(item, "atom measurement")
         fields(item["atom"], "atom_id revision kind concept_ids content qualifiers evidence_links required verification value_status")
-        fields(item["measurement"], "value_status value unit conditions")
         a, m = item["atom"], item["measurement"]
-        assert type(a["revision"]) is int and a["revision"] > 0
-        assert a["kind"] in ("definition", "comparison_value", "formula", "procedure", "boundary", "counterexample", "relation")
-        assert a["verification"] == "unverified" and a["required"] is False
-        assert a["value_status"] in ("known", "unknown") and m["value_status"] in ("known", "unknown")
+        string(a["atom_id"])
+        integer(a["revision"])
+        enum(a["kind"], ("definition", "statement", "comparison_value"))
+        strings(a["concept_ids"])
+        string(a["content"])
+        strings(a["qualifiers"])
+        boolean(a["required"])
+        enum(a["verification"], ("unverified",))
+        assert a["required"] is False, "candidate schema required policy"
+        enum(a["value_status"], ("known", "unknown", "not_applicable"))
+        assert type(a["evidence_links"]) is list, "candidate evidence-link array type"
         for link in a["evidence_links"]:
             fields(link, "evidence_id relation")
-            assert link["relation"] in ("supports", "contradicts", "context")
+            string(link["evidence_id"])
+            enum(link["relation"], ("supports", "refutes", "qualifies"))
+        if m is not None:
+            fields(m, "value_status value unit conditions")
+            enum(m["value_status"], ("known", "unknown", "not_applicable"))
+            string(m["value"], nullable=True)
+            string(m["unit"], nullable=True)
+            strings(m["conditions"])
 
 
 def judgments(candidate, gold, review, decision, source):
@@ -200,7 +255,8 @@ def judgments(candidate, gold, review, decision, source):
               "coverage": [yes(len(atoms) == 1 and decision["unit_id"] == unit["unit_id"] and len(decision["atom_ids"]) == 1 and decision["atom_ids"][0] in [x["atom"]["atom_id"] for x in atoms])]}
     by_atom = []
     for item in atoms:
-        a, m = item["atom"], item["measurement"]
+        a = item["atom"]
+        m = item["measurement"] or {"conditions": [], "value_status": None, "value": None, "unit": None}
         parsed = predicate(a["content"], review, gold)
         quals = a["qualifiers"]
         conditions = m["conditions"]
@@ -241,6 +297,148 @@ def judgments(candidate, gold, review, decision, source):
     if by_atom:
         result.update(by_atom[0]["tests"])
     return result, by_atom
+
+
+def evidence_error(evidence, unit):
+    """Classify actual evidence without using reported diagnostics."""
+    start, end = evidence["excerpt_start_byte"], evidence["excerpt_end_byte"]
+    if evidence["unit_id"] != unit["unit_id"]:
+        return "EXTRACT_EVIDENCE_UNIT"
+    if not unit["start_byte"] <= start < end <= unit["end_byte"]:
+        return "EXTRACT_EVIDENCE_RANGE"
+    raw = unit["text"].encode()[start-unit["start_byte"]:end-unit["start_byte"]]
+    try:
+        actual_quote = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        return "EXTRACT_EVIDENCE_RANGE"
+    if actual_quote != evidence["quote"]:
+        return "EXTRACT_EVIDENCE_QUOTE"
+    if sha(raw) != evidence["excerpt_sha256"]:
+        return "EXTRACT_EVIDENCE_SHA"
+    return None
+
+
+def strict_candidate_code(candidate, source):
+    """Independent shared candidate obligations and their external error class."""
+    payload = candidate["payload"]
+    if candidate["binding"] != payload["binding"] or candidate["binding"] != source["binding"] or candidate["request_id"] != payload["request_id"]:
+        return "VERIFY_BINDING"
+    for evidence in payload["evidence"]:
+        error = evidence_error(evidence, source["units"][0])
+        if error:
+            return error
+    for item in payload["atoms"]:
+        a, m = item["atom"], item["measurement"]
+        if a["kind"] == "comparison_value" and m is None:
+            return "EXTRACT_MEASUREMENT"
+        if m is not None:
+            invalid = m["value_status"] != a["value_status"]
+            invalid |= m["value_status"] == "known" and (not m["value"] or not m["unit"])
+            invalid |= m["value_status"] == "unknown" and m["value"] is not None
+            invalid |= m["value_status"] == "not_applicable" and (m["value"] is not None or m["unit"] is not None)
+            invalid |= m["unit"] is not None and m["unit"] not in a["qualifiers"]
+            invalid |= any(c not in a["qualifiers"] for c in m["conditions"])
+            if invalid:
+                return "EXTRACT_MEASUREMENT"
+    ids = [a["atom"]["atom_id"] for a in payload["atoms"]]
+    concepts = [c["concept_id"] for c in payload["concepts"]]
+    evidence_ids = [e["evidence_id"] for e in payload["evidence"]]
+    if any(len(values) != len(set(values)) or any(not x.strip() for x in values) for values in (ids, concepts, evidence_ids)):
+        return "EXTRACT_KNOWLEDGE"
+    if any(c["revision"] <= 0 or not c["canonical_name"].strip() for c in payload["concepts"]):
+        return "EXTRACT_KNOWLEDGE"
+    for item in payload["atoms"]:
+        a = item["atom"]
+        if a["revision"] <= 0 or not a["content"].strip() or not a["concept_ids"] or any(cid not in concepts for cid in a["concept_ids"]):
+            return "EXTRACT_KNOWLEDGE"
+        if any(link["evidence_id"] not in evidence_ids for link in a["evidence_links"]):
+            return "EXTRACT_KNOWLEDGE"
+    return None
+
+
+def verify_diagnostics(report, candidate, schema, gold, review, decision, source):
+    """Bind every diagnostic and issue set to independently rebuilt occurrences.
+
+    Ordered descriptors retain shared expected checks, per-atom segments and
+    each actual supporting evidence slice. Same IDs never merge segments.
+    """
+    unit = source["units"][0]
+    observed = report["checks"]
+    descriptors, segments = [], []
+
+    def add(category, object_id, state, failure_code, start=None, end=None):
+        descriptor = {"category": category, "object_id": object_id, "unit_id": unit["unit_id"],
+                      "start_byte": unit["start_byte"] if start is None else start,
+                      "end_byte": unit["end_byte"] if end is None else end,
+                      "status": state, "code": None if state == "passed" else failure_code}
+        descriptors.append(descriptor)
+        return descriptor
+
+    yes = lambda passed: "passed" if passed else "failed"
+    add("schema", "expected-0", yes(schema), "VERIFY_SCHEMA")
+    add("source", "expected-0", "passed" if unit["source_status"] == "parsed" else "needs_review", "VERIFY_SOURCE_REVIEW")
+    add("exclusion", "expected-0", {"included": "passed", "excluded": "failed", "pending": "unprocessed", "needs_review": "needs_review"}[decision["disposition"]], "VERIFY_EXCLUSION")
+    payload = candidate["payload"] if schema else {"atoms": [], "concepts": [], "evidence": []}
+    items = payload["atoms"]
+    ids = [x["atom"]["atom_id"] for x in items]
+    coverage = len(items) == 1 and decision["unit_id"] == unit["unit_id"] and len(decision["atom_ids"]) == 1 and decision["atom_ids"][0] in ids
+    add("coverage", "expected-0", yes(coverage), "VERIFY_MISSING" if not items else "VERIFY_COVERAGE")
+    shared_error = strict_candidate_code(candidate, source) if schema else None
+    if shared_error:
+        add("strict_candidate", "expected-0", "failed", shared_error)
+    if schema:
+        obligations, atoms = judgments(candidate, gold, review, decision, source)
+        add("binding", "expected-0", obligations["binding"][0], "VERIFY_BINDING")
+        seen = set()
+        for index, item in enumerate(items):
+            begin = len(descriptors)
+            a, measurement = item["atom"], item["measurement"]
+            m = measurement or {"unit": None, "conditions": []}
+            object_id = a["atom_id"]
+            if shared_error:
+                add("strict_candidate", object_id, "failed", shared_error)
+            parsed = predicate(a["content"], review, gold)
+            semantic_key = "expected_fact" if parsed and same_set(parsed[0], gold["conditions"]) and same_set(parsed[1], gold.get("exceptions", [])) else norm(a["content"])
+            add("duplicate", object_id, yes(semantic_key not in seen), "VERIFY_DUPLICATE")
+            seen.add(semantic_key)
+            supporting_ids = {link["evidence_id"] for link in a["evidence_links"] if link["relation"] == "supports"}
+            for evidence in payload["evidence"]:
+                if evidence["evidence_id"] in supporting_ids:
+                    add("evidence_identity", evidence["evidence_id"], yes(evidence_error(evidence, unit) is None), "VERIFY_EVIDENCE", evidence["excerpt_start_byte"], evidence["excerpt_end_byte"])
+            own = atoms[index]["tests"]
+            for category in ("evidence", "concept", "content", "fact"):
+                state = own[category][0]
+                add(category, object_id, state, "VERIFY_UNKNOWN" if category == "fact" and state == "needs_review" else "VERIFY_" + category.upper())
+            unit_ok = measurement is not None and m["unit"] == gold["unit"] and (gold["unit"] is None or list(map(norm, a["qualifiers"])).count(norm(gold["unit"])) == 1)
+            add("unit", object_id, yes(unit_ok), "VERIFY_UNIT")
+            for state in own["condition"]:
+                add("condition", object_id, state, "VERIFY_CONDITION")
+            allowed = set(map(norm, [*gold["conditions"], *review["allowed_contexts"]]))
+            conditions = list(map(norm, m["conditions"]))
+            valid_conditions = len(conditions) == len(set(conditions)) and set(conditions) <= allowed and parsed is not None and len(parsed[0]) == len(set(parsed[0])) and set(parsed[0]) <= allowed
+            add("condition_set", object_id, yes(valid_conditions), "VERIFY_CONDITION")
+            for state in own["exception"]:
+                add("exception", object_id, state, "VERIFY_EXCEPTION")
+            add("exception_set", object_id, yes(parsed is not None and same_set(parsed[1], gold.get("exceptions", []))), "VERIFY_EXCEPTION")
+            qualifiers = list(map(norm, a["qualifiers"]))
+            allowed_qualifiers = set(map(norm, [*gold["conditions"], *gold.get("exceptions", []), *review["allowed_contexts"], *([gold["unit"]] if gold["unit"] is not None else [])]))
+            add("qualifiers", object_id, yes(len(qualifiers) == len(set(qualifiers)) and set(qualifiers) <= allowed_qualifiers), "VERIFY_CONDITION")
+            segments.append(descriptors[begin:])
+    assert len(observed) == len(descriptors), "diagnostic occurrence count"
+    for index, (actual, expected) in enumerate(zip(observed, descriptors)):
+        assert type(actual["start_byte"]) is int and type(actual["end_byte"]) is int, "diagnostic range integer type"
+        assert {k: actual[k] for k in expected} == expected, "diagnostic identity/range/code/state at occurrence " + str(index)
+    expected_issues = sorted({d["code"] for d in descriptors if d["code"] is not None})
+    assert report["expected_results"][0]["issue_codes"] == expected_issues, "expected issue set"
+    if schema:
+        for result, segment, item in zip(report["candidate_results"], segments, items):
+            # Evidence-local failure belongs to evidence ID. It reaches the atom
+            # through its own evidence check, preserving exact report semantics.
+            codes = sorted({d["code"] for d in segment if d["status"] == "failed" and d["object_id"] == item["atom"]["atom_id"] and d["code"] is not None})
+            assert result["issue_codes"] == codes, "candidate occurrence issue set"
+    else:
+        for result in report["candidate_results"]:
+            assert result["issue_codes"] == ["VERIFY_SCHEMA"], "schema-rejected candidate issue set"
 
 
 def verify_report(output, candidate_bytes, gold_bytes, actual_source, inputs):
@@ -332,7 +530,11 @@ def verify_report(output, candidate_bytes, gold_bytes, actual_source, inputs):
         assert q["status"] == state, "quality status: " + category
     for check in report["checks"]:
         fields(check, "category object_id unit_id start_byte end_byte status code expected actual")
-        assert check["status"] in STATES and check["unit_id"] == unit["unit_id"] and unit["start_byte"] <= check["start_byte"] < check["end_byte"] <= unit["end_byte"], "check location/state"
+        assert check["status"] in STATES and check["unit_id"] == unit["unit_id"], "check location/state"
+        if check["category"] != "evidence_identity":
+            assert check["start_byte"] == unit["start_byte"] and check["end_byte"] == unit["end_byte"], "check source range"
+        # Evidence identity diagnostics deliberately retain malformed actual
+        # ranges. verify_diagnostics binds those exact raw offsets below.
     independently_passed = False
     if schema:
         assert report["origin"]["producer"] == "api" and report["origin"]["transport_mode"] == candidate["transport_mode"] and report["request_id"] == candidate["request_id"], "origin provenance"
@@ -352,12 +554,12 @@ def verify_report(output, candidate_bytes, gold_bytes, actual_source, inputs):
                     if category == "fact":
                         assert check["actual"] == item["measurement"], "check actual measurement"
                     elif category == "unit":
-                        assert check["actual"] == {"measurement": item["measurement"]["unit"], "qualifiers": item["atom"]["qualifiers"]}, "check actual unit"
+                        assert check["actual"] == {"measurement": item["measurement"]["unit"] if item["measurement"] else None, "qualifiers": item["atom"]["qualifiers"]}, "check actual unit"
                     elif category == "content":
                         assert check["actual"] == item["atom"]["content"], "check actual content"
                     elif category == "condition":
                         parsed = predicate(item["atom"]["content"], review, gold)
-                        assert check["actual"] == {"measurement": item["measurement"]["conditions"], "qualifiers": item["atom"]["qualifiers"], "body": parsed[0] if parsed else None}, "check actual condition"
+                        assert check["actual"] == {"measurement": item["measurement"]["conditions"] if item["measurement"] else [], "qualifiers": item["atom"]["qualifiers"], "body": parsed[0] if parsed else None}, "check actual condition"
                         assert check["expected"] in gold["conditions"], "check author condition"
                     elif category == "exception":
                         parsed = predicate(item["atom"]["content"], review, gold)
@@ -379,6 +581,7 @@ def verify_report(output, candidate_bytes, gold_bytes, actual_source, inputs):
         ids = [x["atom"]["atom_id"] for x in candidate["payload"]["atoms"]]
         ids_unique &= len(ids) == len(set(ids))
         independently_passed &= ids_unique
+        independently_passed &= strict_candidate_code(candidate, actual_source) is None
         independent_status = "passed" if independently_passed else "failed"
         if not atoms or decision["disposition"] == "pending":
             independent_status = "unprocessed"
@@ -401,6 +604,7 @@ def verify_report(output, candidate_bytes, gold_bytes, actual_source, inputs):
     else:
         assert totals["duplicate_atoms"] is None and report["status"] != "passed", "schema unknown count/status"
         assert report["quality"]["schema"]["failed"] == 1, "schema failure"
+    verify_diagnostics(report, candidate, schema, gold, review, decision, actual_source)
     ir_path = output / "knowledge-ir.json"
     assert ir_path.exists() == (report["status"] == "passed"), "IR status mismatch"
     if ir_path.exists():

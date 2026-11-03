@@ -185,3 +185,142 @@ class KnowledgeVerifierTests(unittest.TestCase):
         self.change_report(lambda r: r["artifacts"].pop("knowledge-ir.json"))
         with self.assertRaisesRegex(AssertionError, "independent.*status"):
             self.verify()
+
+    def coherent_candidate(self, edit):
+        """Change candidate, copies, diagnostics and IR consistently, no stale SHA."""
+        edit(self.candidate)
+        raw = audit.encoded(self.candidate)
+        self.inputs["candidates.json"] = raw
+        (self.output / "candidates-original.json").write_bytes(raw)
+        report = json.loads((self.output / "verification.json").read_bytes())
+        fp = audit.fingerprint(raw)
+        report["origin"]["input_fingerprints"]["candidates.json"] = fp
+        report["artifacts"]["candidates-original.json"] = fp
+        for check in report["checks"]:
+            if check["category"] == "concept":
+                check["actual"]["linked"] = copy.deepcopy(self.candidate["payload"]["concepts"])
+        ir = json.loads((self.output / "knowledge-ir.json").read_bytes())
+        for key in ("concepts", "atoms", "evidence"):
+            ir[key] = copy.deepcopy(self.candidate["payload"][key])
+        ir["checks"] = copy.deepcopy(report["checks"])
+        audit.save(self.output / "knowledge-ir.json", ir)
+        report["artifacts"]["knowledge-ir.json"] = audit.fingerprint((self.output / "knowledge-ir.json").read_bytes())
+        audit.save(self.output / "verification.json", report)
+        (self.output / "verification.md").write_text("```json\n" + json.dumps(report, ensure_ascii=False) + "\n```\n", encoding="utf-8")
+        # Explicitly assert the forgery is coherent before invoking the gate.
+        self.assertEqual(ir["concepts"], self.candidate["payload"]["concepts"])
+        self.assertEqual(report["artifacts"]["knowledge-ir.json"], audit.fingerprint((self.output / "knowledge-ir.json").read_bytes()))
+
+    def test_fix1_coherent_ill_typed_boolean_cannot_pass(self):
+        self.coherent_candidate(lambda c: c["payload"]["concepts"][0].update(needs_full_explanation="not-a-boolean"))
+        with self.assertRaisesRegex(AssertionError, "schema|candidate.*type"):
+            self.verify()
+
+    def test_fix1_complete_candidate_types(self):
+        changes = [
+            lambda c: c.update(schema_version=True),
+            lambda c: c["payload"]["concepts"][0].update(revision=True),
+            lambda c: c["payload"]["concepts"][0].update(aliases=[7]),
+            lambda c: c["payload"]["concepts"][0].update(needs_full_explanation=1),
+            lambda c: c["payload"]["atoms"][0]["atom"].update(required=0),
+            lambda c: c["payload"]["atoms"][0]["atom"].update(content=["text"]),
+            lambda c: c["payload"]["atoms"][0]["atom"].update(concept_ids="concept-speed"),
+            lambda c: c["payload"]["atoms"][0]["measurement"].update(value=10),
+            lambda c: c["payload"]["atoms"][0]["measurement"].update(conditions=[20]),
+            lambda c: c["payload"]["evidence"][0].update(excerpt_start_byte=False),
+            lambda c: c["payload"]["evidence"][0].update(excerpt_sha256=0),
+            lambda c: c["binding"].update(parse_id=7),
+        ]
+        original = copy.deepcopy(self.candidate)
+        for index, change in enumerate(changes):
+            with self.subTest(index=index):
+                value = copy.deepcopy(original)
+                change(value)
+                with self.assertRaisesRegex(AssertionError, "schema|candidate.*type"):
+                    audit.candidate_schema(value)
+
+    def failed_condition_output(self, candidate_edit=None):
+        case = self.output / "negative-inputs"
+        case.mkdir()
+        for name, raw in self.inputs.items():
+            (case / name).write_bytes(raw)
+        candidate = copy.deepcopy(self.candidate)
+        if candidate_edit:
+            candidate_edit(candidate)
+        else:
+            candidate["payload"]["atoms"][0]["measurement"]["conditions"] = []
+            candidate["payload"]["atoms"][0]["atom"]["qualifiers"] = ["m/s", "结冰时不适用"]
+        audit.save(case / "candidates.json", candidate)
+        output = self.output / "negative-output"
+        run = subprocess.run([str(self.binary), "extract", "verify", str(self.project), self.source["binding"]["import_id"], str(case), str(output)], capture_output=True, timeout=40)
+        audit.save(self.output / "negative-cli-receipt.json", {"argv": run.args, "exit": run.returncode, "stdout": run.stdout.decode(), "stderr": run.stderr.decode()})
+        self.assertEqual(run.returncode, 3)
+        inputs = {p.name: p.read_bytes() for p in case.iterdir()}
+        audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+        return output, inputs
+
+    def test_fix1_coherent_missing_diagnostic_identity_and_codes(self):
+        output, inputs = self.failed_condition_output()
+        report = json.loads((output / "verification.json").read_bytes())
+        for check in report["checks"]:
+            if check["category"] == "condition":
+                check.update(object_id="NONEXISTENT-ATOM", code=None)
+        for result in report["expected_results"] + report["candidate_results"]:
+            result["issue_codes"] = []
+        audit.save(output / "verification.json", report)
+        (output / "verification.md").write_text("```json\n" + json.dumps(report, ensure_ascii=False) + "\n```\n", encoding="utf-8")
+        with self.assertRaisesRegex(AssertionError, "diagnostic|issue"):
+            audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+
+    def test_fix1_wrong_failed_code_is_rejected(self):
+        output, inputs = self.failed_condition_output()
+        report = json.loads((output / "verification.json").read_bytes())
+        for check in report["checks"]:
+            if check["category"] == "condition":
+                check["code"] = "VERIFY_UNIT"
+        audit.save(output / "verification.json", report)
+        (output / "verification.md").write_text("```json\n" + json.dumps(report, ensure_ascii=False) + "\n```\n", encoding="utf-8")
+        with self.assertRaisesRegex(AssertionError, "diagnostic|issue"):
+            audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+
+    def coherent_report(self, edit):
+        report = json.loads((self.output / "verification.json").read_bytes())
+        edit(report)
+        ir = json.loads((self.output / "knowledge-ir.json").read_bytes())
+        ir["checks"] = copy.deepcopy(report["checks"])
+        audit.save(self.output / "knowledge-ir.json", ir)
+        report["artifacts"]["knowledge-ir.json"] = audit.fingerprint((self.output / "knowledge-ir.json").read_bytes())
+        audit.save(self.output / "verification.json", report)
+        (self.output / "verification.md").write_text("```json\n" + json.dumps(report, ensure_ascii=False) + "\n```\n", encoding="utf-8")
+
+    def test_fix1_evidence_local_range_must_match_actual_evidence(self):
+        self.coherent_report(lambda r: next(x for x in r["checks"] if x["category"] == "evidence_identity").update(start_byte=1))
+        with self.assertRaisesRegex(AssertionError, "diagnostic"):
+            self.verify()
+
+    def test_fix1_shared_expected_check_identity(self):
+        self.coherent_report(lambda r: next(x for x in r["checks"] if x["category"] == "source").update(object_id="atom-speed"))
+        with self.assertRaisesRegex(AssertionError, "diagnostic"):
+            self.verify()
+
+    def test_fix1_issue_sets_must_match_actual_failure(self):
+        output, inputs = self.failed_condition_output()
+        report = json.loads((output / "verification.json").read_bytes())
+        for result in report["candidate_results"]:
+            result["issue_codes"] = []
+        audit.save(output / "verification.json", report)
+        (output / "verification.md").write_text("```json\n" + json.dumps(report, ensure_ascii=False) + "\n```\n", encoding="utf-8")
+        with self.assertRaisesRegex(AssertionError, "issue"):
+            audit.verify_report(output, inputs["candidates.json"], self.gold_bytes, self.source, inputs)
+
+    def test_fix1_actual_invalid_evidence_range_is_preserved(self):
+        output, inputs = self.failed_condition_output(lambda c: c["payload"]["evidence"][0].update(excerpt_end_byte=self.source["units"][0]["end_byte"] + 1))
+        report = json.loads((output / "verification.json").read_bytes())
+        diagnostic = next(c for c in report["checks"] if c["category"] == "evidence_identity")
+        self.assertEqual(diagnostic["end_byte"], self.source["units"][0]["end_byte"] + 1)
+        self.assertEqual(diagnostic["code"], "VERIFY_EVIDENCE")
+
+    def test_fix1_diagnostic_boolean_offset_is_not_integer(self):
+        self.coherent_report(lambda r: next(x for x in r["checks"] if x["category"] == "evidence_identity").update(start_byte=False))
+        with self.assertRaisesRegex(AssertionError, "diagnostic"):
+            self.verify()

@@ -1,0 +1,50 @@
+.F.FFFF
+======================================================================
+FAIL: test_fix1_coherent_missing_diagnostic_identity_and_codes (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_fix1_coherent_missing_diagnostic_identity_and_codes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 269, in test_fix1_coherent_missing_diagnostic_identity_and_codes
+    with self.assertRaisesRegex(AssertionError, "diagnostic|issue"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_fix1_evidence_local_range_must_match_actual_evidence (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_fix1_evidence_local_range_must_match_actual_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 295, in test_fix1_evidence_local_range_must_match_actual_evidence
+    with self.assertRaisesRegex(AssertionError, "diagnostic"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_fix1_issue_sets_must_match_actual_failure (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_fix1_issue_sets_must_match_actual_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 310, in test_fix1_issue_sets_must_match_actual_failure
+    with self.assertRaisesRegex(AssertionError, "issue"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_fix1_shared_expected_check_identity (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_fix1_shared_expected_check_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 300, in test_fix1_shared_expected_check_identity
+    with self.assertRaisesRegex(AssertionError, "diagnostic"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_fix1_wrong_failed_code_is_rejected (test_extraction_knowledge_verifier.KnowledgeVerifierTests.test_fix1_wrong_failed_code_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_extraction_knowledge_verifier.py", line 280, in test_fix1_wrong_failed_code_is_rejected
+    with self.assertRaisesRegex(AssertionError, "diagnostic|issue"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.495s
+
+FAILED (failures=5)
