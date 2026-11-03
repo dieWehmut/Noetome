@@ -199,7 +199,7 @@ impl RequestStrategy {
     pub(crate) fn version(self) -> &'static str {
         match self {
             Self::OpenAiStrict => "openai-responses-strict-json-schema-v1",
-            Self::TangmaoDeepseek => "tangmao-deepseek-responses-json-schema-v1",
+            Self::TangmaoDeepseek => "tangmao-deepseek-responses-inline-json-schema-v2",
         }
     }
 }

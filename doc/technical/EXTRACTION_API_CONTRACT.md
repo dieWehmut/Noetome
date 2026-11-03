@@ -32,7 +32,7 @@ required_input=vision 或缺少 text/structured_output 在请求前拒绝；不�
 
 真实 HTTP body 保存为 request-body.json。旧官方/本地策略openai-responses-strict-json-schema-v1发送 model、instructions、input（包含 request_id、SourceBinding、真实 units 和 Core 计算的完整单位证据 anchor 的 JSON 文本）、text.format={type:json_schema,name:noetome_candidates_v1,strict:true,schema}、max_output_tokens、store=false、stream=false、background=false、tools=[]、tool_choice=none、service_tier=default、truncation=disabled。
 
-所选策略tangmao-deepseek-responses-json-schema-v1沿用相同input/name/schema及输出上限，移除text.format.strict、background/service_tier/truncation，发送reasoning={effort:none}、store=false、stream=false、tools=[]、tool_choice=none。store=false是客户端明确意图，不是网关日志或账单保证；严格schema保证由Core对实际返回候选检查。两种策略均不发送conversation、previous_response_id、搜索或文件上传；request_strategy在请求及JSON/Markdown报告逐字段保存，报告也保存实际endpoint。
+所选初始策略tangmao-deepseek-responses-json-schema-v1已在首次真实请求保留。实际网关回包省略error/incomplete_details，模型回复要求提供任务而不是候选JSON。续接策略tangmao-deepseek-responses-inline-json-schema-v2保留name/schema/输出上限与同一端点，input是自足JSON文本：task为完整抽取指令及仅输出一个JSON要求，response_schema为完整候选Schema，request为原request_id/binding/units/evidence_anchors。顶层instructions/text.format仍保留，不依赖网关实际传递这两字段；不剥代码围栏或修补非JSON。仍移除text.format.strict、background/service_tier/truncation，发送reasoning={effort:none}、store=false、stream=false、tools=[]、tool_choice=none。store/effort是客户端意图，首次回包仍有reasoning摘要，不能声称服务已经执行关闭思考或不保存；严格候选由Core检查。两种端点策略均不发送conversation、previous_response_id、搜索或文件上传；request_strategy在请求及JSON/Markdown报告逐字段保存，报告也保存实际endpoint。
 
 Core 先序列化全部正文、提示和 Schema；input_reserved_tokens 为实际 body UTF8 字节数加 1024，reservation_policy=request_utf8_bytes_plus_1024_v1。这是保守工程预留，model_tokenizer=null，并非真实 Token 测量或提供商账单保证。请求前预留 input_reserved_tokens + max_output_tokens；不足停止。返回 usage 再核对 input<=预留、output<=指定上限、input+output=total 且 total<=总预算；违反时保留原响应并失败，不再发下一次请求。缺用量保留 null 并失败，不以 0 补齐。
 
@@ -44,7 +44,7 @@ evidence_anchors 的 excerpt_start_byte/end_byte 必须复制 unit.start_byte/en
 
 ## 响应与 Core 候选
 
-完整原响应保存 response.bin；partial 明确 response_complete=false。HTTP 200 还须 status=completed、error/incomplete_details 均为 null、一个 completed assistant message 的一个 output_text JSON，允许独立 reasoning 元数据，不接受工具输出、额外文本、拒答或空响应。wire 元数据可扩展，但所有层重复 JSON key、尾随 JSON、类型错误拒绝。
+完整原响应保存 response.bin；partial 明确 response_complete=false。HTTP 200 还须显式status=completed、一个completed assistant message的一个output_text JSON，允许独立reasoning元数据，不接受工具输出、额外文本、拒答或空响应。官方/本地strict策略仍要求error/incomplete_details出现且均为null。仅所选v2按已观察到的稀疏completed回包允许两字段省略，原字节不改写；两字段存在时仍校验null/object及内容，非null错误/不完整细节不能成功，缺/错status也不能成功。wire元数据可扩展，但所有层重复JSON key、尾随JSON、类型错误拒绝。
 
 API 输出 JSON 严格字段为 schema_version=1、request_id、binding、concepts、evidence、atoms。SourceBinding、Concept、CandidateEvidence、CandidateAtom/Measurement 沿用领域规则；它不携带模型自封的 producer。request_id/binding 必须与 Core 请求完全一致；原子固定 required=false、verification=unverified，有真实 supports、UTF8 范围/quote/SHA 和明确未知值。API 与 fake 共用领域校验函数，API 不伪装为 fake payload。
 

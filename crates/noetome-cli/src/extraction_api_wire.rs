@@ -1,4 +1,5 @@
 //! Responses envelope validation and strict candidate DTOs.
+use crate::extraction_api_config::RequestStrategy;
 use crate::extraction_model::{CandidateAtom, CandidateEvidence, SourceBinding};
 use crate::fixture_model::Concept;
 use crate::project::ProjectError;
@@ -39,8 +40,15 @@ pub(crate) fn response_metadata(body: &[u8]) -> Result<ResponseMetadata, Project
     let value = strict_json(body).map_err(|_| error("EXTRACT_API_RESPONSE"))?;
     metadata(&value)
 }
+#[cfg(test)]
 pub(crate) fn decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
-    let value = envelope(body)?;
+    decode_with_strategy(body, RequestStrategy::OpenAiStrict)
+}
+pub(crate) fn decode_with_strategy(
+    body: &[u8],
+    strategy: RequestStrategy,
+) -> Result<ParsedResponse, ProjectError> {
+    let value = envelope(body, strategy)?;
     let status = value["status"]
         .as_str()
         .ok_or_else(|| error("EXTRACT_API_RESPONSE"))?;
@@ -178,7 +186,7 @@ impl<'de> Visitor<'de> for UniqueVisitor {
 fn strict_json(bytes: &[u8]) -> Result<Value, serde_json::Error> {
     serde_json::from_slice::<Unique>(bytes).map(|v| v.0)
 }
-fn envelope(body: &[u8]) -> Result<Value, ProjectError> {
+fn envelope(body: &[u8], strategy: RequestStrategy) -> Result<Value, ProjectError> {
     let value = strict_json(body).map_err(|_| error("EXTRACT_API_RESPONSE"))?;
     if !value.is_object() {
         return Err(error("EXTRACT_API_RESPONSE"));
@@ -189,9 +197,14 @@ fn envelope(body: &[u8]) -> Result<Value, ProjectError> {
         }
     }
     for field in ["error", "incomplete_details"] {
-        let v = value
-            .get(field)
-            .ok_or_else(|| error("EXTRACT_API_RESPONSE"))?;
+        let Some(v) = value.get(field) else {
+            if matches!(strategy, RequestStrategy::TangmaoDeepseek)
+                && value["status"] == "completed"
+            {
+                continue;
+            }
+            return Err(error("EXTRACT_API_RESPONSE"));
+        };
         if !v.is_null() && !v.is_object() {
             return Err(error("EXTRACT_API_RESPONSE"));
         }
@@ -359,6 +372,176 @@ fn metadata(value: &Value) -> Result<ResponseMetadata, ProjectError> {
 mod tests {
     use super::*;
     use serde_json::json;
+    fn selected_decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
+        super::decode_with_strategy(body, RequestStrategy::TangmaoDeepseek)
+    }
+    fn sparse_response() -> Value {
+        let mut v = response();
+        v.as_object_mut().unwrap().remove("error");
+        v.as_object_mut().unwrap().remove("incomplete_details");
+        v
+    }
+    #[test]
+    fn inline_fix_selected_sparse_completed_accepts_candidates_but_default_stays_strict() {
+        let bytes = sparse_response().to_string().into_bytes();
+        let parsed = selected_decode(&bytes).unwrap();
+        assert_eq!(parsed.id, "resp");
+        assert_eq!(parsed.usage["total_tokens"], 20);
+        assert_eq!(parsed.candidates.request_id, "req");
+        assert_eq!(decode(&bytes).unwrap_err().code(), "EXTRACT_API_RESPONSE");
+        let mut full = response();
+        full["model"] = json!("deepseek-flash");
+        // Model aliases cannot opt official/local wire into sparse tolerance.
+        full.as_object_mut().unwrap().remove("error");
+        assert_eq!(
+            decode(full.to_string().as_bytes()).unwrap_err().code(),
+            "EXTRACT_API_RESPONSE"
+        );
+    }
+    #[test]
+    fn inline_fix_first_actual_plaintext_is_candidate_failure_with_real_usage_preserved() {
+        let bytes =
+            include_bytes!("../../../doc/validation/assets/B04-T02-live-first-response.bin");
+        let metadata = response_metadata(bytes).unwrap();
+        assert_eq!(metadata.model, "deepseek-flash");
+        assert_eq!(metadata.usage["input_tokens"], 551);
+        assert_eq!(metadata.usage["output_tokens"], 385);
+        assert_eq!(metadata.usage["total_tokens"], 936);
+        assert_eq!(
+            selected_decode(bytes).unwrap_err().code(),
+            "EXTRACT_API_CANDIDATES"
+        );
+        assert_eq!(decode(bytes).unwrap_err().code(), "EXTRACT_API_RESPONSE");
+    }
+    #[test]
+    fn inline_fix_selected_sparse_status_errors_types_and_usage_remain_strict() {
+        let mut missing_status = sparse_response();
+        missing_status.as_object_mut().unwrap().remove("status");
+        assert!(selected_decode(missing_status.to_string().as_bytes()).is_err());
+        for (field, bad, expected) in [
+            ("status", Value::Null, "EXTRACT_API_RESPONSE"),
+            ("status", json!(true), "EXTRACT_API_RESPONSE"),
+            ("status", json!("incomplete"), "EXTRACT_API_RESPONSE"),
+            ("status", json!("failed"), "EXTRACT_API_RESPONSE"),
+            ("status", json!("unknown"), "EXTRACT_API_RESPONSE"),
+            (
+                "error",
+                json!({"code":"bad","message":"failed"}),
+                "EXTRACT_API_STATUS",
+            ),
+            ("error", json!({"code":null}), "EXTRACT_API_RESPONSE"),
+            ("error", json!(false), "EXTRACT_API_RESPONSE"),
+            ("error", json!([]), "EXTRACT_API_RESPONSE"),
+            (
+                "incomplete_details",
+                json!({"reason":"max_output_tokens"}),
+                "EXTRACT_API_INCOMPLETE",
+            ),
+            (
+                "incomplete_details",
+                json!({"reason":7}),
+                "EXTRACT_API_RESPONSE",
+            ),
+            ("incomplete_details", json!("none"), "EXTRACT_API_RESPONSE"),
+            ("usage", Value::Null, "EXTRACT_API_USAGE"),
+            (
+                "usage",
+                json!({"input_tokens":12,"output_tokens":8,"total_tokens":21}),
+                "EXTRACT_API_USAGE",
+            ),
+            ("model", json!(7), "EXTRACT_API_RESPONSE"),
+        ] {
+            let mut value = sparse_response();
+            value[field] = bad;
+            assert_eq!(
+                selected_decode(value.to_string().as_bytes())
+                    .unwrap_err()
+                    .code(),
+                expected,
+                "{field}"
+            );
+        }
+        for omitted in ["error", "incomplete_details"] {
+            let mut value = response();
+            value.as_object_mut().unwrap().remove(omitted);
+            assert!(selected_decode(value.to_string().as_bytes()).is_ok());
+            assert_eq!(
+                decode(value.to_string().as_bytes()).unwrap_err().code(),
+                "EXTRACT_API_RESPONSE"
+            );
+        }
+        assert!(selected_decode(response().to_string().as_bytes()).is_ok());
+        let mut incomplete = response();
+        incomplete["status"] = json!("incomplete");
+        assert_eq!(
+            selected_decode(incomplete.to_string().as_bytes())
+                .unwrap_err()
+                .code(),
+            "EXTRACT_API_INCOMPLETE"
+        );
+    }
+    #[test]
+    fn inline_fix_selected_sparse_duplicates_tools_extra_text_and_fences_stay_rejected() {
+        let good = sparse_response().to_string();
+        for bad in [
+            good.replacen("{", "{\"future\":{\"x\":1,\"x\":2},", 1),
+            good.replace(
+                "\"total_tokens\":20",
+                "\"total_tokens\":20,\"total_tokens\":20",
+            ),
+            good.replace(
+                "\"status\":\"completed\"",
+                "\"status\":\"completed\",\"status\":\"completed\"",
+            ),
+            format!("{good} {{}}"),
+        ] {
+            assert_eq!(
+                selected_decode(bad.as_bytes()).unwrap_err().code(),
+                "EXTRACT_API_RESPONSE"
+            );
+        }
+        for item in [
+            json!({"type":"function_call"}),
+            response()["output"][1].clone(),
+        ] {
+            let mut v = sparse_response();
+            v["output"].as_array_mut().unwrap().push(item);
+            assert_eq!(
+                selected_decode(v.to_string().as_bytes())
+                    .unwrap_err()
+                    .code(),
+                "EXTRACT_API_OUTPUT"
+            );
+        }
+        for content in [
+            json!([{"type":"output_text","text":"{}"},{"type":"output_text","text":"extra"}]),
+            json!([{"type":"refusal","refusal":"no"}]),
+        ] {
+            let mut v = sparse_response();
+            v["output"][1]["content"] = content;
+            assert!(selected_decode(v.to_string().as_bytes()).is_err());
+        }
+        for text in [
+            "Please give me a task".into(),
+            format!("```json\n{}\n```", candidate()),
+            candidate()
+                .to_string()
+                .replacen("{", "{\"future\":{\"x\":1,\"x\":2},", 1),
+        ] {
+            let mut v = sparse_response();
+            v["output"][1]["content"][0]["text"] = json!(text);
+            assert_eq!(
+                selected_decode(v.to_string().as_bytes())
+                    .unwrap_err()
+                    .code(),
+                "EXTRACT_API_CANDIDATES"
+            );
+            assert_eq!(
+                response_metadata(v.to_string().as_bytes()).unwrap().usage["total_tokens"],
+                20
+            );
+        }
+    }
     fn candidate() -> Value {
         let mut value: Value = serde_json::from_str(include_str!(
             "../../../fixtures/extraction-gateway-v1/response.json"

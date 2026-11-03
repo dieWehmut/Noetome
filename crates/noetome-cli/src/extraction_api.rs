@@ -362,7 +362,7 @@ fn run_selected(
                 }
             }
         }
-        let parsed = extraction_api_wire::decode(&receipt.body)?;
+        let parsed = extraction_api_wire::decode_with_strategy(&receipt.body, strategy)?;
         if cfg.transport_mode == "live" {
             report["usage"]["real_model_calls"] = json!(1);
         }

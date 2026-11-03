@@ -34,6 +34,16 @@
 
 **精确裁定**：所选策略 `request_strategy=tangmao-deepseek-responses-json-schema-v1`；旧官方/本地假服务策略 `openai-responses-strict-json-schema-v1`。两个保存快照都包含策略，validation也包含endpoint。所选body保留store=false表达客户端意图，移除background/service_tier/truncation和text.format.strict，添加reasoning.effort=none；不改变name/schema/input/证据anchor。controller 已保存普通CLI 1通过/1失败的真实RED于该计划工作区gateway-cli-red.json，作者普通CLI测试文件由controller负责，不由worker编辑。
 
+### Task 2 实际网关修复轮：自足输入与稀疏 completed 响应
+
+用户已通过本机窗口保存实际密钥，CurrentUser DPAPI复用0请求预检通过。首次真实POST返回HTTP200、配置/返回别名deepseek-flash和有效551输入/385输出/936总Token；原始响应遗漏error/incomplete_details，模型回复要求补充任务，并未返回候选JSON。原响应及首次请求保持独立，936已累计结算，余额9999064；不把失败算为T02真实验收。
+
+按这次实际证据最小修复同一Task2，版本更新为`tangmao-deepseek-responses-inline-json-schema-v2`。所选input仍是一个JSON文本，但自足包含`task`（现有抽取指令加仅输出一个JSON、无Markdown）、`response_schema`（完整现有candidate_schema）和`request`（原request_id/binding/units/evidence_anchors）；顶层instructions和text.format仍保留，官方/本地input完全保持原格式。不通过剥离代码围栏或猜字段接受非JSON；Core严格领域/引文/预算保护不变。实际reasoning摘要说明effort=none不能声称服务已执行该参数。
+
+Wire按经过精确端点/模式校验的策略分流：仅该所选策略允许显式status=completed时省略error/incomplete_details，两字段存在时仍严格校验，非null error、incomplete状态/细节、缺/错status、非法类型、重复key、工具/额外文本均不能成功。原官方/本地strict策略继续要求两字段出现。不修改原始response字节，也不从缺失usage推造0。
+
+文件责任增加当前wire模块及Core调用处；原Task2实施者只改config/schema/wire/Core内的scoped测试，controller维护普通CLI作者测试、文档、累计记录和真实调用。先保存自足input与selected sparse-envelope的真实RED再实现/GREEN、复审；首个真实非JSON响应应从envelope失败推进到明确candidate失败而仍拒绝，完整metadata936不得丢失。通过离线相关回归和新鲜修复审查后，controller在同一累计额度内仅再执行一次有界验证请求，独立保存第二次原响应与结果，不自动循环或改写gold。
+
 ## Task 3: 累计预算与真实小范围验收
 
 controller 在仓库外当前用户 Noetome 设置目录保存非秘密服务、模型、credential_env/DPAPI引用、累计10000000 Token上限和使用记录。所有后续调用先查剩余额度；已知实际用量累计，未知用量保留工程预留，不把额度每次重置。首冒烟 max_requests=1、max_output_tokens<=8192、max_response_bytes<=1MiB、timeout_ms<=60000，费用未知保持null。

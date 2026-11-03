@@ -20,11 +20,20 @@ pub(crate) fn request_body(
             })
         })
         .collect();
-    let input = serde_json::to_string(&json!({"request_id":request_id,"binding":binding,"units":units,"evidence_anchors":evidence_anchors}))
-        .map_err(|_| request_error())?;
+    let request = json!({"request_id":request_id,"binding":binding,"units":units,"evidence_anchors":evidence_anchors});
+    let instructions = "Extract only evidence-supported concepts and atomic claims from the selected text units. Return one JSON object matching the supplied strict schema, copying request_id and binding exactly. Full-unit evidence_anchors provide exact UTF8 byte offsets in the referenced source resource, quote and SHA256. Copy the resource-absolute start/end offsets from the supplied anchors; preserve the quote and its SHA256. Preserve conditions, exceptions and units. Every atom must have required=false and verification=unverified. Use null for unknown measurement/value/unit and explicit value_status. Do not invent scientific verification or producer provenance.";
+    let schema = candidate_schema();
+    let input_value = match strategy {
+        RequestStrategy::OpenAiStrict => request,
+        RequestStrategy::TangmaoDeepseek => json!({
+            "task":format!("{instructions} Return exactly one plain JSON object; no Markdown, code fences, explanations or additional text."),
+            "response_schema":schema,"request":request,
+        }),
+    };
+    let input = serde_json::to_string(&input_value).map_err(|_| request_error())?;
     let mut body = json!({
-        "model":model,"instructions":"Extract only evidence-supported concepts and atomic claims from the selected text units. Return one JSON object matching the supplied strict schema, copying request_id and binding exactly. Full-unit evidence_anchors provide exact UTF8 byte offsets in the referenced source resource, quote and SHA256. Copy the resource-absolute start/end offsets from the supplied anchors; preserve the quote and its SHA256. Preserve conditions, exceptions and units. Every atom must have required=false and verification=unverified. Use null for unknown measurement/value/unit and explicit value_status. Do not invent scientific verification or producer provenance.",
-        "input":input,"text":{"format":{"type":"json_schema","name":"noetome_candidates_v1","schema":candidate_schema()}},
+        "model":model,"instructions":instructions,
+        "input":input,"text":{"format":{"type":"json_schema","name":"noetome_candidates_v1","schema":schema}},
         "max_output_tokens":max_output_tokens,"store":false,"stream":false,
         "tools":[],"tool_choice":"none",
     });
@@ -102,8 +111,7 @@ mod tests {
     use super::*;
     use crate::extraction_model::Locator;
     #[test]
-    fn selected_strategy_keeps_bounded_schema_input_and_absolute_anchor_without_unsupported_fields()
-    {
+    fn inline_fix_selected_input_contains_task_schema_and_original_absolute_request() {
         let binding: SourceBinding = serde_json::from_value(json!({"project_id":"p","import_id":"i","source_id":"s","version_id":"v","content_sha256":"sha","normalized_sha256":null,"parse_id":null,"manifest_sha256":null})).unwrap();
         let units = [RequestUnit {
             unit_id: "u".into(),
@@ -175,13 +183,40 @@ mod tests {
         assert!(format.get("strict").is_none());
         assert_eq!(format["schema"]["additionalProperties"], false);
         assert_eq!(format["schema"], official["text"]["format"]["schema"]);
-        assert_eq!(selected["input"], official["input"]);
         assert_eq!(selected["instructions"], official["instructions"]);
         let input: Value = serde_json::from_str(selected["input"].as_str().unwrap()).unwrap();
-        assert_eq!(input["request_id"], "req");
-        assert_eq!(input["binding"], serde_json::to_value(binding).unwrap());
         assert_eq!(
-            input["evidence_anchors"][0],
+            input
+                .as_object()
+                .unwrap()
+                .keys()
+                .map(String::as_str)
+                .collect::<Vec<_>>(),
+            ["request", "response_schema", "task"]
+        );
+        assert!(
+            input["task"]
+                .as_str()
+                .unwrap()
+                .starts_with(selected["instructions"].as_str().unwrap())
+        );
+        assert!(
+            input["task"]
+                .as_str()
+                .unwrap()
+                .contains("one plain JSON object")
+        );
+        assert!(input["task"].as_str().unwrap().contains("no Markdown"));
+        assert_eq!(input["response_schema"], format["schema"]);
+        assert_eq!(
+            input["request"],
+            serde_json::from_str::<Value>(official["input"].as_str().unwrap()).unwrap()
+        );
+        let request = &input["request"];
+        assert_eq!(request["request_id"], "req");
+        assert_eq!(request["binding"], serde_json::to_value(binding).unwrap());
+        assert_eq!(
+            request["evidence_anchors"][0],
             json!({"unit_id":"u","excerpt_start_byte":123,"excerpt_end_byte":129,"excerpt_sha256":"72726d8818f693066ceb69afa364218b692e62ea92b385782363780f47529c21","quote":"中文"})
         );
         // A model name alone never changes the official endpoint's strategy.

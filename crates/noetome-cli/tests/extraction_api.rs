@@ -352,7 +352,7 @@ fn ordinary_selected_gateway_zero_budget_keeps_model_strategy_and_never_calls() 
     assert_eq!(report["actual_model"], Value::Null);
     assert_eq!(
         report["request_strategy"],
-        "tangmao-deepseek-responses-json-schema-v1"
+        "tangmao-deepseek-responses-inline-json-schema-v2"
     );
     assert_eq!(report["usage"]["network_attempts"], 0);
     assert_eq!(report["usage"]["real_model_calls"], 0);
@@ -366,6 +366,21 @@ fn ordinary_selected_gateway_zero_budget_keeps_model_strategy_and_never_calls() 
         serde_json::from_slice(&fs::read(example.output.join("request-body.json")).unwrap())
             .unwrap();
     assert_eq!(body["model"], "deepseek-flash");
+    let inline: Value = serde_json::from_str(body["input"].as_str().unwrap()).unwrap();
+    assert!(
+        inline["task"]
+            .as_str()
+            .unwrap()
+            .contains("Extract only evidence-supported")
+    );
+    assert_eq!(inline["response_schema"], body["text"]["format"]["schema"]);
+    assert_eq!(inline["request"]["request_id"], request["request_id"]);
+    assert_eq!(inline["request"]["binding"], request["binding"]);
+    assert_eq!(inline["request"]["units"], request["units"]);
+    assert_eq!(
+        inline["request"]["evidence_anchors"][0]["quote"],
+        request["units"][0]["text"]
+    );
     assert_eq!(body["reasoning"]["effort"], "none");
     assert_eq!(body["text"]["format"]["type"], "json_schema");
     assert_eq!(body["text"]["format"]["name"], "noetome_candidates_v1");
