@@ -103,12 +103,27 @@ class VariantsAudit(Audit):
         assert code == expected, f"CLI {name}: expected {expected}, observed {code}; see {stem}"
         return run
 
-    def prepare(self, name, author_name=None, *, multiple=False, reorder=False):
+    def prepare(self, name, author_name=None, *, multiple=False, reorder=False, shared_atom=False):
         author = copy.deepcopy(next(c for c in strict_json(self.authors["authors.json"])["cases"]
                                     if c["name"] == (author_name or name)))
         folder = self.root / name
         folder.mkdir(); frozen = folder / "frozen-authors"; frozen.mkdir()
         expected = author["expected"]
+        if shared_atom:
+            # Original atom IDs belong to each input namespace. Freeze an
+            # explicit author override before constructing candidates or CLI IO.
+            atom_id = author["inputs"][0]["original_atom_id"]
+            expected["case_name"] = name
+            for item in author["inputs"]:
+                item["original_atom_id"] = atom_id
+                item["context"]["original_atom_id"] = atom_id
+            for key in ("atom_mappings", "atom_contexts"):
+                for item in author["identity"][key]:
+                    item["original_atom_id"] = atom_id
+            for item in expected["occurrences"]:
+                item["original_atom_id"] = atom_id
+            for fact in expected["facts"]:
+                fact["original_atom_ids"] = [atom_id for _ in fact["input_ids"]]
         if multiple:
             expected["totals"]["evidence_links"] += 1
             expected["totals"]["context_evidence_links"] += 1
@@ -196,6 +211,8 @@ class VariantsAudit(Audit):
         for name, opts in (("multiple-supports", dict(multiple=True)), ("ordering-display", dict(reorder=True))):
             folder, project, case, gold = self.prepare(name, "conditional", **opts)
             self.coordinate(name, project, case, gold, folder / "output")
+        folder, project, case, gold = self.prepare("shared-original-atom-id", "not_applicable", shared_atom=True)
+        self.coordinate("shared-original-atom-id", project, case, gold, folder / "output")
         folder = self.root / "conditional"
         destination = self.root / "mtime-invariance"; destination.mkdir()
         gold = (folder / "gold.json").read_bytes()

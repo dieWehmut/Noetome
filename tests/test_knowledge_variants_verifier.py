@@ -33,12 +33,48 @@ class VariantsVerifierTests(unittest.TestCase):
             output = folder / "output"
             cls.audit.call(name, ["knowledge", "coordinate", "--", project, case, output])
             cls.prepared[name] = folder, project, case, output, gold
+        folder, project, case, gold = cls.audit.prepare("shared-original-atom-id", "not_applicable", shared_atom=True)
+        output = folder / "output"
+        cls.audit.call("shared-original-atom-id", ["knowledge", "coordinate", "--", project, case, output])
+        cls.prepared["shared-original-atom-id"] = folder, project, case, output, gold
         (cls.root / "test-root.json").write_bytes(encoded(dict(root=str(cls.root))))
         print("Retained actual v2 test root:", cls.root)
 
     def test_conditional_report_matches_frozen_authors(self):
         _, project, case, output, gold = self.prepared["conditional"]
         self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+
+    def test_input_qualified_shared_original_atom_id(self):
+        _, project, case, output, gold = self.prepared["shared-original-atom-id"]
+        author = strict_json(gold)
+        self.assertEqual(author["facts"][0]["input_ids"], ["a", "b"])
+        self.assertEqual(author["facts"][0]["original_atom_ids"], ["a-speed", "a-speed"])
+        report = strict_json((output / "coordination.json").read_bytes())
+        self.assertEqual(len({o["occurrence_id"] for o in report["occurrences"]}), 2)
+        self.assertEqual([o["original_atom"]["atom"]["atom_id"] for o in report["occurrences"]], ["a-speed", "a-speed"])
+        checked = verify_report(project, case, output, gold)
+        self.assertEqual(checked["totals"]["retained_fact_groups"], 1)
+        self.assertEqual(checked["totals"]["evidence_links"], 2)
+        self.assertTrue(checked["independently_verified"])
+
+    def test_shared_atom_members_retain_pairing_and_evidence_guards(self):
+        _, project, case, output, gold = self.prepared["shared-original-atom-id"]
+        for field, value in (("original_atom_ids", ["a-speed"]), ("original_atom_ids", ["a-speed", False]),
+                             ("original_atom_ids", "a-speed"), ("original_atom_ids", ["a-speed", ""]),
+                             ("original_atom_ids", ["a-speed", "x" * 1025]), ("input_ids", ["a", "a"]),
+                             ("original_atom_ids", ["a-speed", "different-atom"])):
+            with self.subTest(field=field, value=value):
+                author = strict_json(gold); author["facts"][0][field] = value
+                with self.assertRaises(AssertionError):
+                    verify_report(project, case, output, encoded(author))
+        forged = self.root / "shared-id-missing-second-support"
+        shutil.copytree(output, forged)
+        report = strict_json((forged / "coordination.json").read_bytes())
+        second = next(o for o in report["occurrences"] if o["input_id"] == "b")
+        second["original_evidence"] = []
+        rewrite_output(forged, report)
+        with self.assertRaisesRegex(AssertionError, "source/author reconstruction"):
+            verify_report(project, case, forged, gold)
 
     def test_all_frozen_authors(self):
         for name, (_, project, case, output, gold) in self.prepared.items():

@@ -76,7 +76,13 @@ def gold_schema(g):
             if collection == "facts":
                 uuid_string(item["object_id"]); uuid_string(item["property_id"])
                 exact(item["value_status"], "known", "author value status")
-                strings(item["input_ids"]); strings(item["original_atom_ids"])
+                strings(item["input_ids"])
+                # Original IDs are input-qualified; different inputs can retain
+                # the same original bytes without becoming the same occurrence.
+                originals = item["original_atom_ids"]
+                assert type(originals) is list and len(originals) <= 8, "author original IDs array bounds"
+                for original in originals:
+                    text(original)
                 assert len(item["input_ids"]) == len(item["original_atom_ids"]), "author fact member pairing"
             else:
                 identifier(item["input_id"]); text(item["original_atom_id"])
