@@ -1,0 +1,42 @@
+{
+  "at_utc": "2026-11-04T14:46:33.311935+00:00",
+  "passed": true,
+  "current_batch": "B05R",
+  "task_status": "done",
+  "next_task": {
+    "id": "B05-T03",
+    "status": "todo"
+  },
+  "in_progress_count": 0,
+  "completion_at_utc": "2026-11-04T14:43:53Z",
+  "completion_artifact_hashes_verified": 8,
+  "copied_archive_hashes_verified": 93,
+  "image_hashes_verified": 10,
+  "product_source_check": {
+    "command": [
+      "git",
+      "diff",
+      "--exit-code",
+      "012fd8b",
+      "main",
+      "--",
+      "apps/desktop",
+      "crates",
+      "scripts",
+      "tests",
+      "Cargo.toml",
+      "Cargo.lock",
+      "package.json",
+      "package-lock.json"
+    ],
+    "exit_code": 0
+  },
+  "actual_check_reports": [
+    "ledger-complete.json",
+    "batch-restore.json",
+    "devlog-completed.json",
+    "diff-completed.json"
+  ],
+  "remote_integration_proof": "main-integration.json",
+  "final_push_note": "The final commit and remote HEAD are verified after pushing, outside this commit to avoid self-referential hashes."
+}

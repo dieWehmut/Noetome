@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B05U",
+  "current_batch": "B05R",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -64,6 +64,13 @@
       "from_batch": "B05",
       "to_batch": "B05U",
       "note": "按用户两张界面参考图优先改侧栏与设置，并按追加指令建立默认main；B05-T03定义和历史保留于B05R，本轮不启动知识冲突任务。"
+    },
+    {
+      "at": "2026-11-04T14:43:53Z",
+      "action": "batch",
+      "from_batch": "B05U",
+      "to_batch": "B05R",
+      "note": "B05U侧栏设置与默认main已实际验收并推送核对；恢复保留ID的B05-T03执行入口，仅切批次不启动下一项。"
     }
   ],
   "tasks": [
@@ -1612,7 +1619,7 @@
       "id": "B05U-T01",
       "title": "按参考图调整侧边栏和分类设置并建立默认main分支",
       "batch": "B05U",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B04U-T01",
         "B05-T02"
@@ -1633,6 +1640,50 @@
           "note": "还原窄图标栏、分组侧栏和分类设置，接入外观与既有窗口行为；实际浏览器和安装版验收后小步提交，合入main并修改远端默认分支。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-04T14:43:53Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "参考图侧栏、分类设置、太阳月亮持久化和安装验收已完成；已合入main并核对GitHub默认main及远端HEAD，保留用户删除。",
+          "validation": [
+            "实际Rust fmt/check退出0，完整17套591测试通过0失败0忽略；Python157通过；TypeScript与Vite及最终NSIS构建安装退出0；浏览器19有效检查和安装WebView7检查通过，真实偏好保存重读与主题进程重启保持；devlog19项与diff检查通过；任务分支和main普通推送成功，REST PATCH200且GET及远端符号HEAD确认main362430c。"
+          ],
+          "artifacts": [
+            {
+              "path": "apps/desktop/src/AppSidebar.tsx",
+              "sha256": "f271337fac281e332c86d49cba818f27e3de6591275ee9d4c1efe606e29f3bc6"
+            },
+            {
+              "path": "apps/desktop/src/AppSettings.tsx",
+              "sha256": "f64168be1ae13be73537168a209b4c2fcea783c445352396f57485c16126ccbd"
+            },
+            {
+              "path": "apps/desktop/src/useThemePreference.ts",
+              "sha256": "7a17ac5ecb54af6dad9803bbff6b908b1c66d3cf24fbf03b3c50c022c3b04e9f"
+            },
+            {
+              "path": "design-qa.md",
+              "sha256": "41fb2e64dabbd1e641019ba651e4efcb9b0615d8de8a6045da93ac5f34991fc0"
+            },
+            {
+              "path": "doc/validation/B05U-T01.md",
+              "sha256": "c6d91f7fd99ce489132f297b557f3a19fcd2f4521c3f6c85d5a2cd1e354b113f"
+            },
+            {
+              "path": "doc/validation/assets/B05U-T01/gate.json",
+              "sha256": "925422e34a746c9b2467a317c861b0bf97af19c56bec196e7854550970408bd0"
+            },
+            {
+              "path": "doc/validation/assets/B05U-T01/main-integration.json",
+              "sha256": "fafb193e20e03b3660946b5208f0bd693ed5fe45253dbd2a1f3588d8ed78c6f5"
+            },
+            {
+              "path": "doc/validation/assets/B05U-T01-native-light.png",
+              "sha256": "b786c522e1945f7dbc49fb09a007a18a467a39e1c4b5e27c78130f59e598dc8f"
+            }
+          ]
         }
       ]
     }
