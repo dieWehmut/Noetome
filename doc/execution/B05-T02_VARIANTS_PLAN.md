@@ -42,7 +42,7 @@
 - 共同身份构造建议函数 `build_occurrences(map:&IdentityMap,reviews:&[VerifiedReview])->Result<(Vec<CanonicalConcept>,Vec<CoordinationInput>,Vec<Occurrence>),ProjectError>`；只共享身份与原出处，v1/v2 分组各自明确。
 - v2 时间为 `{status,precision,value}`；背景为 `{applicability_status,time,evidence_ids,unit_id,start_byte,end_byte,quote,sha256}`。精确事实键、关系顺序及 counters 以 Spec 为准。
 
-- [ ] **Step 1: 读取冻结作者 case，不从输出生成预期，写外部测试与准备器。**
+- [x] **Step 1: 读取冻结作者 case，不从输出生成预期，写外部测试与准备器。**
 
 ```rust
 let f = VariantsCase::prepare("conditional");
@@ -58,13 +58,13 @@ f.assert_protected();
 
 准备器从 `authors.json` 的完整旧 Gold2、源文件和已写好的 identity/expected 构造原候选；支持 quote 必须真实包含背景+gold.quote。先写 gold、expected 和原文，再 init/import/extract verify，再 coordinate；完整 stdout/stderr/exit/argv 及作者/输入/SQL/资源/哨兵指纹写独立新测试根。
 
-- [ ] **Step 2: 在生产代码修改前运行真实 RED 并保存证据。**
+- [x] **Step 2: 在生产代码修改前运行真实 RED 并保存证据。**
 
 Run: `./scripts/cargo_local.ps1 test -p noetome-cli --test knowledge_variants conditional_variants_preserve_all_author_fields '--' --exact --nocapture`。
 
 Expected: 三份来源核对实际成功，普通 v1 CLI 对已声明 v2 返回 `COORD_SCHEMA/2`，测试期望 0 因新能力缺失失败。编译/依赖/准备问题先修准备并另保留失败，不称行为 RED。选定 Python 由运行时绝对路径环境传入，仓库不得硬编码本机路径。
 
-- [ ] **Step 3: 实现三个独立 v2 模块并接线；逐项实施 Spec。**
+- [x] **Step 3: 实现三个独立 v2 模块并接线；逐项实施 Spec。**
 
 ```rust
 // 新严格模型使用 deny_unknown_fields；Option 字段使用已有 nullable 反序列化器。
@@ -78,13 +78,13 @@ Expected: 三份来源核对实际成功，普通 v1 CLI 对已声明 v2 返回 
 
 既有输出复制、96MiB/30s、source guards、最后结果核对与捕获结果撤去保留；禁止完整逻辑复制到 v2。需要共同报告保存层时先明确封闭版本枚举或有界泛型，旧报告模板保持。
 
-- [ ] **Step 4: 运行所有新外部测试与覆盖原能力的回归。**
+- [x] **Step 4: 运行所有新外部测试与覆盖原能力的回归。**
 
 必须覆盖作者每个正常/needs_review case、顺序/显示名、同来源版本（有/无实际时间）、多支持原顺序、条件/例外篡改、背景时间/支持缺失、unknown 与 NA 混淆、相邻性/非零 UTF8 范围、非法/重复/缺字段/版本、输出碰撞/重叠与保存阶段守卫。测试从固定 expected 比较全部事实组、所有原出现和实际分母；同来源版本的独立来源数在调用前写为 1。
 
 Run focused: `./scripts/cargo_local.ps1 test -p noetome-cli --test knowledge_variants`；原 `--test knowledge_coordinate` 和模块 guard 回归。稳定代码运行一次 `cargo fmt --all --check`、`cargo check --workspace`、`cargo test --workspace`（由 wrapper 启动，记录实际线程数、16+ suites 及分母）。
 
-- [ ] **Step 5: 小步 commit、完整报告和任务审查。**
+- [x] **Step 5: 小步 commit、完整报告和任务审查。**
 
 提交明确 Rust 文件和对应测试，不包含 controller 的文档/账本或用户删除。报告含 RED/GREEN 原件路径、全部检查实际输出与 CLI/source 指纹、self-review 及关注事项；controller 生成从 dispatch BASE 开始的 review-package 并安排新鲜 spec+quality reviewer。发现实质问题在同一内部任务修复和有界复查；尚未运行独立 Python 不称 B05-T02 完成。
 
@@ -95,35 +95,36 @@ Run focused: `./scripts/cargo_local.ps1 test -p noetome-cli --test knowledge_var
 - Create: `scripts/verify_knowledge_variants.py`（独立 v2 case/source/context/facts/report/IR 校验及普通 audit）。
 - Create: `scripts/knowledge_variants_audit.py`（冻结作者准备、真实 argv/输出/指纹/保护及矩阵，供 verifier audit 委托）。
 - Create: `tests/test_knowledge_variants_verifier.py`（作者正常样例与同步伪造的行为测试）。
-- Modify: `scripts/verify_knowledge_coordination.py`（仅严格 schema 路由到 v2，保持旧 v1 check/audit）。
+- Modify: `scripts/verify_knowledge_coordination.py`（严格 schema 路由到 v2，保持旧 v1 check/audit；为共同source_bundle增加只由v2显式启用的原evidence.quote换行元数据校验，默认v1规则不变）。
 - Read only: 全部作者 fixture、Task1 Rust 实现/报告及旧 Python 来源准入 helpers。
 
 **Interfaces:**
 
 - Consumes: Task1 的普通 Schema2 输出；`source_bundle(project,directory,pin)`、`actual_source`、`rebuild_source_report`、严格读文件/JSON/指纹/readonly 保护等已有 Python 原来源核对能力。不得调用 Rust 协调器计算 expected，不能共享 Rust v2 分组逻辑。
-- Produces: 既有 `verify_report(project,case,output,gold)` 对严格 v1/v2 路由；新 `verify_knowledge_variants.verify_report(project:Path,case:Path,output:Path,gold:bytes)->dict`，合法返回 `{"passed":True,...}`，任何不符返回 `{"passed":False,"error":...}`，wrapper check 退出 0/1。
+- Produces: 既有 `verify_report(project,case,output,gold)` 对严格 v1/v2 路由；新 `verify_knowledge_variants.verify_report(project:Path,case:Path,output:Path,gold:bytes)->dict` 沿用原调用协议，合法返回 `{"status":...,"independently_verified":True,"totals":...,"inputs":...}`，任何不符抛 `AssertionError`，wrapper check 捕获后退出 1；合法退出 0。不用False字典改变既有audit的异常门禁。
 - Audit: `python scripts/verify_knowledge_coordination.py audit-v2 <absolute-cli> <nonexistent-root>`；旧 `audit` 仍为 v1。新脚本自身 `audit <absolute-cli> <nonexistent-root>` 和 `check <project> <case> <output> <gold>` 可独立使用。
 - 作者 expected 固定 Schema2，包含 case 名、范围/状态、每组 values/units/fullconditions/exceptions/applicability/time/input及原 atom ID、原出现状态问题、pair 关系方向和每个 totals。只从作者文件/明确调用前参数读入。
+- 已观察的共同准入边界：旧metadata递归拒绝所有控制字符，实际v2支持引文必含背景与事实之间的LF。共同source_bundle应有封闭的v2 opt-in，仅允许原candidate.payload.evidence[*].quote中实际来源支持的空白换行，仍执行原长度、全部字段、gold/review/decision元数据和实际来源/quote/SHA/范围重验；默认v1不变。禁止全局monkeypatch、跳过source_bundle或复制完整准入逻辑。
 
-- [ ] **Step 1: 写合法 v2 被旧 verifier 拒绝的真实 RED 与一致伪造测试。**
+- [x] **Step 1: 写合法 v2 被旧 verifier 拒绝的真实 RED 与一致伪造测试。**
 
 ```python
 def test_conditional_report_matches_frozen_authors(self):
     self.assertTrue(verify_report(self.project, self.case, self.output,
-                                 self.expected_raw)["passed"])
+                                 self.expected_raw)["independently_verified"])
 
 def test_coherent_deleted_condition_is_rejected(self):
     forged = self.copy_to_new_output("deleted-condition")
     report = self.read_report(forged)
     report["facts"][0]["conditions"].pop()
     self.rewrite_report_markdown_ir_and_fingerprints(forged, report)
-    self.assertFalse(verify_report(self.project, self.case, forged,
-                                  self.expected_raw)["passed"])
+    with self.assertRaises(AssertionError):
+        verify_report(self.project, self.case, forged, self.expected_raw)
 ```
 
 Run: 选定 Python `-m unittest discover -s tests -p test_knowledge_variants_verifier.py -v`。Task1 实际合法输出在新生产 Python 接线前被旧 schema 校验拒绝，正例测试实际 RED；伪造测试不能仅因陈旧 MD/IR/artifact 失败。不要加入故意宽松的生产 verifier 来制造 RED。
 
-- [ ] **Step 2: 从作者与实际来源分别重建，校验所有引用和字段。**
+- [x] **Step 2: 从作者与实际来源分别重建，校验所有引用和字段。**
 
 ```python
 # expected_raw 先严格验 Schema2/全部字段/作者文本/非负整数与 required null。
@@ -135,14 +136,16 @@ Run: 选定 Python `-m unittest discover -s tests -p test_knowledge_variants_ver
 
 共用旧 helper 只限原 source_review 准入/IO；v2事实与关系重建用 Python 标准库独立实现。v2必须拒绝不支持/混合版本、重复 JSON 键、未知字段、bool计数、缺 null、原件替换、全部支持遗漏/重复、相邻性伪造、日期误配及不同单位伪同组。
 
-- [ ] **Step 3: 普通 audit 从调用前作者 fixture 构造并保留完整证据。**
+- [x] **Step 3: 普通 audit 从调用前作者 fixture 构造并保留完整证据。**
 
 覆盖全部作者 case +同来源有/无时间 +顺序/显示名 +多支持 +coherent forgeries；保护原输入/项目真实资源/SQL/旧IR/gold及外部哨兵。新 audit 保存 CLI 前后 SHA/长度、每次实际 argv/exit/stdout/stderr/耗时、预期原字节指纹、逐场景 check 和保护前后；失败也保留 receipt，不能只记成功摘要。修改时间 metadata 只用明确选中测试资料与新案例，核对始终不改变来源时间分类。
 
-- [ ] **Step 4: focused GREEN、旧模块和完整 Python 稳定门禁。**
+- [x] **Step 4: focused GREEN、旧模块和完整 Python 稳定门禁。**
 
 Run new module；旧 `test_knowledge_coordination_verifier.py`；一次全部 `python -m unittest discover -s tests -p "test_*.py"`，实际记录数量和结果。普通 `audit-v2` 与旧 `audit` 各保存新根，不覆盖旧证据；只在新更改/失败时重复相关检查。
 
 - [ ] **Step 5: commit、报告、任务审查后交 controller 完成全项。**
 
 提交明确 Python 源和测试。报告保存 RED/GREEN、audit原件及严格指纹，controller 新鲜 task review 后追加标准/验收资产、运行devlog check与git diff --check，最终 whole-branch review及一波有界修复后 complete B05-T02、最终日志 commit、普通push并核对 exact远端HEAD。本计划不自动启动B05-T03。
+
+Task2任务审查的输入限定原ID问题已通过第1轮真实RED、修正 `9751505` 与限定复查；实际focused14、完整Python157、v2审计42场景/126命令通过。内部实现与task review已完成；Step5勾选须等待controller的整分支审查、全项账本及远端核对，不将内部验收冒充全项完成。

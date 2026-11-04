@@ -25,6 +25,7 @@
 | [单请求文本API契约](technical/EXTRACTION_API_CONTRACT.md) | Responses配置、外部凭据引用、预算预留、原响应及API候选报告 | 文本API、用量、HTTP故障或凭据保护变化 |
 | [有界来源知识核对](technical/EXTRACTION_REVIEW_CONTRACT.md) | 已保存候选、独立作者gold、真实来源证据及离线测量核对 | extract verify输入、判据、分母或输出保护变化 |
 | [有界多来源知识协调](technical/KNOWLEDGE_COORDINATION_CONTRACT.md) | 显式身份映射、来源依据重验、重复/互补保留与待复核分母 | knowledge coordinate输入、关系或保护变化 |
+| [条件与来源时间协调](technical/KNOWLEDGE_VARIANTS_CONTRACT.md) | 严格v2条件状态、来源背景、并列变体与历史先后 | 条件、时间证据、协调版本或分母变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
 | [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |
@@ -39,6 +40,8 @@
 B04R收束提交已普通推送并核对远端，执行卡归档于[B04R步骤](execution/B04R_STEPS.md)。[B05近期步骤](execution/NEXT_STEPS.md)规定重复/互补、条件/历史和冲突/证据不足三项；当前协调实施依据见[B05-T01计划](execution/B05-T01_COORDINATION_PLAN.md)，状态仍由账本生成，计划中的命令和预期不算验收证据。
 
 [B05-T01验证记录](validation/B05-T01.md)登记实测两事实/三处来源、多支持保留、独立作者原件、完整回归、审查修复及原始归档；最终限定复查包含重复证据链接同步伪造的拒绝验证。记录保留每次失败与当时状态，完成状态只由任务账本生成；明确身份的自造样例不证明真实文献独立性或科学正确率。
+
+[B05-T02计划](execution/B05-T02_VARIANTS_PLAN.md)与[新作者样例](../fixtures/knowledge-coordination-v2/README.md)定义严格v2的条件与来源时间范围，真实检查按[B05-T02记录](validation/B05-T02.md)追加。调用前原文、旧Gold2及独立expected先冻结；计划和标准中的新接口须有本项实际验收才能算完成。
 
 `requirements/PRD.html` 是由 Markdown 生成的阅读版；只修改 Markdown 后重新构建。其他标准文件以 Markdown 为准。旧 `docs` 路径仅保留迁移入口。
 

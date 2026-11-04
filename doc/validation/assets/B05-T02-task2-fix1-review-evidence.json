@@ -1,0 +1,682 @@
+{
+  "scope": "4f0940b..9751505, original P2 and direct regressions only",
+  "commands": {
+    "task-2-fix1-red": {
+      "argv": [
+        "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_knowledge_variants_verifier.py",
+        "-v"
+      ],
+      "cwd": "D:\\Noetome",
+      "exit": 1,
+      "seconds": 25.937999999994645,
+      "streams_verified": true,
+      "before_after_equal": true,
+      "streams": {
+        "stdout": "Retained actual v2 test root: D:\\Noetome\\target\\python-variants-084180631cab4ef0a414d2f603232bf8\n",
+        "stderr": "test_actual_context_adjacency_uniqueness_and_full_range (test_knowledge_variants_verifier.VariantsVerifierTests.test_actual_context_adjacency_uniqueness_and_full_range) ... ok\ntest_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) ... \n  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='shared-original-atom-id') ... FAIL\ntest_coherent_case_context_against_actual_source (test_knowledge_variants_verifier.VariantsVerifierTests.test_coherent_case_context_against_actual_source) ... ok\ntest_coherent_deleted_condition_is_rejected (test_knowledge_variants_verifier.VariantsVerifierTests.test_coherent_deleted_condition_is_rejected) ... ok\ntest_coherent_semantic_matrix (test_knowledge_variants_verifier.VariantsVerifierTests.test_coherent_semantic_matrix) ... ok\ntest_conditional_report_matches_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_conditional_report_matches_frozen_authors) ... ok\ntest_gregorian_ranges_and_normalization_boundaries (test_knowledge_variants_verifier.VariantsVerifierTests.test_gregorian_ranges_and_normalization_boundaries) ... ok\ntest_input_qualified_shared_original_atom_id (test_knowledge_variants_verifier.VariantsVerifierTests.test_input_qualified_shared_original_atom_id) ... FAIL\ntest_metadata_lf_opt_in_is_closed_and_v1_default_remains (test_knowledge_variants_verifier.VariantsVerifierTests.test_metadata_lf_opt_in_is_closed_and_v1_default_remains) ... ok\ntest_shared_atom_members_retain_pairing_and_evidence_guards (test_knowledge_variants_verifier.VariantsVerifierTests.test_shared_atom_members_retain_pairing_and_evidence_guards) ... FAIL\ntest_source_mtime_cannot_create_time (test_knowledge_variants_verifier.VariantsVerifierTests.test_source_mtime_cannot_create_time) ... ok\ntest_strict_version_duplicate_json_and_bool_schema (test_knowledge_variants_verifier.VariantsVerifierTests.test_strict_version_duplicate_json_and_bool_schema) ... ok\ntest_top_level_case_types_use_assertion_protocol (test_knowledge_variants_verifier.VariantsVerifierTests.test_top_level_case_types_use_assertion_protocol) ... ok\ntest_visible_markdown_counts_and_suffix_are_verified (test_knowledge_variants_verifier.VariantsVerifierTests.test_visible_markdown_counts_and_suffix_are_verified) ... ok\n\n======================================================================\nFAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='shared-original-atom-id')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\Noetome\\tests\\test_knowledge_variants_verifier.py\", line 82, in test_all_frozen_authors\n    self.assertTrue(verify_report(project, case, output, gold)[\"independently_verified\"])\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Noetome\\scripts\\verify_knowledge_coordination.py\", line 635, in verify_report\n    return verify_v2(Path(project), Path(case), Path(output), gold_bytes)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Noetome\\scripts\\verify_knowledge_variants.py\", line 337, in verify_report\n    return _verify(Path(project), Path(case), Path(output), gold)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Noetome\\scripts\\verify_knowledge_variants.py\", line 174, in _verify\n    gold = strict_json(gold_bytes); gold_schema(gold)\n                                    ^^^^^^^^^^^^^^^^^\n  File \"D:\\Noetome\\scripts\\verify_knowledge_variants.py\", line 79, in gold_schema\n    strings(item[\"input_ids\"]); strings(item[\"original_atom_ids\"])\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Noetome\\scripts\\verify_knowledge_coordination.py\", line 87, in strings\n    assert len({normalized(x) for x in value}) == len(value), \"duplicate normalized string\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: duplicate normalized string\n\n======================================================================\nFAIL: test_input_qualified_shared_original_atom_id (test_knowledge_variants_verifier.VariantsVerifierTests.test_input_qualified_shared_original_atom_id)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"D:\\Noetome\\tests\\test_knowledge_variants_verifier.py\", line 55, in test_input_qualified_shared_original_atom_id\n    checked = verify_report(project, case, output, gold)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Noetome\\scripts\\verify_knowledge_coordination.py\", line 635, in verify_report\n    return verify_v2(Path(project), Path(case), Path(output), gold_bytes)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Noetome\\scripts\\verify_knowledge_variants.py\", line 337, in verify_report\n    return _verify(Path(project), Path(case), Path(output), gold)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Noetome\\scripts\\verify_knowledge_variants.py\", line 174, in _verify\n    gold = strict_json(gold_bytes); gold_schema(gold)\n                                    ^^^^^^^^^^^^^^^^^\n  File \"D:\\Noetome\\scripts\\verify_knowledge_variants.py\", line 79, in gold_schema\n    strings(item[\"input_ids\"]); strings(item[\"original_atom_ids\"])\n                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Noetome\\scripts\\verify_knowledge_coordination.py\", line 87, in strings\n    assert len({normalized(x) for x in value}) == len(value), \"duplicate normalized string\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: duplicate normalized string\n\n======================================================================\nFAIL: test_shared_atom_members_retain_pairing_and_evidence_guards (test_knowledge_variants_verifier.VariantsVerifierTests.test_shared_atom_members_retain_pairing_and_evidence_guards)\n----------------------------------------------------------------------\nAssertionError: duplicate normalized string\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\Noetome\\tests\\test_knowledge_variants_verifier.py\", line 76, in test_shared_atom_members_retain_pairing_and_evidence_guards\n    with self.assertRaisesRegex(AssertionError, \"source/author reconstruction\"):\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: \"source/author reconstruction\" does not match \"duplicate normalized string\"\n\n----------------------------------------------------------------------\nRan 14 tests in 25.842s\n\nFAILED (failures=3)\n"
+      }
+    },
+    "task-2-fix1-green": {
+      "argv": [
+        "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_knowledge_variants_verifier.py",
+        "-v"
+      ],
+      "cwd": "D:\\Noetome",
+      "exit": 0,
+      "seconds": 25.90700000000652,
+      "streams_verified": true,
+      "before_after_equal": true,
+      "streams": {
+        "stdout": "Retained actual v2 test root: D:\\Noetome\\target\\python-variants-de22f746afb3440bb5fe1b289a3e54ce\n",
+        "stderr": "test_actual_context_adjacency_uniqueness_and_full_range (test_knowledge_variants_verifier.VariantsVerifierTests.test_actual_context_adjacency_uniqueness_and_full_range) ... ok\ntest_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) ... ok\ntest_coherent_case_context_against_actual_source (test_knowledge_variants_verifier.VariantsVerifierTests.test_coherent_case_context_against_actual_source) ... ok\ntest_coherent_deleted_condition_is_rejected (test_knowledge_variants_verifier.VariantsVerifierTests.test_coherent_deleted_condition_is_rejected) ... ok\ntest_coherent_semantic_matrix (test_knowledge_variants_verifier.VariantsVerifierTests.test_coherent_semantic_matrix) ... ok\ntest_conditional_report_matches_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_conditional_report_matches_frozen_authors) ... ok\ntest_gregorian_ranges_and_normalization_boundaries (test_knowledge_variants_verifier.VariantsVerifierTests.test_gregorian_ranges_and_normalization_boundaries) ... ok\ntest_input_qualified_shared_original_atom_id (test_knowledge_variants_verifier.VariantsVerifierTests.test_input_qualified_shared_original_atom_id) ... ok\ntest_metadata_lf_opt_in_is_closed_and_v1_default_remains (test_knowledge_variants_verifier.VariantsVerifierTests.test_metadata_lf_opt_in_is_closed_and_v1_default_remains) ... ok\ntest_shared_atom_members_retain_pairing_and_evidence_guards (test_knowledge_variants_verifier.VariantsVerifierTests.test_shared_atom_members_retain_pairing_and_evidence_guards) ... ok\ntest_source_mtime_cannot_create_time (test_knowledge_variants_verifier.VariantsVerifierTests.test_source_mtime_cannot_create_time) ... ok\ntest_strict_version_duplicate_json_and_bool_schema (test_knowledge_variants_verifier.VariantsVerifierTests.test_strict_version_duplicate_json_and_bool_schema) ... ok\ntest_top_level_case_types_use_assertion_protocol (test_knowledge_variants_verifier.VariantsVerifierTests.test_top_level_case_types_use_assertion_protocol) ... ok\ntest_visible_markdown_counts_and_suffix_are_verified (test_knowledge_variants_verifier.VariantsVerifierTests.test_visible_markdown_counts_and_suffix_are_verified) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 25.817s\n\nOK\n"
+      }
+    },
+    "task-2-fix1-python": {
+      "argv": [
+        "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "cwd": "D:\\Noetome",
+      "exit": 0,
+      "seconds": 103.43700000000536,
+      "streams_verified": true,
+      "before_after_equal": true,
+      "streams": {
+        "stdout": "Retained actual v2 test root: D:\\Noetome\\target\\python-variants-c465e336fe5a42e69938f84d2db0bb2c\n",
+        "stderr": ".............................................................................................................................................................\n----------------------------------------------------------------------\nRan 157 tests in 103.282s\n\nOK\n"
+      }
+    },
+    "task-2-fix1-audit-v2-command": {
+      "argv": [
+        "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-X",
+        "utf8",
+        "scripts/verify_knowledge_coordination.py",
+        "audit-v2",
+        "D:/Noetome/target/debug/noetome.exe",
+        "D:/Noetome/.superpowers/sdd/B05-T02_VARIANTS_PLAN/task-2-fix1-audit-v2"
+      ],
+      "cwd": "D:\\Noetome",
+      "exit": 0,
+      "seconds": 32.85899999999674,
+      "streams_verified": true,
+      "before_after_equal": true,
+      "streams": {
+        "stdout": "{\"audit\": \"D:\\\\Noetome\\\\.superpowers\\\\sdd\\\\B05-T02_VARIANTS_PLAN\\\\task-2-fix1-audit-v2\\\\audit.json\", \"scenarios\": 42, \"commands\": 126, \"protection_passed\": true}\n",
+        "stderr": ""
+      }
+    }
+  },
+  "audit": {
+    "scenarios": 42,
+    "calls": 126,
+    "all_streams_and_expected_exits_verified": true,
+    "protection_equal": true,
+    "source_equal": true,
+    "shared_row": {
+      "name": "shared-original-atom-id",
+      "checked": {
+        "status": "passed",
+        "independently_verified": true,
+        "totals": {
+          "input_bundles": 2,
+          "validated_input_bundles": 2,
+          "input_atoms": 2,
+          "retained_fact_groups": 1,
+          "canonical_facts": 1,
+          "source_occurrences": 2,
+          "evidence_links": 2,
+          "independent_sources": 2,
+          "duplicate_occurrences": 1,
+          "passed": 2,
+          "failed": 0,
+          "needs_review": 0,
+          "unprocessed": 0,
+          "condition_variants": 0,
+          "historical_relations": 0,
+          "known_condition_occurrences": 0,
+          "unknown_condition_occurrences": 0,
+          "not_applicable_condition_occurrences": 2,
+          "dated_occurrences": 0,
+          "undated_occurrences": 2,
+          "context_evidence_links": 2
+        },
+        "inputs": [
+          "a",
+          "b"
+        ]
+      },
+      "expected_fingerprint": {
+        "sha256": "d235f02037d9f41db47396e2c447f62428cb09959d7cb9c318d5f10c04d3f400",
+        "byte_length": 2769
+      }
+    },
+    "shared_calls": [
+      {
+        "index": 119,
+        "name": "shared-original-atom-id-init",
+        "argv": [
+          "D:\\Noetome\\target\\debug\\noetome.exe",
+          "project",
+          "init",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\project"
+        ],
+        "cwd": "D:\\Noetome",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "elapsed_seconds": 0.01600000000325963,
+        "stdout": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-119-shared-original-atom-id-init.stdout.txt",
+          "sha256": "6638cbbdb984321243823efe25c9dc77be7d2267c65a94bb3401d8fe46ad54af",
+          "byte_length": 656
+        },
+        "stderr": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-119-shared-original-atom-id-init.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "cli_before": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "cli_after": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "error": null
+      },
+      {
+        "index": 120,
+        "name": "shared-original-atom-id-import-a",
+        "argv": [
+          "D:\\Noetome\\target\\debug\\noetome.exe",
+          "source",
+          "import",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\project",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\frozen-authors\\not_applicable-a.txt"
+        ],
+        "cwd": "D:\\Noetome",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "elapsed_seconds": 0.10899999999674037,
+        "stdout": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-120-shared-original-atom-id-import-a.stdout.txt",
+          "sha256": "5bfd8ce794a378f6c71795a3e8a4e45cd51ff1b1b5b8966805d9ea0041737007",
+          "byte_length": 1809
+        },
+        "stderr": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-120-shared-original-atom-id-import-a.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "cli_before": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "cli_after": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "error": null
+      },
+      {
+        "index": 121,
+        "name": "shared-original-atom-id-review-a",
+        "argv": [
+          "D:\\Noetome\\target\\debug\\noetome.exe",
+          "extract",
+          "verify",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\project",
+          "a1901ee7-4a02-42fc-9f2d-70e53337198c",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\review-a",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\case\\bundle-a"
+        ],
+        "cwd": "D:\\Noetome",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "elapsed_seconds": 0.1090000000258442,
+        "stdout": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-121-shared-original-atom-id-review-a.stdout.txt",
+          "sha256": "9ab069e279dfd22cb83cd6a010dde22e9049e0a65ac3ef175e15bb1b7a45993b",
+          "byte_length": 14129
+        },
+        "stderr": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-121-shared-original-atom-id-review-a.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "cli_before": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "cli_after": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "error": null
+      },
+      {
+        "index": 122,
+        "name": "shared-original-atom-id-seed-b",
+        "argv": [
+          "D:\\Noetome\\target\\debug\\noetome.exe",
+          "source",
+          "import",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\project",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\b-seed.txt"
+        ],
+        "cwd": "D:\\Noetome",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "elapsed_seconds": 0.14100000000325963,
+        "stdout": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-122-shared-original-atom-id-seed-b.stdout.txt",
+          "sha256": "4f6c34bbcdab6016566298c315b2def25b056ca2e58f5bdc01d3ac3a73744ce7",
+          "byte_length": 1773
+        },
+        "stderr": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-122-shared-original-atom-id-seed-b.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "cli_before": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "cli_after": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "error": null
+      },
+      {
+        "index": 123,
+        "name": "shared-original-atom-id-import-b",
+        "argv": [
+          "D:\\Noetome\\target\\debug\\noetome.exe",
+          "source",
+          "import",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\project",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\frozen-authors\\not_applicable-b.txt",
+          "--source-id",
+          "a0a0f46c-c2ce-455d-b9f4-e3c1395a1237"
+        ],
+        "cwd": "D:\\Noetome",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "elapsed_seconds": 0.125,
+        "stdout": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-123-shared-original-atom-id-import-b.stdout.txt",
+          "sha256": "65acb5a9ebef6f6d2f5dbdf09d8793eacd6fa866295ceaecce46ec39d231f0af",
+          "byte_length": 1811
+        },
+        "stderr": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-123-shared-original-atom-id-import-b.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "cli_before": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "cli_after": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "error": null
+      },
+      {
+        "index": 124,
+        "name": "shared-original-atom-id-review-b",
+        "argv": [
+          "D:\\Noetome\\target\\debug\\noetome.exe",
+          "extract",
+          "verify",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\project",
+          "9ea98c85-8d71-4f6f-a2c7-c02422a356c9",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\review-b",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\case\\bundle-b"
+        ],
+        "cwd": "D:\\Noetome",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "elapsed_seconds": 0.14100000000325963,
+        "stdout": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-124-shared-original-atom-id-review-b.stdout.txt",
+          "sha256": "05ce53bb91a4260091b2d6890828187d73b38fd02d9de60f730ed608efe698ba",
+          "byte_length": 14129
+        },
+        "stderr": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-124-shared-original-atom-id-review-b.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "cli_before": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "cli_after": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "error": null
+      },
+      {
+        "index": 125,
+        "name": "shared-original-atom-id",
+        "argv": [
+          "D:\\Noetome\\target\\debug\\noetome.exe",
+          "knowledge",
+          "coordinate",
+          "--",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\project",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\case",
+          "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id\\output"
+        ],
+        "cwd": "D:\\Noetome",
+        "exit_code": 0,
+        "expected_exit": 0,
+        "elapsed_seconds": 0.48399999999674037,
+        "stdout": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-125-shared-original-atom-id.stdout.txt",
+          "sha256": "ca7d6c78403f114c20108635f27bf8d097dec77479b8a023a2cca2787bfce2eb",
+          "byte_length": 35631
+        },
+        "stderr": {
+          "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\command-125-shared-original-atom-id.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "cli_before": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "cli_after": {
+          "sha256": "ae987370f93969a27e9bff1c3b394c6f82fac93e12078b6fb6c9c4b73275cd8b",
+          "byte_length": 18631680
+        },
+        "error": null
+      }
+    ],
+    "retained_rejections": [
+      {
+        "name": "deleted-condition",
+        "reason": "IR source/author reconstruction/occurrences/2/conditions: length"
+      },
+      {
+        "name": "rewritten-condition",
+        "reason": "IR source/author reconstruction/occurrences/2/conditions: length"
+      },
+      {
+        "name": "deleted-exception",
+        "reason": "IR source/author reconstruction/occurrences/2/exceptions: length"
+      },
+      {
+        "name": "rewritten-exception",
+        "reason": "IR source/author reconstruction/occurrences/2/exceptions/0: value"
+      },
+      {
+        "name": "lost-context-support",
+        "reason": "IR source/author reconstruction/occurrences/0/context/evidence_ids: length"
+      },
+      {
+        "name": "invented-time",
+        "reason": "IR source/author reconstruction/occurrences/0/context/time/value: value"
+      },
+      {
+        "name": "unknown-as-na",
+        "reason": "report source/author reconstruction/occurrences/0/context/applicability_status: value"
+      },
+      {
+        "name": "default-zero",
+        "reason": "IR source/author reconstruction/occurrences/0/context/time/value: type"
+      },
+      {
+        "name": "omitted-null",
+        "reason": "IR source/author reconstruction/facts/0/time: fields"
+      },
+      {
+        "name": "omitted-occurrence",
+        "reason": "IR source/author reconstruction/occurrences: length"
+      },
+      {
+        "name": "identity",
+        "reason": "IR source/author reconstruction/occurrences/2/object_id: value"
+      },
+      {
+        "name": "version",
+        "reason": "IR source/author reconstruction/occurrences/0/binding/version_id: value"
+      },
+      {
+        "name": "unit-merge",
+        "reason": "report source/author reconstruction/occurrences/0/unit_value: value"
+      },
+      {
+        "name": "overlap-order",
+        "reason": "report source/author reconstruction/relations/0/relation: value"
+      },
+      {
+        "name": "boolean-count",
+        "reason": "IR source/author reconstruction/totals/failed: type"
+      },
+      {
+        "name": "declared-source-time",
+        "reason": "actual source time/status: value"
+      },
+      {
+        "name": "declared-source-applicability",
+        "reason": "full applicability conditions"
+      },
+      {
+        "name": "declared-support-omission",
+        "reason": "context evidence nonempty"
+      },
+      {
+        "name": "declared-support-duplicate",
+        "reason": "duplicate normalized string"
+      },
+      {
+        "name": "declared-cross-input-support",
+        "reason": "exact actual background support set"
+      },
+      {
+        "name": "declared-original-identity",
+        "reason": "context actual atom: value"
+      },
+      {
+        "name": "declared-missing-null",
+        "reason": "schema fields: status precision value"
+      },
+      {
+        "name": "declared-zero-date",
+        "reason": "Gregorian year"
+      },
+      {
+        "name": "declared-invalid-leap-day",
+        "reason": "v2 coordination verification failed: ValueError"
+      }
+    ]
+  },
+  "shared_roots": {
+    "task-2-fix1-red": "D:\\Noetome\\target\\python-variants-084180631cab4ef0a414d2f603232bf8\\shared-original-atom-id",
+    "task-2-fix1-green": "D:\\Noetome\\target\\python-variants-de22f746afb3440bb5fe1b289a3e54ce\\shared-original-atom-id",
+    "audit": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id"
+  },
+  "shared_root_checks": {
+    "task-2-fix1-red": {
+      "path": "D:\\Noetome\\target\\python-variants-084180631cab4ef0a414d2f603232bf8\\shared-original-atom-id",
+      "author_matches_expected": true,
+      "expected_pin": {
+        "sha256": "d235f02037d9f41db47396e2c447f62428cb09959d7cb9c318d5f10c04d3f400",
+        "byte_length": 2769
+      },
+      "status": "passed",
+      "totals": {
+        "condition_variants": 0,
+        "historical_relations": 0,
+        "known_condition_occurrences": 0,
+        "unknown_condition_occurrences": 0,
+        "not_applicable_condition_occurrences": 2,
+        "dated_occurrences": 0,
+        "undated_occurrences": 2,
+        "context_evidence_links": 2,
+        "input_bundles": 2,
+        "validated_input_bundles": 2,
+        "input_atoms": 2,
+        "retained_fact_groups": 1,
+        "canonical_facts": 1,
+        "source_occurrences": 2,
+        "evidence_links": 2,
+        "independent_sources": 2,
+        "duplicate_occurrences": 1,
+        "passed": 2,
+        "failed": 0,
+        "needs_review": 0,
+        "unprocessed": 0
+      },
+      "inputs": [
+        {
+          "input_id": "a",
+          "original_atom_id": "a-speed",
+          "sql_binding_matches": true,
+          "supports": [
+            "a-support"
+          ]
+        },
+        {
+          "input_id": "b",
+          "original_atom_id": "a-speed",
+          "sql_binding_matches": true,
+          "supports": [
+            "b-support"
+          ]
+        }
+      ],
+      "distinct_occurrence_ids": [
+        "occ-dd086a385c649c5ecb47e6f3637710a0fb26fd6c2236b9861e296012759be3ad",
+        "occ-ff497eb13bf582bddacd8a6b355e810108d4831928c244ca1f54f35b79d2399d"
+      ],
+      "distinct_source_ids": [
+        "9a601591-fecf-404d-8e5b-50ceebe5a654",
+        "e8287cd7-6f0c-426b-8909-cdb510f3aa92"
+      ]
+    },
+    "task-2-fix1-green": {
+      "path": "D:\\Noetome\\target\\python-variants-de22f746afb3440bb5fe1b289a3e54ce\\shared-original-atom-id",
+      "author_matches_expected": true,
+      "expected_pin": {
+        "sha256": "d235f02037d9f41db47396e2c447f62428cb09959d7cb9c318d5f10c04d3f400",
+        "byte_length": 2769
+      },
+      "status": "passed",
+      "totals": {
+        "condition_variants": 0,
+        "historical_relations": 0,
+        "known_condition_occurrences": 0,
+        "unknown_condition_occurrences": 0,
+        "not_applicable_condition_occurrences": 2,
+        "dated_occurrences": 0,
+        "undated_occurrences": 2,
+        "context_evidence_links": 2,
+        "input_bundles": 2,
+        "validated_input_bundles": 2,
+        "input_atoms": 2,
+        "retained_fact_groups": 1,
+        "canonical_facts": 1,
+        "source_occurrences": 2,
+        "evidence_links": 2,
+        "independent_sources": 2,
+        "duplicate_occurrences": 1,
+        "passed": 2,
+        "failed": 0,
+        "needs_review": 0,
+        "unprocessed": 0
+      },
+      "inputs": [
+        {
+          "input_id": "a",
+          "original_atom_id": "a-speed",
+          "sql_binding_matches": true,
+          "supports": [
+            "a-support"
+          ]
+        },
+        {
+          "input_id": "b",
+          "original_atom_id": "a-speed",
+          "sql_binding_matches": true,
+          "supports": [
+            "b-support"
+          ]
+        }
+      ],
+      "distinct_occurrence_ids": [
+        "occ-25ab767bb53aae7570adc70c19becf3d42630e846c1bd88173355254ec3ed387",
+        "occ-f2f2e4560dfa941340e614951d7a0b451cf974b33fefa6d15f0c92ca6a2ad7c6"
+      ],
+      "distinct_source_ids": [
+        "993ca6b7-2143-4a25-a937-7ea748d7bd56",
+        "231e5ce7-2ae9-4d93-b156-560a58e6b0be"
+      ]
+    },
+    "audit": {
+      "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\task-2-fix1-audit-v2\\shared-original-atom-id",
+      "author_matches_expected": true,
+      "expected_pin": {
+        "sha256": "d235f02037d9f41db47396e2c447f62428cb09959d7cb9c318d5f10c04d3f400",
+        "byte_length": 2769
+      },
+      "status": "passed",
+      "totals": {
+        "condition_variants": 0,
+        "historical_relations": 0,
+        "known_condition_occurrences": 0,
+        "unknown_condition_occurrences": 0,
+        "not_applicable_condition_occurrences": 2,
+        "dated_occurrences": 0,
+        "undated_occurrences": 2,
+        "context_evidence_links": 2,
+        "input_bundles": 2,
+        "validated_input_bundles": 2,
+        "input_atoms": 2,
+        "retained_fact_groups": 1,
+        "canonical_facts": 1,
+        "source_occurrences": 2,
+        "evidence_links": 2,
+        "independent_sources": 2,
+        "duplicate_occurrences": 1,
+        "passed": 2,
+        "failed": 0,
+        "needs_review": 0,
+        "unprocessed": 0
+      },
+      "inputs": [
+        {
+          "input_id": "a",
+          "original_atom_id": "a-speed",
+          "sql_binding_matches": true,
+          "supports": [
+            "a-support"
+          ]
+        },
+        {
+          "input_id": "b",
+          "original_atom_id": "a-speed",
+          "sql_binding_matches": true,
+          "supports": [
+            "b-support"
+          ]
+        }
+      ],
+      "distinct_occurrence_ids": [
+        "occ-37c15179273c2455da1875fbc0520d4df23d3a4999c70681c8f538afba2a0580",
+        "occ-5ea94b42247a82f74bf56a26e0251fb22cea6809deecfdd12deb9519a1e16dd4"
+      ],
+      "distinct_source_ids": [
+        "3d37b4c1-f3f4-4f3f-96b0-cb170fe24865",
+        "a0a0f46c-c2ce-455d-b9f4-e3c1395a1237"
+      ]
+    }
+  },
+  "focused_additional_inspection": {
+    "red_verifier_exact_old_pin": {
+      "sha256": "c79129dccb76284a784d6911f7e1511b87f8ef754a9c84064be319e57afc29ac",
+      "byte_length": 26065
+    },
+    "shared_audit_stdout_equals_persisted_report": true,
+    "green_missing_b_support_forgery": {
+      "path": "D:\\Noetome\\target\\python-variants-de22f746afb3440bb5fe1b289a3e54ce\\shared-id-missing-second-support",
+      "artifact_pins_synchronized": true,
+      "markdown_json_equal": true,
+      "ir_report_equal": true,
+      "input_b_evidence_empty": true,
+      "reconstruction_rejection_assertion_passes_in_existing_green_suite": true
+    }
+  }
+}

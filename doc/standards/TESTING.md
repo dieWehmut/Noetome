@@ -218,3 +218,11 @@ Task2经过两项真实伪造的审查修复，28项focused Python及52场景/60
 本项先前实际完整Rust558、Python138、模块30及任务内审查修复均有历史原件。整分支最终审查另发现三项Important及两项Minor后，先取得真实针对性RED再做一波修复；首次修复后Rust16 suites为561 passed/0failed/0ignored、独立模块34/34、完整Python142/142，154份源码在门禁前后未变。普通审计33场景/56命令及29组原件保护通过。Rust与Python完整回归并行时Cargo正常重建CLI，各命令分别保存执行前后指纹，不把CLI未变作为虚假前提。
 
 限定复查随后实际发现重复pair同步伪造被独立误接受，保留第27条required1/actual0和普通Rust拒绝3，再于同一修复波补准入唯一性。新增用例真实RED后GREEN，最终模块35/35、完整Python143/143、最新普通审计33场景/56命令及29保护组通过，CLI前后相同；Rust对应152份依赖源码未变，复用实际561回归。原限定审查者只新增两次只读check确认原同步伪造拒绝1、合法反序四支持通过0，新增Important解除。初始错误准备、每次真实失败、旧审查和旧回归全部保留，历史轮次不相加成独立知识样本；日志与远端收束据[B05-T01记录](../validation/B05-T01.md)追加。
+
+## B05-T02 条件与来源时间独立验收
+
+新[作者样例](../../fixtures/knowledge-coordination-v2/README.md)先冻结源字节、旧Gold2、明确身份、背景和全部expected，再构造普通CLI依据；原v1/B04样例不改。首个普通CLI RED须是来源准备实际成功后尚缺v2外部行为，不能用编译、路径或准备失败替代。温度/样例范围、完整例外、已知时间/有效闰日、unknown/NA、缺时间、重叠时间与不同单位分别核对所有原出现及组。
+
+独立v2核对从实际只读SQL/资源与旧九件原source_review重建背景及原出处，作者expected先于候选和调用；不能用Rust的计数/状态或从结果计算新expected。同步更新JSON/Markdown/IR/artifact指纹的伪造须因条件、时间、出处或分母本身被拒绝；陈旧报告和SHA的提前拒绝不能替代该证明。删/改完整条件或例外、丢历史支持、伪造时间/顺序、错误单位归并、unknown与NA混淆、填零/遗漏原出现和错版本都要实际验证。
+
+原 `audit` 保持v1；v2普通矩阵入口为 `python scripts/verify_knowledge_coordination.py audit-v2 <absolute-cli> <nonexistent-root>`，只读 `check <project> <case> <output> <gold>`按严格版本路由。分别保存实际argv、每条stdout/stderr、退出码、CLI前后与冻结作者指纹及输入/项目/资源/旧IR/gold/外部哨兵保护。源码未变的本项已通过Rust回归可核对依赖指纹复用；最终Python、devlog/Git和新鲜任务/whole-branch审查在稳定实现上确认，真实记录见[B05-T02](../validation/B05-T02.md)。

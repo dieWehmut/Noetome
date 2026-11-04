@@ -1,0 +1,349 @@
+test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) ... 
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='conditional') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='history') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='history_day') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='unknown_condition') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='not_applicable') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='mixed_state') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='unit_difference') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='undated_difference') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='overlapping_time') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='exception_difference') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='combined_context') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='same_source_history') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='same_source_undated') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='same_source_condition') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='multiple-supports') ... FAIL
+  test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='ordering-display') ... FAIL
+test_coherent_deleted_condition_is_rejected (test_knowledge_variants_verifier.VariantsVerifierTests.test_coherent_deleted_condition_is_rejected) ... ok
+test_coherent_semantic_matrix (test_knowledge_variants_verifier.VariantsVerifierTests.test_coherent_semantic_matrix) ... ok
+test_conditional_report_matches_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_conditional_report_matches_frozen_authors) ... FAIL
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='conditional')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='history')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='history_day')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='unknown_condition')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='not_applicable')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='mixed_state')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='unit_difference')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='undated_difference')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='overlapping_time')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='exception_difference')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='combined_context')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='same_source_history')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='same_source_undated')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='same_source_condition')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='multiple-supports')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_all_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_all_frozen_authors) (name='ordering-display')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 45, in test_all_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+======================================================================
+FAIL: test_conditional_report_matches_frozen_authors (test_knowledge_variants_verifier.VariantsVerifierTests.test_conditional_report_matches_frozen_authors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\tests\test_knowledge_variants_verifier.py", line 40, in test_conditional_report_matches_frozen_authors
+    self.assertTrue(verify_report(project, case, output, gold)["independently_verified"])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 625, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+Retained actual v2 test root: D:\Noetome\target\python-variants-ea863af20921491db3eac892b1738b26
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 470, in _verify
+    gold_schema(gold)
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 293, in gold_schema
+    fields(gold, "schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts")
+  File "D:\Noetome\scripts\verify_knowledge_coordination.py", line 56, in fields
+    assert type(obj) is dict and set(obj) == set(names.split()), "schema fields: " + names
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: schema fields: schema_version author scope scientific_quality knowledge_status published expected_status input_ids expected_input_bundles expected_fact_groups expected_source_occurrences expected_independent_sources expected_evidence_links expected_duplicate_occurrences facts
+
+----------------------------------------------------------------------
+Ran 4 tests in 17.100s
+
+FAILED (failures=17)

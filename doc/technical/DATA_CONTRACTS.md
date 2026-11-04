@@ -365,3 +365,11 @@ B05-T01的 `knowledge coordinate <project> <case> <new-output>` 使用独立Sche
 `input_atoms`、`source_occurrences`、`evidence_links`、`independent_sources`、`retained_fact_groups`与`canonical_facts`分开表达。四状态按原出现互斥分区；待复核时canonical_facts为null，保留全部原组与来源，不生成coordination-ir.json。真实空值与未知不能互换，bool不作整数，重复输入不能增加独立来源数。同SHA的不同已登记source_id保留各自出处，但这个结构计数不证明真实文献独立性。
 
 成功和待复核保存coordination.json/coordination.md，Markdown嵌入完整同事实JSON；仅成功另存未发布coordination-ir.json。case、身份文件和每份九件依据逐字节复制，owner限定本轮用途。保存依据的严格结构错误返回COORD_SCHEMA/2；有效类型的来源或语义不符返回COORD_SOURCE_REVIEW/3。模型预算、来源SQL、Run/Release及生产Vault不被修改。当前实际证据见[B05-T01记录](../validation/B05-T01.md)。
+
+## 有界条件与来源时间协调交换 v2
+
+B05-T02使用独立Schema2的case、identity、report与IR，保留严格v1读取及旧B04 Gold/IR。identity新增每原子恰一项atom_contexts，来源背景从实际unit内紧邻原gold.quote的有界中文整行重建，再核对作者状态/时间与所有能覆盖联合范围的原supports；不是把映射声明当作真实时间。详见[条件与来源时间契约](KNOWLEDGE_VARIANTS_CONTRACT.md)。
+
+条件状态known/unknown/not_applicable分开；unknown条件的事实键包含实际occurrence_id，不能将两个空条件当成已证明相同。完整条件与例外都参与适用范围和键。time严格为status/precision/value，未知两项null；已知为有效年份或公历日期，不从导入、运行、响应或文件元数据推造。
+
+v2 occurrence新增实际背景context及UTF8范围/SHA/原支持ID，fact新增条件状态和time，关系可为condition_variant或有可证明先后的historical_evolution，后者保留earlier/later实际原出现。背景重叠、未知条件、无依据的同来源版本或不同单位不被强行归并；需要复核时保留完整原组、canonical_facts=null且无成功IR。totals分别计条件三分区、时间两分区、实际背景支持与pair关系，科学仍not_run、知识pending、发布false。

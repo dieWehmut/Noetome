@@ -1,0 +1,24 @@
+{
+  "probe": "same original atom ID in distinct input namespaces",
+  "base_case": "not_applicable",
+  "base_author_sha256": "ea76eba3c5e33eb090f1ab3678a77bc05fd316f12eeffa7110f042babd7aa833",
+  "input_ids": [
+    "a",
+    "b"
+  ],
+  "fact_members": [
+    {
+      "input_ids": [
+        "a",
+        "b"
+      ],
+      "original_atom_ids": [
+        "a-speed",
+        "a-speed"
+      ]
+    }
+  ],
+  "result": "rejected",
+  "reason": "duplicate normalized string",
+  "stall_note": "Initial default-login orchestration cell g66:11 stalled without output and was terminated; this one probe was retried with login false."
+}

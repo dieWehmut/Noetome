@@ -1,0 +1,110 @@
+{
+  "schema_version": 2,
+  "author": "independent-condition-time-fixture-author-before-candidates",
+  "scope": "explicit_identity_condition_time_v2",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case_name": "not_applicable",
+  "expected_status": "passed",
+  "input_ids": [
+    "a",
+    "b"
+  ],
+  "facts": [
+    {
+      "object_id": "00000000-0000-4000-8000-000000000001",
+      "property_id": "00000000-0000-4000-8000-000000000002",
+      "value_status": "known",
+      "value": "10",
+      "unit": "m/s",
+      "conditions": [],
+      "exceptions": [],
+      "applicability_status": "not_applicable",
+      "time": {
+        "status": "unknown",
+        "precision": null,
+        "value": null
+      },
+      "input_ids": [
+        "a",
+        "b"
+      ],
+      "original_atom_ids": [
+        "a-speed",
+        "a-speed"
+      ],
+      "status": "passed",
+      "issue_codes": []
+    }
+  ],
+  "occurrences": [
+    {
+      "input_id": "a",
+      "original_atom_id": "a-speed",
+      "value": "10",
+      "unit": "m/s",
+      "conditions": [],
+      "exceptions": [],
+      "applicability_status": "not_applicable",
+      "time": {
+        "status": "unknown",
+        "precision": null,
+        "value": null
+      },
+      "context_quote": "适用条件：不适用；观点时间：未给出。\n样例 A 的速度为 10 m/s。",
+      "status": "passed",
+      "issue_codes": []
+    },
+    {
+      "input_id": "b",
+      "original_atom_id": "a-speed",
+      "value": "10",
+      "unit": "m/s",
+      "conditions": [],
+      "exceptions": [],
+      "applicability_status": "not_applicable",
+      "time": {
+        "status": "unknown",
+        "precision": null,
+        "value": null
+      },
+      "context_quote": "适用条件：不适用；观点时间：未给出。\n样例 A 的速度为 10 m/s。",
+      "status": "passed",
+      "issue_codes": []
+    }
+  ],
+  "relations": [
+    {
+      "left_input_id": "a",
+      "right_input_id": "b",
+      "relation": "duplicate",
+      "issue_code": null,
+      "earlier_input_id": null,
+      "later_input_id": null
+    }
+  ],
+  "totals": {
+    "input_bundles": 2,
+    "validated_input_bundles": 2,
+    "input_atoms": 2,
+    "retained_fact_groups": 1,
+    "canonical_facts": 1,
+    "source_occurrences": 2,
+    "evidence_links": 2,
+    "independent_sources": 2,
+    "duplicate_occurrences": 1,
+    "passed": 2,
+    "failed": 0,
+    "needs_review": 0,
+    "unprocessed": 0,
+    "condition_variants": 0,
+    "historical_relations": 0,
+    "known_condition_occurrences": 0,
+    "unknown_condition_occurrences": 0,
+    "not_applicable_condition_occurrences": 2,
+    "dated_occurrences": 0,
+    "undated_occurrences": 2,
+    "context_evidence_links": 2
+  }
+}

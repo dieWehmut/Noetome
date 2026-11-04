@@ -269,3 +269,5 @@ B05-T01增加普通 `knowledge coordinate`，消费同项目2至3份已保存的
 [入口与保存](../../crates/noetome-cli/src/knowledge_coordinate.rs)持有输入守卫至三个结果保存后，仅撤去本轮可确认的结果文件；未知内容、原输入及来源项目不被接管。完整同键才去重，不按相同内容SHA合并另一实际来源身份，不按显示名称推断身份。无法处理的同对象/属性差异及同来源版本差异保留待复核，无成功IR。完整交换见[协调契约](KNOWLEDGE_COORDINATION_CONTRACT.md)，实际证明与仍未完成范围见[B05-T01记录](../validation/B05-T01.md)。
 
 [独立协调审计](../../scripts/verify_knowledge_coordination.py)从外部作者gold、明确映射、只读实际来源及原source_review重新计算事实键、出处ID、关系和全部分母，然后核对JSON、Markdown、IR及原件副本；不共享Rust协调算法。当前是公开自造材料的离线明确身份原型，科学not_run、研究not_requested、知识pending、published=false。条件/历史变体和正式冲突分类由后续任务分别验收。
+
+B05-T02按[严格v2契约](KNOWLEDGE_VARIANTS_CONTRACT.md)扩展同一入口：版本DTO、实际背景重建和并列事实关系分别承担独立职责，共用原身份/出处构造和完整来源守卫。条件或时间字段不写入原B04 IR；事实仍引用原对象和实际source/version/unit/range。时间区间只用于有来源依据的先后，条件完整性及无法比较的单位独立限制归并；未决不会提升为科学通过。Python v2独立重建和普通audit与旧v1验收分别保留，实测交付按[B05-T02记录](../validation/B05-T02.md)确认。

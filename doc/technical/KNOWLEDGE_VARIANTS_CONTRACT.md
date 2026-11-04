@@ -43,6 +43,8 @@ v2 fact 在 v1 的全部字段外新增必填 `applicability_status,time`，采�
 
 occurrence_id 沿用 v1 的实际来源/版本/parse/unit/range/原 atom ID 键，显示名、input 顺序及背景证据数组顺序不参与身份。输入与映射数组重排不得改变分组、原出现、出处及实际计数。
 
+原子身份由 `input_id` 与 `original_atom_id` 配对，不要求不同输入的原ID全局唯一。作者expected的每组 `input_ids` 与 `original_atom_ids` 必须等长逐项对应，前者保持唯一，后者允许不同输入重复同一原ID；每个原ID仍按对应实际输入核对，不能为通过校验改名或丢弃第二来源。
+
 ## 并列关系和未决状态
 
 每对 occurrence 恰一条关系。v2 relation 在 v1 字段外新增必填可空 `earlier_occurrence_id,later_occurrence_id`。只有 `historical_evolution` 两者非空并指向该对原出现，其他关系两者必须 null。历史顺序只表示背景先后，不能选出权威或覆盖旧值。
