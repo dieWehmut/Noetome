@@ -41,9 +41,33 @@ impl VariantsCase {
         Self::custom(name, |_, _, _| {})
     }
     pub(crate) fn custom(name: &str, change: impl Fn(&str, &mut String, &mut Value)) -> Self {
-        let author_bytes = fs::read(repo().join("fixtures/knowledge-coordination-v2/authors.json")).unwrap();
+        Self::candidate_custom(name, change, |_, _| {})
+    }
+    pub(crate) fn candidate_custom(
+        name: &str,
+        change: impl Fn(&str, &mut String, &mut Value),
+        change_candidate: impl Fn(&str, &mut Value),
+    ) -> Self {
+        Self::prepare_variant(name, |_| {}, change, change_candidate)
+    }
+    pub(crate) fn prepare_variant(
+        name: &str,
+        change_author: impl Fn(&mut Value),
+        change: impl Fn(&str, &mut String, &mut Value),
+        change_candidate: impl Fn(&str, &mut Value),
+    ) -> Self {
+        let author_bytes =
+            fs::read(repo().join("fixtures/knowledge-coordination-v2/authors.json")).unwrap();
         let authors: Value = serde_json::from_slice(&author_bytes).unwrap();
-        let author = authors["cases"].as_array().unwrap().iter().find(|c|c["name"] == name).unwrap();
+        let mut authored_case = authors["cases"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|c| c["name"] == name)
+            .unwrap()
+            .clone();
+        change_author(&mut authored_case);
+        let author = &authored_case;
         let same_source = author["same_source"].as_bool().unwrap();
         let parent = repo().join("target/compiler-temp");
         fs::create_dir_all(&parent).unwrap();
@@ -56,6 +80,7 @@ impl VariantsCase {
             root,
             protected: vec![],
         };
+        println!("prepared_variants_root={} case={name}", f.root.display());
         let fixture = repo().join("fixtures/knowledge-coordination-v2");
         for entry in fs::read_dir(&fixture).unwrap() {
             let p = entry.unwrap().path();
@@ -66,8 +91,16 @@ impl VariantsCase {
         fs::write(f.root.join("expected.json"), encode(&author["expected"])).unwrap();
         for i in author["inputs"].as_array().unwrap() {
             let id = i["input_id"].as_str().unwrap();
-            fs::copy(fixture.join(i["source_file"].as_str().unwrap()), f.root.join(format!("selected-{id}.txt"))).unwrap();
-            fs::write(f.root.join(format!("frozen-gold-{id}.json")), encode(&i["gold"])).unwrap();
+            fs::copy(
+                fixture.join(i["source_file"].as_str().unwrap()),
+                f.root.join(format!("selected-{id}.txt")),
+            )
+            .unwrap();
+            fs::write(
+                f.root.join(format!("frozen-gold-{id}.json")),
+                encode(&i["gold"]),
+            )
+            .unwrap();
         }
         let pins: Value = f
             .protected
@@ -173,6 +206,7 @@ impl VariantsCase {
             atom["atom"]["evidence_links"] =
                 json!([{"evidence_id":evidence_id,"relation":"supports"}]);
             atom["measurement"] = json!({"value_status":"known","value":gold["value"],"unit":gold["unit"],"conditions":gold["conditions"]});
+            change_candidate(id, &mut candidate);
             fs::write(review_dir.join("candidates.json"), encode(&candidate)).unwrap();
             fs::write(review_dir.join("decision.json"),encode(&json!({"schema_version":1,"unit_id":"unit-0","disposition":"included","atom_ids":[atom_id],"exclusion_reason":null}))).unwrap();
             fs::write(review_dir.join("review.json"),encode(&json!({"schema_version":1,"purpose":"single_measurement_source_review","selection":[{"kind":"text","ordinal":0}],"candidate_file":"candidates.json","gold_file":"gold.json","gold_sha256":hash(&gold_bytes),"decision_file":"decision.json","subject":"样例 A","property":property,"allowed_contexts":[],"reviewer":"automated_source_review","interpretation_timing":"before_synthetic_response"}))).unwrap();
@@ -212,7 +246,11 @@ impl VariantsCase {
                 .map(|i| i["binding"]["source_id"].as_str().unwrap())
                 .collect::<std::collections::BTreeSet<_>>()
                 .len(),
-            if same_source { 1 } else { author["inputs"].as_array().unwrap().len() }
+            if same_source {
+                1
+            } else {
+                author["inputs"].as_array().unwrap().len()
+            }
         );
         let project: Value =
             serde_json::from_slice(&fs::read(f.project.join("project.json")).unwrap()).unwrap();
@@ -225,7 +263,9 @@ impl VariantsCase {
         fs::write(&outside, b"external protected sentinel").unwrap();
         f.protected
             .push((outside, b"external protected sentinel".to_vec()));
-        let cli = option_env!("CARGO_BIN_EXE_noetome").map(PathBuf::from).unwrap_or_else(||repo().join("target/debug/noetome.exe"));
+        let cli = option_env!("CARGO_BIN_EXE_noetome")
+            .map(PathBuf::from)
+            .unwrap_or_else(|| repo().join("target/debug/noetome.exe"));
         fs::write(f.root.join("cli-sha256.txt"), hash(&fs::read(cli).unwrap())).unwrap();
         f.freeze();
         f
@@ -245,6 +285,18 @@ impl VariantsCase {
             .retain(|(p, _)| !p.starts_with(&self.case) && !p.starts_with(&self.project));
         gather(&self.case, &mut self.protected);
         gather(&self.project, &mut self.protected);
+        for entry in fs::read_dir(&self.root).unwrap() {
+            let path = entry.unwrap().path();
+            let name = path.file_name().unwrap().to_string_lossy();
+            if name.starts_with("selected-")
+                || name.starts_with("frozen-")
+                || name == "expected.json"
+                || name == "author-pins.json"
+            {
+                self.protected.retain(|(p, _)| p != &path);
+                self.protected.push((path.clone(), fs::read(path).unwrap()));
+            }
+        }
         self.protected.push((
             self.root.join("external-sentinel.txt"),
             b"keep human sentinel".to_vec(),
@@ -271,6 +323,13 @@ impl VariantsCase {
         .unwrap();
     }
     pub(crate) fn command(&self, name: &str, args: &[&str]) -> Output {
+        // Preserve both executions in order/relabeling cases instead of replacing the first receipt.
+        let mut label = name.to_owned();
+        let mut ordinal = 1;
+        while self.root.join(format!("{label}-stdout.txt")).exists() {
+            ordinal += 1;
+            label = format!("{name}-{ordinal}");
+        }
         let r = Command::new(
             option_env!("CARGO_BIN_EXE_noetome")
                 .map(PathBuf::from)
@@ -279,8 +338,12 @@ impl VariantsCase {
         .args(args)
         .output()
         .unwrap();
-        fs::write(self.root.join(format!("{name}-argv.json")), encode(&json!(args))).unwrap();
-        self.save_cli(name, &r);
+        fs::write(
+            self.root.join(format!("{label}-argv.json")),
+            encode(&json!(args)),
+        )
+        .unwrap();
+        self.save_cli(&label, &r);
         r
     }
     pub(crate) fn coordinate(&self) -> Output {
@@ -312,5 +375,3 @@ impl VariantsCase {
         .unwrap();
     }
 }
-
-
