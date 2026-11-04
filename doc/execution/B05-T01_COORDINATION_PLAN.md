@@ -266,4 +266,4 @@ fact_id = "fact-" + hashlib.sha256(compact(key)).hexdigest()
 - [x] 适当完整 Rust fmt/check/workspace test、完整 Python unittest、devlog check、git diff --check：记录当前HEAD/源码/CLI指纹、命令、实际输出、exit与范围，保留首次失败。
 - [x] 保存公开自造的审查、CLI和独立核验证据到assets，写真实 B05-T01 验收；标准与入口同步，PRD未变不重建。
 - [x] devlog complete B05-T01使用实际产物与验证，check生成账本视图；仍仅B05-T02/T03待办，不切批次。原start及各失败历史保留，没有重造任务状态。
-- [ ] 最后分步commit普通push当前分支，git ls-remote核对 exact HEAD；结尾交代实际完成、局限、剩余下一步及全部控制器rulings。审查临时目录和可恢复归档保留，不再递归删除。
+- [x] 最后分步commit普通push当前分支，git ls-remote核对 exact HEAD；代码/日志/证据收束HEAD `19cde25006e7e4d17f9c4fad69fdb28d54dcb3e8` 与远端实际相同，见[推送原始记录](../validation/assets/B05-T01-push-checkpoint.json)。结尾交代实际完成、局限、剩余下一步及全部控制器rulings。审查临时目录和可恢复归档保留，不再递归删除。

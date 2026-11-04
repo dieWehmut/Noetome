@@ -4,7 +4,7 @@
 
 B04-T03已完成日志、审查修复、实际安装和普通推送；收束提交`b3d40a02b0eb3a8905c190b2b78442a4c9121c29`与远端相等。最后完整Rust532、Python108、前端10及原生16项和用户托盘/拖动确认有真实证据。所选模型配置/DPAPI继续保存并复用：累计30097、余额9969903、pending0，T03新增模型请求0。
 
-当前批次 **B05** 只含下面三张顺序执行卡。B05-T01已完成作者化输入、Rust协调、独立Python、整分支审查修复与最终限定复查，并用devlog工具记录完成；实际Rust561、独立模块35、完整Python143和33场景/56次普通CLI有原始证据。最新生产修正为 `2618752028557d15e8fb5a1828f243cf3f25f935`，普通推送与远端核对在本轮最后收束。B05-T02/T03仍为todo，下一项B05-T02须在T01推送核对后顺序启动；完成状态由账本生成，详见[B05-T01验证](../validation/B05-T01.md)。
+当前批次 **B05** 只含下面三张顺序执行卡。B05-T01已完成作者化输入、Rust协调、独立Python、整分支审查修复与最终限定复查，并用devlog工具记录完成；实际Rust561、独立模块35、完整Python143和33场景/56次普通CLI有原始证据。最新生产修正为 `2618752028557d15e8fb5a1828f243cf3f25f935`；代码、日志与证据收束提交 `19cde25006e7e4d17f9c4fad69fdb28d54dcb3e8` 已普通推送至 `codex/b05-t01-knowledge-coordination`，git ls-remote实际返回相同HEAD，见[原始推送核对](../validation/assets/B05-T01-push-checkpoint.json)。B05-T02/T03仍为todo，下一项顺序推进B05-T02；完成状态由账本生成，详见[B05-T01验证](../validation/B05-T01.md)。
 
 **目标**：在已验收的受控单来源核对上，先合并重复并保留互补，再区分条件和历史，最后呈现真正冲突与证据不足。
 
@@ -44,7 +44,7 @@ B04-T03已完成日志、审查修复、实际安装和普通推送；收束提�
 - [x] 写普通CLI测试并在接线前取得真实行为RED；正确样例预期exit0和完整证据集合，错误样例必须有具体失败或需复核。编译/设置失败单独记录。
 - [x] 实现有界守卫与显式身份协调；规范ID不依赖显示名称/输入顺序，原ID可追。跨来源同SHA保留各自身份，同一输入重复引用不能冒充独立来源。未处理的条件/单位/时间差异保持需复核。
 - [x] 独立Python从固定gold和实际源SQL/资源核对两事实/三来源及JSON/Markdown/IR；篡改错来源/引文、丢第二证据、错误归并、数量填零、重复输入和既有/内嵌/链接输出必须被检测。输入和源前后不变。
-- [ ] 运行针对性普通入口、独立脚本及必要完整回归，新鲜审查修复后用devlog complete附代码/真实产物，分步提交推送并核对远端。此时不把明确身份原型算成通用实体识别/归并撤销或真实教材质量验收。
+- [x] 运行针对性普通入口、独立脚本及必要完整回归，新鲜审查修复后用devlog complete附代码/真实产物，分步提交推送并核对远端。此时不把明确身份原型算成通用实体识别/归并撤销或真实教材质量验收。
 
 预定行为验证：`./scripts/cargo_local.ps1 test -p noetome-cli --locked --offline --test knowledge_coordinate '--' --test-threads=4`；`python scripts/verify_knowledge_coordination.py audit <absolute-noetome> <nonexistent-root>`；保存后只读复核为 `check <project> <case> <output> <gold>`。独立校验器用真实一致伪造报告先RED再GREEN。
 
