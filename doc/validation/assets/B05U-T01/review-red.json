@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Review RED: fresh settings search",
+    "passed": false,
+    "error": "Error: Existing window settings route is missing from fresh search",
+    "source": "async()=>{await noetomeTab.playwright.getByRole('button',{name:'搜索导航',exact:true}).click();await noetomeTab.playwright.getByRole('searchbox',{name:'搜索导航页面'}).fill('窗口设置');await noetomeTab.getAXState(); const matches=await noetomeTab.playwright.getByRole('button',{name:'窗口设置',exact:true}).count(); browserAssert(matches>0,'Existing window settings route is missing from fresh search'); return {matches};}"
+  },
+  {
+    "name": "Review RED: overlay dismissal on settings navigation",
+    "passed": false,
+    "error": "Error: Sidebar overlay remains over focused settings controls",
+    "source": "async()=>{await noetomeTab.playwright.getByRole('button',{name:'设置',exact:true}).click();await noetomeTab.getAXState();const result=await noetomeTab.playwright.evaluate(()=>({sidebarHidden:document.getElementById('app-sidebar').hidden,focused:document.activeElement.id,heading:document.querySelector('.settings-page-heading').getBoundingClientRect().toJSON()}));browserAssert(result.sidebarHidden,'Sidebar overlay remains over focused settings controls');return result;}"
+  }
+]
