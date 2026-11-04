@@ -213,4 +213,8 @@ Task2经过两项真实伪造的审查修复，28项focused Python及52场景/60
 
 普通审计入口为 `python scripts/verify_knowledge_coordination.py audit <absolute-cli> <nonexistent-root>`；只读复核为 `check <project> <case> <output> <gold>`。保存实际argv、stdout/stderr、退出码、CLI指纹和输入/原IR/gold/源项目/外部哨兵保护。守卫注入需有实际执行证据，不能把不能注入称为CLI竞态通过。源码未变的已通过完整Rust回归可核对指纹复用；最终Python与日志/Git检查在稳定代码上执行。真实结果和审查修复见[B05-T01记录](../validation/B05-T01.md)。
 
-本轮实际完整Rust为558 passed/0failed/0ignored；结构错误分类修复先7个真实RED后GREEN。独立模块修复先27方法/13次实际误接受RED，最终30/30，普通审计33场景/56命令及29组原件保护通过；最后完整Python138/138在仓库外TEMP执行，154份源码前后未变。任务内两次新鲜审查的Important都经过限定复查解决。四轮审计/初始错误准备/每次真实失败及修复保留，历史轮次不相加成独立知识样本；最终整分支与日志/远端收束据[B05-T01记录](../validation/B05-T01.md)追加。
+独立准入必须验证每个本地角色匹配出的规范ID集合恰等于所选ID，拒绝不同ID的别名歧义；多条支持证据按原atom链接顺序保留，不能因payload数组顺序不同而遗漏或拒绝。原atom的 `(evidence_id,relation)` 必须唯一，重复supports不能充作两条支持；同ID不同relation按原Schema接受。已经升级到Schema3的项目仍可选择Text span，配置、SQL元数据与PRAGMA user_version必须一致。保存owner不支持版本按COORD_SCHEMA/2拒绝；原GoldInput的author在摘要转换前验证非空明文与1024 UTF8字节限额，两种原Schema都适用。
+
+本项先前实际完整Rust558、Python138、模块30及任务内审查修复均有历史原件。整分支最终审查另发现三项Important及两项Minor后，先取得真实针对性RED再做一波修复；首次修复后Rust16 suites为561 passed/0failed/0ignored、独立模块34/34、完整Python142/142，154份源码在门禁前后未变。普通审计33场景/56命令及29组原件保护通过。Rust与Python完整回归并行时Cargo正常重建CLI，各命令分别保存执行前后指纹，不把CLI未变作为虚假前提。
+
+限定复查随后实际发现重复pair同步伪造被独立误接受，保留第27条required1/actual0和普通Rust拒绝3，再于同一修复波补准入唯一性。新增用例真实RED后GREEN，最终模块35/35、完整Python143/143、最新普通审计33场景/56命令及29保护组通过，CLI前后相同；Rust对应152份依赖源码未变，复用实际561回归。原限定审查者只新增两次只读check确认原同步伪造拒绝1、合法反序四支持通过0，新增Important解除。初始错误准备、每次真实失败、旧审查和旧回归全部保留，历史轮次不相加成独立知识样本；日志与远端收束据[B05-T01记录](../validation/B05-T01.md)追加。

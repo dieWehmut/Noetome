@@ -262,7 +262,8 @@ fact_id = "fact-" + hashlib.sha256(compact(key)).hexdigest()
 ## 控制器收尾门槛
 
 - [x] 对两个Task的代码和每条spec/quality观察作实际证据检查，修复重要问题并限定复查；全部接口/分母/原保护需求在验收表有对应真实命令与文件。
+- [x] 一次整分支最终审查及同一次限定复查完成：原五项修复后，限定复查实际发现重复pair误接受并在同一波补三行准入；原五项与该新增Important均ADDRESSED。保存原NO、中间Important未解除和最终通过全文，实际2/35/143与最新33场景/56命令分别有原流，复用源码未变的Rust561。
 - [x] 适当完整 Rust fmt/check/workspace test、完整 Python unittest、devlog check、git diff --check：记录当前HEAD/源码/CLI指纹、命令、实际输出、exit与范围，保留首次失败。
 - [x] 保存公开自造的审查、CLI和独立核验证据到assets，写真实 B05-T01 验收；标准与入口同步，PRD未变不重建。
-- [ ] devlog complete B05-T01使用实际产物与验证，check生成账本视图；仍仅B05-T02/T03待办，不切批次。
+- [x] devlog complete B05-T01使用实际产物与验证，check生成账本视图；仍仅B05-T02/T03待办，不切批次。原start及各失败历史保留，没有重造任务状态。
 - [ ] 最后分步commit普通push当前分支，git ls-remote核对 exact HEAD；结尾交代实际完成、局限、剩余下一步及全部控制器rulings。审查临时目录和可恢复归档保留，不再递归删除。

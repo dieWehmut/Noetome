@@ -1419,7 +1419,7 @@
       "id": "B05-T01",
       "title": "多来源重复归并与互补事实保留",
       "batch": "B05",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B04-T03"
       ],
@@ -1448,6 +1448,50 @@
           "note": "冻结显式身份映射与多来源重复／互补协调契约；只读重验已有 source_review 依据，离线实现普通 CLI 和独立验证，不推进 B05-T02/T03。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-04T01:43:30Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成明确身份的有界多来源重复归并与互补事实保留；实际来源九件依据重验、完整出处保留、独立校验及最终审查修复均通过，B05-T02/T03保持待办。",
+          "validation": [
+            "实际Rust fmt/check/workspace通过，16 suites共561 passed/0 failed/0 ignored；补充修正仅改两Python文件，152份Rust依赖原字节匹配，复用真实561记录。",
+            "最终独立模块35/35，完整Python143 tests/71.141秒/OK；重复支持链接一致伪造先真实RED再GREEN，合法反序四支持继续通过，全部154源码与CLI执行前后一致。",
+            "最新普通CLI审计33场景/56实际命令、112原流SHA及29保护组通过；正常2事实/3出处/3来源/3支持/1重复，未处理差异保持需复核和无成功IR。",
+            "一次整分支审查和同一次限定复查完成，原五项及新增重复pair问题全部ADDRESSED；复查29命令的旧失败/新拒绝保留，最新伪造check1与合法check0。",
+            "收尾实核18份文档266本地链接、9冻结作者原字节、154当前源码；devlog check18项和git diff --check退出0。全部工程样例自造，科学not_run、研究not_requested、未发布、无新模型或生产Vault写入。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/knowledge_coordinate.rs",
+              "sha256": "3bcbe206972a1691f55191a022f79ffe07dacf82e3ed2cdb1dd9d7d348b7c4e9"
+            },
+            {
+              "path": "crates/noetome-cli/src/knowledge_coordinate_input.rs",
+              "sha256": "e2bf61774c446b99f5f7c1037ef3fbcc624071d54f743497db228429fa6dff52"
+            },
+            {
+              "path": "crates/noetome-cli/src/knowledge_coordinate_facts.rs",
+              "sha256": "7c4fc75e05bd1995412d9f1736ea843bcaaa92bc383109628b9a75613fe8e935"
+            },
+            {
+              "path": "scripts/verify_knowledge_coordination.py",
+              "sha256": "99c32ada6ef9a481ad64b699fc67825212ebacdf83f9ad41cbfbe7b73b381344"
+            },
+            {
+              "path": "doc/validation/B05-T01.md",
+              "sha256": "dc3381a6ef906f1764c8a6c58defdf2708b4aa7460f00bdb0927d60ec69a33c3"
+            },
+            {
+              "path": "doc/validation/assets/B05-T01-final-rereview-1.md",
+              "sha256": "c5ab6768d62633158eda69693da85aba2ddfb01145c057b2c5358da6cbe285b5"
+            },
+            {
+              "path": "doc/validation/assets/B05-T01-final-verified-evidence.zip",
+              "sha256": "7ad9a248fa3c885b639a4f0b1aa8313d680a8ffb8ec4609a1a64021bd17d96c9"
+            }
+          ]
         }
       ]
     },
