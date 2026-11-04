@@ -137,17 +137,21 @@ def read(path, limit):
     return path.read_bytes()
 
 
-def metadata(value):
+def metadata(value, *, evidence_quote_lf=False, _path=()):
     """Bound metadata recursively; RequestUnit body is validated separately."""
     if type(value) is str:
-        assert len(value.encode()) <= 1024 and not any(ord(c) < 32 or ord(c) == 127 for c in value), "metadata limit/control"
+        quote = (evidence_quote_lf and len(_path) == 4 and
+                 _path[:2] == ("payload", "evidence") and type(_path[2]) is int and _path[3] == "quote")
+        assert len(value.encode()) <= 1024 and not any(
+            (ord(c) < 32 or ord(c) == 127) and not (quote and c == "\n")
+            for c in value), "metadata limit/control"
     elif type(value) is dict:
-        for item in value.values():
-            metadata(item)
+        for key, item in value.items():
+            metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, key))
     elif type(value) is list:
         assert len(value) <= 1024, "metadata array limit"
-        for item in value:
-            metadata(item)
+        for index, item in enumerate(value):
+            metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, index))
 
 
 def role_text(value):
@@ -316,7 +320,7 @@ def gold_schema(gold):
     assert sorted(covered) == sorted(gold["input_ids"]), "gold partition"
 
 
-def source_bundle(project, directory, pin):
+def source_bundle(project, directory, pin, *, evidence_quote_lf=False):
     assert {p.name for p in directory.iterdir()} == set(FILES), "source bundle inventory"
     raw = {name: read(directory / name, limit) for name, limit in FILES.items()}
     exact(pin, {name: fingerprint(body) for name, body in raw.items()}, "nine source fingerprints")
@@ -324,7 +328,7 @@ def source_bundle(project, directory, pin):
     review, candidate, gold, decision = (parsed[name + "-original.json"] for name in ("review", "candidates", "gold", "decision"))
     source_roles_schema(review, gold, decision)
     for obj in (review, candidate, gold, decision):
-        metadata(obj)
+        metadata(obj, evidence_quote_lf=evidence_quote_lf and obj is candidate)
     fields(review, "schema_version purpose candidate_file gold_file decision_file gold_sha256 subject property allowed_contexts selection reviewer interpretation_timing")
     exact(review["schema_version"], 1, "review version")
     assert review["purpose"] == "single_measurement_source_review", "review purpose"
@@ -622,6 +626,11 @@ def _verify(project, case, output, gold_bytes):
 def verify_report(project, case, output, gold_bytes):
     """Read actual SQL/source/gold and all bundles; false success raises AssertionError."""
     try:
+        version = strict_json(read(Path(case) / "coordination.json", 65536)).get("schema_version")
+        assert type(version) is int and version in (1, 2), "case version"
+        if version == 2:
+            from verify_knowledge_variants import verify_report as verify_v2
+            return verify_v2(Path(project), Path(case), Path(output), gold_bytes)
         return _verify(Path(project), Path(case), Path(output), gold_bytes)
     except (ValueError, KeyError, TypeError, OSError, StopIteration, sqlite3.Error) as exc:
         raise AssertionError("coordination verification failed: " + type(exc).__name__) from exc
@@ -1034,13 +1043,19 @@ def main(argv=None):
         check.add_argument(name, type=Path)
     audit_parser = sub.add_parser("audit", help="actual CLI matrix in an exclusively new root")
     audit_parser.add_argument("cli", type=Path); audit_parser.add_argument("root", type=Path)
+    variants_parser = sub.add_parser("audit-v2", help="actual condition/time CLI matrix in a new root")
+    variants_parser.add_argument("cli", type=Path); variants_parser.add_argument("root", type=Path)
     args = parser.parse_args(argv)
     audit = None
     try:
         if args.command == "check":
             result = verify_report(args.project, args.case, args.output, args.gold.read_bytes())
         else:
-            audit = Audit(args.cli, args.root)
+            if args.command == "audit-v2":
+                from knowledge_variants_audit import VariantsAudit
+                audit = VariantsAudit(args.cli, args.root)
+            else:
+                audit = Audit(args.cli, args.root)
             result = audit.matrix()
             result = dict(audit=str(audit.root / "audit.json"), scenarios=result["scenario_count"], commands=result["command_count"], protection_passed=True)
         print(json.dumps(result, ensure_ascii=False))
