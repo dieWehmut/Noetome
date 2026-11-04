@@ -1,0 +1,29 @@
+{
+  "argv": [
+    "powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "$ErrorActionPreference = 'Stop'\n$venvExe = 'D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe'\n$directExe = 'C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe'\n$venvCode = \"import sys,struct,importlib.metadata as m,json; print(json.dumps({'python':sys.version,'python_version':'.'.join(map(str,sys.version_info[:3])),'platform':sys.platform,'bits':struct.calcsize('P')*8,'executable':sys.executable,'base_executable':sys._base_executable,'prefix':sys.prefix,'base_prefix':sys.base_prefix,'packages':{n:m.version(n) for n in ['pdfplumber','pdfminer.six','pypdfium2','Pillow','charset-normalizer','cryptography','cffi','pycparser']}}))\"\n$directCode = \"import sys,struct,json; print(json.dumps({'python':sys.version,'python_version':'.'.join(map(str,sys.version_info[:3])),'platform':sys.platform,'bits':struct.calcsize('P')*8,'executable':sys.executable,'base_executable':sys._base_executable,'prefix':sys.prefix,'base_prefix':sys.base_prefix}))\"\n$venvRaw = & $venvExe -c $venvCode\n$venvExit = $LASTEXITCODE\nif ($venvExit -ne 0) { exit $venvExit }\n$directRaw = & $directExe -c $directCode\n$directExit = $LASTEXITCODE\nif ($directExit -ne 0) { exit $directExit }\n$fingerprints = @{}\nforeach ($exe in @($venvExe,$directExe)) {\n  $item = Get-Item -LiteralPath $exe\n  $fingerprints[$exe] = @{sha256=(Get-FileHash -LiteralPath $exe -Algorithm SHA256).Hash.ToLowerInvariant(); byte_length=$item.Length}\n}\n@{kind='selected_native_runtime_metadata';checked_at_utc=[DateTime]::UtcNow.ToString('o');venv=($venvRaw|ConvertFrom-Json);direct=($directRaw|ConvertFrom-Json);venv_exit=$venvExit;direct_exit=$directExit;interpreter_fingerprints=$fingerprints} | ConvertTo-Json -Depth 8 -Compress\n"
+  ],
+  "cwd": "/home/lyinn/project/Noetome",
+  "started_utc": "2026-11-04T16:56:09.786259+00:00",
+  "exit_code": 0,
+  "stdout": {
+    "sha256": "c346ce469be7b3b92b7fab363e6f27239bcf20a79e7a131ae7eb79583478996b",
+    "byte_length": 1772
+  },
+  "stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byte_length": 0
+  },
+  "query_source": {
+    "sha256": "e42e680f552f23e8b6cf3bae36d95f8132a90be789ded3268670fe191d757eb7",
+    "byte_length": 1725
+  },
+  "runtime_lock": {
+    "path": "sidecars/pdf_parser/runtime-lock.json",
+    "sha256": "6ab5c620ea4bd0dbe048df567909f7f771ec5047038e40651f835e9b53064309",
+    "byte_length": 420
+  }
+}

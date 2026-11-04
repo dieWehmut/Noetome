@@ -1,0 +1,64 @@
+{
+  "kind": "stdlib_runtime_pipe_diagnostic",
+  "parent_pid": 68144,
+  "results": [
+    {
+      "label": "venv_redirector",
+      "executable": "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+      "launcher_pid": 23988,
+      "actual_python_pid": 63816,
+      "processes": [
+        {
+          "pid": 23988,
+          "parent_pid": 68144,
+          "name": "python.exe"
+        },
+        {
+          "pid": 63816,
+          "parent_pid": 23988,
+          "name": "python.exe"
+        }
+      ],
+      "writer_before_cleanup": {
+        "completed": false,
+        "observed_for_ms": 500
+      },
+      "writer_after_cleanup": {
+        "completed": true,
+        "error_type": "BrokenPipeError",
+        "winerror": null,
+        "errno": 32,
+        "latency_ms": 500.0
+      },
+      "created_pids_no_longer_present": true
+    },
+    {
+      "label": "direct_base",
+      "executable": "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "launcher_pid": 17776,
+      "actual_python_pid": 17776,
+      "processes": [
+        {
+          "pid": 17776,
+          "parent_pid": 68144,
+          "name": "python.exe"
+        }
+      ],
+      "writer_before_cleanup": {
+        "completed": true,
+        "error_type": "OSError",
+        "winerror": null,
+        "errno": 22,
+        "latency_ms": 0.0
+      },
+      "writer_after_cleanup": {
+        "completed": true,
+        "error_type": "OSError",
+        "winerror": null,
+        "errno": 22,
+        "latency_ms": 0.0
+      },
+      "created_pids_no_longer_present": true
+    }
+  ]
+}

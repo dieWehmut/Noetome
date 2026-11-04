@@ -1,0 +1,78 @@
+{
+  "argv": [
+    "powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "& 'C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe' 'C:/Users/Lyinn/AppData/Local/Temp/Noetome-pipe-diagnostic-833fda1160724141a4579bd1b26f607b.py'"
+  ],
+  "exit_code": 0,
+  "kind": "repeatable stdlibrary diagnostic; not full Rust test",
+  "source_sha256": "84d3eccf56bc2653e4eb9d224a238fd9680c81ba9c1a1fc0f29df4a8cd4c2b3c",
+  "stdout_sha256": "36355a0b9828fda052ae16616c7c8bedce77375dbada13aa7ee18f28203cc215",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "result": {
+    "kind": "stdlib_runtime_pipe_diagnostic",
+    "parent_pid": 68144,
+    "results": [
+      {
+        "label": "venv_redirector",
+        "executable": "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "launcher_pid": 23988,
+        "actual_python_pid": 63816,
+        "processes": [
+          {
+            "pid": 23988,
+            "parent_pid": 68144,
+            "name": "python.exe"
+          },
+          {
+            "pid": 63816,
+            "parent_pid": 23988,
+            "name": "python.exe"
+          }
+        ],
+        "writer_before_cleanup": {
+          "completed": false,
+          "observed_for_ms": 500
+        },
+        "writer_after_cleanup": {
+          "completed": true,
+          "error_type": "BrokenPipeError",
+          "winerror": null,
+          "errno": 32,
+          "latency_ms": 500.0
+        },
+        "created_pids_no_longer_present": true
+      },
+      {
+        "label": "direct_base",
+        "executable": "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "launcher_pid": 17776,
+        "actual_python_pid": 17776,
+        "processes": [
+          {
+            "pid": 17776,
+            "parent_pid": 68144,
+            "name": "python.exe"
+          }
+        ],
+        "writer_before_cleanup": {
+          "completed": true,
+          "error_type": "OSError",
+          "winerror": null,
+          "errno": 22,
+          "latency_ms": 0.0
+        },
+        "writer_after_cleanup": {
+          "completed": true,
+          "error_type": "OSError",
+          "winerror": null,
+          "errno": 22,
+          "latency_ms": 0.0
+        },
+        "created_pids_no_longer_present": true
+      }
+    ]
+  }
+}

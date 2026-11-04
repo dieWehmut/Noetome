@@ -1595,7 +1595,7 @@
       "id": "B05-T03",
       "title": "真实冲突与证据不足的可追踪报告",
       "batch": "B05R",
-      "status": "blocked",
+      "status": "done",
       "depends_on": [
         "B05-T02"
       ],
@@ -1631,6 +1631,58 @@
           "note": "Schema3文本协调、最终Rust16/v1-v2共51、Python157含17平台跳过、独立59场景175命令及两项审查修复已验证。Linux当前完整workspace缺桌面系统依赖；Windows-only sidecar使完整lib263通过98失败，与main基线失败集合相同。没有可用Windows入口，完整必要回归尚未通过，保留原任务与全部证据，暂不complete/推送或切B06。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-04T16:23:39Z",
+          "action": "reopen",
+          "from_status": "blocked",
+          "to_status": "todo",
+          "note": "复核发现本机WSL2可通过powershell.exe运行Windows，Rust1.98.1已实际确认；在新的native快照测试目录恢复原任务完整验收，保留上轮阻塞和失败记录",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-04T16:23:39Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "运行当前提交字节一致的Windows隔离快照：完整Rust/Python、独立v3审计及Windows路径保护，成功后收束B05-T03并推送",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-04T16:59:15Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成严格Schema3冲突与证据不足报告、反证全量保留和独立重建；两项Important修复复审关闭，补齐原生Windows完整回归与真实祖先reparse验证，保留全部RED/Linux/初次Windows失败历史",
+          "validation": [
+            "原生Windows Rust1.98.1 fmt/check/workspace test实际退出0；18 suite共607 passed、0 failed、0 ignored；锁定Python3.12.14完整unittest 157 run/156 passed/1 skipped，跳过项由真实NTFS junction补充；八项PDF依赖实际metadata与lock完全相等。",
+            "Windows普通v3 audit55场景172次命令，100源码/保护清单不变；祖先junction15次真实调用、两入口拒绝project/case/output/gold和词法别名，Rust拒绝且无新输出；原v1 24/v2 27/v3 16及Linux59/175工程结果和失败历史保留。",
+            "root与独立审查逐件读回2zip全部3350成员CRC/SHA/长度、命令原流及当前100源码/44作者；112暂存原件无Git转换。独立限定收束无剩余Critical/Important/Minor；cargo fmt、12项devlog unittest、devlog check、git diff/cached diff检查及本地链接实际通过，AGENTS未改。三项选定生产路径保持不存在，无模型调用/联网研究/生产Vault写入。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B05-T03.md",
+              "sha256": "4d98735f75d2b97aa652bbf5adb4f24d7ddef74f5474e005871e5dfe34fba77f"
+            },
+            {
+              "path": "doc/validation/assets/B05-T03/windows/native-final.json",
+              "sha256": "f52c57d429c01c8bace3c48fce313ea3590ce2400b07e1ed835b4e5ac6ac576f"
+            },
+            {
+              "path": "doc/validation/assets/B05-T03/windows/final-evidence-review.json",
+              "sha256": "b060f6b6bbacdeeebe06b4aee42b3d448660de6f761a5ce0e47b01d4a75b82ff"
+            },
+            {
+              "path": "doc/validation/assets/B05-T03/windows/junction/windows-validation-review.md",
+              "sha256": "1136f5e90fd0cc0984954d5e07c678e26fc30a257fc6a8a48f0adc343e3d5ddb"
+            },
+            {
+              "path": "doc/technical/KNOWLEDGE_CONFLICTS_CONTRACT.md",
+              "sha256": "2852f7cab3dab8a9e75383bcd610b2a57adb41c909b389baa3b13adcf490dc72"
+            }
+          ]
         }
       ]
     },

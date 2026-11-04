@@ -1,0 +1,221 @@
+[
+  {
+    "name": "fmt",
+    "argv": [
+      "powershell.exe",
+      "-NoProfile",
+      "-ExecutionPolicy",
+      "Bypass",
+      "-File",
+      "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo\\scripts\\cargo_local.ps1",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo",
+    "started_utc": "2026-11-04T16:27:01.028587+00:00",
+    "elapsed_seconds": 1.2650000000139698,
+    "exit_code": 0,
+    "stdout": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\fmt.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    "stderr": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\fmt.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    "tracked_before_after_match": true,
+    "selected_production_before_after_match": true,
+    "cli_before": null,
+    "cli_after": null
+  },
+  {
+    "name": "workspace-check",
+    "argv": [
+      "powershell.exe",
+      "-NoProfile",
+      "-ExecutionPolicy",
+      "Bypass",
+      "-File",
+      "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo\\scripts\\cargo_local.ps1",
+      "check",
+      "--workspace",
+      "--locked",
+      "--offline"
+    ],
+    "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo",
+    "started_utc": "2026-11-04T16:27:02.295218+00:00",
+    "elapsed_seconds": 48.171999999991385,
+    "exit_code": 0,
+    "stdout": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\workspace-check.stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    "stderr": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\workspace-check.stderr.bin",
+      "sha256": "27f42f576752cff22b382d74142ab23364ec98386db850e0a1ce276e3739b54c",
+      "byte_length": 8979
+    },
+    "tracked_before_after_match": true,
+    "selected_production_before_after_match": true,
+    "cli_before": null,
+    "cli_after": null
+  },
+  {
+    "name": "workspace-tests",
+    "argv": [
+      "powershell.exe",
+      "-NoProfile",
+      "-ExecutionPolicy",
+      "Bypass",
+      "-File",
+      "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo\\scripts\\cargo_local.ps1",
+      "test",
+      "--workspace",
+      "--locked",
+      "--offline",
+      "--",
+      "--test-threads=4"
+    ],
+    "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo",
+    "started_utc": "2026-11-04T16:27:50.474651+00:00",
+    "elapsed_seconds": 99.17200000002049,
+    "exit_code": 101,
+    "stdout": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\workspace-tests.stdout.bin",
+      "sha256": "bd7b4ea35947dbac2b13a9e7946bba76a647c755430efca1768bd09cb7d43ec3",
+      "byte_length": 36689
+    },
+    "stderr": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\workspace-tests.stderr.bin",
+      "sha256": "f4d8f4dba6ced2d00dd2d42c32e10d556ab79d65f513d9abf987cdaefc4b42cd",
+      "byte_length": 7194
+    },
+    "tracked_before_after_match": true,
+    "selected_production_before_after_match": true,
+    "cli_before": null,
+    "cli_after": {
+      "sha256": "c8c03af4718bc668a89491033409142ff7fc00ccf462eae119488a2ed1426628",
+      "byte_length": 19029504
+    }
+  },
+  {
+    "name": "workspace-tests-after-pipe",
+    "argv": [
+      "powershell.exe",
+      "-NoProfile",
+      "-ExecutionPolicy",
+      "Bypass",
+      "-File",
+      "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo\\scripts\\cargo_local.ps1",
+      "test",
+      "--workspace",
+      "--locked",
+      "--offline",
+      "--",
+      "--test-threads=4"
+    ],
+    "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo",
+    "started_utc": "2026-11-04T16:34:10.703832+00:00",
+    "elapsed_seconds": 121.875,
+    "exit_code": 0,
+    "stdout": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\workspace-tests-after-pipe.stdout.bin",
+      "sha256": "6f923d721b2fd7a6496c50b0792f45070ed7fe636cb492bcb6d58a6b3cbbdc3d",
+      "byte_length": 53490
+    },
+    "stderr": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\workspace-tests-after-pipe.stderr.bin",
+      "sha256": "41e40bb25e610a361d46421b76e2277a58632cb49fffafdfddead339b54220ae",
+      "byte_length": 1579
+    },
+    "tracked_before_after_match": true,
+    "selected_production_before_after_match": true,
+    "cli_before": {
+      "sha256": "c8c03af4718bc668a89491033409142ff7fc00ccf462eae119488a2ed1426628",
+      "byte_length": 19029504
+    },
+    "cli_after": {
+      "sha256": "c8c03af4718bc668a89491033409142ff7fc00ccf462eae119488a2ed1426628",
+      "byte_length": 19029504
+    }
+  },
+  {
+    "name": "python-full",
+    "argv": [
+      "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+      "-X",
+      "utf8",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_*.py"
+    ],
+    "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo",
+    "started_utc": "2026-11-04T16:36:12.589574+00:00",
+    "elapsed_seconds": 102.39100000000326,
+    "exit_code": 0,
+    "stdout": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\python-full.stdout.bin",
+      "sha256": "e71c289bd06abd96925426ec12d37e9aa93dd4c76b003bca7b2065da4f181046",
+      "byte_length": 301
+    },
+    "stderr": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\python-full.stderr.bin",
+      "sha256": "b20b49b4ff670d2763577c78b3e038c86ea29680e33f37c1dfaa4244857b0921",
+      "byte_length": 276
+    },
+    "tracked_before_after_match": true,
+    "selected_production_before_after_match": true,
+    "cli_before": {
+      "sha256": "c8c03af4718bc668a89491033409142ff7fc00ccf462eae119488a2ed1426628",
+      "byte_length": 19029504
+    },
+    "cli_after": {
+      "sha256": "c8c03af4718bc668a89491033409142ff7fc00ccf462eae119488a2ed1426628",
+      "byte_length": 19029504
+    }
+  },
+  {
+    "name": "audit-v3",
+    "argv": [
+      "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+      "-X",
+      "utf8",
+      "scripts/verify_knowledge_coordination.py",
+      "audit-v3",
+      "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo\\target\\debug\\noetome.exe",
+      "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\audit-v3"
+    ],
+    "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\repo",
+    "started_utc": "2026-11-04T16:37:55.006200+00:00",
+    "elapsed_seconds": 35.46799999999348,
+    "exit_code": 0,
+    "stdout": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\audit-v3.stdout.bin",
+      "sha256": "8bcb922bcfc90b234af5dbd4cb580c03daca14feba42d29cf733346a29c36564",
+      "byte_length": 159
+    },
+    "stderr": {
+      "path": "D:\\Noetome\\target\\compiler-temp\\native-b05-t03-6af0813f3f\\audit-v3.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    "tracked_before_after_match": true,
+    "selected_production_before_after_match": true,
+    "cli_before": {
+      "sha256": "c8c03af4718bc668a89491033409142ff7fc00ccf462eae119488a2ed1426628",
+      "byte_length": 19029504
+    },
+    "cli_after": {
+      "sha256": "c8c03af4718bc668a89491033409142ff7fc00ccf462eae119488a2ed1426628",
+      "byte_length": 19029504
+    }
+  }
+]

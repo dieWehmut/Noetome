@@ -1,0 +1,2 @@
+& 'D:\Noetome\.artifacts\b03-t02-python312\Scripts\python.exe' -X utf8 'D:\Noetome\target\compiler-temp\native-b05-t03-6af0813f3f\windows_junction_probe.py'
+exit $LASTEXITCODE
