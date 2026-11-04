@@ -10,6 +10,7 @@ import type { Page } from "./appTypes";
 
 type Phase = "idle" | "running" | "success" | "error";
 type PreviewOption = "help" | "version";
+const sidebarOverlayQuery = "(max-width: 620px)";
 
 interface RuntimeInfo {
   app_version: string;
@@ -49,7 +50,7 @@ export default function App() {
   const page = history.entries[history.index];
   const theme = useThemePreference();
   const recentPages = [...new Set(history.entries.slice(0, history.index + 1).reverse())].slice(0, 5);
-  const [sidebarVisible, setSidebarVisible] = useState(true);
+  const [sidebarVisible, setSidebarVisible] = useState(() => !window.matchMedia(sidebarOverlayQuery).matches);
   const [focusTarget, setFocusTarget] = useState<{ id: string; request: number } | null>(null);
   const mainRef = useRef<HTMLElement>(null);
   const [hasSelection, setHasSelection] = useState(false);
@@ -60,6 +61,7 @@ export default function App() {
   const [preview, setPreview] = useState<Preview>({ phase: "idle", output: "", error: "" });
 
   function requestFocus(id = "main-content") {
+    if (window.matchMedia(sidebarOverlayQuery).matches) setSidebarVisible(false);
     setFocusTarget((previous) => ({ id, request: (previous?.request ?? 0) + 1 }));
   }
 
@@ -89,6 +91,19 @@ export default function App() {
     else target?.scrollIntoView({ block: "start" });
   }, [page, focusTarget]);
 
+  useEffect(() => {
+    const media = window.matchMedia(sidebarOverlayQuery);
+    function closeOverlay(event: MediaQueryListEvent) {
+      if (!event.matches) return;
+      if (document.getElementById("app-sidebar")?.contains(document.activeElement)) {
+        mainRef.current?.focus({ preventScroll: true });
+      }
+      setSidebarVisible(false);
+    }
+    media.addEventListener("change", closeOverlay);
+    return () => media.removeEventListener("change", closeOverlay);
+  }, []);
+
   function toggleSidebar() {
     if (sidebarVisible && document.getElementById("app-sidebar")?.contains(document.activeElement)) {
       mainRef.current?.focus({ preventScroll: true });
@@ -114,6 +129,7 @@ export default function App() {
     const main = mainRef.current;
     const selection = window.getSelection();
     if (!main || !selection) return;
+    if (window.matchMedia(sidebarOverlayQuery).matches) setSidebarVisible(false);
     main.focus({ preventScroll: true });
     const range = document.createRange();
     range.selectNodeContents(main);

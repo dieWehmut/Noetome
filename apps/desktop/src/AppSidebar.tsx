@@ -24,6 +24,7 @@ export default function AppSidebar({ page, visible, recentPages, theme, onNaviga
   const inSettings = page === "appearance" || page === "window" || page === "about";
   const search = query.trim().toLocaleLowerCase();
   const matches = (target: Page) => pageLabels[target].toLocaleLowerCase().includes(search);
+  const results = (Object.keys(pageLabels) as Page[]).filter(matches);
   const tools = (["runtime", "about"] as const).filter(matches);
   const recent = recentPages.filter(matches);
 
@@ -66,7 +67,7 @@ export default function AppSidebar({ page, visible, recentPages, theme, onNaviga
         </header>
 
         {searchVisible && <div className="sidebar-search"><input id="navigation-search" type="search" aria-label="搜索导航页面" placeholder="搜索导航…" ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} onKeyDown={(event) => { if (event.key === "Escape") closeSearch(); }} /></div>}
-        {matches("workspace") && <button className="sidebar-primary" onClick={() => onNavigate("workspace")}><AppIcon name="compose" /><span>工作台</span></button>}
+        {!search && <button className="sidebar-primary" onClick={() => onNavigate("workspace")}><AppIcon name="compose" /><span>工作台</span></button>}
 
         <div className="sidebar-scroll">
           {!search && <section className="sidebar-section" aria-labelledby="projects-heading">
@@ -75,9 +76,9 @@ export default function AppSidebar({ page, visible, recentPages, theme, onNaviga
             <div id="sidebar-projects" className="sidebar-empty" hidden={!projectsExpanded}><p>尚未载入项目</p><small>项目暂通过 CLI 管理</small></div>
           </section>}
 
-          {tools.length > 0 && <section className="sidebar-section" aria-labelledby="tools-heading"><h2 id="tools-heading" className="nav-section-label">工具</h2><nav aria-label="工具导航">{tools.map((target) => pageButton(target, target === "runtime" ? "pulse" : "info"))}</nav></section>}
-          {recent.length > 0 && <section className="sidebar-section recent-section" aria-labelledby="recent-heading"><h2 id="recent-heading" className="nav-section-label">最近访问</h2><nav aria-label="最近访问">{recent.map((target) => pageButton(target))}</nav></section>}
-          {search && !matches("workspace") && tools.length === 0 && recent.length === 0 && <p className="navigation-empty" role="status">没有匹配的页面</p>}
+          {!search && tools.length > 0 && <section className="sidebar-section" aria-labelledby="tools-heading"><h2 id="tools-heading" className="nav-section-label">工具</h2><nav aria-label="工具导航">{tools.map((target) => pageButton(target, target === "runtime" ? "pulse" : "info"))}</nav></section>}
+          {!search && recent.length > 0 && <section className="sidebar-section recent-section" aria-labelledby="recent-heading"><h2 id="recent-heading" className="nav-section-label">最近访问</h2><nav aria-label="最近访问">{recent.map((target) => pageButton(target))}</nav></section>}
+          {search && <section className="sidebar-section" aria-labelledby="search-results-heading"><h2 id="search-results-heading" className="nav-section-label">搜索结果</h2>{results.length > 0 ? <nav aria-label="搜索结果">{results.map((target) => pageButton(target))}</nav> : <p className="navigation-empty" role="status">没有匹配的页面</p>}</section>}
         </div>
       </aside>
     </>
