@@ -626,10 +626,17 @@ def _verify(project, case, output, gold_bytes):
 def verify_report(project, case, output, gold_bytes):
     """Read actual SQL/source/gold and all bundles; false success raises AssertionError."""
     try:
+        supplied_gold = strict_json(gold_bytes)
+        if type(supplied_gold) is dict and type(supplied_gold.get("schema_version")) is int and supplied_gold["schema_version"] == 3:
+            from verify_knowledge_conflicts import verify_report as verify_v3
+            return verify_v3(Path(project), Path(case), Path(output), gold_bytes)
         manifest = strict_json(read(Path(case) / "coordination.json", 65536))
         assert type(manifest) is dict, "case document object"
         version = manifest.get("schema_version")
-        assert type(version) is int and version in (1, 2), "case version"
+        assert type(version) is int and version in (1, 2, 3), "case version"
+        if version == 3:
+            from verify_knowledge_conflicts import verify_report as verify_v3
+            return verify_v3(Path(project), Path(case), Path(output), gold_bytes)
         if version == 2:
             from verify_knowledge_variants import verify_report as verify_v2
             return verify_v2(Path(project), Path(case), Path(output), gold_bytes)
@@ -1047,13 +1054,20 @@ def main(argv=None):
     audit_parser.add_argument("cli", type=Path); audit_parser.add_argument("root", type=Path)
     variants_parser = sub.add_parser("audit-v2", help="actual condition/time CLI matrix in a new root")
     variants_parser.add_argument("cli", type=Path); variants_parser.add_argument("root", type=Path)
+    conflicts_parser = sub.add_parser("audit-v3", help="actual conflicts and evidence retention CLI matrix in a new root")
+    conflicts_parser.add_argument("cli", type=Path); conflicts_parser.add_argument("root", type=Path)
     args = parser.parse_args(argv)
     audit = None
     try:
         if args.command == "check":
+            from verify_knowledge_conflicts import guard_path
+            guard_path(args.gold, directory=False)
             result = verify_report(args.project, args.case, args.output, args.gold.read_bytes())
         else:
-            if args.command == "audit-v2":
+            if args.command == "audit-v3":
+                from knowledge_conflicts_audit import ConflictsAudit
+                audit = ConflictsAudit(args.cli, args.root)
+            elif args.command == "audit-v2":
                 from knowledge_variants_audit import VariantsAudit
                 audit = VariantsAudit(args.cli, args.root)
             else:
