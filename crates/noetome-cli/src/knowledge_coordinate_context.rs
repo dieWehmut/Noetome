@@ -137,6 +137,9 @@ pub(crate) fn rebuild(r: &VerifiedReview, c: &AtomContext) -> Result<Context, Pr
         return Err(bad());
     }
     let end = fact_start + gold.len();
+    // Candidate evidence and emitted context both use absolute source byte offsets.
+    let absolute_start = u.start_byte + start;
+    let absolute_end = u.start_byte + end;
     let covered = r.candidate.payload.atoms[0]
         .atom
         .evidence_links
@@ -150,8 +153,8 @@ pub(crate) fn rebuild(r: &VerifiedReview, c: &AtomContext) -> Result<Context, Pr
                 .find(|e| {
                     e.evidence_id == l.evidence_id
                         && e.unit_id == u.unit_id
-                        && e.excerpt_start_byte <= start
-                        && e.excerpt_end_byte >= end
+                        && e.excerpt_start_byte <= absolute_start
+                        && e.excerpt_end_byte >= absolute_end
                 })
                 .map(|e| e.evidence_id.clone())
         })
@@ -170,14 +173,13 @@ pub(crate) fn rebuild(r: &VerifiedReview, c: &AtomContext) -> Result<Context, Pr
         return Err(bad());
     }
     let quote = text[start..end].to_owned();
-    // Evidence excerpts use unit-local byte offsets; the emitted context uses absolute source offsets.
     Ok(Context {
         applicability_status: applicability.into(),
         time: actual,
         evidence_ids: declared.into_iter().collect(),
         unit_id: u.unit_id.clone(),
-        start_byte: u.start_byte + start,
-        end_byte: u.start_byte + end,
+        start_byte: absolute_start,
+        end_byte: absolute_end,
         sha256: sha256(quote.as_bytes()),
         quote,
     })

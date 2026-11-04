@@ -56,6 +56,24 @@ impl VariantsCase {
         change: impl Fn(&str, &mut String, &mut Value),
         change_candidate: impl Fn(&str, &mut Value),
     ) -> Self {
+        Self::prepare_with_prefix(name, "", change_author, change, change_candidate)
+    }
+    pub(crate) fn nonzero_unit(name: &str, change_candidate: impl Fn(&str, &mut Value)) -> Self {
+        Self::prepare_with_prefix(
+            name,
+            "# 独立资料前言 α\n\n",
+            |_| {},
+            |_, _, _| {},
+            change_candidate,
+        )
+    }
+    fn prepare_with_prefix(
+        name: &str,
+        prefix: &str,
+        change_author: impl Fn(&mut Value),
+        change: impl Fn(&str, &mut String, &mut Value),
+        change_candidate: impl Fn(&str, &mut Value),
+    ) -> Self {
         let author_bytes =
             fs::read(repo().join("fixtures/knowledge-coordination-v2/authors.json")).unwrap();
         let authors: Value = serde_json::from_slice(&author_bytes).unwrap();
@@ -126,6 +144,10 @@ impl VariantsCase {
             let mut source = fs::read_to_string(f.root.join(format!("selected-{id}.txt"))).unwrap();
             let mut gold = authored["gold"].clone();
             change(id, &mut source, &mut gold);
+            let selected_start = prefix.len();
+            source = format!("{prefix}{source}");
+            // The heading and blank separator occupy ordinals 0 and 1.
+            let ordinal = if prefix.is_empty() { 0 } else { 2 };
             let source_path = f.root.join(format!("selected-{id}.txt"));
             fs::write(&source_path, &source).unwrap();
             let gold_bytes = encode(&gold);
@@ -181,7 +203,11 @@ impl VariantsCase {
             let property = authored["property"].as_str().unwrap();
             let atom_id = authored["original_atom_id"].as_str().unwrap().to_owned();
             let evidence_id = format!("{id}-support");
-            let quote = source.trim_end();
+            let quote = if prefix.is_empty() {
+                source[selected_start..].trim_end()
+            } else {
+                authored["context_quote"].as_str().unwrap()
+            };
             let start = source.find(quote).unwrap();
             let mut candidate: Value = serde_json::from_slice(
                 &fs::read(repo().join("fixtures/extraction-review-v1/candidates.json")).unwrap(),
@@ -209,7 +235,7 @@ impl VariantsCase {
             change_candidate(id, &mut candidate);
             fs::write(review_dir.join("candidates.json"), encode(&candidate)).unwrap();
             fs::write(review_dir.join("decision.json"),encode(&json!({"schema_version":1,"unit_id":"unit-0","disposition":"included","atom_ids":[atom_id],"exclusion_reason":null}))).unwrap();
-            fs::write(review_dir.join("review.json"),encode(&json!({"schema_version":1,"purpose":"single_measurement_source_review","selection":[{"kind":"text","ordinal":0}],"candidate_file":"candidates.json","gold_file":"gold.json","gold_sha256":hash(&gold_bytes),"decision_file":"decision.json","subject":"样例 A","property":property,"allowed_contexts":[],"reviewer":"automated_source_review","interpretation_timing":"before_synthetic_response"}))).unwrap();
+            fs::write(review_dir.join("review.json"),encode(&json!({"schema_version":1,"purpose":"single_measurement_source_review","selection":[{"kind":"text","ordinal":ordinal}],"candidate_file":"candidates.json","gold_file":"gold.json","gold_sha256":hash(&gold_bytes),"decision_file":"decision.json","subject":"样例 A","property":property,"allowed_contexts":[],"reviewer":"automated_source_review","interpretation_timing":"before_synthetic_response"}))).unwrap();
             let bundle = f.case.join(format!("bundle-{id}"));
             let run = f.command(
                 &format!("verify-{id}"),

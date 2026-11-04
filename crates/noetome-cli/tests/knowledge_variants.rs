@@ -669,6 +669,44 @@ fn nonzero_utf8_context_range_keeps_actual_source_prefix() {
     );
 }
 #[test]
+fn nonzero_source_unit_preserves_frozen_history_and_absolute_context() {
+    let f = VariantsCase::nonzero_unit("history", |_, _| {});
+    let r = f.coordinate();
+    f.assert_protected();
+    assert_eq!(
+        r.status.code(),
+        Some(0),
+        "{}",
+        String::from_utf8_lossy(&r.stderr)
+    );
+    let v: Value = serde_json::from_slice(&r.stdout).unwrap();
+    f.assert_author_expectations(&v);
+    for o in v["occurrences"].as_array().unwrap() {
+        assert_eq!(o["unit"]["start_byte"], 25);
+        assert_eq!(o["context"]["start_byte"], 57);
+        let id = o["input_id"].as_str().unwrap();
+        let review = read(&f.case.join(format!("bundle-{id}/review-original.json")));
+        assert_eq!(review["selection"], json!([{"kind":"text","ordinal":2}]));
+    }
+}
+#[test]
+fn nonzero_source_unit_rejects_support_covering_only_fact() {
+    let f = VariantsCase::nonzero_unit("history", |_, c| {
+        let quote = c["payload"]["atoms"][0]["atom"]["content"]
+            .as_str()
+            .unwrap()
+            .to_owned();
+        let ev = &mut c["payload"]["evidence"][0];
+        let start = ev["excerpt_start_byte"].as_u64().unwrap() as usize
+            + ev["quote"].as_str().unwrap().find(&quote).unwrap();
+        ev["excerpt_start_byte"] = json!(start);
+        ev["excerpt_end_byte"] = json!(start + quote.len());
+        ev["excerpt_sha256"] = json!(hash(quote.as_bytes()));
+        ev["quote"] = json!(quote);
+    });
+    reject(f, 3, "COORD_CONTEXT");
+}
+#[test]
 fn output_collisions_and_overlap_preserve_existing_content() {
     let mut f = VariantsCase::prepare("conditional");
     fs::create_dir(&f.output).unwrap();
