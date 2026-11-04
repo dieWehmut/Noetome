@@ -358,6 +358,9 @@ def source_bundle(project, directory, pin):
     inputs = {"review.json": raw["review-original.json"], **dict(zip(names, [raw["candidates-original.json"], raw["gold-original.json"], raw["decision-original.json"]]))}
     verified = verify_source_report(directory, raw["candidates-original.json"], raw["gold-original.json"], source, inputs)
     assert verified["status"] == "passed" and verified["independently_passed"] and verified["candidate_atoms"] == 1, "source independently passed single atom"
+    evidence_links = candidate["payload"]["atoms"][0]["atom"]["evidence_links"]
+    evidence_pairs = {(link["evidence_id"], link["relation"]) for link in evidence_links}
+    assert len(evidence_pairs) == len(evidence_links), "unique atom evidence links"
     exact(parsed[".owner.json"], dict(schema_version=1, producer="source_review", request_id=candidate["request_id"], purpose="unpublished_source_review"), "source owner")
     # Strengthen the old verifier's Python equality and report numeric fields.
     r, ir = parsed["verification.json"], parsed["knowledge-ir.json"]

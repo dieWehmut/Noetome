@@ -69,6 +69,8 @@ v1 成功仅表示 `explicit_identity_duplicate_complement_v1` 范围内的来�
 
 occurrence.original_evidence按原atom.evidence_links中supports的顺序逐ID取原证据，保持每条链接与原证据对应；原payload.evidence数组不重排。来源核对报告自身checks的原顺序仍沿用B04规则，不能为协调数组顺序修改旧报告。
 
+原atom.evidence_links中的 `(evidence_id,relation)` 不得重复，独立协调校验在九件来源依据准入时也必须核对这条已有知识Schema约束；同一证据ID的不同relation仍按原Schema接受。重复supports不能充作两条独立支持或以数组长度相等换取通过。
+
 每对 occurrence 有且仅有一条关系，左右 ID 按字典序排列。relation 只接受 `duplicate`、`complement`、`separate_object`、`needs_review`；前三种 issue_code 为 null，needs_review 为上述问题码。`separate_object` 仅说明作者给出不同对象，不是 FR-10 六类科学关系裁决。牵涉 needs_review 的 occurrence 和 fact 标为 needs_review，其余标 passed。成功范围没有 failed/unprocessed 的伪通过对象。
 
 ## 6 输出事实和分母

@@ -318,13 +318,16 @@ class CoordinationVerifierTests(unittest.TestCase):
                 finally:
                     self.assertEqual(before, [inventory(p) for p in (self.project, self.case, self.output)])
 
-    def final_review_fixture(self, name, output="output"):
+    def final_review_fixture(self, name, output="output", *,
+                             archive_name="B05-T01-final-review-probes.zip",
+                             sha256="9163f306bb515f5fa1e98c9e3e463e48e8655424a47d45dc2067b8054da0dd20",
+                             member_count=598, case_name="case"):
         """Load retained ordinary outputs or the explicitly labeled role forgery."""
-        archive_path = ROOT / "doc/validation/assets/B05-T01-final-review-probes.zip"
-        self.assertEqual(fp(archive_path.read_bytes())["sha256"], "9163f306bb515f5fa1e98c9e3e463e48e8655424a47d45dc2067b8054da0dd20")
+        archive_path = ROOT / "doc/validation/assets" / archive_name
+        self.assertEqual(fp(archive_path.read_bytes())["sha256"], sha256)
         destination = self.root / "final-review"
         with zipfile.ZipFile(archive_path) as archive:
-            self.assertEqual(len(archive.infolist()), 598)
+            self.assertEqual(len(archive.infolist()), member_count)
             for entry in archive.infolist():
                 relative = Path(entry.filename)
                 self.assertFalse(relative.is_absolute() or ".." in relative.parts or "\\" in entry.filename or ":" in entry.filename)
@@ -335,7 +338,7 @@ class CoordinationVerifierTests(unittest.TestCase):
                 with target.open("xb") as stream:
                     stream.write(archive.read(entry))
         folder = destination / name
-        self.project, self.case, self.output = folder / "project", folder / "case", folder / output
+        self.project, self.case, self.output = folder / "project", folder / case_name, folder / output
         self.gold_bytes = (folder / "gold.json").read_bytes()
 
     def test_final_review_support_link_order_is_preserved(self):
@@ -368,6 +371,25 @@ class CoordinationVerifierTests(unittest.TestCase):
         self.assertEqual(result["status"], "passed")
         self.assertEqual(result["totals"]["canonical_facts"], 2)
         self.assertEqual(result["totals"]["independent_sources"], 3)
+
+    def test_final_rereview_duplicate_support_cannot_inflate_evidence(self):
+        self.final_review_fixture(
+            "duplicate-support", "coherent-forged-output",
+            archive_name="B05-T01-final-link-probes.zip",
+            sha256="dbc5226b986c0cb79b4c103e4730bd1eb82aee0398e86bfd7f3b287d92d7c69a",
+            member_count=99, case_name="coherently-forged-case")
+        candidate = json.loads((self.case / "bundle-a/candidates-original.json").read_bytes())
+        self.assertEqual([link["evidence_id"] for link in candidate["payload"]["atoms"][0]["atom"]["evidence_links"]],
+                         ["a-support-second", "a-support-second"])
+        self.assertEqual(len(candidate["payload"]["evidence"]), 2)
+        self.assertEqual(json.loads(self.gold_bytes)["expected_evidence_links"], 4)
+        from verify_knowledge_coordination import inventory
+        before = [inventory(p) for p in (self.project, self.case, self.output)]
+        try:
+            with self.assertRaisesRegex(AssertionError, "unique atom evidence links", msg="root=" + str(self.root)):
+                verify_report(self.project, self.case, self.output, self.gold_bytes)
+        finally:
+            self.assertEqual(before, [inventory(p) for p in (self.project, self.case, self.output)])
 
     def sync_original_roles(self):
         """Synchronize every provenance/artifact pin, leaving source and facts fixed."""
