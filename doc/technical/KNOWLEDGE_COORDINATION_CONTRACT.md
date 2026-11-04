@@ -39,15 +39,21 @@ v1 成功仅表示 `explicit_identity_duplicate_complement_v1` 范围内的来�
 - `atom_mappings` 每项为 `{input_id,original_atom_id,object_id,property_id}`。每份原 IR 中唯一原子恰好有一项映射，object_id 和 property_id 是两个不同的已声明 canonical_id，并均由该原子的概念引用映射得到。object_id 必须来自原引用中 canonical_name 或 alias 与 review.subject 规范值一致的组件，property_id 同理对应 review.property；此项只重查作者明确给出的本地角色，不按名称推断跨来源身份。v1 使用来源核对已支持的主体与属性组件概念；未提供两项可明确映射的组件引用不得猜测成对象与属性。
 - 未使用的规范概念和无关映射拒绝。每项 original ID 是有界非空普通文本；映射的选择是作者的显式决定，不证明科学语义等价。
 
+对每个本地角色，所有匹配该subject/property的已引用概念经明确映射后，必须恰好得到一个规范ID，并等于atom映射选择的对应ID。多个原概念显式映射到同一个规范ID仍可接受；匹配到两个不同规范ID时是歧义，拒绝COORD_IDENTITY/2，不能只取任一匹配项。
+
 样例使用组件概念“样例 A”“速度”“质量”，两份速度输入映射到同一对象/属性，质量输入映射到同一对象和另一属性。显示名称可更改，映射数组和 input 数组可重排；canonical_id、归并关系、事实 ID 和实际证据关系必须稳定。
 
 ## 4 来源依据重验
 
 加载依据时保留 case、父目录、映射、每个依据目录及九份文件的身份和字节守卫，直到最终结果保存后。保留全部 `SourceSession`，重新检查只读 SQLite、注册版本、原始及规范资源、Span 或 PDF parse/manifest/page/region/resource 与实际 UTF-8 范围，不只比较 SHA 或“passed”字符串。
 
+实际来源项目可以处于已支持的Schema2或Schema3；本次选择Text span不要求项目从未登记PDF。独立校验同样核对配置Schema、project_metadata.schema_version和PRAGMA user_version一致，并核对实际项目ID；不能只接受Schema2或只检查ID而忽略版本不一致。此处不新增PDF协调验收。
+
 依次重新解析四份原始输入；核对 review 选择恰好一个单位、原 gold SHA、决定为 included 且只有该原子、来源绑定、双 request_id、输入限额、解释时间与 local_http_test 标记。执行现有 `validate_gold`、`validate_candidates` 和完整 `extraction_review::assess`。只接收重新计算为 passed、恰好一个实际原子、known value 与明确单位的依据。
 
 按实际来源重建 `source-snapshot.json`，按原候选及重算 checks 重建 `knowledge-ir.json`。使用来源核对的共同报告构造函数，从四个原角色名的实际字节指纹和七份原报告 artifact 字节指纹重建完整 `verification.json` 及其 Markdown。保存的 IR、快照、全部状态、原对象、逐项 checks、原始分母、质量分区、指纹和双报告必须与这些重建结果一致；旧规则、字段、错误行为不能因本任务放宽。
+
+两种原GoldInput都在转换为内部事实摘要前核对author为非空有界明文；不能因摘要不使用作者字段而跳过它。作者超过1024 UTF8字节为COORD_INPUT_LIMIT/2，空白或非法明文为COORD_SCHEMA/2。原Gold Schema和B04来源核对行为保持不变。
 
 `.owner.json` 严格为 `schema_version:1`、`producer:source_review`、匹配候选的 `request_id`、`purpose:unpublished_source_review`。manifest 的 binding 必须等于重新打开的实际来源和原候选。相同内容 SHA 的不同 source_id/version_id 不能互换。
 
@@ -60,6 +66,8 @@ v1 成功仅表示 `explicit_identity_duplicate_complement_v1` 范围内的来�
 稳定 fact_id 为 `fact-` 加上述 JSON 紧凑 UTF-8 字节的 SHA256；object_id/property_id 是作者 UUID，显示名和 input 顺序不参与键。occurrence_id 为 `occ-` 加紧凑 JSON 数组 `[project_id,source_id,version_id,parse_id,unit_id,start_byte,end_byte,original_atom_id]` 的 SHA256。原对象内容、测量、qualifiers、概念引用、来源绑定、单位定位和完整证据仍保存为每个 occurrence 的原值。
 
 完全相同的键归为一个 fact，occurrence_ids 保留所有独立位置；重复引用不能额外贡献独立来源。每个原子的所有支持证据都保留，不以任选第一条证据替代另一输入的出现。不同 object_id 的事实分别保留；同一 object_id、不同 property_id 标为 complement。同一 object_id/property_id 的非同键事实或同 source_id 的不同版本/parse 身份，均标 `needs_review`，issue code 为 `COORD_UNHANDLED_DIFFERENCE`；原事实分组和对立依据全部保留，不产生通过的协调 IR。
+
+occurrence.original_evidence按原atom.evidence_links中supports的顺序逐ID取原证据，保持每条链接与原证据对应；原payload.evidence数组不重排。来源核对报告自身checks的原顺序仍沿用B04规则，不能为协调数组顺序修改旧报告。
 
 每对 occurrence 有且仅有一条关系，左右 ID 按字典序排列。relation 只接受 `duplicate`、`complement`、`separate_object`、`needs_review`；前三种 issue_code 为 null，needs_review 为上述问题码。`separate_object` 仅说明作者给出不同对象，不是 FR-10 六类科学关系裁决。牵涉 needs_review 的 occurrence 和 fact 标为 needs_review，其余标 passed。成功范围没有 failed/unprocessed 的伪通过对象。
 

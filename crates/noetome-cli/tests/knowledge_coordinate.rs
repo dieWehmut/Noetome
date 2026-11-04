@@ -121,6 +121,95 @@ fn saved_bundle_invalid_type_is_schema_exit_two() {
 fn saved_bundle_unsupported_version_is_schema_exit_two() {
     reject_saved_bundle_schema("version");
 }
+#[test]
+fn final_review_saved_owner_version_is_schema_exit_two() {
+    let mut f = PreparedCase::baseline();
+    let path = f.case.join("bundle-b/.owner.json");
+    let mut owner = read(&path);
+    owner["schema_version"] = json!(2);
+    write(&path, &owner);
+    refresh_old_fingerprints(&f);
+    f.freeze();
+    let result = f.coordinate();
+    f.save_cli("final-review-owner-version", &result);
+    f.assert_protected();
+    assert_eq!(
+        result.status.code(),
+        Some(2),
+        "{} root={}",
+        String::from_utf8_lossy(&result.stderr),
+        f.root.display()
+    );
+    assert!(String::from_utf8_lossy(&result.stderr).contains("COORD_SCHEMA"));
+    assert!(!f.output.join("coordination-ir.json").exists());
+}
+fn reject_original_gold_author(author: &str, error: &str) {
+    let mut f = PreparedCase::baseline();
+    let directory = f.case.join("bundle-b");
+    let review_directory = f.root.join("author-boundary-review");
+    fs::create_dir(&review_directory).unwrap();
+    let mut review = read(&directory.join("review-original.json"));
+    let mut gold = read(&directory.join("gold-original.json"));
+    gold["author"] = json!(author);
+    let gold_path = review_directory.join(review["gold_file"].as_str().unwrap());
+    write(&gold_path, &gold);
+    review["gold_sha256"] = json!(hash(&fs::read(&gold_path).unwrap()));
+    write(&review_directory.join("review.json"), &review);
+    for (role, original) in [
+        ("candidate_file", "candidates-original.json"),
+        ("decision_file", "decision-original.json"),
+    ] {
+        fs::copy(
+            directory.join(original),
+            review_directory.join(review[role].as_str().unwrap()),
+        )
+        .unwrap();
+    }
+    let candidate = read(&directory.join("candidates-original.json"));
+    let replacement = f.root.join("author-boundary-bundle");
+    let prepared = f.command(
+        "final-review-author-source-review",
+        &[
+            "extract",
+            "verify",
+            f.project.to_str().unwrap(),
+            candidate["binding"]["import_id"].as_str().unwrap(),
+            review_directory.to_str().unwrap(),
+            replacement.to_str().unwrap(),
+        ],
+    );
+    assert_eq!(
+        prepared.status.code(),
+        Some(0),
+        "{}",
+        String::from_utf8_lossy(&prepared.stderr)
+    );
+    for name in FILES {
+        fs::copy(replacement.join(name), directory.join(name)).unwrap();
+    }
+    repin(&f);
+    f.freeze();
+    let result = f.coordinate();
+    f.save_cli("final-review-gold-author", &result);
+    f.assert_protected();
+    assert_eq!(
+        result.status.code(),
+        Some(2),
+        "{} root={}",
+        String::from_utf8_lossy(&result.stderr),
+        f.root.display()
+    );
+    assert!(String::from_utf8_lossy(&result.stderr).contains(error));
+    assert!(!f.output.join("coordination-ir.json").exists());
+}
+#[test]
+fn final_review_original_gold_author_cannot_be_discarded() {
+    reject_original_gold_author("   ", "COORD_SCHEMA");
+}
+#[test]
+fn final_review_original_gold_author_obeys_text_limit() {
+    reject_original_gold_author(&"a".repeat(2048), "COORD_INPUT_LIMIT");
+}
 fn refresh_old_fingerprints(f: &PreparedCase) {
     let dir = f.case.join("bundle-b");
     let p = dir.join("verification.json");

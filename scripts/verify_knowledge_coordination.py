@@ -260,12 +260,17 @@ def selected_source_paths(project, import_id, selection):
         return path
     manifest = strict_json(read(project / "project.json", 65536))
     fields(manifest, "project_id schema_version created_at state database")
-    exact(manifest["schema_version"], 2, "source project version")
+    version = manifest["schema_version"]
+    assert type(version) is int and version in (2, 3), "source project version"
     assert manifest["database"] == "project.sqlite" and manifest["state"] == "initialized", "source project state/database"
     uuid_string(manifest["project_id"])
     with closing(sqlite3.connect((project / "project.sqlite").as_uri() + "?mode=ro&immutable=1", uri=True)) as db:
         db.row_factory = sqlite3.Row
-        assert db.execute("SELECT project_id FROM project_metadata").fetchone()[0] == manifest["project_id"], "project SQL identity"
+        metadata_rows = db.execute("SELECT project_id, schema_version FROM project_metadata").fetchall()
+        assert len(metadata_rows) == 1, "project SQL metadata row"
+        assert metadata_rows[0]["project_id"] == manifest["project_id"], "project SQL identity"
+        exact(metadata_rows[0]["schema_version"], version, "project SQL schema version")
+        exact(db.execute("PRAGMA user_version").fetchone()[0], version, "project user version")
         table = "source_imports" if selection["kind"] == "text" else "pdf_imports"
         imp = db.execute("SELECT * FROM " + table + " WHERE import_id=?", (import_id,)).fetchone()
         assert imp, "selected source import"
@@ -519,7 +524,8 @@ def _verify(project, case, output, gold_bytes):
         for role in ("object_id", "property_id"):
             target = review["subject" if role == "object_id" else "property"]
             matches = [c for c in concepts if c["concept_id"] in refs and normalized(target) in map(normalized, [c["canonical_name"], *c["aliases"]])]
-            assert any(cm[(ident, c["concept_id"])] == a[role] for c in matches), "original subject/property role"
+            matched_ids = {cm[(ident, c["concept_id"])] for c in matches}
+            assert matched_ids == {a[role]}, "original subject/property role"
         expected_f = next(f for f in gold["facts"] if ident in f["input_ids"])
         for k in ("object_id", "property_id"):
             exact(a[k], expected_f[k], "author identity")
@@ -532,8 +538,10 @@ def _verify(project, case, output, gold_bytes):
         actual_locations.add(compact(loc))
         occurrence_id = "occ-" + hashlib.sha256(compact([*loc, atom["atom"]["atom_id"]])).hexdigest()
         support = [link["evidence_id"] for link in atom["atom"]["evidence_links"] if link["relation"] == "supports"]
-        evidence = [e for e in candidate["payload"]["evidence"] if e["evidence_id"] in support]
-        assert evidence and len(evidence) == len(support), "complete support evidence"
+        evidence_by_id = {e["evidence_id"]: e for e in candidate["payload"]["evidence"]}
+        assert len(evidence_by_id) == len(candidate["payload"]["evidence"]), "unique source evidence"
+        evidence = [evidence_by_id[evidence_id] for evidence_id in support]
+        assert evidence, "complete support evidence"
         occurrences.append(dict(occurrence_id=occurrence_id, input_id=ident, binding=b, unit=unit,
                                 original_concepts=concepts, original_atom=atom, original_evidence=evidence,
                                 canonical_concept_ids=cc, object_id=a["object_id"], property_id=a["property_id"],

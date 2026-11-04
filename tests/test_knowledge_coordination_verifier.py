@@ -297,6 +297,78 @@ class CoordinationVerifierTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             verify_report(self.project, self.case, self.output, self.gold_bytes)
 
+    def test_final_review_project_schema_must_match_sql_and_user_version(self):
+        import sqlite3
+        from verify_knowledge_coordination import inventory
+        database = self.project / "project.sqlite"
+        original = database.read_bytes()
+        for change in ("metadata", "user_version"):
+            with self.subTest(change=change):
+                database.write_bytes(original)
+                with sqlite3.connect(database) as db:
+                    if change == "metadata":
+                        db.execute("PRAGMA ignore_check_constraints=ON")
+                        db.execute("UPDATE project_metadata SET schema_version=3")
+                    else:
+                        db.execute("PRAGMA user_version=3")
+                before = [inventory(p) for p in (self.project, self.case, self.output)]
+                try:
+                    with self.assertRaises(AssertionError):
+                        verify_report(self.project, self.case, self.output, self.gold_bytes)
+                finally:
+                    self.assertEqual(before, [inventory(p) for p in (self.project, self.case, self.output)])
+
+    def final_review_fixture(self, name, output="output"):
+        """Load retained ordinary outputs or the explicitly labeled role forgery."""
+        archive_path = ROOT / "doc/validation/assets/B05-T01-final-review-probes.zip"
+        self.assertEqual(fp(archive_path.read_bytes())["sha256"], "9163f306bb515f5fa1e98c9e3e463e48e8655424a47d45dc2067b8054da0dd20")
+        destination = self.root / "final-review"
+        with zipfile.ZipFile(archive_path) as archive:
+            self.assertEqual(len(archive.infolist()), 598)
+            for entry in archive.infolist():
+                relative = Path(entry.filename)
+                self.assertFalse(relative.is_absolute() or ".." in relative.parts or "\\" in entry.filename or ":" in entry.filename)
+                if not entry.filename.startswith(name + "/"):
+                    continue
+                target = destination / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                with target.open("xb") as stream:
+                    stream.write(archive.read(entry))
+        folder = destination / name
+        self.project, self.case, self.output = folder / "project", folder / "case", folder / output
+        self.gold_bytes = (folder / "gold.json").read_bytes()
+
+    def test_final_review_support_link_order_is_preserved(self):
+        self.final_review_fixture("support-order")
+        result = verify_report(self.project, self.case, self.output, self.gold_bytes)
+        self.assertEqual(result["status"], "passed")
+        self.assertEqual(result["totals"]["evidence_links"], 4)
+        self.assertEqual(result["totals"]["source_occurrences"], 3)
+        report = json.loads((self.output / "coordination.json").read_bytes())
+        occurrence = next(o for o in report["occurrences"] if o["input_id"] == "a")
+        self.assertEqual([e["evidence_id"] for e in occurrence["original_evidence"]], ["a-support-second", "a-support"])
+
+    def test_final_review_ambiguous_original_role_is_rejected(self):
+        self.final_review_fixture("ambiguous-role", "forged-output")
+        from verify_knowledge_coordination import inventory
+        before = [inventory(p) for p in (self.project, self.case, self.output)]
+        try:
+            with self.assertRaisesRegex(AssertionError, "original subject/property role"):
+                verify_report(self.project, self.case, self.output, self.gold_bytes)
+        finally:
+            self.assertEqual(before, [inventory(p) for p in (self.project, self.case, self.output)])
+
+    def test_final_review_schema3_project_retains_text_input_support(self):
+        self.final_review_fixture("schema3-text")
+        self.assertEqual(json.loads((self.project / "project.json").read_bytes())["schema_version"], 3)
+        for ident in "abc":
+            review = json.loads((self.case / ("bundle-" + ident) / "review-original.json").read_bytes())
+            self.assertEqual(review["selection"][0]["kind"], "text")
+        result = verify_report(self.project, self.case, self.output, self.gold_bytes)
+        self.assertEqual(result["status"], "passed")
+        self.assertEqual(result["totals"]["canonical_facts"], 2)
+        self.assertEqual(result["totals"]["independent_sources"], 3)
+
     def sync_original_roles(self):
         """Synchronize every provenance/artifact pin, leaving source and facts fixed."""
         directory = self.case / "bundle-a"

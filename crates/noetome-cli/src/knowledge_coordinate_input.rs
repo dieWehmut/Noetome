@@ -345,9 +345,31 @@ impl VerifiedReview {
             }
         }
         let owner: Owner = parse(held.bytes(".owner.json")?)?;
+        if owner.schema_version != 1 {
+            return Err(err(
+                "COORD_SCHEMA",
+                2,
+                "unsupported saved source owner schema",
+            ));
+        }
         let review: Review = parse(held.bytes("review-original.json")?)?;
         let candidate: SavedCandidate = parse(held.bytes("candidates-original.json")?)?;
-        let gold: Gold = parse::<GoldInput>(held.bytes("gold-original.json")?)?.into();
+        let gold_input: GoldInput = parse(held.bytes("gold-original.json")?)?;
+        let author = match &gold_input {
+            GoldInput::V1(gold) => &gold.author,
+            GoldInput::V2(gold) => &gold.author,
+        };
+        if author.len() > 1024 {
+            return Err(err("COORD_INPUT_LIMIT", 2, "source gold author text limit"));
+        }
+        if !plain(author) {
+            return Err(err(
+                "COORD_SCHEMA",
+                2,
+                "source gold author must be nonempty plain text",
+            ));
+        }
+        let gold: Gold = gold_input.into();
         let decision: Decision = parse(held.bytes("decision-original.json")?)?;
         let roles = [
             "review.json",
@@ -360,7 +382,6 @@ impl VerifiedReview {
             || roles.iter().any(|s| !filename(s))
             || review.selection.len() != 1
             || review.gold_sha256 != sha256(held.bytes("gold-original.json")?)
-            || owner.schema_version != 1
             || owner.producer != "source_review"
             || owner.purpose != "unpublished_source_review"
             || owner.request_id != candidate.request_id
