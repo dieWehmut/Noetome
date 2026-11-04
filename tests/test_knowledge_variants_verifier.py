@@ -136,6 +136,14 @@ class VariantsVerifierTests(unittest.TestCase):
         self.assertNotEqual(normalized("m/s"), normalized("M/s"))
         self.assertNotEqual(normalized("01"), normalized("1"))
 
+    def test_top_level_case_types_use_assertion_protocol(self):
+        folder, project, _, _, gold = self.prepared["conditional"]
+        for index, document in enumerate(([], None, False, 2, "case")):
+            case, output = forged_case(folder, self.root / ("top-level-" + str(index)), "time", dict(status="unknown", precision=None, value=None))
+            (case / "coordination.json").write_bytes(encoded(document))
+            with self.assertRaisesRegex(AssertionError, "case document object"):
+                verify_report(project, case, output, gold)
+
     def test_source_mtime_cannot_create_time(self):
         folder, _, _, _, gold = self.prepared["conditional"]
         destination = self.root / "mtime-invariance"

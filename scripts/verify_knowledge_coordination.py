@@ -626,7 +626,9 @@ def _verify(project, case, output, gold_bytes):
 def verify_report(project, case, output, gold_bytes):
     """Read actual SQL/source/gold and all bundles; false success raises AssertionError."""
     try:
-        version = strict_json(read(Path(case) / "coordination.json", 65536)).get("schema_version")
+        manifest = strict_json(read(Path(case) / "coordination.json", 65536))
+        assert type(manifest) is dict, "case document object"
+        version = manifest.get("schema_version")
         assert type(version) is int and version in (1, 2), "case version"
         if version == 2:
             from verify_knowledge_variants import verify_report as verify_v2
