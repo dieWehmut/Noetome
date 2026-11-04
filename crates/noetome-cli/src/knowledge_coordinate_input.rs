@@ -199,6 +199,7 @@ pub(crate) struct CoordinationSelection {
 pub(crate) enum CaseVersion {
     V1,
     V2(Vec<crate::knowledge_coordination_v2_model::AtomContext>),
+    V3(Vec<crate::knowledge_coordination_v3_model::AtomContext>),
 }
 impl CaseInputs {
     pub(crate) fn open(path: &Path, c: &Control) -> Result<Self, ProjectError> {
@@ -220,6 +221,14 @@ impl CaseInputs {
             }
             2 => {
                 let v: crate::knowledge_coordination_v2_model::CoordinationCase = parse(original)?;
+                CoordinationSelection {
+                    project_id: v.project_id,
+                    identity_file: v.identity_file,
+                    inputs: v.inputs,
+                }
+            }
+            3 => {
+                let v: crate::knowledge_coordination_v3_model::CoordinationCase = parse(original)?;
                 CoordinationSelection {
                     project_id: v.project_id,
                     identity_file: v.identity_file,
@@ -259,6 +268,20 @@ impl CaseInputs {
                         atom_mappings: v.atom_mappings,
                     },
                     CaseVersion::V2(v.atom_contexts),
+                )
+            }
+            3 => {
+                let v: crate::knowledge_coordination_v3_model::IdentityMap =
+                    parse(held.bytes(&config.identity_file)?)?;
+                (
+                    IdentityMap {
+                        schema_version: 1,
+                        author: v.author,
+                        concepts: v.concepts,
+                        concept_mappings: v.concept_mappings,
+                        atom_mappings: v.atom_mappings,
+                    },
+                    CaseVersion::V3(v.atom_contexts),
                 )
             }
             _ => unreachable!(),

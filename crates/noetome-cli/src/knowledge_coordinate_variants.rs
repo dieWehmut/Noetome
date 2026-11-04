@@ -32,11 +32,18 @@ fn key(o: &Occurrence) -> Value {
         }
     ])
 }
-pub(crate) fn coordinate(
+pub(crate) fn build_context_occurrences(
     map: &IdentityMap,
     contexts: &[AtomContext],
     reviews: &[VerifiedReview],
-) -> Result<CoordinatedFacts, ProjectError> {
+) -> Result<
+    (
+        Vec<crate::knowledge_coordination_model::CanonicalConcept>,
+        Vec<crate::knowledge_coordination_model::CoordinationInput>,
+        Vec<Occurrence>,
+    ),
+    ProjectError,
+> {
     let (canonical_concepts, inputs, originals) = build_occurrences(map, reviews)?;
     let mut declarations = BTreeMap::new();
     if contexts.len() > 1024 {
@@ -83,6 +90,15 @@ pub(crate) fn coordinate(
     if !declarations.is_empty() {
         return Err(err("COORD_CONTEXT", 3, "unused atom context"));
     }
+    Ok((canonical_concepts, inputs, occurrences))
+}
+pub(crate) fn coordinate(
+    map: &IdentityMap,
+    contexts: &[AtomContext],
+    reviews: &[VerifiedReview],
+) -> Result<CoordinatedFacts, ProjectError> {
+    let (canonical_concepts, inputs, mut occurrences) =
+        build_context_occurrences(map, contexts, reviews)?;
     let keys = occurrences.iter().map(key).collect::<Vec<_>>();
     let mut issues: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
     for o in &occurrences {

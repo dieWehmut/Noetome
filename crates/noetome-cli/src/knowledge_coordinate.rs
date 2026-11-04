@@ -1,7 +1,7 @@
 //! Ordinary bounded coordination CLI: independent review reconstruction, held inputs and new output.
 use crate::{
     extraction_output::{self, OutputRoot},
-    knowledge_coordinate_facts,
+    knowledge_coordinate_conflicts, knowledge_coordinate_facts,
     knowledge_coordinate_input::{
         CaseInputs, CaseVersion, VerifiedReview, check, encoded, err, parse,
     },
@@ -86,6 +86,9 @@ pub fn run(project: &Path, case: &Path, output: &Path) -> Result<CoordinationOut
                 &inputs.map,
                 &reviews,
             )?),
+            CaseVersion::V3(contexts) => VersionFacts::V3(
+                knowledge_coordinate_conflicts::coordinate(&inputs.map, contexts, &reviews)?,
+            ),
             CaseVersion::V2(contexts) => VersionFacts::V2(
                 knowledge_coordinate_variants::coordinate(&inputs.map, contexts, &reviews)?,
             ),
@@ -133,6 +136,7 @@ pub fn run(project: &Path, case: &Path, output: &Path) -> Result<CoordinationOut
 enum VersionFacts {
     V1(CoordinatedFacts),
     V2(crate::knowledge_coordination_v2_model::CoordinatedFacts),
+    V3(crate::knowledge_coordination_v3_model::CoordinatedFacts),
 }
 fn save_checked<T: serde::Serialize + serde::de::DeserializeOwned>(
     output: &mut OutputRoot,
@@ -156,7 +160,10 @@ fn save_version(
     use crate::knowledge_coordination_v2_model::{
         CoordinationIr as Ir2, CoordinationReport as Report2,
     };
-    macro_rules! save {($facts:expr,$ir:ident,$report:ident,$version:expr,$scope:expr,$summary:expr)=>{{
+    use crate::knowledge_coordination_v3_model::{
+        CoordinationIr as Ir3, CoordinationReport as Report3,
+    };
+    macro_rules! save {($facts:expr,$ir:ident,$report:ident,$version:expr,$scope:expr,$summary:expr$(,$extra:ident)*)=>{{
         let facts=$facts;
         let ir = $ir {
             schema_version: $version,
@@ -174,6 +181,7 @@ fn save_version(
             occurrences: facts.occurrences.clone(),
             facts: facts.facts.clone(),
             relations: facts.relations.clone(),
+            $($extra: facts.$extra.clone(),)*
             totals: facts.totals.clone(),
         };
         if facts.status == "passed" { save_checked(output,"coordination-ir.json",&ir)?; }
@@ -196,6 +204,7 @@ fn save_version(
             occurrences: facts.occurrences,
             facts: facts.facts,
             relations: facts.relations,
+            $($extra: facts.$extra,)*
             totals: facts.totals,
             artifacts: output.fingerprints(),
         };
@@ -216,6 +225,30 @@ fn save_version(
             "explicit_identity_duplicate_complement_v1",
             "显式身份重复／互补范围；完整来源、原对象、证据与分母见以下事实，与 coordination.json 一致。"
         ),
+        VersionFacts::V3(f) => {
+            let summary = format!(
+                "条件已列明：{}；条件未知：{}；条件不适用：{}；时间已知：{}；时间未知：{}；条件并列关系：{}；历史关系：{}；真实冲突关系：{}；证据不足关系：{}；反证链接：{}。完整来源、原对象、证据与分母与 coordination.json 一致。",
+                f.totals.known_condition_occurrences,
+                f.totals.unknown_condition_occurrences,
+                f.totals.not_applicable_condition_occurrences,
+                f.totals.dated_occurrences,
+                f.totals.undated_occurrences,
+                f.totals.condition_variants,
+                f.totals.historical_relations,
+                f.totals.true_conflicts,
+                f.totals.insufficient_evidence_relations,
+                f.totals.counter_evidence_links
+            );
+            save!(
+                f,
+                Ir3,
+                Report3,
+                3,
+                "explicit_identity_conflict_review_v3",
+                summary,
+                processing_records
+            )
+        }
         VersionFacts::V2(f) => {
             let summary = format!(
                 "条件已列明：{}；条件未知：{}；条件不适用：{}；时间已知：{}；时间未知：{}；条件并列关系：{}；历史关系：{}。完整来源、原对象、证据与分母与 coordination.json 一致。",
