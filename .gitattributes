@@ -64,6 +64,11 @@ fixtures/extraction-review-v1/** -text whitespace=cr-at-eol
 fixtures/knowledge-coordination-v1/** -text whitespace=cr-at-eol
 # New source-context fixtures also sign original UTF8 bytes, including their LF boundary.
 fixtures/knowledge-coordination-v2/** -text whitespace=cr-at-eol
+# Conflict authors sign their exact source bytes before any candidate construction.
+fixtures/knowledge-coordination-v3/** -text whitespace=cr-at-eol
+doc/validation/assets/B05-T03-*.json -text whitespace=cr-at-eol
+doc/validation/assets/B05-T03-*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+doc/validation/assets/B05-T03-*.zip binary
 doc/validation/assets/B05-T02-*.json -text whitespace=cr-at-eol
 doc/validation/assets/B05-T02-*.md -text whitespace=-blank-at-eof,cr-at-eol
 doc/validation/assets/B05-T02-*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
