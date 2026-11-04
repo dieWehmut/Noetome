@@ -1,0 +1,38 @@
+{
+  "stage": "restart",
+  "endpoint": "http://127.0.0.1:56494",
+  "checks": [
+    {
+      "name": "Dark theme survives installed process restart",
+      "passed": true,
+      "detail": {
+        "theme": "dark",
+        "freshProcess": true
+      }
+    },
+    {
+      "name": "Exit preference survives restart and original value is restored",
+      "passed": true,
+      "detail": {
+        "restarted": "exit",
+        "restored": "hide_to_tray"
+      }
+    },
+    {
+      "name": "Original theme restores and survives reload",
+      "passed": true,
+      "detail": {
+        "restored": "light",
+        "reload": true
+      }
+    }
+  ],
+  "errors": [],
+  "viewport": {
+    "width": 1200,
+    "height": 800,
+    "dpr": 2
+  },
+  "tauri": true,
+  "passed": true
+}

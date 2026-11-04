@@ -1,0 +1,349 @@
+{
+  "captured_utc": "2026-11-04T13:47:13.724Z",
+  "checks": [
+    {
+      "name": "Settings opens from permanent rail with appearance selected",
+      "passed": true,
+      "detail": {
+        "currentCategory": "page"
+      }
+    },
+    {
+      "name": "Sun and moon toggle immediately and survive a reload",
+      "passed": false,
+      "error": "Error: Timed out running CDP command \"Page.captureScreenshot\" for tab 2"
+    },
+    {
+      "name": "Sun and moon toggle immediately and survive a reload (capture recovered)",
+      "passed": true,
+      "detail": {
+        "afterReload": "dark",
+        "restored": "light",
+        "selectSynced": true,
+        "captureRecovery": "viewport reset and standard screenshot"
+      },
+      "source": "async () => { await noetomeTab.playwright.getByRole(\"button\", { name: \"切换到亮色\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); await noetomeTab.playwright.getByRole(\"button\", { name: \"切换到暗色\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.evaluate(() => document.documentElement.dataset.theme) === \"dark\", \"Dark theme was not applied\"); await noetomeTab.reload(); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.evaluate(() => document.documentElement.dataset.theme) === \"dark\", \"Theme did not survive reload\"); browserAssert(await noetomeTab.playwright.getByRole(\"button\", { name: \"切换到亮色\", exact: true }).isVisible(), \"Sun did not replace moon\"); await noetomeTab.playwright.getByRole(\"navigation\", { name: \"快捷导航\", exact: true }).getByRole(\"button\", { name: \"设置\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByLabel(\"主题\", { exact: true }).evaluate(el => el.value) === \"dark\", \"Settings select out of sync\"); await viewport.reset(); var shot = await noetomeTab.getScreenshot({ emit: false }); await cuaFs.writeFile(\"D:/Noetome/.artifacts/b05u/browser-dark-settings.png\", shot); await noetomeTab.playwright.getByLabel(\"主题\", { exact: true }).selectOption(\"light\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.evaluate(() => document.documentElement.dataset.theme) === \"light\", \"Light theme not restored\"); browserAssert(await noetomeTab.playwright.getByRole(\"button\", { name: \"切换到暗色\", exact: true }).isVisible(), \"Moon did not return\"); return { afterReload: \"dark\", restored: \"light\", selectSynced: true, captureRecovery: \"viewport reset and standard screenshot\" }; }"
+    },
+    {
+      "name": "Settings categories participate in actual back and forward history",
+      "passed": true,
+      "detail": {
+        "actualCategoryHistory": [
+          "appearance",
+          "window",
+          "appearance",
+          "window",
+          "about"
+        ],
+        "previewIpcUnavailable": true
+      },
+      "source": "async () => { await noetomeTab.playwright.getByRole(\"navigation\", { name: \"设置分类\", exact: true }).getByRole(\"button\", { name: \"窗口行为\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByRole(\"heading\", { name: \"窗口行为\", exact: true }).isVisible(), \"Window settings missing\"); browserAssert(!(await noetomeTab.playwright.getByLabel(\"关闭窗口时\", { exact: true }).isEnabled()), \"Preview falsely enables native setting\"); browserAssert((await noetomeTab.playwright.getByRole(\"alert\").innerText()).includes(\"DESKTOP_SETTINGS_UNAVAILABLE\"), \"Native IPC error hidden\"); await noetomeTab.playwright.getByRole(\"button\", { name: \"后退\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByRole(\"heading\", { name: \"外观\", exact: true }).isVisible(), \"Back lost settings category\"); await noetomeTab.playwright.getByRole(\"button\", { name: \"前进\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByRole(\"heading\", { name: \"窗口行为\", exact: true }).isVisible(), \"Forward lost category\"); await noetomeTab.playwright.getByRole(\"navigation\", { name: \"设置分类\", exact: true }).getByRole(\"button\", { name: \"关于 Noetome\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); browserAssert(!(await noetomeTab.playwright.getByRole(\"button\", { name: \"前进\", exact: true }).isEnabled()), \"Forward history was not truncated\"); return { actualCategoryHistory: [\"appearance\", \"window\", \"appearance\", \"window\", \"about\"], previewIpcUnavailable: true }; }"
+    },
+    {
+      "name": "Navigation search filters real pages and Escape restores focus",
+      "passed": false,
+      "error": "Error: Error: Tab 2 is not part of browser session 01a1a674-862e-7231-8490-5e6b2ac2a110\nwaiting on click for selector internal:role=button[name=\"搜索导航\"s]",
+      "source": "async () => { await noetomeTab.playwright.getByRole(\"button\", { name: \"搜索导航\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); await noetomeTab.playwright.getByRole(\"searchbox\", { name: \"搜索导航页面\", exact: true }).fill(\"运行\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByRole(\"navigation\", { name: \"工具导航\", exact: true }).getByRole(\"button\", { name: \"运行检查\", exact: true }).isVisible(), \"Existing runtime was not searchable\"); browserAssert(await noetomeTab.playwright.getByRole(\"navigation\", { name: \"工具导航\", exact: true }).getByRole(\"button\", { name: \"关于 Noetome\", exact: true }).count() === 0, \"Nonmatching tool leaked into results\"); await noetomeTab.playwright.getByRole(\"searchbox\", { name: \"搜索导航页面\", exact: true }).fill(\"no-match-xyz\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByText(\"没有匹配的页面\", { exact: true }).isVisible(), \"Empty search feedback absent\"); await noetomeTab.playwright.getByRole(\"searchbox\", { name: \"搜索导航页面\", exact: true }).press(\"Escape\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByRole(\"searchbox\", { name: \"搜索导航页面\", exact: true }).count() === 0, \"Escape did not close search\"); browserAssert(await noetomeTab.playwright.evaluate(() => document.activeElement?.getAttribute('aria-label')) === \"搜索导航\", \"Search focus not restored\"); return { matches: \"运行检查\", emptyState: true, escapeFocus: \"搜索导航\" }; }"
+    },
+    {
+      "name": "Navigation search filters real pages and Escape restores focus (fresh tab)",
+      "passed": true,
+      "detail": {
+        "searchablePage": "运行检查",
+        "emptyState": true,
+        "escapeRestoresFocus": true
+      },
+      "source": "async () => { await noetomeTab.playwright.getByRole(\"button\", { name: \"搜索导航\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); await noetomeTab.playwright.getByRole(\"searchbox\", { name: \"搜索导航页面\", exact: true }).fill(\"运行\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByRole(\"navigation\", { name: \"工具导航\", exact: true }).getByRole(\"button\", { name: \"运行检查\", exact: true }).isVisible(), \"Runtime not searchable\"); browserAssert(await noetomeTab.playwright.getByRole(\"navigation\", { name: \"工具导航\", exact: true }).getByRole(\"button\", { name: \"关于 Noetome\", exact: true }).count() === 0, \"Search not filtered\"); await noetomeTab.playwright.getByRole(\"searchbox\", { name: \"搜索导航页面\", exact: true }).fill(\"no-match-xyz\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByText(\"没有匹配的页面\", { exact: true }).isVisible(), \"No empty search feedback\"); await noetomeTab.playwright.getByRole(\"searchbox\", { name: \"搜索导航页面\", exact: true }).press(\"Escape\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByRole(\"searchbox\", { name: \"搜索导航页面\", exact: true }).count() === 0, \"Search not closed\"); browserAssert(await noetomeTab.playwright.evaluate(() => document.activeElement?.getAttribute('aria-label')) === \"搜索导航\", \"Focus not restored\"); return { searchablePage: \"运行检查\", emptyState: true, escapeRestoresFocus: true }; }"
+    },
+    {
+      "name": "Project group collapses with keyboard and preserves explicit empty state",
+      "passed": true,
+      "detail": {
+        "keyboard": [
+          "Enter",
+          "Space"
+        ],
+        "projectState": "empty"
+      },
+      "source": "async () => { await noetomeTab.playwright.getByRole(\"button\", { name: \"学习项目\", exact: true }).press(\"Enter\"); await noetomeTab.getAXState({ emit: false }); browserAssert(!(await noetomeTab.playwright.getByText(\"尚未载入项目\", { exact: true }).isVisible()), \"Project content not collapsed\"); await noetomeTab.playwright.getByRole(\"button\", { name: \"学习项目\", exact: true }).press(\"Space\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByText(\"尚未载入项目\", { exact: true }).isVisible(), \"Project content not expanded\"); return { keyboard: [\"Enter\", \"Space\"], projectState: \"empty\" }; }"
+    },
+    {
+      "name": "Sidebar hide releases content width and preserves rail controls",
+      "passed": true,
+      "detail": {
+        "before": 904,
+        "after": 1142,
+        "released": 238
+      },
+      "source": "async () => { var before = await noetomeTab.playwright.evaluate(() => document.querySelector('.main-layout').getBoundingClientRect().width); await noetomeTab.playwright.getByRole(\"button\", { name: \"切换侧栏\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); browserAssert(!(await noetomeTab.playwright.locator('#app-sidebar').isVisible()), \"Sidebar still visible\"); var after = await noetomeTab.playwright.evaluate(() => document.querySelector('.main-layout').getBoundingClientRect().width); browserAssert(after - before === 238, \"Content width not released\"); browserAssert(await noetomeTab.playwright.getByRole(\"button\", { name: \"设置\", exact: true }).isVisible(), \"Settings hidden\"); browserAssert(await noetomeTab.playwright.getByRole(\"button\", { name: \"切换到暗色\", exact: true }).isVisible(), \"Theme hidden\"); await noetomeTab.playwright.getByRole(\"button\", { name: \"切换侧栏\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); return { before, after, released: after - before }; }"
+    },
+    {
+      "name": "Top menus retain keyboard navigation and focus window settings",
+      "passed": true,
+      "detail": {
+        "keys": [
+          "ArrowDown",
+          "End",
+          "Home",
+          "Escape"
+        ],
+        "destination": "window",
+        "focus": "window-settings-title"
+      },
+      "source": "async () => { await noetomeTab.playwright.getByRole(\"menuitem\", { name: \"File\", exact: true }).press(\"ArrowDown\"); await noetomeTab.getAXState({ emit: false }); await noetomeTab.playwright.getByRole(\"menu\", { name: \"File\", exact: true }).getByRole(\"menuitem\", { name: \"工作台\", exact: true }).press(\"End\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.evaluate(() => document.activeElement?.textContent) === \"窗口设置\", \"End did not focus last action\"); await noetomeTab.playwright.getByRole(\"menu\", { name: \"File\", exact: true }).getByRole(\"menuitem\", { name: \"窗口设置\", exact: true }).press(\"Home\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.evaluate(() => document.activeElement?.textContent) === \"工作台\", \"Home did not focus first action\"); await noetomeTab.playwright.getByRole(\"menu\", { name: \"File\", exact: true }).getByRole(\"menuitem\", { name: \"工作台\", exact: true }).press(\"Escape\"); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByRole(\"menu\", { name: \"File\", exact: true }).count() === 0, \"Escape did not close menu\"); browserAssert(await noetomeTab.playwright.evaluate(() => document.activeElement?.id) === \"app-menu-file\", \"Escape did not restore menu trigger\"); await noetomeTab.playwright.getByRole(\"menuitem\", { name: \"File\", exact: true }).press(\"ArrowDown\"); await noetomeTab.getAXState({ emit: false }); await noetomeTab.playwright.getByRole(\"menu\", { name: \"File\", exact: true }).getByRole(\"menuitem\", { name: \"窗口设置\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByRole(\"heading\", { name: \"窗口行为\", exact: true }).isVisible(), \"File settings destination changed\"); browserAssert(await noetomeTab.playwright.evaluate(() => document.activeElement?.id) === \"window-settings-title\", \"Window heading did not receive focus\"); return { keys: [\"ArrowDown\", \"End\", \"Home\", \"Escape\"], destination: \"window\", focus: \"window-settings-title\" }; }"
+    },
+    {
+      "name": "Runtime and help expose real preview IPC failure",
+      "passed": true,
+      "detail": {
+        "help": "DESKTOP_IPC_ERROR",
+        "runtime": "检查失败",
+        "nativeHostPresent": false
+      },
+      "source": "async () => { await noetomeTab.playwright.getByRole(\"navigation\", { name: \"快捷导航\", exact: true }).getByRole(\"button\", { name: \"运行检查\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); await noetomeTab.playwright.getByRole(\"button\", { name: \"查看帮助\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); browserAssert((await noetomeTab.playwright.locator('.console-panel').innerText()).includes(\"DESKTOP_IPC_ERROR\"), \"Help preview falsely succeeded\"); await noetomeTab.playwright.getByRole(\"button\", { name: \"检查连接\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); browserAssert(await noetomeTab.playwright.getByText(\"检查失败\", { exact: true }).isVisible(), \"Preview runtime falsely succeeded\"); return { help: \"DESKTOP_IPC_ERROR\", runtime: \"检查失败\", nativeHostPresent: false }; }"
+    },
+    {
+      "name": "640px desktop viewport scrolls content while rail stays fixed",
+      "passed": true,
+      "detail": {
+        "before": {
+          "clientHeight": 512,
+          "overflow": false,
+          "railBottom": 590,
+          "scrollHeight": 983,
+          "settingsTop": 554,
+          "themeTop": 508,
+          "width": 640
+        },
+        "after": {
+          "railBottom": 590,
+          "scrollTop": 107
+        }
+      },
+      "source": "async () => { await viewport.set({ width: 640, height: 600 }); await noetomeTab.playwright.getByRole(\"navigation\", { name: \"快捷导航\", exact: true }).getByRole(\"button\", { name: \"工作台\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); var before = await noetomeTab.playwright.evaluate(() => ({ width: innerWidth, overflow: document.documentElement.scrollWidth > innerWidth, railBottom: document.querySelector('.rail-bottom').getBoundingClientRect().bottom, themeTop: document.querySelector('.theme-toggle').getBoundingClientRect().top, settingsTop: document.querySelector('.rail-bottom button:last-child').getBoundingClientRect().top, scrollHeight: document.querySelector('#main-content').scrollHeight, clientHeight: document.querySelector('#main-content').clientHeight })); browserAssert(before.width === 640 && !before.overflow, \"Desktop viewport overflows\"); browserAssert(before.themeTop < before.settingsTop && before.railBottom <= 600, \"Theme not above settings or rail clipped\"); browserAssert(before.scrollHeight > before.clientHeight, \"Long content has no scroll area\"); await noetomeTab.playwright.locator('#main-content').press(\"PageDown\"); await noetomeTab.getAXState({ emit: false }); var after = await noetomeTab.playwright.evaluate(() => ({ scrollTop: document.querySelector('#main-content').scrollTop, railBottom: document.querySelector('.rail-bottom').getBoundingClientRect().bottom })); browserAssert(after.scrollTop > 0, \"Keyboard did not scroll content\"); browserAssert(after.railBottom === before.railBottom, \"Bottom controls scrolled away\"); var shot = await noetomeTab.getScreenshot({ emit: false }); await cuaFs.writeFile(\"D:/Noetome/.artifacts/b05u/browser-640.png\", shot); return { before, after }; }"
+    },
+    {
+      "name": "360px viewport keeps settings usable with a collapsible drawer",
+      "passed": true,
+      "detail": {
+        "menuRight": 360,
+        "overflow": false,
+        "selectRight": 329,
+        "width": 360
+      },
+      "source": "async () => { await viewport.set({ width: 360, height: 600 }); await noetomeTab.getAXState({ emit: false }); await noetomeTab.playwright.getByRole(\"button\", { name: \"切换侧栏\", exact: true }).click(); await noetomeTab.getAXState({ emit: false }); await noetomeTab.playwright.getByRole(\"button\", { name: \"设置\", exact: true }).press(\"Enter\"); await noetomeTab.getAXState({ emit: false }); var geometry = await noetomeTab.playwright.evaluate(() => ({ width: innerWidth, overflow: document.documentElement.scrollWidth > innerWidth, selectRight: document.querySelector('#appearance-theme').getBoundingClientRect().right, menuRight: document.querySelector('.app-window-controls').getBoundingClientRect().right })); browserAssert(geometry.width === 360 && !geometry.overflow && geometry.selectRight <= 360 && geometry.menuRight <= 360, \"Narrow controls overflow\"); browserAssert(await noetomeTab.playwright.getByLabel(\"主题\", { exact: true }).isVisible(), \"Theme field not usable\"); var shot = await noetomeTab.getScreenshot({ emit: false }); await cuaFs.writeFile(\"D:/Noetome/.artifacts/b05u/browser-360.png\", shot); return geometry; }"
+    },
+    {
+      "name": "Rail icons meet readable contrast",
+      "passed": true,
+      "detail": {
+        "background": "rgb(243, 243, 243)",
+        "foreground": "rgb(147, 147, 147)",
+        "contrast": 2.768726202438564,
+        "required": 3,
+        "needsFix": true
+      },
+      "source": "async () => { var colors = await noetomeTab.playwright.evaluate(() => ({ foreground: getComputedStyle(document.querySelector('.theme-toggle')).color, background: getComputedStyle(document.documentElement).backgroundColor })); var luminance = value => { var rgb = value.match(/[\\d.]+/g).slice(0, 3).map(Number).map(v => v / 255).map(v => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4); return .2126 * rgb[0] + .7152 * rgb[1] + .0722 * rgb[2]; }; var a = luminance(colors.foreground), b = luminance(colors.background); var ratio = (Math.max(a, b) + .05) / (Math.min(a, b) + .05); return { ...colors, contrast: ratio, required: 3, needsFix: ratio < 3 }; }"
+    },
+    {
+      "name": "Final light rail contrast and spacing",
+      "passed": false,
+      "error": "Error: TypeError: Cannot read properties of null (reading 'querySelector')\n    at __playwrightEvaluate (<anonymous>:2686:113)\n    at <anonymous>:2687:14\n    at runUserScript (<anonymous>:2688:10)\n    at <anonymous>:2692:10\n    at <anonymous>:2693:3",
+      "source": "async () => { const measurement = await noetomeTab.playwright.evaluate(() => { const button = document.querySelector('.rail-theme'); const icon = button.querySelector('svg'); const luminance = rgb => { const values = rgb.match(/[\\d.]+/g).slice(0,3).map(v => Number(v)/255).map(v => v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4)); return values[0]*.2126+values[1]*.7152+values[2]*.0722; }; const foreground=getComputedStyle(icon).color; const background=getComputedStyle(document.documentElement).backgroundColor; const a=luminance(foreground), b=luminance(background); return {viewport:[innerWidth,innerHeight], foreground, background, contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05), themeTop:button.getBoundingClientRect().top, settingsTop:document.querySelector('.rail-settings').getBoundingClientRect().top, projectHeadingTop:document.getElementById('projects-heading').getBoundingClientRect().top, sidebarWidth:document.querySelector('.sidebar').getBoundingClientRect().width}; }); browserAssert(measurement.contrast >= 3, 'Rail contrast remains below 3'); browserAssert(measurement.themeTop < measurement.settingsTop, 'Theme must be directly above settings'); return measurement; }"
+    },
+    {
+      "name": "Final light rail contrast and spacing",
+      "passed": true,
+      "detail": {
+        "background": "rgb(243, 243, 243)",
+        "contrast": 3.2811279958625077,
+        "foreground": "rgb(134, 134, 134)",
+        "projectHeadingTop": 140,
+        "settingsTop": 984,
+        "sidebarWidth": 238,
+        "themeTop": 938,
+        "viewport": [
+          1200,
+          1030
+        ]
+      },
+      "source": "async () => { const measurement = await noetomeTab.playwright.evaluate(() => { const button = document.querySelector('.theme-toggle'); const icon = button.querySelector('svg'); const luminance = rgb => { const values = rgb.match(/[\\d.]+/g).slice(0,3).map(v => Number(v)/255).map(v => v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4)); return values[0]*.2126+values[1]*.7152+values[2]*.0722; }; const foreground=getComputedStyle(icon).color; const background=getComputedStyle(document.documentElement).backgroundColor; const a=luminance(foreground), b=luminance(background); return {viewport:[innerWidth,innerHeight], foreground, background, contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05), themeTop:button.getBoundingClientRect().top, settingsTop:document.querySelector('button[aria-label=\"设置\"]').getBoundingClientRect().top, projectHeadingTop:document.getElementById('projects-heading').getBoundingClientRect().top, sidebarWidth:document.querySelector('.sidebar').getBoundingClientRect().width}; }); browserAssert(measurement.contrast >= 3, 'Rail contrast remains below 3'); browserAssert(measurement.themeTop < measurement.settingsTop, 'Theme must be directly above settings'); return measurement; }"
+    },
+    {
+      "name": "Final dark appearance and direct Sun control",
+      "passed": true,
+      "detail": {
+        "categories": [
+          "外观",
+          "窗口行为",
+          "关于 Noetome"
+        ],
+        "contrast": 14.631717314253036,
+        "control": "切换到亮色",
+        "selection": "dark",
+        "theme": "dark",
+        "viewport": [
+          1200,
+          800
+        ]
+      },
+      "source": "async () => { const result = await noetomeTab.playwright.evaluate(() => { const button=document.querySelector('.theme-toggle'); const icon=button.querySelector('svg'); const luminance=rgb=>{ const a=rgb.match(/[\\d.]+/g).slice(0,3).map(v=>Number(v)/255).map(v=>v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4)); return a[0]*.2126+a[1]*.7152+a[2]*.0722; }; const fg=getComputedStyle(icon).color,bg=getComputedStyle(document.documentElement).backgroundColor; const a=luminance(fg),b=luminance(bg); return {theme:document.documentElement.dataset.theme, selection:document.getElementById('appearance-theme').value, control:button.getAttribute('aria-label'), contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05), viewport:[innerWidth,innerHeight], categories:Array.from(document.querySelectorAll('.settings-nav-item')).map(x=>x.textContent)}; }); browserAssert(result.theme==='dark' && result.selection==='dark' && result.control==='切换到亮色', 'Dark appearance did not sync'); browserAssert(result.contrast>=3,'Dark icon contrast below 3'); return result; }"
+    },
+    {
+      "name": "Review RED: fresh settings search",
+      "passed": false,
+      "error": "Error: Existing window settings route is missing from fresh search",
+      "source": "async()=>{await noetomeTab.playwright.getByRole('button',{name:'搜索导航',exact:true}).click();await noetomeTab.playwright.getByRole('searchbox',{name:'搜索导航页面'}).fill('窗口设置');await noetomeTab.getAXState(); const matches=await noetomeTab.playwright.getByRole('button',{name:'窗口设置',exact:true}).count(); browserAssert(matches>0,'Existing window settings route is missing from fresh search'); return {matches};}"
+    },
+    {
+      "name": "Review RED: overlay dismissal on settings navigation",
+      "passed": false,
+      "error": "Error: Sidebar overlay remains over focused settings controls",
+      "source": "async()=>{await noetomeTab.playwright.getByRole('button',{name:'设置',exact:true}).click();await noetomeTab.getAXState();const result=await noetomeTab.playwright.evaluate(()=>({sidebarHidden:document.getElementById('app-sidebar').hidden,focused:document.activeElement.id,heading:document.querySelector('.settings-page-heading').getBoundingClientRect().toJSON()}));browserAssert(result.sidebarHidden,'Sidebar overlay remains over focused settings controls');return result;}"
+    },
+    {
+      "name": "Review GREEN: all settings searchable before visiting",
+      "passed": true,
+      "detail": {
+        "appearance": 1,
+        "windowPage": 1,
+        "searchNavigated": true,
+        "unknownQueryFeedback": true
+      },
+      "source": "async()=>{await noetomeTab.playwright.getByRole('button',{name:'搜索导航',exact:true}).click(); const input=noetomeTab.playwright.getByRole('searchbox',{name:'搜索导航页面'});await input.fill('外观');const appearance=await noetomeTab.playwright.getByRole('button',{name:'外观设置',exact:true}).count();await input.fill('窗口设置');const windowPage=await noetomeTab.playwright.getByRole('button',{name:'窗口设置',exact:true}).count();await noetomeTab.getAXState();browserAssert(appearance===1&&windowPage===1,'Settings still depend on visit history');await noetomeTab.playwright.getByRole('button',{name:'窗口设置',exact:true}).click();await noetomeTab.getAXState();browserAssert(await noetomeTab.playwright.getByRole('heading',{name:'窗口行为',exact:true}).count()===1,'Search result did not navigate to window settings');await input.fill('没有此页面');browserAssert(await noetomeTab.playwright.getByText('没有匹配的页面',{exact:true}).isVisible(),'Missing no-match feedback');await input.press('Escape');return {appearance,windowPage,searchNavigated:true,unknownQueryFeedback:true};}"
+    },
+    {
+      "name": "Review GREEN: 360px overlay navigation and visible keyboard focus",
+      "passed": false,
+      "error": "Error: Narrow startup must show unobstructed content",
+      "source": "async()=>{const initiallyHidden=await noetomeTab.playwright.evaluate(()=>document.getElementById('app-sidebar').hidden);browserAssert(initiallyHidden,'Narrow startup must show unobstructed content');await noetomeTab.playwright.getByRole('button',{name:'切换侧栏',exact:true}).click();await noetomeTab.getAXState();await noetomeTab.playwright.getByRole('button',{name:'设置',exact:true}).click();await noetomeTab.getAXState();let result=await noetomeTab.playwright.evaluate(()=>({hidden:document.getElementById('app-sidebar').hidden,focused:document.activeElement.id,fieldRight:document.getElementById('appearance-theme').getBoundingClientRect().right,overflow:document.documentElement.scrollWidth>innerWidth}));browserAssert(result.hidden&&result.focused==='main-content'&&!result.overflow&&result.fieldRight<=360,'Gear destination is covered');await noetomeTab.playwright.locator('#main-content').press('Tab');const focus=await noetomeTab.playwright.evaluate(()=>{const node=document.activeElement,rect=node.getBoundingClientRect(),painted=document.elementFromPoint(rect.x+rect.width/2,rect.y+rect.height/2);return {label:node.textContent,visible:node===painted||node.contains(painted),right:rect.right};});browserAssert(focus.visible&&focus.right<=360,'Keyboard focus is covered');await noetomeTab.playwright.getByRole('button',{name:'切换侧栏',exact:true}).click();await noetomeTab.playwright.getByRole('button',{name:'搜索导航',exact:true}).click();await noetomeTab.playwright.getByRole('searchbox',{name:'搜索导航页面'}).fill('窗口设置');await noetomeTab.playwright.getByRole('button',{name:'窗口设置',exact:true}).click();await noetomeTab.getAXState();browserAssert(await noetomeTab.playwright.evaluate(()=>document.getElementById('app-sidebar').hidden&&document.activeElement.id==='main-content'),'Search result leaves focus covered');await noetomeTab.playwright.getByRole('button',{name:'后退',exact:true}).click();return {initiallyHidden,gear:result,keyboardFocus:focus,searchClosedOverlay:true,historyReturnedToAppearance:await noetomeTab.playwright.getByRole('heading',{name:'外观',exact:true}).isVisible()};}"
+    },
+    {
+      "name": "Review GREEN: 360px overlay navigation and visible keyboard focus",
+      "passed": true,
+      "detail": {
+        "initiallyHidden": true,
+        "gear": {
+          "fieldRight": 329,
+          "focused": "main-content",
+          "hidden": true,
+          "overflow": false
+        },
+        "keyboardFocus": {
+          "label": "外观",
+          "right": 136,
+          "visible": true
+        },
+        "searchClosedOverlay": true,
+        "historyReturnedToAppearance": true
+      },
+      "source": "async()=>{const initiallyHidden=await noetomeTab.playwright.evaluate(()=>document.getElementById('app-sidebar').hidden);browserAssert(initiallyHidden,'Narrow startup must show unobstructed content');await noetomeTab.playwright.getByRole('button',{name:'切换侧栏',exact:true}).click();await noetomeTab.getAXState();await noetomeTab.playwright.getByRole('button',{name:'设置',exact:true}).click();await noetomeTab.getAXState();let result=await noetomeTab.playwright.evaluate(()=>({hidden:document.getElementById('app-sidebar').hidden,focused:document.activeElement.id,fieldRight:document.getElementById('appearance-theme').getBoundingClientRect().right,overflow:document.documentElement.scrollWidth>innerWidth}));browserAssert(result.hidden&&result.focused==='main-content'&&!result.overflow&&result.fieldRight<=360,'Gear destination is covered');await noetomeTab.playwright.locator('#main-content').press('Tab');const focus=await noetomeTab.playwright.evaluate(()=>{const node=document.activeElement,rect=node.getBoundingClientRect(),painted=document.elementFromPoint(rect.x+rect.width/2,rect.y+rect.height/2);return {label:node.textContent,visible:node===painted||node.contains(painted),right:rect.right};});browserAssert(focus.visible&&focus.right<=360,'Keyboard focus is covered');await noetomeTab.playwright.getByRole('button',{name:'切换侧栏',exact:true}).click();await noetomeTab.playwright.getByRole('button',{name:'搜索导航',exact:true}).click();await noetomeTab.playwright.getByRole('searchbox',{name:'搜索导航页面'}).fill('窗口设置');await noetomeTab.playwright.getByRole('button',{name:'窗口设置',exact:true}).click();await noetomeTab.getAXState();browserAssert(await noetomeTab.playwright.evaluate(()=>document.getElementById('app-sidebar').hidden&&document.activeElement.id==='main-content'),'Search result leaves focus covered');await noetomeTab.playwright.getByRole('button',{name:'后退',exact:true}).click();return {initiallyHidden,gear:result,keyboardFocus:focus,searchClosedOverlay:true,historyReturnedToAppearance:await noetomeTab.playwright.getByRole('heading',{name:'外观',exact:true}).isVisible()};}"
+    },
+    {
+      "name": "Controlled fixture: theme write failure preserves light selection",
+      "passed": true,
+      "detail": {
+        "alerts": [
+          "主题未保存。请检查应用的本地存储后重试。"
+        ],
+        "selection": "light",
+        "status": "当前主题：亮色。",
+        "theme": "light"
+      },
+      "source": "async()=>{await noetomeTab.playwright.getByRole('button',{name:'设置',exact:true}).click();await noetomeTab.playwright.getByRole('button',{name:'切换到暗色',exact:true}).click();await noetomeTab.getAXState();const result=await noetomeTab.playwright.evaluate(()=>({theme:document.documentElement.dataset.theme,selection:document.getElementById('appearance-theme').value,alerts:Array.from(document.querySelectorAll('[role=\"alert\"]')).map(x=>x.textContent),status:document.querySelector('.settings-status').textContent}));browserAssert(result.theme==='light'&&result.selection==='light','Failed storage write changes current theme');browserAssert(result.alerts.some(x=>x.includes('主题未保存'))&&!result.status.includes('已保存'),'Write failure claims success');return result;}",
+      "fixture": "theme-write-test.html"
+    },
+    {
+      "name": "Controlled fixture: theme read failure is explicit",
+      "passed": true,
+      "detail": {
+        "alerts": [
+          "无法读取外观设置。请检查应用的本地存储后重试。"
+        ],
+        "selection": "light",
+        "theme": "light"
+      },
+      "source": "async()=>{await noetomeTab.playwright.getByRole('button',{name:'设置',exact:true}).click();const result=await noetomeTab.playwright.evaluate(()=>({theme:document.documentElement.dataset.theme,selection:document.getElementById('appearance-theme').value,alerts:Array.from(document.querySelectorAll('[role=\"alert\"]')).map(x=>x.textContent)}));browserAssert(result.theme==='light'&&result.selection==='light'&&result.alerts.some(x=>x.includes('无法读取外观设置')),'Read failure is not explicit');return result;}",
+      "fixture": "theme-read-test.html"
+    },
+    {
+      "name": "Controlled fixture: invalid theme and save recovery",
+      "passed": true,
+      "detail": {
+        "initial": {
+          "alerts": [
+            "无法识别已保存的主题。请选择亮色或暗色重新保存。"
+          ],
+          "theme": "light"
+        },
+        "restored": {
+          "alerts": 0,
+          "status": "主题已保存，下次打开时继续使用。",
+          "theme": "light"
+        }
+      },
+      "source": "async()=>{await noetomeTab.playwright.getByRole('button',{name:'设置',exact:true}).click();const initial=await noetomeTab.playwright.evaluate(()=>({theme:document.documentElement.dataset.theme,alerts:Array.from(document.querySelectorAll('[role=\"alert\"]')).map(x=>x.textContent)}));browserAssert(initial.theme==='light'&&initial.alerts.some(x=>x.includes('无法识别已保存的主题')),'Invalid preference was silently accepted');await noetomeTab.playwright.getByRole('button',{name:'切换到暗色',exact:true}).click();await noetomeTab.playwright.getByRole('combobox',{name:'主题',exact:true}).selectOption('light');await noetomeTab.getAXState();const restored=await noetomeTab.playwright.evaluate(()=>({theme:document.documentElement.dataset.theme,alerts:document.querySelectorAll('[role=\"alert\"]').length,status:document.querySelector('.settings-status').textContent}));browserAssert(restored.theme==='light'&&restored.alerts===0&&restored.status.includes('已保存'),'Saving a valid preference did not recover');return {initial,restored};}",
+      "fixture": "theme-invalid-test.html"
+    },
+    {
+      "name": "Final dark inactive icon contrast",
+      "passed": true,
+      "detail": {
+        "background": "rgb(23, 23, 23)",
+        "contrast": 5.331409435328784,
+        "foreground": "rgb(140, 140, 140)",
+        "theme": "dark"
+      },
+      "source": "async()=>{const r=await noetomeTab.playwright.evaluate(()=>{const icon=document.querySelector('.theme-toggle svg');const lum=c=>{const v=c.match(/[\\d.]+/g).slice(0,3).map(x=>Number(x)/255).map(x=>x<=.04045?x/12.92:Math.pow((x+.055)/1.055,2.4));return v[0]*.2126+v[1]*.7152+v[2]*.0722};const foreground=getComputedStyle(icon).color,background=getComputedStyle(document.documentElement).backgroundColor;const a=lum(foreground),b=lum(background);return {foreground,background,contrast:(Math.max(a,b)+.05)/(Math.min(a,b)+.05),theme:document.documentElement.dataset.theme};});browserAssert(r.theme==='dark'&&r.contrast>=3,'Dark inactive icon is unreadable');return r;}"
+    },
+    {
+      "name": "Final bright dark reload persistence and recovery",
+      "passed": true,
+      "detail": {
+        "dark": true,
+        "light": true,
+        "fixtureOverridesRemoved": true
+      },
+      "source": "async()=>{await noetomeTab.reload();await noetomeTab.playwright.getByRole('button',{name:'设置',exact:true}).click();const dark=await noetomeTab.playwright.evaluate(()=>document.documentElement.dataset.theme==='dark'&&document.getElementById('appearance-theme').value==='dark');browserAssert(dark,'Dark theme was not persisted');await noetomeTab.playwright.getByRole('button',{name:'切换到亮色',exact:true}).click();await noetomeTab.reload();await noetomeTab.playwright.getByRole('button',{name:'设置',exact:true}).click();const light=await noetomeTab.playwright.evaluate(()=>document.documentElement.dataset.theme==='light'&&document.getElementById('appearance-theme').value==='light'&&document.querySelectorAll('[role=\"alert\"]').length===0);browserAssert(light,'Light theme or clean recovery was not persisted');return {dark,light,fixtureOverridesRemoved:true};}"
+    },
+    {
+      "name": "Final 640px long content and fixed bottom controls",
+      "passed": true,
+      "detail": {
+        "clientHeight": 512,
+        "overflow": false,
+        "scrollHeight": 983,
+        "scrollTop": 69.5,
+        "settingsBottom": 590,
+        "settingsTop": 554,
+        "themeTop": 508,
+        "width": 640
+      },
+      "source": "async()=>{await noetomeTab.playwright.locator('#main-content').press('PageDown');await noetomeTab.getAXState();const r=await noetomeTab.playwright.evaluate(()=>{const main=document.getElementById('main-content'),theme=document.querySelector('.theme-toggle').getBoundingClientRect(),settings=document.querySelector('button[aria-label=\"设置\"]').getBoundingClientRect();return {width:innerWidth,overflow:document.documentElement.scrollWidth>innerWidth,scrollTop:main.scrollTop,scrollHeight:main.scrollHeight,clientHeight:main.clientHeight,themeTop:theme.top,settingsTop:settings.top,settingsBottom:settings.bottom};});browserAssert(r.width===640&&!r.overflow&&r.scrollTop>0&&r.scrollHeight>r.clientHeight,'Long content scrolling is broken');browserAssert(r.themeTop<r.settingsTop&&r.settingsBottom<=600,'Bottom controls leave the viewport');return r;}"
+    },
+    {
+      "name": "Final normalized sidebar geometry",
+      "passed": true,
+      "detail": {
+        "bodyOverflow": false,
+        "projectsTop": 140,
+        "railWidth": 52,
+        "settingsTop": 984,
+        "sidebarWidth": 238,
+        "theme": "light",
+        "themeTop": 938,
+        "viewport": [
+          1200,
+          1030
+        ]
+      },
+      "source": "async()=>{const r=await noetomeTab.playwright.evaluate(()=>({viewport:[innerWidth,innerHeight],railWidth:document.querySelector('.activity-rail').getBoundingClientRect().width,sidebarWidth:document.getElementById('app-sidebar').getBoundingClientRect().width,projectsTop:document.getElementById('projects-heading').getBoundingClientRect().top,themeTop:document.querySelector('.theme-toggle').getBoundingClientRect().top,settingsTop:document.querySelector('button[aria-label=\"设置\"]').getBoundingClientRect().top,bodyOverflow:document.documentElement.scrollWidth>innerWidth,theme:document.documentElement.dataset.theme}));browserAssert(r.railWidth===52&&r.sidebarWidth===238&&r.themeTop<r.settingsTop&&!r.bodyOverflow&&r.theme==='light','Final sidebar geometry differs from accepted structure');return r;}"
+    }
+  ],
+  "console_errors": [],
+  "notes": [
+    "Expected preimplementation/review RED and harness failures are retained as history.",
+    "The served App module was stale after an index reload; the Vite service was restarted and current code was verified before final 360px GREEN.",
+    "Theme fault documents were isolated outside public/ and removed from the live page by navigating back to the normal app."
+  ]
+}
