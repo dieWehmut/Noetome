@@ -9,7 +9,7 @@ use crate::{
 };
 use serde_json::{Value, json};
 use std::collections::{BTreeMap, BTreeSet};
-fn sorted(v: &[String]) -> Vec<String> {
+pub(crate) fn sorted(v: &[String]) -> Vec<String> {
     let mut v: Vec<_> = v.iter().map(|s| normalized(s)).collect();
     v.sort();
     v
@@ -24,16 +24,23 @@ fn fact_key(o: &Occurrence) -> Value {
         sorted(&o.exceptions)
     ])
 }
-fn stable_id(prefix: &str, key: &Value) -> Result<String, ProjectError> {
+pub(crate) fn stable_id(prefix: &str, key: &Value) -> Result<String, ProjectError> {
     Ok(format!(
         "{prefix}{}",
         sha256(&serde_json::to_vec(key).map_err(|e| err("COORD_SCHEMA", 2, e))?)
     ))
 }
-pub(crate) fn coordinate(
+pub(crate) fn build_occurrences(
     map: &IdentityMap,
     reviews: &[VerifiedReview],
-) -> Result<CoordinatedFacts, ProjectError> {
+) -> Result<
+    (
+        Vec<CanonicalConcept>,
+        Vec<CoordinationInput>,
+        Vec<Occurrence>,
+    ),
+    ProjectError,
+> {
     let bad = || {
         err(
             "COORD_IDENTITY",
@@ -196,6 +203,15 @@ pub(crate) fn coordinate(
     }
     occurrences.sort_by(|a, b| a.occurrence_id.cmp(&b.occurrence_id));
     inputs.sort_by(|a, b| a.input_id.cmp(&b.input_id));
+    let mut canonical_concepts = map.concepts.clone();
+    canonical_concepts.sort_by(|a, b| a.canonical_id.cmp(&b.canonical_id));
+    Ok((canonical_concepts, inputs, occurrences))
+}
+pub(crate) fn coordinate(
+    map: &IdentityMap,
+    reviews: &[VerifiedReview],
+) -> Result<CoordinatedFacts, ProjectError> {
+    let (canonical_concepts, inputs, mut occurrences) = build_occurrences(map, reviews)?;
     let keys = occurrences.iter().map(fact_key).collect::<Vec<_>>();
     let mut relations = vec![];
     let mut review_ids = BTreeSet::new();
@@ -286,8 +302,6 @@ pub(crate) fn coordinate(
         needs_review,
         unprocessed: 0,
     };
-    let mut canonical_concepts = map.concepts.clone();
-    canonical_concepts.sort_by(|a, b| a.canonical_id.cmp(&b.canonical_id));
     Ok(CoordinatedFacts {
         canonical_concepts,
         inputs,

@@ -25,9 +25,12 @@ mod fixture_model;
 mod fixture_plan;
 mod fixture_render;
 pub mod knowledge_coordinate;
+mod knowledge_coordinate_context;
 mod knowledge_coordinate_facts;
 mod knowledge_coordinate_input;
+mod knowledge_coordinate_variants;
 mod knowledge_coordination_model;
+mod knowledge_coordination_v2_model;
 mod pdf_model;
 pub mod pdf_parse;
 mod pdf_source;
@@ -486,7 +489,7 @@ pub const KNOWLEDGE_HELP:&str="Noetome 有界多来源知识协调
 
 用法：noetome knowledge coordinate <项目路径> <coordination-case> <尚不存在的测试输出根>
 
-只重新核对同项目2至3份成功的单原子来源依据，通过显式组件身份映射保留重复／互补事实和全部出处。
+只重新核对同项目2至3份成功的单原子来源依据，通过显式组件身份映射保留重复／互补事实和全部出处；严格协调Schema2还保留有来源背景的条件与历史变体。
 未知语义差异保持needs_review；不调用模型或研究服务。知识pending，published=false，scientific_quality=not_run。
 输出必须为已有父目录下的新测试根；以连字符开头的路径在coordinate后加 --，中文和空格路径作为单独参数。
 ";

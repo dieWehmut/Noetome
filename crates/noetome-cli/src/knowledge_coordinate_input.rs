@@ -185,15 +185,49 @@ impl Held {
     }
 }
 pub(crate) struct CaseInputs {
-    pub(crate) config: CoordinationCase,
+    pub(crate) config: CoordinationSelection,
     pub(crate) map: IdentityMap,
+    pub(crate) version: CaseVersion,
     held: Held,
+}
+// A private, non-wire view obtained only after the corresponding strict version DTO parses.
+pub(crate) struct CoordinationSelection {
+    pub(crate) project_id: String,
+    pub(crate) identity_file: String,
+    pub(crate) inputs: Vec<InputSpec>,
+}
+pub(crate) enum CaseVersion {
+    V1,
+    V2(Vec<crate::knowledge_coordination_v2_model::AtomContext>),
 }
 impl CaseInputs {
     pub(crate) fn open(path: &Path, c: &Control) -> Result<Self, ProjectError> {
         let mut held = Held::open(path)?;
         held.add("coordination.json", 65536, c)?;
-        let config: CoordinationCase = parse(held.bytes("coordination.json")?)?;
+        let original = held.bytes("coordination.json")?;
+        let dispatch: serde_json::Value = parse(original)?;
+        let schema = dispatch["schema_version"]
+            .as_u64()
+            .ok_or_else(|| err("COORD_SCHEMA", 2, "missing schema version"))?;
+        let config: CoordinationSelection = match schema {
+            1 => {
+                let v: CoordinationCase = parse(original)?;
+                CoordinationSelection {
+                    project_id: v.project_id,
+                    identity_file: v.identity_file,
+                    inputs: v.inputs,
+                }
+            }
+            2 => {
+                let v: crate::knowledge_coordination_v2_model::CoordinationCase = parse(original)?;
+                CoordinationSelection {
+                    project_id: v.project_id,
+                    identity_file: v.identity_file,
+                    inputs: v.inputs,
+                }
+            }
+            _ => return Err(err("COORD_SCHEMA", 2, "unknown schema version")),
+        };
         if !uuid(&config.project_id)
             || !(2..=3).contains(&config.inputs.len())
             || !filename(&config.identity_file)
@@ -206,7 +240,29 @@ impl CaseInputs {
             ));
         }
         held.add(&config.identity_file, 65536, c)?;
-        let map: IdentityMap = parse(held.bytes(&config.identity_file)?)?;
+        let (map, version) = match schema {
+            1 => (
+                parse::<IdentityMap>(held.bytes(&config.identity_file)?)?,
+                CaseVersion::V1,
+            ),
+            2 => {
+                let v: crate::knowledge_coordination_v2_model::IdentityMap =
+                    parse(held.bytes(&config.identity_file)?)?;
+                // The shared identity builder consumes only these already parsed identity fields.
+                // This private v1-shaped projection is never written over the original v2 map.
+                (
+                    IdentityMap {
+                        schema_version: 1,
+                        author: v.author,
+                        concepts: v.concepts,
+                        concept_mappings: v.concept_mappings,
+                        atom_mappings: v.atom_mappings,
+                    },
+                    CaseVersion::V2(v.atom_contexts),
+                )
+            }
+            _ => unreachable!(),
+        };
         let mut names = vec!["coordination.json".into(), config.identity_file.clone()];
         let mut ids = BTreeSet::new();
         let mut directories = vec![];
@@ -251,7 +307,12 @@ impl CaseInputs {
         {
             return Err(err("COORD_INPUT_LIMIT", 2, "identity map limits"));
         }
-        Ok(Self { config, map, held })
+        Ok(Self {
+            config,
+            map,
+            version,
+            held,
+        })
     }
     pub(crate) fn root(&self) -> &Path {
         &self.held.root

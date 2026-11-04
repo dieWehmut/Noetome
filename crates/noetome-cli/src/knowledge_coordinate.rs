@@ -2,7 +2,10 @@
 use crate::{
     extraction_output::{self, OutputRoot},
     knowledge_coordinate_facts,
-    knowledge_coordinate_input::{CaseInputs, VerifiedReview, check, encoded, err, parse},
+    knowledge_coordinate_input::{
+        CaseInputs, CaseVersion, VerifiedReview, check, encoded, err, parse,
+    },
+    knowledge_coordinate_variants,
     knowledge_coordination_model::*,
     project::{self, ProjectError},
     sidecar_process::Control,
@@ -77,7 +80,16 @@ pub fn run(project: &Path, case: &Path, output: &Path) -> Result<CoordinationOut
         reviews.push(r);
         check(&control)?;
     }
-    let facts = knowledge_coordinate_facts::coordinate(&inputs.map, &reviews)?;
+    let facts =
+        match &inputs.version {
+            CaseVersion::V1 => VersionFacts::V1(knowledge_coordinate_facts::coordinate(
+                &inputs.map,
+                &reviews,
+            )?),
+            CaseVersion::V2(contexts) => VersionFacts::V2(
+                knowledge_coordinate_variants::coordinate(&inputs.map, contexts, &reviews)?,
+            ),
+        };
     #[cfg(test)]
     stage("inputs_held");
     inputs.verify(&control)?;
@@ -96,13 +108,63 @@ pub fn run(project: &Path, case: &Path, output: &Path) -> Result<CoordinationOut
                 output.add(&format!("input-{}--{n}", r.input.input_id), b)?;
             }
         }
-        let ir = CoordinationIr {
-            schema_version: 1,
+        let (json, failed) =
+            save_version(facts, &inputs.config.project_id, &request_id, &mut output)?;
+        #[cfg(test)]
+        stage("results_saved");
+        check(&control)?;
+        inputs.verify(&control)?;
+        for r in &reviews {
+            r.verify(&control)?;
+        }
+        output.verify()?;
+        check(&control)?;
+        Ok(CoordinationOutput {
+            json: format!("{json}\n"),
+            failed,
+        })
+    })();
+    if result.is_err() {
+        output.discard_coordination_result()?;
+    }
+    result
+}
+
+enum VersionFacts {
+    V1(CoordinatedFacts),
+    V2(crate::knowledge_coordination_v2_model::CoordinatedFacts),
+}
+fn save_checked<T: serde::Serialize + serde::de::DeserializeOwned>(
+    output: &mut OutputRoot,
+    name: &str,
+    value: &T,
+) -> Result<Vec<u8>, ProjectError> {
+    let bytes = encoded(value)?;
+    output.add(name, &bytes)?;
+    let saved: T = parse(&output.read(name)?)?;
+    if encoded(&saved)? != bytes {
+        return Err(err("COORD_INPUT_CHANGED", 3, "saved result differs"));
+    }
+    Ok(bytes)
+}
+fn save_version(
+    facts: VersionFacts,
+    project_id: &str,
+    request_id: &str,
+    output: &mut OutputRoot,
+) -> Result<(String, bool), ProjectError> {
+    use crate::knowledge_coordination_v2_model::{
+        CoordinationIr as Ir2, CoordinationReport as Report2,
+    };
+    macro_rules! save {($facts:expr,$ir:ident,$report:ident,$version:expr,$scope:expr,$summary:expr)=>{{
+        let facts=$facts;
+        let ir = $ir {
+            schema_version: $version,
             producer: "knowledge_coordination".into(),
             revision: 1,
-            request_id: request_id.clone(),
-            scope: "explicit_identity_duplicate_complement_v1".into(),
-            project_id: inputs.config.project_id.clone(),
+            request_id: request_id.to_owned(),
+            scope: $scope.into(),
+            project_id: project_id.to_owned(),
             knowledge_status: "pending".into(),
             published: false,
             scientific_quality: "not_run".into(),
@@ -114,19 +176,12 @@ pub fn run(project: &Path, case: &Path, output: &Path) -> Result<CoordinationOut
             relations: facts.relations.clone(),
             totals: facts.totals.clone(),
         };
-        if facts.status == "passed" {
-            let bytes = encoded(&ir)?;
-            output.add("coordination-ir.json", &bytes)?;
-            let saved: CoordinationIr = parse(&output.read("coordination-ir.json")?)?;
-            if encoded(&saved)? != bytes {
-                return Err(err("COORD_INPUT_CHANGED", 3, "saved IR differs"));
-            }
-        }
-        let report = CoordinationReport {
-            schema_version: 1,
+        if facts.status == "passed" { save_checked(output,"coordination-ir.json",&ir)?; }
+        let report = $report {
+            schema_version: $version,
             report_kind: "knowledge_coordination".into(),
             producer: "knowledge_coordination".into(),
-            request_id,
+            request_id: request_id.to_owned(),
             scope: ir.scope,
             project_id: ir.project_id,
             status: facts.status.clone(),
@@ -144,41 +199,173 @@ pub fn run(project: &Path, case: &Path, output: &Path) -> Result<CoordinationOut
             totals: facts.totals,
             artifacts: output.fingerprints(),
         };
-        let bytes = encoded(&report)?;
-        let json = String::from_utf8(bytes.clone()).map_err(|e| err("COORD_SCHEMA", 2, e))?;
-        let markdown = format!(
-            "# 有界多来源知识协调\n\n状态：{}；知识状态：pending；发布：false。\n\n科学质量：not_run；研究：not_requested；网络与付费调用：0。\n\n显式身份重复／互补范围；完整来源、原对象、证据与分母见以下事实，与 coordination.json 一致。\n\n```json\n{json}\n```\n",
-            report.status
-        );
-        output.add("coordination.json", &bytes)?;
-        output.add("coordination.md", markdown.as_bytes())?;
-        let saved: CoordinationReport = parse(&output.read("coordination.json")?)?;
-        if encoded(&saved)? != bytes || output.read("coordination.md")? != markdown.as_bytes() {
-            return Err(err("COORD_INPUT_CHANGED", 3, "saved dual report differs"));
+
+        let bytes=save_checked(output,"coordination.json",&report)?;
+        let json=String::from_utf8(bytes).map_err(|e|err("COORD_SCHEMA",2,e))?;
+        let markdown=format!("# 有界多来源知识协调\n\n状态：{}；知识状态：pending；发布：false。\n\n科学质量：not_run；研究：not_requested；网络与付费调用：0。\n\n{}\n\n```json\n{json}\n```\n",report.status,$summary);
+        output.add("coordination.md",markdown.as_bytes())?;
+        if output.read("coordination.md")?!=markdown.as_bytes(){return Err(err("COORD_INPUT_CHANGED",3,"saved dual report differs"));}
+        Ok((json,report.status!="passed"))
+    }}}
+    match facts {
+        VersionFacts::V1(f) => save!(
+            f,
+            CoordinationIr,
+            CoordinationReport,
+            1,
+            "explicit_identity_duplicate_complement_v1",
+            "显式身份重复／互补范围；完整来源、原对象、证据与分母见以下事实，与 coordination.json 一致。"
+        ),
+        VersionFacts::V2(f) => {
+            let summary = format!(
+                "条件已列明：{}；条件未知：{}；条件不适用：{}；时间已知：{}；时间未知：{}；条件并列关系：{}；历史关系：{}。完整来源、原对象、证据与分母与 coordination.json 一致。",
+                f.totals.known_condition_occurrences,
+                f.totals.unknown_condition_occurrences,
+                f.totals.not_applicable_condition_occurrences,
+                f.totals.dated_occurrences,
+                f.totals.undated_occurrences,
+                f.totals.condition_variants,
+                f.totals.historical_relations
+            );
+            save!(
+                f,
+                Ir2,
+                Report2,
+                2,
+                "explicit_identity_condition_time_v2",
+                summary
+            )
         }
-        #[cfg(test)]
-        stage("results_saved");
-        check(&control)?;
-        inputs.verify(&control)?;
-        for r in &reviews {
-            r.verify(&control)?;
-        }
-        output.verify()?;
-        check(&control)?;
-        Ok(CoordinationOutput {
-            json: format!("{json}\n"),
-            failed: report.status != "passed",
-        })
-    })();
-    if result.is_err() {
-        output.discard_coordination_result()?;
     }
-    result
 }
 #[cfg(test)]
 #[allow(dead_code)]
 #[path = "../tests/support/coordination_case.rs"]
 mod test_case;
+#[cfg(test)]
+#[allow(dead_code)]
+#[path = "../tests/support/coordination_variants_case.rs"]
+mod variants_test_case;
+#[cfg(test)]
+mod variants_guard_tests {
+    use super::*;
+    use std::fs;
+    #[test]
+    fn v2_final_input_inventory_change_preserves_originals_and_human_additions() {
+        for case_name in ["conditional", "unknown_condition"] {
+            let f = variants_test_case::VariantsCase::prepare(case_name);
+            let case = f.case.clone();
+            let output = f.output.clone();
+            TEST_HOOK.with(|h| {
+                *h.borrow_mut() = Some(Box::new(move |stage| {
+                    if stage == "results_saved" {
+                        let case = case.clone();
+                        let output = output.clone();
+                        std::thread::spawn(move || {
+                            fs::write(case.join("human.txt"), b"keep input").unwrap();
+                            fs::write(output.join("human.txt"), b"keep output").unwrap();
+                        })
+                        .join()
+                        .unwrap();
+                    }
+                }))
+            });
+            let result = run(&f.project, &f.case, &f.output);
+            TEST_HOOK.with(|h| *h.borrow_mut() = None);
+            assert_eq!(result.err().unwrap().code(), "COORD_INPUT_CHANGED");
+            for name in [
+                "coordination.json",
+                "coordination.md",
+                "coordination-ir.json",
+            ] {
+                assert!(!f.output.join(name).exists());
+            }
+            assert!(f.output.join("identity-original.json").exists());
+            assert_eq!(
+                fs::read(f.output.join("human.txt")).unwrap(),
+                b"keep output"
+            );
+            f.assert_protected();
+        }
+    }
+    #[test]
+    fn v2_final_source_or_output_inventory_change_discards_captured_results() {
+        for source in [true, false] {
+            let f = variants_test_case::VariantsCase::prepare("history");
+            let path = if source {
+                f.project.join("human.txt")
+            } else {
+                f.output.join("human.txt")
+            };
+            TEST_HOOK.with(|h| {
+                *h.borrow_mut() = Some(Box::new(move |stage| {
+                    if stage == "results_saved" {
+                        let path = path.clone();
+                        std::thread::spawn(move || fs::write(path, b"preserve").unwrap())
+                            .join()
+                            .unwrap();
+                    }
+                }))
+            });
+            let result = run(&f.project, &f.case, &f.output);
+            TEST_HOOK.with(|h| *h.borrow_mut() = None);
+            assert_eq!(
+                result.err().unwrap().code(),
+                if source {
+                    "EXTRACT_SOURCE_CHANGED"
+                } else {
+                    "EXTRACT_OUTPUT_CHANGED"
+                }
+            );
+            for name in [
+                "coordination.json",
+                "coordination.md",
+                "coordination-ir.json",
+            ] {
+                assert!(!f.output.join(name).exists());
+            }
+            f.assert_protected();
+        }
+    }
+    #[cfg(windows)]
+    #[test]
+    fn v2_held_sources_inputs_and_results_deny_writes() {
+        let f = variants_test_case::VariantsCase::prepare("history");
+        let case = f.case.clone();
+        let project = f.project.clone();
+        let output = f.output.clone();
+        TEST_HOOK.with(|h| {
+            *h.borrow_mut() = Some(Box::new(move |stage| {
+                let paths = if stage == "inputs_held" {
+                    vec![
+                        case.join("identity.json"),
+                        case.join("bundle-b/knowledge-ir.json"),
+                        project.join("project.sqlite"),
+                    ]
+                } else if stage == "results_saved" {
+                    vec![
+                        output.join("coordination-ir.json"),
+                        output.join("coordination.json"),
+                    ]
+                } else {
+                    vec![]
+                };
+                for path in paths {
+                    std::thread::spawn(move || {
+                        assert!(fs::write(&path, b"bad").is_err());
+                        assert!(fs::remove_file(path).is_err());
+                    })
+                    .join()
+                    .unwrap();
+                }
+            }))
+        });
+        let result = run(&f.project, &f.case, &f.output);
+        TEST_HOOK.with(|h| *h.borrow_mut() = None);
+        assert!(!result.unwrap().failed);
+        f.assert_protected();
+    }
+}
 #[cfg(test)]
 mod guard_tests {
     use super::*;
