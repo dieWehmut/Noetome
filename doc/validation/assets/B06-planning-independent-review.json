@@ -1,0 +1,65 @@
+{
+  "review_kind": "readonly_B06_planning_consistency",
+  "base_accepted_task": "043ae8c",
+  "current_batch": "B06",
+  "new_tasks": [
+    {
+      "id": "B06-T01",
+      "title": "从已核对知识主动生成有据比较表",
+      "status": "todo",
+      "depends_on": [
+        "B05-T03"
+      ],
+      "acceptance_count": 5
+    },
+    {
+      "id": "B06-T02",
+      "title": "把有依据的步骤与分支编译为流程图",
+      "status": "todo",
+      "depends_on": [
+        "B06-T01"
+      ],
+      "acceptance_count": 5
+    },
+    {
+      "id": "B06-T03",
+      "title": "保真输出原始TeX及公式原图回退",
+      "status": "todo",
+      "depends_on": [
+        "B06-T02"
+      ],
+      "acceptance_count": 5
+    }
+  ],
+  "in_progress": 0,
+  "done": 19,
+  "findings_unresolved": [],
+  "resolved_planning_comments": [
+    "T03 focused raw TeX and formula-region fallback; general visual tasks retained in roadmap",
+    "T02 unsupported cycles explicitly distinguished from factual errors"
+  ],
+  "reviewed_paths": {
+    "doc/execution/B06_STEPS.md": {
+      "sha256": "86a78c3bee9c05fa1372e5e45bb9a458bd8257bd7fdca0f8838d8bd22bb61df6",
+      "byte_length": 8472
+    },
+    "doc/execution/NEXT_STEPS.md": {
+      "sha256": "ce76171786e1a189a3a32bd812fd04acdd22fed8c5ace842400df4fe090554f0",
+      "byte_length": 2460
+    },
+    "doc/execution/ROADMAP.md": {
+      "sha256": "3bc072233708a31cabc58e25c19d66a9d2d8fe330fc4a1d68ed022d8aaa84350",
+      "byte_length": 8523
+    },
+    "doc/README.md": {
+      "sha256": "8396ad6ab112f0cec9a954982da772d48e750f883a5d1665c5ace24f9f7c6467",
+      "byte_length": 6893
+    },
+    "dev-log/tasks.json": {
+      "sha256": "837eb9335bf181bdcb444bda592077b399c45c6004d588acad1038486438c74a",
+      "byte_length": 113553
+    }
+  },
+  "no_product_implementation_since_task_acceptance": true,
+  "scope": "planning only; not product capability validation"
+}
