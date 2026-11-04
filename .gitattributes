@@ -66,6 +66,13 @@ fixtures/knowledge-coordination-v1/** -text whitespace=cr-at-eol
 fixtures/knowledge-coordination-v2/** -text whitespace=cr-at-eol
 # Conflict authors sign their exact source bytes before any candidate construction.
 fixtures/knowledge-coordination-v3/** -text whitespace=cr-at-eol
+# Active presentation expectations sign source bytes before candidate construction.
+fixtures/active-presentation-v1/** -text whitespace=cr-at-eol
+fixtures/active-presentation-legacy-v1/** -text whitespace=cr-at-eol
+# Recorded commands and their archives retain the actual bytes on Windows.
+doc/validation/assets/B06-T01/** -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
+doc/validation/assets/B06-T01/**/*.bin binary
+doc/validation/assets/B06-T01/**/*.zip binary
 doc/validation/assets/B05-T03-*.json -text whitespace=cr-at-eol
 doc/validation/assets/B05-T03-*.log -text whitespace=-blank-at-eol,-blank-at-eof,cr-at-eol
 doc/validation/assets/B05-T03-*.zip binary

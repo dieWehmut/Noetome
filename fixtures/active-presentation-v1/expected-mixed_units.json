@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "author": "self-authored-active-presentation-fixture-before-candidates",
+  "scope": "active_presentation_semantics_v1",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case_name": "mixed_units",
+  "expected_status": "passed",
+  "expect_successful_preview": true,
+  "representation": "table",
+  "objects": [
+    {
+      "object_id": "60000000-0000-4000-8000-000000000001",
+      "label": "样例 A"
+    },
+    {
+      "object_id": "60000000-0000-4000-8000-000000000002",
+      "label": "样例 B"
+    }
+  ],
+  "properties": [
+    {
+      "property_id": "60000000-0000-4000-8000-000000000003",
+      "label": "速度"
+    }
+  ],
+  "cells": [
+    {
+      "object_id": "60000000-0000-4000-8000-000000000001",
+      "property_id": "60000000-0000-4000-8000-000000000003",
+      "state": "facts",
+      "missing_meaning": null,
+      "facts": [
+        {
+          "value_status": "known",
+          "value": "10",
+          "unit": "m/s",
+          "conditions": [
+            "温度 20 ℃",
+            "仅适用成年样例 A"
+          ],
+          "exceptions": [
+            "结冰时不适用"
+          ],
+          "applicability_status": "known",
+          "time": {
+            "status": "known",
+            "precision": "year",
+            "value": "2020"
+          },
+          "input_ids": [
+            "a"
+          ],
+          "original_atom_ids": [
+            "a-speed"
+          ]
+        }
+      ]
+    },
+    {
+      "object_id": "60000000-0000-4000-8000-000000000002",
+      "property_id": "60000000-0000-4000-8000-000000000003",
+      "state": "facts",
+      "missing_meaning": null,
+      "facts": [
+        {
+          "value_status": "known",
+          "value": "36",
+          "unit": "km/h",
+          "conditions": [
+            "温度 20 ℃",
+            "仅适用成年样例 B"
+          ],
+          "exceptions": [
+            "结冰时不适用"
+          ],
+          "applicability_status": "known",
+          "time": {
+            "status": "known",
+            "precision": "year",
+            "value": "2020"
+          },
+          "input_ids": [
+            "b"
+          ],
+          "original_atom_ids": [
+            "b-speed"
+          ]
+        }
+      ]
+    }
+  ],
+  "required_atom_refs": [
+    {
+      "input_id": "a",
+      "original_atom_id": "a-speed"
+    },
+    {
+      "input_id": "b",
+      "original_atom_id": "b-speed"
+    }
+  ],
+  "required_missing_text": null
+}

@@ -1,0 +1,103 @@
+   Compiling noetome-cli v0.1.0 (/home/lyinn/project/Noetome/crates/noetome-cli)
+warning: unused imports: `sync::atomic::Ordering`, `thread`, and `time::Duration`
+ --> crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:5:30
+  |
+5 | use std::{fs, path::PathBuf, sync::atomic::Ordering, thread, time::Duration};
+  |                              ^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^  ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `std::process::Command`
+ --> crates/noetome-cli/src/../tests/support/sidecar_tests.rs:2:5
+  |
+2 | use std::process::Command;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `sync::atomic::Ordering`
+ --> crates/noetome-cli/src/../tests/support/sidecar_tests.rs:5:5
+  |
+5 |     sync::atomic::Ordering,
+  |     ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+error[E0616]: field `code` of struct `project::ProjectError` is private
+    --> crates/noetome-cli/src/knowledge_presentation_render.rs:1358:18
+     |
+1358 |                 .code,
+     |                  ^^^^ private field
+     |
+help: a method `code` also exists, call it with parentheses
+     |
+1358 |                 .code(),
+     |                      ++
+
+error[E0616]: field `code` of struct `project::ProjectError` is private
+    --> crates/noetome-cli/src/knowledge_presentation_render.rs:1387:22
+     |
+1387 |                     .code,
+     |                      ^^^^ private field
+     |
+help: a method `code` also exists, call it with parentheses
+     |
+1387 |                     .code(),
+     |                          ++
+
+error[E0616]: field `code` of struct `project::ProjectError` is private
+    --> crates/noetome-cli/src/knowledge_presentation_render.rs:1407:68
+     |
+1407 |             validate_rendered(&plan, &files, &actual).unwrap_err().code,
+     |                                                                    ^^^^ private field
+     |
+help: a method `code` also exists, call it with parentheses
+     |
+1407 |             validate_rendered(&plan, &files, &actual).unwrap_err().code(),
+     |                                                                        ++
+
+error[E0616]: field `code` of struct `project::ProjectError` is private
+    --> crates/noetome-cli/src/knowledge_presentation_render.rs:1413:68
+     |
+1413 |             validate_rendered(&plan, &files, &actual).unwrap_err().code,
+     |                                                                    ^^^^ private field
+     |
+help: a method `code` also exists, call it with parentheses
+     |
+1413 |             validate_rendered(&plan, &files, &actual).unwrap_err().code(),
+     |                                                                        ++
+
+error[E0616]: field `code` of struct `project::ProjectError` is private
+    --> crates/noetome-cli/src/knowledge_presentation_render.rs:1466:22
+     |
+1466 |                     .code,
+     |                      ^^^^ private field
+     |
+help: a method `code` also exists, call it with parentheses
+     |
+1466 |                     .code(),
+     |                          ++
+
+For more information about this error, try `rustc --explain E0616`.
+warning: `noetome-cli` (lib test) generated 6 warnings
+error: could not compile `noetome-cli` (lib test) due to 5 previous errors; 6 warnings emitted

@@ -1,0 +1,44 @@
+{
+  "argv": [
+    "cargo",
+    "test",
+    "-p",
+    "noetome-cli",
+    "--locked",
+    "--offline",
+    "--test",
+    "knowledge_presentation",
+    "--",
+    "--test-threads=4",
+    "--nocapture"
+  ],
+  "cwd": "/home/lyinn/project/Noetome",
+  "selected_command_environment": {
+    "OPENSSL_DIR": "/home/lyinn/miniconda3",
+    "LD_LIBRARY_PATH": "/home/lyinn/miniconda3/lib"
+  },
+  "exit_code": 101,
+  "elapsed_seconds": 3.109616980998908,
+  "test_author_pins_before": {
+    "crates/noetome-cli/tests/knowledge_presentation.rs": {
+      "sha256": "7509b2db1c4ae13169c9cc24ea6528b2651ee724982ebf1d0eff94da3b04c711",
+      "byte_length": 1241
+    },
+    "crates/noetome-cli/tests/support/presentation_case.rs": {
+      "sha256": "0272979ab13f00b5cb4e64ab32f9cc6048573b4325f7bfb30a22053f500b1b57",
+      "byte_length": 20142
+    },
+    "fixtures/active-presentation-v1/frozen-sha256.json": {
+      "sha256": "8667c1f3f82dd67d18050b53cc5fb2a6c9a104e0535e24228b022c4cfd0d42b7",
+      "byte_length": 5901
+    }
+  },
+  "stdout": {
+    "sha256": "803d1eb8fec91e9bcf863ce5e9fa3e94f93b5c47704f029a80b086e48c8a1f58",
+    "byte_length": 459
+  },
+  "stderr": {
+    "sha256": "2f9da5d30a5ffe779c2086c8b1a819e43fd8ea1c63d2cb10f7ff4319ca5f3029",
+    "byte_length": 2018
+  }
+}
