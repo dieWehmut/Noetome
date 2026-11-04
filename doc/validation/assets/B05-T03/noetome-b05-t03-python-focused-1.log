@@ -1,0 +1,30 @@
+test_actual_context_declaration_and_source_guards (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_actual_context_declaration_and_source_guards) ... ok
+test_all_frozen_authors_reconstructed (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_all_frozen_authors_reconstructed) ... ok
+test_coherent_deleted_opponent (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_coherent_deleted_opponent) ... ok
+test_coherent_forgery_matrix (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_coherent_forgery_matrix) ... ok
+test_conflict_keeps_two_sides_and_blocks_success_ir (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_conflict_keeps_two_sides_and_blocks_success_ir) ... ok
+test_counter_evidence_and_history_retained (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_counter_evidence_and_history_retained) ... ok
+test_exact_decimal_boundaries (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_exact_decimal_boundaries) ... ok
+test_majority_does_not_choose_winner_and_mixed_pass_is_retained (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_majority_does_not_choose_winner_and_mixed_pass_is_retained) ... ok
+test_qualifier_link_retained_with_unique_evidence (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_qualifier_link_retained_with_unique_evidence) ... ok
+test_registered_source_bytes_are_read_and_protected (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_registered_source_bytes_are_read_and_protected) ... FAIL
+test_same_evidence_multiple_relations_keeps_link_counts (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_same_evidence_multiple_relations_keeps_link_counts) ... ok
+test_strict_schema_counts_and_processing_fields (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_strict_schema_counts_and_processing_fields) ... ok
+test_unknown_time_is_null_and_false_zero_is_rejected (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_unknown_time_is_null_and_false_zero_is_rejected) ... ok
+test_unrelated_complement_not_marked_as_conflicted (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_unrelated_complement_not_marked_as_conflicted) ... ok
+test_visible_preamble_counts_suffix_and_science (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_visible_preamble_counts_suffix_and_science) ... ok
+
+======================================================================
+FAIL: test_registered_source_bytes_are_read_and_protected (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_registered_source_bytes_are_read_and_protected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_knowledge_conflicts_verifier.py", line 193, in test_registered_source_bytes_are_read_and_protected
+    with self.assertRaisesRegex(AssertionError, "source SHA"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 15 tests in 49.530s
+
+FAILED (failures=1)
+Retained actual v3 test root: /home/lyinn/project/Noetome/target/python-conflicts-67665521f5204be283a04253de0620f5

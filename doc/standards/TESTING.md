@@ -228,3 +228,11 @@ Task2经过两项真实伪造的审查修复，28项focused Python及52场景/60
 独立v2核对从实际只读SQL/资源与旧九件原source_review重建背景及原出处，作者expected先于候选和调用；不能用Rust的计数/状态或从结果计算新expected。同步更新JSON/Markdown/IR/artifact指纹的伪造须因条件、时间、出处或分母本身被拒绝；陈旧报告和SHA的提前拒绝不能替代该证明。删/改完整条件或例外、丢历史支持、伪造时间/顺序、错误单位归并、unknown与NA混淆、填零/遗漏原出现和错版本都要实际验证。
 
 原 `audit` 保持v1；v2普通矩阵入口为 `python scripts/verify_knowledge_coordination.py audit-v2 <absolute-cli> <nonexistent-root>`，只读 `check <project> <case> <output> <gold>`按严格版本路由。分别保存实际argv、每条stdout/stderr、退出码、CLI前后与冻结作者指纹及输入/项目/资源/旧IR/gold/外部哨兵保护。源码未变的本项已通过Rust回归可核对依赖指纹复用；最终Python、devlog/Git和新鲜任务/whole-branch审查在稳定实现上确认，真实记录见[B05-T02](../validation/B05-T02.md)。
+
+## B05-T03 冲突与证据不足独立验收
+
+新v3作者来源、Gold2、身份和expected必须先冻结再构造候选。真实同对象/属性/单位/完整条件/同已知时间的10与12、第三份重复支持及原refutes链接须进入普通CLI。解析、引用、背景支持错误先拒绝输入；缺条件、时间或比较依据逐原出现保留需复核。条件和历史非冲突、精确相等但字面不同的小数、大位数小数、未知与不适用、无争议互补对象均有独立预期。
+
+入口为 `python scripts/verify_knowledge_coordination.py audit-v3 <absolute-cli> <nonexistent-root>`，只读 `check`按Schema3路由。独立核对重新读取作者expected、实际SQL/资源及九件原source_review，重建原支持/反证/限定、事实、每对关系、逐原出现处理记录与全部分母；同步修改JSON/Markdown/IR/指纹的多数判胜、删反证/历史、未知填零、假核实、错误成功/失败和处理记录遗漏仍须被拒绝。全部原链接计数与唯一证据切片数分别核对，同一evidence_id的不同relation不可丢失。
+
+运行 `cargo test -p noetome-cli --test knowledge_conflicts`、既有v1/v2及相关回归，完整Rust/Python、格式/日志/Git和新鲜审查；平台不可用的失败或跳过须单列，不将Linux子进程adapter测试冒充Windows进程树宿主验收。实际证据及未完成门槛见[B05-T03记录](../validation/B05-T03.md)。

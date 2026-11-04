@@ -1,0 +1,340 @@
+{
+  "kind": "independent_narrow_rereview",
+  "root": "/tmp/noetome-b05-t03-independent-rereview",
+  "source": "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim",
+  "counter_original_value": "10",
+  "counter_quote": "反证记录：同一范围的速度 10 m/s 不获本来源支持。",
+  "coherent_deleted_counter_rejected": true,
+  "original_inputs_outputs_gold_unchanged": true,
+  "calls": [
+    {
+      "name": "new-counter-valid-check",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/case",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/output",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "stdout_sha256": {
+        "sha256": "bbd5188d199b3baeed8a7f52a4339fa13ee408e6d544a70473046b3f453f36dc",
+        "byte_length": 778
+      },
+      "stderr_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/new-counter-valid-check.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/new-counter-valid-check.stderr.txt"
+    },
+    {
+      "name": "claim-matched-counter-deletion-check",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/case",
+        "/tmp/noetome-b05-t03-independent-rereview/forged-counter-deleted",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "83e14970fe0af25e47cf4917dfb6f499745e06333dfcd2653fc9343fb7836bc0",
+        "byte_length": 115
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/claim-matched-counter-deletion-check.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/claim-matched-counter-deletion-check.stderr.txt"
+    },
+    {
+      "name": "ancestor-project-generic",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py",
+        "check",
+        "/tmp/noetome-b05-t03-independent-rereview/ancestor-alias/project",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/case",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/output",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "bed3676485fb3c1128669097e3dadc40f6f452ad1012512a8550d5307edbbe0e",
+        "byte_length": 50
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-project-generic.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-project-generic.stderr.txt"
+    },
+    {
+      "name": "ancestor-project-dedicated",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_conflicts.py",
+        "check",
+        "/tmp/noetome-b05-t03-independent-rereview/ancestor-alias/project",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/case",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/output",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "201bcfcb7e632bd020920d6755d374ab33e2c11813c9b61ef2270b0480527d01",
+        "byte_length": 40
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-project-dedicated.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-project-dedicated.stderr.txt"
+    },
+    {
+      "name": "ancestor-case-generic",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "/tmp/noetome-b05-t03-independent-rereview/ancestor-alias/case",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/output",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "bed3676485fb3c1128669097e3dadc40f6f452ad1012512a8550d5307edbbe0e",
+        "byte_length": 50
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-case-generic.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-case-generic.stderr.txt"
+    },
+    {
+      "name": "ancestor-case-dedicated",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_conflicts.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "/tmp/noetome-b05-t03-independent-rereview/ancestor-alias/case",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/output",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "201bcfcb7e632bd020920d6755d374ab33e2c11813c9b61ef2270b0480527d01",
+        "byte_length": 40
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-case-dedicated.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-case-dedicated.stderr.txt"
+    },
+    {
+      "name": "ancestor-output-generic",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/case",
+        "/tmp/noetome-b05-t03-independent-rereview/ancestor-alias/output",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "bed3676485fb3c1128669097e3dadc40f6f452ad1012512a8550d5307edbbe0e",
+        "byte_length": 50
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-output-generic.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-output-generic.stderr.txt"
+    },
+    {
+      "name": "ancestor-output-dedicated",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_conflicts.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/case",
+        "/tmp/noetome-b05-t03-independent-rereview/ancestor-alias/output",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "201bcfcb7e632bd020920d6755d374ab33e2c11813c9b61ef2270b0480527d01",
+        "byte_length": 40
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-output-dedicated.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/ancestor-output-dedicated.stderr.txt"
+    },
+    {
+      "name": "direct-case-generic",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "/tmp/noetome-b05-t03-independent-rereview/direct-case-alias",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/output",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "bed3676485fb3c1128669097e3dadc40f6f452ad1012512a8550d5307edbbe0e",
+        "byte_length": 50
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/direct-case-generic.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/direct-case-generic.stderr.txt"
+    },
+    {
+      "name": "direct-case-dedicated",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_conflicts.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "/tmp/noetome-b05-t03-independent-rereview/direct-case-alias",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/output",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "201bcfcb7e632bd020920d6755d374ab33e2c11813c9b61ef2270b0480527d01",
+        "byte_length": 40
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/direct-case-dedicated.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/direct-case-dedicated.stderr.txt"
+    },
+    {
+      "name": "rust-ancestor-case-rejection",
+      "argv": [
+        "/home/lyinn/project/Noetome/target/debug/noetome",
+        "knowledge",
+        "coordinate",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "/tmp/noetome-b05-t03-independent-rereview/ancestor-alias/case",
+        "/tmp/noetome-b05-t03-independent-rereview/should-not-exist-ancestor"
+      ],
+      "exit_code": 2,
+      "expected_exit": 2,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "f56cbe950d6c196140ddd5d30b92c58a6197512dfc203e536d54ce234b772080",
+        "byte_length": 214
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/rust-ancestor-case-rejection.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/rust-ancestor-case-rejection.stderr.txt"
+    },
+    {
+      "name": "rust-direct-case-rejection",
+      "argv": [
+        "/home/lyinn/project/Noetome/target/debug/noetome",
+        "knowledge",
+        "coordinate",
+        "/home/lyinn/project/Noetome/target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "/tmp/noetome-b05-t03-independent-rereview/direct-case-alias",
+        "/tmp/noetome-b05-t03-independent-rereview/should-not-exist-direct"
+      ],
+      "exit_code": 2,
+      "expected_exit": 2,
+      "stdout_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr_sha256": {
+        "sha256": "bca0270b4ad32f0ea7383c14a8929a70e79650173e3e2b73f5d660d8597d151c",
+        "byte_length": 217
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/rust-direct-case-rejection.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/rust-direct-case-rejection.stderr.txt"
+    },
+    {
+      "name": "valid-relative-paths-check",
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py",
+        "check",
+        "target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/project",
+        "target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/case",
+        "target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/output",
+        "target/python-conflicts-21b4784793a94fa4a62970500c249098/counter_to_claim/gold.json"
+      ],
+      "exit_code": 0,
+      "expected_exit": 0,
+      "stdout_sha256": {
+        "sha256": "bbd5188d199b3baeed8a7f52a4339fa13ee408e6d544a70473046b3f453f36dc",
+        "byte_length": 778
+      },
+      "stderr_sha256": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stdout_path": "/tmp/noetome-b05-t03-independent-rereview/valid-relative-paths-check.stdout.txt",
+      "stderr_path": "/tmp/noetome-b05-t03-independent-rereview/valid-relative-paths-check.stderr.txt"
+    }
+  ],
+  "checks": 13,
+  "cli": {
+    "sha256": "ab600e987809a573fabef9a1a8b30580ca7ce8a1756cbc3354e40186a8be7912",
+    "byte_length": 115768984
+  },
+  "reviewed_scripts": {
+    "scripts/verify_knowledge_coordination.py": {
+      "sha256": "bcd9e36a65810383a406a7647e77ae6b9c3e49b93c4ec2c7c45f0f99dc6560cf",
+      "byte_length": 72812
+    },
+    "scripts/verify_knowledge_conflicts.py": {
+      "sha256": "afabb05e849508c635c4acf8765480b3a5c1477a569a0b7d86e1dd4f7adc1cc5",
+      "byte_length": 30135
+    },
+    "scripts/knowledge_conflicts_audit.py": {
+      "sha256": "c73d11aed3c2e9552379403b834d266902cd6d10eeb8826e178228e73caa794d",
+      "byte_length": 27555
+    }
+  }
+}

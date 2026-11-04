@@ -1,0 +1,36 @@
+test_selected_roots_reject_ancestor_links (__main__.AncestorAdmission.test_selected_roots_reject_ancestor_links) ... 
+  test_selected_roots_reject_ancestor_links (__main__.AncestorAdmission.test_selected_roots_reject_ancestor_links) (role='project') ... FAIL
+  test_selected_roots_reject_ancestor_links (__main__.AncestorAdmission.test_selected_roots_reject_ancestor_links) (role='case') ... FAIL
+  test_selected_roots_reject_ancestor_links (__main__.AncestorAdmission.test_selected_roots_reject_ancestor_links) (role='output') ... FAIL
+
+======================================================================
+FAIL: test_selected_roots_reject_ancestor_links (__main__.AncestorAdmission.test_selected_roots_reject_ancestor_links) (role='project')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/noetome-v3-ancestor-red.py", line 17, in test_selected_roots_reject_ancestor_links
+    with self.assertRaises(AssertionError):verify_report(args['project'],args['case'],args['output'],gold)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_selected_roots_reject_ancestor_links (__main__.AncestorAdmission.test_selected_roots_reject_ancestor_links) (role='case')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/noetome-v3-ancestor-red.py", line 17, in test_selected_roots_reject_ancestor_links
+    with self.assertRaises(AssertionError):verify_report(args['project'],args['case'],args['output'],gold)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+======================================================================
+FAIL: test_selected_roots_reject_ancestor_links (__main__.AncestorAdmission.test_selected_roots_reject_ancestor_links) (role='output')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/noetome-v3-ancestor-red.py", line 17, in test_selected_roots_reject_ancestor_links
+    with self.assertRaises(AssertionError):verify_report(args['project'],args['case'],args['output'],gold)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: AssertionError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.046s
+
+FAILED (failures=3)

@@ -26,6 +26,7 @@
 | [有界来源知识核对](technical/EXTRACTION_REVIEW_CONTRACT.md) | 已保存候选、独立作者gold、真实来源证据及离线测量核对 | extract verify输入、判据、分母或输出保护变化 |
 | [有界多来源知识协调](technical/KNOWLEDGE_COORDINATION_CONTRACT.md) | 显式身份映射、来源依据重验、重复/互补保留与待复核分母 | knowledge coordinate输入、关系或保护变化 |
 | [条件与来源时间协调](technical/KNOWLEDGE_VARIANTS_CONTRACT.md) | 严格v2条件状态、来源背景、并列变体与历史先后 | 条件、时间证据、协调版本或分母变化 |
+| [有据冲突与证据不足](technical/KNOWLEDGE_CONFLICTS_CONTRACT.md) | 严格v3冲突、可比较十进制、反证保留与逐原出现处理记录 | 冲突分类、证据不足、处理记录或相关分母变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
 | [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |

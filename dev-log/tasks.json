@@ -1595,7 +1595,7 @@
       "id": "B05-T03",
       "title": "真实冲突与证据不足的可追踪报告",
       "batch": "B05R",
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [
         "B05-T02"
       ],
@@ -1620,6 +1620,15 @@
           "from_status": "todo",
           "to_status": "in_progress",
           "note": "持续开发：冻结同条件冲突/反证/证据不足作者样例，扩展协调与独立核对，实际CLI和保护回归后验收",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-04T16:12:45Z",
+          "action": "block",
+          "from_status": "in_progress",
+          "to_status": "blocked",
+          "note": "Schema3文本协调、最终Rust16/v1-v2共51、Python157含17平台跳过、独立59场景175命令及两项审查修复已验证。Linux当前完整workspace缺桌面系统依赖；Windows-only sidecar使完整lib263通过98失败，与main基线失败集合相同。没有可用Windows入口，完整必要回归尚未通过，保留原任务与全部证据，暂不complete/推送或切B06。",
           "validation": [],
           "artifacts": []
         }

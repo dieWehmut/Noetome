@@ -1,0 +1,578 @@
+ssssssssssssssss............sE..../home/lyinn/miniconda3/lib/python3.14/copy.py:110: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7e7d8b3cd8a0>
+  def deepcopy(x, memo=None, _nil=[]):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+........../home/lyinn/miniconda3/lib/python3.14/encodings/cp437.py:14: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7e7d8b0cfc40>
+  def decode(self,input,errors='strict'):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/lyinn/miniconda3/lib/python3.14/encodings/cp437.py:14: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7e7d8b0cf790>
+  def decode(self,input,errors='strict'):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..................../home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py:76: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x7e7d8b0cfc40>
+  assert not any(ord(c) < 32 or ord(c) == 127 for c in value), "text control"
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.E.FFF.FF.FF.FFF.FFFFFFFFFFFFFFFFFFFFFFFFFFFF.FFF.
+======================================================================
+ERROR: setUpClass (test_extraction_knowledge_verifier.KnowledgeVerifierTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_extraction_knowledge_verifier.py", line 30, in setUpClass
+    cls.root = Path(tempfile.mkdtemp(prefix="knowledge-validator-", dir=REPO / "target/compiler-temp"))
+                    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/miniconda3/lib/python3.14/tempfile.py", line 381, in mkdtemp
+    _os.mkdir(file, 0o700)
+    ~~~~~~~~~^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/lyinn/project/Noetome/target/compiler-temp/knowledge-validator-wft6g0b8'
+
+======================================================================
+ERROR: setUpClass (test_knowledge_variants_verifier.VariantsVerifierTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_knowledge_variants_verifier.py", line 22, in setUpClass
+    cls.audit = VariantsAudit(ROOT / "target/debug/noetome.exe", cls.root)
+                ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/knowledge_variants_audit.py", line 58, in __init__
+    self.root.mkdir()
+    ~~~~~~~~~~~~~~~^^
+  File "/home/lyinn/miniconda3/lib/python3.14/pathlib/__init__.py", line 1011, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/lyinn/project/Noetome/target/python-variants-ebca3ed3787c44e5b051ceae02e2e146'
+
+======================================================================
+FAIL: test_annotation_uses_raw_rotation_transform_without_following_action (test_pdf_adapter.PdfAdapterTests.test_annotation_uses_raw_rotation_transform_without_following_action)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 474, in test_annotation_uses_raw_rotation_transform_without_following_action
+    _, manifest, _ = self.valid_response(result, workspace, request)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit (test_pdf_adapter.PdfAdapterTests.test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit) (filename='damaged.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 586, in test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit
+    case, response, manifest, resources = self.run_fixture(filename)
+                                          ~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit (test_pdf_adapter.PdfAdapterTests.test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit) (filename='encrypted.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 586, in test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit
+    case, response, manifest, resources = self.run_fixture(filename)
+                                          ~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_empty_document_gets_failed_document_unit (test_pdf_adapter.PdfAdapterTests.test_empty_document_gets_failed_document_unit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 607, in test_empty_document_gets_failed_document_unit
+    response, manifest, _ = self.valid_response(result, workspace, request)
+                            ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_enumeration_failure_keeps_prefix_and_unknown_total_with_document_unit (test_pdf_adapter.PdfAdapterTests.test_enumeration_failure_keeps_prefix_and_unknown_total_with_document_unit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 427, in test_enumeration_failure_keeps_prefix_and_unknown_total_with_document_unit
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_glyph_policy_overflow_does_not_publish_truncated_inventory (test_pdf_adapter.PdfAdapterTests.test_glyph_policy_overflow_does_not_publish_truncated_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 709, in test_glyph_policy_overflow_does_not_publish_truncated_inventory
+    self.assertIn(b"50000", result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'50000' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_glyphs_outside_cropbox_fail_page_instead_of_silently_clamping (test_pdf_adapter.PdfAdapterTests.test_glyphs_outside_cropbox_fail_page_instead_of_silently_clamping)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 439, in test_glyphs_outside_cropbox_fail_page_instead_of_silently_clamping
+    _, manifest, resources = self.valid_response(result, workspace, request)
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_overlapping_glyphs_are_preserved_and_require_review (test_pdf_adapter.PdfAdapterTests.test_overlapping_glyphs_are_preserved_and_require_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 463, in test_overlapping_glyphs_are_preserved_and_require_review
+    _, manifest, _ = self.valid_response(result, workspace, request)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_partial_page_failure_retains_confirmed_page_and_true_total (test_pdf_adapter.PdfAdapterTests.test_partial_page_failure_retains_confirmed_page_and_true_total)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 414, in test_partial_page_failure_retains_confirmed_page_and_true_total
+    case, _, manifest, resources = self.run_fixture("partial-page-failure.pdf")
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_pdf_page_policy_overflow_does_not_truncate_page_manifest (test_pdf_adapter.PdfAdapterTests.test_pdf_page_policy_overflow_does_not_truncate_page_manifest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 703, in test_pdf_page_policy_overflow_does_not_truncate_page_manifest
+    self.assertIn(b"128", result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'128' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_real_cropbox_offset_matches_visible_origin (test_pdf_adapter.PdfAdapterTests.test_real_cropbox_offset_matches_visible_origin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 375, in test_real_cropbox_offset_matches_visible_origin
+    case, _, manifest, resources = self.run_fixture("crop-offset.pdf")
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_real_multiple_pages_preserves_every_physical_page (test_pdf_adapter.PdfAdapterTests.test_real_multiple_pages_preserves_every_physical_page)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 370, in test_real_multiple_pages_preserves_every_physical_page
+    case, _, manifest, resources = self.run_fixture("multiple-pages.pdf")
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_real_single_page_matches_full_authoring_text_and_utf8_ranges (test_pdf_adapter.PdfAdapterTests.test_real_single_page_matches_full_authoring_text_and_utf8_ranges)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 348, in test_real_single_page_matches_full_authoring_text_and_utf8_ranges
+    case, response, manifest, resources = self.run_fixture("single-page.pdf")
+                                          ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_region_slice_is_exact_authoring_line_excluding_appended_lf (test_pdf_adapter.PdfAdapterTests.test_region_slice_is_exact_authoring_line_excluding_appended_lf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 356, in test_region_slice_is_exact_authoring_line_excluding_appended_lf
+    case, _, manifest, resources = self.run_fixture("single-page.pdf")
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_rotations_and_userunit_keep_true_transforms_and_review_status (test_pdf_adapter.PdfAdapterTests.test_rotations_and_userunit_keep_true_transforms_and_review_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 563, in test_rotations_and_userunit_keep_true_transforms_and_review_status
+    case, _, manifest, resources = self.run_fixture("rotations.pdf")
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests.test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import) (dependency='pdfplumber')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'pdfplumber' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests.test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import) (dependency='pdfminer.six')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'pdfminer.six' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests.test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import) (dependency='pypdfium2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'pypdfium2' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests.test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import) (dependency='Pillow')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'Pillow' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests.test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import) (dependency='charset-normalizer')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'charset-normalizer' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests.test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import) (dependency='cryptography')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'cryptography' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests.test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import) (dependency='cffi')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'cffi' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests.test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import) (dependency='pycparser')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'pycparser' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests.test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues) (filename='scanned-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 483, in test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues
+    case, response, manifest, resources = self.run_fixture(filename)
+                                          ~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests.test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues) (filename='blank-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 483, in test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues
+    case, response, manifest, resources = self.run_fixture(filename)
+                                          ~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_staggered_columns_retain_all_text_and_require_review (test_pdf_adapter.PdfAdapterTests.test_staggered_columns_retain_all_text_and_require_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 398, in test_staggered_columns_retain_all_text_and_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_table_formula_image_and_columns_remain_honestly_needs_review (test_pdf_adapter.PdfAdapterTests.test_table_formula_image_and_columns_remain_honestly_needs_review) (filename='table-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 555, in test_table_formula_image_and_columns_remain_honestly_needs_review
+    case, _, manifest, resources = self.run_fixture(filename)
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_table_formula_image_and_columns_remain_honestly_needs_review (test_pdf_adapter.PdfAdapterTests.test_table_formula_image_and_columns_remain_honestly_needs_review) (filename='formula-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 555, in test_table_formula_image_and_columns_remain_honestly_needs_review
+    case, _, manifest, resources = self.run_fixture(filename)
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_table_formula_image_and_columns_remain_honestly_needs_review (test_pdf_adapter.PdfAdapterTests.test_table_formula_image_and_columns_remain_honestly_needs_review) (filename='image-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 555, in test_table_formula_image_and_columns_remain_honestly_needs_review
+    case, _, manifest, resources = self.run_fixture(filename)
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_table_formula_image_and_columns_remain_honestly_needs_review (test_pdf_adapter.PdfAdapterTests.test_table_formula_image_and_columns_remain_honestly_needs_review) (filename='columns-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 555, in test_table_formula_image_and_columns_remain_honestly_needs_review
+    case, _, manifest, resources = self.run_fixture(filename)
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_total_glyph_policy_overflow_never_publishes_incomplete_manifest (test_pdf_adapter.PdfAdapterTests.test_total_glyph_policy_overflow_never_publishes_incomplete_manifest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 715, in test_total_glyph_policy_overflow_never_publishes_incomplete_manifest
+    self.assertIn(b"200000", result.stderr)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'200000' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests.test_tounicode_glyph_boundary_spaces_and_geometry_require_review) (case='trailing_space')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests.test_tounicode_glyph_boundary_spaces_and_geometry_require_review) (case='leading_space')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests.test_tounicode_glyph_boundary_spaces_and_geometry_require_review) (case='both_boundary_spaces')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests.test_tounicode_glyph_boundary_spaces_and_geometry_require_review) (case='large_gap_after_encoded_space')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests.test_tounicode_glyph_boundary_spaces_and_geometry_require_review) (case='large_gap_before_whitespace_glyph')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests.test_tounicode_glyph_boundary_spaces_and_geometry_require_review) (case='overlap_before_whitespace_glyph')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_underflowed_display_geometry_cannot_be_reported_as_zero_area_review (test_pdf_adapter.PdfAdapterTests.test_underflowed_display_geometry_cannot_be_reported_as_zero_area_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 454, in test_underflowed_display_geometry_cannot_be_reported_as_zero_area_review
+    _, manifest, _ = self.valid_response(result, workspace, request)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_unknown_format_preserves_complete_raw_without_inventing_pages (test_pdf_adapter.PdfAdapterTests.test_unknown_format_preserves_complete_raw_without_inventing_pages)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 598, in test_unknown_format_preserves_complete_raw_without_inventing_pages
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_visual_reading_order_preserves_actual_drawing_inventory (test_pdf_adapter.PdfAdapterTests.test_visual_reading_order_preserves_actual_drawing_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 382, in test_visual_reading_order_preserves_actual_drawing_inventory
+    case, _, manifest, resources = self.run_fixture("layout-order.pdf")
+                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_whitespace_only_page_retains_nonempty_artifact_and_requires_review (test_pdf_adapter.PdfAdapterTests.test_whitespace_only_page_retains_nonempty_artifact_and_requires_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 496, in test_whitespace_only_page_retains_nonempty_artifact_and_requires_review
+    response, manifest, resources = self.valid_response(result, workspace, request)
+                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+----------------------------------------------------------------------
+Ran 95 tests in 7.151s
+
+FAILED (failures=41, errors=2, skipped=17)

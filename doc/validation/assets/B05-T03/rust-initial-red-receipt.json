@@ -1,0 +1,33 @@
+{
+  "phase": "actual ordinary CLI RED after valid source preparation",
+  "command": "OPENSSL_DIR=<existing local conda> LD_LIBRARY_PATH=<existing local conda lib> cargo test -p noetome-cli --locked --offline --test knowledge_conflicts frozen_same_context_conflict_is_reported_after_successful_source_review -- --nocapture",
+  "source_preparation_exit_codes": {
+    "coordinate-exit.txt": "2",
+    "verify-a-exit.txt": "0",
+    "import-b-exit.txt": "0",
+    "init-exit.txt": "0",
+    "import-a-exit.txt": "0",
+    "verify-b-exit.txt": "0",
+    "import-b-seed-exit.txt": "0"
+  },
+  "expected_coordination_exit": 3,
+  "actual_coordination_exit": 2,
+  "diagnostic": "COORD_SCHEMA：unknown schema version\n",
+  "root": "/home/lyinn/project/Noetome/target/compiler-temp/conflicts-6f4f0cb6-0c1a-4788-b1ed-48fbe87f19a8",
+  "protection_equal": true,
+  "frozen_manifest": {
+    "sha256": "9e70d74e848e2f10f68812d2afb0e910069d556c407b9ea614aaeba3827dc8d8",
+    "byte_length": 6260
+  },
+  "log": {
+    "sha256": "c8331b710d5fc066027ba1d42d6bdba7dfbe1a2190c9772f2eae6e4714b95cfb",
+    "byte_length": 4017
+  },
+  "archive": {
+    "sha256": "cbf05fc3a6b8d94edfc0c6599633e3fccc0a76e96d47006df55c01f25138708e",
+    "byte_length": 27627
+  },
+  "limitations": [
+    "engineered fake values; scientific not_run; no production Vault; no actual API call"
+  ]
+}

@@ -271,3 +271,5 @@ B05-T01增加普通 `knowledge coordinate`，消费同项目2至3份已保存的
 [独立协调审计](../../scripts/verify_knowledge_coordination.py)从外部作者gold、明确映射、只读实际来源及原source_review重新计算事实键、出处ID、关系和全部分母，然后核对JSON、Markdown、IR及原件副本；不共享Rust协调算法。当前是公开自造材料的离线明确身份原型，科学not_run、研究not_requested、知识pending、published=false。条件/历史变体和正式冲突分类由后续任务分别验收。
 
 B05-T02按[严格v2契约](KNOWLEDGE_VARIANTS_CONTRACT.md)扩展同一入口：版本DTO、实际背景重建和并列事实关系分别承担独立职责，共用原身份/出处构造和完整来源守卫。条件或时间字段不写入原B04 IR；事实仍引用原对象和实际source/version/unit/range。时间区间只用于有来源依据的先后，条件完整性及无法比较的单位独立限制归并；未决不会提升为科学通过。Python v2独立重建和普通audit与旧v1验收分别保留，实测交付按[B05-T02记录](../validation/B05-T02.md)确认。
+
+B05-T03新增[严格v3契约](KNOWLEDGE_CONFLICTS_CONTRACT.md)，复用完整来源核对及仅重建背景的内部函数。冲突分类在对象、属性、单位、完整适用范围与有据时间检查后进行；精确十进制比较不改写原表述。v3保留原支持、反证和限定链接及唯一证据切片，每处处理记录关联完整原出现。未决关系不选择胜者，无争议对象仍保留通过状态。独立Python从真实来源和调用前作者expected重建，不共享Rust分类器；实际验证及平台局限见[B05-T03记录](../validation/B05-T03.md)。

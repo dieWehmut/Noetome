@@ -1,0 +1,100 @@
+    Blocking waiting for file lock on build directory
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib) generated 4 warnings (run `cargo fix --lib -p noetome-cli` to apply 3 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.13s
+     Running tests/knowledge_coordinate.rs (target/debug/deps/knowledge_coordinate-227ca27ec14ab9a8)
+
+running 24 tests
+test copied_actual_unit_rejected ... ok
+test final_review_original_gold_author_cannot_be_discarded ... ok
+test final_review_original_gold_author_obeys_text_limit ... ok
+test knowledge_help_and_invalid_arguments_are_filesystem_free ... ok
+test final_review_saved_owner_version_is_schema_exit_two ... ok
+test forged_candidate_and_ir_with_coherent_all_fingerprints_fail_real_assessment ... ok
+test legal_two_source_case_has_one_fact ... ok
+test author_condition_and_unit_differences_require_review ... ok
+test ordinary_cli_coalesces_duplicate_preserving_three_sources ... ok
+test output_collision_overlap_hardlink_and_junction_preserve_inputs ... ok
+test reordered_inputs_mapping_and_display_names_preserve_ids ... ok
+test mapping_missing_unknown_duplicate_wrong_role_rejected ... ok
+test same_sha_binding_swap_rejected ... ok
+test repinned_fake_old_counts_and_markdown_rejected ... ok
+test saved_bundle_extra_inventory_is_schema_exit_two ... ok
+test saved_bundle_invalid_type_is_schema_exit_two ... ok
+test same_source_distinct_registered_versions_require_review ... ok
+test saved_bundle_malformed_json_is_schema_exit_two ... ok
+test repinned_ir_candidate_measurement_and_extra_evidence_rejected ... ok
+test saved_bundle_missing_nullable_is_schema_exit_two ... ok
+test saved_bundle_nested_duplicate_key_is_schema_exit_two ... ok
+test saved_bundle_unknown_field_is_schema_exit_two ... ok
+test saved_bundle_unsupported_version_is_schema_exit_two ... ok
+test strict_schema_extra_duplicate_nullable_and_inventory_rejected ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.93s
+
+     Running tests/knowledge_variants.rs (target/debug/deps/knowledge_variants-b3828f2f8d30658e)
+
+running 27 tests
+test combined_context ... ok
+test conditional_variants_preserve_all_author_fields ... ok
+test conditions_and_exceptions_cannot_be_coherently_deleted ... ok
+test display_names_and_all_manifest_order_do_not_change_identity ... ok
+test exception_difference ... ok
+test history ... ok
+test history_day ... ok
+test mixed_state ... ok
+test background_must_be_complete_adjacent_and_fact_unique ... ok
+test multiple_supports_keep_original_order_and_exact_context_set ... ok
+test nonzero_source_unit_preserves_frozen_history_and_absolute_context ... ok
+test nonzero_source_unit_rejects_support_covering_only_fact ... ok
+test nonzero_utf8_context_range_keeps_actual_source_prefix ... ok
+test not_applicable ... ok
+test output_collisions_and_overlap_preserve_existing_content ... ok
+test same_source_condition ... ok
+test overlapping_time ... ok
+test same_source_history ... ok
+test same_source_undated ... ok
+test support_must_cover_both_background_and_fact ... ok
+test declared_context_must_match_actual_source ... ok
+test undated_difference ... ok
+test unit_difference ... ok
+test unknown_condition ... ok
+test unknown_and_not_applicable_cannot_be_exchanged ... ok
+test time_nullable_contract_and_gregorian_values_are_enforced ... ok
+test schema_two_strict_fields_enums_and_versions ... ok
+
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 49.08s
+

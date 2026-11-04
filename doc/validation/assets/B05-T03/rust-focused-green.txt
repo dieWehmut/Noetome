@@ -1,0 +1,86 @@
+   Compiling openssl-sys v0.9.118
+   Compiling openssl v0.10.82
+   Compiling native-tls v0.2.18
+   Compiling noetome-cli v0.1.0 (/home/lyinn/project/Noetome/crates/noetome-cli)
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib) generated 4 warnings (run `cargo fix --lib -p noetome-cli` to apply 3 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.93s
+     Running tests/knowledge_conflicts.rs (target/debug/deps/knowledge_conflicts-a83e094618ca5992)
+
+running 15 tests
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-33dc2742-5df7-4317-ba22-cf218cc30729 case=counter_support
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-24511c0a-160f-4b84-9e68-ee1bfc92f89f case=counter_support
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-84c47177-57fa-4765-bbf1-749c8a3a1b22 case=not_applicable
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-850971fe-091b-4cc3-876c-b8dcab61c01d case=true_conflict
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-9fa3b5d1-1bb0-431f-a8ff-d1862836f9d4 case=majority_conflict
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-e8a346fa-7d56-43fa-a407-b91dbeb04fd2 case=condition_variant
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-a7ebd97e-7427-4dd4-a130-13ad4120d5b6 case=true_conflict
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-5d6e9d53-6596-46bc-a3f5-c9b52bafb10a case=counter_support
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-73fabad9-fe2e-43e8-863a-e84ce12b86c2 case=mixed_conflict
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-cd34fc26-aee0-4e26-b3d4-f2d1f640d8d1 case=undated_difference
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-d4d8b2cc-27bc-44d0-af25-95623f327da0 case=true_conflict
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-01a5240f-a546-4134-870a-570d0885533c case=counter_support
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-6e48fbe9-b2c5-41f1-b6cc-70341371443f case=unknown_complement
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-3e5cd5d1-5a79-4682-80cd-cb21888cfa41 case=precise_large_decimal
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-341781d5-6589-4b65-a7e8-85f916aa57a9 case=majority_conflict
+test broken_counter_reference_is_input_failure_before_any_conflict_report ... ok
+test output_collision_and_case_overlap_preserve_human_content ... ok
+test explicit_not_applicable_scope_can_contain_a_true_conflict ... ok
+test real_counter_evidence_is_preserved_with_its_original_link_and_position ... ok
+test frozen_same_context_conflict_is_reported_after_successful_source_review ... ok
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-7498718f-4159-4500-8bcb-54b0e61b3908 case=history
+test independent_unknown_condition_does_not_taint_complementary_property ... ok
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-09adf4d9-10c5-4307-9b17-a89aa782bb72 case=unknown_condition
+test qualifier_links_preserve_relations_without_duplicating_original_evidence ... ok
+test unresolved_conflict_does_not_hide_the_passed_complement ... ok
+test missing_support_is_not_promoted_to_a_legitimate_viewpoint ... ok
+test counter_evidence_in_nonzero_utf8_unit_keeps_absolute_positions ... ok
+test input_order_and_display_names_never_select_a_winner ... ok
+test majority_support_retains_all_three_parties_and_two_conflict_pairs ... ok
+test large_decimal_inequality_is_compared_exactly_without_float_rounding ... ok
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-afd23531-b99e-44db-a008-f11e8417aa7f case=same_source_history
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-50a840d2-cc83-4961-8371-606ba534aaf8 case=mixed_state
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-98536991-dc4f-41dc-9fae-6b3ae0b18d28 case=numeric_equal
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-ad63749b-8b44-4d76-9cb8-a6a6aac8a7dc case=unit_difference
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-6da06093-06a4-4e20-b380-ecc54d8cd8f0 case=signed_zero
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-3d47f66a-07c2-4edd-89f1-b3df9545db26 case=overlapping_time
+test conditions_history_and_exact_decimal_equality_avoid_false_conflicts ... ok
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-10792a9f-2b4c-4121-af81-01bbf389c178 case=same_source_undated
+prepared_conflicts_root=/home/lyinn/project/Noetome/target/compiler-temp/conflicts-fe5c41b4-f8b3-45e4-a284-1d08cb0ca24c case=non_decimal
+test missing_or_incomparable_evidence_is_located_without_inventing_values ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.88s
+
