@@ -4,7 +4,7 @@
 
 B04-T03已完成日志、审查修复、实际安装和普通推送；收束提交`b3d40a02b0eb3a8905c190b2b78442a4c9121c29`与远端相等。最后完整Rust532、Python108、前端10及原生16项和用户托盘/拖动确认有真实证据。所选模型配置/DPAPI继续保存并复用：累计30097、余额9969903、pending0，T03新增模型请求0。
 
-当前批次 **B05** 只含下面三张顺序执行卡。B05-T01已完成作者化输入、Rust协调、独立Python、整分支审查修复与最终限定复查，并用devlog工具记录完成；实际Rust561、独立模块35、完整Python143和33场景/56次普通CLI有原始证据。最新生产修正为 `2618752028557d15e8fb5a1828f243cf3f25f935`；代码、日志与证据收束提交 `19cde25006e7e4d17f9c4fad69fdb28d54dcb3e8` 已普通推送至 `codex/b05-t01-knowledge-coordination`，git ls-remote实际返回相同HEAD，见[原始推送核对](../validation/assets/B05-T01-push-checkpoint.json)。B05-T02是当前唯一进行中任务：作者冻结、真实RED、Rust589、最终Python157与v2审计42场景/126命令已有原始证据，Rust与Python任务审查及一次原ID修正限定复查通过；整分支审查、最终账本和远端收束仍待完成。B05-T03依赖其验收，保持todo。完成状态由账本生成，详见[B05-T01验证](../validation/B05-T01.md)和[B05-T02验证](../validation/B05-T02.md)。
+当前批次 **B05** 只含下面三张顺序执行卡。B05-T01已完成作者化输入、Rust协调、独立Python、整分支审查修复与最终限定复查，并用devlog工具记录完成；实际Rust561、独立模块35、完整Python143和33场景/56次普通CLI有原始证据。最新生产修正为 `2618752028557d15e8fb5a1828f243cf3f25f935`；代码、日志与证据收束提交 `19cde25006e7e4d17f9c4fad69fdb28d54dcb3e8` 已普通推送至 `codex/b05-t01-knowledge-coordination`，git ls-remote实际返回相同HEAD，见[原始推送核对](../validation/assets/B05-T01-push-checkpoint.json)。B05-T02已通过devlog工具验收：最终坐标修正 `3b6a59c`、DTO排版 `01742df`，新鲜Rust591、Python157、v2审计42场景/126命令及v1回归33/56通过，一次整分支审查后的同一修复限定复审确认R1/R2全部ADDRESSED；原作者/来源/失败和14615件最终证据已核对保存。当前仅剩本项Git收束和远端核对，完成后顺序推进B05-T03；其保持todo，切批次或工具complete不会自动start。完成状态由账本生成，详见[B05-T01验证](../validation/B05-T01.md)和[B05-T02验证](../validation/B05-T02.md)。
 
 **目标**：在已验收的受控单来源核对上，先合并重复并保留互补，再区分条件和历史，最后呈现真正冲突与证据不足。
 

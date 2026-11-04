@@ -1,0 +1,806 @@
+{
+  "scope": "Read-only inspection of saved final-fix evidence; no behavior suite rerun",
+  "base": "b3a31eaf87be8bbd4c119f4af19c92aefd958ca8",
+  "head": "01742df21296b8b744b90155dbedb67f938fd312",
+  "started_unix": 1793781815.8561542,
+  "changed_files": [
+    {
+      "path": "crates/noetome-cli/src/knowledge_coordinate_context.rs",
+      "working_pin": {
+        "sha256": "2ea76c03f21443fc142d9164a926a343169b2dfbb99d0c6f0f7bf2c10ff3d81c",
+        "byte_length": 6141
+      },
+      "head_blob_sha256": "2ea76c03f21443fc142d9164a926a343169b2dfbb99d0c6f0f7bf2c10ff3d81c",
+      "equals_head_after_line_ending_normalization": true
+    },
+    {
+      "path": "crates/noetome-cli/src/knowledge_coordination_v2_model.rs",
+      "working_pin": {
+        "sha256": "822d715ac8ed22d5f83d930b1b1da0081ccd6dbcd6f36aa6dba450eece1d7d4e",
+        "byte_length": 8595
+      },
+      "head_blob_sha256": "822d715ac8ed22d5f83d930b1b1da0081ccd6dbcd6f36aa6dba450eece1d7d4e",
+      "equals_head_after_line_ending_normalization": true
+    },
+    {
+      "path": "crates/noetome-cli/tests/knowledge_variants.rs",
+      "working_pin": {
+        "sha256": "01d24b03955953339ce33061ddac9e05d327ba9f7614f99904df70fadc745769",
+        "byte_length": 26991
+      },
+      "head_blob_sha256": "01d24b03955953339ce33061ddac9e05d327ba9f7614f99904df70fadc745769",
+      "equals_head_after_line_ending_normalization": true
+    },
+    {
+      "path": "crates/noetome-cli/tests/support/coordination_variants_case.rs",
+      "working_pin": {
+        "sha256": "db021ef9e7c0fba4475bb8c1fe953a9b0628ebc7ab6c3088441e3d59a635f11a",
+        "byte_length": 17652
+      },
+      "head_blob_sha256": "db021ef9e7c0fba4475bb8c1fe953a9b0628ebc7ab6c3088441e3d59a635f11a",
+      "equals_head_after_line_ending_normalization": true
+    }
+  ],
+  "r2_token_comparison": {
+    "tokens_equal_ignoring_whitespace_and_optional_field_trailing_commas": true,
+    "normalized_token_count": 1956,
+    "dto_invocations": 12
+  },
+  "saved_runs": {
+    "red": {
+      "verification_pin": {
+        "sha256": "0a07053f10f61904b55ddba57a2edbd6a86a5425251890fbbfd1d2bc011ae7d2",
+        "byte_length": 161390
+      },
+      "exits": [
+        1
+      ],
+      "commands": [
+        {
+          "argv": [
+            "powershell.exe",
+            "-NoProfile",
+            "-Command",
+            "& './scripts/cargo_local.ps1' test -p noetome-cli --locked --offline --test knowledge_variants nonzero_source_unit '--' --test-threads=4 --nocapture"
+          ],
+          "cwd": "D:\\Noetome",
+          "exit_code": 1,
+          "elapsed_seconds": 2.7381551265716553,
+          "stdout": {
+            "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\final-fix-red-focused.stdout.txt",
+            "sha256": "b34c0f4256ea416c4ae2d2d2fcb9bf34c0233c67dc1de493f47cf339653f8faf",
+            "byte_length": 712
+          },
+          "stderr": {
+            "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\final-fix-red-focused.stderr.txt",
+            "sha256": "0b29ae485d2f06ae9a3414dbc4f632d116ec87d33437682afa7b673d6457a2f8",
+            "byte_length": 689
+          }
+        }
+      ],
+      "sources": 139,
+      "source_snapshots_equal": true,
+      "binaries": 121,
+      "roots_verified": 2,
+      "root_file_counts": [
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-0ec7f442-d4ca-4514-b925-fcf4910ed5bf",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-6def4ab5-3251-4558-bc7c-5eadc3cecc29",
+          "protected_files": 70,
+          "raw_receipts": 39
+        }
+      ]
+    },
+    "green": {
+      "verification_pin": {
+        "sha256": "0ab8bc1fce811db589ccb1e8e3b540ca75db88f411938543f7de0bfda4ba39fb",
+        "byte_length": 161397
+      },
+      "exits": [
+        0
+      ],
+      "commands": [
+        {
+          "argv": [
+            "powershell.exe",
+            "-NoProfile",
+            "-Command",
+            "& './scripts/cargo_local.ps1' test -p noetome-cli --locked --offline --test knowledge_variants nonzero_source_unit '--' --test-threads=4 --nocapture"
+          ],
+          "cwd": "D:\\Noetome",
+          "exit_code": 0,
+          "elapsed_seconds": 7.941312313079834,
+          "stdout": {
+            "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\final-fix-green-focused.stdout.txt",
+            "sha256": "311f6297af5ddb612f85c6ef420e0aae0292ea0782bd56e0181032c4907da828",
+            "byte_length": 612
+          },
+          "stderr": {
+            "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\final-fix-green-focused.stderr.txt",
+            "sha256": "7fa796bb403b50891ebcb1d88dd2204f085a02b4de77ce9e6c7af51f6303fcf2",
+            "byte_length": 238
+          }
+        }
+      ],
+      "sources": 139,
+      "source_snapshots_equal": true,
+      "binaries": 121,
+      "roots_verified": 2,
+      "root_file_counts": [
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-8abe7a37-b68e-4f7e-b3a3-0c43ad5fb77c",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-529a7015-7be2-44ba-97aa-25d6828b5920",
+          "protected_files": 70,
+          "raw_receipts": 39
+        }
+      ]
+    },
+    "stable-final": {
+      "verification_pin": {
+        "sha256": "536dac529df4fca28e18de04bf569d626584102d8de17f8f63d42f9d322d7d63",
+        "byte_length": 2108185
+      },
+      "exits": [
+        0,
+        0,
+        0
+      ],
+      "commands": [
+        {
+          "argv": [
+            "powershell.exe",
+            "-NoProfile",
+            "-Command",
+            "& './scripts/cargo_local.ps1' fmt --all --check"
+          ],
+          "cwd": "D:\\Noetome",
+          "exit_code": 0,
+          "elapsed_seconds": 0.9164814949035645,
+          "stdout": {
+            "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\final-fix-stable-final-fmt.stdout.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_length": 0
+          },
+          "stderr": {
+            "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\final-fix-stable-final-fmt.stderr.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_length": 0
+          }
+        },
+        {
+          "argv": [
+            "powershell.exe",
+            "-NoProfile",
+            "-Command",
+            "& './scripts/cargo_local.ps1' check --workspace --locked --offline"
+          ],
+          "cwd": "D:\\Noetome",
+          "exit_code": 0,
+          "elapsed_seconds": 3.562347173690796,
+          "stdout": {
+            "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\final-fix-stable-final-check.stdout.txt",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_length": 0
+          },
+          "stderr": {
+            "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\final-fix-stable-final-check.stderr.txt",
+            "sha256": "da5604aec565de021ff798e1d591690fdf42946f88a2ac28a67693161dd03a9e",
+            "byte_length": 208
+          }
+        },
+        {
+          "argv": [
+            "powershell.exe",
+            "-NoProfile",
+            "-Command",
+            "& './scripts/cargo_local.ps1' test --workspace --locked --offline '--' --test-threads=4 --nocapture"
+          ],
+          "cwd": "D:\\Noetome",
+          "exit_code": 0,
+          "elapsed_seconds": 124.17657470703125,
+          "stdout": {
+            "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\final-fix-stable-final-workspace.stdout.txt",
+            "sha256": "e77deeac4f2fba918e8210308bd087c0704ddb296b66b51f3bdf87a93e0c8e6e",
+            "byte_length": 68966
+          },
+          "stderr": {
+            "path": "D:\\Noetome\\.superpowers\\sdd\\B05-T02_VARIANTS_PLAN\\final-fix-stable-final-workspace.stderr.txt",
+            "sha256": "f49376083086be72ce3f7916c92849b3e486632c1331054abd87d34e80e8daed",
+            "byte_length": 4847
+          }
+        }
+      ],
+      "sources": 139,
+      "source_snapshots_equal": true,
+      "binaries": 121,
+      "roots_verified": 68,
+      "root_file_counts": [
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-c7cec484-d4f3-4f01-b025-5ec4ca0de0a1",
+          "protected_files": 85,
+          "raw_receipts": 50
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-5cfe2be4-c249-4d08-80de-6613dec0d5ee",
+          "protected_files": 70,
+          "raw_receipts": 35
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-0e49b1e9-9f5a-43e7-a4f7-ff2daf66dacf",
+          "protected_files": 70,
+          "raw_receipts": 35
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-44dcb267-f320-4d64-ac54-2f7d1d0ac3fa",
+          "protected_files": 70,
+          "raw_receipts": 35
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-ddb57fc7-41a3-4deb-b440-71819e8c9047",
+          "protected_files": 70,
+          "raw_receipts": 35
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-abbfba28-a248-4605-a018-c583b30fbb68",
+          "protected_files": 85,
+          "raw_receipts": 54
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-c6ca4291-7c3d-4dbd-ab24-2fe6c6975651",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-25310a35-a2bf-4b44-942d-777653817f5e",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-ec466789-720e-4d90-bd1b-f5bfb3b41fcb",
+          "protected_files": 85,
+          "raw_receipts": 54
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-a3367e1d-ef1c-47f8-8eb0-b91485e1b09d",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-96b2eaa1-e7a7-4e63-9267-d4deb84215eb",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-fdf29630-b1cd-4faf-a558-e71bf662ab2b",
+          "protected_files": 85,
+          "raw_receipts": 54
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-f6bbe1eb-bbc8-41b5-a43d-4224566291b9",
+          "protected_files": 85,
+          "raw_receipts": 58
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-6ef564e0-99bb-4973-9bb9-b4f69c3e05b0",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-cb6f6adb-4738-49bb-87b0-64fabb129d38",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-228ae4c2-24e4-47b6-abd3-ea5e978860ad",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-b1c1a366-8a02-4465-b35d-14c9ebd8a324",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-903e4669-2a86-4879-ace6-95c7da5ed55a",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-d450a750-d228-4adb-af74-abfa9d2bbc6e",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-4dbaf048-523a-45d2-b243-38e2e9b16302",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-3709befc-ea90-4b04-85d9-9ab4ac76f02d",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-3ab0ab31-f828-4ff6-acbd-a2cb2f384166",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-111b3f45-4183-480c-b0cc-de08b3c3b1b3",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-d566f7bf-3079-4973-a3b4-56155583af83",
+          "protected_files": 85,
+          "raw_receipts": 58
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-cae98a46-6770-413d-ad92-be4a7c829acf",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-86af94dd-5c62-4c92-a050-4edb3f9bd46d",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-c5085768-5a77-4b71-8dac-80b738879006",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-7d4f71e9-0808-412f-b0f2-8c1afc7b716d",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-923875bb-606d-4e13-8da2-672004a5c46c",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-b044c13d-54ee-4763-912c-47ea9fddcf12",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-73618490-bf1e-477c-b05a-0eb0db2e94c1",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-cef67826-981c-4a31-abfb-fd7ea7e95a63",
+          "protected_files": 85,
+          "raw_receipts": 58
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-672f38fa-f968-4ffb-a9c4-5eff8bbc0094",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-2a60713a-06b8-4581-ac16-640f1f22b17d",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-5f4de362-edfb-44de-8cbc-7e45f945ffbc",
+          "protected_files": 68,
+          "raw_receipts": 34
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-e2678117-aadb-4145-8cfe-9d945b2d6ed7",
+          "protected_files": 68,
+          "raw_receipts": 34
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-ab1dbf30-7022-4043-a083-e8360c66e024",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-6e989f2f-01f1-40eb-9c63-e657c4378ca4",
+          "protected_files": 68,
+          "raw_receipts": 34
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-8bffba3a-60ca-4416-81ac-add2c8029803",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-1125e27e-90b5-4672-9710-bac2113e81b5",
+          "protected_files": 85,
+          "raw_receipts": 54
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-9aacb498-ed21-4069-a1b2-a8caa034dd67",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-36ab4398-1083-4e1d-97f6-000d64ebec7c",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-55498508-649c-4330-82b2-f306db5d0058",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-c58c1063-e73c-470e-8bdd-7295b1c770e6",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-c5faa6c5-a314-4c17-a396-e4cb257d7a92",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-a9b6ee50-a71a-4b58-a061-03574058ec57",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-9d3266b5-ba25-4a06-97ab-429ebf762b09",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-8da1cdb7-20d3-4106-ab43-2622c31662fa",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-f3c30ccd-7437-4d87-a71e-ce40557877ff",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-5430d9bd-5110-453d-a71d-51c68d647492",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-f7c54882-fc52-41f0-8e9c-44f326ca9107",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-2a9132ad-1b13-4a90-9000-fb9f92a54bcd",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-39ceceb3-7530-4ea8-a8cd-1e3e159863c6",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-18897e62-8ff0-4e1c-acb6-df550350dd0c",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-bf5f0bc1-343c-40c1-ad1d-208101753a1f",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-bfc68a5b-d52b-40a5-9531-61b3876352d6",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-e5786d7c-ce87-4bc7-a4ee-8cf361df188d",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-fc941279-73ce-4e1e-ba8d-57d7fa944d57",
+          "protected_files": 85,
+          "raw_receipts": 54
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-f6138f8b-cb6b-43eb-a274-bfb4d958c212",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-f246cc16-37c9-43fa-a1d4-039bd9c80ebb",
+          "protected_files": 85,
+          "raw_receipts": 54
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-5d78f414-c263-4e94-a09a-4f00f68aaf7f",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-73319726-b137-4f2c-bf5c-41fed9f65a53",
+          "protected_files": 85,
+          "raw_receipts": 54
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-a3b43c9c-891b-4d34-947a-2604b93557b9",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-013d33e0-7114-4e9f-af0d-32c6a31c094f",
+          "protected_files": 85,
+          "raw_receipts": 54
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-24aae605-c37b-4d17-8054-66d3f2fcb528",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-7b6748f7-2cf8-49e8-89bb-95ff3477c269",
+          "protected_files": 85,
+          "raw_receipts": 54
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-97e1eb34-f15d-4f3f-a853-309a1a5d76c4",
+          "protected_files": 70,
+          "raw_receipts": 39
+        },
+        {
+          "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-6ac741f0-c4a2-444a-9712-28ff82ac0329",
+          "protected_files": 85,
+          "raw_receipts": 54
+        }
+      ]
+    }
+  },
+  "red_context_source_matches_base_blob": true,
+  "workspace_raw": {
+    "suites": 17,
+    "passed_failed_ignored": [
+      591,
+      0,
+      0
+    ],
+    "knowledge_variants_tests": 27
+  },
+  "nonzero_regression_roots": [
+    {
+      "mode": "red",
+      "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-0ec7f442-d4ca-4514-b925-fcf4910ed5bf",
+      "positive": false,
+      "coordinate_exit": 3,
+      "original_author_and_gold_equal": true,
+      "inputs": [
+        {
+          "input": "a",
+          "selection": [
+            {
+              "kind": "text",
+              "ordinal": 2
+            }
+          ],
+          "upstream_exit": 0,
+          "support_start": 110,
+          "support_end": 221,
+          "joint_context_supported": false
+        },
+        {
+          "input": "b",
+          "selection": [
+            {
+              "kind": "text",
+              "ordinal": 2
+            }
+          ],
+          "upstream_exit": 0,
+          "support_start": 110,
+          "support_end": 222,
+          "joint_context_supported": false
+        }
+      ]
+    },
+    {
+      "mode": "red",
+      "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-6def4ab5-3251-4558-bc7c-5eadc3cecc29",
+      "positive": true,
+      "coordinate_exit": 3,
+      "original_author_and_gold_equal": true,
+      "inputs": [
+        {
+          "input": "a",
+          "selection": [
+            {
+              "kind": "text",
+              "ordinal": 2
+            }
+          ],
+          "upstream_exit": 0,
+          "support_start": 57,
+          "support_end": 221,
+          "joint_context_supported": true
+        },
+        {
+          "input": "b",
+          "selection": [
+            {
+              "kind": "text",
+              "ordinal": 2
+            }
+          ],
+          "upstream_exit": 0,
+          "support_start": 57,
+          "support_end": 222,
+          "joint_context_supported": true
+        }
+      ]
+    },
+    {
+      "mode": "green",
+      "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-8abe7a37-b68e-4f7e-b3a3-0c43ad5fb77c",
+      "positive": true,
+      "coordinate_exit": 0,
+      "original_author_and_gold_equal": true,
+      "inputs": [
+        {
+          "input": "a",
+          "selection": [
+            {
+              "kind": "text",
+              "ordinal": 2
+            }
+          ],
+          "upstream_exit": 0,
+          "support_start": 57,
+          "support_end": 221,
+          "joint_context_supported": true
+        },
+        {
+          "input": "b",
+          "selection": [
+            {
+              "kind": "text",
+              "ordinal": 2
+            }
+          ],
+          "upstream_exit": 0,
+          "support_start": 57,
+          "support_end": 222,
+          "joint_context_supported": true
+        }
+      ]
+    },
+    {
+      "mode": "green",
+      "root": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\coordinate-529a7015-7be2-44ba-97aa-25d6828b5920",
+      "positive": false,
+      "coordinate_exit": 3,
+      "original_author_and_gold_equal": true,
+      "inputs": [
+        {
+          "input": "a",
+          "selection": [
+            {
+              "kind": "text",
+              "ordinal": 2
+            }
+          ],
+          "upstream_exit": 0,
+          "support_start": 110,
+          "support_end": 221,
+          "joint_context_supported": false
+        },
+        {
+          "input": "b",
+          "selection": [
+            {
+              "kind": "text",
+              "ordinal": 2
+            }
+          ],
+          "upstream_exit": 0,
+          "support_start": 110,
+          "support_end": 222,
+          "joint_context_supported": false
+        }
+      ]
+    }
+  ],
+  "independent_green": {
+    "evidence_pin": {
+      "sha256": "9a785bc2131849115b9fb28244056f8aa07bdaf6ae73099d7fca0fe710777971",
+      "byte_length": 91390
+    },
+    "calls": 7,
+    "cli_calls": 6,
+    "python_calls": 1,
+    "exits": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "protected_pins": 94,
+    "author_gold_expected_unchanged": true,
+    "representation_equality": true,
+    "complete_check": {
+      "status": "passed",
+      "independently_verified": true,
+      "totals": {
+        "input_bundles": 2,
+        "validated_input_bundles": 2,
+        "input_atoms": 2,
+        "retained_fact_groups": 2,
+        "canonical_facts": 2,
+        "source_occurrences": 2,
+        "evidence_links": 2,
+        "independent_sources": 2,
+        "duplicate_occurrences": 0,
+        "passed": 2,
+        "failed": 0,
+        "needs_review": 0,
+        "unprocessed": 0,
+        "condition_variants": 0,
+        "historical_relations": 1,
+        "known_condition_occurrences": 2,
+        "unknown_condition_occurrences": 0,
+        "not_applicable_condition_occurrences": 0,
+        "dated_occurrences": 2,
+        "undated_occurrences": 0,
+        "context_evidence_links": 2
+      },
+      "inputs": [
+        "a",
+        "b"
+      ]
+    },
+    "unit_starts": [
+      25,
+      25
+    ],
+    "context_starts": [
+      57,
+      57
+    ],
+    "inherited_metadata_base": "e1c3e0867304f3cbfab75e3d7fd2d579e777646a",
+    "inherited_metadata_head": "b3a31eaf87be8bbd4c119f4af19c92aefd958ca8"
+  },
+  "final_cli": {
+    "sha256": "74b5c8f6af000b70fd21a8bc8c556d9c90c3d40dc5ec641dfbd18ab85a3649e1",
+    "byte_length": 18631680
+  },
+  "unique_file_pins_verified": 5782,
+  "completed_unix": 1793781817.3558958,
+  "inspection_result": "all assertions passed",
+  "preserved_preparation_and_fmt": [
+    {
+      "receipt": "final-fix-red-preparation-verification.json",
+      "exits": [
+        0
+      ],
+      "raw_streams_match_saved_pins": true
+    },
+    {
+      "receipt": "final-fix-stable-verification.json",
+      "exits": [
+        1
+      ],
+      "raw_streams_match_saved_pins": true
+    }
+  ]
+}

@@ -1499,7 +1499,7 @@
       "id": "B05-T02",
       "title": "条件差异与历史观点的并列变体",
       "batch": "B05",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B05-T01"
       ],
@@ -1526,6 +1526,54 @@
           "note": "在已验收的显式身份和来源依据链上实现严格协调v2；先冻结条件状态、例外与来源时间作者预期，再验证并列变体、未知复核和独立篡改门禁。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-04T08:49:51Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成严格v2条件与来源时间并列协调、独立作者核对及最终坐标修正；原观点和全部支持保留，B05-T03继续待办。",
+          "validation": [
+            "最终Windows Rust wrapper fmt、locked/offline check/workspace实际退出0；17结果suite共591 passed、0 failed、0 ignored，新v2普通测试27项。139当前源码/输入及121执行文件指纹复核一致。",
+            "非零来源单元真实RED为1失败/1通过，修正后GREEN2/2；新根6次CLI与1次普通Python完整作者check全部0，unit25/context57，事实单独支持仍拒绝，原反例和作者保持。",
+            "controller新鲜完整Python157/157、98.391秒、0跳过；v2普通audit42场景/126实际命令、75保护组，v1回归33/56、29保护组，原流/退出及134当前源码和CLI前后保护一致。",
+            "一次整分支审查和同一次最终修复限定复审完成，R1/R2 ADDRESSED、Spec与quality PASS，修正范围新增Critical/Important/Minor均0；原准备及fmt失败、旧标签出处与真实CLI对应保留。",
+            "最终原件归档14615件、18668802字节，CRC和全部成员SHA/长度读回通过；11份文档196本地链接、31冻结作者与Git原字节及devlog/Git差异检查实际通过。科学not_run、研究not_requested、未发布、无新模型或生产Vault写入。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/knowledge_coordinate_context.rs",
+              "sha256": "2ea76c03f21443fc142d9164a926a343169b2dfbb99d0c6f0f7bf2c10ff3d81c"
+            },
+            {
+              "path": "crates/noetome-cli/src/knowledge_coordinate_variants.rs",
+              "sha256": "fa4b719370109249be3df7ce5b52fcc3484baa032eb6e9c255c47fdd99b4d65d"
+            },
+            {
+              "path": "crates/noetome-cli/tests/knowledge_variants.rs",
+              "sha256": "01d24b03955953339ce33061ddac9e05d327ba9f7614f99904df70fadc745769"
+            },
+            {
+              "path": "scripts/verify_knowledge_variants.py",
+              "sha256": "b9147097f8976d2165e7fff9210bef3455f20be9841d6ecde2ff13f7c8603a7b"
+            },
+            {
+              "path": "doc/technical/KNOWLEDGE_VARIANTS_CONTRACT.md",
+              "sha256": "ea8fc41606294bc7f273fff4ed91213e3560a43bac78e4ed782db80b1ecd8fc3"
+            },
+            {
+              "path": "doc/validation/B05-T02.md",
+              "sha256": "75f8377d806c0ff7be1549adb68cbe45a5bfce93217a4f14f4865ce80910ebe3"
+            },
+            {
+              "path": "doc/validation/assets/B05-T02-final-rereview.md",
+              "sha256": "8413280069f2bea1bd61178b07feff827d417393fbabbec0f37bce1c288d8418"
+            },
+            {
+              "path": "doc/validation/assets/B05-T02-final-verified-evidence.zip",
+              "sha256": "e2d7eebaabd7c40caee5c65870b827739fb76ff894e0b56afca1dd13b3fb177f"
+            }
+          ]
         }
       ]
     },
