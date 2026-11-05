@@ -1,0 +1,15 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 43.481,
+  "powershell": "\n$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'\n$taskOriginalSource='C:\\Users\\Lyinn\\AppData\\Local\\NoetomeBuilds\\b06u-t02-source-20261105'\n$taskSource='D:\\Noetome\\target\\b06u-t02-source-20261105'\nNew-Item -ItemType Directory -Path $taskSource -ErrorAction Stop | Out-Null\n& robocopy.exe $taskOriginalSource $taskSource /E /XJ /R:0 /W:0 /NFL /NDL /NJH /NJS /NP | Out-Null\nif ($LASTEXITCODE -gt 7) { throw 'Snapshot copy failed' }\nSet-Location $taskSource\nif ((Get-FileHash 'package-lock.json').Hash -ne (Get-FileHash 'D:\\Noetome\\package-lock.json').Hash) { throw 'Dependency lock mismatch' }\nNew-Item -ItemType Junction -Path (Join-Path $taskSource 'node_modules') -Target 'D:\\Noetome\\node_modules' | Out-Null\n$env:CARGO_TARGET_DIR='D:\\Noetome\\target'\n$env:TEMP='D:\\Noetome\\target\\compiler-temp'; $env:TMP=$env:TEMP\n& node.exe 'node_modules/@tauri-apps/cli/tauri.js' build --config crates/noetome-desktop/tauri.conf.json --ci -- --locked --offline\nexit $LASTEXITCODE\n",
+  "streams": {
+    "stdout": {
+      "bytes": 596,
+      "sha256": "3017b15da0294be8c4d555b09594aaed3af10219dfcba26b6bb4f692d08011d5"
+    },
+    "stderr": {
+      "bytes": 1061,
+      "sha256": "3e96bbbccce5f3fc241d42d13707b9b4b4804d451a3485070b01fc3f494b0898"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "exit_code": 1,
+  "elapsed_seconds": 59.889,
+  "powershell": "\n$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'\n$taskSource='C:\\Users\\Lyinn\\AppData\\Local\\NoetomeBuilds\\b06u-t02-source-20261105'\nSet-Location $taskSource\nif ((Get-FileHash 'package-lock.json').Hash -ne (Get-FileHash 'D:\\Noetome\\package-lock.json').Hash) { throw 'Dependency lock mismatch' }\nNew-Item -ItemType Junction -Path (Join-Path $taskSource 'node_modules') -Target 'D:\\Noetome\\node_modules' | Out-Null\n$env:CARGO_TARGET_DIR='D:\\Noetome\\target'\n$env:TEMP='D:\\Noetome\\target\\compiler-temp'; $env:TMP=$env:TEMP\n& node.exe 'node_modules/@tauri-apps/cli/tauri.js' build --config crates/noetome-desktop/tauri.conf.json --ci -- --locked --offline\nexit $LASTEXITCODE\n",
+  "streams": {
+    "stdout": {
+      "bytes": 596,
+      "sha256": "caab4139bea224f73775c5a2c5c417640f9af85ff569eb91215020635328ca94"
+    },
+    "stderr": {
+      "bytes": 1519,
+      "sha256": "4737716b492e56950c57041f5d9403d23da6907b14564388d2391263bd29741b"
+    }
+  }
+}

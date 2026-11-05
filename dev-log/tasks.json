@@ -2014,6 +2014,68 @@
           ]
         }
       ]
+    },
+    {
+      "id": "B06U-T02",
+      "title": "本地重装设置侧栏修正版并说明构建依赖",
+      "batch": "B06R",
+      "status": "done",
+      "depends_on": [
+        "B06U-T01"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "以当前侧栏修正版源码构建Windows NSIS，本地更新安装并核对完整程序指纹、快捷方式和卸载登记。",
+        "实际安装版验证设置侧栏隐藏、返回状态、真实Rust连接；普通启动保持打开，保存真实证据。",
+        "提供Linux缺失构建依赖与运行命令，明确实测与未执行范围；维护日志并提交推送。"
+      ],
+      "history": [
+        {
+          "at": "2026-11-05T11:25:55Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "用户要求本地重装；独立当前源码Windows构建安装与原生WebView验证，附缺失Linux依赖执行方法",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-05T13:21:38Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "当前设置侧栏修正版已Windows构建并在原位置重新安装，保留旧安装备份；原生6组验证通过并普通启动，补齐Linux缺失依赖与构建操作说明。",
+          "validation": [
+            "Windows NSIS构建与安装退出0；完整程序与当前构建NSIS变体一致，快捷方式/卸载登记通过；原生6组检查、实际JS/CSS逐字节比对与普通可见窗口通过。Windows fmt/check/test通过，Rust657通过0失败0忽略；Linux Python205项188通过17跳过；1980源码副本及当前406产品/测试输入一致；独立审查、62本地链接、devlog与diff检查通过。Linux系统依赖安装和完整Linux Rust回归未执行，提供执行方法。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/technical/LOCAL_BUILD.md",
+              "sha256": "dedefdbbad409084b6c670a3a24a2a1b253da289b93f64478a739c4c8e19741b"
+            },
+            {
+              "path": "doc/validation/B06U-T02.md",
+              "sha256": "cfc69015473f45b7415e55033182a1d147cdbf719451f83409b6238f9eff0988"
+            },
+            {
+              "path": "doc/validation/assets/B06U-T02/desktop-install.json",
+              "sha256": "28d51def4a7ac8dd829e3eaf882eb50033c725e6c0e86a999cf3cad3475185ea"
+            },
+            {
+              "path": "doc/validation/assets/B06U-T02/native-verification.json",
+              "sha256": "224604dbc10fc88d146bd635e0f5ac87b38f1cf540b763b5537ce2a09b2e513a"
+            },
+            {
+              "path": "doc/validation/assets/B06U-T02/verification-summary.json",
+              "sha256": "4af5cbe7278c6c92b61a88ea1b9328e7060e8db9d722bbb2b9f6b09a469508a2"
+            },
+            {
+              "path": "doc/validation/assets/B06U-T02/ordinary-launch-readback.json",
+              "sha256": "e79db6c424110141a888a44aae4f745e47b72b7465dc5ba9c9dcfdcfb47d67e2"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

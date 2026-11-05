@@ -1,0 +1,23 @@
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `npm run web:build`
+   Compiling noetome-desktop v0.1.0 (C:\Users\Lyinn\AppData\Local\NoetomeBuilds\b06u-t02-source-20261105\crates\noetome-desktop)
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\AppData\Local\NoetomeBuilds\b06u-t02-source-20261105\crates\noetome-cli)
+error: failed to run custom build command for `noetome-desktop v0.1.0 (C:\Users\Lyinn\AppData\Local\NoetomeBuilds\b06u-t02-source-20261105\crates\noetome-desktop)`
+
+Caused by:
+  process didn't exit successfully: `D:\Noetome\target\release\build\noetome-desktop-c5b2194ababdb181\build-script-build` (exit code: 1)
+  --- stdout
+  cargo:rustc-env=NOETOME_TARGET=x86_64-pc-windows-msvc
+  cargo:rerun-if-env-changed=TAURI_CONFIG
+  cargo:rustc-check-cfg=cfg(desktop)
+  cargo:rustc-cfg=desktop
+  cargo:rustc-check-cfg=cfg(mobile)
+  cargo:rerun-if-changed=C:\Users\Lyinn\AppData\Local\NoetomeBuilds\b06u-t02-source-20261105\crates\noetome-desktop\tauri.conf.json
+  cargo:rustc-env=TAURI_ANDROID_PACKAGE_NAME_APP_NAME=desktop
+  cargo:rustc-env=TAURI_ANDROID_PACKAGE_NAME_PREFIX=com_noetome
+  cargo:rustc-check-cfg=cfg(dev)
+  cargo:PERMISSION_FILES_PATH=D:\Noetome\target\release\build\noetome-desktop-51f6e3073e244b9c\out\app-manifest\__app__-permission-files
+  拒绝访问。 (os error 5)
+warning: build failed, waiting for other jobs to finish...
+failed to build app: failed to build app
+       Error failed to build app: failed to build app

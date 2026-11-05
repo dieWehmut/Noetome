@@ -284,3 +284,5 @@ python -m unittest discover -s tests -p "test_*.py"
 ```
 
 开发时通过start、complete、block、reopen维护状态和证据，工具自动刷新三份清单。具体命令见[日志规则](dev-log/README.md)。不要手动把计划写成已完成。
+
+设置页隐藏主导航侧栏的修正版已实际本地重装，安装包、原生验证及备份说明见[B06U-T02记录](doc/validation/B06U-T02.md)。Ubuntu/WSL缺失构建依赖和Windows重装命令见[本机构建说明](doc/technical/LOCAL_BUILD.md)。
