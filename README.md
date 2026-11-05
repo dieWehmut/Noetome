@@ -113,6 +113,8 @@ python scripts/verify_knowledge_presentation.py check <项目路径> <coordinati
 
 全新测试 Vault 保存 `知识比较.md`、对象详情、`plan.json` 和 `presentation.json`/`presentation.md`。表内链接定位固定的知识明细小节，出处保存在内部索引。成功仅表示有界工程预览，知识仍为 pending、科学质量 not_run、发布 false；不写生产 Vault。范围和输出契约见[有据主动表达](doc/technical/ACTIVE_PRESENTATION_CONTRACT.md)。
 
+[B06-T01 实际验收](doc/validation/B06-T01.md)保存独立篡改核对、完整 Windows 回归、原件保护及真实 Obsidian 表格/正文/链接结果，包含多行名称误拒的发现、修复和双实现回归。
+
 ## 明确身份的多来源重复与互补协调
 
 ```text

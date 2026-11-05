@@ -1769,7 +1769,7 @@
       "id": "B06-T01",
       "title": "从已核对知识主动生成有据比较表",
       "batch": "B06",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B05-T03"
       ],
@@ -1797,6 +1797,60 @@
           "note": "从已核对协调事实主动选择比较表/正文，先冻结无图作者与独立单元格预期并取得真实CLI RED；实现新测试Vault预览、来源重验及语义/路径/真实Obsidian验收，不推进流程图或公式任务",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-05T05:42:08Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成从真实来源核对与严格v1/v2/v3协调重建主动比较表或正文，保留完整事实、缺失含义、原出现及逐格映射；修复运行期清理、角色/小节定位和多行显示名及独立校验一致性。仅有界工程预览，知识pending、科学not_run、未发布。",
+          "validation": [
+            "最终固定源码452dc55原生Windows cargo fmt/check/test workspace全通过：19 suite共623 passed、0 failed、0 ignored；完整Python 177项，175通过、2跳过。全部命令原流、源码与外部哨兵前后指纹保存并读回；首轮TEMP误入仓库导致15失败及16项修正后GREEN保留。",
+            "独立审计实际14个作者闭环、22个同步篡改拒绝；Linux125次CLI，Windows124次CLI并明确1个符号链接不可用记录。真实NTFS专项16条命令补齐路径保护；v1/v2/v3持有期387条记录共774次实际写/删全部被错误32拒绝。新增多行标签三版本完整独立核对及另一位审查者复审通过。",
+            "干净Obsidian1.6.7实际验证13场景38笔记26次链接点击；最终原生构建38份Markdown与实机原件逐字一致。4份Windows ZIP共11889文件CRC/SHA/长度全量读回，1533快照文件及323当前源码/fixture/checker逐件核对；devlog check、git diff --check及相关文档链接核对通过。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/knowledge_presentation.rs",
+              "sha256": "ee587b1513d9870dd83fdc83459e7ee662391dbdada0205a5ab71c846e48b47c"
+            },
+            {
+              "path": "crates/noetome-cli/src/knowledge_presentation_render.rs",
+              "sha256": "002286e8685a1e82f9b6eecf80ec9296f74fb4e1519fbe65acc3595d41d9c606"
+            },
+            {
+              "path": "scripts/verify_knowledge_presentation.py",
+              "sha256": "a338a69e970999689b1e3db15d828002c39078cc82d8873feb732cdaa00ec49e"
+            },
+            {
+              "path": "tests/test_presentation_display_verifier.py",
+              "sha256": "a9b2504cb961c76675199d7ff2e6b1e359b569cc4cc2b97d063398637fec0581"
+            },
+            {
+              "path": "doc/validation/B06-T01.md",
+              "sha256": "c088f31d3f6a3ae4b1668dbc5355d2fcfb12f47f91ca09da73b1e51ad3aaff8b"
+            },
+            {
+              "path": "doc/validation/assets/B06-T01/windows/native-final.json",
+              "sha256": "4054b043f13506d4f937cbd8f5ac5c3b9dc21ce3361076dffe568c8a373d4033"
+            },
+            {
+              "path": "doc/validation/assets/B06-T01/windows/closeout-readback.json",
+              "sha256": "c24501f1e1b6faab82b34281b4a6b3291808301dc4256f39a4c72b27cd3470d1"
+            },
+            {
+              "path": "doc/validation/assets/B06-T01/windows/ntfs-final.json",
+              "sha256": "ea2ac1ba32fc4621cb4cb8b9f2878c0b88b9e3fe1fb1c1f86f86de17f564177d"
+            },
+            {
+              "path": "doc/validation/assets/B06-T01/obsidian/final-source-linkage.json",
+              "sha256": "f5bf52b6fabf0355b329a7b08e6a922d86225fcd024cd46ce28fce4d40e74915"
+            },
+            {
+              "path": "doc/validation/assets/B06-T01/display-checker-final-review.json",
+              "sha256": "45450e39cc24443cf1c956fc39f2015faa4a827d24bea6fe1dc2f45aac9a86d7"
+            }
+          ]
         }
       ]
     },
