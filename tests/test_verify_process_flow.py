@@ -2,9 +2,12 @@
 import copy
 import importlib.util
 import json
+import os
 from pathlib import Path
+import sqlite3
 import tempfile
 import unittest
+import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("verify_process_flow", ROOT / "scripts/verify_process_flow.py")
@@ -186,6 +189,144 @@ class MarkdownCodecTests(unittest.TestCase):
         for field, value in [('start_byte', 1), ('source_object_ids', ['s2'])]:
             reports = copy.deepcopy(files); reports[0]['content_mappings'][0][field] = value
             with self.subTest(field=field), self.assertRaises(AssertionError): V.verify_rendered(plan, reports, actual)
+
+
+class BlockerDiagnosticTests(unittest.TestCase):
+    def document(self, name):
+        return V.parse_source((FIXTURE / (name + ".txt")).read_bytes())[0]
+
+    def test_primary_issues_identify_all_actual_source_objects(self):
+        expected = {"correlation": ["r1"], "direction_unknown": ["r1"], "missing_branch": ["d1"],
+                    "cycle": ["s1", "s2", "s3"], "missing_connection": ["s3"], "unknown_criterion": ["d1"]}
+        profile = json.loads((FIXTURE / "profile-obsidian_1_6_7_flowchart.json").read_bytes())
+        for name, ids in expected.items():
+            doc = self.document(name); issues = V.blocker_issues(doc)
+            with self.subTest(name=name):
+                self.assertEqual(issues[0]["object_ids"], ids)
+                self.assertEqual([i["code"] for i in issues], V.classify(doc, profile)[1])
+                V.verify_blockers(issues, doc)
+
+    def test_empty_unrelated_missing_objects_and_fabricated_reason_are_rejected(self):
+        for name in ("correlation", "direction_unknown", "missing_branch", "cycle", "missing_connection", "unknown_criterion"):
+            doc = self.document(name)
+            for field, value in [("object_ids", []), ("object_ids", ["process"]), ("message", "该问题定位于此步骤。")]:
+                issues = V.blocker_issues(doc); issues[0][field] = value
+                with self.subTest(name=name, field=field, value=value), self.assertRaises(AssertionError):
+                    V.verify_blockers(issues, doc)
+        doc = self.document("correlation"); issues = V.blocker_issues(doc); issues[0]["object_ids"] = ["s1"]
+        with self.assertRaises(AssertionError): V.verify_blockers(issues, doc)
+        doc = self.document("cycle"); issues = V.blocker_issues(doc); issues[0]["object_ids"].pop()
+        with self.assertRaises(AssertionError): V.verify_blockers(issues, doc)
+
+    def test_cycle_residual_and_goal_mismatch_diagnostics_are_precise(self):
+        doc = self.document("linear")
+        doc["relations"].append(dict(id="r3", left="s2", right="s2", kind="sequence", branch_outcome=None, conditions=[], exceptions=[]))
+        self.assertEqual(V.blocker_issues(doc)[0]["object_ids"], ["s2", "s3"])
+        doc = self.document("linear"); doc["process"]["goals"] = ["s2"]
+        issues = V.blocker_issues(doc)
+        self.assertEqual(issues[0]["object_ids"], ["process", "s2", "s3"])
+        self.assertIn("目标", issues[0]["message"])
+
+    def test_failed_source_reason_cannot_be_replaced_by_graph_claim(self):
+        doc = self.document("correlation")
+        correct = V.blocker_issues(doc, False)
+        self.assertEqual(correct[0]["code"], "FLOW_SOURCE_UNVERIFIED")
+        self.assertEqual(correct[0]["object_ids"], [])
+        with self.assertRaises(AssertionError): V.verify_blockers(V.blocker_issues(doc), doc, False)
+
+
+class SelectedSourcePreflightTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
+        self.project = Path(self.temp.name) / "project"; self.project.mkdir()
+        self.version, self.source, self.import_id = (str(uuid.uuid4()) for _ in range(3))
+        self.project_id = str(uuid.uuid4())
+
+    def create(self, raw=None):
+        raw = raw if raw is not None else (FIXTURE / "linear.txt").read_bytes()
+        normalized = V.normalize_raw_text(raw)
+        self.cache = self.project / ".noetome-sources" / self.version; self.cache.mkdir(parents=True)
+        (self.cache / "raw.bin").write_bytes(raw); (self.cache / "normalized.txt").write_bytes(normalized)
+        self.dbpath = self.project / "project.sqlite"
+        V.save(self.project / "project.json", dict(project_id=self.project_id, schema_version=2,
+            created_at="2026-11-05T00:00:00Z", state="initialized", database="project.sqlite"))
+        db = sqlite3.connect(self.dbpath)
+        db.execute("CREATE TABLE project_metadata (project_id TEXT)")
+        db.execute("INSERT INTO project_metadata VALUES (?)", (self.project_id,))
+        db.execute("CREATE TABLE source_imports (import_id TEXT, status TEXT, source_id TEXT, version_id TEXT)")
+        db.execute("INSERT INTO source_imports VALUES (?,?,?,?)", (self.import_id, "ready", self.source, self.version))
+        version = dict(version_id=self.version, source_id=self.source, media_type="text/plain", ingest_status="ready",
+            normalization_version="utf8-newlines-v1", raw_snapshot=f".noetome-sources/{self.version}/raw.bin",
+            normalized_snapshot=f".noetome-sources/{self.version}/normalized.txt", content_sha256=V.fingerprint(raw)["sha256"],
+            byte_length=len(raw), normalized_sha256=V.fingerprint(normalized)["sha256"])
+        db.execute("CREATE TABLE source_versions (" + ",".join(k+(" INTEGER" if type(v) is int else " TEXT") for k,v in version.items()) + ")")
+        db.execute("INSERT INTO source_versions VALUES ("+",".join("?" for _ in version)+")", list(version.values()))
+        self.spans = V.text_blocks(normalized)
+        db.execute("CREATE TABLE source_spans (span_id TEXT, source_version_id TEXT, ordinal INTEGER, kind TEXT, start_byte INTEGER, end_byte INTEGER, start_line INTEGER, end_line INTEGER, text_sha256 TEXT, parse_status TEXT, parser_version TEXT)")
+        for i, span in enumerate(self.spans):
+            db.execute("INSERT INTO source_spans VALUES (?,?,?,?,?,?,?,?,?,?,?)", (str(uuid.uuid4()), self.version, i, *span.values(), "blocks-v1"))
+        db.commit(); db.close()
+        return raw, normalized
+
+    def update(self, statement, args=()):
+        db = sqlite3.connect(self.dbpath); db.execute(statement, args); db.commit(); db.close()
+
+    def preflight(self, ordinal=0):
+        return V.source_preflight(self.project, self.import_id, dict(kind="text", ordinal=ordinal))
+
+    def test_only_first_bom_and_cr_newlines_are_normalized(self):
+        raw = "\ufeff\ufeff# 标题\r\n第一行\r第二行\u2028保留".encode()
+        self.assertEqual(V.normalize_raw_text(raw), "\ufeff# 标题\n第一行\n第二行\u2028保留".encode())
+        with self.assertRaises(UnicodeDecodeError): V.normalize_raw_text(b"\xef\xbb\xbf\xff")
+
+    def test_heading_blank_prefix_preserves_actual_selected_unit_and_offsets(self):
+        source = (FIXTURE / "linear.txt").read_bytes()
+        _, normalized = self.create("\ufeff# 前置标题\r\n\r\n".encode()+source)
+        self.assertEqual([s["kind"] for s in self.spans], ["heading", "formatting", "text"])
+        self.assertEqual(self.preflight(2), source)
+        self.assertEqual(self.spans[2]["start_byte"], normalized.index(source))
+        self.assertEqual(self.spans[2]["start_line"], 3)
+
+    def test_blocks_cover_fences_deep_indent_unicode_blanks_and_terminal_lf(self):
+        raw = "   # heading\n\u2003\n    # ordinary\n```x\n# code\n```\n\t# ordinary\n~~~\nunclosed".encode()
+        blocks = V.text_blocks(raw)
+        self.assertEqual([(s["kind"], s["parse_status"]) for s in blocks], [
+            ("heading", "parsed"), ("formatting", "parsed"), ("text", "parsed"), ("code", "parsed"), ("text", "parsed"), ("code", "needs_review")])
+        self.assertEqual(b"".join(raw[s["start_byte"]:s["end_byte"]] for s in blocks), raw)
+        self.assertEqual(V.text_blocks(b""), [])
+        self.assertEqual(V.text_blocks(b"\x1c\n")[0]["kind"], "text")
+
+    def test_external_parent_or_same_project_alias_paths_are_rejected(self):
+        self.create()
+        for bad in ("/tmp/outside.txt", "../outside.txt", "ordinary-inside-project.txt", f".noetome-sources/{self.version}/../normalized.txt"):
+            self.update("UPDATE source_versions SET normalized_snapshot=?", (bad,))
+            with self.subTest(path=bad), self.assertRaises(AssertionError): self.preflight()
+
+    def test_raw_and_normalized_self_consistent_hashes_do_not_replace_derivation(self):
+        self.create()
+        changed = b"unrelated raw source\n"
+        (self.cache / "raw.bin").write_bytes(changed)
+        self.update("UPDATE source_versions SET content_sha256=?, byte_length=?", (V.fingerprint(changed)["sha256"], len(changed)))
+        with self.assertRaisesRegex(AssertionError, "derive"): self.preflight()
+
+    def test_sql_span_cannot_hide_negative_tail_with_synchronized_hash(self):
+        source = (FIXTURE / "linear.txt").read_bytes(); self.create(source+"关系 r3：s1 不导致 s3。条件：[]。例外：[]。\n".encode())
+        self.update("UPDATE source_spans SET end_byte=?,end_line=6,text_sha256=?", (len(source), V.fingerprint(source)["sha256"]))
+        with self.assertRaisesRegex(AssertionError, "raw-derived source span"): self.preflight()
+
+    def test_single_link_and_canonical_version_identity_are_required(self):
+        self.create(); alias = Path(self.temp.name) / "alias.bin"
+        os.link(self.cache / "raw.bin", alias)
+        with self.assertRaises(AssertionError): self.preflight()
+        alias.unlink()
+        self.update("UPDATE source_versions SET version_id=?", (self.version.upper(),))
+        self.update("UPDATE source_imports SET version_id=?", (self.version.upper(),))
+        with self.assertRaises(AssertionError): self.preflight()
+
+    def test_project_manifest_and_database_must_identify_same_project(self):
+        self.create(); manifest = json.loads((self.project / "project.json").read_bytes())
+        manifest["project_id"] = str(uuid.uuid4()); V.save(self.project / "project.json", manifest)
+        with self.assertRaisesRegex(AssertionError, "project manifest / database identity"): self.preflight()
 
 
 if __name__ == "__main__":

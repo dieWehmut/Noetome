@@ -8,6 +8,7 @@ claim to execute Obsidian. CLI receipts retain original bytes, including errors.
 from __future__ import annotations
 
 import argparse
+from contextlib import closing
 import copy
 import hashlib
 import heapq
@@ -15,6 +16,7 @@ import json
 from pathlib import Path
 import re
 import shutil
+import sqlite3
 import subprocess
 import sys
 import time
@@ -47,10 +49,10 @@ def save(path, value):
     Path(path).write_bytes(encoded(value) + b"\n")
 
 
-def read(path):
+def read(path, maximum=16 * 1024 * 1024):
     path = Path(path)
     guard_path(path, directory=False)
-    assert path.stat().st_size <= 16 * 1024 * 1024, "bounded audit input"
+    assert path.stat().st_size <= maximum, "bounded audit input"
     return path.read_bytes()
 
 
@@ -329,7 +331,167 @@ def classify(doc, profile):
 
 def label_whitespace(value):
     return (value.startswith(" ") or value.endswith(" ") or "  " in value or
-            any(c.isspace() and c != " " for c in value))
+            any(unicode_whitespace(c) and c != " " for c in value))
+
+
+def blocker_issues(doc, source_ready=True):
+    """Derive exact primary diagnostic objects and meaning from source records."""
+    def issue(code, ids, message):
+        return [dict(code=code, object_ids=sorted(set(ids)), message=message)]
+    if not source_ready:
+        return issue("FLOW_SOURCE_UNVERIFIED", [], "过程来源核对尚未通过，未运行流程规划。")
+    nodes = {s["id"]: s for s in doc["steps"]}; relations = doc["relations"]
+    unknown = [s["id"] for s in nodes.values() if s["kind"] == "decision" and not s["criterion"]]
+    if unknown:
+        return issue("FLOW_UNKNOWN_CRITERION", unknown, "判定缺少明确判据，不能生成真假分支表达。")
+    for kind, code, message in [
+            ("correlates", "FLOW_CORRELATION_UNDIRECTED", "来源只说明相关性，不能推定执行或因果方向。"),
+            ("unknown", "FLOW_DIRECTION_UNKNOWN", "来源未说明关系方向，不能生成有向流程。")]:
+        ids = [r["id"] for r in relations if r["kind"] == kind]
+        if ids: return issue(code, ids, message)
+    outgoing = {ident: [r for r in relations if r["left"] == ident] for ident in nodes}
+    incomplete = set()
+    for ident, s in nodes.items():
+        edges = outgoing[ident]
+        if s["kind"] == "decision" and (len(edges) != 2 or any(r["kind"] != "branch" for r in edges)
+                                         or sorted(r["branch_outcome"] for r in edges) != [False, True]):
+            incomplete.add(ident)
+    for r in relations:
+        if ((r["kind"] == "branch" and (nodes[r["left"]]["kind"] != "decision" or type(r["branch_outcome"]) is not bool))
+                or (r["kind"] != "branch" and r["branch_outcome"] is not None)):
+            incomplete.add(r["id"])
+    if incomplete:
+        return issue("FLOW_DECISION_INCOMPLETE", incomplete, "每个判定须恰有一条真分支和一条假分支，分支必须来自具有判据的判定。")
+    # Repeatedly remove zero-predecessor nodes. The residual includes both
+    # cycles and their blocked descendants, as specified by the diagnostic.
+    residual = set(nodes)
+    while residual:
+        roots = {ident for ident in residual if not any(r["right"] == ident and r["left"] in residual for r in relations)}
+        if not roots:
+            return issue("FLOW_UNSUPPORTED_CYCLE", residual, "来源关系含有循环，本版流程模型未支持循环表达。")
+        residual -= roots
+    reached, todo = set(), [doc["process"]["entry"]]
+    while todo:
+        ident = todo.pop()
+        if ident not in reached:
+            reached.add(ident); todo.extend(r["right"] for r in outgoing[ident])
+    if reached != set(nodes):
+        return issue("FLOW_DISCONNECTED", set(nodes)-reached, "存在不能从所声明入口到达的步骤，不能补造缺失关系。")
+    terminals = {ident for ident in nodes if not outgoing[ident]}; goals = set(doc["process"]["goals"])
+    if goals != terminals:
+        return issue("FLOW_DISCONNECTED", {"process"} | (goals ^ terminals), "所声明目标须与流程终点逐项一致；当前目标与终点集合不一致。")
+    return []
+
+
+def verify_blockers(actual, doc, source_ready=True):
+    exact(actual, blocker_issues(doc, source_ready), "source-derived blocker diagnosis")
+
+
+def unicode_whitespace(character):
+    """Unicode White_Space, matching Rust char::is_whitespace (not Python C0 extras)."""
+    return (character in "\t\n\v\f\r \x85\u00a0\u1680\u2028\u2029\u202f\u205f\u3000"
+            or 0x2000 <= ord(character) <= 0x200a)
+
+
+def normalize_raw_text(raw):
+    return raw.decode("utf-8").removeprefix("\ufeff").replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+
+
+def text_blocks(normalized):
+    """Independent blocks-v1 positions from complete normalized bytes, no SQL ranges."""
+    text = normalized.decode("utf-8")
+    pieces = text.split("\n")
+    if pieces[-1] == "": pieces.pop()
+    lines, offset = [], 0
+    for i, line in enumerate(pieces):
+        length = len(line.encode()) + (1 if offset + len(line.encode()) < len(normalized) else 0)
+        lines.append(dict(text=line, start_byte=offset, end_byte=offset+length, number=i+1)); offset += length
+    def marker(line):
+        spaces = len(line)-len(line.lstrip(" "))
+        return line[spaces:] if spaces <= 3 else None
+    def blank(line):
+        return all(unicode_whitespace(c) for c in line)
+    def heading(line):
+        value = marker(line)
+        if value is None: return False
+        hashes = len(value)-len(value.lstrip("#"))
+        return 1 <= hashes <= 6 and (hashes == len(value) or unicode_whitespace(value[hashes]))
+    def fence(line):
+        value = marker(line)
+        match = re.match(r"(`{3,}|~{3,})", value) if value is not None else None
+        return match[0] if match else None
+    def closes(line, opening):
+        value = marker(line)
+        if value is None: return False
+        run = len(value)-len(value.lstrip(opening[0]))
+        return run >= len(opening) and all(c in " \t" for c in value[run:])
+    spans, index = [], 0
+    while index < len(lines):
+        first = index; body = lines[index]["text"]; opening = fence(body); status = "parsed"
+        index += 1
+        if opening:
+            kind, closed = "code", False
+            while index < len(lines):
+                closed = closes(lines[index]["text"], opening); index += 1
+                if closed: break
+            if not closed: status = "needs_review"
+        elif heading(body): kind = "heading"
+        elif blank(body):
+            kind = "formatting"
+            while index < len(lines) and blank(lines[index]["text"]): index += 1
+        else:
+            kind = "text"
+            while index < len(lines) and not blank(lines[index]["text"]) and not heading(lines[index]["text"]) and not fence(lines[index]["text"]): index += 1
+        start, end = lines[first]["start_byte"], lines[index-1]["end_byte"]
+        spans.append(dict(kind=kind, start_byte=start, end_byte=end, start_line=lines[first]["number"],
+                          end_line=lines[index-1]["number"], text_sha256=fingerprint(normalized[start:end])["sha256"], parse_status=status))
+    assert offset == len(normalized), "complete normalized text partition"
+    return spans
+
+
+def source_preflight(project, import_id, selection):
+    """Check this selected text version's fixed paths and independently derived bytes/spans."""
+    project = Path(project); guard_path(project, directory=True)
+    guard_path(project / "project.sqlite", directory=False)
+    manifest = strict_json(read(project / "project.json"))
+    fields(manifest, "project_id schema_version created_at state database")
+    uuid_string(manifest["project_id"])
+    exact(manifest["database"], "project.sqlite", "fixed project database")
+    with closing(sqlite3.connect((project.absolute() / "project.sqlite").as_uri()+"?mode=ro&immutable=1", uri=True)) as db:
+        db.row_factory = sqlite3.Row
+        metadata = db.execute("SELECT project_id FROM project_metadata").fetchall()
+        exact([row["project_id"] for row in metadata], [manifest["project_id"]], "project manifest / database identity")
+        imported = db.execute("SELECT * FROM source_imports WHERE import_id=?", (import_id,)).fetchone()
+        assert imported and imported["status"] == "ready", "selected text import ready"
+        version = db.execute("SELECT * FROM source_versions WHERE version_id=?", (imported["version_id"],)).fetchone()
+        assert version, "selected source version"
+        version = dict(version)
+        for key in ("version_id", "source_id"): uuid_string(version[key])
+        exact(imported["source_id"], version["source_id"], "selected source identity")
+        spans = [dict(row) for row in db.execute("SELECT * FROM source_spans WHERE source_version_id=? ORDER BY ordinal", (version["version_id"],))]
+    assert version["media_type"] in ("text/plain", "text/markdown") and version["ingest_status"] == "ready", "selected text version kind/status"
+    exact(version["normalization_version"], "utf8-newlines-v1", "source normalization codec")
+    stem = ".noetome-sources/" + version["version_id"] + "/"
+    exact(version["raw_snapshot"], stem+"raw.bin", "fixed raw snapshot path")
+    exact(version["normalized_snapshot"], stem+"normalized.txt", "fixed normalized snapshot path")
+    directory = project / ".noetome-sources" / version["version_id"]
+    guard_path(directory, directory=True)
+    exact({p.name for p in directory.iterdir()}, {"raw.bin", "normalized.txt"}, "selected version snapshot inventory")
+    raw = read(directory / "raw.bin", 64*1024*1024)
+    normalized = read(directory / "normalized.txt", 64*1024*1024)
+    exact(fingerprint(raw), dict(sha256=version["content_sha256"], byte_length=version["byte_length"]), "actual raw source fingerprint")
+    exact(normalized, normalize_raw_text(raw), "normalized cache must derive from actual raw source")
+    exact(fingerprint(normalized)["sha256"], version["normalized_sha256"], "derived normalized source SHA")
+    derived = text_blocks(normalized)
+    exact(len(spans), len(derived), "complete actual source block count")
+    span_ids = set()
+    for ordinal, (row, actual) in enumerate(zip(spans, derived)):
+        uuid_string(row["span_id"]); assert row["span_id"] not in span_ids, "unique source span identity"; span_ids.add(row["span_id"])
+        exact(row, dict(span_id=row["span_id"], source_version_id=version["version_id"], ordinal=ordinal, **actual, parser_version="blocks-v1"), "raw-derived source span")
+    assert selection["ordinal"] < len(derived), "selected derived block exists"
+    selected = derived[selection["ordinal"]]
+    assert selected["parse_status"] != "failed", "selected source block status"
+    return normalized[selected["start_byte"]:selected["end_byte"]]
 
 
 def verify_fixture(root=FIXTURE):
@@ -399,8 +561,9 @@ def source_inputs(project, case):
     gold_raw = files[config["gold_file"]]
     exact(fingerprint(gold_raw)["sha256"], config["gold_sha256"], "gold input SHA")
     gold = gold_document(strict_json(gold_raw))
-    tree(project)  # Reject linked/reparse source resources before actual_source resolves.
+    selected_raw = source_preflight(project, config["import_id"], selection[0])
     source = actual_source(Path(project), config["import_id"], selection[0])
+    exact(source["units"][0]["text"].encode(), selected_raw, "actual_source matches raw-derived selected block")
     exact(config["project_id"], source["binding"]["project_id"], "actual project binding")
     doc, unmatched, count = parse_source(source["units"][0]["text"].encode())
     snapshot = dict(schema_version=1, binding=source["binding"], units=source["units"])
@@ -737,13 +900,7 @@ def verify_flow(project, case, review, profile_path, vault, expected_path=None):
         exact(report["files"], [], "blocked render inventory")
         exact(report["decision"], None, "blocked decision")
         exact(report["plan_fingerprint"], None, "blocked plan")
-        assert type(report["issues"]) is list and len(report["issues"]) == len(codes), "blocker details"
-        all_ids = {e["object_id"] for e in doc["evidence"]}
-        for issue, code in zip(report["issues"], codes):
-            fields(issue, "code object_ids message"); exact(issue["code"], code, "blocker code")
-            display_text(issue["message"])
-            assert type(issue["object_ids"]) is list and set(issue["object_ids"]) <= all_ids, "blocker object IDs"
-            exact(issue["object_ids"], sorted(set(issue["object_ids"])), "unique ordered blocker IDs")
+        verify_blockers(report["issues"], doc, source_ready)
         totals.update(rendered_notes=0, content_mappings=0, links=0)
     exact(report["totals"], totals, "flow complete denominators")
     exact(set(files), artifacts | {"flow.json", "flow.md"}, "flow exact inventory")

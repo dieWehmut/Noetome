@@ -200,7 +200,7 @@ class Probe:
 
     def checker(self, name, *, review_only=False):
         selected = [self.project, self.case, self.review]
-        selected += [self.expected] if review_only else [self.profile, self.vault, self.expected]
+        selected += [self.author_expected] if review_only else [self.profile, self.vault, self.author_expected]
         self.call(name, [self.cfg["python_native"], "-X", "utf8", self.repo / "scripts/verify_process_flow.py",
                          "check-review" if review_only else "check", *selected])
 
@@ -209,6 +209,9 @@ class Probe:
         frozen = read_json(fixture / "frozen-sha256.json")
         assert all(pin(fixture / name) == expected for name, expected in frozen["files"].items())
         author = next(c for c in read_json(fixture / "authors.json")["cases"] if c["name"] == "linear")
+        # The checker binds expected to the complete signed fixture directory.
+        # The base/expected.json copy is retained evidence, not a new oracle.
+        self.author_expected = fixture / author["expected_file"]
         for field, target in [("source_file", self.base / "source.txt"), ("gold_file", self.case / "gold.json"),
                               ("profile_file", self.profile), ("expected_file", self.expected)]:
             target.write_bytes((fixture / author[field]).read_bytes())
@@ -247,7 +250,9 @@ class Probe:
         path = self.work / name
         assert not os.path.lexists(path)
         assert not any(c in str(path) + str(target) for c in '\"%&|<>^!\r\n'), "controlled mklink paths required"
-        self.call("create-" + name, ["cmd.exe", "/d", "/s", "/c", f'mklink /J "{path}" "{target}"'])
+        # Pass the builtin and path tokens separately. A single /c string with
+        # embedded quotes gains literal backslashes under list2cmdline.
+        self.call("create-" + name, ["cmd.exe", "/d", "/c", "mklink", "/J", path, target])
         return self.link_record(path, target, "junction")
 
     def link_matrix(self, alias, kind, output_alias):
