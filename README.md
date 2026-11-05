@@ -102,6 +102,17 @@ review-case严格包含review、原候选、独立作者gold和纳入/排除依�
 
 [B04-T03实际验证](doc/validation/B04-T03.md)包含原第六保存模型候选、调用前gold与源SQL/字节核对，以及负例、独立校验器和完整回归。本能力仅支持契约声明的有界受控语法，scientific_quality=not_run、knowledge_status=pending、published=false；它不代替正式准确率、完整自然语言/PDF或知识发布。输入字段、原子分母及保护规则见[来源核对契约](doc/technical/EXTRACTION_REVIEW_CONTRACT.md)。
 
+## 从已核对知识主动生成比较表
+
+```text
+noetome knowledge present <项目路径> <coordination-case> <已保存协调输出> <尚不存在的测试Vault>
+python scripts/verify_knowledge_presentation.py check <项目路径> <coordination-case> <已保存协调输出> <测试Vault> <独立expected>
+```
+
+入口重新核对实际来源及已保存的 v1/v2/v3 协调结果。多个明确对象共享属性时主动选择比较表，否则使用正文；完整保留原值、单位、条件、例外、有据时间与原出现映射。缺失格显示“选定事实未给出”，未决协调不会生成成功计划或笔记。
+
+全新测试 Vault 保存 `知识比较.md`、对象详情、`plan.json` 和 `presentation.json`/`presentation.md`。表内链接定位固定的知识明细小节，出处保存在内部索引。成功仅表示有界工程预览，知识仍为 pending、科学质量 not_run、发布 false；不写生产 Vault。范围和输出契约见[有据主动表达](doc/technical/ACTIVE_PRESENTATION_CONTRACT.md)。
+
 ## 明确身份的多来源重复与互补协调
 
 ```text

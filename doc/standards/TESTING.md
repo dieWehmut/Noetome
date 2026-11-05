@@ -236,3 +236,11 @@ Task2经过两项真实伪造的审查修复，28项focused Python及52场景/60
 入口为 `python scripts/verify_knowledge_coordination.py audit-v3 <absolute-cli> <nonexistent-root>`，只读 `check`按Schema3路由。独立核对重新读取作者expected、实际SQL/资源及九件原source_review，重建原支持/反证/限定、事实、每对关系、逐原出现处理记录与全部分母；同步修改JSON/Markdown/IR/指纹的多数判胜、删反证/历史、未知填零、假核实、错误成功/失败和处理记录遗漏仍须被拒绝。全部原链接计数与唯一证据切片数分别核对，同一evidence_id的不同relation不可丢失。
 
 运行 `cargo test -p noetome-cli --test knowledge_conflicts`、既有v1/v2及相关回归，完整Rust/Python、格式/日志/Git和新鲜审查；平台不可用的失败或跳过须单列，不将Linux子进程adapter测试冒充Windows进程树宿主验收。实际证据及未完成门槛见[B05-T03记录](../validation/B05-T03.md)。
+
+### B06-T01 有据主动表达
+
+三个独立签字节作者包覆盖11个无图场景、2个旧协调版本及1个跨事实角色复用场景。原文、Gold2、身份、原子/单元格expected先冻结再构造候选和调用CLI；不提供NotePlan或从实现输出反推gold。逐项验证source_review→coordinate→present，覆盖比较表、稀疏缺值、单对象、无共享属性、条件/历史并列、单位保留、复杂名称、未决阻断、v1未声明背景与旧版完整限定证据。
+
+运行 `cargo test -p noetome-cli --test knowledge_presentation` 和 `python scripts/verify_knowledge_presentation.py audit <absolute-cli> <nonexistent-root>`。Python独立从作者、原SQL/资源和全部九件来源核对重建完整协调/计划，读取实际Markdown的UTF8正文及链接范围和双报告。同步改写计划、正文、映射、指纹和报告后的删条件/单位/例外/时间、错行列/链接、填零、丢原出处/多版本及假成功仍须被拒绝。
+
+路径准入、真实NTFS reparse/硬链接、输入和输出持有期拒写/拒删、最终库存变化及捕获结果清理均按平台实跑。已变更结果与未知人工文件保留，未变更成功双报告仍需清理；不能由只测写入前路径代替运行期守卫。源码稳定后运行完整Rust/Python、相关B02/B05回归与新鲜审查，在记录版本的干净Obsidian实测表格、正文、中文路径及实际链接。任务完成以真实记录和账本为准，工程作者样例不证明通用文本或科学质量。

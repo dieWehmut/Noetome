@@ -273,3 +273,9 @@ B05-T01增加普通 `knowledge coordinate`，消费同项目2至3份已保存的
 B05-T02按[严格v2契约](KNOWLEDGE_VARIANTS_CONTRACT.md)扩展同一入口：版本DTO、实际背景重建和并列事实关系分别承担独立职责，共用原身份/出处构造和完整来源守卫。条件或时间字段不写入原B04 IR；事实仍引用原对象和实际source/version/unit/range。时间区间只用于有来源依据的先后，条件完整性及无法比较的单位独立限制归并；未决不会提升为科学通过。Python v2独立重建和普通audit与旧v1验收分别保留，实测交付按[B05-T02记录](../validation/B05-T02.md)确认。
 
 B05-T03新增[严格v3契约](KNOWLEDGE_CONFLICTS_CONTRACT.md)，复用完整来源核对及仅重建背景的内部函数。冲突分类在对象、属性、单位、完整适用范围与有据时间检查后进行；精确十进制比较不改写原表述。v3保留原支持、反证和限定链接及唯一证据切片，每处处理记录关联完整原出现。未决关系不选择胜者，无争议对象仍保留通过状态。独立Python从真实来源和调用前作者expected重建，不共享Rust分类器；实际验证及平台局限见[B05-T03记录](../validation/B05-T03.md)。
+
+## 有据主动表达
+
+B06-T01增加普通 `knowledge present`，从原协调case和已保存输出重新持有全部来源核对材料及真实SourceSession。`knowledge_presentation_input`复用三个旧协调算法重建完整结果，再严格核对旧版本IR、双报告和原件；`knowledge_presentation_plan`从明确对象/属性及原始出现记录选择比较表或正文。它恢复原词面并保留完整事实组，未决输入不进入成功规划。
+
+`knowledge_presentation_render`编译结构化节点，独立解析实际Markdown、正文和链接字节范围；入口将结果写到全新测试Vault并复验来源和输出身份。新的[表达契约](ACTIVE_PRESENTATION_CONTRACT.md)使用独立schema/scope，与B02 fixture发布数据库分开。独立[Python校核](../../scripts/verify_knowledge_presentation.py)从调用前作者和真实来源重建计划，不借Rust计划生成expected。知识pending、science未运行和未发布状态保持；完整任务验收以账本为准。

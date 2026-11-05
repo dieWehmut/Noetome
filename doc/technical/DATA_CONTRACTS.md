@@ -373,3 +373,11 @@ B05-T02使用独立Schema2的case、identity、report与IR，保留严格v1读�
 条件状态known/unknown/not_applicable分开；unknown条件的事实键包含实际occurrence_id，不能将两个空条件当成已证明相同。完整条件与例外都参与适用范围和键。time严格为status/precision/value，未知两项null；已知为有效年份或公历日期，不从导入、运行、响应或文件元数据推造。
 
 v2 occurrence新增实际背景context及UTF8范围/SHA/原支持ID，fact新增条件状态和time，关系可为condition_variant或有可证明先后的historical_evolution，后者保留earlier/later实际原出现。背景重叠、未知条件、无依据的同来源版本或不同单位不被强行归并；需要复核时保留完整原组、canonical_facts=null且无成功IR。totals分别计条件三分区、时间两分区、实际背景支持与pair关系，科学仍not_run、知识pending、发布false。
+
+## 有据主动表达交换 v1
+
+[主动表达契约](ACTIVE_PRESENTATION_CONTRACT.md)与旧fixture v1分开：schema_version=1、producer=knowledge_presentation、scope=active_presentation_v1、representation_origin=deterministic_planner，绑定原协调版本、实际IR指纹和本次request_id。计划保存表示/理由、角色标签、全部原词面事实、完整出处与实际笔记结构。对象/属性可跨事实复用同一概念身份，出现引用按所属角色分别保留。
+
+事实保留原fact_id及occurrence_ids；value/unit/conditions/exceptions来自组内首个原始出现，全部原候选内容和supports/refutes/qualifies保存在逐出现出处中。v1没有声明的applicability/time为null，不升级为known。标签的空fact_ids不代表缺少出处；其concept_ids及完整occurrence_ids定位身份。缺值单元格明确missing、无事实引用，不能填零或混同不适用。
+
+RenderedFile将正文与链接分开定位，保存文件指纹、note_id、section/node/row/column/kind和UTF8半开范围。section在所属文件内定位；正文范围完整显示事实，链接别名不作事实内容。双报告严格区分工程预览通过、知识pending、science=not_run和published=false；非法准入在建根前拒绝，合法未决可保存无计划/笔记的失败报告。
