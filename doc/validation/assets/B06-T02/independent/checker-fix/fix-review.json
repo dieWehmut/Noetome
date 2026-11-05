@@ -1,0 +1,36 @@
+{
+  "status": "fixed_pending_peer_replay",
+  "created_utc": "2026-11-05T07:03:29.085371+00:00",
+  "checker": {
+    "sha256": "adfebcfabd6baf3e8fc86fa1473630958f863fc1f6e2eba163d635c95501b40f",
+    "byte_length": 73672
+  },
+  "tests": {
+    "sha256": "5f304cdc8b4270780b9102e782ae7bf03ddfd2e6501ba674cec5088be08e39f6",
+    "byte_length": 21739
+  },
+  "fixes": [
+    "Blocked diagnosis object_ids and fixed message are reconstructed from actual source semantics and compared exactly.",
+    "Only this process checker preflights canonical selected version storage names and ordinary single-linked files; project manifest and SQL project identity agree.",
+    "Strict UTF8 with first-BOM-only and CRLF/CR normalization must derive the actual normalized cache from raw bytes.",
+    "Independently reconstructed blocks-v1 intervals, line numbers, kinds, status, hashes and full version span inventory must match SQL before actual_source."
+  ],
+  "regressions": {
+    "targeted_python_tests": 28,
+    "focused_commands": 16,
+    "original_peer_baselines_exit": 0,
+    "original_peer_forged_check_exit": 1,
+    "new_synchronized_raw_cache_before_exit": 0,
+    "new_synchronized_raw_cache_after_exit": 1,
+    "new_synchronized_truncated_span_before_exit": 0,
+    "new_synchronized_truncated_span_after_exit": 1,
+    "new_attacks_rust_rejected_without_output": true,
+    "real_prefixed_ordinal2_project_import_review_flow_commands": 4,
+    "real_prefixed_ordinal2_check_exit": 0
+  },
+  "no_full_second_audit": true,
+  "rust_or_frozen_fixture_modified": false,
+  "peer_review": "Requested presentation_review to review current functions and replay originals; this is not a substitute for that independent review.",
+  "archive": "focused-originals.zip",
+  "archive_members": 167
+}

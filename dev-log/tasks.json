@@ -1858,7 +1858,7 @@
       "id": "B06-T02",
       "title": "把有依据的步骤与分支编译为流程图",
       "batch": "B06",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B06-T01"
       ],
@@ -1885,6 +1885,42 @@
           "note": "实现有据步骤/关系的严格新契约与独立来源核对，主动规划流程图及有据文字回退；先冻结无图作者和节点/边预期并取得普通CLI RED，保留旧协调/比较表语义，不推进公式任务。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-05T07:24:01Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现独立有界过程来源核对与 knowledge flow，重建实际来源后主动生成有据流程图或保真文字回退；完整保留步骤、分支、正负作用、条件、例外和证据映射。修复独立核对器诊断定位及原始文本派生核验缺口，保留全部失败与复查原件。",
+          "validation": [
+            "固定源码3977ac70：Windows fmt/workspace check通过；Rust657通过0失败0忽略；Python205运行203通过2跳过；比较表独立39场景124次CLI、流程16作者41场景73次CLI通过；原生46次写入和46次删除均Win32 32拒绝；NTFS25场景29次CLI通过，symlink权限1314的8场景未运行；Obsidian1.6.7/Mermaid10.6.1实际8场景16笔记60次锚点点击与最终原生输出逐字相同；根代理重读1873源码、404当前产品文件及7990归档成员CRC通过。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/process_review.rs",
+              "sha256": "5fa7b6407edc71f93553e6d7f105aa30544fb983af554d1c7707bfce0e89a6f5"
+            },
+            {
+              "path": "crates/noetome-cli/src/process_flow_plan.rs",
+              "sha256": "6e6d9a09a8bc5110d8ffb18f05d47555deefbffca19a6b22118180d9b671a3ce"
+            },
+            {
+              "path": "crates/noetome-cli/src/process_flow_render.rs",
+              "sha256": "65f3138ba0d79a62f27695150df3d7b0e057923a5cb6b9a773bb1dc5e4114e3d"
+            },
+            {
+              "path": "scripts/verify_process_flow.py",
+              "sha256": "adfebcfabd6baf3e8fc86fa1473630958f863fc1f6e2eba163d635c95501b40f"
+            },
+            {
+              "path": "doc/validation/B06-T02.md",
+              "sha256": "4fdac96ff0e6f1d63c853079b589173300071deec591e2969be8adbbfeb6e7ed"
+            },
+            {
+              "path": "doc/validation/assets/B06-T02/windows/closeout-readback.json",
+              "sha256": "3e6a062e7967c81f3a2bac80a74c9ebf80de5a67bcf4967977784217a2a5ec54"
+            }
+          ]
         }
       ]
     },

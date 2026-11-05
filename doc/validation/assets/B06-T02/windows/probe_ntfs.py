@@ -98,14 +98,23 @@ class Probe:
         assert all(code == 0 for code in self.native["required_latest_exits"].values())
         assert self.cfg["snapshot_head"] == self.snapshot["head"] == self.native["head"]
         self.repo = Path(self.cfg["repo_native"])
-        self.cli = self.repo / "target/debug/noetome.exe"
-        ordinary_ancestors(self.cli)
-        assert self.cli.stat().st_nlink == 1 and pin(self.cli) == self.native["cli"]
+        self.built_cli = self.repo / "target/debug/noetome.exe"
+        ordinary_ancestors(self.built_cli)
+        assert pin(self.built_cli) == self.native["cli"]
         assert os.path.samefile(sys.executable, self.cfg["python_native"])
         self.volume = volume_info(self.root)
         assert self.volume["filesystem"].upper() == "NTFS", "actual NTFS filesystem required"
         self.work = self.root / ("ntfs-probe-" + uuid.uuid4().hex[:12])
         self.work.mkdir()
+        # Cargo may hardlink debug/noetome.exe to its deps executable. The
+        # probe uses a fresh byte-identical copy, as the native audits do.
+        self.cli = self.work / "probe-cli.exe"
+        with self.cli.open("xb") as target:
+            target.write(self.built_cli.read_bytes())
+        assert self.cli.stat().st_nlink == 1 and pin(self.cli) == self.native["cli"]
+        write(self.work / "cli-copy.json", dict(built_cli=str(self.built_cli), copied_cli=str(self.cli),
+              fingerprint=pin(self.cli), built_link_count=self.built_cli.stat().st_nlink,
+              copied_link_count=self.cli.stat().st_nlink, copied_bytes_equal=True))
         self.external = self.root.parent / (self.work.name + "-external-sentinel")
         self.external.mkdir()
         (self.external / "human-sentinel.txt").write_bytes(b"self-owned external B06-T02 sentinel; must remain byte-exact\n")
@@ -126,7 +135,7 @@ class Probe:
         assert critical, "fixed source pins required"
         self.protected_files = {str(self.repo / name): pin(self.repo / name) for name in critical}
         assert all(self.protected_files[str(self.repo / n)] == self.snapshot["files"][n] for n in critical)
-        for path in [self.cli, self.root / "snapshot.json", self.root / "native-final.json", Path(__file__).absolute()]:
+        for path in [self.built_cli, self.cli, self.root / "snapshot.json", self.root / "native-final.json", Path(__file__).absolute()]:
             self.protected_files[str(path)] = pin(path)
         runtime_temp = self.work / "runtime-temp"
         runtime_temp.mkdir()

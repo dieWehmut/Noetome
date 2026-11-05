@@ -1,0 +1,93 @@
+{
+  "work": "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f",
+  "original_normalized_snapshot": ".noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/normalized.txt",
+  "changed_normalized_snapshot": "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/outside-project-source.txt",
+  "external_source_fingerprint": {
+    "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+    "byte_length": 991
+  },
+  "checker": {
+    "sha256": "77c4a482b0d282633c73539213f1be1851266a24eb0b59107be595ffa15f7e41",
+    "byte_length": 64218
+  },
+  "tests": {
+    "sha256": "1aed94ac0c5a089a4e1a8074bfcc5d9a7dbe543d16d4887d5e1cb2d817aa8c86",
+    "byte_length": 12190
+  },
+  "actual_source_helper": {
+    "sha256": "3e79c6bef75a592d0f3246900187d4d0587bd72f577d810be60daec04baad0c4",
+    "byte_length": 65774
+  },
+  "commands": [
+    {
+      "name": "baseline",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python3",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/project",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/profile.json",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "sha256": "ea591ba96b2b123abeb27ddc3a99ca061830231507bb07804aa10f807b4ac398",
+        "byte_length": 803
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "outside-snapshot-checker",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python3",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/profile.json",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "sha256": "ea591ba96b2b123abeb27ddc3a99ca061830231507bb07804aa10f807b4ac398",
+        "byte_length": 803
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "outside-snapshot-rust",
+      "argv": [
+        "/home/lyinn/project/Noetome/target/debug/noetome",
+        "knowledge",
+        "flow",
+        "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/profile.json",
+        "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/rejected-output"
+      ],
+      "exit_code": 2,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "0eda200d1ebbafb4e7b64674275b37799c21b5e2a52ad3b1ab4ebc24cfa329d1",
+        "byte_length": 133
+      }
+    }
+  ],
+  "original_case_unchanged": true,
+  "rust_output_exists": false
+}

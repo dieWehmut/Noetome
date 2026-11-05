@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/scripts/verify_process_flow.py", line 1150, in <module>
+    main()
+    ~~~~^^
+  File "/home/lyinn/project/Noetome/scripts/verify_process_flow.py", line 1144, in main
+    report = verify_flow(args.project, args.case, args.review, args.profile, args.vault, args.expected)
+  File "/home/lyinn/project/Noetome/scripts/verify_process_flow.py", line 903, in verify_flow
+    verify_blockers(report["issues"], doc, source_ready)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_process_flow.py", line 387, in verify_blockers
+    exact(actual, blocker_issues(doc, source_ready), "source-derived blocker diagnosis")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 70, in exact
+    exact(a, e, label + "/" + str(index))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 66, in exact
+    exact(actual[key], expected[key], label + "/" + key)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 70, in exact
+    exact(a, e, label + "/" + str(index))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 72, in exact
+    assert actual == expected, label + ": value"
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: source-derived blocker diagnosis/0/object_ids/0: value

@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/scripts/verify_process_flow.py", line 1150, in <module>
+    main()
+    ~~~~^^
+  File "/home/lyinn/project/Noetome/scripts/verify_process_flow.py", line 1144, in main
+    report = verify_flow(args.project, args.case, args.review, args.profile, args.vault, args.expected)
+  File "/home/lyinn/project/Noetome/scripts/verify_process_flow.py", line 867, in verify_flow
+    reviewed, review_files, doc = verify_review(project, case, review, expected_path)
+                                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_process_flow.py", line 575, in verify_review
+    config, source, doc, unmatched, count, gold, originals = source_inputs(project, case)
+                                                             ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_process_flow.py", line 564, in source_inputs
+    selected_raw = source_preflight(project, config["import_id"], selection[0])
+  File "/home/lyinn/project/Noetome/scripts/verify_process_flow.py", line 476, in source_preflight
+    exact(version["normalized_snapshot"], stem+"normalized.txt", "fixed normalized snapshot path")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 72, in exact
+    assert actual == expected, label + ": value"
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: fixed normalized snapshot path: value

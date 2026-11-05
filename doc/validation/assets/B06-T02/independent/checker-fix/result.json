@@ -1,0 +1,3495 @@
+{
+  "status": "passed",
+  "root": "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e",
+  "commands": [
+    {
+      "label": "blocker-baseline-after",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/project",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/case",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/review",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/profile.json",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/test-Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-correlation.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.14792840000154683,
+      "stdout": {
+        "sha256": "014dae0cfaee9f7e81ce4aeed1ebaa5e9a9ab08ae2509001e84be0e9831e5c82",
+        "byte_length": 801
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "input_before": {
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "81c7816712052f5ccb76dd605781124e2799cd0b049d62873585803ff18dfe4c",
+            "byte_length": 73
+          },
+          ".noetome-sources/fed07378-84e8-4be3-a748-8ff4d7c13d3e/normalized.txt": {
+            "sha256": "605b5e749cf18dfae20b4af47e75eb3b035ea10596b991cbc7ccb7c6424b9e42",
+            "byte_length": 716
+          },
+          ".noetome-sources/fed07378-84e8-4be3-a748-8ff4d7c13d3e/raw.bin": {
+            "sha256": "605b5e749cf18dfae20b4af47e75eb3b035ea10596b991cbc7ccb7c6424b9e42",
+            "byte_length": 716
+          },
+          "project.json": {
+            "sha256": "b3c8ea86e2acf5799f8764452df45f540c9b06ffd23ee350e2ff61b9390b945f",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "35f5b3d7e5ff5feabd8e821a3d8d480194193287ef5640e2cdd2c5d4047d771b",
+            "byte_length": 69632
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/case": {
+          "gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          "process-review.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/review": {
+          ".case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".owner.json": {
+            "sha256": "c864279a258ff12fe765c0447b72033d9aaeb2ad70bb3a990acb0327cd2beb68",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          "process-ir.json": {
+            "sha256": "4ef3e7b917ea9d84cc88a271831c6cbb81bd22c925bde18db50640046a5eeac3",
+            "byte_length": 5187
+          },
+          "review.json": {
+            "sha256": "a69cd690804436681eb6b36bfac819805e5a100c5166d832f901445643cb34ba",
+            "byte_length": 6405
+          },
+          "review.md": {
+            "sha256": "6027479a94b33f96d73e5d836c192f1827d4015013659351430a8c106b4e377a",
+            "byte_length": 6588
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/test-Vault": {
+          ".case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".owner.json": {
+            "sha256": "9ef6b04d6beee13062e00084c1dc49437abcd0be27bd647bb995d39ba2cb3d22",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".review-.gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".review-.owner.json": {
+            "sha256": "c864279a258ff12fe765c0447b72033d9aaeb2ad70bb3a990acb0327cd2beb68",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          ".review-process-ir.json": {
+            "sha256": "4ef3e7b917ea9d84cc88a271831c6cbb81bd22c925bde18db50640046a5eeac3",
+            "byte_length": 5187
+          },
+          ".review-review.json": {
+            "sha256": "a69cd690804436681eb6b36bfac819805e5a100c5166d832f901445643cb34ba",
+            "byte_length": 6405
+          },
+          ".review-review.md": {
+            "sha256": "6027479a94b33f96d73e5d836c192f1827d4015013659351430a8c106b4e377a",
+            "byte_length": 6588
+          },
+          ".source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          "flow.json": {
+            "sha256": "17f673283351c7fc4fecc388c2636e459217ba70b82e5eebb93c6b1c84041029",
+            "byte_length": 8641
+          },
+          "flow.md": {
+            "sha256": "e37341b94880ff447482cc557d1cef29cbdac11c109f22070543588b8b233a20",
+            "byte_length": 8849
+          }
+        }
+      },
+      "input_after": {
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "81c7816712052f5ccb76dd605781124e2799cd0b049d62873585803ff18dfe4c",
+            "byte_length": 73
+          },
+          ".noetome-sources/fed07378-84e8-4be3-a748-8ff4d7c13d3e/normalized.txt": {
+            "sha256": "605b5e749cf18dfae20b4af47e75eb3b035ea10596b991cbc7ccb7c6424b9e42",
+            "byte_length": 716
+          },
+          ".noetome-sources/fed07378-84e8-4be3-a748-8ff4d7c13d3e/raw.bin": {
+            "sha256": "605b5e749cf18dfae20b4af47e75eb3b035ea10596b991cbc7ccb7c6424b9e42",
+            "byte_length": 716
+          },
+          "project.json": {
+            "sha256": "b3c8ea86e2acf5799f8764452df45f540c9b06ffd23ee350e2ff61b9390b945f",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "35f5b3d7e5ff5feabd8e821a3d8d480194193287ef5640e2cdd2c5d4047d771b",
+            "byte_length": 69632
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/case": {
+          "gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          "process-review.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/review": {
+          ".case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".owner.json": {
+            "sha256": "c864279a258ff12fe765c0447b72033d9aaeb2ad70bb3a990acb0327cd2beb68",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          "process-ir.json": {
+            "sha256": "4ef3e7b917ea9d84cc88a271831c6cbb81bd22c925bde18db50640046a5eeac3",
+            "byte_length": 5187
+          },
+          "review.json": {
+            "sha256": "a69cd690804436681eb6b36bfac819805e5a100c5166d832f901445643cb34ba",
+            "byte_length": 6405
+          },
+          "review.md": {
+            "sha256": "6027479a94b33f96d73e5d836c192f1827d4015013659351430a8c106b4e377a",
+            "byte_length": 6588
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/test-Vault": {
+          ".case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".owner.json": {
+            "sha256": "9ef6b04d6beee13062e00084c1dc49437abcd0be27bd647bb995d39ba2cb3d22",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".review-.gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".review-.owner.json": {
+            "sha256": "c864279a258ff12fe765c0447b72033d9aaeb2ad70bb3a990acb0327cd2beb68",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          ".review-process-ir.json": {
+            "sha256": "4ef3e7b917ea9d84cc88a271831c6cbb81bd22c925bde18db50640046a5eeac3",
+            "byte_length": 5187
+          },
+          ".review-review.json": {
+            "sha256": "a69cd690804436681eb6b36bfac819805e5a100c5166d832f901445643cb34ba",
+            "byte_length": 6405
+          },
+          ".review-review.md": {
+            "sha256": "6027479a94b33f96d73e5d836c192f1827d4015013659351430a8c106b4e377a",
+            "byte_length": 6588
+          },
+          ".source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          "flow.json": {
+            "sha256": "17f673283351c7fc4fecc388c2636e459217ba70b82e5eebb93c6b1c84041029",
+            "byte_length": 8641
+          },
+          "flow.md": {
+            "sha256": "e37341b94880ff447482cc557d1cef29cbdac11c109f22070543588b8b233a20",
+            "byte_length": 8849
+          }
+        }
+      }
+    },
+    {
+      "label": "blocker-forged-blocker-after",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/project",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/case",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/review",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/profile.json",
+        "/tmp/noetome-b06-checker-blocker-review-04a72d5759b848fe9cd5930032e1290b/mutated-Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-correlation.json"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.10675212000205647,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "f644fb1b8ebea0678aab4feb9ee593a7b83215ea6a61fb23af1d3875bd0222f0",
+        "byte_length": 1645
+      },
+      "input_before": {
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "81c7816712052f5ccb76dd605781124e2799cd0b049d62873585803ff18dfe4c",
+            "byte_length": 73
+          },
+          ".noetome-sources/fed07378-84e8-4be3-a748-8ff4d7c13d3e/normalized.txt": {
+            "sha256": "605b5e749cf18dfae20b4af47e75eb3b035ea10596b991cbc7ccb7c6424b9e42",
+            "byte_length": 716
+          },
+          ".noetome-sources/fed07378-84e8-4be3-a748-8ff4d7c13d3e/raw.bin": {
+            "sha256": "605b5e749cf18dfae20b4af47e75eb3b035ea10596b991cbc7ccb7c6424b9e42",
+            "byte_length": 716
+          },
+          "project.json": {
+            "sha256": "b3c8ea86e2acf5799f8764452df45f540c9b06ffd23ee350e2ff61b9390b945f",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "35f5b3d7e5ff5feabd8e821a3d8d480194193287ef5640e2cdd2c5d4047d771b",
+            "byte_length": 69632
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/case": {
+          "gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          "process-review.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/review": {
+          ".case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".owner.json": {
+            "sha256": "c864279a258ff12fe765c0447b72033d9aaeb2ad70bb3a990acb0327cd2beb68",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          "process-ir.json": {
+            "sha256": "4ef3e7b917ea9d84cc88a271831c6cbb81bd22c925bde18db50640046a5eeac3",
+            "byte_length": 5187
+          },
+          "review.json": {
+            "sha256": "a69cd690804436681eb6b36bfac819805e5a100c5166d832f901445643cb34ba",
+            "byte_length": 6405
+          },
+          "review.md": {
+            "sha256": "6027479a94b33f96d73e5d836c192f1827d4015013659351430a8c106b4e377a",
+            "byte_length": 6588
+          }
+        },
+        "/tmp/noetome-b06-checker-blocker-review-04a72d5759b848fe9cd5930032e1290b/mutated-Vault": {
+          ".case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".owner.json": {
+            "sha256": "9ef6b04d6beee13062e00084c1dc49437abcd0be27bd647bb995d39ba2cb3d22",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".review-.gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".review-.owner.json": {
+            "sha256": "c864279a258ff12fe765c0447b72033d9aaeb2ad70bb3a990acb0327cd2beb68",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          ".review-process-ir.json": {
+            "sha256": "4ef3e7b917ea9d84cc88a271831c6cbb81bd22c925bde18db50640046a5eeac3",
+            "byte_length": 5187
+          },
+          ".review-review.json": {
+            "sha256": "a69cd690804436681eb6b36bfac819805e5a100c5166d832f901445643cb34ba",
+            "byte_length": 6405
+          },
+          ".review-review.md": {
+            "sha256": "6027479a94b33f96d73e5d836c192f1827d4015013659351430a8c106b4e377a",
+            "byte_length": 6588
+          },
+          ".source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          "flow.json": {
+            "sha256": "e72cb72a2141e147d3b3937424991e8a092365dff264792f56231a879183ff46",
+            "byte_length": 8608
+          },
+          "flow.md": {
+            "sha256": "0c649a82521ff3815cc38a18c5183be336eebfe22d7f0cf8513b58ef285667f0",
+            "byte_length": 8816
+          }
+        }
+      },
+      "input_after": {
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "81c7816712052f5ccb76dd605781124e2799cd0b049d62873585803ff18dfe4c",
+            "byte_length": 73
+          },
+          ".noetome-sources/fed07378-84e8-4be3-a748-8ff4d7c13d3e/normalized.txt": {
+            "sha256": "605b5e749cf18dfae20b4af47e75eb3b035ea10596b991cbc7ccb7c6424b9e42",
+            "byte_length": 716
+          },
+          ".noetome-sources/fed07378-84e8-4be3-a748-8ff4d7c13d3e/raw.bin": {
+            "sha256": "605b5e749cf18dfae20b4af47e75eb3b035ea10596b991cbc7ccb7c6424b9e42",
+            "byte_length": 716
+          },
+          "project.json": {
+            "sha256": "b3c8ea86e2acf5799f8764452df45f540c9b06ffd23ee350e2ff61b9390b945f",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "35f5b3d7e5ff5feabd8e821a3d8d480194193287ef5640e2cdd2c5d4047d771b",
+            "byte_length": 69632
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/case": {
+          "gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          "process-review.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/review": {
+          ".case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".owner.json": {
+            "sha256": "c864279a258ff12fe765c0447b72033d9aaeb2ad70bb3a990acb0327cd2beb68",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          "process-ir.json": {
+            "sha256": "4ef3e7b917ea9d84cc88a271831c6cbb81bd22c925bde18db50640046a5eeac3",
+            "byte_length": 5187
+          },
+          "review.json": {
+            "sha256": "a69cd690804436681eb6b36bfac819805e5a100c5166d832f901445643cb34ba",
+            "byte_length": 6405
+          },
+          "review.md": {
+            "sha256": "6027479a94b33f96d73e5d836c192f1827d4015013659351430a8c106b4e377a",
+            "byte_length": 6588
+          }
+        },
+        "/tmp/noetome-b06-checker-blocker-review-04a72d5759b848fe9cd5930032e1290b/mutated-Vault": {
+          ".case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".owner.json": {
+            "sha256": "9ef6b04d6beee13062e00084c1dc49437abcd0be27bd647bb995d39ba2cb3d22",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "78371404eb9387c05a737cd4165fee942bc6c9378a97c05f4a901af963c812ef",
+            "byte_length": 362
+          },
+          ".review-.gold.json": {
+            "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+            "byte_length": 2697
+          },
+          ".review-.owner.json": {
+            "sha256": "c864279a258ff12fe765c0447b72033d9aaeb2ad70bb3a990acb0327cd2beb68",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          ".review-process-ir.json": {
+            "sha256": "4ef3e7b917ea9d84cc88a271831c6cbb81bd22c925bde18db50640046a5eeac3",
+            "byte_length": 5187
+          },
+          ".review-review.json": {
+            "sha256": "a69cd690804436681eb6b36bfac819805e5a100c5166d832f901445643cb34ba",
+            "byte_length": 6405
+          },
+          ".review-review.md": {
+            "sha256": "6027479a94b33f96d73e5d836c192f1827d4015013659351430a8c106b4e377a",
+            "byte_length": 6588
+          },
+          ".source.json": {
+            "sha256": "185e57b62d88321b34c3893f9eeffdc6c9bb517e54d6aaf4da2c0c6ee2bf5cd0",
+            "byte_length": 1644
+          },
+          "flow.json": {
+            "sha256": "e72cb72a2141e147d3b3937424991e8a092365dff264792f56231a879183ff46",
+            "byte_length": 8608
+          },
+          "flow.md": {
+            "sha256": "0c649a82521ff3815cc38a18c5183be336eebfe22d7f0cf8513b58ef285667f0",
+            "byte_length": 8816
+          }
+        }
+      }
+    },
+    {
+      "label": "path-baseline-after",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/project",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/profile.json",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.11140535299637122,
+      "stdout": {
+        "sha256": "ea591ba96b2b123abeb27ddc3a99ca061830231507bb07804aa10f807b4ac398",
+        "byte_length": 803
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "input_before": {
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "51c9f4ef6a879f274f7aacff7efe92dc56a0cae829d9d1096044f739b233392d",
+            "byte_length": 73
+          },
+          ".noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/normalized.txt": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          ".noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/raw.bin": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          "project.json": {
+            "sha256": "e1fbbe8a139715f2854595a4e88ff86af1bcd9aeadc27e28a0704ed9ba6f0d6d",
+            "byte_length": 168
+          },
+          "project.sqlite": {
+            "sha256": "2867bd83cf5961dd9a2e6d3077e1454fb6de6b1b3dbd2097d94b5d0c8312c369",
+            "byte_length": 69632
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review": {
+          ".case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "f09605bc73709a08aca49824da7a51595b91969bfd3933f4d61aba56eff7e498",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "f9219166a33018a20f30ab01f7b234a8792b59066b5d90f451f88ea20ebe93f0",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "eef61ffdee9835dff0c44a8b12c232bffc05a349ef04fcbf532449bf4bae37a9",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "2b2c8a40988f08d43850c209c51a3469ebb0a09dc7f455d863452e659cd7d870",
+            "byte_length": 7769
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault": {
+          ".case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "01ef8dae7c8735220add4ac50fec5d0000a4dbf0bda1d4cb76973b05a8318b2b",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "f09605bc73709a08aca49824da7a51595b91969bfd3933f4d61aba56eff7e498",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "f9219166a33018a20f30ab01f7b234a8792b59066b5d90f451f88ea20ebe93f0",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "eef61ffdee9835dff0c44a8b12c232bffc05a349ef04fcbf532449bf4bae37a9",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "2b2c8a40988f08d43850c209c51a3469ebb0a09dc7f455d863452e659cd7d870",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "6b397e1e6ab1d1e32f88e9bca1228545dad5d247ec3e093688785525d5372133",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "3e7758a7bd4d032830e4bac01ddae6e8791a1ddc073ef1377972eb99ef1ee277",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "6aefd8ab736e0673273446be84e26d82dab55a94e563aa26f7548b1feb7f294c",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      },
+      "input_after": {
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "51c9f4ef6a879f274f7aacff7efe92dc56a0cae829d9d1096044f739b233392d",
+            "byte_length": 73
+          },
+          ".noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/normalized.txt": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          ".noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/raw.bin": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          "project.json": {
+            "sha256": "e1fbbe8a139715f2854595a4e88ff86af1bcd9aeadc27e28a0704ed9ba6f0d6d",
+            "byte_length": 168
+          },
+          "project.sqlite": {
+            "sha256": "2867bd83cf5961dd9a2e6d3077e1454fb6de6b1b3dbd2097d94b5d0c8312c369",
+            "byte_length": 69632
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review": {
+          ".case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "f09605bc73709a08aca49824da7a51595b91969bfd3933f4d61aba56eff7e498",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "f9219166a33018a20f30ab01f7b234a8792b59066b5d90f451f88ea20ebe93f0",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "eef61ffdee9835dff0c44a8b12c232bffc05a349ef04fcbf532449bf4bae37a9",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "2b2c8a40988f08d43850c209c51a3469ebb0a09dc7f455d863452e659cd7d870",
+            "byte_length": 7769
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault": {
+          ".case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "01ef8dae7c8735220add4ac50fec5d0000a4dbf0bda1d4cb76973b05a8318b2b",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "f09605bc73709a08aca49824da7a51595b91969bfd3933f4d61aba56eff7e498",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "f9219166a33018a20f30ab01f7b234a8792b59066b5d90f451f88ea20ebe93f0",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "eef61ffdee9835dff0c44a8b12c232bffc05a349ef04fcbf532449bf4bae37a9",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "2b2c8a40988f08d43850c209c51a3469ebb0a09dc7f455d863452e659cd7d870",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "6b397e1e6ab1d1e32f88e9bca1228545dad5d247ec3e093688785525d5372133",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "3e7758a7bd4d032830e4bac01ddae6e8791a1ddc073ef1377972eb99ef1ee277",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "6aefd8ab736e0673273446be84e26d82dab55a94e563aa26f7548b1feb7f294c",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      }
+    },
+    {
+      "label": "path-outside-snapshot-checker-after",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/profile.json",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.08138276499812491,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "280720736e70921a65b4cfd9bbdd3234c79ef2c40f039d7f07770b7462eaee96",
+        "byte_length": 1586
+      },
+      "input_before": {
+        "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "51c9f4ef6a879f274f7aacff7efe92dc56a0cae829d9d1096044f739b233392d",
+            "byte_length": 73
+          },
+          ".noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/normalized.txt": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          ".noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/raw.bin": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          "project.json": {
+            "sha256": "e1fbbe8a139715f2854595a4e88ff86af1bcd9aeadc27e28a0704ed9ba6f0d6d",
+            "byte_length": 168
+          },
+          "project.sqlite": {
+            "sha256": "4aa7824156efd000e181132da4ac003c4fbc35d639ca1d769589fb126eaabcfd",
+            "byte_length": 69632
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review": {
+          ".case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "f09605bc73709a08aca49824da7a51595b91969bfd3933f4d61aba56eff7e498",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "f9219166a33018a20f30ab01f7b234a8792b59066b5d90f451f88ea20ebe93f0",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "eef61ffdee9835dff0c44a8b12c232bffc05a349ef04fcbf532449bf4bae37a9",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "2b2c8a40988f08d43850c209c51a3469ebb0a09dc7f455d863452e659cd7d870",
+            "byte_length": 7769
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault": {
+          ".case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "01ef8dae7c8735220add4ac50fec5d0000a4dbf0bda1d4cb76973b05a8318b2b",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "f09605bc73709a08aca49824da7a51595b91969bfd3933f4d61aba56eff7e498",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "f9219166a33018a20f30ab01f7b234a8792b59066b5d90f451f88ea20ebe93f0",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "eef61ffdee9835dff0c44a8b12c232bffc05a349ef04fcbf532449bf4bae37a9",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "2b2c8a40988f08d43850c209c51a3469ebb0a09dc7f455d863452e659cd7d870",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "6b397e1e6ab1d1e32f88e9bca1228545dad5d247ec3e093688785525d5372133",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "3e7758a7bd4d032830e4bac01ddae6e8791a1ddc073ef1377972eb99ef1ee277",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "6aefd8ab736e0673273446be84e26d82dab55a94e563aa26f7548b1feb7f294c",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      },
+      "input_after": {
+        "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "51c9f4ef6a879f274f7aacff7efe92dc56a0cae829d9d1096044f739b233392d",
+            "byte_length": 73
+          },
+          ".noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/normalized.txt": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          ".noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/raw.bin": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          "project.json": {
+            "sha256": "e1fbbe8a139715f2854595a4e88ff86af1bcd9aeadc27e28a0704ed9ba6f0d6d",
+            "byte_length": 168
+          },
+          "project.sqlite": {
+            "sha256": "4aa7824156efd000e181132da4ac003c4fbc35d639ca1d769589fb126eaabcfd",
+            "byte_length": 69632
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review": {
+          ".case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "f09605bc73709a08aca49824da7a51595b91969bfd3933f4d61aba56eff7e498",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "f9219166a33018a20f30ab01f7b234a8792b59066b5d90f451f88ea20ebe93f0",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "eef61ffdee9835dff0c44a8b12c232bffc05a349ef04fcbf532449bf4bae37a9",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "2b2c8a40988f08d43850c209c51a3469ebb0a09dc7f455d863452e659cd7d870",
+            "byte_length": 7769
+          }
+        },
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault": {
+          ".case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "01ef8dae7c8735220add4ac50fec5d0000a4dbf0bda1d4cb76973b05a8318b2b",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+            "byte_length": 362
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "f09605bc73709a08aca49824da7a51595b91969bfd3933f4d61aba56eff7e498",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "f9219166a33018a20f30ab01f7b234a8792b59066b5d90f451f88ea20ebe93f0",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "eef61ffdee9835dff0c44a8b12c232bffc05a349ef04fcbf532449bf4bae37a9",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "2b2c8a40988f08d43850c209c51a3469ebb0a09dc7f455d863452e659cd7d870",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "6b397e1e6ab1d1e32f88e9bca1228545dad5d247ec3e093688785525d5372133",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "3e7758a7bd4d032830e4bac01ddae6e8791a1ddc073ef1377972eb99ef1ee277",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "6aefd8ab736e0673273446be84e26d82dab55a94e563aa26f7548b1feb7f294c",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      }
+    },
+    {
+      "label": "raw-normalization-before",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/before-tools/verify_process_flow.py",
+        "check",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/project",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/case",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/review",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/profile.json",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.1388441969975247,
+      "stdout": {
+        "sha256": "ea591ba96b2b123abeb27ddc3a99ca061830231507bb07804aa10f807b4ac398",
+        "byte_length": 803
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "input_before": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "477d09fb4875f37fed762aa2d5388c26fd80c8afa978f3090f1211a47962ed91",
+            "byte_length": 43
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "5e4ef5ab79eae417f0717327afef12238382f3be1608d3e3fcd089747607fd0a",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "e6910a5e8bdc98c3578596abd91a47a2297d2363887ec9e6253973c27bba8135",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "ea06d87a4db73eaa4fc2489127cd43266990d79c571e0b4da14a936efc653617",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      },
+      "input_after": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "477d09fb4875f37fed762aa2d5388c26fd80c8afa978f3090f1211a47962ed91",
+            "byte_length": 43
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "5e4ef5ab79eae417f0717327afef12238382f3be1608d3e3fcd089747607fd0a",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "e6910a5e8bdc98c3578596abd91a47a2297d2363887ec9e6253973c27bba8135",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "ea06d87a4db73eaa4fc2489127cd43266990d79c571e0b4da14a936efc653617",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      }
+    },
+    {
+      "label": "raw-normalization-after",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/project",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/case",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/review",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/profile.json",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.07815924700116739,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "1e2d768b52d50933a59103de59c910dc2caf04e241de9b2f91bbbfd932f6f0df",
+        "byte_length": 1613
+      },
+      "input_before": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "477d09fb4875f37fed762aa2d5388c26fd80c8afa978f3090f1211a47962ed91",
+            "byte_length": 43
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "5e4ef5ab79eae417f0717327afef12238382f3be1608d3e3fcd089747607fd0a",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "e6910a5e8bdc98c3578596abd91a47a2297d2363887ec9e6253973c27bba8135",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "ea06d87a4db73eaa4fc2489127cd43266990d79c571e0b4da14a936efc653617",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      },
+      "input_after": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "477d09fb4875f37fed762aa2d5388c26fd80c8afa978f3090f1211a47962ed91",
+            "byte_length": 43
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "5e4ef5ab79eae417f0717327afef12238382f3be1608d3e3fcd089747607fd0a",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "e6910a5e8bdc98c3578596abd91a47a2297d2363887ec9e6253973c27bba8135",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "ea06d87a4db73eaa4fc2489127cd43266990d79c571e0b4da14a936efc653617",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      }
+    },
+    {
+      "label": "raw-normalization-rust",
+      "argv": [
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/noetome",
+        "knowledge",
+        "flow",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/project",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/case",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/review",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/profile.json",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/rust-rejected"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.01223415999993449,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "732af60c4f3d50d753b3d51beaca5273a3675601c2bd3b0790ba2d61a9229fff",
+        "byte_length": 111
+      },
+      "input_before": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "477d09fb4875f37fed762aa2d5388c26fd80c8afa978f3090f1211a47962ed91",
+            "byte_length": 43
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "5e4ef5ab79eae417f0717327afef12238382f3be1608d3e3fcd089747607fd0a",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "e6910a5e8bdc98c3578596abd91a47a2297d2363887ec9e6253973c27bba8135",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "ea06d87a4db73eaa4fc2489127cd43266990d79c571e0b4da14a936efc653617",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      },
+      "input_after": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+            "byte_length": 991
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "477d09fb4875f37fed762aa2d5388c26fd80c8afa978f3090f1211a47962ed91",
+            "byte_length": 43
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "5e4ef5ab79eae417f0717327afef12238382f3be1608d3e3fcd089747607fd0a",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/raw-normalization/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "b7cd70d7a44c4cd35005e00ed38f77c2b346250fc7db713e6ce0b296105634b8",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "8ad0d5e86f01e04c650ac64196edecd3eae730c0cc7496441ac882eca02e2e96",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "61b4c9fa4e02a01c5cc43e2b0e826d63e772bd8a92512c012453713daac318e2",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "c4d34fb035c1b37072031f4068b976222890051b5269aeabfdef1ca040b44baa",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "e6910a5e8bdc98c3578596abd91a47a2297d2363887ec9e6253973c27bba8135",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "ea06d87a4db73eaa4fc2489127cd43266990d79c571e0b4da14a936efc653617",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      }
+    },
+    {
+      "label": "truncated-negative-tail-before",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/before-tools/verify_process_flow.py",
+        "check",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/project",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/case",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/review",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/profile.json",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.10515089899854502,
+      "stdout": {
+        "sha256": "ea591ba96b2b123abeb27ddc3a99ca061830231507bb07804aa10f807b4ac398",
+        "byte_length": 803
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "input_before": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "cfbf597511ec95822d3d11f61586e13473c7b9cb09d89e7f4359fb7267d66a7e",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "7151584e364aae16afd0171e6c44c19147461c4a2a04112afe7e164eda65d233",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "112e6a2154c6adc68a77694e95ec3b752b4a547e30685d6612997f010c73baac",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      },
+      "input_after": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "cfbf597511ec95822d3d11f61586e13473c7b9cb09d89e7f4359fb7267d66a7e",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "7151584e364aae16afd0171e6c44c19147461c4a2a04112afe7e164eda65d233",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "112e6a2154c6adc68a77694e95ec3b752b4a547e30685d6612997f010c73baac",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      }
+    },
+    {
+      "label": "truncated-negative-tail-after",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/project",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/case",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/review",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/profile.json",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.08712548299808986,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "b18da2704763c5633a718fc2c75fb17c780d4c307ac613cef5771cb263493285",
+        "byte_length": 1937
+      },
+      "input_before": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "cfbf597511ec95822d3d11f61586e13473c7b9cb09d89e7f4359fb7267d66a7e",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "7151584e364aae16afd0171e6c44c19147461c4a2a04112afe7e164eda65d233",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "112e6a2154c6adc68a77694e95ec3b752b4a547e30685d6612997f010c73baac",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      },
+      "input_after": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "cfbf597511ec95822d3d11f61586e13473c7b9cb09d89e7f4359fb7267d66a7e",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "7151584e364aae16afd0171e6c44c19147461c4a2a04112afe7e164eda65d233",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "112e6a2154c6adc68a77694e95ec3b752b4a547e30685d6612997f010c73baac",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      }
+    },
+    {
+      "label": "truncated-negative-tail-rust",
+      "argv": [
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/noetome",
+        "knowledge",
+        "flow",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/project",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/case",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/review",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/profile.json",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/rust-rejected"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.012660223997954745,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "07d85837e88c0a84710c12e1393032eb9bda3c40b468704e7b0bc268923d3ef3",
+        "byte_length": 128
+      },
+      "input_before": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "cfbf597511ec95822d3d11f61586e13473c7b9cb09d89e7f4359fb7267d66a7e",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "7151584e364aae16afd0171e6c44c19147461c4a2a04112afe7e164eda65d233",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "112e6a2154c6adc68a77694e95ec3b752b4a547e30685d6612997f010c73baac",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      },
+      "input_after": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "a85d4df93f24b804aee2cee1d81479532eb3ec6c802176bd35384829ea998236",
+            "byte_length": 73
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/normalized.txt": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          ".noetome-sources/06a01cf7-09dc-47ed-859b-6ed340f32631/raw.bin": {
+            "sha256": "8024a87366b30f8e47622d6b1fda7129b2785dc4bef8c0dbbde6247980cceb76",
+            "byte_length": 1050
+          },
+          "project.json": {
+            "sha256": "27052d7ec1f7dbce34e26559da624065d6e50288e52f4dad83a5dd1327f3749c",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "cfbf597511ec95822d3d11f61586e13473c7b9cb09d89e7f4359fb7267d66a7e",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/review": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          "review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/truncated-negative-tail/Vault": {
+          ".case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "dcaf728b975c9a92749d626c93166864b8aebc665f9cb393cf9e7f043c1a81ed",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "1b0d5b3b8276dfdfbbd274b5b20228caeb274395f00cd6b80b52c4353a5e4f1f",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "5af898aa44136f2d045d7ee9701bec20089733fb0a403fd2474bdcd242df4b4e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          ".review-process-ir.json": {
+            "sha256": "236f577f837956ada31f72a46f07a52792ae640e0f96cae92683a26620290e65",
+            "byte_length": 6917
+          },
+          ".review-review.json": {
+            "sha256": "3cdb998dab4e5cb896b517f9f0097aab9155d18f5ff47ee53b07fed064c70bd1",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "f4179b1664726165b49ea7c3cd0aece85bbdafacbb92012bb9c534676e381686",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "120d441370a82a02b83c6bd4774b924a0a2bca8fce45b1e03207b7838518d3b2",
+            "byte_length": 1937
+          },
+          "flow.json": {
+            "sha256": "7151584e364aae16afd0171e6c44c19147461c4a2a04112afe7e164eda65d233",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "112e6a2154c6adc68a77694e95ec3b752b4a547e30685d6612997f010c73baac",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "0528c81a9917272ccb4639f089ca6c4b1d909b491c44bde3c3f0f79bf6aa81c3",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      }
+    },
+    {
+      "label": "prefixed-project",
+      "argv": [
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/noetome",
+        "project",
+        "init",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.008692934999999125,
+      "stdout": {
+        "sha256": "80f7d53854b0069a4eddaf850fa5f8de347f3ede277636885614b6461d81f668",
+        "byte_length": 625
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "input_before": {},
+      "input_after": {}
+    },
+    {
+      "label": "prefixed-import",
+      "argv": [
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/noetome",
+        "source",
+        "import",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/source.txt"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.03192022399889538,
+      "stdout": {
+        "sha256": "15ca42698144d507701d94d235e033b8101e5e63acc44695b9bb8112c9dd0f93",
+        "byte_length": 2624
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "input_before": {},
+      "input_after": {}
+    },
+    {
+      "label": "prefixed-review",
+      "argv": [
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/noetome",
+        "knowledge",
+        "process-review",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/case",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/review"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.03043042500212323,
+      "stdout": {
+        "sha256": "ddc03bc433258eb7a2e8614f84415d16d7ba84e8bc8b77e6acdbfed5d6735fed",
+        "byte_length": 7587
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "input_before": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "54ead0bf6a6868001849f3870282f26eb3086aa4dccd321e9ae5029ee32e8dcd",
+            "byte_length": 73
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/normalized.txt": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/raw.bin": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          "project.json": {
+            "sha256": "ddf268055dc8c2599b89b71c7b7f4074cb761302b17f4ef186bfb031a7b8e94b",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "d0dacb70c1417d85fb04f0e264a73a0786bb01794e4fd1cbee455cb64edc9db6",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          }
+        }
+      },
+      "input_after": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "54ead0bf6a6868001849f3870282f26eb3086aa4dccd321e9ae5029ee32e8dcd",
+            "byte_length": 73
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/normalized.txt": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/raw.bin": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          "project.json": {
+            "sha256": "ddf268055dc8c2599b89b71c7b7f4074cb761302b17f4ef186bfb031a7b8e94b",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "d0dacb70c1417d85fb04f0e264a73a0786bb01794e4fd1cbee455cb64edc9db6",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          }
+        }
+      }
+    },
+    {
+      "label": "prefixed-flow",
+      "argv": [
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/noetome",
+        "knowledge",
+        "flow",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/case",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/review",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/profile.json",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/Vault"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.06996203199378215,
+      "stdout": {
+        "sha256": "c85d02540bacbb0111c053e72b192c796a7e7ed6e8e115361e96ce24ad6b4041",
+        "byte_length": 17026
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "input_before": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "54ead0bf6a6868001849f3870282f26eb3086aa4dccd321e9ae5029ee32e8dcd",
+            "byte_length": 73
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/normalized.txt": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/raw.bin": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          "project.json": {
+            "sha256": "ddf268055dc8c2599b89b71c7b7f4074cb761302b17f4ef186bfb031a7b8e94b",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "d0dacb70c1417d85fb04f0e264a73a0786bb01794e4fd1cbee455cb64edc9db6",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/review": {
+          ".case.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "846591ff837caad1d6d5cf671a3a29f1b6c659ef0f71f92d52b517015a7b3aa2",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "8657a4e178e7b3b2a799507e42d19e644add19b3ea71ea90412b31ef597dbd17",
+            "byte_length": 1939
+          },
+          "process-ir.json": {
+            "sha256": "72f86813845ea4c81b7c8b5b3c4ec948996caabd9fe651389a71a6a1cbf0bb72",
+            "byte_length": 6919
+          },
+          "review.json": {
+            "sha256": "320520ca93056ae52e9f441c5d37de3d5a249337ff112c08fe408ac6da6962c3",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "cc9369c06742a26417bfcb886a77b82b6fb474a93d0012d6cf674446bd98899f",
+            "byte_length": 7769
+          }
+        }
+      },
+      "input_after": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "54ead0bf6a6868001849f3870282f26eb3086aa4dccd321e9ae5029ee32e8dcd",
+            "byte_length": 73
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/normalized.txt": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/raw.bin": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          "project.json": {
+            "sha256": "ddf268055dc8c2599b89b71c7b7f4074cb761302b17f4ef186bfb031a7b8e94b",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "d0dacb70c1417d85fb04f0e264a73a0786bb01794e4fd1cbee455cb64edc9db6",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/review": {
+          ".case.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "846591ff837caad1d6d5cf671a3a29f1b6c659ef0f71f92d52b517015a7b3aa2",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "8657a4e178e7b3b2a799507e42d19e644add19b3ea71ea90412b31ef597dbd17",
+            "byte_length": 1939
+          },
+          "process-ir.json": {
+            "sha256": "72f86813845ea4c81b7c8b5b3c4ec948996caabd9fe651389a71a6a1cbf0bb72",
+            "byte_length": 6919
+          },
+          "review.json": {
+            "sha256": "320520ca93056ae52e9f441c5d37de3d5a249337ff112c08fe408ac6da6962c3",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "cc9369c06742a26417bfcb886a77b82b6fb474a93d0012d6cf674446bd98899f",
+            "byte_length": 7769
+          }
+        }
+      }
+    },
+    {
+      "label": "prefixed-independent-check",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/case",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/review",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/profile.json",
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.10592440600157715,
+      "stdout": {
+        "sha256": "ea591ba96b2b123abeb27ddc3a99ca061830231507bb07804aa10f807b4ac398",
+        "byte_length": 803
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "input_before": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "54ead0bf6a6868001849f3870282f26eb3086aa4dccd321e9ae5029ee32e8dcd",
+            "byte_length": 73
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/normalized.txt": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/raw.bin": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          "project.json": {
+            "sha256": "ddf268055dc8c2599b89b71c7b7f4074cb761302b17f4ef186bfb031a7b8e94b",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "d0dacb70c1417d85fb04f0e264a73a0786bb01794e4fd1cbee455cb64edc9db6",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/review": {
+          ".case.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "846591ff837caad1d6d5cf671a3a29f1b6c659ef0f71f92d52b517015a7b3aa2",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "8657a4e178e7b3b2a799507e42d19e644add19b3ea71ea90412b31ef597dbd17",
+            "byte_length": 1939
+          },
+          "process-ir.json": {
+            "sha256": "72f86813845ea4c81b7c8b5b3c4ec948996caabd9fe651389a71a6a1cbf0bb72",
+            "byte_length": 6919
+          },
+          "review.json": {
+            "sha256": "320520ca93056ae52e9f441c5d37de3d5a249337ff112c08fe408ac6da6962c3",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "cc9369c06742a26417bfcb886a77b82b6fb474a93d0012d6cf674446bd98899f",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/Vault": {
+          ".case.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "4c67bb8739110561a233433f85b09d40fcf3b905b588bf182e8c4036adb73cf8",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "846591ff837caad1d6d5cf671a3a29f1b6c659ef0f71f92d52b517015a7b3aa2",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "8657a4e178e7b3b2a799507e42d19e644add19b3ea71ea90412b31ef597dbd17",
+            "byte_length": 1939
+          },
+          ".review-process-ir.json": {
+            "sha256": "72f86813845ea4c81b7c8b5b3c4ec948996caabd9fe651389a71a6a1cbf0bb72",
+            "byte_length": 6919
+          },
+          ".review-review.json": {
+            "sha256": "320520ca93056ae52e9f441c5d37de3d5a249337ff112c08fe408ac6da6962c3",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "cc9369c06742a26417bfcb886a77b82b6fb474a93d0012d6cf674446bd98899f",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "8657a4e178e7b3b2a799507e42d19e644add19b3ea71ea90412b31ef597dbd17",
+            "byte_length": 1939
+          },
+          "flow.json": {
+            "sha256": "24f267873819dacae9c4a993f6f48559c7f35f14cfd5f85cc1b920fc05279be8",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "566368f20ba3054edc1f03b3d056ed25daaa40bd6c2d4f87325e0b2716148c0d",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "7075f22a9f833568c6f3f2e22bca4865ca4bd86346cc54de21c5f38ed0405729",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      },
+      "input_after": {
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/project": {
+          ".noetome-sources/.owner.json": {
+            "sha256": "54ead0bf6a6868001849f3870282f26eb3086aa4dccd321e9ae5029ee32e8dcd",
+            "byte_length": 73
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/normalized.txt": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          ".noetome-sources/bce0db92-f79a-47ec-9e70-ca2a1182f680/raw.bin": {
+            "sha256": "6e20ebcb15458354162588a7b0e98720fe390f532ec30283d39f258bd2384d1d",
+            "byte_length": 1007
+          },
+          "project.json": {
+            "sha256": "ddf268055dc8c2599b89b71c7b7f4074cb761302b17f4ef186bfb031a7b8e94b",
+            "byte_length": 169
+          },
+          "project.sqlite": {
+            "sha256": "d0dacb70c1417d85fb04f0e264a73a0786bb01794e4fd1cbee455cb64edc9db6",
+            "byte_length": 69632
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/case": {
+          "gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          "process-review.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/review": {
+          ".case.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "846591ff837caad1d6d5cf671a3a29f1b6c659ef0f71f92d52b517015a7b3aa2",
+            "byte_length": 170
+          },
+          ".source.json": {
+            "sha256": "8657a4e178e7b3b2a799507e42d19e644add19b3ea71ea90412b31ef597dbd17",
+            "byte_length": 1939
+          },
+          "process-ir.json": {
+            "sha256": "72f86813845ea4c81b7c8b5b3c4ec948996caabd9fe651389a71a6a1cbf0bb72",
+            "byte_length": 6919
+          },
+          "review.json": {
+            "sha256": "320520ca93056ae52e9f441c5d37de3d5a249337ff112c08fe408ac6da6962c3",
+            "byte_length": 7586
+          },
+          "review.md": {
+            "sha256": "cc9369c06742a26417bfcb886a77b82b6fb474a93d0012d6cf674446bd98899f",
+            "byte_length": 7769
+          }
+        },
+        "/tmp/noetome-process-checker-fix-885c0bc7690143ae9eb74fbb953d502e/prefixed-positive/Vault": {
+          ".case.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".owner.json": {
+            "sha256": "4c67bb8739110561a233433f85b09d40fcf3b905b588bf182e8c4036adb73cf8",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "182e6446ab4778be01653a88dd9b5477d53822f392f760896f2d54b40085f260",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+            "byte_length": 3790
+          },
+          ".review-.owner.json": {
+            "sha256": "846591ff837caad1d6d5cf671a3a29f1b6c659ef0f71f92d52b517015a7b3aa2",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "8657a4e178e7b3b2a799507e42d19e644add19b3ea71ea90412b31ef597dbd17",
+            "byte_length": 1939
+          },
+          ".review-process-ir.json": {
+            "sha256": "72f86813845ea4c81b7c8b5b3c4ec948996caabd9fe651389a71a6a1cbf0bb72",
+            "byte_length": 6919
+          },
+          ".review-review.json": {
+            "sha256": "320520ca93056ae52e9f441c5d37de3d5a249337ff112c08fe408ac6da6962c3",
+            "byte_length": 7586
+          },
+          ".review-review.md": {
+            "sha256": "cc9369c06742a26417bfcb886a77b82b6fb474a93d0012d6cf674446bd98899f",
+            "byte_length": 7769
+          },
+          ".source.json": {
+            "sha256": "8657a4e178e7b3b2a799507e42d19e644add19b3ea71ea90412b31ef597dbd17",
+            "byte_length": 1939
+          },
+          "flow.json": {
+            "sha256": "24f267873819dacae9c4a993f6f48559c7f35f14cfd5f85cc1b920fc05279be8",
+            "byte_length": 17025
+          },
+          "flow.md": {
+            "sha256": "566368f20ba3054edc1f03b3d056ed25daaa40bd6c2d4f87325e0b2716148c0d",
+            "byte_length": 17228
+          },
+          "plan.json": {
+            "sha256": "7075f22a9f833568c6f3f2e22bca4865ca4bd86346cc54de21c5f38ed0405729",
+            "byte_length": 13149
+          },
+          "流程总览.md": {
+            "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+            "byte_length": 783
+          },
+          "过程明细.md": {
+            "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+            "byte_length": 1507
+          }
+        }
+      }
+    },
+    {
+      "label": "targeted-python",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_verify_process_flow.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.17044313500082353,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "a852908438ca298934e35ae61d1223ebb0bbac7c3263d07e6a7d84120002ddc7",
+        "byte_length": 5209
+      },
+      "input_before": {},
+      "input_after": {}
+    }
+  ],
+  "cli": {
+    "sha256": "5398c7edc78391a93074ec530b0e901a3b95a6cf62a915043ac6c3ec67c68cac",
+    "byte_length": 139802224
+  },
+  "checker": {
+    "sha256": "adfebcfabd6baf3e8fc86fa1473630958f863fc1f6e2eba163d635c95501b40f",
+    "byte_length": 73672
+  },
+  "tests": {
+    "sha256": "5f304cdc8b4270780b9102e782ae7bf03ddfd2e6501ba674cec5088be08e39f6",
+    "byte_length": 21739
+  },
+  "counts": {
+    "targeted_python_tests": 28,
+    "commands": 16,
+    "new_ordinary_positive_cli": 4
+  },
+  "scope": "Focused original forgeries and raw-derived-source proof; no second full audit"
+}

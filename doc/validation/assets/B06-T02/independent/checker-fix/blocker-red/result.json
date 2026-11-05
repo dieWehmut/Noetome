@@ -1,0 +1,74 @@
+{
+  "work": "/tmp/noetome-b06-checker-blocker-review-04a72d5759b848fe9cd5930032e1290b",
+  "original_issue": {
+    "code": "FLOW_CORRELATION_UNDIRECTED",
+    "object_ids": [
+      "r1"
+    ],
+    "message": "来源只说明相关性，不能推定执行或因果方向。"
+  },
+  "forged_issue": {
+    "code": "FLOW_CORRELATION_UNDIRECTED",
+    "object_ids": [
+      "s1"
+    ],
+    "message": "该问题定位于此步骤。"
+  },
+  "checker": {
+    "sha256": "77c4a482b0d282633c73539213f1be1851266a24eb0b59107be595ffa15f7e41",
+    "byte_length": 64218
+  },
+  "tests": {
+    "sha256": "1aed94ac0c5a089a4e1a8074bfcc5d9a7dbe543d16d4887d5e1cb2d817aa8c86",
+    "byte_length": 12190
+  },
+  "commands": [
+    {
+      "name": "baseline",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python3",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/project",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/case",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/review",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/profile.json",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/test-Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-correlation.json"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "sha256": "014dae0cfaee9f7e81ce4aeed1ebaa5e9a9ab08ae2509001e84be0e9831e5c82",
+        "byte_length": 801
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "forged-blocker",
+      "argv": [
+        "/home/lyinn/miniconda3/bin/python3",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/project",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/case",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/review",
+        "/home/lyinn/project/Noetome/target/compiler-temp/process-ffef3253-022d-44cb-8bfa-809c3ba3c1ed/profile.json",
+        "/tmp/noetome-b06-checker-blocker-review-04a72d5759b848fe9cd5930032e1290b/mutated-Vault",
+        "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-correlation.json"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "sha256": "014dae0cfaee9f7e81ce4aeed1ebaa5e9a9ab08ae2509001e84be0e9831e5c82",
+        "byte_length": 801
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    }
+  ],
+  "original_case_unchanged": true
+}

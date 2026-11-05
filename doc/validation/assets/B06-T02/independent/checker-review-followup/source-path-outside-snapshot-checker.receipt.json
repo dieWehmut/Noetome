@@ -1,0 +1,161 @@
+{
+  "name": "source-path-outside-snapshot-checker",
+  "argv": [
+    "/home/lyinn/miniconda3/bin/python3",
+    "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+    "check",
+    "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project",
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case",
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review",
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/profile.json",
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault",
+    "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json"
+  ],
+  "exit_code": 1,
+  "expected_exit": 1,
+  "stdout": {
+    "file": "checker-review-followup/source-path-outside-snapshot-checker.stdout.bin",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byte_length": 0
+  },
+  "stderr": {
+    "file": "checker-review-followup/source-path-outside-snapshot-checker.stderr.bin",
+    "sha256": "280720736e70921a65b4cfd9bbdd3234c79ef2c40f039d7f07770b7462eaee96",
+    "byte_length": 1586
+  },
+  "protected_before_after_match": true,
+  "protected_files": {
+    "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project/project.json": {
+      "sha256": "e1fbbe8a139715f2854595a4e88ff86af1bcd9aeadc27e28a0704ed9ba6f0d6d",
+      "byte_length": 168
+    },
+    "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project/project.sqlite": {
+      "sha256": "4aa7824156efd000e181132da4ac003c4fbc35d639ca1d769589fb126eaabcfd",
+      "byte_length": 69632
+    },
+    "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project/.noetome-sources/.owner.json": {
+      "sha256": "51c9f4ef6a879f274f7aacff7efe92dc56a0cae829d9d1096044f739b233392d",
+      "byte_length": 73
+    },
+    "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project/.noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/normalized.txt": {
+      "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+      "byte_length": 991
+    },
+    "/tmp/noetome-b06-checker-source-path-review-1d5531d2832447c19eef92ce4540263f/project/.noetome-sources/57d2a369-9f79-4be8-8d07-ba0c62797dac/raw.bin": {
+      "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+      "byte_length": 991
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case/gold.json": {
+      "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+      "byte_length": 3790
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/case/process-review.json": {
+      "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+      "byte_length": 362
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review/process-ir.json": {
+      "sha256": "f9219166a33018a20f30ab01f7b234a8792b59066b5d90f451f88ea20ebe93f0",
+      "byte_length": 6917
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review/.gold.json": {
+      "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+      "byte_length": 3790
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review/review.json": {
+      "sha256": "eef61ffdee9835dff0c44a8b12c232bffc05a349ef04fcbf532449bf4bae37a9",
+      "byte_length": 7586
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review/.case.json": {
+      "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+      "byte_length": 362
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review/.source.json": {
+      "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+      "byte_length": 1937
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review/review.md": {
+      "sha256": "2b2c8a40988f08d43850c209c51a3469ebb0a09dc7f455d863452e659cd7d870",
+      "byte_length": 7769
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/review/.owner.json": {
+      "sha256": "f09605bc73709a08aca49824da7a51595b91969bfd3933f4d61aba56eff7e498",
+      "byte_length": 170
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.review-process-ir.json": {
+      "sha256": "f9219166a33018a20f30ab01f7b234a8792b59066b5d90f451f88ea20ebe93f0",
+      "byte_length": 6917
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/flow.md": {
+      "sha256": "3e7758a7bd4d032830e4bac01ddae6e8791a1ddc073ef1377972eb99ef1ee277",
+      "byte_length": 17228
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.review-.gold.json": {
+      "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+      "byte_length": 3790
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.gold.json": {
+      "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+      "byte_length": 3790
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.review-.owner.json": {
+      "sha256": "f09605bc73709a08aca49824da7a51595b91969bfd3933f4d61aba56eff7e498",
+      "byte_length": 170
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/过程明细.md": {
+      "sha256": "e3eb976672179d40a9c097e4174a487300c68adee25a9c1a3b9527223aefb4c9",
+      "byte_length": 1507
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.case.json": {
+      "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+      "byte_length": 362
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.source.json": {
+      "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+      "byte_length": 1937
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.review-.source.json": {
+      "sha256": "e825995c8ebb61f59e420529ee7a6f402bb85935e0e36dd3cf1c3e6c593b145a",
+      "byte_length": 1937
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/流程总览.md": {
+      "sha256": "8d95d4d84795ab5d2188ad3df2baf50d4652773d3fa3f3b10b22bbf600ce9eef",
+      "byte_length": 783
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.review-.case.json": {
+      "sha256": "a1dd8e4c73a59bcc13e7428a3d325b9bc9a0b9a398b3af3e8754234e86370064",
+      "byte_length": 362
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.review-review.md": {
+      "sha256": "2b2c8a40988f08d43850c209c51a3469ebb0a09dc7f455d863452e659cd7d870",
+      "byte_length": 7769
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/flow.json": {
+      "sha256": "6b397e1e6ab1d1e32f88e9bca1228545dad5d247ec3e093688785525d5372133",
+      "byte_length": 17025
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/plan.json": {
+      "sha256": "6aefd8ab736e0673273446be84e26d82dab55a94e563aa26f7548b1feb7f294c",
+      "byte_length": 13149
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.review-review.json": {
+      "sha256": "eef61ffdee9835dff0c44a8b12c232bffc05a349ef04fcbf532449bf4bae37a9",
+      "byte_length": 7586
+    },
+    "/home/lyinn/project/Noetome/target/compiler-temp/process-3480a9dd-c8e5-478d-830f-b63d82ab7c8f/test-Vault/.owner.json": {
+      "sha256": "01ef8dae7c8735220add4ac50fec5d0000a4dbf0bda1d4cb76973b05a8318b2b",
+      "byte_length": 146
+    },
+    "/home/lyinn/project/Noetome/fixtures/process-flow-v1/expected-linear.json": {
+      "sha256": "a382973a062fc9c569e2aeedc0c8b2deca2a3be617985281d766274871fb5820",
+      "byte_length": 3216
+    }
+  }
+}

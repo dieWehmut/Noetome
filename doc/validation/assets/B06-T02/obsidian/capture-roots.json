@@ -1,0 +1,40 @@
+{
+  "cases": {
+    "linear": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-e/linear",
+    "branch": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-e/branch",
+    "causes": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-e/causes",
+    "promotes": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-e/promotes",
+    "inhibits": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-f/inhibits",
+    "complex_labels": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-f/complex_labels",
+    "multiline_labels": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-f/multiline_labels",
+    "compatibility_fallback": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-f/compatibility_fallback"
+  },
+  "failed_attempts": [
+    {
+      "attempt": "first",
+      "root": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105/linear",
+      "cause": "Strict fragment visibility predicate after fixed 150 ms failed; later native geometry showed subpixel scroll rounding."
+    },
+    {
+      "attempt": "wait-fragment",
+      "root": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-b/linear",
+      "cause": "Native fragment reached target and highlighted it; 0.203125 CSS px scroll rounding violated strict zero-tolerance boundary."
+    },
+    {
+      "attempt": "whole-dom",
+      "root": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-c/linear",
+      "cause": "Single DOM read after long-note scroll omitted virtualized earlier sections. Changed to actual scroll sweeps."
+    },
+    {
+      "attempt": "hover-popover",
+      "root": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-d/linear",
+      "cause": "Both notes and six details links passed, but core hover preview created a second global matching element. Scoped to active pane and moved pointer to inert sidebar."
+    },
+    {
+      "attempt": "screenshot-timeout",
+      "root": "/mnt/d/Noetome/target/compiler-temp/b06-product-obsidian-20261105-e/inhibits",
+      "cause": "First screenshot timed out at 30 seconds; no rendered note counted passed. Next new instance used own-page bringToFront and 60-second screenshot timeout."
+    }
+  ],
+  "scope": "eight successful actual runs and five preserved unsuccessful capture attempts"
+}
