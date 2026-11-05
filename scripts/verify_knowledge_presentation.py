@@ -26,7 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from verify_knowledge_coordination import (
     FILES, actual_source, compact, encoded, exact, fields, fingerprint, identifier,
     inventory, read, safe_name, source_bundle, strict_json, text,
-    uuid_string, verify_report as verify_coordination, verify_markdown,
+    uuid_string, verify_report as verify_coordination, verify_markdown, display_text,
 )
 from verify_knowledge_conflicts import guard_path, time_schema
 
@@ -66,7 +66,7 @@ def expected_schema(expected):
     for name, id_field in (("objects", "object_id"), ("properties", "property_id")):
         assert type(expected[name]) is list and 1 <= len(expected[name]) <= 3, "author labels"
         for label in expected[name]:
-            fields(label, id_field + " label"); uuid_string(label[id_field]); text(label["label"])
+            fields(label, id_field + " label"); uuid_string(label[id_field]); display_text(label["label"])
         assert len({v[id_field] for v in expected[name]}) == len(expected[name]), "unique author labels"
     assert type(expected["cells"]) is list and len(expected["cells"]) <= 9, "author cells"
     keys = set()

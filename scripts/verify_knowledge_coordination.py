@@ -19,6 +19,7 @@ import sqlite3
 import subprocess
 import sys
 import time
+import unicodedata
 import uuid
 
 # Works both as a script and when imported from elsewhere in the repository.
@@ -74,6 +75,20 @@ def exact(actual, expected, label):
 def text(value, limit=1024):
     assert type(value) is str and value.strip() and len(value.encode("utf-8")) <= limit, "text type/limit"
     assert not any(ord(c) < 32 or ord(c) == 127 for c in value), "text control"
+
+
+def display_text(value):
+    """Canonical labels use Rust's bounded finite plain-text display contract."""
+    assert type(value) is str and value.strip() and len(value.encode("utf-8")) <= 1024, "display text type/limit"
+    assert not any(unicodedata.category(c) == "Cc" and c not in "\n\t" for c in value), "display text control"
+    assert not any(marker in value for marker in ("%%", "[[", "![")), "display hidden/link text"
+    assert not re.search(r"<[A-Za-z/!?]|\]\s*[(\[:]", value), "display rich text"
+    # Check each '<', including nested ones, just as the finite Rust contract
+    # does; a numeric local part must not become an email autolink either.
+    for opening, character in enumerate(value):
+        if character == "<" and (closing := value.find(">", opening + 1)) != -1:
+            inside = value[opening + 1:closing]
+            assert not ("@" in inside and not any(c.isspace() for c in inside)), "display email autolink"
 
 
 def integer(value):
@@ -137,9 +152,13 @@ def read(path, limit):
     return path.read_bytes()
 
 
-def metadata(value, *, evidence_quote_lf=False, _path=()):
+def metadata(value, *, evidence_quote_lf=False, identity_display_labels=False, _path=()):
     """Bound metadata recursively; RequestUnit body is validated separately."""
     if type(value) is str:
+        if (identity_display_labels and len(_path) == 3 and _path[0] == "concepts"
+                and type(_path[1]) is int and _path[2] == "display_name"):
+            display_text(value)
+            return
         quote = (evidence_quote_lf and len(_path) == 4 and
                  _path[:2] == ("payload", "evidence") and type(_path[2]) is int and _path[3] == "quote")
         assert len(value.encode()) <= 1024 and not any(
@@ -147,11 +166,11 @@ def metadata(value, *, evidence_quote_lf=False, _path=()):
             for c in value), "metadata limit/control"
     elif type(value) is dict:
         for key, item in value.items():
-            metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, key))
+            metadata(item, evidence_quote_lf=evidence_quote_lf, identity_display_labels=identity_display_labels, _path=(*_path, key))
     elif type(value) is list:
         assert len(value) <= 1024, "metadata array limit"
         for index, item in enumerate(value):
-            metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, index))
+            metadata(item, evidence_quote_lf=evidence_quote_lf, identity_display_labels=identity_display_labels, _path=(*_path, index))
 
 
 def role_text(value):
@@ -486,12 +505,12 @@ def _verify(project, case, output, gold_bytes):
     mapping = strict_json(map_raw)
     fields(mapping, "schema_version author concepts concept_mappings atom_mappings")
     exact(mapping["schema_version"], 1, "map version"); text(mapping["author"])
-    metadata(mapping)
+    metadata(mapping, identity_display_labels=True)
     for name in ("concepts", "concept_mappings", "atom_mappings"):
         assert type(mapping[name]) is list and len(mapping[name]) <= 1024, "map array type/limit"
     canonical = {}
     for c in mapping["concepts"]:
-        fields(c, "canonical_id display_name"); uuid_string(c["canonical_id"]); text(c["display_name"])
+        fields(c, "canonical_id display_name"); uuid_string(c["canonical_id"]); display_text(c["display_name"])
         assert c["canonical_id"] not in canonical, "duplicate canonical"
         canonical[c["canonical_id"]] = c
     cm, am = {}, {}

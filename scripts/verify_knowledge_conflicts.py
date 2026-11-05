@@ -15,7 +15,7 @@ import time
 from verify_knowledge_coordination import (REPORT, TOTALS as V1_TOTALS, FILES,
     strict_json, fingerprint, encoded, compact, normalized, fields, exact, text,
     strings, integer, identifier, uuid_string, safe_name, binding, metadata,
-    inventory, read, source_bundle, verify_markdown)
+    inventory, read, source_bundle, verify_markdown, display_text)
 
 SCOPE = "explicit_identity_conflict_review_v3"
 TOTALS = V1_TOTALS + " condition_variants historical_relations known_condition_occurrences unknown_condition_occurrences not_applicable_condition_occurrences dated_occurrences undated_occurrences context_evidence_links true_conflicts insufficient_evidence_relations conflicting_occurrences insufficient_evidence_occurrences counter_evidence_links"
@@ -231,12 +231,12 @@ def _verify(project, case, output, gold_bytes):
     assert type(manifest["inputs"]) is list and 2 <= len(manifest["inputs"]) <= 3, "case input count"
     map_raw = read(case / manifest["identity_file"], 65536); mapping = strict_json(map_raw)
     fields(mapping, "schema_version author concepts concept_mappings atom_mappings atom_contexts")
-    exact(mapping["schema_version"], 3, "map v3"); text(mapping["author"]); metadata(mapping)
+    exact(mapping["schema_version"], 3, "map v3"); text(mapping["author"]); metadata(mapping, identity_display_labels=True)
     for k in ("concepts", "concept_mappings", "atom_mappings", "atom_contexts"):
         assert type(mapping[k]) is list and len(mapping[k]) <= 1024, "map bounds"
     canonical, cm, am, contexts = {}, {}, {}, {}
     for c in mapping["concepts"]:
-        fields(c, "canonical_id display_name"); uuid_string(c["canonical_id"]); text(c["display_name"])
+        fields(c, "canonical_id display_name"); uuid_string(c["canonical_id"]); display_text(c["display_name"])
         assert c["canonical_id"] not in canonical, "unique canonical"
         canonical[c["canonical_id"]] = c
     for c in mapping["concept_mappings"]:
