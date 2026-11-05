@@ -1,0 +1,937 @@
+
+running 401 tests
+test compile_report::tests::underscore_delimited_diagnostic_is_visible_as_literal_text ... ok
+test compile_report::tests::diagnostic_text_does_not_inject_table_columns_or_html ... ok
+test compile_report::tests::markdown_preserves_failed_facts_counts_and_unrun_science ... ok
+test compile_report::tests::file_revision_and_each_link_scope_are_visible_in_markdown ... ok
+test compile_store::tests::existing_and_input_child_roots_are_rejected_without_writes ... ok
+test compile_store::tests::hot_journal_child ... ok
+test compile_store::tests::incorrect_or_missing_base_counts_fail_before_creating_output ... ok
+test compile_store::tests::creation_persists_independent_scope_and_actual_counts ... ok
+test compile_store::tests::active_sqlite_journal_is_rejected_without_recovery_reads ... ok
+test compile_store::tests::exclusive_file_write_preserves_existing_bytes ... ok
+test compile_store::tests::killed_sqlite_writer_leaves_a_hot_journal_that_read_checks_preserve ... ok
+test compile_store::tests::preflight_selects_an_absent_sibling_without_writing ... ok
+test compile_store::tests::raw_parent_traversal_is_rejected_before_filesystem_access ... ok
+test compile_store::tests::recovery_refuses_to_write_when_an_owned_directory_is_replaced ... ok
+test compile_store::tests::rendering_failure_records_failed_run_and_staged_release ... ok
+test compile_store::tests::same_bytes_with_a_new_file_identity_are_rejected ... ok
+test compile_store::tests::same_empty_directory_name_with_new_identity_is_rejected ... ok
+test compile_store::tests::same_root_and_existing_input_ancestors_use_the_overlap_error ... ok
+test compile_store::tests::mismatched_markdown_cannot_be_published_as_the_same_snapshot ... ok
+test compile_store::tests::publication_atomically_binds_both_report_bytes_and_manifest ... ok
+test compile_store::tests::windows_active_file_writer_blocks_read_and_keeps_bytes ... ok
+test compile_store::tests::windows_protected_root_cannot_be_moved_during_a_run ... ok
+test extraction_api::tests::actual_usage_rejects_each_limit_and_overflow_without_zero_defaults ... ok
+test extraction_api::tests::credential_scan_catches_nested_escaped_and_malformed_strings ... ok
+test extraction_api_config::tests::chat_fix_exact_selected_and_numeric_test_provider_endpoints_validate ... ok
+test extraction_api_config::tests::endpoint_allows_only_explicit_numeric_loopback_or_official_live ... ok
+test extraction_api_config::tests::revision_fix_updates_only_selected_chat_strategy_version ... ok
+test extraction_api_config::tests::selected_gateway_accepts_only_exact_live_endpoint_and_selected_model ... ok
+test extraction_api_config::tests::selected_guard_does_not_consume_siblings_and_rejects_hardlinks_and_size ... ok
+test extraction_api_config::tests::strict_config_rejects_duplicates_extra_missing_and_nullable_omissions ... ok
+test extraction_api_schema::tests::inline_fix_selected_input_contains_task_schema_and_original_absolute_request ... ok
+test extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor ... ok
+test extraction_api_schema::tests::revision_fix_chat_schema_has_only_two_positive_integer_boundaries ... ok
+test extraction_api_schema::tests::revision_fix_chat_task_demands_positive_revision_and_keeps_v5_prefix ... ok
+test extraction_api_transport::tests::framed_empty_receipts_are_complete_and_keep_http_classification ... ok
+test compile_store::tests::unknown_file_is_preserved_and_blocks_publication ... ok
+test extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried ... ok
+test extraction_api_transport::tests::pre_cancel_sends_nothing ... ok
+test extraction_api_transport::tests::one_http1_post_preserves_complete_receipt ... ok
+test compile_store::tests::sqlite_reader_makes_final_commit_busy_and_rolls_back_publication ... ok
+test extraction_api_transport::tests::truncated_chunked_and_oversize_receipts_fail ... ok
+test extraction_api_transport::tests::zero_deadline_counts_no_unstarted_attempt ... ok
+test extraction_api_wire::chat::tests::cache_pair_requires_checked_prompt_sum_without_inventing_absent_counters ... ok
+test extraction_api_wire::chat::tests::duplicates_fences_trailing_unknown_candidates_and_bad_usage_fail ... ok
+test extraction_api_wire::chat::tests::mapped_metadata_keeps_raw_usage_and_survives_length_candidate_failures ... ok
+test extraction_api_wire::chat::tests::only_one_stopped_assistant_plain_json_and_typed_metadata_is_accepted ... ok
+test extraction_api_wire::chat::tests::qualifier_fix_original_fourth_structure_passes_but_unit_stays_missing ... ok
+test extraction_api_wire::chat::tests::revision_fix_original_fifth_decodes_with_usage_but_has_four_revision_issues ... ok
+test extraction_api_wire::chat::tests::shape_fix_original_third_flattened_candidate_stays_rejected_with_usage ... ok
+test extraction_api_wire::tests::actual_metadata_fields_reject_null_or_wrong_types ... ok
+test extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail ... ok
+test extraction_api_wire::tests::chat_fix_valid_single_chat_candidate_requires_chat_decoder ... ok
+test extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata ... ok
+test extraction_api_wire::tests::inline_fix_first_actual_plaintext_is_candidate_failure_with_real_usage_preserved ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_completed_accepts_candidates_but_default_stays_strict ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_duplicates_tools_extra_text_and_fences_stay_rejected ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_status_errors_types_and_usage_remain_strict ... ok
+test extraction_api_wire::tests::metadata_preserves_real_usage_independent_of_candidate_approval ... ok
+test extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status ... ok
+test extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected ... ok
+test extraction_api_wire::tests::rejects_duplicate_keys_at_unknown_nesting_and_trailing_json ... ok
+test extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail ... ok
+test extraction_api_wire::tests::valid_metadata_survives_invalid_output_fields_and_decode_rejects_them ... ok
+test extraction_model::tests::binding_requires_nullable_fields_and_rejects_unknown_fields ... ok
+test extraction_model::tests::fake_config_and_measurement_require_explicit_nullable_fields ... ok
+test extraction_model::tests::payload_rejects_unknown_versions_producers_fields_duplicate_and_trailing_json ... ok
+test extraction_model::tests::selectors_and_locators_reject_mixed_or_unknown_fields ... ok
+test compile_store::tests::missing_failed_or_not_run_required_checks_block_publication ... ok
+test extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work ... ok
+test extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body ... ok
+test extraction_source::tests::project_database_is_bounded_before_hashing_or_semantic_loading ... ok
+test extraction_source::tests::registered_cache_hard_link_is_rejected_before_consuming_changed_target ... ok
+test extraction_source::tests::request_selection_and_input_limits_are_enforced ... ok
+test extraction_source::tests::session_holds_config_database_and_snapshot_against_writers ... ok
+test extraction_source::tests::session_uses_real_utf8_span_and_checks_new_project_inventory ... ok
+test extraction_source::tests::source_cache_caps_run_before_semantic_loading ... ok
+test extraction_source::tests::unknown_cache_bytes_are_not_hashed_before_semantic_inventory_rejection ... ok
+test extraction_source::tests::unknown_private_project_files_use_metadata_only ... ok
+test extraction_source::tests::failed_utf8_and_failed_pdf_never_supply_request_units ... ok
+test extraction_source::tests::actual_pdf_parse_produces_page_resource_and_bbox_without_legacy_span ... ok
+test extraction_source::tests::source_cache_file_count_is_bounded_before_semantic_loading ... ok
+test extraction_verify::guard_tests::held_source_inputs_and_results_deny_actual_concurrent_write_and_delete ... ok
+test extraction_verify::guard_tests::actual_hardlink_and_linked_directory_inputs_fail_before_output ... ok
+test extraction_verify::guard_tests::output_added_during_final_guard_retains_human_file ... ok
+test extraction_verify::guard_tests::result_hardlink_is_denied_or_invalidates_and_cleans_only_owned_results ... ok
+test extraction_verify::guard_tests::selected_case_ignores_private_sibling_content ... ok
+test fixture_compile::tests::active_windows_input_writer_is_blocked_and_original_bytes_publish ... ok
+test fixture_compile::tests::checkpoint_child ... ok
+test extraction_verify::guard_tests::source_added_during_final_guard_removes_only_captured_results ... ok
+test fixture_compile::tests::actual_process_kill_after_persisted_staging_retains_unpublished_state ... ok
+test fixture_compile::tests::actual_unit_loss_with_refreshed_hash_and_offsets_is_blocked ... ok
+test fixture_compile::tests::first_staged_file_failure_keeps_partial_scene_and_truthful_reports ... ok
+test fixture_input::tests::aggregate_size_and_path_reuse_are_checked_before_the_next_read ... ok
+test fixture_input::tests::json_size_is_rejected_before_decoding_or_reading_the_large_file ... ok
+test fixture_input::tests::nullable_coverage_fields_are_required_even_when_the_value_is_null ... ok
+test fixture_input::tests::real_fixture_loading_rebuilds_twelve_spans_without_writing ... ok
+test fixture_input::tests::safe_relative_paths_preserve_unicode_and_spaces ... ok
+test fixture_input::tests::unsafe_relative_names_are_rejected_before_filesystem_access ... ok
+test fixture_knowledge::tests::atom_content_and_qualifiers_cannot_be_empty ... ok
+test fixture_knowledge::tests::atoms_require_nonempty_unambiguous_concept_and_evidence_references ... ok
+test fixture_knowledge::tests::concepts_require_text_but_names_and_aliases_may_overlap ... ok
+test fixture_compile::tests::occupied_report_path_is_preserved_and_does_not_claim_a_report_pair ... ok
+test fixture_compile::tests::unknown_staged_file_is_preserved_without_publication ... ok
+test fixture_knowledge::tests::coverage_is_exactly_one_record_per_actual_span ... ok
+test fixture_knowledge::tests::duplicate_chains_must_be_acyclic_and_end_at_included_mapping ... ok
+test fixture_knowledge::tests::duplicate_mapping_must_agree_and_have_support_at_the_repeat_position ... ok
+test fixture_knowledge::tests::each_included_position_needs_its_own_valid_supporting_excerpt ... ok
+test fixture_knowledge::tests::duplicates_require_existing_reference_identical_span_hash_and_no_cycle ... ok
+test fixture_knowledge::tests::coverage_requires_current_scope_policy_and_mapped_or_planned_stage ... ok
+test fixture_knowledge::tests::evidence_can_bind_a_nonempty_partial_unicode_excerpt ... ok
+test fixture_knowledge::tests::evidence_offsets_must_be_utf8_character_boundaries ... ok
+test fixture_knowledge::tests::evidence_hash_must_match_the_actual_excerpt_bytes ... ok
+test fixture_knowledge::tests::evidence_references_must_resolve_to_actual_spans ... ok
+test fixture_knowledge::tests::evidence_rejects_empty_reversed_or_out_of_bounds_ranges ... ok
+test fixture_knowledge::tests::exclusions_require_reason_no_mapping_and_no_duplicate_reference ... ok
+test fixture_knowledge::tests::included_and_duplicate_decisions_cannot_claim_deterministic_format_review ... ok
+test fixture_knowledge::tests::included_mapping_cannot_also_claim_exclusion_or_duplicate ... ok
+test fixture_knowledge::tests::included_coverage_requires_nonempty_mapping_and_resolved_atoms ... ok
+test fixture_knowledge::tests::repeated_source_bindings_are_rejected_even_if_the_set_is_unchanged ... ok
+test fixture_knowledge::tests::ids_and_entity_revisions_cannot_be_invalid_or_ambiguous ... ok
+test fixture_knowledge::tests::required_atoms_must_be_known_and_fixture_reviewed ... ok
+test fixture_knowledge::tests::required_atoms_need_valid_support_not_only_refutes_or_qualifies ... ok
+test fixture_knowledge::tests::knowledge_sources_must_match_the_entire_manifest_binding ... ok
+test fixture_knowledge::tests::reviewed_fixture_has_valid_knowledge_and_complete_coverage ... ok
+test fixture_knowledge::tests::required_mapping_is_exactly_the_required_subset_of_mapped_atoms ... ok
+test fixture_knowledge::tests::unresolved_dispositions_and_unreviewed_parse_status_cannot_pass ... ok
+test fixture_compile::tests::real_sqlite_commit_busy_rolls_back_all_success_records ... ok
+test fixture_plan::tests::ambiguous_headings_do_not_resolve_to_a_canonical_link_target ... ok
+test fixture_plan::tests::canonical_placements_need_one_existing_related_section ... ok
+test fixture_plan::tests::canonical_section_must_display_its_reviewed_explanation_atoms ... ok
+test fixture_plan::tests::all_display_fields_reject_unregistered_wiki_links_and_embeds ... ok
+test fixture_plan::tests::all_display_fields_reject_raw_html_and_hidden_comments ... ok
+test fixture_plan::tests::empty_or_unsupported_plan_and_invalid_identity_are_rejected ... ok
+test fixture_plan::tests::every_plan_identity_scope_rejects_duplicates ... ok
+test fixture_plan::tests::expected_canonical_and_required_semantic_links_must_exist_exactly ... ok
+test fixture_plan::tests::display_fields_reject_controls_and_numeric_email_autolinks ... ok
+test fixture_plan::tests::expected_atoms_fix_content_conditions_concepts_type_and_support_positions ... ok
+test fixture_plan::tests::expected_required_atom_set_catches_required_false_drift ... ok
+test fixture_plan::tests::expected_case_identity_and_duplicate_expected_entries_are_rejected ... ok
+test fixture_plan::tests::all_display_fields_reject_raw_markdown_links_images_and_definitions ... ok
+test fixture_plan::tests::expected_support_positions_and_expected_collections_cannot_be_relabelled ... ok
+test fixture_plan::tests::expected_coverage_fix_all_spans_and_exact_exclusion_decisions ... ok
+test fixture_plan::tests::mapped_paragraph_and_list_item_must_show_their_own_atom_text ... ok
+test fixture_plan::tests::expected_tables_fix_all_columns_rows_cells_labels_and_missing_states ... ok
+test fixture_plan::tests::literal_output_paths_reject_wiki_address_control_characters ... ok
+test fixture_plan::tests::missing_required_mapping_and_unknown_atom_are_rejected ... ok
+test fixture_plan::tests::normal_comparison_text_and_single_brackets_remain_visible_plain_text ... ok
+test fixture_plan::tests::output_file_directory_collision_is_detected_with_interleaving_sorted_paths ... ok
+test fixture_plan::tests::node_atom_ids_equal_child_mapping_sets_without_duplicate_refs ... ok
+test fixture_plan::tests::headings_reject_wiki_syntax_and_case_trim_ambiguity ... ok
+test fixture_plan::tests::paragraph_atom_hidden_in_html_or_obsidian_comment_is_not_complete ... ok
+test fixture_plan::tests::plan_binds_both_full_raw_ir_hash_and_revision ... ok
+test fixture_plan::tests::semantic_links_resolve_concept_ids_even_when_names_are_equal ... ok
+test fixture_plan::tests::reviewed_evidence_ranges_cannot_shrink_to_nonknowledge_prefixes ... ok
+test fixture_plan::tests::table_cell_cannot_borrow_units_or_qualifiers_from_another_cell ... ok
+test fixture_plan::tests::reviewed_canonical_atom_ids_cannot_be_empty_duplicate_unknown_or_unrelated ... ok
+test fixture_plan::tests::valid_fixture_resolves_by_identity_to_two_literal_canonical_targets ... ok
+test fixture_render::tests::actual_newline_tab_and_literal_entity_variant_cannot_be_double_decoded ... ok
+test fixture_plan::tests::reviewed_evidence_inventory_and_every_evidence_field_are_fixed ... ok
+test fixture_render::tests::actual_tables_and_headings_are_parsed_independently_of_metadata ... ok
+test fixture_plan::tests::table_rectangles_content_label_and_missing_states_are_enforced ... ok
+test fixture_render::tests::codec_uses_literal_ascii_escapes_and_decodes_control_tokens_once ... ok
+test fixture_render::tests::all_actual_links_include_ghost_tokens_outside_declared_scopes ... ok
+test fixture_render::tests::an_alias_cannot_complete_a_qualifier_deleted_from_its_cell_body ... ok
+test fixture_render::tests::content_checks_catch_unit_condition_and_missing_cell_drift_after_sha_refresh ... ok
+test fixture_render::tests::independent_validator_accepts_literal_bytes_without_calling_renderer ... ok
+test fixture_render::tests::independently_reviewed_table_alias_variant_has_literal_escaped_pipe ... ok
+test fixture_render::tests::links_cannot_disappear_or_move_into_the_body_mapping ... ok
+test fixture_render::tests::output_limit_refuses_a_complete_chunk_without_truncating_text ... ok
+test fixture_render::tests::manifest_and_utf8_failures_are_distinct_from_content_checks ... ok
+test fixture_render::tests::metadata_atom_ids_cannot_hide_missing_or_invalid_scope_ranges ... ok
+test fixture_render::tests::renderer_matches_two_author_declared_literal_notes_and_child_mappings ... ok
+test fixture_render::tests::table_parser_counts_escape_parity_without_splitting_literal_pipes ... ok
+test fixture_render::tests::scopes_do_not_borrow_units_from_another_cell_or_alias ... ok
+test fixture_render::tests::wiki_target_headings_reject_backslashes_before_rendering ... ok
+test fixture_plan::tests::unsafe_and_windows_colliding_output_paths_are_rejected ... ok
+test fixture_render::tests::renderable_aliases_reject_unsupported_separators_and_whitespace ... ok
+test knowledge_coordinate::guard_tests::final_input_inventory_change_discards_only_captured_results ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-bb6e4072-cda8-4a2f-9708-ac06917775cf case=conditional
+test knowledge_coordinate::guard_tests::final_result_hardlink_denied_or_invalidated_without_alias_cleanup ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-71cce9fd-252d-4ee4-b323-5dac309d3a26 case=history
+test knowledge_coordinate::guard_tests::held_inputs_sources_and_results_deny_concurrent_write_delete ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-47355093-29c6-458f-9870-5eaf2d83dabe case=history
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-32ea5051-4b2a-4c31-9fc8-a241e131f8f7 case=history
+test knowledge_coordinate::variants_guard_tests::v2_held_sources_inputs_and_results_deny_writes ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-6d1dee09-3f45-4d2e-bdb1-9e1e6c14c564 case=two_objects
+test knowledge_coordinate::guard_tests::final_source_and_output_changes_preserve_unknown_content ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-91aa45e9-8f01-44bf-be2a-d4a2f22cde30 case=two_objects
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-aafbbdc8-5096-4d1e-be01-e1bf6af5b555 case=unknown_condition
+test knowledge_coordinate::variants_guard_tests::v2_final_source_or_output_inventory_change_discards_captured_results ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-f9721e6c-b116-45e9-9620-b640dc44233a case=legacy_v1_two_objects
+presentation_guard_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-91aa45e9-8f01-44bf-be2a-d4a2f22cde30 coordination_schema=3
+presentation_guard_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-6d1dee09-3f45-4d2e-bdb1-9e1e6c14c564 coordination_schema=3
+test knowledge_coordinate::variants_guard_tests::v2_final_input_inventory_change_preserves_originals_and_human_additions ... ok
+test knowledge_presentation_render::tests::body_drift_is_rejected_after_rehashing_output ... ok
+test knowledge_presentation_render::tests::byte_ranges_and_scope_identity_are_checked_against_observed_structure ... ok
+test knowledge_presentation_render::tests::full_fact_context_must_occur_in_its_own_body_and_cannot_come_from_alias ... ok
+test knowledge_presentation_render::tests::independently_authored_table_and_paragraph_bytes_have_exact_scopes ... ok
+test knowledge_presentation_render::tests::unsafe_paths_and_undeclared_or_wrong_links_are_rejected ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-0c0a5dfc-519d-49ae-88d3-6e27e2f54a9a case=two_objects
+test pdf_parse::tests::bounded_control_diagnostics_remain_a_capturable_host_failure ... ok
+test pdf_parse::tests::cancellation_before_launch_does_not_create_an_output_root ... ok
+test pdf_parse::tests::host_failure_keeps_parser_directory_alive_until_registry_capture ... ok
+test pdf_parse::tests::input_byte_limit_never_invents_confirmed_sha_or_pages ... ok
+test pdf_parse::tests::input_change_attempt_is_refused_and_preserves_original_bytes ... ok
+test pdf_parse::tests::junction_output_parent_cannot_cross_the_selected_sandbox ... ok
+test pdf_parse::tests::locked_input_and_multiple_hard_links_are_not_confirmed_as_complete ... ok
+test pdf_parse::tests::outer_sandbox_replacement_attempt_is_refused_by_live_directory_guards ... ok
+presentation_guard_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-f9721e6c-b116-45e9-9620-b640dc44233a coordination_schema=1
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-135d67cf-78d6-49ee-8469-f3f8a76363ef case=two_objects
+test pdf_parse::tests::real_live_pdf_helper_cancels_and_exits ... ok
+presentation_guard_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-0c0a5dfc-519d-49ae-88d3-6e27e2f54a9a coordination_schema=3
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-a5d2091d-e2a5-4bd3-9e03-7a69f6c01873 case=legacy_v2_two_objects
+test knowledge_presentation::guard_tests::inputs_held_inventory_changes_reject_before_preview_creation ... ok
+presentation_guard_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-135d67cf-78d6-49ee-8469-f3f8a76363ef coordination_schema=3
+test pdf_parse::tests::real_parser_report_collision_preserves_existing_report_bytes_and_cannot_inspect_as_complete ... ok
+test pdf_parse::tests::real_parser_resource_limit_returns_nonzero_with_a_locatable_reason ... ok
+test pdf_parse::tests::stdout_overflow_is_not_truncated_into_a_successful_pdf_report ... ok
+test pdf_parse::tests::synthetic_producer_is_refused_by_the_pdf_wrapper ... ok
+test pdf_parse::tests::unsuccessful_real_child_preserves_bounded_diagnostics_and_unconfirmed_failure ... ok
+test pdf_source_model::tests::a_new_exclusively_occupied_cache_root_is_rejected_during_absence_recheck ... ok
+test pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion ... ok
+test pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option ... ok
+test pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages ... ok
+test pdf_source_model::tests::global_import_history_rejects_cross_table_ids_and_rowid_collisions ... ok
+test pdf_source_model::tests::historical_adapter_sha_recomputes_key_while_unsupported_actual_parser_is_rejected ... ok
+test pdf_source_model::tests::host_failure_keeps_partial_non_utf8_parser_bytes_unconfirmed ... ok
+test pdf_source_model::tests::host_failure_rejects_fabricated_confirmed_pages_even_with_outer_hashes_updated ... ok
+test pdf_source_model::tests::native_semantic_inspector_rejects_utf8_cut_even_with_sql_and_all_outer_shas_updated ... ok
+test pdf_source_model::tests::native_snapshot_reader_binds_full_page_region_and_core_resource_inventory ... ok
+test pdf_source_model::tests::needs_review_reports_hydrate_actual_bound_issues_and_keep_knowledge_pending ... ok
+test pdf_source_model::tests::next_global_import_order_reports_i64_overflow_without_wrapping ... ok
+test pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected ... ok
+test pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version ... ok
+test pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw ... ok
+test pdf_source_model::tests::report_hydration_rejects_caller_altered_sql_facts ... ok
+test pdf_source_model::tests::report_hydration_rejects_foreign_import_identity ... ok
+test pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states ... ok
+test pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history ... ok
+presentation_guard_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-a5d2091d-e2a5-4bd3-9e03-7a69f6c01873 coordination_schema=2
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-f3f2407d-1688-41c6-af9f-efcf3ee1891a case=two_objects
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-857f6751-b402-46d4-88e1-7f54a8d45d5d case=two_objects
+presentation_guard_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-f3f2407d-1688-41c6-af9f-efcf3ee1891a coordination_schema=3
+test pdf_parse::tests::real_live_pdf_helper_times_out_and_exits ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-7b72e461-c5f7-4ee0-950f-de9d2658ee6b case=two_objects
+presentation_guard_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-857f6751-b402-46d4-88e1-7f54a8d45d5d coordination_schema=3
+presentation_guard_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-7b72e461-c5f7-4ee0-950f-de9d2658ee6b coordination_schema=3
+test knowledge_presentation::guard_tests::windows_v1_v2_v3_held_inputs_and_saved_results_deny_actual_write_and_delete ... ok
+test pdf_source_model::tests::source_cache_races::initially_absent_source_cache_created_during_staged_read_is_rejected ... ok
+test knowledge_presentation::guard_tests::results_saved_inventory_changes_preserve_originals_and_unknown_bytes ... ok
+test pdf_source_model::tests::staged_pdf_reader_only_accepts_registered_ids_in_the_current_writer_paths ... ok
+test pdf_source_model::tests::unified_source_helpers_follow_global_rowid_even_when_clock_moves_backwards ... ok
+test pdf_validate::tests::accepts_declared_complete_synthetic_page_and_utf8_region ... ok
+test pdf_validate::tests::accepts_review_page_with_confirmed_empty_artifact_and_no_wire_range ... ok
+test pdf_validate::tests::refuses_multicodepoint_glyph_claimed_as_parsed_despite_consistent_body ... ok
+test pdf_validate::tests::refuses_staggered_disjoint_line_columns_claimed_as_parsed ... ok
+test pdf_validate::tests::refuses_whitespace_only_page_claimed_as_parsed ... ok
+test pdf_validate::tests::rejects_in_bounds_bbox_that_does_not_enclose_its_actual_glyphs ... ok
+test pdf_validate::tests::rejects_missing_body_even_when_all_artifact_shas_are_valid ... ok
+test pdf_validate::tests::rejects_missing_page_and_fake_page_count ... ok
+test pdf_validate::tests::rejects_nonfinite_and_out_of_page_coordinates ... ok
+test pdf_validate::tests::rejects_review_or_failed_page_claimed_as_whole_document_parsed ... ok
+test pdf_validate::tests::rejects_text_artifact_resource_sha_or_page_reference_change ... ok
+test pdf_validate::tests::rejects_unconfirmed_page_count_claimed_as_parsed ... ok
+test pdf_validate::tests::rejects_utf8_byte_range_cutting_an_actual_character ... ok
+test pdf_validate::tests::rejects_wrong_crop_rotation_matrix ... ok
+test pdf_validate::tests::rejects_wrong_page_location ... ok
+test project::tests::actual_process_termination_preserves_partial_state_and_new_path_retry_succeeds ... ok
+test project::tests::configuration_requires_a_real_uuid_v4_rfc4122_variant ... ok
+test project::tests::exact_schema_three_project_inspection_is_readonly ... ok
+test pdf_source_model::tests::source_cache_races::owner_bytes_are_guarded_without_an_acquired_pdf_version ... ok
+test project::tests::handled_initialization_failures_clean_only_owned_files_and_allow_same_path_retry ... ok
+test project::tests::rollback_does_not_remove_a_replacement_empty_directory ... ok
+test project::tests::initialized_schema_one_inspection_rejects_weakened_metadata_constraints ... ok
+test project::tests::rollback_preserves_unknown_content_changed_bytes_deleted_files_and_replaced_files ... ok
+test project::tests::schema_three_inspection_rejects_mismatched_and_unknown_versions_without_migration ... ok
+test project::tests::source_schema_two_preserves_project_identity_and_inspection_is_readonly ... ok
+test project::tests::writer_inspection_never_ignores_old_initialization_remnants_or_a_file_marker ... ok
+test project::tests::writer_inspection_only_allows_its_own_ordinary_directory ... ok
+test project::tests::writer_inspection_rejects_a_junction_write_directory_without_touching_its_target ... ok
+test project::tests::schema_three_inspection_rejects_unknown_objects_changed_constraints_and_bad_metadata ... ok
+test sidecar_process::tests::actual_input_fingerprint_is_complete ... ok
+test sidecar_process::tests::blocked_stdin_writer_is_joined_on_timeout ... ok
+test sidecar_process::tests::bounded_diagnostic_overflow_is_explicit ... ok
+test sidecar_process::tests::concurrent_stderr_is_drained ... ok
+test sidecar_process::tests::crashed_process ... ok
+tree_mode=tree_cancel live_pids=[67204, 60040, 43232]
+tree_mode=tree_cancel primary_failure=false stop_elapsed_ms=10
+test sidecar_process::tests::diagnostics_are_separate ... ok
+test sidecar_process::tests::cancellation_reaps_live_tree ... ok
+test sidecar_process::tests::duplicate_units ... ok
+test sidecar_process::tests::empty_parser_version ... ok
+test sidecar_process::tests::empty_response ... ok
+test sidecar_process::tests::existing_workspace_is_rejected ... ok
+tree_mode=tree_early live_pids=[38232, 19232, 68740]
+tree_mode=tree_early primary_failure=false stop_elapsed_ms=17
+test sidecar_process::tests::early_parent_exit_reaps_noninherited_descendants ... ok
+test sidecar_process::tests::failed_protocol_retains_diagnostics ... ok
+test sidecar_process::tests::failed_unit_without_issue ... ok
+test sidecar_process::tests::input_byte_limit ... ok
+test sidecar_process::tests::input_hardlink_rejected ... ok
+test sidecar_process::tests::hardlink_resource_rejected_with_external_sentinel_unchanged ... ok
+test sidecar_process::tests::input_write_is_denied ... ok
+test sidecar_process::tests::invalid_json_response ... ok
+test sidecar_process::tests::invalid_utf8_response ... ok
+test sidecar_process::tests::issue_count_limit ... ok
+test sidecar_process::tests::junction_rejected_with_external_sentinel_unchanged ... ok
+test sidecar_process::tests::missing_nullable_text_field ... ok
+test sidecar_process::tests::missing_ordinal ... ok
+test sidecar_process::tests::missing_units ... ok
+test sidecar_process::tests::no_stdin_reader_times_out ... ok
+test sidecar_process::tests::pre_cancel_does_not_launch ... ok
+test sidecar_process::tests::public_entry_rejects_fake ... ok
+tree_mode=tree_output live_pids=[72036, 74088, 71212]
+tree_mode=tree_output primary_failure=false stop_elapsed_ms=9
+test sidecar_process::tests::real_parser_zero_units_rejected ... ok
+test sidecar_process::tests::request_byte_limit ... ok
+test sidecar_process::tests::overflow_reaps_live_tree ... ok
+test sidecar_process::tests::resource_absolute_path ... ok
+test sidecar_process::tests::resource_byte_limit ... ok
+test sidecar_process::tests::resource_case_collision ... ok
+test sidecar_process::tests::resource_count_limit ... ok
+test pdf_source_model::tests::source_cache_races::owner_identity_is_guarded_without_an_acquired_pdf_version ... ok
+test sidecar_process::tests::resource_directory_depth_limit ... ok
+test sidecar_process::tests::resource_invalid_utf8 ... ok
+test sidecar_process::tests::resource_parent_path ... ok
+test sidecar_process::tests::resource_prefix_collision ... ok
+test sidecar_process::tests::resource_range_splits_character ... ok
+test sidecar_process::tests::resource_reserved_name ... ok
+test sidecar_process::tests::resource_trailing_dot ... ok
+test pdf_source_model::tests::source_cache_races::unknown_source_cache_entry_added_during_raw_read_is_rejected ... ok
+test sidecar_process::tests::resource_unknown_directory ... ok
+test sidecar_process::tests::resource_unknown_file ... ok
+test sidecar_process::tests::resource_unknown_reference ... ok
+broken_pipe_valid_request_bytes=66400
+test sidecar_process::tests::resource_wrong_length ... ok
+test sidecar_process::tests::resource_unreferenced ... ok
+test sidecar_process::tests::resource_wrong_sha ... ok
+broken_pipe_live_pids=[60848, 65740, 25896]
+broken_pipe_latency_ms=6 error=SIDECAR_IO: 管道已结束。 (os error 109)
+test sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree ... ok
+tree_mode=tree_fallback live_pids=[51812, 58544, 52220]
+tree_mode=tree_fallback primary_failure=true stop_elapsed_ms=5
+test sidecar_process::tests::review_primary_terminate_failure_reaps_real_tree ... ok
+test sidecar_process::tests::review_unit_without_issue ... ok
+test sidecar_process::tests::review_units_preserve_status_and_issue ... ok
+test sidecar_process::tests::start_failure ... ok
+test sidecar_process::tests::second_stdout_json ... ok
+test sidecar_process::tests::stderr_byte_limit ... ok
+test sidecar_process::tests::stdout_byte_limit ... ok
+test sidecar_process::tests::successful_result_holds_resource_and_directory_guards ... ok
+test sidecar_process::tests::total_resource_byte_limit ... ok
+tree_mode=tree_timeout live_pids=[27628, 73384, 66588]
+test sidecar_process::tests::trailing_whitespace_is_accepted ... ok
+test sidecar_process::tests::truncated_response ... ok
+test sidecar_process::tests::unit_count_limit ... ok
+large_resource_timeout elapsed_ms=1004 result=Some("SIDECAR_TIMEOUT")
+test sidecar_process::tests::review_large_resource_timeout_latency ... ok
+test sidecar_process::tests::unknown_capability ... ok
+test sidecar_process::tests::unknown_enum ... ok
+test sidecar_process::tests::unknown_field ... ok
+test sidecar_process::tests::unknown_issue_reference ... ok
+large_resource_validation_cancel latency_ms=1 result=Some("SIDECAR_CANCELLED")
+test sidecar_process::tests::review_large_resource_validation_cancel_latency ... ok
+test sidecar_process::tests::unknown_nested_field ... ok
+test sidecar_process::tests::unsupported_capability_version ... ok
+test sidecar_process::tests::unknown_unit_cannot_be_parsed ... ok
+test sidecar_process::tests::unsupported_version ... ok
+test sidecar_process::tests::valid_json_with_nonzero_exit_is_failure ... ok
+test sidecar_process::tests::valid_resources ... ok
+test sidecar_process::tests::wrong_length ... ok
+test sidecar_process::tests::wrong_request_id ... ok
+test sidecar_process::tests::zero_policy_rejected_without_workspace ... ok
+test source_model::tests::failed_utf8_versions_have_only_real_raw_bytes_and_no_spans ... ok
+test sidecar_process::tests::wrong_sha ... ok
+test source_model::tests::loading_and_validating_real_snapshots_preserves_complete_records ... ok
+test source_model::tests::pending_count_constraint_rejects_a_different_count_without_changing_the_report ... ok
+test sidecar_process::tests::wrong_workspace_identity ... ok
+test source_model::tests::snapshots_reject_changed_raw_bytes_and_incomplete_span_inventory ... ok
+test source_model::tests::records_reject_invalid_hashes_and_reuse_before_the_first_import ... ok
+test source_model::tests::snapshots_reject_unknown_cache_content_and_invalid_owner ... ok
+test source_model::tests::staged_snapshot_validation_is_restricted_to_the_current_writer_directory ... ok
+test source_schema::tests::candidate_upgrade_rejects_a_mismatched_identity_without_rewriting_old_rows ... ok
+test source_schema::tests::a_real_sqlite_reader_lock_rolls_back_schema_three_rows_and_database_bytes ... ok
+test source_schema::tests::exact_schema_routing_rejects_broken_foreign_keys_even_if_writes_disabled_them ... ok
+test source_schema::tests::exact_schema_three_accepts_its_empty_registration_state ... ok
+test source_schema::tests::exact_source_schema_accepts_its_empty_registration_state ... ok
+test source_schema::tests::legacy_upgrade_keeps_schema_three_without_a_downgrade ... ok
+test source_schema::tests::pdf_upgrade_of_empty_schema_one_reaches_three_with_the_original_identity ... ok
+test source_schema::tests::schema_one_upgrades_recheck_metadata_after_a_real_write_lock_handoff ... ok
+test source_schema::tests::exact_schema_routing_rejects_unknown_tables_indexes_views_triggers_and_constraints ... ok
+test source_schema::tests::schema_three_page_and_resource_columns_reject_wrong_types_and_states ... ok
+test source_schema::tests::schema_three_migration_preserves_every_legacy_row_value_identity_and_order ... ok
+test source_schema::tests::schema_three_noop_upgrades_preserve_all_pdf_rows_and_identities ... ok
+test source_schema::tests::schema_three_parse_rows_require_verified_or_real_host_failure_outcomes ... ok
+test source_schema::tests::schema_three_pdf_imports_bind_source_version_and_parse_without_fabricating_failed_versions ... ok
+test source_schema::tests::schema_three_region_columns_enforce_finite_bbox_ranges_and_same_parse_foreign_keys ... ok
+test source_schema::tests::schema_three_pdf_versions_enforce_acquisition_and_do_not_reinterpret_text_states ... ok
+test source_schema::tests::schema_three_preserves_legacy_span_kinds_and_nonempty_ranges ... ok
+test source_schema::tests::source_schema_rejects_unknown_objects_and_changed_constraints ... ok
+test source_schema::tests::schema_upgrades_reject_unknown_versions_and_wrong_version_pairs_without_mutation ... ok
+test source_write::pdf_tests::pdf_writer_interruption_child ... ok
+test source_schema::tests::upgrading_a_candidate_preserves_identity_and_rejects_unknown_schema_atomically ... ok
+tree_mode=tree_timeout primary_failure=false stop_elapsed_ms=1795
+test sidecar_process::tests::timeout_reaps_live_tree ... ok
+test source_write::pdf_tests::real_windows_delete_locks_on_published_pdf_files_preserve_recovery_backups ... ok
+test source_write::tests::a_replaced_project_directory_and_its_original_moved_tree_are_untouched ... ok
+test source_write::tests::actual_abort_snapshot_delete_failure_restores_pair_and_retains_both_backups ... ok
+test source_write::tests::actual_cleanup_delete_failure_keeps_validated_files_marker_and_both_backups ... ok
+test source_write::tests::actual_process_kill_preserves_backups_and_blocks_inspection_at_three_stages ... ok
+test source_write::tests::actual_windows_delete_sharing_failure_restores_old_project ... ok
+test source_write::tests::beginning_then_aborting_preserves_original_project_and_sentinel ... ok
+test source_write::tests::callback_failure_does_not_change_original_database_or_config ... ok
+test source_write::pdf_tests::unregistered_files_at_pdf_publication_preserve_human_bytes_and_recovery_backups ... ok
+test source_write::tests::candidate_replacement_and_unknown_transaction_or_root_content_are_preserved ... ok
+test source_write::tests::drop_rolls_back_a_known_callback_failure_without_an_explicit_abort ... ok
+test source_write::tests::externally_deleted_backup_is_not_recreated_during_abort ... ok
+test source_write::tests::invalid_internal_ids_or_project_identity_changes_do_not_publish ... ok
+test source_write::tests::preexisting_unowned_cache_and_version_collision_are_never_taken_over ... ok
+test source_write::tests::controlled_failures_at_all_six_stages_restore_exact_original_bytes ... ok
+test source_write::tests::same_byte_replacement_of_published_targets_keeps_backups_and_marker ... ok
+test source_write::tests::successful_commit_upgrades_identity_and_publishes_owned_snapshots ... ok
+test source_write::tests::unknown_published_snapshot_content_is_preserved_without_rollback_deletion ... ok
+test text::tests::blank_unicode_whitespace_is_preserved_in_one_formatting_span ... ok
+test text::tests::consecutive_closed_fences_remain_distinct_blocks ... ok
+test text::tests::deeply_indented_fences_are_text_and_not_code_delimiters ... ok
+test text::tests::empty_or_only_bom_inputs_have_no_phantom_spans ... ok
+test text::tests::enum_names_are_strict_and_all_declared_statuses_round_trip ... ok
+test text::tests::headings_require_one_to_six_hashes_and_at_most_three_spaces ... ok
+test text::tests::invalid_utf8_reports_original_byte_offset_without_replacement ... ok
+test text::tests::matching_longer_tilde_fence_keeps_headings_and_other_markers_as_code ... ok
+test text::tests::mixed_unicode_blocks_have_explicit_byte_and_line_boundaries ... ok
+test text::tests::only_the_first_bom_and_newline_encoding_are_normalized ... ok
+test text::tests::sha256_matches_independent_empty_ascii_and_utf8_vectors ... ok
+test text::tests::short_or_suffixed_closing_fences_do_not_hide_unclosed_code ... ok
+test text::tests::trailing_newlines_do_not_invent_uncovered_or_empty_lines ... ok
+test source_write::tests::second_commit_preserves_existing_cache_and_raw_only_versions ... ok
+test source_write::pdf_tests::real_pdf_writer_process_kill_preserves_old_history_at_five_publish_stages ... ok
+test source_write::pdf_tests::controlled_pdf_write_errors_restore_old_text_and_both_project_files_at_seven_stages ... ok
+
+test result: ok. 401 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 37.09s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 4 tests
+test non_unicode_windows_argument_is_rejected_without_panicking_or_writing_files ... ok
+test version_matches_package_without_writing_files ... ok
+test help_succeeds_without_writing_files ... ok
+test invalid_arguments_are_actionable_input_errors_without_writing_files ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+
+running 12 tests
+test invalid_fixture_preflight_never_creates_output_or_false_publication ... ok
+test closed_stdout_after_real_compile_keeps_committed_publication_authority ... ok
+test author_reviewed_table_alias_variant_emits_escaped_real_canonical_link ... ok
+test malformed_fixture_and_invalid_utf8_fail_before_output_allocation ... ok
+test literal_ascii_punctuation_is_escaped_without_changing_required_content ... ok
+test existing_targets_and_human_edited_published_vault_are_never_overwritten ... ok
+test real_windows_source_lock_and_junctions_do_not_write_external_targets ... ok
+test overlapping_input_output_roots_are_rejected_but_component_siblings_are_valid ... ok
+test parameter_separator_supports_dash_paths_and_extra_arguments_remain_read_only ... ok
+test valid_case_compile_creates_published_output_only_in_selected_new_root ... ok
+test windows_path_controls_are_rejected_before_any_selected_root_is_created ... ok
+test two_new_roots_keep_note_bytes_and_identities_stable_with_independent_runs ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.88s
+
+
+running 3 tests
+test ordinary_fake_runtime_cancel_does_not_publish ... ok
+test ordinary_fake_rejects_chinese_interior_byte_without_candidates ... ok
+test ordinary_fake_uses_real_source_and_preserves_project ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.25s
+
+
+running 7 tests
+test ordinary_api_zero_budget_stops_before_any_http_request ... ok
+test ordinary_api_sends_one_structured_request_and_validates_author_candidate ... ok
+test ordinary_chat_local_http_maps_usage_and_accepts_author_candidates ... ok
+test ordinary_api_rate_limit_is_one_attempt_without_retry ... ok
+test ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request ... ok
+test ordinary_selected_gateway_zero_budget_keeps_model_strategy_and_never_calls ... ok
+test ordinary_selected_gateway_rejects_other_authorities_models_and_paths ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.59s
+
+
+running 24 tests
+test author_gold_cannot_use_substring_of_wrong_source_value ... ok
+test broken_concept_link_fails ... ok
+test author_exception_passes_ordinary_cli ... ok
+test failed_primary_cannot_borrow_duplicate_quality_passes ... ok
+test existing_embedded_and_hardlinked_paths_rejected ... ok
+test excluded_pending_and_review_are_not_passed ... ok
+test fix1_same_id_primary_checks_cannot_borrow_passes ... ok
+test invalid_evidence_sha_cannot_report_evidence_passed ... ok
+test fix1_source_and_unknown_review_preserve_known_condition_failure ... ok
+test fix1_duplicate_json_keys_keep_actual_counts_unknown ... ok
+test irrelevant_quote_and_extra_body_assertions_fail ... ok
+test missing_both_condition_fields_fails ... ok
+test malformed_candidate_preserves_actual_objects_and_source_mismatch_quality ... ok
+test fix1_workflow_preserves_observed_category_failures ... ok
+test missing_exception_fails ... ok
+test missing_both_unit_fields_fails ... ok
+test omitted_candidate_is_unprocessed ... ok
+test original_gold1_split_concepts_and_context_pass_without_repair ... ok
+test real_needs_review_source_remains_review ... ok
+test semantic_duplicate_new_id_fails ... ok
+test right_quote_wrong_fact_fails ... ok
+test unknown_author_value_stays_review_and_nonzero_utf8_span_passes ... ok
+test strict_candidate_and_evidence_errors_have_reports ... ok
+test strict_review_gold_decision_and_wrapper_inputs_are_rejected ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.47s
+
+
+running 20 tests
+test complete_raw_ir_binding_detects_whitespace_change_even_with_same_json_fields ... ok
+test evidence_ranges_require_actual_utf8_boundaries_and_slice_sha ... ok
+test independent_expected_catches_required_false_and_content_or_qualifier_drift ... ok
+test canonical_targets_and_title_paths_must_be_unique_and_unambiguous ... ok
+test independent_expected_fixes_table_labels_missing_values_and_cell_kind ... ok
+test complete_coverage_rejects_missing_duplicate_self_cycle_and_fake_exclusions ... ok
+test missing_atom_and_evidence_and_refutes_only_cannot_validate_required_knowledge ... ok
+test real_windows_exclusive_source_lock_fails_without_any_written_bytes ... ok
+test note_plan_requires_content_in_each_mapped_paragraph_list_item_and_table_cell ... ok
+test review_regression_definition_moved_away_cannot_leave_a_canonical_value_only_section ... ok
+test real_windows_root_and_source_junctions_never_widen_selected_inputs ... ok
+test note_output_paths_reject_traversal_reserved_names_and_windows_ambiguity ... ok
+test review_regression_full_reviewed_evidence_cannot_shrink_to_one_utf8_character ... ok
+test malformed_contract_versions_unknown_fields_and_missing_fields_are_explicit_input_errors ... ok
+test review_regression_unplanned_optional_atoms_still_require_plain_text ... ok
+test review_regression_required_atoms_inside_html_or_hidden_comments_are_not_displayed ... ok
+test source_mismatch_stops_later_checks_and_does_not_slice_declared_bad_boundaries ... ok
+test valid_fixture_reports_only_contract_success_and_preserves_all_inputs ... ok
+test selected_input_paths_reject_traversal_absolute_ads_collisions_and_reserved_names ... ok
+test review_regression_raw_wiki_and_html_in_all_display_fields_and_aliases_are_rejected ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.16s
+
+
+running 16 tests
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-19379b6b-c04f-495f-a59b-2dde4e051b3a case=counter_support
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-f8114e3b-3990-4245-a107-033f7e679a69 case=condition_variant
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-ef02cf29-77a1-4342-bd7a-efc48b66e040 case=counter_support
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-950afe40-f653-480a-b522-1e61a190a5bf case=not_applicable
+test broken_counter_reference_is_input_failure_before_any_conflict_report ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-97b15435-a9ca-4fbe-adcb-95f35f48675b case=true_conflict
+test counter_evidence_in_nonzero_utf8_unit_keeps_absolute_positions ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-40850b1e-5e99-44f6-992d-989fb422c562 case=unknown_complement
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-9012dc44-b909-4cb8-bf16-7805aec45e8b case=history
+test explicit_not_applicable_scope_can_contain_a_true_conflict ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-3b8bf1b5-387c-49d1-bb07-79ced5776f17 case=majority_conflict
+test frozen_same_context_conflict_is_reported_after_successful_source_review ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-761a21c6-37e5-42c7-90ec-993f701f6e3e case=precise_large_decimal
+test independent_unknown_condition_does_not_taint_complementary_property ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-acb37dc3-35a1-47e4-91cc-5bf408ecc1d6 case=majority_conflict
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-6db803ce-5ca0-442c-b22c-760dd45c3e53 case=same_source_history
+test large_decimal_inequality_is_compared_exactly_without_float_rounding ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-4a172d99-ae03-4e0e-ade5-891427ac2ff7 case=undated_difference
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-59fb4447-ecf2-442e-8752-c4eb5ddd8a34 case=numeric_equal
+test input_order_and_display_names_never_select_a_winner ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-22e52379-51e3-4247-86dd-f87adfde9956 case=true_conflict
+test majority_support_retains_all_three_parties_and_two_conflict_pairs ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-5e1c0bcd-27cb-440e-bfb7-6007e1475545 case=true_conflict
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-d7e5fb1b-28d9-429a-b9aa-c9f74bb58a10 case=unknown_condition
+test missing_support_is_not_promoted_to_a_legitimate_viewpoint ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-051f4d7f-c9b8-47c0-ae76-3553b58dd43b case=counter_support
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-da4c3db3-b7aa-449c-aa5d-8107de53427a case=signed_zero
+test output_collision_and_case_overlap_preserve_human_content ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-94a51a7f-db45-4530-bdc1-60d78404f16b case=counter_support
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-57dc3d46-ad44-479e-9971-175838c3db7c case=mixed_state
+test qualifier_links_preserve_relations_without_duplicating_original_evidence ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-16ee23af-e30c-4ee0-bf74-5171250f0de5 case=counter_to_claim
+test conditions_history_and_exact_decimal_equality_avoid_false_conflicts ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-fe9b425a-237d-44f2-a97b-2f89a5f03491 case=mixed_conflict
+test real_counter_evidence_is_preserved_with_its_original_link_and_position ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-459aa929-4a3d-41ea-b5d3-38d738f187f9 case=unit_difference
+test source_counter_to_the_claim_is_retained_without_a_fake_verified_verdict ... ok
+test unresolved_conflict_does_not_hide_the_passed_complement ... ok
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-cbe401d1-a0f4-49a1-a41a-55dcae79e251 case=overlapping_time
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-dc89cc7d-cfd5-4877-992d-4dd31adda2ba case=same_source_undated
+prepared_conflicts_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\conflicts-dd4f2ed7-941a-453a-8d97-9e063901cbb8 case=non_decimal
+test missing_or_incomparable_evidence_is_located_without_inventing_values ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.60s
+
+
+running 25 tests
+test copied_actual_unit_rejected ... ok
+test final_review_original_gold_author_cannot_be_discarded ... ok
+test actual_junction_case_and_output_parent_are_rejected ... ok
+test final_review_saved_owner_version_is_schema_exit_two ... ok
+test knowledge_help_and_invalid_arguments_are_filesystem_free ... ok
+test final_review_original_gold_author_obeys_text_limit ... ok
+test forged_candidate_and_ir_with_coherent_all_fingerprints_fail_real_assessment ... ok
+test author_condition_and_unit_differences_require_review ... ok
+test legal_two_source_case_has_one_fact ... ok
+positive root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-6641c5ef-478f-49b5-b10f-6e22d78487b1
+test ordinary_cli_coalesces_duplicate_preserving_three_sources ... ok
+test reordered_inputs_mapping_and_display_names_preserve_ids ... ok
+test output_collision_overlap_hardlink_and_junction_preserve_inputs ... ok
+test mapping_missing_unknown_duplicate_wrong_role_rejected ... ok
+test same_sha_binding_swap_rejected ... ok
+test repinned_fake_old_counts_and_markdown_rejected ... ok
+saved-bundle-schema kind=inventory root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-a6f06758-dfb3-4a11-afce-f1650a8b9ed3
+test saved_bundle_extra_inventory_is_schema_exit_two ... ok
+test same_source_distinct_registered_versions_require_review ... ok
+saved-bundle-schema kind=type root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-ef86259e-85e7-4298-9b28-ebc3268d20bf
+test saved_bundle_invalid_type_is_schema_exit_two ... ok
+saved-bundle-schema kind=malformed root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-dc17591f-7fd3-40b1-830b-ac48247f3a83
+test saved_bundle_malformed_json_is_schema_exit_two ... ok
+saved-bundle-schema kind=nullable root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-d6b78133-53a0-4e01-a6c5-7e17c6c067e9
+test repinned_ir_candidate_measurement_and_extra_evidence_rejected ... ok
+test saved_bundle_missing_nullable_is_schema_exit_two ... ok
+saved-bundle-schema kind=duplicate root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-b419d10d-22e3-4a4f-8d1e-14fcbfdf700a
+test saved_bundle_nested_duplicate_key_is_schema_exit_two ... ok
+saved-bundle-schema kind=unknown root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-ff4158b7-89b7-49f1-ba39-8a1f12fcaee4
+saved-bundle-schema kind=version root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-b6c413be-8077-4ca0-8a4c-a0a6e5361be3
+test saved_bundle_unknown_field_is_schema_exit_two ... ok
+test saved_bundle_unsupported_version_is_schema_exit_two ... ok
+test strict_schema_extra_duplicate_nullable_and_inventory_rejected ... ok
+
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.62s
+
+
+running 8 tests
+presentation_legacy_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-legacy-5ed6a42d-fc82-4ee7-9a13-3aaaa05a3110
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-f5607ed6-10c2-422d-b50b-ef3c02586bd9 case=cross_role_disjoint_paragraph
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-b42dcffa-6898-4751-b4bf-24b56541b228 case=legacy_v1_two_objects
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-fed9025a-8baf-4a97-b38c-b48bb0f6272c case=two_objects
+presentation_matrix_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-matrix-0db6a491-a765-402e-9d80-94c0ed709054
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-eca01061-0666-40ef-8ed9-5c122a34fe05 case=two_objects
+test cross_atom_concept_role_reuse_preserves_source_backed_paragraph ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-a06c903b-843f-4dae-9818-355318ec6ae1 case=two_objects
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-981e34f6-60bb-449f-901f-154f59ef3ec4 case=legacy_v2_two_objects
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-5384b346-1cde-4426-855f-4eae86183430 case=sparse_properties
+test ordinary_present_chooses_table_after_source_review_and_successful_coordination ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-fd6864ec-6144-49dc-b9f9-2b1a736e864c case=two_objects
+test legacy_source_reviews_coordinate_and_present_without_context_upgrade_or_lost_qualifiers ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-7925a2bd-5340-41df-9fef-afb72f1db2aa case=two_objects
+test present_accepts_delimited_four_paths_and_new_unicode_vault_path ... ok
+presentation_tamper_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-tamper-8c541b32-cb91-434c-8f46-791ad992f7da
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-b4f2ed84-73e4-4eaf-a78b-e012fc0a7625 case=two_objects
+test present_preserves_existing_output_and_rejects_input_descendant_targets ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-a8ab304a-cff7-44f4-8443-e614aa4c9930 case=single_object
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-ee5e8973-2cd7-4ee3-9aae-ee63f21333e6 case=two_objects
+test present_preserves_multiline_display_name_and_stable_detail_link ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-1dd5050a-7ac2-4db4-b748-ac03883046b7 case=two_objects
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-becab2a1-1204-454e-83ea-ddf9072f534e case=no_shared_property
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-a2e33ae4-cefd-46e3-bc00-bc9e635ab5d2 case=two_objects
+test present_reopens_saved_coordination_and_original_source_review_materials ... ok
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-dc869ed9-c536-450a-b713-57c38c6f4f4b case=known_vs_na
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-775a8866-75ae-463d-b69e-28ffb0f52324 case=multi_context_cell
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-41057cb4-eb58-4fe1-b6b1-ca4e5db28d56 case=history_cell
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-5e40f235-5fbd-44f6-bfaa-544bb7516997 case=escaping_names
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-bba5957e-3f0c-4cf3-8a82-aa3ce16814b7 case=mixed_units
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-4d2c0634-a2ee-4b8c-8653-a83fcb12b4eb case=blocked_conflict
+prepared_presentation_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\presentation-a45f5fe3-9096-4cd7-a7a9-4295f4cc6129 case=blocked_unknown
+test every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 32.16s
+
+
+running 27 tests
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-9869833e-fc22-4ed2-b2e9-0ea31d326802 case=history
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-076f7c1a-9f8b-4191-abdc-9ff773cfa0f8 case=combined_context
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-e8c95be6-f824-449d-a09e-f021faf0e0c6 case=conditional
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-691baa8c-f8d7-4ab5-98b6-e98ebde1947b case=conditional
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-9869833e-fc22-4ed2-b2e9-0ea31d326802
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-c0e1fe07-ccbc-4774-b33c-1484b90299ef case=history
+case=combined_context root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-076f7c1a-9f8b-4191-abdc-9ff773cfa0f8
+test combined_context ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-9b0bfac8-e4d6-415f-b45c-b4d12bd77dac case=history
+rejection=COORD_SOURCE_REVIEW root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-691baa8c-f8d7-4ab5-98b6-e98ebde1947b
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-a098f241-61b0-49bc-bbd9-9f75d8051d40 case=conditional
+root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-e8c95be6-f824-449d-a09e-f021faf0e0c6
+test conditional_variants_preserve_all_author_fields ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-0ce894f4-3775-4b78-bd8b-9003e3b969e0 case=conditional
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-c0e1fe07-ccbc-4774-b33c-1484b90299ef
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-3af3880c-58a3-4e40-916f-3921449a4ea7 case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-9b0bfac8-e4d6-415f-b45c-b4d12bd77dac
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-c71b636a-6a8a-4d55-952f-2d7ccf7e8281 case=history
+rejection=COORD_SOURCE_REVIEW root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-a098f241-61b0-49bc-bbd9-9f75d8051d40
+test conditions_and_exceptions_cannot_be_coherently_deleted ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-408e8cb4-94e7-4911-8fb1-afb81bdc64b0 case=exception_difference
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-3af3880c-58a3-4e40-916f-3921449a4ea7
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-05d5b82e-cb47-4b1b-9dfc-8d5dc9c2ffdf case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-c71b636a-6a8a-4d55-952f-2d7ccf7e8281
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-550af382-8b7c-436a-bcd6-e7cb8681a307 case=history
+case=exception_difference root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-408e8cb4-94e7-4911-8fb1-afb81bdc64b0
+test exception_difference ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-d13f3f79-28b6-4fd1-a625-11195b96eeff case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-05d5b82e-cb47-4b1b-9dfc-8d5dc9c2ffdf
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-9af393e2-b78b-4880-8937-9223587fbaac case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-550af382-8b7c-436a-bcd6-e7cb8681a307
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-90a1338a-fc00-4827-81fc-4ea4cef7ec7b case=history
+test display_names_and_all_manifest_order_do_not_change_identity ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-fb579c73-4011-42c9-b905-469de8231b3b case=history_day
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-9af393e2-b78b-4880-8937-9223587fbaac
+test background_must_be_complete_adjacent_and_fact_unique ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-46952d50-95c5-4685-bf88-4402958cfc27 case=mixed_state
+case=history root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-d13f3f79-28b6-4fd1-a625-11195b96eeff
+test history ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-a72c2c53-15c3-468c-a0e1-fd97175a33b3 case=conditional
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-90a1338a-fc00-4827-81fc-4ea4cef7ec7b
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-42b276ca-d5ac-4c53-a18d-c700a207813d case=history
+case=history_day root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-fb579c73-4011-42c9-b905-469de8231b3b
+test history_day ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-e314332d-76c8-486f-9dfc-7d50d429d330 case=history
+case=mixed_state root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-46952d50-95c5-4685-bf88-4402958cfc27
+test mixed_state ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-e33c35be-4e40-4ebb-bf24-2096b62fc5f7 case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-42b276ca-d5ac-4c53-a18d-c700a207813d
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-cbe409c6-7af0-4ea8-a647-f9ffe699922a case=history
+test nonzero_source_unit_preserves_frozen_history_and_absolute_context ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-69c91253-d902-43f2-8447-850d295b6dfa case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-e33c35be-4e40-4ebb-bf24-2096b62fc5f7
+test nonzero_source_unit_rejects_support_covering_only_fact ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-6f417c5e-fdec-41a4-b045-f2f6f6ac6b3e case=not_applicable
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-cbe409c6-7af0-4ea8-a647-f9ffe699922a
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-7eb41de1-e464-4252-863a-fb71f6709be4 case=history
+test multiple_supports_keep_original_order_and_exact_context_set ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-769c171e-987a-4948-a745-dfaf91778afb case=conditional
+test nonzero_utf8_context_range_keeps_actual_source_prefix ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-ecb685f9-3e36-4919-9008-c26aa9f53d6f case=overlapping_time
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-7eb41de1-e464-4252-863a-fb71f6709be4
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-6d31827a-0d56-4a87-8256-ef1736bc9d8e case=history
+case=not_applicable root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-6f417c5e-fdec-41a4-b045-f2f6f6ac6b3e
+test not_applicable ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-6a5444ac-c340-40ae-b6a5-7486775cad98 case=same_source_condition
+rejection=EXTRACT_OUTPUT_OVERLAP root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-769c171e-987a-4948-a745-dfaf91778afb
+test output_collisions_and_overlap_preserve_existing_content ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-e267cb63-b37e-4a07-a3eb-76524ed18834 case=same_source_history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-6d31827a-0d56-4a87-8256-ef1736bc9d8e
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-a9ebf9ab-4f8c-44a3-afb8-d0ded8733ba1 case=history
+case=overlapping_time root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-ecb685f9-3e36-4919-9008-c26aa9f53d6f
+test overlapping_time ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-f5d5549a-1f5f-4913-ab2a-992fe7c877b0 case=same_source_undated
+case=same_source_condition root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-6a5444ac-c340-40ae-b6a5-7486775cad98
+test same_source_condition ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-685e9d58-60d9-46ef-8c86-47b708f51306 case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-a9ebf9ab-4f8c-44a3-afb8-d0ded8733ba1
+test declared_context_must_match_actual_source ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-c9f8ac5b-7cba-4977-a27d-c99970cfdd80 case=conditional
+case=same_source_history root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-e267cb63-b37e-4a07-a3eb-76524ed18834
+test same_source_history ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-9a76f21d-4d59-487c-bfa9-10c2099e9de1 case=history
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-685e9d58-60d9-46ef-8c86-47b708f51306
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-eba1164f-577d-4b1f-a007-31f216edd053 case=history
+case=same_source_undated root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-f5d5549a-1f5f-4913-ab2a-992fe7c877b0
+test same_source_undated ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-f030f2ce-9da1-4e98-8f34-9de23e287479 case=undated_difference
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-eba1164f-577d-4b1f-a007-31f216edd053
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-94c763da-e80a-473e-9b74-197362924b45 case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-9a76f21d-4d59-487c-bfa9-10c2099e9de1
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-6716b697-b887-4279-b49b-1759ea67e2ba case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-c9f8ac5b-7cba-4977-a27d-c99970cfdd80
+test support_must_cover_both_background_and_fact ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-48fab60e-24e7-4546-b950-07ff14cf4389 case=unit_difference
+case=undated_difference root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-f030f2ce-9da1-4e98-8f34-9de23e287479
+test undated_difference ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-8545f841-bad4-40f5-b90d-278f5c66dff6 case=unknown_condition
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-94c763da-e80a-473e-9b74-197362924b45
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-ed9f939f-bd2c-4d3d-8e98-bff228596ce4 case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-6716b697-b887-4279-b49b-1759ea67e2ba
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-aaa7e82a-517f-42d8-b9a9-f1a66539a055 case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-8545f841-bad4-40f5-b90d-278f5c66dff6
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-b76b5553-454a-4241-8ccc-7e418c64cf29 case=not_applicable
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-ed9f939f-bd2c-4d3d-8e98-bff228596ce4
+case=unit_difference root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-48fab60e-24e7-4546-b950-07ff14cf4389
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-f21138b0-7050-4738-89e5-bd6aeecff45f case=history
+test unit_difference ... ok
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-7634ab8d-eede-463a-8458-5e08cee1b690 case=unknown_condition
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-aaa7e82a-517f-42d8-b9a9-f1a66539a055
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-421ba5d4-5e66-47af-9cdd-b6da75d96e13 case=history
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-f21138b0-7050-4738-89e5-bd6aeecff45f
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-ba07c4c7-0992-4a51-b2e9-8b024e5959c6 case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-b76b5553-454a-4241-8ccc-7e418c64cf29
+test unknown_and_not_applicable_cannot_be_exchanged ... ok
+case=unknown_condition root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-7634ab8d-eede-463a-8458-5e08cee1b690
+test unknown_condition ... ok
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-421ba5d4-5e66-47af-9cdd-b6da75d96e13
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-e1cad040-770f-496e-8124-71479aa50263 case=history
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-ba07c4c7-0992-4a51-b2e9-8b024e5959c6
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-9fa0e2c9-4432-4009-a0b6-964a80d0bcdc case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-e1cad040-770f-496e-8124-71479aa50263
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-41872041-2200-4789-89a8-13fbb25f76f9 case=history
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-9fa0e2c9-4432-4009-a0b6-964a80d0bcdc
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-3c287cd8-5f3f-4657-b79f-a761f360ee5c case=conditional
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-41872041-2200-4789-89a8-13fbb25f76f9
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-415c65f5-262b-4132-b8fb-98c43be3eb85 case=history
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-3c287cd8-5f3f-4657-b79f-a761f360ee5c
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-585269ee-9cb0-44cf-8750-6da37021d97b case=conditional
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-415c65f5-262b-4132-b8fb-98c43be3eb85
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-22e9d5e6-7dc1-42c1-8098-17169b3bfa56 case=history
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-585269ee-9cb0-44cf-8750-6da37021d97b
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-bda05b5d-7c46-401b-9caf-c436148369aa case=conditional
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-22e9d5e6-7dc1-42c1-8098-17169b3bfa56
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-2541c99f-4b26-4a19-abbf-e662b1a16295 case=history
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-bda05b5d-7c46-401b-9caf-c436148369aa
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-bbcdbb40-5678-4f54-abf8-05957bc0d2f7 case=conditional
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-2541c99f-4b26-4a19-abbf-e662b1a16295
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-cecefd5d-6b87-4c69-9f81-b5679069d740 case=history
+rejection=COORD_CONTEXT root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-cecefd5d-6b87-4c69-9f81-b5679069d740
+test time_nullable_contract_and_gregorian_values_are_enforced ... ok
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-bbcdbb40-5678-4f54-abf8-05957bc0d2f7
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-12c7ef5f-15d9-4214-bd49-85522ee86763 case=conditional
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-12c7ef5f-15d9-4214-bd49-85522ee86763
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-82718bae-c582-488f-bf63-b7826229b08c case=history
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-82718bae-c582-488f-bf63-b7826229b08c
+prepared_variants_root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-de30576f-9a49-4047-9b9b-63a40f6b8f83 case=conditional
+rejection=COORD_SCHEMA root=\\?\D:\Noetome\target\compiler-temp\native-b06-t01-8ce6623db0ad\repo\target\compiler-temp\coordinate-de30576f-9a49-4047-9b9b-63a40f6b8f83
+test schema_two_strict_fields_enums_and_versions ... ok
+
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 29.51s
+
+
+running 7 tests
+test missing_or_relative_runtime_is_explicit_failure_without_creating_a_sandbox ... ok
+test multicodepoint_unicode_mapping_preserves_one_edge_space_and_remains_reviewable ... ok
+test existing_root_unreadable_input_and_unknown_workspace_entries_never_succeed ... ok
+test inspect_uses_saved_raw_after_input_moves_and_rejects_changed_text ... ok
+test location_and_body_mutations_fail_even_after_artifact_hashes_are_updated ... ok
+test real_cli_parses_fixed_single_and_multiple_pages_with_actual_positions ... ok
+test real_boundary_matrix_preserves_physical_pages_and_honest_nonzero_status ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.42s
+
+
+running 19 tests
+test actual_pdf_cache_junction_is_rejected_and_its_target_stays_unchanged ... ok
+test actual_hardlinked_pdf_resource_is_rejected_even_with_identical_bytes ... ok
+test actual_windows_exclusive_pdf_lock_creates_no_version_and_unlock_recovers ... ok
+test configuration_schema_mismatch_or_unknown_schema_never_implicitly_migrates ... ok
+test cross_table_duplicate_import_rowid_or_uuid_cannot_hide_behind_text_inspect ... ok
+test changed_raw_and_sql_resource_or_page_index_are_rejected_without_writes ... ok
+test missing_and_oversized_pdf_record_only_failed_import_then_valid_input_recovers ... ok
+test missing_runtime_keeps_acquired_raw_and_failed_attempt_then_recovers_readonly ... ok
+test explicit_source_id_isolates_same_sha_versions_and_parse_evidence ... ok
+test mixed_text_and_pdf_imports_share_a_unique_increasing_sql_rowid_sequence ... ok
+test real_windows_database_replace_lock_preserves_old_text_and_config_bytes ... ok
+test reparse_on_schema1_creates_one_fresh_real_attempt ... ok
+test schema1_pdf_import_registers_authored_pages_and_exact_ten_tables ... ok
+test damaged_encrypted_partial_and_review_keep_raw_and_honest_page_counts ... ok
+test schema2_upgrade_preserves_all_old_rows_reports_snapshots_and_text_semantics ... ok
+test unknown_pdf_cache_and_snapshot_entries_are_never_accepted_or_cleaned ... ok
+test same_bytes_repeat_and_rename_reuse_version_parse_without_new_evidence ... ok
+test complete_raw_above_parser_resource_limit_retains_a_retryable_original_version ... ok
+test semantic_region_and_utf8_tamper_fail_even_when_all_outer_hashes_match ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 19.20s
+
+
+running 13 tests
+test case_insensitive_windows_sidecar_names_remain_blocking_and_untouched ... ok
+test active_rollback_and_wal_journals_are_blocked_without_touching_sqlite_files ... ok
+test existing_targets_and_invalid_parents_preserve_all_content ... ok
+test inspection_works_with_readonly_files_and_windows_write_sharing_denied ... ok
+test initialization_persists_matching_identity_schema_and_empty_state ... ok
+test corrupt_or_mismatched_databases_are_rejected_without_migration ... ok
+test incomplete_layouts_are_reported_and_not_cleaned_by_readonly_inspection ... ok
+test relative_and_dash_prefixed_paths_are_supported_and_projects_can_move ... ok
+test project_help_and_invalid_syntax_have_no_filesystem_side_effects ... ok
+test supported_schema_versions_must_match_without_migration ... ok
+test windows_junction_roots_and_parents_are_rejected_without_writing_the_target ... ok
+test writing_directory_is_incomplete_and_preserved_by_public_inspection ... ok
+test malformed_configs_are_rejected_without_repair_or_path_escape ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s
+
+
+running 3 tests
+test cli_has_no_fake_command_or_flag ... ok
+test project_import_cannot_take_fake_producer_flag ... ok
+test production_library_rejects_actual_fake_process ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+
+running 19 tests
+test actual_exclusive_windows_source_lock_records_failure_without_a_fake_version ... ok
+test chinese_bom_and_mixed_newlines_preserve_full_byte_and_line_locations ... ok
+test existing_write_marker_and_unknown_snapshot_content_are_never_cleaned_or_overwritten ... ok
+test actual_windows_database_replace_block_preserves_all_previous_project_bytes ... ok
+test empty_and_bom_only_sources_have_zero_spans_without_fake_knowledge_completion ... ok
+test changed_content_creates_new_version_without_rewriting_old_evidence ... ok
+test invalid_or_unknown_source_and_import_ids_do_not_change_project_content ... ok
+test missing_selected_file_records_an_attempt_without_a_fake_version ... ok
+test explicit_source_identity_survives_content_hash_shared_with_another_source ... ok
+test project_source_and_snapshot_junctions_do_not_write_their_targets ... ok
+test invalid_utf8_records_only_a_real_raw_version_and_remains_inspectable ... ok
+test source_help_and_invalid_syntax_have_no_filesystem_side_effects ... ok
+test source_exceeding_read_bound_records_no_truncated_content_version ... ok
+test same_display_name_with_other_content_does_not_merge_source_identity ... ok
+test source_material_is_data_and_does_not_execute_embedded_file_commands ... ok
+test repeated_and_renamed_files_reuse_versions_and_span_identity ... ok
+test source_import_persists_real_snapshots_and_readonly_inspection ... ok
+test unsupported_type_and_path_traversal_are_rejected_without_project_changes ... ok
+test unclosed_fence_is_preserved_as_needing_review ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.14s
+
+
+running 15 tests
+test preferences::tests::directory_collision_and_oversized_settings_are_preserved ... ok
+test preferences::tests::corrupt_unsupported_and_unknown_settings_are_preserved_with_safe_close_fallback ... ok
+test preferences::tests::invalid_values_do_not_change_memory_or_saved_bytes ... ok
+test preferences::tests::actual_windows_replace_failure_keeps_old_file_and_effective_choice ... ok
+test preferences::tests::missing_settings_use_safe_default_without_writing_and_valid_choice_persists ... ok
+test preferences::tests::reload_recovers_after_a_windows_read_lock_blocks_initial_loading ... ok
+test preferences::tests::reload_rejects_corruption_and_preserves_the_previous_effective_choice ... ok
+test preferences::tests::external_edits_deletions_and_same_byte_replacements_are_not_overwritten ... ok
+test tests::desktop_and_cli_share_versions_and_supported_capabilities ... ok
+test tests::desktop_does_not_accept_arbitrary_cli_commands ... ok
+test tests::profile_preparation_preserves_existing_content_and_reports_file_collision ... ok
+test preferences::tests::junction_settings_directory_is_rejected_without_touching_its_target ... ok
+test preferences::tests::saving_replaces_an_existing_settings_file_and_does_not_leave_temporary_files ... ok
+test tests::startup_logs_append_and_preserve_files_that_block_the_log_directory ... ok
+test preferences::tests::reload_updates_a_cached_choice_saved_by_an_independent_state_without_writing ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

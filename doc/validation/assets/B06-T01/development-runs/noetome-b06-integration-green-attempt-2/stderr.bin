@@ -1,0 +1,121 @@
+   Compiling noetome-cli v0.1.0 (/home/lyinn/project/Noetome/crates/noetome-cli)
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib) generated 4 warnings (run `cargo fix --lib -p noetome-cli` to apply 3 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.66s
+     Running tests/knowledge_presentation.rs (target/debug/deps/knowledge_presentation-8676f985f8e2cb4b)
+
+thread 'every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules' (127697) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:457:21:
+assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'present_accepts_delimited_four_paths_and_new_unicode_vault_path' (127700) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:457:21:
+assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+
+thread 'legacy_source_reviews_coordinate_and_present_without_context_upgrade_or_lost_qualifiers' (127698) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:457:21:
+assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-c8059aa40c13c94a1a27b3806716eb5261430c5febdbd5d80d7f1906e7ff36c8"}
+
+thread 'legacy_source_reviews_coordinate_and_present_without_context_upgrade_or_lost_qualifiers' (127698) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:457:21:
+assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v2-684ab00816caadf3595021604d289e3d3e1aeddef500e779f0b55a8628006c79"}
+
+thread 'legacy_source_reviews_coordinate_and_present_without_context_upgrade_or_lost_qualifiers' (127698) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:1055:5:
+legacy_v1_two_objects: assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-c8059aa40c13c94a1a27b3806716eb5261430c5febdbd5d80d7f1906e7ff36c8"}
+legacy_v2_two_objects: assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v2-684ab00816caadf3595021604d289e3d3e1aeddef500e779f0b55a8628006c79"}
+
+thread 'every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules' (127697) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:457:21:
+assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-242a3b2e27c64fb47847a4a7c3b6ac29f7968a39317917012768912585feb493", "fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+
+thread 'every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules' (127697) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:457:21:
+assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-95e8db276f76bd15119bad7028219d48fc477e0c9514235cb1670fb20314e34a"}
+
+thread 'every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules' (127697) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:457:21:
+assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-b3b30aead99f7625774d2df41a44a30697c93f2f650b87b9cb4ca711c47caab0", "fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+
+thread 'every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules' (127697) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:457:21:
+assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-7c791e173394c49e91d70ffd8fc76a2cc286ad394b4647c3bb8bc0325bc3536f", "fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+
+thread 'every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules' (127697) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:457:21:
+assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-e3524c039cc467895fbe79851774e4896cf06a621783045c08e94161a4b247a1"}
+
+thread 'every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules' (127697) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:457:21:
+assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+
+thread 'every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules' (127697) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:950:5:
+two_objects: assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+sparse_properties: assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-242a3b2e27c64fb47847a4a7c3b6ac29f7968a39317917012768912585feb493", "fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+known_vs_na: assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-95e8db276f76bd15119bad7028219d48fc477e0c9514235cb1670fb20314e34a"}
+multi_context_cell: assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-b3b30aead99f7625774d2df41a44a30697c93f2f650b87b9cb4ca711c47caab0", "fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+history_cell: assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-7c791e173394c49e91d70ffd8fc76a2cc286ad394b4647c3bb8bc0325bc3536f", "fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+escaping_names: assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-e3524c039cc467895fbe79851774e4896cf06a621783045c08e94161a4b247a1"}
+mixed_units: assertion `left == right` failed: object label complete fact references
+  left: {}
+ right: {"fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"}
+error: test failed, to rerun pass `-p noetome-cli --test knowledge_presentation`

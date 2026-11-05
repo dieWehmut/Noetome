@@ -1,0 +1,156 @@
+{
+  "schema_version": 3,
+  "author": "self-authored-active-presentation-fixture-before-candidates",
+  "scope": "explicit_identity_conflict_review_v3",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case_name": "two_objects",
+  "expected_status": "passed",
+  "input_ids": [
+    "a",
+    "b"
+  ],
+  "facts": [
+    {
+      "object_id": "60000000-0000-4000-8000-000000000001",
+      "property_id": "60000000-0000-4000-8000-000000000003",
+      "value_status": "known",
+      "value": "10",
+      "unit": "m/s",
+      "conditions": [
+        "温度 20 ℃",
+        "仅适用成年样例 A"
+      ],
+      "exceptions": [
+        "结冰时不适用"
+      ],
+      "applicability_status": "known",
+      "time": {
+        "status": "known",
+        "precision": "year",
+        "value": "2020"
+      },
+      "input_ids": [
+        "a"
+      ],
+      "original_atom_ids": [
+        "a-speed"
+      ],
+      "status": "passed",
+      "issue_codes": []
+    },
+    {
+      "object_id": "60000000-0000-4000-8000-000000000002",
+      "property_id": "60000000-0000-4000-8000-000000000003",
+      "value_status": "known",
+      "value": "12",
+      "unit": "m/s",
+      "conditions": [
+        "温度 20 ℃",
+        "仅适用成年样例 B"
+      ],
+      "exceptions": [
+        "结冰时不适用"
+      ],
+      "applicability_status": "known",
+      "time": {
+        "status": "known",
+        "precision": "year",
+        "value": "2020"
+      },
+      "input_ids": [
+        "b"
+      ],
+      "original_atom_ids": [
+        "b-speed"
+      ],
+      "status": "passed",
+      "issue_codes": []
+    }
+  ],
+  "occurrences": [
+    {
+      "input_id": "a",
+      "original_atom_id": "a-speed",
+      "value": "10",
+      "unit": "m/s",
+      "conditions": [
+        "温度 20 ℃",
+        "仅适用成年样例 A"
+      ],
+      "exceptions": [
+        "结冰时不适用"
+      ],
+      "applicability_status": "known",
+      "time": {
+        "status": "known",
+        "precision": "year",
+        "value": "2020"
+      },
+      "context_quote": "适用条件：已列明；观点时间：2020年。\n样例 A 的速度为 10 m/s，条件为温度 20 ℃且仅适用成年样例 A；例外为结冰时不适用。",
+      "status": "passed",
+      "issue_codes": []
+    },
+    {
+      "input_id": "b",
+      "original_atom_id": "b-speed",
+      "value": "12",
+      "unit": "m/s",
+      "conditions": [
+        "温度 20 ℃",
+        "仅适用成年样例 B"
+      ],
+      "exceptions": [
+        "结冰时不适用"
+      ],
+      "applicability_status": "known",
+      "time": {
+        "status": "known",
+        "precision": "year",
+        "value": "2020"
+      },
+      "context_quote": "适用条件：已列明；观点时间：2020年。\n样例 B 的速度为 12 m/s，条件为温度 20 ℃且仅适用成年样例 B；例外为结冰时不适用。",
+      "status": "passed",
+      "issue_codes": []
+    }
+  ],
+  "relations": [
+    {
+      "left_input_id": "a",
+      "right_input_id": "b",
+      "relation": "separate_object",
+      "issue_code": null,
+      "earlier_input_id": null,
+      "later_input_id": null
+    }
+  ],
+  "totals": {
+    "input_bundles": 2,
+    "validated_input_bundles": 2,
+    "input_atoms": 2,
+    "retained_fact_groups": 2,
+    "canonical_facts": 2,
+    "source_occurrences": 2,
+    "evidence_links": 2,
+    "independent_sources": 2,
+    "duplicate_occurrences": 0,
+    "passed": 2,
+    "failed": 0,
+    "needs_review": 0,
+    "unprocessed": 0,
+    "condition_variants": 0,
+    "historical_relations": 0,
+    "known_condition_occurrences": 2,
+    "unknown_condition_occurrences": 0,
+    "not_applicable_condition_occurrences": 0,
+    "dated_occurrences": 2,
+    "undated_occurrences": 0,
+    "context_evidence_links": 2,
+    "true_conflicts": 0,
+    "insufficient_evidence_relations": 0,
+    "conflicting_occurrences": 0,
+    "insufficient_evidence_occurrences": 0,
+    "counter_evidence_links": 0
+  }
+}

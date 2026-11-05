@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "task_id": "B06-T01",
+  "reviewer": "independent child agent /root/presentation_review",
+  "reviewed_at": "2026-11-05T05:28:53.386767+00:00",
+  "scope": "Read-only final review of four Python checker diffs and test_presentation_display_verifier.py; compare bounded display-label validation against Rust plain_text and verify the metadata exception cannot extend to ID/path/source fields.",
+  "source_pins": {
+    "scripts/verify_knowledge_coordination.py": {
+      "sha256": "31cafd9006de7b883ba69130e584020b12cd9fad05c7139b50c08e589814a266",
+      "byte_length": 74156
+    },
+    "scripts/verify_knowledge_variants.py": {
+      "sha256": "062dee55fc34880842b7b45f7872ed525cdbcea4ee2e22e8a962d90fa0e509d6",
+      "byte_length": 26480
+    },
+    "scripts/verify_knowledge_conflicts.py": {
+      "sha256": "bad84ccd7c47d3e42400dc86ad990f87bdad2cf958f1158548a90bcd015b9248",
+      "byte_length": 30187
+    },
+    "scripts/verify_knowledge_presentation.py": {
+      "sha256": "a338a69e970999689b1e3db15d828002c39078cc82d8873feb732cdaa00ec49e",
+      "byte_length": 62332
+    },
+    "tests/test_presentation_display_verifier.py": {
+      "sha256": "a9b2504cb961c76675199d7ff2e6b1e359b569cc4cc2b97d063398637fec0581",
+      "byte_length": 7072
+    },
+    "crates/noetome-cli/src/fixture_plan.rs": {
+      "sha256": "3a3199430d3c5fec7cbea3665447edf910f7cc2f6b0e7b5c91c43c8fe9285ab2",
+      "byte_length": 65699
+    },
+    "crates/noetome-cli/src/knowledge_coordinate_input.rs": {
+      "sha256": "70ece9e4fb3d4ace371adb1539822d6dbd23f3837df5691cd1e3087c19d9ea1d",
+      "byte_length": 23265
+    },
+    "crates/noetome-cli/src/knowledge_presentation_render.rs": {
+      "sha256": "002286e8685a1e82f9b6eecf80ec9296f74fb4e1519fbe65acc3595d41d9c606",
+      "byte_length": 56128
+    }
+  },
+  "verdict": "no_actionable_findings_in_reviewed_diff",
+  "findings": [],
+  "analysis": [
+    "display_text retains a nonempty, at-most-1024-UTF8-byte label. Unicode Cc characters are rejected except LF/TAB, matching Rust char::is_control exclusions. It independently retains the Rust finite display syntax prohibitions: hidden comments, wiki/image markers, HTML/autolink starts, Markdown link/reference tails and numeric-local-part email autolinks.",
+    "The metadata exception requires an explicit identity_display_labels flag and the exact typed path (concepts, integer array index, display_name). Flags are passed only at v1/v2/v3 identity-map validation. Other nested objects, IDs, authors, context declarations and source candidate evidence retain their prior checks.",
+    "All three coordination versions still apply exact schema fields, UUID checks, source reconstruction and original inventory protection. ID, filename and source-bundle validators were not changed by the patch.",
+    "Presentation expected-schema changes only object/property label admission. The checker still binds those labels to reconstructed canonical concepts, reconstructs the full plan/Markdown/ranges/reports and compares originals; the new helper does not bypass complete verification.",
+    "The added integration tests freeze unchanged source/atom gold and explicit label expectations before normal coordinate/present calls. They invoke complete coordination and presentation verifiers for versions 1, 2 and 3, and check protected original inventories after verification."
+  ],
+  "validation": {
+    "command": "LD_LIBRARY_PATH=/home/lyinn/miniconda3/lib python -m unittest discover -s tests -p test_presentation_display_verifier.py -v",
+    "python": "/home/lyinn/miniconda3/bin/python",
+    "python_version": "3.14.7 | packaged by Anaconda, Inc. | (main, Aug 14 2026, 10:21:40) [GCC 14.3.0]",
+    "exit_code": 0,
+    "tests_passed": 6,
+    "tests_failed": 0,
+    "elapsed_seconds_from_unittest": 6.3,
+    "retained_root": "target/presentation-display-python-f9a6edaf4fa64bbfa5fd5f403c5eab94",
+    "cli": {
+      "sha256": "2ee0c8585a0ac64225f435150cc7ab19f530b1c65d4323572dc1d21f962dbd11",
+      "byte_length": 127504088
+    },
+    "ordinary_cli_calls": 24,
+    "all_cli_exit_codes_zero": true,
+    "ordinary_cli_operations": [
+      "legacy_v1_two_objects-init",
+      "legacy_v1_two_objects-import-a",
+      "legacy_v1_two_objects-review-a",
+      "legacy_v1_two_objects-seed-b",
+      "legacy_v1_two_objects-import-b",
+      "legacy_v1_two_objects-review-b",
+      "legacy_v1_two_objects-multiline-coordinate",
+      "legacy_v1_two_objects-multiline-present",
+      "legacy_v2_two_objects-init",
+      "legacy_v2_two_objects-import-a",
+      "legacy_v2_two_objects-review-a",
+      "legacy_v2_two_objects-seed-b",
+      "legacy_v2_two_objects-import-b",
+      "legacy_v2_two_objects-review-b",
+      "legacy_v2_two_objects-multiline-coordinate",
+      "legacy_v2_two_objects-multiline-present",
+      "two_objects-init",
+      "two_objects-import-a",
+      "two_objects-review-a",
+      "two_objects-seed-b",
+      "two_objects-import-b",
+      "two_objects-review-b",
+      "two_objects-multiline-coordinate",
+      "two_objects-multiline-present"
+    ],
+    "independent_checks": [
+      {
+        "path": "audit/legacy_v1_two_objects/multiline-independent-check.json",
+        "result": {
+          "coordination": {
+            "status": "passed",
+            "independently_verified": true,
+            "totals": {
+              "input_bundles": 2,
+              "validated_input_bundles": 2,
+              "input_atoms": 2,
+              "retained_fact_groups": 2,
+              "canonical_facts": 2,
+              "source_occurrences": 2,
+              "evidence_links": 2,
+              "independent_sources": 2,
+              "duplicate_occurrences": 0,
+              "passed": 2,
+              "failed": 0,
+              "needs_review": 0,
+              "unprocessed": 0
+            },
+            "inputs": [
+              "a",
+              "b"
+            ]
+          },
+          "presentation": {
+            "status": "passed",
+            "preview_status": "rendered",
+            "independently_verified": true,
+            "totals": {
+              "input_bundles": 2,
+              "facts": 2,
+              "source_occurrences": 2,
+              "objects": 2,
+              "properties": 1,
+              "table_cells": 4,
+              "missing_cells": 0,
+              "rendered_notes": 3,
+              "content_mappings": 8,
+              "links": 2
+            },
+            "representation": "table",
+            "knowledge_status": "pending",
+            "scientific_quality": "not_run",
+            "published": false,
+            "network_calls": 0,
+            "paid_calls": 0
+          }
+        }
+      },
+      {
+        "path": "audit/legacy_v2_two_objects/multiline-independent-check.json",
+        "result": {
+          "coordination": {
+            "status": "passed",
+            "independently_verified": true,
+            "totals": {
+              "input_bundles": 2,
+              "validated_input_bundles": 2,
+              "input_atoms": 2,
+              "retained_fact_groups": 2,
+              "canonical_facts": 2,
+              "source_occurrences": 2,
+              "evidence_links": 2,
+              "independent_sources": 2,
+              "duplicate_occurrences": 0,
+              "passed": 2,
+              "failed": 0,
+              "needs_review": 0,
+              "unprocessed": 0,
+              "condition_variants": 0,
+              "historical_relations": 0,
+              "known_condition_occurrences": 2,
+              "unknown_condition_occurrences": 0,
+              "not_applicable_condition_occurrences": 0,
+              "dated_occurrences": 2,
+              "undated_occurrences": 0,
+              "context_evidence_links": 2
+            },
+            "inputs": [
+              "a",
+              "b"
+            ]
+          },
+          "presentation": {
+            "status": "passed",
+            "preview_status": "rendered",
+            "independently_verified": true,
+            "totals": {
+              "input_bundles": 2,
+              "facts": 2,
+              "source_occurrences": 2,
+              "objects": 2,
+              "properties": 1,
+              "table_cells": 4,
+              "missing_cells": 0,
+              "rendered_notes": 3,
+              "content_mappings": 8,
+              "links": 2
+            },
+            "representation": "table",
+            "knowledge_status": "pending",
+            "scientific_quality": "not_run",
+            "published": false,
+            "network_calls": 0,
+            "paid_calls": 0
+          }
+        }
+      },
+      {
+        "path": "audit/two_objects/multiline-independent-check.json",
+        "result": {
+          "coordination": {
+            "status": "passed",
+            "independently_verified": true,
+            "totals": {
+              "input_bundles": 2,
+              "validated_input_bundles": 2,
+              "input_atoms": 2,
+              "retained_fact_groups": 2,
+              "canonical_facts": 2,
+              "source_occurrences": 2,
+              "evidence_links": 2,
+              "independent_sources": 2,
+              "duplicate_occurrences": 0,
+              "passed": 2,
+              "failed": 0,
+              "needs_review": 0,
+              "unprocessed": 0,
+              "condition_variants": 0,
+              "historical_relations": 0,
+              "known_condition_occurrences": 2,
+              "unknown_condition_occurrences": 0,
+              "not_applicable_condition_occurrences": 0,
+              "dated_occurrences": 2,
+              "undated_occurrences": 0,
+              "context_evidence_links": 2,
+              "true_conflicts": 0,
+              "insufficient_evidence_relations": 0,
+              "conflicting_occurrences": 0,
+              "insufficient_evidence_occurrences": 0,
+              "counter_evidence_links": 0
+            },
+            "inputs": [
+              "a",
+              "b"
+            ]
+          },
+          "presentation": {
+            "status": "passed",
+            "preview_status": "rendered",
+            "independently_verified": true,
+            "totals": {
+              "input_bundles": 2,
+              "facts": 2,
+              "source_occurrences": 2,
+              "objects": 2,
+              "properties": 1,
+              "table_cells": 4,
+              "missing_cells": 0,
+              "rendered_notes": 3,
+              "content_mappings": 8,
+              "links": 2
+            },
+            "representation": "table",
+            "knowledge_status": "pending",
+            "scientific_quality": "not_run",
+            "published": false,
+            "network_calls": 0,
+            "paid_calls": 0
+          }
+        }
+      }
+    ],
+    "git_diff_check": "exit 0"
+  },
+  "evidence": {
+    "doc/validation/assets/B06-T01/display-checker-review/ordinary-cli-originals.zip": {
+      "sha256": "c344ab20d0e1ff4db0e27a6f0ad937d90ae536eb3ce9d49f3f138ec6aa9131eb",
+      "byte_length": 886905
+    },
+    "doc/validation/assets/B06-T01/display-checker-review/unittest.log": {
+      "sha256": "280993c51d2fe19138fb13ad9b2871cd295b9129cda857289dfe2026b066efeb",
+      "byte_length": 1252
+    }
+  },
+  "limitations": [
+    "This independent run is Linux, not native Windows full-workspace validation. Root is running the separate native completion gate.",
+    "This diff review does not claim general text extraction or scientific correctness.",
+    "Metadata ID/path rules retain their preexisting behavior; no broader audit of unchanged checker code is claimed."
+  ]
+}

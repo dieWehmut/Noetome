@@ -1,0 +1,58 @@
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib) generated 4 warnings (run `cargo fix --lib -p noetome-cli` to apply 3 suggestions)
+   Compiling noetome-cli v0.1.0 (/home/lyinn/project/Noetome/crates/noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.54s
+     Running tests/knowledge_presentation.rs (target/debug/deps/knowledge_presentation-8676f985f8e2cb4b)
+
+running 1 test
+prepared_presentation_root=/home/lyinn/project/Noetome/target/compiler-temp/presentation-cab14d2a-76c8-4060-a5f6-551f6a4c1c16 case=two_objects
+
+thread 'present_preserves_multiline_display_name_and_stable_detail_link' (260229) panicked at crates/noetome-cli/tests/knowledge_presentation.rs:1194:5:
+assertion `left == right` failed: valid coordinated multiline label rejected: PRESENT_RENDER_PLAN：笔记路径、标题、小节或标识不满足安全且唯一的呈现契约。
+
+  left: Some(3)
+ right: Some(0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test present_preserves_multiline_display_name_and_stable_detail_link ... FAILED
+
+failures:
+
+failures:
+    present_preserves_multiline_display_name_and_stable_detail_link
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 9 filtered out; finished in 2.66s
+
+error: test failed, to rerun pass `-p noetome-cli --test knowledge_presentation`

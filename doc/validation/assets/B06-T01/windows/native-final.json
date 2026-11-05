@@ -1,0 +1,556 @@
+{
+  "head": "452dc557c439332aba8c0ae4e27aa7b9768c5f03",
+  "commands": [
+    {
+      "name": "fmt",
+      "attempt": 1,
+      "argv": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\cargo_local.ps1",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "pid": 10396,
+      "started_utc": "2026-11-05T05:15:14.966531+00:00",
+      "elapsed_seconds": 1.375,
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_cleanup": null,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\fmt-attempt-1.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\fmt-attempt-1.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "tracked_before_after_match": true,
+      "external_sentinel_before_after_match": true,
+      "cli_before": null,
+      "cli_after": null,
+      "snapshot_head": "2eacb00a9ba18236cdd00df5c0abde6c862af7de"
+    },
+    {
+      "name": "workspace-check",
+      "attempt": 1,
+      "argv": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\cargo_local.ps1",
+        "check",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "pid": 48308,
+      "started_utc": "2026-11-05T05:15:16.346582+00:00",
+      "elapsed_seconds": 49.54700000002049,
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_cleanup": null,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\workspace-check-attempt-1.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\workspace-check-attempt-1.stderr.bin",
+        "sha256": "daaa06f322fcc9ef014b53a57ef0309d20075d67a9bd35e77a0feeb567e4d3c3",
+        "byte_length": 8983
+      },
+      "tracked_before_after_match": true,
+      "external_sentinel_before_after_match": true,
+      "cli_before": null,
+      "cli_after": null,
+      "snapshot_head": "2eacb00a9ba18236cdd00df5c0abde6c862af7de"
+    },
+    {
+      "name": "workspace-tests",
+      "attempt": 1,
+      "argv": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\cargo_local.ps1",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--",
+        "--test-threads=4",
+        "--nocapture"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "pid": 73804,
+      "started_utc": "2026-11-05T05:16:05.895400+00:00",
+      "elapsed_seconds": 252.0470000000205,
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_cleanup": null,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\workspace-tests-attempt-1.stdout.bin",
+        "sha256": "c8239db91a9bac5601d9e2e58ac2b5753ea8d71cf9422e99d51f5587341cd77c",
+        "byte_length": 92027
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\workspace-tests-attempt-1.stderr.bin",
+        "sha256": "05c8977b01f4aba1975583b0940472d7097d7514a3a7025aa76e6b590beb5562",
+        "byte_length": 12119
+      },
+      "tracked_before_after_match": true,
+      "external_sentinel_before_after_match": true,
+      "cli_before": null,
+      "cli_after": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "snapshot_head": "2eacb00a9ba18236cdd00df5c0abde6c862af7de"
+    },
+    {
+      "name": "python-full",
+      "attempt": 1,
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "pid": 33408,
+      "started_utc": "2026-11-05T05:20:17.961994+00:00",
+      "elapsed_seconds": 97.25,
+      "exit_code": 1,
+      "timed_out": false,
+      "timeout_cleanup": null,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\python-full-attempt-1.stdout.bin",
+        "sha256": "aa7395a05ed06ab84ed9d198d6decbdedff3fbb8cc6719611f23ae50f84364b3",
+        "byte_length": 305
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\python-full-attempt-1.stderr.bin",
+        "sha256": "dd0ae4d6accbbf308ca852b3566b63ebcbc3dfe8062c0883bef06efd79702dd1",
+        "byte_length": 9955
+      },
+      "tracked_before_after_match": true,
+      "external_sentinel_before_after_match": true,
+      "cli_before": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "cli_after": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "snapshot_head": "2eacb00a9ba18236cdd00df5c0abde6c862af7de"
+    },
+    {
+      "name": "fmt",
+      "attempt": 2,
+      "argv": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\cargo_local.ps1",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "pid": 65748,
+      "started_utc": "2026-11-05T05:29:36.650855+00:00",
+      "elapsed_seconds": 1.1560000000172295,
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_cleanup": null,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\fmt-attempt-2.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\fmt-attempt-2.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "tracked_before_after_match": true,
+      "external_sentinel_before_after_match": true,
+      "cli_before": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "cli_after": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "snapshot_head": "452dc557c439332aba8c0ae4e27aa7b9768c5f03"
+    },
+    {
+      "name": "workspace-check",
+      "attempt": 2,
+      "argv": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\cargo_local.ps1",
+        "check",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "pid": 75652,
+      "started_utc": "2026-11-05T05:29:37.835080+00:00",
+      "elapsed_seconds": 1.0160000000032596,
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_cleanup": null,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\workspace-check-attempt-2.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\workspace-check-attempt-2.stderr.bin",
+        "sha256": "80a72ab0b6d57f57833fbff08eb4f1c216d4bb98fd0953be701bdd8ef1a25c8e",
+        "byte_length": 72
+      },
+      "tracked_before_after_match": true,
+      "external_sentinel_before_after_match": true,
+      "cli_before": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "cli_after": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "snapshot_head": "452dc557c439332aba8c0ae4e27aa7b9768c5f03"
+    },
+    {
+      "name": "workspace-tests",
+      "attempt": 2,
+      "argv": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\cargo_local.ps1",
+        "test",
+        "--workspace",
+        "--locked",
+        "--offline",
+        "--",
+        "--test-threads=4",
+        "--nocapture"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "pid": 74136,
+      "started_utc": "2026-11-05T05:29:38.872757+00:00",
+      "elapsed_seconds": 168.875,
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_cleanup": null,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\workspace-tests-attempt-2.stdout.bin",
+        "sha256": "7e71072e55e5332a58797969187ed11eb287d03af363d9135f6fa5bf967f390c",
+        "byte_length": 92028
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\workspace-tests-attempt-2.stderr.bin",
+        "sha256": "f6042297e7fd99f6c0b928abb160953a1223bf12381466bbe35d48eeaacbb16c",
+        "byte_length": 5138
+      },
+      "tracked_before_after_match": true,
+      "external_sentinel_before_after_match": true,
+      "cli_before": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "cli_after": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "snapshot_head": "452dc557c439332aba8c0ae4e27aa7b9768c5f03"
+    },
+    {
+      "name": "python-full",
+      "attempt": 2,
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "pid": 52320,
+      "started_utc": "2026-11-05T05:32:27.768835+00:00",
+      "elapsed_seconds": 110.60999999998603,
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_cleanup": null,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\python-full-attempt-2.stdout.bin",
+        "sha256": "a4158212a35bb8b83aa2d667c3a6daf97b00730225aaa0d98742bf98b08b23cf",
+        "byte_length": 486
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\python-full-attempt-2.stderr.bin",
+        "sha256": "87556ccadbc36bb4fbd9482179abfc9311592bb40b285c37c44e90715b46740e",
+        "byte_length": 296
+      },
+      "tracked_before_after_match": true,
+      "external_sentinel_before_after_match": true,
+      "cli_before": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "cli_after": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "snapshot_head": "452dc557c439332aba8c0ae4e27aa7b9768c5f03"
+    },
+    {
+      "name": "presentation-audit",
+      "attempt": 1,
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "scripts/verify_knowledge_presentation.py",
+        "audit",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-cli-1.exe",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "pid": 20564,
+      "started_utc": "2026-11-05T05:34:18.467470+00:00",
+      "elapsed_seconds": 59.54700000002049,
+      "exit_code": 0,
+      "timed_out": false,
+      "timeout_cleanup": null,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-attempt-1.stdout.bin",
+        "sha256": "1d5edc1ab8c39a2caec182f016cbe2507cb0edc326618e1b45aab3c009f1801b",
+        "byte_length": 306
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-attempt-1.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "tracked_before_after_match": true,
+      "external_sentinel_before_after_match": true,
+      "cli_before": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "cli_after": {
+        "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+        "byte_length": 21303296
+      },
+      "snapshot_head": "452dc557c439332aba8c0ae4e27aa7b9768c5f03"
+    }
+  ],
+  "required_latest_exits": {
+    "fmt": 0,
+    "workspace-check": 0,
+    "workspace-tests": 0,
+    "python-full": 0,
+    "presentation-audit": 0
+  },
+  "tracked_files": 1533,
+  "tracked_before_after_match": true,
+  "external_sentinel_before": {
+    "sha256": "e279bfdf84cd8ffbc804556cf43328e3e185379f66aa4c5b1948491c1838471f",
+    "byte_length": 48
+  },
+  "external_sentinel_after": {
+    "sha256": "e279bfdf84cd8ffbc804556cf43328e3e185379f66aa4c5b1948491c1838471f",
+    "byte_length": 48
+  },
+  "cli": {
+    "sha256": "a43d49aacd62a2ac35eeda8bc519526ce0453bd1653a8744392c0c92bf450ed2",
+    "byte_length": 21303296
+  },
+  "rust_suite_summaries": [
+    [
+      401,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      12,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      7,
+      0,
+      0
+    ],
+    [
+      24,
+      0,
+      0
+    ],
+    [
+      20,
+      0,
+      0
+    ],
+    [
+      16,
+      0,
+      0
+    ],
+    [
+      25,
+      0,
+      0
+    ],
+    [
+      8,
+      0,
+      0
+    ],
+    [
+      27,
+      0,
+      0
+    ],
+    [
+      7,
+      0,
+      0
+    ],
+    [
+      19,
+      0,
+      0
+    ],
+    [
+      13,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      19,
+      0,
+      0
+    ],
+    [
+      15,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "windows_held_receipts": [
+    {
+      "path": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\target\\compiler-temp\\presentation-857f6751-b402-46d4-88e1-7f54a8d45d5d\\guard-receipt.json",
+      "sha256": "b00999703e9c2b91e5fb44d6e6249638f34d860aea5f37e08361d25cdc7faee8",
+      "byte_length": 212725,
+      "schema_version": 3,
+      "actual_operation_attempts": 129,
+      "denied_native_error_codes": [
+        32
+      ]
+    },
+    {
+      "path": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\target\\compiler-temp\\presentation-a5d2091d-e2a5-4bd3-9e03-7a69f6c01873\\guard-receipt.json",
+      "sha256": "7ab3692d2e0ab4cdc2c9b04b545a89f7d6325c847c5388ab129f6bf65baabf6d",
+      "byte_length": 212725,
+      "schema_version": 2,
+      "actual_operation_attempts": 129,
+      "denied_native_error_codes": [
+        32
+      ]
+    },
+    {
+      "path": "\\\\?\\D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\target\\compiler-temp\\presentation-f9721e6c-b116-45e9-9620-b640dc44233a\\guard-receipt.json",
+      "sha256": "f3f221ba0257e6a3fe961d0d5be758348ef8837771efd3b5f38a5b818f71880a",
+      "byte_length": 212707,
+      "schema_version": 1,
+      "actual_operation_attempts": 129,
+      "denied_native_error_codes": [
+        32
+      ]
+    }
+  ],
+  "python_summary": "...............................................................s....................................................................................................s............\n----------------------------------------------------------------------\nRan 177 tests in 110.184s\n\nOK (skipped=2)\n",
+  "presentation_audit": {
+    "status": "passed",
+    "scenarios": 39,
+    "ordinary_cli_calls": 124,
+    "root": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1",
+    "independently_verified": true,
+    "knowledge_status": "pending",
+    "scientific_quality": "not_run",
+    "published": false
+  },
+  "presentation_audit_root": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1",
+  "scope": "five native regression gates passed; actual NTFS/held paths and Obsidian rendering still separate"
+}

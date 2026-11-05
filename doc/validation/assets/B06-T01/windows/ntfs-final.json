@@ -1,0 +1,492 @@
+{
+  "status": "passed",
+  "snapshot_head": "452dc557c439332aba8c0ae4e27aa7b9768c5f03",
+  "native_platform": "win32",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "work": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a",
+  "commands": [
+    {
+      "name": "baseline-direct-before",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\verify_knowledge_presentation.py",
+        "check",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\preview-Vault",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\expected.json"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "stderr_contains": null,
+      "elapsed_seconds": 0.21899999998277053,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\baseline-direct-before.stdout.bin",
+        "sha256": "6e9d009aa0a1709103025a7afaaa2d2bd730b11a633127f6a0913846b3e0f71d",
+        "byte_length": 514
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\baseline-direct-before.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "mklink-junction",
+      "argv": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "mklink",
+        "/J",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "stderr_contains": null,
+      "elapsed_seconds": 0.062000000034458935,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\mklink-junction.stdout.bin",
+        "sha256": "76174ec9c8c7bc7b35e6d4f343786a08e144d8108d62d48a44d11e6cf330bba3",
+        "byte_length": 223
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\mklink-junction.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "python-junction-project",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\verify_knowledge_presentation.py",
+        "check",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\preview-Vault",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\expected.json"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stderr_contains": null,
+      "elapsed_seconds": 0.125,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-junction-project.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-junction-project.stderr.bin",
+        "sha256": "f67a3bd86ade5601f6c067f267a42e2097757e98e28c5b8449321cb6b989278b",
+        "byte_length": 76
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "python-junction-case",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\verify_knowledge_presentation.py",
+        "check",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\preview-Vault",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\expected.json"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stderr_contains": null,
+      "elapsed_seconds": 0.10999999998603016,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-junction-case.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-junction-case.stderr.bin",
+        "sha256": "f67a3bd86ade5601f6c067f267a42e2097757e98e28c5b8449321cb6b989278b",
+        "byte_length": 76
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "python-junction-coordination",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\verify_knowledge_presentation.py",
+        "check",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\preview-Vault",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\expected.json"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stderr_contains": null,
+      "elapsed_seconds": 0.125,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-junction-coordination.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-junction-coordination.stderr.bin",
+        "sha256": "f67a3bd86ade5601f6c067f267a42e2097757e98e28c5b8449321cb6b989278b",
+        "byte_length": 76
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "python-junction-preview",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\verify_knowledge_presentation.py",
+        "check",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\preview-Vault",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\expected.json"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stderr_contains": null,
+      "elapsed_seconds": 0.125,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-junction-preview.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-junction-preview.stderr.bin",
+        "sha256": "f67a3bd86ade5601f6c067f267a42e2097757e98e28c5b8449321cb6b989278b",
+        "byte_length": 76
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "python-junction-expected",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\verify_knowledge_presentation.py",
+        "check",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\preview-Vault",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\expected.json"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stderr_contains": null,
+      "elapsed_seconds": 0.125,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-junction-expected.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-junction-expected.stderr.bin",
+        "sha256": "f67a3bd86ade5601f6c067f267a42e2097757e98e28c5b8449321cb6b989278b",
+        "byte_length": 76
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "python-lexical-parent",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\verify_knowledge_presentation.py",
+        "check",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\..\\case-ancestor-junction\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\preview-Vault",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\expected.json"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stderr_contains": null,
+      "elapsed_seconds": 0.125,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-lexical-parent.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-lexical-parent.stderr.bin",
+        "sha256": "f67a3bd86ade5601f6c067f267a42e2097757e98e28c5b8449321cb6b989278b",
+        "byte_length": 76
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "cli-junction-project",
+      "argv": [
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\target\\debug\\noetome.exe",
+        "knowledge",
+        "present",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\rejected-project-output"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 3,
+      "expected_exit": 3,
+      "stderr_contains": "COORD_SOURCE_REVIEW",
+      "elapsed_seconds": 0.09299999999348074,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-junction-project.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-junction-project.stderr.bin",
+        "sha256": "297cc095168f4d85740c0bfa121029da5aa12ab09b0a49791af78f1bac49092f",
+        "byte_length": 270
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "cli-junction-case",
+      "argv": [
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\target\\debug\\noetome.exe",
+        "knowledge",
+        "present",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\rejected-case-output"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "stderr_contains": "COORD_INPUT_PATH",
+      "elapsed_seconds": 0.06300000002374873,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-junction-case.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-junction-case.stderr.bin",
+        "sha256": "6128d3b267c757d1a1ce5c100729bab91cb4125c858c973e353072545ff863c9",
+        "byte_length": 264
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "cli-junction-coordination",
+      "argv": [
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\target\\debug\\noetome.exe",
+        "knowledge",
+        "present",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\rejected-coordination-output"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "stderr_contains": "COORD_INPUT_PATH",
+      "elapsed_seconds": 0.21899999998277053,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-junction-coordination.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-junction-coordination.stderr.bin",
+        "sha256": "6128d3b267c757d1a1ce5c100729bab91cb4125c858c973e353072545ff863c9",
+        "byte_length": 264
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "cli-junction-output",
+      "argv": [
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\target\\debug\\noetome.exe",
+        "knowledge",
+        "present",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\rejected-output-ancestor"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "stderr_contains": "PROJECT_UNSAFE_PATH",
+      "elapsed_seconds": 0.045999999972991645,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-junction-output.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-junction-output.stderr.bin",
+        "sha256": "a25677593f3681c07c9a16214ec90c1be9bbb4c9382ad508f6cc51a26cbcec58",
+        "byte_length": 245
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "cli-lexical-parent-output",
+      "argv": [
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\target\\debug\\noetome.exe",
+        "knowledge",
+        "present",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction\\..\\case-ancestor-junction\\rejected-parent-output"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "stderr_contains": "PROJECT_UNSAFE_PATH",
+      "elapsed_seconds": 0.06300000002374873,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-lexical-parent-output.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-lexical-parent-output.stderr.bin",
+        "sha256": "ae8af52f2c5390baee5d5a5766a863f5199de65c1da97e7478a6eed176d26b65",
+        "byte_length": 294
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "python-hardlinked-source-gold",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\verify_knowledge_presentation.py",
+        "check",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\preview-Vault",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\expected.json"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 1,
+      "expected_exit": 1,
+      "stderr_contains": null,
+      "elapsed_seconds": 0.125,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-hardlinked-source-gold.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\python-hardlinked-source-gold.stderr.bin",
+        "sha256": "05e633dd945b861fc87ed7ae2bfacd2d1620ab3ac6b4194da80b19340f0c58b3",
+        "byte_length": 84
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "cli-hardlinked-source-gold",
+      "argv": [
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\target\\debug\\noetome.exe",
+        "knowledge",
+        "present",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\rejected-hardlink-output"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "stderr_contains": "COORD_INPUT_PATH",
+      "elapsed_seconds": 0.061999999976251274,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-hardlinked-source-gold.stdout.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\cli-hardlinked-source-gold.stderr.bin",
+        "sha256": "1e24c8fb700a736d39284d723bb6bd5195cae7ec8fd51841b5fc4ccfcc803446",
+        "byte_length": 69
+      },
+      "protected_before_after_match": true
+    },
+    {
+      "name": "baseline-direct-after",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "-X",
+        "utf8",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo\\scripts\\verify_knowledge_presentation.py",
+        "check",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\project",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\case",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\coordination-output",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\preview-Vault",
+        "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\presentation-audit-1\\two_objects\\expected.json"
+      ],
+      "cwd": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\repo",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "stderr_contains": null,
+      "elapsed_seconds": 0.2190000000409782,
+      "stdout": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\baseline-direct-after.stdout.bin",
+        "sha256": "6e9d009aa0a1709103025a7afaaa2d2bd730b11a633127f6a0913846b3e0f71d",
+        "byte_length": 514
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\baseline-direct-after.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before_after_match": true
+    }
+  ],
+  "junction": "D:\\Noetome\\target\\compiler-temp\\native-b06-t01-8ce6623db0ad\\ntfs-probe-c1369dfa677a\\case-ancestor-junction",
+  "junction_cleanup": {
+    "only_self_owned_junction_removed": true,
+    "junction_absent": true,
+    "original_case_still_exists": true,
+    "protected_before_after_match": true
+  },
+  "scope": "actual NTFS ancestor junction and hardlink admission checks; held-period and Obsidian evidence are separate"
+}

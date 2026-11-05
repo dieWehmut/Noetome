@@ -1,0 +1,34 @@
+{
+  "root": "/tmp/noetome-presentation-label-review-t2yz1c1i",
+  "label": "样例\nA\t（两行标签）",
+  "cli_sha256": "e1feaafb20edecc9ddb4b9b816b16dcc2a52ee99e0ee61bc9168cd2b251d192c",
+  "results": [
+    {
+      "stage": "coordinate",
+      "argv": [
+        "/home/lyinn/project/Noetome/target/debug/noetome",
+        "knowledge",
+        "coordinate",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/project",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/case",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/coordinated"
+      ],
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "stage": "present",
+      "argv": [
+        "/home/lyinn/project/Noetome/target/debug/noetome",
+        "knowledge",
+        "present",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/project",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/case",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/coordinated",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/preview"
+      ],
+      "exit": 3,
+      "stderr": "PRESENT_RENDER_PLAN：笔记路径、标题、小节或标识不满足安全且唯一的呈现契约。\n"
+    }
+  ]
+}

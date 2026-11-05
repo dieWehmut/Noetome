@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "kind": "implementation_and_actual_validation_of_independent_checker_fix",
+  "created_utc": "2026-11-05T05:27:51.544177+00:00",
+  "executor": "/root/independent_audit",
+  "finding_id": "B06-PY-MULTILINE-DISPLAY",
+  "previous_review": "final-review.json",
+  "status": "fixed_and_tested_pending_separate_reviewer",
+  "scope": "Only Python canonical display_name and authored expected label admission. Rust/product source and generic text/IDs/path/source metadata boundaries unchanged.",
+  "change": {
+    "files": [
+      "scripts/verify_knowledge_coordination.py",
+      "scripts/verify_knowledge_variants.py",
+      "scripts/verify_knowledge_conflicts.py",
+      "scripts/verify_knowledge_presentation.py",
+      "tests/test_presentation_display_verifier.py"
+    ],
+    "display_contract": "Nonempty <=1024 UTF8 bytes; Unicode Cc except LF/TAB rejected; no %% [[ ![, ASCII HTML prefixes, bracket-link/reference syntax or numeric email autolinks.",
+    "metadata_exception": "Only when identity_display_labels=True and exact path is concepts[int].display_name. No exception for arbitrary nested/payload similarly named fields."
+  },
+  "validation": {
+    "red": {
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_presentation_display_verifier.py",
+        "-k",
+        "test_multiline",
+        "-v"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 6.054911842002184,
+      "source_pins": {
+        "scripts/verify_knowledge_coordination.py": {
+          "sha256": "bcd9e36a65810383a406a7647e77ae6b9c3e49b93c4ec2c7c45f0f99dc6560cf",
+          "byte_length": 72812
+        },
+        "scripts/verify_knowledge_variants.py": {
+          "sha256": "b9147097f8976d2165e7fff9210bef3455f20be9841d6ecde2ff13f7c8603a7b",
+          "byte_length": 26428
+        },
+        "scripts/verify_knowledge_conflicts.py": {
+          "sha256": "afabb05e849508c635c4acf8765480b3a5c1477a569a0b7d86e1dd4f7adc1cc5",
+          "byte_length": 30135
+        },
+        "scripts/verify_knowledge_presentation.py": {
+          "sha256": "d844f80c03a060a38efbbdb3e1c5682613732188370200381e95e2dca0948a87",
+          "byte_length": 62310
+        },
+        "tests/test_presentation_display_verifier.py": {
+          "sha256": "a9b2504cb961c76675199d7ff2e6b1e359b569cc4cc2b97d063398637fec0581",
+          "byte_length": 7072
+        }
+      }
+    },
+    "green": {
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_presentation_display_verifier.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 6.52635525399819,
+      "source_pins": {
+        "scripts/verify_knowledge_coordination.py": {
+          "sha256": "31cafd9006de7b883ba69130e584020b12cd9fad05c7139b50c08e589814a266",
+          "byte_length": 74156
+        },
+        "scripts/verify_knowledge_variants.py": {
+          "sha256": "062dee55fc34880842b7b45f7872ed525cdbcea4ee2e22e8a962d90fa0e509d6",
+          "byte_length": 26480
+        },
+        "scripts/verify_knowledge_conflicts.py": {
+          "sha256": "bad84ccd7c47d3e42400dc86ad990f87bdad2cf958f1158548a90bcd015b9248",
+          "byte_length": 30187
+        },
+        "scripts/verify_knowledge_presentation.py": {
+          "sha256": "a338a69e970999689b1e3db15d828002c39078cc82d8873feb732cdaa00ec49e",
+          "byte_length": 62332
+        },
+        "tests/test_presentation_display_verifier.py": {
+          "sha256": "a9b2504cb961c76675199d7ff2e6b1e359b569cc4cc2b97d063398637fec0581",
+          "byte_length": 7072
+        }
+      }
+    },
+    "original_rust_multiline_green_full_independent_check": {
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "scripts/verify_knowledge_presentation.py",
+        "check",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/project",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/case",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/coordinated",
+        "/tmp/noetome-presentation-label-review-t2yz1c1i/preview-green",
+        "doc/validation/assets/B06-T01/independent/display-checker-green/original-label-expectation/expected.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.08402831500279717
+    },
+    "legacy_checks": [
+      {
+        "argv": [
+          "/tmp/noetome-b05-t03-python/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_verify_knowledge_presentation.py",
+          "-v"
+        ],
+        "observed": "Ran 14 tests; OK",
+        "stderr": "display-checker-green/legacy-previous-tests.stderr.bin"
+      },
+      {
+        "argv": [
+          "/tmp/noetome-b05-t03-python/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_knowledge_coordination_verifier.py",
+          "-v"
+        ],
+        "observed": "Ran 35 tests; OK",
+        "stderr": "display-checker-green/legacy-v1-tests.stderr.bin"
+      }
+    ]
+  },
+  "archives": "display-checker-capture.json",
+  "full_workspace_and_native_runs": "Parent owns the final native/full regression after syncing final Python source.",
+  "independent_approval": "Implementation author does not self-approve this fix; parent/another reviewer must review it separately."
+}

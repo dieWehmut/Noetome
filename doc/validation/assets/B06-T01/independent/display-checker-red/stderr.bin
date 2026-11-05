@@ -1,0 +1,91 @@
+test_multiline_v1_independent_check (test_presentation_display_verifier.MultilinePresentationCliTests.test_multiline_v1_independent_check) ... FAIL
+test_multiline_v2_independent_check (test_presentation_display_verifier.MultilinePresentationCliTests.test_multiline_v2_independent_check) ... FAIL
+test_multiline_v3_independent_check (test_presentation_display_verifier.MultilinePresentationCliTests.test_multiline_v3_independent_check) ... FAIL
+
+======================================================================
+FAIL: test_multiline_v1_independent_check (test_presentation_display_verifier.MultilinePresentationCliTests.test_multiline_v1_independent_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_presentation_display_verifier.py", line 111, in test_multiline_v1_independent_check
+    self.check_multiline_version(1)
+  File "/home/lyinn/project/Noetome/tests/test_presentation_display_verifier.py", line 98, in check_multiline_version
+    checked_coordination = VERIFY.verify_coordination(project, case, coordination, gold)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 643, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 489, in _verify
+    metadata(mapping)
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 150, in metadata
+    metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, key))
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 154, in metadata
+    metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, index))
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 150, in metadata
+    metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, key))
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 145, in metadata
+    assert len(value.encode()) <= 1024 and not any(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: metadata limit/control
+
+======================================================================
+FAIL: test_multiline_v2_independent_check (test_presentation_display_verifier.MultilinePresentationCliTests.test_multiline_v2_independent_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_presentation_display_verifier.py", line 114, in test_multiline_v2_independent_check
+    self.check_multiline_version(2)
+  File "/home/lyinn/project/Noetome/tests/test_presentation_display_verifier.py", line 98, in check_multiline_version
+    checked_coordination = VERIFY.verify_coordination(project, case, coordination, gold)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 642, in verify_report
+    return verify_v2(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_variants.py", line 343, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_variants.py", line 191, in _verify
+    exact(mapping["schema_version"], 2, "map v2"); text(mapping["author"]); metadata(mapping)
+                                                                            ^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 150, in metadata
+    metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, key))
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 154, in metadata
+    metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, index))
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 150, in metadata
+    metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, key))
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 145, in metadata
+    assert len(value.encode()) <= 1024 and not any(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: metadata limit/control
+
+======================================================================
+FAIL: test_multiline_v3_independent_check (test_presentation_display_verifier.MultilinePresentationCliTests.test_multiline_v3_independent_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_presentation_display_verifier.py", line 117, in test_multiline_v3_independent_check
+    self.check_multiline_version(3)
+  File "/home/lyinn/project/Noetome/tests/test_presentation_display_verifier.py", line 98, in check_multiline_version
+    checked_coordination = VERIFY.verify_coordination(project, case, coordination, gold)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 632, in verify_report
+    return verify_v3(Path(project), Path(case), Path(output), gold_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_conflicts.py", line 396, in verify_report
+    return _verify(Path(project), Path(case), Path(output), gold)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_conflicts.py", line 234, in _verify
+    exact(mapping["schema_version"], 3, "map v3"); text(mapping["author"]); metadata(mapping)
+                                                                            ^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 150, in metadata
+    metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, key))
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 154, in metadata
+    metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, index))
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 150, in metadata
+    metadata(item, evidence_quote_lf=evidence_quote_lf, _path=(*_path, key))
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 145, in metadata
+    assert len(value.encode()) <= 1024 and not any(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: metadata limit/control
+
+----------------------------------------------------------------------
+Ran 3 tests in 6.004s
+
+FAILED (failures=3)

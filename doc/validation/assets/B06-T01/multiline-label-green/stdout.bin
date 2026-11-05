@@ -1,0 +1,484 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_presentation",
+  "report_kind": "knowledge_presentation",
+  "scope": "active_presentation_v1",
+  "request_id": "3177924a-9f99-417d-a445-a1fd8691de85",
+  "project_id": "abc12038-b4c4-46ed-9552-30360b6867ee",
+  "coordination_schema_version": 3,
+  "status": "passed",
+  "preview_status": "rendered",
+  "knowledge_status": "pending",
+  "published": false,
+  "scientific_quality": "not_run",
+  "research_status": "not_requested",
+  "network_calls": 0,
+  "paid_calls": 0,
+  "checks": {
+    "source_review": "passed",
+    "coordination": "passed",
+    "note_plan": "passed",
+    "rendering": "passed",
+    "saved_output": "passed"
+  },
+  "totals": {
+    "input_bundles": 2,
+    "facts": 2,
+    "source_occurrences": 2,
+    "objects": 2,
+    "properties": 1,
+    "table_cells": 4,
+    "missing_cells": 0,
+    "rendered_notes": 3,
+    "content_mappings": 8,
+    "links": 2
+  },
+  "issue_codes": [],
+  "decision": {
+    "rule_id": "PRESENT_SHARED_PROPERTY_TABLE",
+    "reason": "多个明确对象共享已核对属性，以比较表并列完整事实；单位与条件保留，不作数值裁决。",
+    "shared_property_ids": [
+      "60000000-0000-4000-8000-000000000003"
+    ]
+  },
+  "coordination_ir_fingerprint": {
+    "sha256": "b56612de691e959716cb2ae2be31b9f8a4d51eba695de3bbca95d4be0eb95861",
+    "byte_length": 41341
+  },
+  "plan_fingerprint": {
+    "sha256": "96459c363ccc011e3184284f4b7a12439641c3a6cc79603b286f3f99a036fe8d",
+    "byte_length": 17239
+  },
+  "inputs": {
+    ".coordination-ir.json": {
+      "sha256": "b56612de691e959716cb2ae2be31b9f8a4d51eba695de3bbca95d4be0eb95861",
+      "byte_length": 41341
+    },
+    ".coordination-owner.json": {
+      "sha256": "9af76af7959cc54196b051188a434f81d778aa1d58807f24a7cdcefdeba7913d",
+      "byte_length": 162
+    },
+    ".coordination-report.json": {
+      "sha256": "c7c091b16daff66b40fde060173e0ebd4f6211ef7861bef644fe6f2e9c4d04c8",
+      "byte_length": 44812
+    },
+    ".coordination-report.md": {
+      "sha256": "8f23d1f274302c57842eb4ddb8ba5356ff5d919c02a551104c66c5e8fc6c4a90",
+      "byte_length": 45287
+    },
+    ".identity-original.json": {
+      "sha256": "939f5d45ac64dd5537c12d22d68184ffe9f5f4a6b528e4f98bae88bf3b7153b4",
+      "byte_length": 2037
+    },
+    ".input-a--.owner.json": {
+      "sha256": "10839dfc05b0d0b9c6717fb73b14a15fad767739c3fc5e994aaf6d7d8e21891f",
+      "byte_length": 142
+    },
+    ".input-a--candidates-original.json": {
+      "sha256": "c792d5edf274e25eb7aed70d558fd09a8791c8550c8bd613b181ba6eb94122bf",
+      "byte_length": 3056
+    },
+    ".input-a--decision-original.json": {
+      "sha256": "c4978e5e0280871e4b354ee935f52c1a551174d3b3814d65d4030b093ab798b8",
+      "byte_length": 140
+    },
+    ".input-a--gold-original.json": {
+      "sha256": "0adf6d03903b530310f65e5a7dd32331c891ecceae3905bb9d3b1af8c5153715",
+      "byte_length": 746
+    },
+    ".input-a--knowledge-ir.json": {
+      "sha256": "d8ef7d8f0c5a291e2b3364e5686596bc8af795cbbe621f3ac580334435392db3",
+      "byte_length": 12394
+    },
+    ".input-a--review-original.json": {
+      "sha256": "f09147ee37a7772941ef254ae5b4659dff541910f0f2be2df5cbd4c23c2e4ed1",
+      "byte_length": 509
+    },
+    ".input-a--source-snapshot.json": {
+      "sha256": "bf9d86e8ecde5903365f355b5fd420bce03a298c13abc4b853dac371ead7f12a",
+      "byte_length": 1056
+    },
+    ".input-a--verification.json": {
+      "sha256": "c4cb64e2455c63fc2f915ac14cdd9fca2a996fdd0beaca9bb9dc6d9b3c52aa49",
+      "byte_length": 16869
+    },
+    ".input-a--verification.md": {
+      "sha256": "75380ec065f3c8aab35872ab71e16ce8068c2bcd52963e79c33bc3ac7a540848",
+      "byte_length": 17303
+    },
+    ".input-b--.owner.json": {
+      "sha256": "88883829cc26da9d4966260b2ee12c11b389ff6eef4a6f2022c46eb65db1fd48",
+      "byte_length": 142
+    },
+    ".input-b--candidates-original.json": {
+      "sha256": "e3e43b74ccaeec27a0a7dc7e0abab68525940783be02f4354a50c0f51498eef5",
+      "byte_length": 3056
+    },
+    ".input-b--decision-original.json": {
+      "sha256": "bdd97a62d821b2f3e48c8556f57a3fed1ba496efbb4f0fa30d23080212b00b5d",
+      "byte_length": 140
+    },
+    ".input-b--gold-original.json": {
+      "sha256": "c85210429e4bc8f8df2f06b9e582f653bf789081f34088d06c76ef2dd4780f9b",
+      "byte_length": 746
+    },
+    ".input-b--knowledge-ir.json": {
+      "sha256": "bbeb3775ce7e8d58e8af2aad444b98dcf0dd5147d96694dc2581d9305d7cab7c",
+      "byte_length": 12394
+    },
+    ".input-b--review-original.json": {
+      "sha256": "4d7453b8c1e0767d3677c624857fb131d8ea4c4caabe8eddf2fecc397494b09f",
+      "byte_length": 509
+    },
+    ".input-b--source-snapshot.json": {
+      "sha256": "1820e53f3f0b8795853b15a0c3c6aca2f6fe6846479c024831ac93e170f5aa2a",
+      "byte_length": 1056
+    },
+    ".input-b--verification.json": {
+      "sha256": "b388c05446cc70dbeec703da3477211f99c97b2dabf65ed7557d9d3e03e53dc8",
+      "byte_length": 16869
+    },
+    ".input-b--verification.md": {
+      "sha256": "e00e4aa1cf6d1ea7f0b46bff276ac481251557e488bbc04ff917a7dc8c9b0a28",
+      "byte_length": 17303
+    },
+    ".selection-original.json": {
+      "sha256": "ef51c06bc59a1ea44ee44023d88ec0f7a68e5467d72850333d5c4d9662c00cd4",
+      "byte_length": 4329
+    }
+  },
+  "files": [
+    {
+      "relative_path": "知识比较.md",
+      "note_id": "overview",
+      "plan_revision": 1,
+      "content_sha256": "ab0c838cc5de821764ed8342a48bda7c80706c3d40f33d210f77d22dfd3c1820",
+      "byte_length": 567,
+      "content_mappings": [
+        {
+          "scope": {
+            "section_id": "overview",
+            "node_id": "comparison",
+            "kind": "table_header",
+            "row_id": null,
+            "column_id": "object"
+          },
+          "fact_ids": [],
+          "occurrence_ids": [],
+          "concept_ids": [],
+          "start_byte": 35,
+          "end_byte": 41
+        },
+        {
+          "scope": {
+            "section_id": "overview",
+            "node_id": "comparison",
+            "kind": "table_header",
+            "row_id": null,
+            "column_id": "60000000-0000-4000-8000-000000000003"
+          },
+          "fact_ids": [],
+          "occurrence_ids": [
+            "occ-57e02aec2e2d3745e0282a01cfc5918263ae9cbc4c77b478914b5c28823a94be",
+            "occ-9bb7efdd7599e3f285cc2840c790e9355c2aaa47ac24af573bc40ec556bcc908"
+          ],
+          "concept_ids": [
+            "60000000-0000-4000-8000-000000000003"
+          ],
+          "start_byte": 44,
+          "end_byte": 50
+        },
+        {
+          "scope": {
+            "section_id": "overview",
+            "node_id": "comparison",
+            "kind": "label",
+            "row_id": "60000000-0000-4000-8000-000000000001",
+            "column_id": "object"
+          },
+          "fact_ids": [],
+          "occurrence_ids": [
+            "occ-9bb7efdd7599e3f285cc2840c790e9355c2aaa47ac24af573bc40ec556bcc908"
+          ],
+          "concept_ids": [
+            "60000000-0000-4000-8000-000000000001"
+          ],
+          "start_byte": 69,
+          "end_byte": 102
+        },
+        {
+          "scope": {
+            "section_id": "overview",
+            "node_id": "comparison",
+            "kind": "facts",
+            "row_id": "60000000-0000-4000-8000-000000000001",
+            "column_id": "60000000-0000-4000-8000-000000000003"
+          },
+          "fact_ids": [
+            "fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"
+          ],
+          "occurrence_ids": [
+            "occ-9bb7efdd7599e3f285cc2840c790e9355c2aaa47ac24af573bc40ec556bcc908"
+          ],
+          "concept_ids": [
+            "60000000-0000-4000-8000-000000000001",
+            "60000000-0000-4000-8000-000000000003"
+          ],
+          "start_byte": 180,
+          "end_byte": 326
+        },
+        {
+          "scope": {
+            "section_id": "overview",
+            "node_id": "comparison",
+            "kind": "label",
+            "row_id": "60000000-0000-4000-8000-000000000002",
+            "column_id": "object"
+          },
+          "fact_ids": [],
+          "occurrence_ids": [
+            "occ-57e02aec2e2d3745e0282a01cfc5918263ae9cbc4c77b478914b5c28823a94be"
+          ],
+          "concept_ids": [
+            "60000000-0000-4000-8000-000000000002"
+          ],
+          "start_byte": 331,
+          "end_byte": 339
+        },
+        {
+          "scope": {
+            "section_id": "overview",
+            "node_id": "comparison",
+            "kind": "facts",
+            "row_id": "60000000-0000-4000-8000-000000000002",
+            "column_id": "60000000-0000-4000-8000-000000000003"
+          },
+          "fact_ids": [
+            "fact-v3-bc42572483fd480f09b096be42b029674241b962c579720d3c2c1365699ce03a"
+          ],
+          "occurrence_ids": [
+            "occ-57e02aec2e2d3745e0282a01cfc5918263ae9cbc4c77b478914b5c28823a94be"
+          ],
+          "concept_ids": [
+            "60000000-0000-4000-8000-000000000002",
+            "60000000-0000-4000-8000-000000000003"
+          ],
+          "start_byte": 417,
+          "end_byte": 563
+        }
+      ],
+      "links": [
+        {
+          "scope": {
+            "section_id": "overview",
+            "node_id": "comparison",
+            "kind": "label",
+            "row_id": "60000000-0000-4000-8000-000000000001",
+            "column_id": "object"
+          },
+          "target_concept_id": "60000000-0000-4000-8000-000000000001",
+          "target_path": "对象-60000000-0000-4000-8000-000000000001.md",
+          "target_heading": "知识明细",
+          "display_text": "查看详情",
+          "start_byte": 103,
+          "end_byte": 177
+        },
+        {
+          "scope": {
+            "section_id": "overview",
+            "node_id": "comparison",
+            "kind": "label",
+            "row_id": "60000000-0000-4000-8000-000000000002",
+            "column_id": "object"
+          },
+          "target_concept_id": "60000000-0000-4000-8000-000000000002",
+          "target_path": "对象-60000000-0000-4000-8000-000000000002.md",
+          "target_heading": "知识明细",
+          "display_text": "查看详情",
+          "start_byte": 340,
+          "end_byte": 414
+        }
+      ]
+    },
+    {
+      "relative_path": "对象-60000000-0000-4000-8000-000000000001.md",
+      "note_id": "object-60000000-0000-4000-8000-000000000001",
+      "plan_revision": 1,
+      "content_sha256": "3671e66cdb44fd5afde4f2e24e574e6ed2db4367a92052a00f6e48694c9088e6",
+      "byte_length": 379,
+      "content_mappings": [
+        {
+          "scope": {
+            "section_id": "details",
+            "node_id": "detail-fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1",
+            "kind": "paragraph",
+            "row_id": null,
+            "column_id": null
+          },
+          "fact_ids": [
+            "fact-v3-db1e8d0199a1250dbc1e1c9332d65d258d7a6d826cce353586665fc554ef71c1"
+          ],
+          "occurrence_ids": [
+            "occ-9bb7efdd7599e3f285cc2840c790e9355c2aaa47ac24af573bc40ec556bcc908"
+          ],
+          "concept_ids": [
+            "60000000-0000-4000-8000-000000000001",
+            "60000000-0000-4000-8000-000000000003"
+          ],
+          "start_byte": 54,
+          "end_byte": 377
+        }
+      ],
+      "links": []
+    },
+    {
+      "relative_path": "对象-60000000-0000-4000-8000-000000000002.md",
+      "note_id": "object-60000000-0000-4000-8000-000000000002",
+      "plan_revision": 1,
+      "content_sha256": "747babaf98960ee8e125e10516016a6d2ce3691996c51bf3064f8cfc4e97b1b9",
+      "byte_length": 329,
+      "content_mappings": [
+        {
+          "scope": {
+            "section_id": "details",
+            "node_id": "detail-fact-v3-bc42572483fd480f09b096be42b029674241b962c579720d3c2c1365699ce03a",
+            "kind": "paragraph",
+            "row_id": null,
+            "column_id": null
+          },
+          "fact_ids": [
+            "fact-v3-bc42572483fd480f09b096be42b029674241b962c579720d3c2c1365699ce03a"
+          ],
+          "occurrence_ids": [
+            "occ-57e02aec2e2d3745e0282a01cfc5918263ae9cbc4c77b478914b5c28823a94be"
+          ],
+          "concept_ids": [
+            "60000000-0000-4000-8000-000000000002",
+            "60000000-0000-4000-8000-000000000003"
+          ],
+          "start_byte": 29,
+          "end_byte": 327
+        }
+      ],
+      "links": []
+    }
+  ],
+  "artifacts": {
+    ".coordination-ir.json": {
+      "sha256": "b56612de691e959716cb2ae2be31b9f8a4d51eba695de3bbca95d4be0eb95861",
+      "byte_length": 41341
+    },
+    ".coordination-owner.json": {
+      "sha256": "9af76af7959cc54196b051188a434f81d778aa1d58807f24a7cdcefdeba7913d",
+      "byte_length": 162
+    },
+    ".coordination-report.json": {
+      "sha256": "c7c091b16daff66b40fde060173e0ebd4f6211ef7861bef644fe6f2e9c4d04c8",
+      "byte_length": 44812
+    },
+    ".coordination-report.md": {
+      "sha256": "8f23d1f274302c57842eb4ddb8ba5356ff5d919c02a551104c66c5e8fc6c4a90",
+      "byte_length": 45287
+    },
+    ".identity-original.json": {
+      "sha256": "939f5d45ac64dd5537c12d22d68184ffe9f5f4a6b528e4f98bae88bf3b7153b4",
+      "byte_length": 2037
+    },
+    ".input-a--.owner.json": {
+      "sha256": "10839dfc05b0d0b9c6717fb73b14a15fad767739c3fc5e994aaf6d7d8e21891f",
+      "byte_length": 142
+    },
+    ".input-a--candidates-original.json": {
+      "sha256": "c792d5edf274e25eb7aed70d558fd09a8791c8550c8bd613b181ba6eb94122bf",
+      "byte_length": 3056
+    },
+    ".input-a--decision-original.json": {
+      "sha256": "c4978e5e0280871e4b354ee935f52c1a551174d3b3814d65d4030b093ab798b8",
+      "byte_length": 140
+    },
+    ".input-a--gold-original.json": {
+      "sha256": "0adf6d03903b530310f65e5a7dd32331c891ecceae3905bb9d3b1af8c5153715",
+      "byte_length": 746
+    },
+    ".input-a--knowledge-ir.json": {
+      "sha256": "d8ef7d8f0c5a291e2b3364e5686596bc8af795cbbe621f3ac580334435392db3",
+      "byte_length": 12394
+    },
+    ".input-a--review-original.json": {
+      "sha256": "f09147ee37a7772941ef254ae5b4659dff541910f0f2be2df5cbd4c23c2e4ed1",
+      "byte_length": 509
+    },
+    ".input-a--source-snapshot.json": {
+      "sha256": "bf9d86e8ecde5903365f355b5fd420bce03a298c13abc4b853dac371ead7f12a",
+      "byte_length": 1056
+    },
+    ".input-a--verification.json": {
+      "sha256": "c4cb64e2455c63fc2f915ac14cdd9fca2a996fdd0beaca9bb9dc6d9b3c52aa49",
+      "byte_length": 16869
+    },
+    ".input-a--verification.md": {
+      "sha256": "75380ec065f3c8aab35872ab71e16ce8068c2bcd52963e79c33bc3ac7a540848",
+      "byte_length": 17303
+    },
+    ".input-b--.owner.json": {
+      "sha256": "88883829cc26da9d4966260b2ee12c11b389ff6eef4a6f2022c46eb65db1fd48",
+      "byte_length": 142
+    },
+    ".input-b--candidates-original.json": {
+      "sha256": "e3e43b74ccaeec27a0a7dc7e0abab68525940783be02f4354a50c0f51498eef5",
+      "byte_length": 3056
+    },
+    ".input-b--decision-original.json": {
+      "sha256": "bdd97a62d821b2f3e48c8556f57a3fed1ba496efbb4f0fa30d23080212b00b5d",
+      "byte_length": 140
+    },
+    ".input-b--gold-original.json": {
+      "sha256": "c85210429e4bc8f8df2f06b9e582f653bf789081f34088d06c76ef2dd4780f9b",
+      "byte_length": 746
+    },
+    ".input-b--knowledge-ir.json": {
+      "sha256": "bbeb3775ce7e8d58e8af2aad444b98dcf0dd5147d96694dc2581d9305d7cab7c",
+      "byte_length": 12394
+    },
+    ".input-b--review-original.json": {
+      "sha256": "4d7453b8c1e0767d3677c624857fb131d8ea4c4caabe8eddf2fecc397494b09f",
+      "byte_length": 509
+    },
+    ".input-b--source-snapshot.json": {
+      "sha256": "1820e53f3f0b8795853b15a0c3c6aca2f6fe6846479c024831ac93e170f5aa2a",
+      "byte_length": 1056
+    },
+    ".input-b--verification.json": {
+      "sha256": "b388c05446cc70dbeec703da3477211f99c97b2dabf65ed7557d9d3e03e53dc8",
+      "byte_length": 16869
+    },
+    ".input-b--verification.md": {
+      "sha256": "e00e4aa1cf6d1ea7f0b46bff276ac481251557e488bbc04ff917a7dc8c9b0a28",
+      "byte_length": 17303
+    },
+    ".owner.json": {
+      "sha256": "377d1773291969f45bf1e43b8751ee174d2ddfbdc8327519fc389947a3fc25f4",
+      "byte_length": 162
+    },
+    ".selection-original.json": {
+      "sha256": "ef51c06bc59a1ea44ee44023d88ec0f7a68e5467d72850333d5c4d9662c00cd4",
+      "byte_length": 4329
+    },
+    "plan.json": {
+      "sha256": "96459c363ccc011e3184284f4b7a12439641c3a6cc79603b286f3f99a036fe8d",
+      "byte_length": 17239
+    },
+    "对象-60000000-0000-4000-8000-000000000001.md": {
+      "sha256": "3671e66cdb44fd5afde4f2e24e574e6ed2db4367a92052a00f6e48694c9088e6",
+      "byte_length": 379
+    },
+    "对象-60000000-0000-4000-8000-000000000002.md": {
+      "sha256": "747babaf98960ee8e125e10516016a6d2ce3691996c51bf3064f8cfc4e97b1b9",
+      "byte_length": 329
+    },
+    "知识比较.md": {
+      "sha256": "ab0c838cc5de821764ed8342a48bda7c80706c3d40f33d210f77d22dfd3c1820",
+      "byte_length": 567
+    }
+  }
+}
