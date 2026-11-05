@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_formula",
+  "scope": "selected_formula_fidelity_v1",
+  "request_id": "8e43ad8a-6483-45c2-854b-ca1b37687946",
+  "case": {
+    "schema_version": 1,
+    "purpose": "formula_fidelity",
+    "selection_id": "native_exp",
+    "title": "公式保真样例 native_exp",
+    "source_kind": "tex",
+    "tex": {
+      "file": "original.tex",
+      "sha256": "658aed26eb6d71d92775ec0e85a16cb16d377e06e62c4c3f97bb5b0f842712ce"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "841c0935473be2ee124ebdd41de8f53f396e59fe391751847d6ef5e7224c4efa"
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "a30de55f74c6dccda0e3dabcc064236002d11a772429cf77e69d0da0c67a6a47",
+      "page": 1,
+      "canvas": [
+        1000,
+        600
+      ],
+      "bounds": [
+        100,
+        120,
+        800,
+        240
+      ],
+      "legibility": "clear"
+    },
+    "data_available": false
+  },
+  "semantics": {
+    "schema_version": 1,
+    "expression": "C_i(t)=C_0\\exp{-k t}",
+    "symbols": [
+      {
+        "symbol": "C",
+        "definition": "test concentration",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "t",
+        "definition": "elapsed time",
+        "unit": "s"
+      },
+      {
+        "symbol": "k",
+        "definition": "positive decay coefficient",
+        "unit": "1/s"
+      }
+    ],
+    "conditions": [
+      "k > 0"
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "decision": {
+    "representation": "native_math",
+    "fallback_reasons": [],
+    "compatibility_rewrites": [],
+    "issue_codes": []
+  },
+  "tokens": [
+    "C",
+    "_",
+    "i",
+    "(",
+    "t",
+    ")",
+    "=",
+    "C",
+    "_",
+    "0",
+    "\\exp",
+    "{",
+    "-",
+    "k",
+    "t",
+    "}"
+  ],
+  "compiled_expression": "C_i(t)=C_0\\exp{-k t}"
+}

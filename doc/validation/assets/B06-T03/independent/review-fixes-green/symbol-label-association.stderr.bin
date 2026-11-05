@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/scripts/verify_formula.py", line 869, in <module>
+    main()
+  File "/home/lyinn/project/Noetome/scripts/verify_formula.py", line 863, in main
+    print(json.dumps(verify_output(args.case, args.profile, args.vault, args.expected), ensure_ascii=False))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_formula.py", line 572, in verify_output
+    verify_note(note, case, semantics, decision, expression, file_report)
+  File "/home/lyinn/project/Noetome/scripts/verify_formula.py", line 467, in verify_note
+    exact([n["kind"] for n in group], ["heading", "label", "literal", "label", "literal", "label", "literal"], "adjacent symbol field/value association")
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 70, in exact
+    exact(a, e, label + "/" + str(index))
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 72, in exact
+    assert actual == expected, label + ": value"
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: adjacent symbol field/value association/2: value

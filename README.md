@@ -286,3 +286,11 @@ python -m unittest discover -s tests -p "test_*.py"
 开发时通过start、complete、block、reopen维护状态和证据，工具自动刷新三份清单。具体命令见[日志规则](dev-log/README.md)。不要手动把计划写成已完成。
 
 设置页隐藏主导航侧栏的修正版已实际本地重装，安装包、原生验证及备份说明见[B06U-T02记录](doc/validation/B06U-T02.md)。Ubuntu/WSL缺失构建依赖和Windows重装命令见[本机构建说明](doc/technical/LOCAL_BUILD.md)。
+
+明确选定的公式可通过独立 CLI 入口生成全新测试 Vault：
+
+```text
+noetome knowledge formula <formula-case目录> <profile.json> <尚不存在的新测试Vault>
+```
+
+[公式契约](doc/technical/FORMULA_FIDELITY_CONTRACT.md)说明原始 TeX/作者语义声明/PNG 区域、逐 token 核对、兼容另存及原图回退。[公开自造样例](fixtures/formula-fidelity/README.md)的 `native` 和 `profile-native.json` 可作为明确输入；[验证记录](doc/validation/B06-T03.md)保留实际 RED、篡改、运行期保护及干净 Obsidian 证据。未知符号、不可辨原区和无数据曲线阻断成功，原件仍保存；工程预览不证明科学正确率或 OCR 能力。

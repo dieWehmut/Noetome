@@ -1,0 +1,507 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "case": "native_relational",
+      "capture_root": "/mnt/d/Noetome/target/compiler-temp/b06-t03-formula-native-fixed-2fcbeb690db4/native_relational",
+      "symbols": [
+        {
+          "symbol_index": 0,
+          "symbol": "x",
+          "heading": "符号 1",
+          "definition": "test coordinate",
+          "unit": "mm",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 1,
+          "symbol": "i",
+          "heading": "符号 2",
+          "definition": "selected integer sample index",
+          "unit": null,
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 2,
+          "symbol": "a",
+          "heading": "符号 3",
+          "definition": "positive scaling constant",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 3,
+          "symbol": "b",
+          "heading": "符号 4",
+          "definition": "positive nonzero divisor",
+          "unit": "s^2",
+          "actual_native_contiguous_events_match": true
+        }
+      ],
+      "context": [
+        {
+          "heading": "适用前提",
+          "field": "conditions",
+          "values": [
+            "a > 0 and b > 0",
+            "This is a fictional engineering example, not a scientific claim."
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "范围",
+          "field": "ranges",
+          "values": [
+            "i = 1,2,3",
+            "0 <= t <= 10 s"
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "例外",
+          "field": "exceptions",
+          "values": [
+            "Do not apply outside the selected time interval."
+          ],
+          "actual_native_contiguous_events_match": true
+        }
+      ]
+    },
+    {
+      "case": "native_exp",
+      "capture_root": "/mnt/d/Noetome/target/compiler-temp/b06-t03-formula-native-fixed-2fcbeb690db4/native_exp",
+      "symbols": [
+        {
+          "symbol_index": 0,
+          "symbol": "C",
+          "heading": "符号 1",
+          "definition": "test concentration",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 1,
+          "symbol": "i",
+          "heading": "符号 2",
+          "definition": "selected integer sample index",
+          "unit": null,
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 2,
+          "symbol": "t",
+          "heading": "符号 3",
+          "definition": "elapsed time",
+          "unit": "s",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 3,
+          "symbol": "k",
+          "heading": "符号 4",
+          "definition": "positive decay coefficient",
+          "unit": "1/s",
+          "actual_native_contiguous_events_match": true
+        }
+      ],
+      "context": [
+        {
+          "heading": "适用前提",
+          "field": "conditions",
+          "values": [
+            "k > 0"
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "范围",
+          "field": "ranges",
+          "values": [
+            "i = 1,2,3",
+            "0 <= t <= 10 s"
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "例外",
+          "field": "exceptions",
+          "values": [
+            "Do not apply outside the selected time interval."
+          ],
+          "actual_native_contiguous_events_match": true
+        }
+      ]
+    },
+    {
+      "case": "image_fallback",
+      "capture_root": "/mnt/d/Noetome/target/compiler-temp/b06-t03-formula-native-fixed-2fcbeb690db4/image_fallback",
+      "symbols": [
+        {
+          "symbol_index": 0,
+          "symbol": "C",
+          "heading": "符号 1",
+          "definition": "test concentration",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 1,
+          "symbol": "i",
+          "heading": "符号 2",
+          "definition": "selected integer sample index",
+          "unit": null,
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 2,
+          "symbol": "t",
+          "heading": "符号 3",
+          "definition": "elapsed time",
+          "unit": "s",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 3,
+          "symbol": "a",
+          "heading": "符号 4",
+          "definition": "positive scaling constant",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 4,
+          "symbol": "b",
+          "heading": "符号 5",
+          "definition": "positive nonzero divisor",
+          "unit": "s^2",
+          "actual_native_contiguous_events_match": true
+        }
+      ],
+      "context": [
+        {
+          "heading": "适用前提",
+          "field": "conditions",
+          "values": [
+            "a > 0 and b > 0",
+            "This is a fictional engineering example, not a scientific claim."
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "范围",
+          "field": "ranges",
+          "values": [
+            "i = 1,2,3",
+            "0 <= t <= 10 s"
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "例外",
+          "field": "exceptions",
+          "values": [
+            "Do not apply outside the selected time interval."
+          ],
+          "actual_native_contiguous_events_match": true
+        }
+      ]
+    },
+    {
+      "case": "region_only",
+      "capture_root": "/mnt/d/Noetome/target/compiler-temp/b06-t03-formula-native-fixed-2fcbeb690db4/region_only",
+      "symbols": [
+        {
+          "symbol_index": 0,
+          "symbol": "C",
+          "heading": "符号 1",
+          "definition": "test concentration",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 1,
+          "symbol": "i",
+          "heading": "符号 2",
+          "definition": "selected integer sample index",
+          "unit": null,
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 2,
+          "symbol": "t",
+          "heading": "符号 3",
+          "definition": "elapsed time",
+          "unit": "s",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 3,
+          "symbol": "a",
+          "heading": "符号 4",
+          "definition": "positive scaling constant",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 4,
+          "symbol": "b",
+          "heading": "符号 5",
+          "definition": "positive nonzero divisor",
+          "unit": "s^2",
+          "actual_native_contiguous_events_match": true
+        }
+      ],
+      "context": [
+        {
+          "heading": "适用前提",
+          "field": "conditions",
+          "values": [
+            "a > 0 and b > 0",
+            "This is a fictional engineering example, not a scientific claim."
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "范围",
+          "field": "ranges",
+          "values": [
+            "i = 1,2,3",
+            "0 <= t <= 10 s"
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "例外",
+          "field": "exceptions",
+          "values": [
+            "Do not apply outside the selected time interval."
+          ],
+          "actual_native_contiguous_events_match": true
+        }
+      ]
+    },
+    {
+      "case": "compatibility_disabled",
+      "capture_root": "/mnt/d/Noetome/target/compiler-temp/b06-t03-formula-native-fixed-2fcbeb690db4/compatibility_disabled",
+      "symbols": [
+        {
+          "symbol_index": 0,
+          "symbol": "C",
+          "heading": "符号 1",
+          "definition": "test concentration",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 1,
+          "symbol": "i",
+          "heading": "符号 2",
+          "definition": "selected integer sample index",
+          "unit": null,
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 2,
+          "symbol": "t",
+          "heading": "符号 3",
+          "definition": "elapsed time",
+          "unit": "s",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 3,
+          "symbol": "a",
+          "heading": "符号 4",
+          "definition": "positive scaling constant",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 4,
+          "symbol": "b",
+          "heading": "符号 5",
+          "definition": "positive nonzero divisor",
+          "unit": "s^2",
+          "actual_native_contiguous_events_match": true
+        }
+      ],
+      "context": [
+        {
+          "heading": "适用前提",
+          "field": "conditions",
+          "values": [
+            "a > 0 and b > 0",
+            "This is a fictional engineering example, not a scientific claim."
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "范围",
+          "field": "ranges",
+          "values": [
+            "i = 1,2,3",
+            "0 <= t <= 10 s"
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "例外",
+          "field": "exceptions",
+          "values": [
+            "Do not apply outside the selected time interval."
+          ],
+          "actual_native_contiguous_events_match": true
+        }
+      ]
+    },
+    {
+      "case": "native",
+      "capture_root": "/mnt/d/Noetome/target/compiler-temp/b06-t03-formula-native-glyph-82e08b691104/native",
+      "symbols": [
+        {
+          "symbol_index": 0,
+          "symbol": "C",
+          "heading": "符号 1",
+          "definition": "test concentration",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 1,
+          "symbol": "i",
+          "heading": "符号 2",
+          "definition": "selected integer sample index",
+          "unit": null,
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 2,
+          "symbol": "t",
+          "heading": "符号 3",
+          "definition": "elapsed time",
+          "unit": "s",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 3,
+          "symbol": "a",
+          "heading": "符号 4",
+          "definition": "positive scaling constant",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 4,
+          "symbol": "b",
+          "heading": "符号 5",
+          "definition": "positive nonzero divisor",
+          "unit": "s^2",
+          "actual_native_contiguous_events_match": true
+        }
+      ],
+      "context": [
+        {
+          "heading": "适用前提",
+          "field": "conditions",
+          "values": [
+            "a > 0 and b > 0",
+            "This is a fictional engineering example, not a scientific claim."
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "范围",
+          "field": "ranges",
+          "values": [
+            "i = 1,2,3",
+            "0 <= t <= 10 s"
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "例外",
+          "field": "exceptions",
+          "values": [
+            "Do not apply outside the selected time interval."
+          ],
+          "actual_native_contiguous_events_match": true
+        }
+      ]
+    },
+    {
+      "case": "compatibility",
+      "capture_root": "/mnt/d/Noetome/target/compiler-temp/b06-t03-formula-native-glyph-82e08b691104/compatibility",
+      "symbols": [
+        {
+          "symbol_index": 0,
+          "symbol": "C",
+          "heading": "符号 1",
+          "definition": "test concentration",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 1,
+          "symbol": "i",
+          "heading": "符号 2",
+          "definition": "selected integer sample index",
+          "unit": null,
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 2,
+          "symbol": "t",
+          "heading": "符号 3",
+          "definition": "elapsed time",
+          "unit": "s",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 3,
+          "symbol": "a",
+          "heading": "符号 4",
+          "definition": "positive scaling constant",
+          "unit": "mmol/L",
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "symbol_index": 4,
+          "symbol": "b",
+          "heading": "符号 5",
+          "definition": "positive nonzero divisor",
+          "unit": "s^2",
+          "actual_native_contiguous_events_match": true
+        }
+      ],
+      "context": [
+        {
+          "heading": "适用前提",
+          "field": "conditions",
+          "values": [
+            "a > 0 and b > 0",
+            "This is a fictional engineering example, not a scientific claim."
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "范围",
+          "field": "ranges",
+          "values": [
+            "i = 1,2,3",
+            "0 <= t <= 10 s"
+          ],
+          "actual_native_contiguous_events_match": true
+        },
+        {
+          "heading": "例外",
+          "field": "exceptions",
+          "values": [
+            "Do not apply outside the selected time interval."
+          ],
+          "actual_native_contiguous_events_match": true
+        }
+      ]
+    }
+  ],
+  "method": "parse actual recorded scoped Obsidian DOM events; require a contiguous observed heading/label/value group rather than flattening all visible strings"
+}

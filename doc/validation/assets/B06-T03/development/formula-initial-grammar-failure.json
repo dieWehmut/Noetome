@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "evidence_source": "Actual functions.exec -> tools.write_stdin result, copied from this agent tool transcript; not a rerun or a reconstructed complete stdout stream",
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "noetome-cli",
+    "--offline",
+    "formula",
+    "--",
+    "--nocapture"
+  ],
+  "cwd": "/home/lyinn/project/Noetome",
+  "tool_process_session_id": 53240,
+  "exit_code": 101,
+  "unit_test_total": 7,
+  "passed": 6,
+  "failed": 1,
+  "failure_test": "formula_parser::tests::rendering_syntax_and_unbounded_nesting_never_pass_as_semantics",
+  "observed_failure_excerpt": "thread 'formula_parser::tests::rendering_syntax_and_unbounded_nesting_never_pass_as_semantics' (387971) panicked at crates/noetome-cli/src/formula_parser.rs:259:13:\nx++y\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n",
+  "observed_summary": "test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 397 filtered out; finished in 0.14s",
+  "fix": "The bounded sum grammar now rejects adjacent additive signs unless explicitly grouped. Full retained source input x++y failed the intended rejection check before this fix."
+}

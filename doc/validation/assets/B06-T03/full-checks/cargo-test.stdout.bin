@@ -1,0 +1,1144 @@
+
+running 404 tests
+test compile_report::tests::diagnostic_text_does_not_inject_table_columns_or_html ... ok
+test compile_report::tests::underscore_delimited_diagnostic_is_visible_as_literal_text ... ok
+test compile_report::tests::markdown_preserves_failed_facts_counts_and_unrun_science ... ok
+test compile_report::tests::file_revision_and_each_link_scope_are_visible_in_markdown ... ok
+test compile_store::tests::hot_journal_child ... ok
+test compile_store::tests::same_root_and_existing_input_ancestors_use_the_overlap_error ... ok
+test compile_store::tests::existing_and_input_child_roots_are_rejected_without_writes ... ok
+test compile_store::tests::preflight_selects_an_absent_sibling_without_writing ... ok
+test compile_store::tests::raw_parent_traversal_is_rejected_before_filesystem_access ... ok
+test extraction_api::tests::actual_usage_rejects_each_limit_and_overflow_without_zero_defaults ... ok
+test extraction_api::tests::credential_scan_catches_nested_escaped_and_malformed_strings ... ok
+test extraction_api_config::tests::endpoint_allows_only_explicit_numeric_loopback_or_official_live ... ok
+test extraction_api_config::tests::chat_fix_exact_selected_and_numeric_test_provider_endpoints_validate ... ok
+test extraction_api_config::tests::revision_fix_updates_only_selected_chat_strategy_version ... ok
+test extraction_api_config::tests::selected_gateway_accepts_only_exact_live_endpoint_and_selected_model ... ok
+test extraction_api_config::tests::strict_config_rejects_duplicates_extra_missing_and_nullable_omissions ... ok
+test extraction_api_schema::tests::inline_fix_selected_input_contains_task_schema_and_original_absolute_request ... ok
+test extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor ... ok
+test extraction_api_schema::tests::revision_fix_chat_schema_has_only_two_positive_integer_boundaries ... ok
+test extraction_api_config::tests::selected_guard_does_not_consume_siblings_and_rejects_hardlinks_and_size ... ok
+test extraction_api_schema::tests::revision_fix_chat_task_demands_positive_revision_and_keeps_v5_prefix ... ok
+test compile_store::tests::incorrect_or_missing_base_counts_fail_before_creating_output ... ok
+test compile_store::tests::creation_persists_independent_scope_and_actual_counts ... ok
+test extraction_api_transport::tests::pre_cancel_sends_nothing ... ok
+test compile_store::tests::recovery_refuses_to_write_when_an_owned_directory_is_replaced ... ok
+test compile_store::tests::same_empty_directory_name_with_new_identity_is_rejected ... ok
+test compile_store::tests::active_sqlite_journal_is_rejected_without_recovery_reads ... ok
+test compile_store::tests::same_bytes_with_a_new_file_identity_are_rejected ... ok
+test extraction_api_wire::chat::tests::cache_pair_requires_checked_prompt_sum_without_inventing_absent_counters ... ok
+test extraction_api_wire::chat::tests::duplicates_fences_trailing_unknown_candidates_and_bad_usage_fail ... ok
+test extraction_api_wire::chat::tests::mapped_metadata_keeps_raw_usage_and_survives_length_candidate_failures ... ok
+test compile_store::tests::exclusive_file_write_preserves_existing_bytes ... ok
+test extraction_api_wire::chat::tests::qualifier_fix_original_fourth_structure_passes_but_unit_stays_missing ... ok
+test extraction_api_wire::chat::tests::revision_fix_original_fifth_decodes_with_usage_but_has_four_revision_issues ... ok
+test extraction_api_wire::chat::tests::shape_fix_original_third_flattened_candidate_stays_rejected_with_usage ... ok
+test extraction_api_wire::tests::actual_metadata_fields_reject_null_or_wrong_types ... ok
+test extraction_api_wire::chat::tests::only_one_stopped_assistant_plain_json_and_typed_metadata_is_accepted ... ok
+test extraction_api_wire::tests::chat_fix_valid_single_chat_candidate_requires_chat_decoder ... ok
+test extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail ... ok
+test extraction_api_wire::tests::inline_fix_first_actual_plaintext_is_candidate_failure_with_real_usage_preserved ... ok
+test extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_completed_accepts_candidates_but_default_stays_strict ... ok
+test compile_store::tests::killed_sqlite_writer_leaves_a_hot_journal_that_read_checks_preserve ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_duplicates_tools_extra_text_and_fences_stay_rejected ... ok
+test extraction_api_wire::tests::metadata_preserves_real_usage_independent_of_candidate_approval ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_status_errors_types_and_usage_remain_strict ... ok
+test extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected ... ok
+test extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status ... ok
+test extraction_api_wire::tests::rejects_duplicate_keys_at_unknown_nesting_and_trailing_json ... ok
+test extraction_model::tests::binding_requires_nullable_fields_and_rejects_unknown_fields ... ok
+test extraction_model::tests::fake_config_and_measurement_require_explicit_nullable_fields ... ok
+test extraction_model::tests::payload_rejects_unknown_versions_producers_fields_duplicate_and_trailing_json ... ok
+test extraction_model::tests::selectors_and_locators_reject_mixed_or_unknown_fields ... ok
+test extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail ... ok
+test extraction_api_wire::tests::valid_metadata_survives_invalid_output_fields_and_decode_rejects_them ... ok
+test compile_store::tests::rendering_failure_records_failed_run_and_staged_release ... ok
+test extraction_output::presentation_cleanup_tests::a_changed_plan_preserves_changed_and_unknown_bytes_but_removes_passed_reports ... ok
+test compile_store::tests::unknown_file_is_preserved_and_blocks_publication ... ok
+test compile_store::tests::mismatched_markdown_cannot_be_published_as_the_same_snapshot ... ok
+test extraction_api_transport::tests::one_http1_post_preserves_complete_receipt ... ok
+test extraction_api_transport::tests::zero_deadline_counts_no_unstarted_attempt ... ok
+test compile_store::tests::publication_atomically_binds_both_report_bytes_and_manifest ... ok
+test compile_store::tests::sqlite_reader_makes_final_commit_busy_and_rolls_back_publication ... ok
+test extraction_source::tests::project_database_is_bounded_before_hashing_or_semantic_loading ... ok
+test extraction_source::tests::registered_cache_hard_link_is_rejected_before_consuming_changed_target ... ok
+test extraction_source::tests::source_cache_caps_run_before_semantic_loading ... ok
+test extraction_source::tests::request_selection_and_input_limits_are_enforced ... ok
+test extraction_source::tests::session_uses_real_utf8_span_and_checks_new_project_inventory ... ok
+test extraction_source::tests::unknown_cache_bytes_are_not_hashed_before_semantic_inventory_rejection ... ok
+test extraction_api_transport::tests::truncated_chunked_and_oversize_receipts_fail ... ok
+test extraction_source::tests::unix_snapshot_byte_changes_are_detected_by_retained_receipt ... ok
+test extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work ... FAILED
+test fixture_compile::tests::checkpoint_child ... ok
+test extraction_source::tests::unknown_private_project_files_use_metadata_only ... ok
+test extraction_api_transport::tests::framed_empty_receipts_are_complete_and_keep_http_classification ... ok
+test fixture_compile::tests::actual_process_kill_after_persisted_staging_retains_unpublished_state ... ok
+test extraction_source::tests::source_cache_file_count_is_bounded_before_semantic_loading ... ok
+test extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried ... ok
+test fixture_input::tests::aggregate_size_and_path_reuse_are_checked_before_the_next_read ... ok
+test fixture_input::tests::json_size_is_rejected_before_decoding_or_reading_the_large_file ... ok
+test fixture_input::tests::nullable_coverage_fields_are_required_even_when_the_value_is_null ... ok
+test fixture_input::tests::real_fixture_loading_rebuilds_twelve_spans_without_writing ... ok
+test fixture_input::tests::safe_relative_paths_preserve_unicode_and_spaces ... ok
+test fixture_input::tests::unsafe_relative_names_are_rejected_before_filesystem_access ... ok
+test compile_store::tests::missing_failed_or_not_run_required_checks_block_publication ... ok
+test fixture_knowledge::tests::atom_content_and_qualifiers_cannot_be_empty ... ok
+test fixture_knowledge::tests::concepts_require_text_but_names_and_aliases_may_overlap ... ok
+test fixture_compile::tests::first_staged_file_failure_keeps_partial_scene_and_truthful_reports ... ok
+test fixture_knowledge::tests::atoms_require_nonempty_unambiguous_concept_and_evidence_references ... ok
+test extraction_source::tests::actual_pdf_parse_produces_page_resource_and_bbox_without_legacy_span ... FAILED
+test fixture_knowledge::tests::coverage_is_exactly_one_record_per_actual_span ... ok
+test fixture_knowledge::tests::duplicate_chains_must_be_acyclic_and_end_at_included_mapping ... ok
+test fixture_knowledge::tests::duplicate_mapping_must_agree_and_have_support_at_the_repeat_position ... ok
+test fixture_knowledge::tests::each_included_position_needs_its_own_valid_supporting_excerpt ... ok
+test fixture_knowledge::tests::evidence_can_bind_a_nonempty_partial_unicode_excerpt ... ok
+test fixture_knowledge::tests::evidence_hash_must_match_the_actual_excerpt_bytes ... ok
+test fixture_knowledge::tests::duplicates_require_existing_reference_identical_span_hash_and_no_cycle ... ok
+test fixture_knowledge::tests::evidence_offsets_must_be_utf8_character_boundaries ... ok
+test fixture_knowledge::tests::evidence_references_must_resolve_to_actual_spans ... ok
+test fixture_knowledge::tests::evidence_rejects_empty_reversed_or_out_of_bounds_ranges ... ok
+test fixture_knowledge::tests::coverage_requires_current_scope_policy_and_mapped_or_planned_stage ... ok
+test fixture_knowledge::tests::included_and_duplicate_decisions_cannot_claim_deterministic_format_review ... ok
+test fixture_knowledge::tests::exclusions_require_reason_no_mapping_and_no_duplicate_reference ... ok
+test fixture_knowledge::tests::included_coverage_requires_nonempty_mapping_and_resolved_atoms ... ok
+test fixture_compile::tests::unknown_staged_file_is_preserved_without_publication ... ok
+test fixture_knowledge::tests::repeated_source_bindings_are_rejected_even_if_the_set_is_unchanged ... ok
+test fixture_knowledge::tests::included_mapping_cannot_also_claim_exclusion_or_duplicate ... ok
+test fixture_knowledge::tests::required_atoms_must_be_known_and_fixture_reviewed ... ok
+test fixture_knowledge::tests::required_mapping_is_exactly_the_required_subset_of_mapped_atoms ... ok
+test fixture_knowledge::tests::ids_and_entity_revisions_cannot_be_invalid_or_ambiguous ... ok
+test fixture_knowledge::tests::reviewed_fixture_has_valid_knowledge_and_complete_coverage ... ok
+test fixture_knowledge::tests::required_atoms_need_valid_support_not_only_refutes_or_qualifies ... ok
+test fixture_knowledge::tests::knowledge_sources_must_match_the_entire_manifest_binding ... ok
+test fixture_plan::tests::ambiguous_headings_do_not_resolve_to_a_canonical_link_target ... ok
+test fixture_knowledge::tests::unresolved_dispositions_and_unreviewed_parse_status_cannot_pass ... ok
+test fixture_plan::tests::canonical_section_must_display_its_reviewed_explanation_atoms ... ok
+test fixture_compile::tests::actual_unit_loss_with_refreshed_hash_and_offsets_is_blocked ... ok
+test fixture_plan::tests::canonical_placements_need_one_existing_related_section ... ok
+test fixture_plan::tests::empty_or_unsupported_plan_and_invalid_identity_are_rejected ... ok
+test fixture_compile::tests::occupied_report_path_is_preserved_and_does_not_claim_a_report_pair ... ok
+test fixture_plan::tests::expected_canonical_and_required_semantic_links_must_exist_exactly ... ok
+test fixture_plan::tests::every_plan_identity_scope_rejects_duplicates ... ok
+test fixture_plan::tests::expected_case_identity_and_duplicate_expected_entries_are_rejected ... ok
+test fixture_plan::tests::expected_atoms_fix_content_conditions_concepts_type_and_support_positions ... ok
+test fixture_plan::tests::expected_required_atom_set_catches_required_false_drift ... ok
+test fixture_plan::tests::display_fields_reject_controls_and_numeric_email_autolinks ... ok
+test fixture_plan::tests::all_display_fields_reject_raw_html_and_hidden_comments ... ok
+test fixture_plan::tests::all_display_fields_reject_unregistered_wiki_links_and_embeds ... ok
+test fixture_plan::tests::expected_coverage_fix_all_spans_and_exact_exclusion_decisions ... ok
+test fixture_plan::tests::expected_support_positions_and_expected_collections_cannot_be_relabelled ... ok
+test fixture_plan::tests::literal_output_paths_reject_wiki_address_control_characters ... ok
+test fixture_plan::tests::mapped_paragraph_and_list_item_must_show_their_own_atom_text ... ok
+test fixture_plan::tests::missing_required_mapping_and_unknown_atom_are_rejected ... ok
+test fixture_plan::tests::normal_comparison_text_and_single_brackets_remain_visible_plain_text ... ok
+test fixture_plan::tests::output_file_directory_collision_is_detected_with_interleaving_sorted_paths ... ok
+test fixture_plan::tests::headings_reject_wiki_syntax_and_case_trim_ambiguity ... ok
+test extraction_source::tests::failed_utf8_and_failed_pdf_never_supply_request_units ... ok
+test fixture_plan::tests::expected_tables_fix_all_columns_rows_cells_labels_and_missing_states ... ok
+test fixture_plan::tests::node_atom_ids_equal_child_mapping_sets_without_duplicate_refs ... ok
+test fixture_plan::tests::plan_binds_both_full_raw_ir_hash_and_revision ... ok
+test extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body ... FAILED
+test fixture_plan::tests::reviewed_evidence_ranges_cannot_shrink_to_nonknowledge_prefixes ... ok
+test fixture_plan::tests::semantic_links_resolve_concept_ids_even_when_names_are_equal ... ok
+test fixture_plan::tests::table_cell_cannot_borrow_units_or_qualifiers_from_another_cell ... ok
+test fixture_plan::tests::paragraph_atom_hidden_in_html_or_obsidian_comment_is_not_complete ... ok
+test fixture_plan::tests::valid_fixture_resolves_by_identity_to_two_literal_canonical_targets ... ok
+test fixture_render::tests::actual_newline_tab_and_literal_entity_variant_cannot_be_double_decoded ... ok
+test fixture_render::tests::actual_tables_and_headings_are_parsed_independently_of_metadata ... ok
+test fixture_plan::tests::reviewed_canonical_atom_ids_cannot_be_empty_duplicate_unknown_or_unrelated ... ok
+test fixture_render::tests::all_actual_links_include_ghost_tokens_outside_declared_scopes ... ok
+test fixture_render::tests::codec_uses_literal_ascii_escapes_and_decodes_control_tokens_once ... ok
+test fixture_render::tests::an_alias_cannot_complete_a_qualifier_deleted_from_its_cell_body ... ok
+test fixture_render::tests::independent_validator_accepts_literal_bytes_without_calling_renderer ... ok
+test fixture_render::tests::content_checks_catch_unit_condition_and_missing_cell_drift_after_sha_refresh ... ok
+test fixture_render::tests::independently_reviewed_table_alias_variant_has_literal_escaped_pipe ... ok
+test fixture_render::tests::links_cannot_disappear_or_move_into_the_body_mapping ... ok
+test fixture_render::tests::manifest_and_utf8_failures_are_distinct_from_content_checks ... ok
+test fixture_render::tests::output_limit_refuses_a_complete_chunk_without_truncating_text ... ok
+test fixture_render::tests::metadata_atom_ids_cannot_hide_missing_or_invalid_scope_ranges ... ok
+test fixture_render::tests::table_parser_counts_escape_parity_without_splitting_literal_pipes ... ok
+test fixture_plan::tests::table_rectangles_content_label_and_missing_states_are_enforced ... ok
+test fixture_render::tests::renderer_matches_two_author_declared_literal_notes_and_child_mappings ... ok
+test fixture_render::tests::wiki_target_headings_reject_backslashes_before_rendering ... ok
+test fixture_render::tests::scopes_do_not_borrow_units_from_another_cell_or_alias ... ok
+test fixture_plan::tests::reviewed_evidence_inventory_and_every_evidence_field_are_fixed ... ok
+test formula_parser::tests::fidelity_preserves_scripts_signs_relations_and_fraction_arguments ... ok
+test formula_parser::tests::rendering_syntax_and_unbounded_nesting_never_pass_as_semantics ... ok
+test fixture_plan::tests::all_display_fields_reject_raw_markdown_links_images_and_definitions ... ok
+test fixture_render::tests::renderable_aliases_reject_unsupported_separators_and_whitespace ... ok
+test fixture_plan::tests::unsafe_and_windows_colliding_output_paths_are_rejected ... ok
+test formula::guard_tests::replaced_case_ancestor_never_follows_the_link_or_writes_a_success_vault ... ok
+test extraction_verify::guard_tests::output_added_during_final_guard_retains_human_file ... ok
+test fixture_compile::tests::late_selected_input_change_marks_source_check_failed ... ok
+test extraction_verify::guard_tests::source_added_during_final_guard_removes_only_captured_results ... ok
+test extraction_verify::guard_tests::result_hardlink_is_denied_or_invalidates_and_cleans_only_owned_results ... ok
+test knowledge_presentation_render::tests::body_drift_is_rejected_after_rehashing_output ... ok
+test knowledge_presentation_render::tests::byte_ranges_and_scope_identity_are_checked_against_observed_structure ... ok
+test knowledge_presentation_render::tests::full_fact_context_must_occur_in_its_own_body_and_cannot_come_from_alias ... ok
+test knowledge_presentation_render::tests::independently_authored_table_and_paragraph_bytes_have_exact_scopes ... ok
+test knowledge_presentation_render::tests::unsafe_paths_and_undeclared_or_wrong_links_are_rejected ... ok
+test extraction_verify::guard_tests::selected_case_ignores_private_sibling_content ... ok
+test pdf_parse::tests::cancellation_before_launch_does_not_create_an_output_root ... FAILED
+test pdf_parse::tests::input_byte_limit_never_invents_confirmed_sha_or_pages ... FAILED
+test pdf_parse::tests::real_parser_report_collision_preserves_existing_report_bytes_and_cannot_inspect_as_complete ... FAILED
+test pdf_parse::tests::real_parser_resource_limit_returns_nonzero_with_a_locatable_reason ... FAILED
+test extraction_verify::guard_tests::actual_hardlink_and_linked_directory_inputs_fail_before_output ... ok
+test pdf_parse::tests::unsuccessful_real_child_preserves_bounded_diagnostics_and_unconfirmed_failure ... FAILED
+test pdf_parse::tests::synthetic_producer_is_refused_by_the_pdf_wrapper ... FAILED
+test pdf_parse::tests::stdout_overflow_is_not_truncated_into_a_successful_pdf_report ... FAILED
+test pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option ... ok
+test pdf_source_model::tests::global_import_history_rejects_cross_table_ids_and_rowid_collisions ... FAILED
+test pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages ... FAILED
+test fixture_compile::tests::real_sqlite_commit_busy_rolls_back_all_success_records ... ok
+test pdf_source_model::tests::historical_adapter_sha_recomputes_key_while_unsupported_actual_parser_is_rejected ... FAILED
+test pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion ... FAILED
+test pdf_source_model::tests::host_failure_keeps_partial_non_utf8_parser_bytes_unconfirmed ... FAILED
+test pdf_source_model::tests::host_failure_rejects_fabricated_confirmed_pages_even_with_outer_hashes_updated ... FAILED
+test formula::guard_tests::generated_note_edit_survives_but_unchanged_success_reports_are_removed ... ok
+test pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected ... ok
+test pdf_source_model::tests::native_semantic_inspector_rejects_utf8_cut_even_with_sql_and_all_outer_shas_updated ... FAILED
+test pdf_source_model::tests::native_snapshot_reader_binds_full_page_region_and_core_resource_inventory ... FAILED
+test formula::guard_tests::inventory_mutation_before_creation_and_after_save_is_detected_without_deleting_it ... ok
+test pdf_source_model::tests::next_global_import_order_reports_i64_overflow_without_wrapping ... FAILED
+test pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version ... FAILED
+test pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states ... FAILED
+test pdf_source_model::tests::needs_review_reports_hydrate_actual_bound_issues_and_keep_knowledge_pending ... FAILED
+test pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw ... FAILED
+test pdf_validate::tests::accepts_declared_complete_synthetic_page_and_utf8_region ... ok
+test pdf_source_model::tests::report_hydration_rejects_caller_altered_sql_facts ... FAILED
+test pdf_validate::tests::accepts_review_page_with_confirmed_empty_artifact_and_no_wire_range ... ok
+test pdf_validate::tests::refuses_multicodepoint_glyph_claimed_as_parsed_despite_consistent_body ... ok
+test pdf_validate::tests::refuses_staggered_disjoint_line_columns_claimed_as_parsed ... ok
+test pdf_validate::tests::refuses_whitespace_only_page_claimed_as_parsed ... ok
+test pdf_validate::tests::rejects_in_bounds_bbox_that_does_not_enclose_its_actual_glyphs ... ok
+test pdf_validate::tests::rejects_missing_body_even_when_all_artifact_shas_are_valid ... ok
+test pdf_validate::tests::rejects_missing_page_and_fake_page_count ... ok
+test pdf_validate::tests::rejects_nonfinite_and_out_of_page_coordinates ... ok
+test pdf_validate::tests::rejects_review_or_failed_page_claimed_as_whole_document_parsed ... ok
+test pdf_validate::tests::rejects_text_artifact_resource_sha_or_page_reference_change ... ok
+test pdf_validate::tests::rejects_unconfirmed_page_count_claimed_as_parsed ... ok
+test pdf_validate::tests::rejects_wrong_crop_rotation_matrix ... ok
+test pdf_validate::tests::rejects_utf8_byte_range_cutting_an_actual_character ... ok
+test pdf_source_model::tests::report_hydration_rejects_foreign_import_identity ... FAILED
+test pdf_validate::tests::rejects_wrong_page_location ... ok
+test pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history ... FAILED
+test pdf_source_model::tests::unified_source_helpers_follow_global_rowid_even_when_clock_moves_backwards ... FAILED
+test pdf_source_model::tests::staged_pdf_reader_only_accepts_registered_ids_in_the_current_writer_paths ... FAILED
+test process_flow_plan::tests::body_only_whitespace_does_not_disable_an_otherwise_verified_diagram ... ok
+test process_flow_plan::tests::detached_cycle_is_diagnosed_before_secondary_disconnection ... ok
+test process_flow_plan::tests::frozen_semantic_cases_have_their_primary_issue ... ok
+test process_flow_plan::tests::goals_must_equal_actual_terminal_set ... ok
+test process_flow_plan::tests::label_and_criterion_whitespace_have_a_conservative_display_boundary ... ok
+test process_flow_plan::tests::multiline_labels_fall_back_without_losing_characters_or_semantics ... ok
+test process_flow_plan::tests::profile_claim_cannot_promote_an_unmeasured_target ... ok
+test process_flow_plan::tests::strict_profile_rejects_missing_extra_and_codec_fields ... ok
+test process_flow_render::tests::body_fence_delimiters_and_trailing_whitespace_preserve_literal_text ... ok
+test process_flow_render::tests::every_frozen_success_renders_and_independently_reads_back ... ok
+test process_flow_render::tests::extra_mermaid_instruction_and_broken_link_are_rejected ... ok
+test process_flow_render::tests::missing_nullable_fields_do_not_deserialize_as_implicit_null ... ok
+test process_flow_render::tests::negative_sign_branch_criterion_and_exception_cannot_disappear ... ok
+test process_flow_render::tests::punctuation_codec_is_one_pass_and_rejects_raw_syntax ... ok
+test process_flow_render::tests::reversed_arrow_rejected_even_when_fingerprint_is_rewritten ... ok
+test process_flow_render::tests::synchronized_mapping_and_plan_forgery_rejected_against_document ... ok
+test process_parser::tests::complete_consumption_rejects_unknown_fields_tails_and_physical_blank_lines ... ok
+test process_parser::tests::document_validation_rejects_counterfeit_evidence_and_type_fields ... ok
+test process_parser::tests::frozen_authors_match_all_parsed_fields_and_real_utf8_ranges ... ok
+test process_parser::tests::json_tokens_preserve_quoted_delimiters_and_do_not_infer_relations ... ok
+test process_parser::tests::known_but_invalid_structure_cannot_create_a_document ... ok
+test formula::guard_tests::new_unknown_output_and_hardlink_alias_preserve_external_bytes_and_clear_success ... ok
+test process_parser::tests::limits_and_empty_arrays_are_explicit_and_normalization_preserves_author_order ... ok
+test project::tests::configuration_requires_a_real_uuid_v4_rfc4122_variant ... ok
+test formula::guard_tests::original_attachment_and_profile_changes_are_denied_or_detected_while_held ... ok
+test project::tests::exact_schema_three_project_inspection_is_readonly ... ok
+test project::tests::initialized_schema_one_inspection_rejects_weakened_metadata_constraints ... ok
+test project::tests::rollback_does_not_remove_a_replacement_empty_directory ... ok
+test project::tests::actual_process_termination_preserves_partial_state_and_new_path_retry_succeeds ... ok
+test project::tests::handled_initialization_failures_clean_only_owned_files_and_allow_same_path_retry ... ok
+test process_flow::guard_tests::late_output_hardlink_does_not_delete_external_alias_bytes ... ok
+test process_flow::guard_tests::changed_generated_note_is_preserved_but_unchanged_success_report_is_removed ... ok
+test project::tests::writer_inspection_never_ignores_old_initialization_remnants_or_a_file_marker ... ok
+test project::tests::source_schema_two_preserves_project_identity_and_inspection_is_readonly ... ok
+test sidecar_process::tests::actual_input_fingerprint_is_complete ... FAILED
+test sidecar_process::tests::bounded_diagnostic_overflow_is_explicit ... FAILED
+test sidecar_process::tests::concurrent_stderr_is_drained ... FAILED
+test sidecar_process::tests::crashed_process ... FAILED
+test sidecar_process::tests::diagnostics_are_separate ... FAILED
+test sidecar_process::tests::duplicate_units ... FAILED
+test sidecar_process::tests::empty_parser_version ... FAILED
+test sidecar_process::tests::empty_response ... FAILED
+test sidecar_process::tests::existing_workspace_is_rejected ... ok
+test project::tests::writer_inspection_only_allows_its_own_ordinary_directory ... ok
+test sidecar_process::tests::failed_protocol_retains_diagnostics ... FAILED
+test sidecar_process::tests::failed_unit_without_issue ... FAILED
+test sidecar_process::tests::hardlink_resource_rejected_with_external_sentinel_unchanged ... FAILED
+test sidecar_process::tests::input_byte_limit ... ok
+test sidecar_process::tests::input_hardlink_rejected ... ok
+test sidecar_process::tests::invalid_json_response ... FAILED
+test sidecar_process::tests::input_write_is_denied ... FAILED
+test sidecar_process::tests::invalid_utf8_response ... FAILED
+test sidecar_process::tests::issue_count_limit ... FAILED
+test sidecar_process::tests::missing_nullable_text_field ... FAILED
+test project::tests::rollback_preserves_unknown_content_changed_bytes_deleted_files_and_replaced_files ... ok
+test sidecar_process::tests::no_stdin_reader_times_out ... FAILED
+test sidecar_process::tests::missing_ordinal ... FAILED
+test sidecar_process::tests::missing_units ... FAILED
+test sidecar_process::tests::real_parser_zero_units_rejected ... FAILED
+test sidecar_process::tests::public_entry_rejects_fake ... FAILED
+test sidecar_process::tests::pre_cancel_does_not_launch ... ok
+test sidecar_process::tests::resource_byte_limit ... FAILED
+test sidecar_process::tests::resource_absolute_path ... FAILED
+test sidecar_process::tests::request_byte_limit ... ok
+test sidecar_process::tests::resource_case_collision ... FAILED
+test sidecar_process::tests::resource_directory_depth_limit ... FAILED
+test sidecar_process::tests::resource_count_limit ... FAILED
+test sidecar_process::tests::resource_invalid_utf8 ... FAILED
+test sidecar_process::tests::resource_parent_path ... FAILED
+test sidecar_process::tests::resource_prefix_collision ... FAILED
+test sidecar_process::tests::resource_reserved_name ... FAILED
+test sidecar_process::tests::resource_range_splits_character ... FAILED
+test sidecar_process::tests::resource_trailing_dot ... FAILED
+test sidecar_process::tests::resource_unknown_directory ... FAILED
+test sidecar_process::tests::resource_unknown_file ... FAILED
+test sidecar_process::tests::resource_unknown_reference ... FAILED
+test sidecar_process::tests::resource_unreferenced ... FAILED
+test sidecar_process::tests::resource_wrong_sha ... FAILED
+test sidecar_process::tests::resource_wrong_length ... FAILED
+test sidecar_process::tests::review_large_resource_timeout_latency ... FAILED
+test sidecar_process::tests::review_large_resource_validation_cancel_latency ... FAILED
+test sidecar_process::tests::review_unit_without_issue ... FAILED
+test sidecar_process::tests::second_stdout_json ... FAILED
+test sidecar_process::tests::review_units_preserve_status_and_issue ... FAILED
+test sidecar_process::tests::start_failure ... FAILED
+test sidecar_process::tests::stdout_byte_limit ... FAILED
+test sidecar_process::tests::stderr_byte_limit ... FAILED
+test sidecar_process::tests::trailing_whitespace_is_accepted ... FAILED
+test sidecar_process::tests::total_resource_byte_limit ... FAILED
+test sidecar_process::tests::truncated_response ... FAILED
+test sidecar_process::tests::unit_count_limit ... FAILED
+test sidecar_process::tests::unknown_enum ... FAILED
+test sidecar_process::tests::unknown_capability ... FAILED
+test sidecar_process::tests::unknown_field ... FAILED
+test sidecar_process::tests::unknown_issue_reference ... FAILED
+test sidecar_process::tests::unknown_nested_field ... FAILED
+test sidecar_process::tests::unsupported_capability_version ... FAILED
+test sidecar_process::tests::unknown_unit_cannot_be_parsed ... FAILED
+test sidecar_process::tests::unsupported_version ... FAILED
+test sidecar_process::tests::valid_json_with_nonzero_exit_is_failure ... FAILED
+test sidecar_process::tests::valid_resources ... FAILED
+test sidecar_process::tests::wrong_request_id ... FAILED
+test sidecar_process::tests::wrong_length ... FAILED
+test sidecar_process::tests::zero_policy_rejected_without_workspace ... ok
+test sidecar_process::tests::wrong_sha ... FAILED
+test sidecar_process::tests::wrong_workspace_identity ... FAILED
+test source_model::tests::loading_and_validating_real_snapshots_preserves_complete_records ... FAILED
+test source_model::tests::failed_utf8_versions_have_only_real_raw_bytes_and_no_spans ... FAILED
+test source_model::tests::pending_count_constraint_rejects_a_different_count_without_changing_the_report ... FAILED
+test source_model::tests::snapshots_reject_unknown_cache_content_and_invalid_owner ... FAILED
+test source_model::tests::snapshots_reject_changed_raw_bytes_and_incomplete_span_inventory ... ok
+test source_model::tests::staged_snapshot_validation_is_restricted_to_the_current_writer_directory ... FAILED
+test source_schema::tests::candidate_upgrade_rejects_a_mismatched_identity_without_rewriting_old_rows ... ok
+test source_model::tests::records_reject_invalid_hashes_and_reuse_before_the_first_import ... ok
+test source_schema::tests::a_real_sqlite_reader_lock_rolls_back_schema_three_rows_and_database_bytes ... ok
+test source_schema::tests::exact_schema_routing_rejects_broken_foreign_keys_even_if_writes_disabled_them ... ok
+test source_schema::tests::exact_source_schema_accepts_its_empty_registration_state ... ok
+test source_schema::tests::exact_schema_three_accepts_its_empty_registration_state ... ok
+test source_schema::tests::legacy_upgrade_keeps_schema_three_without_a_downgrade ... ok
+test process_flow::guard_tests::unknown_output_addition_survives_and_captured_generated_results_are_removed ... ok
+test source_schema::tests::pdf_upgrade_of_empty_schema_one_reaches_three_with_the_original_identity ... ok
+test process_flow::guard_tests::changed_profile_is_detected_or_denied_while_held ... ok
+test source_schema::tests::schema_three_page_and_resource_columns_reject_wrong_types_and_states ... ok
+test source_schema::tests::schema_one_upgrades_recheck_metadata_after_a_real_write_lock_handoff ... ok
+test source_schema::tests::schema_three_noop_upgrades_preserve_all_pdf_rows_and_identities ... ok
+test source_schema::tests::schema_three_migration_preserves_every_legacy_row_value_identity_and_order ... ok
+test source_schema::tests::schema_three_pdf_imports_bind_source_version_and_parse_without_fabricating_failed_versions ... ok
+test project::tests::schema_three_inspection_rejects_mismatched_and_unknown_versions_without_migration ... ok
+test source_schema::tests::schema_three_parse_rows_require_verified_or_real_host_failure_outcomes ... ok
+test source_schema::tests::schema_three_pdf_versions_enforce_acquisition_and_do_not_reinterpret_text_states ... ok
+test source_schema::tests::schema_three_region_columns_enforce_finite_bbox_ranges_and_same_parse_foreign_keys ... ok
+test source_schema::tests::source_schema_rejects_unknown_objects_and_changed_constraints ... ok
+test source_write::pdf_tests::pdf_writer_interruption_child ... ok
+test source_schema::tests::schema_three_preserves_legacy_span_kinds_and_nonempty_ranges ... ok
+test source_schema::tests::schema_upgrades_reject_unknown_versions_and_wrong_version_pairs_without_mutation ... ok
+test source_schema::tests::upgrading_a_candidate_preserves_identity_and_rejects_unknown_schema_atomically ... ok
+test source_schema::tests::exact_schema_routing_rejects_unknown_tables_indexes_views_triggers_and_constraints ... ok
+test source_write::tests::beginning_then_aborting_preserves_original_project_and_sentinel ... ok
+test source_write::tests::a_replaced_project_directory_and_its_original_moved_tree_are_untouched ... ok
+test source_write::tests::callback_failure_does_not_change_original_database_or_config ... ok
+test project::tests::schema_three_inspection_rejects_unknown_objects_changed_constraints_and_bad_metadata ... ok
+test source_write::tests::candidate_replacement_and_unknown_transaction_or_root_content_are_preserved ... ok
+test knowledge_coordinate::guard_tests::final_result_hardlink_denied_or_invalidated_without_alias_cleanup ... ok
+test source_write::tests::drop_rolls_back_a_known_callback_failure_without_an_explicit_abort ... ok
+test source_write::pdf_tests::controlled_pdf_write_errors_restore_old_text_and_both_project_files_at_seven_stages ... FAILED
+test source_write::tests::externally_deleted_backup_is_not_recreated_during_abort ... ok
+test source_write::tests::invalid_internal_ids_or_project_identity_changes_do_not_publish ... ok
+test knowledge_coordinate::guard_tests::final_input_inventory_change_discards_only_captured_results ... ok
+test source_write::tests::unknown_published_snapshot_content_is_preserved_without_rollback_deletion ... ok
+test text::tests::blank_unicode_whitespace_is_preserved_in_one_formatting_span ... ok
+test text::tests::consecutive_closed_fences_remain_distinct_blocks ... ok
+test text::tests::deeply_indented_fences_are_text_and_not_code_delimiters ... ok
+test text::tests::empty_or_only_bom_inputs_have_no_phantom_spans ... ok
+test text::tests::enum_names_are_strict_and_all_declared_statuses_round_trip ... ok
+test source_write::tests::successful_commit_upgrades_identity_and_publishes_owned_snapshots ... ok
+test text::tests::invalid_utf8_reports_original_byte_offset_without_replacement ... ok
+test text::tests::headings_require_one_to_six_hashes_and_at_most_three_spaces ... ok
+test text::tests::matching_longer_tilde_fence_keeps_headings_and_other_markers_as_code ... ok
+test text::tests::mixed_unicode_blocks_have_explicit_byte_and_line_boundaries ... ok
+test text::tests::sha256_matches_independent_empty_ascii_and_utf8_vectors ... ok
+test text::tests::short_or_suffixed_closing_fences_do_not_hide_unclosed_code ... ok
+test text::tests::trailing_newlines_do_not_invent_uncovered_or_empty_lines ... ok
+test text::tests::only_the_first_bom_and_newline_encoding_are_normalized ... ok
+test source_write::tests::second_commit_preserves_existing_cache_and_raw_only_versions ... ok
+test source_write::tests::same_byte_replacement_of_published_targets_keeps_backups_and_marker ... ok
+test source_write::tests::actual_process_kill_preserves_backups_and_blocks_inspection_at_three_stages ... ok
+test source_write::pdf_tests::unregistered_files_at_pdf_publication_preserve_human_bytes_and_recovery_backups ... FAILED
+test source_write::pdf_tests::real_pdf_writer_process_kill_preserves_old_history_at_five_publish_stages ... FAILED
+test source_write::tests::controlled_failures_at_all_six_stages_restore_exact_original_bytes ... ok
+test source_write::tests::preexisting_unowned_cache_and_version_collision_are_never_taken_over ... ok
+test knowledge_coordinate::guard_tests::final_source_and_output_changes_preserve_unknown_content ... ok
+test process_flow::guard_tests::input_inventory_changes_before_output_and_after_save_never_keep_success_results ... ok
+test knowledge_presentation::guard_tests::changed_plan_and_unknown_file_survive_late_cleanup_on_unix ... ok
+test knowledge_coordinate::variants_guard_tests::v2_final_source_or_output_inventory_change_discards_captured_results ... ok
+test knowledge_coordinate::variants_guard_tests::v2_final_input_inventory_change_preserves_originals_and_human_additions ... ok
+test knowledge_presentation::guard_tests::inputs_held_inventory_changes_reject_before_preview_creation ... ok
+test knowledge_presentation::guard_tests::results_saved_inventory_changes_preserve_originals_and_unknown_bytes ... ok
+
+failures:
+
+---- extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work stdout ----
+
+thread 'extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work' (399543) panicked at crates/noetome-cli/src/extraction_api_transport.rs:391:9:
+shutdown waited 225.060564ms
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- extraction_source::tests::actual_pdf_parse_produces_page_resource_and_bbox_without_legacy_span stdout ----
+
+thread 'extraction_source::tests::actual_pdf_parse_produces_page_resource_and_bbox_without_legacy_span' (399578) panicked at crates/noetome-cli/src/extraction_source.rs:671:9:
+assertion `left == right` failed: {"acquisition_status":"acquired","error":{"code":"PDF_RUNTIME","message":"PROJECT_UNSAFE_PATH：项目路径必须是普通目录和文件，不允许符号链接、junction、路径跳转或不安全文件名：/tmp/noetome-b05-t03-python/bin/python"},"import_id":"a6138f64-dcc2-427e-95fe-2356f969c0ca","imported_at":"2026-11-05T23:24:09.72417663Z","knowledge_status":"pending","pdf":{"adapter_sha256":"5e0a8c25c531085c5d04d55b094904fb83a79c3b3f2b3cd979e163c5bfc179b8","cache_key":"a25268cb959ddd6769e331e8afed2c324e7d7898e3a9ee4da0881ec70f04eb3f","confirmed_page_count":0,"error":{"code":"PDF_RUNTIME","message":"PROJECT_UNSAFE_PATH：项目路径必须是普通目录和文件，不允许符号链接、junction、路径跳转或不安全文件名：/tmp/noetome-b05-t03-python/bin/python"},"failed_page_count":0,"import_options_version":"pdf-import-default-v1","issues":[],"manifest_sha256":null,"needs_review_page_count":0,"outcome_kind":"host_failed","outcome_sha256":"4f82a883e01425314f5e01b6a7297c32e1ee5e3a929a134c20a8cf04761c1707","page_count":null,"parse_id":"39c4e15f-f5c2-482f-909c-80c33b1a6040","parsed_page_count":0,"parser":null,"protocol_version":1,"region_count":0,"requested_parser":{"adapter_version":"noetome-pdf-text-v1","engine":"pdfplumber","engine_dependency":"pdfminer.six","engine_dependency_version":"20251230","engine_version":"0.11.9","options_version":"crop-pt-lines-v1","python_version":"3.12.14"},"reused":false,"snapshot_path":".noetome-pdf-parses/39c4e15f-f5c2-482f-909c-80c33b1a6040","status":"failed"},"pending_extraction_count":0,"project_id":"af3573f3-23ce-4e1f-b414-5fb5fe3145ff","report_kind":"source_pdf_import","reused":false,"schema_version":2,"selected_path":"/home/lyinn/project/Noetome/fixtures/pdf-text-v1/single-page.pdf","source_id":"73ee1cf7-cb9e-4b73-8e71-0e10e0ad851b","status":"failed","version":{"byte_length":873,"content_sha256":"1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457","created_at":"2026-11-05T23:24:09.72417663Z","display_name":"single-page.pdf","error":null,"ingest_status":"acquired","media_type":"application/pdf","normalization_version":null,"normalized_sha256":null,"normalized_snapshot":null,"raw_snapshot":".noetome-sources/87a0c150-f87d-47ef-9054-c2b09a8f223d/raw.pdf","revision":1,"source_id":"73ee1cf7-cb9e-4b73-8e71-0e10e0ad851b","version_id":"87a0c150-f87d-47ef-9054-c2b09a8f223d"},"version_id":"87a0c150-f87d-47ef-9054-c2b09a8f223d"}
+  left: String("failed")
+ right: "parsed"
+
+---- extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body stdout ----
+
+thread 'extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body' (399546) panicked at crates/noetome-cli/src/extraction_api_transport.rs:235:9:
+assertion `left == right` failed
+  left: []
+ right: [97, 98, 99]
+
+---- pdf_parse::tests::cancellation_before_launch_does_not_create_an_output_root stdout ----
+
+thread 'pdf_parse::tests::cancellation_before_launch_does_not_create_an_output_root' (399726) panicked at crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:95:5:
+assertion `left == right` failed
+  left: "PDF_RUNTIME"
+ right: "SIDECAR_CANCELLED"
+
+---- pdf_parse::tests::input_byte_limit_never_invents_confirmed_sha_or_pages stdout ----
+
+thread 'pdf_parse::tests::input_byte_limit_never_invents_confirmed_sha_or_pages' (399727) panicked at crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:81:5:
+assertion `left == right` failed
+  left: "PDF_RUNTIME"
+ right: "SIDECAR_LIMIT"
+
+---- pdf_parse::tests::real_parser_report_collision_preserves_existing_report_bytes_and_cannot_inspect_as_complete stdout ----
+
+thread 'pdf_parse::tests::real_parser_report_collision_preserves_existing_report_bytes_and_cannot_inspect_as_complete' (399728) panicked at crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:494:43:
+called `Result::unwrap()` on an `Err` value: SidecarError { code: "PDF_RUNTIME", message: "PROJECT_UNSAFE_PATH：项目路径必须是普通目录和文件，不允许符号链接、junction、路径跳转或不安全文件名：/tmp/noetome-b05-t03-python/bin/python", diagnostics: [] }
+
+---- pdf_parse::tests::real_parser_resource_limit_returns_nonzero_with_a_locatable_reason stdout ----
+
+thread 'pdf_parse::tests::real_parser_resource_limit_returns_nonzero_with_a_locatable_reason' (399730) panicked at crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:178:5:
+assertion failed: matches!(error.code, "SIDECAR_EXIT" | "SIDECAR_LIMIT")
+
+---- pdf_parse::tests::unsuccessful_real_child_preserves_bounded_diagnostics_and_unconfirmed_failure stdout ----
+
+thread 'pdf_parse::tests::unsuccessful_real_child_preserves_bounded_diagnostics_and_unconfirmed_failure' (399733) panicked at crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:116:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_EXIT"
+
+---- pdf_parse::tests::synthetic_producer_is_refused_by_the_pdf_wrapper stdout ----
+
+thread 'pdf_parse::tests::synthetic_producer_is_refused_by_the_pdf_wrapper' (399732) panicked at crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:152:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PRODUCER"
+
+---- pdf_parse::tests::stdout_overflow_is_not_truncated_into_a_successful_pdf_report stdout ----
+
+thread 'pdf_parse::tests::stdout_overflow_is_not_truncated_into_a_successful_pdf_report' (399731) panicked at crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:140:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_LIMIT"
+
+---- pdf_source_model::tests::global_import_history_rejects_cross_table_ids_and_rowid_collisions stdout ----
+
+thread 'pdf_source_model::tests::global_import_history_rejects_cross_table_ids_and_rowid_collisions' (399741) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:537:65:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages stdout ----
+
+thread 'pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages' (399740) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:233:77:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::historical_adapter_sha_recomputes_key_while_unsupported_actual_parser_is_rejected stdout ----
+
+thread 'pdf_source_model::tests::historical_adapter_sha_recomputes_key_while_unsupported_actual_parser_is_rejected' (399744) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:765:60:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion stdout ----
+
+thread 'pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion' (399738) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:948:5:
+bounded escaped diagnostics rejected: Err(ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" })
+
+---- pdf_source_model::tests::host_failure_keeps_partial_non_utf8_parser_bytes_unconfirmed stdout ----
+
+thread 'pdf_source_model::tests::host_failure_keeps_partial_non_utf8_parser_bytes_unconfirmed' (399746) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:694:76:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::host_failure_rejects_fabricated_confirmed_pages_even_with_outer_hashes_updated stdout ----
+
+thread 'pdf_source_model::tests::host_failure_rejects_fabricated_confirmed_pages_even_with_outer_hashes_updated' (399747) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:744:72:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::native_semantic_inspector_rejects_utf8_cut_even_with_sql_and_all_outer_shas_updated stdout ----
+
+thread 'pdf_source_model::tests::native_semantic_inspector_rejects_utf8_cut_even_with_sql_and_all_outer_shas_updated' (399748) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:520:72:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::native_snapshot_reader_binds_full_page_region_and_core_resource_inventory stdout ----
+
+thread 'pdf_source_model::tests::native_snapshot_reader_binds_full_page_region_and_core_resource_inventory' (399749) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:485:76:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::next_global_import_order_reports_i64_overflow_without_wrapping stdout ----
+
+thread 'pdf_source_model::tests::next_global_import_order_reports_i64_overflow_without_wrapping' (399751) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:618:72:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version stdout ----
+
+thread 'pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version' (399753) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:786:77:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states stdout ----
+
+thread 'pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states' (399759) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:158:65:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::needs_review_reports_hydrate_actual_bound_issues_and_keep_knowledge_pending stdout ----
+
+thread 'pdf_source_model::tests::needs_review_reports_hydrate_actual_bound_issues_and_keep_knowledge_pending' (399750) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:895:76:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw stdout ----
+
+thread 'pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw' (399754) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:252:77:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::report_hydration_rejects_caller_altered_sql_facts stdout ----
+
+thread 'pdf_source_model::tests::report_hydration_rejects_caller_altered_sql_facts' (399755) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:288:77:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::report_hydration_rejects_foreign_import_identity stdout ----
+
+thread 'pdf_source_model::tests::report_hydration_rejects_foreign_import_identity' (399757) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:306:77:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history stdout ----
+
+thread 'pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history' (399760) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:150:5:
+complete synthetic PDF history rejected: Err(ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" })
+
+---- pdf_source_model::tests::unified_source_helpers_follow_global_rowid_even_when_clock_moves_backwards stdout ----
+
+thread 'pdf_source_model::tests::unified_source_helpers_follow_global_rowid_even_when_clock_moves_backwards' (399763) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:577:72:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- pdf_source_model::tests::staged_pdf_reader_only_accepts_registered_ids_in_the_current_writer_paths stdout ----
+
+thread 'pdf_source_model::tests::staged_pdf_reader_only_accepts_registered_ids_in_the_current_writer_paths' (399761) panicked at crates/noetome-cli/src/../tests/support/pdf_source_model_tests.rs:640:81:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：PDF 导入报告身份、字段、UTC 时间、选取路径或知识状态无效。没有修改数据库或快照。" }
+
+---- sidecar_process::tests::actual_input_fingerprint_is_complete stdout ----
+
+thread 'sidecar_process::tests::actual_input_fingerprint_is_complete' (399885) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:593:53:
+called `Result::unwrap()` on an `Err` value: SidecarError { code: "SIDECAR_CONFIG", message: "process tree host currently requires Windows", diagnostics: [] }
+
+---- sidecar_process::tests::bounded_diagnostic_overflow_is_explicit stdout ----
+
+thread 'sidecar_process::tests::bounded_diagnostic_overflow_is_explicit' (399886) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:568:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_LIMIT"
+
+---- sidecar_process::tests::concurrent_stderr_is_drained stdout ----
+
+thread 'sidecar_process::tests::concurrent_stderr_is_drained' (399887) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:170:14:
+called `Result::unwrap()` on an `Err` value: SidecarError { code: "SIDECAR_CONFIG", message: "process tree host currently requires Windows", diagnostics: [] }
+
+---- sidecar_process::tests::crashed_process stdout ----
+
+thread 'sidecar_process::tests::crashed_process' (399888) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:62:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_EXIT"
+
+---- sidecar_process::tests::diagnostics_are_separate stdout ----
+
+thread 'sidecar_process::tests::diagnostics_are_separate' (399889) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:161:14:
+called `Result::unwrap()` on an `Err` value: SidecarError { code: "SIDECAR_CONFIG", message: "process tree host currently requires Windows", diagnostics: [] }
+
+---- sidecar_process::tests::duplicate_units stdout ----
+
+thread 'sidecar_process::tests::duplicate_units' (399890) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:83:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::empty_parser_version stdout ----
+
+thread 'sidecar_process::tests::empty_parser_version' (399891) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:82:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_VERSION"
+
+---- sidecar_process::tests::empty_response stdout ----
+
+thread 'sidecar_process::tests::empty_response' (399892) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:63:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::failed_protocol_retains_diagnostics stdout ----
+
+thread 'sidecar_process::tests::failed_protocol_retains_diagnostics' (399894) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:585:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::failed_unit_without_issue stdout ----
+
+thread 'sidecar_process::tests::failed_unit_without_issue' (399895) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:471:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::hardlink_resource_rejected_with_external_sentinel_unchanged stdout ----
+
+thread 'sidecar_process::tests::hardlink_resource_rejected_with_external_sentinel_unchanged' (399896) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:347:5:
+assertion `left == right` failed: SidecarError { code: "SIDECAR_CONFIG", message: "process tree host currently requires Windows", diagnostics: [] }
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::invalid_json_response stdout ----
+
+thread 'sidecar_process::tests::invalid_json_response' (399900) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:65:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::input_write_is_denied stdout ----
+
+thread 'sidecar_process::tests::input_write_is_denied' (399899) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:183:46:
+called `Result::unwrap()` on an `Err` value: SidecarError { code: "SIDECAR_CONFIG", message: "process tree host currently requires Windows", diagnostics: [] }
+
+---- sidecar_process::tests::invalid_utf8_response stdout ----
+
+thread 'sidecar_process::tests::invalid_utf8_response' (399901) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:64:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::issue_count_limit stdout ----
+
+thread 'sidecar_process::tests::issue_count_limit' (399902) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:509:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_LIMIT"
+
+---- sidecar_process::tests::missing_nullable_text_field stdout ----
+
+thread 'sidecar_process::tests::missing_nullable_text_field' (399903) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:466:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::no_stdin_reader_times_out stdout ----
+
+thread 'sidecar_process::tests::no_stdin_reader_times_out' (399906) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:286:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_TIMEOUT"
+
+---- sidecar_process::tests::missing_ordinal stdout ----
+
+thread 'sidecar_process::tests::missing_ordinal' (399904) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:85:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::missing_units stdout ----
+
+thread 'sidecar_process::tests::missing_units' (399905) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:84:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::real_parser_zero_units_rejected stdout ----
+
+thread 'sidecar_process::tests::real_parser_zero_units_rejected' (399910) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:670:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::public_entry_rejects_fake stdout ----
+
+thread 'sidecar_process::tests::public_entry_rejects_fake' (399909) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:302:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PRODUCER"
+
+---- sidecar_process::tests::resource_byte_limit stdout ----
+
+thread 'sidecar_process::tests::resource_byte_limit' (399913) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:217:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_LIMIT"
+
+---- sidecar_process::tests::resource_absolute_path stdout ----
+
+thread 'sidecar_process::tests::resource_absolute_path' (399912) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:99:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::resource_case_collision stdout ----
+
+thread 'sidecar_process::tests::resource_case_collision' (399914) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:111:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::resource_directory_depth_limit stdout ----
+
+thread 'sidecar_process::tests::resource_directory_depth_limit' (399916) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:665:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_LIMIT"
+
+---- sidecar_process::tests::resource_count_limit stdout ----
+
+thread 'sidecar_process::tests::resource_count_limit' (399915) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:524:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_LIMIT"
+
+---- sidecar_process::tests::resource_invalid_utf8 stdout ----
+
+thread 'sidecar_process::tests::resource_invalid_utf8' (399917) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:132:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::resource_parent_path stdout ----
+
+thread 'sidecar_process::tests::resource_parent_path' (399918) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:100:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::resource_prefix_collision stdout ----
+
+thread 'sidecar_process::tests::resource_prefix_collision' (399919) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:112:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::resource_reserved_name stdout ----
+
+thread 'sidecar_process::tests::resource_reserved_name' (399921) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:101:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::resource_range_splits_character stdout ----
+
+thread 'sidecar_process::tests::resource_range_splits_character' (399920) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:117:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::resource_trailing_dot stdout ----
+
+thread 'sidecar_process::tests::resource_trailing_dot' (399922) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:106:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::resource_unknown_directory stdout ----
+
+thread 'sidecar_process::tests::resource_unknown_directory' (399923) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:94:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::resource_unknown_file stdout ----
+
+thread 'sidecar_process::tests::resource_unknown_file' (399924) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:89:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::resource_unknown_reference stdout ----
+
+thread 'sidecar_process::tests::resource_unknown_reference' (399925) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:122:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::resource_unreferenced stdout ----
+
+thread 'sidecar_process::tests::resource_unreferenced' (399926) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:127:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::resource_wrong_sha stdout ----
+
+thread 'sidecar_process::tests::resource_wrong_sha' (399929) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:87:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::resource_wrong_length stdout ----
+
+thread 'sidecar_process::tests::resource_wrong_length' (399928) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:88:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_RESOURCE"
+
+---- sidecar_process::tests::review_large_resource_timeout_latency stdout ----
+large_resource_timeout elapsed_ms=0 result=Some("SIDECAR_CONFIG")
+
+thread 'sidecar_process::tests::review_large_resource_timeout_latency' (399930) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:700:23:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_TIMEOUT"
+
+---- sidecar_process::tests::review_large_resource_validation_cancel_latency stdout ----
+
+thread 'sidecar_process::tests::review_large_resource_validation_cancel_latency' (399931) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:712:56:
+called `Option::unwrap()` on a `None` value
+
+---- sidecar_process::tests::review_unit_without_issue stdout ----
+
+thread 'sidecar_process::tests::review_unit_without_issue' (399932) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:476:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::second_stdout_json stdout ----
+
+thread 'sidecar_process::tests::second_stdout_json' (399934) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:67:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::review_units_preserve_status_and_issue stdout ----
+
+thread 'sidecar_process::tests::review_units_preserve_status_and_issue' (399933) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:488:63:
+called `Result::unwrap()` on an `Err` value: SidecarError { code: "SIDECAR_CONFIG", message: "process tree host currently requires Windows", diagnostics: [] }
+
+---- sidecar_process::tests::start_failure stdout ----
+
+thread 'sidecar_process::tests::start_failure' (399936) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:270:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_START"
+
+---- sidecar_process::tests::stdout_byte_limit stdout ----
+
+thread 'sidecar_process::tests::stdout_byte_limit' (399938) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:139:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_LIMIT"
+
+---- sidecar_process::tests::stderr_byte_limit stdout ----
+
+thread 'sidecar_process::tests::stderr_byte_limit' (399937) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:152:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_LIMIT"
+
+---- sidecar_process::tests::trailing_whitespace_is_accepted stdout ----
+
+thread 'sidecar_process::tests::trailing_whitespace_is_accepted' (399940) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:155:43:
+called `Result::unwrap()` on an `Err` value: SidecarError { code: "SIDECAR_CONFIG", message: "process tree host currently requires Windows", diagnostics: [] }
+
+---- sidecar_process::tests::total_resource_byte_limit stdout ----
+
+thread 'sidecar_process::tests::total_resource_byte_limit' (399939) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:232:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_LIMIT"
+
+---- sidecar_process::tests::truncated_response stdout ----
+
+thread 'sidecar_process::tests::truncated_response' (399941) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:66:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::unit_count_limit stdout ----
+
+thread 'sidecar_process::tests::unit_count_limit' (399942) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:494:5:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_LIMIT"
+
+---- sidecar_process::tests::unknown_enum stdout ----
+
+thread 'sidecar_process::tests::unknown_enum' (399944) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:70:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::unknown_capability stdout ----
+
+thread 'sidecar_process::tests::unknown_capability' (399943) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:71:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::unknown_field stdout ----
+
+thread 'sidecar_process::tests::unknown_field' (399945) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:68:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::unknown_issue_reference stdout ----
+
+thread 'sidecar_process::tests::unknown_issue_reference' (399946) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:86:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::unknown_nested_field stdout ----
+
+thread 'sidecar_process::tests::unknown_nested_field' (399947) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:69:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_PROTOCOL"
+
+---- sidecar_process::tests::unsupported_capability_version stdout ----
+
+thread 'sidecar_process::tests::unsupported_capability_version' (399949) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:73:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_VERSION"
+
+---- sidecar_process::tests::unknown_unit_cannot_be_parsed stdout ----
+
+thread 'sidecar_process::tests::unknown_unit_cannot_be_parsed' (399948) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:481:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_UNITS"
+
+---- sidecar_process::tests::unsupported_version stdout ----
+
+thread 'sidecar_process::tests::unsupported_version' (399950) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:72:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_VERSION"
+
+---- sidecar_process::tests::valid_json_with_nonzero_exit_is_failure stdout ----
+
+thread 'sidecar_process::tests::valid_json_with_nonzero_exit_is_failure' (399951) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:57:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_EXIT"
+
+---- sidecar_process::tests::valid_resources stdout ----
+
+thread 'sidecar_process::tests::valid_resources' (399953) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:178:62:
+called `Result::unwrap()` on an `Err` value: SidecarError { code: "SIDECAR_CONFIG", message: "process tree host currently requires Windows", diagnostics: [] }
+
+---- sidecar_process::tests::wrong_request_id stdout ----
+
+thread 'sidecar_process::tests::wrong_request_id' (399955) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:78:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_IDENTITY"
+
+---- sidecar_process::tests::wrong_length stdout ----
+
+thread 'sidecar_process::tests::wrong_length' (399954) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:80:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_IDENTITY"
+
+---- sidecar_process::tests::wrong_sha stdout ----
+
+thread 'sidecar_process::tests::wrong_sha' (399956) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:79:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_IDENTITY"
+
+---- sidecar_process::tests::wrong_workspace_identity stdout ----
+
+thread 'sidecar_process::tests::wrong_workspace_identity' (399957) panicked at crates/noetome-cli/src/../tests/support/sidecar_tests.rs:81:1:
+assertion `left == right` failed
+  left: "SIDECAR_CONFIG"
+ right: "SIDECAR_IDENTITY"
+
+---- source_model::tests::loading_and_validating_real_snapshots_preserves_complete_records stdout ----
+
+thread 'source_model::tests::loading_and_validating_real_snapshots_preserves_complete_records' (399960) panicked at crates/noetome-cli/src/source_model.rs:1399:55:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：导入的明确选取路径必须为非空绝对路径。没有修改数据库或快照。" }
+
+---- source_model::tests::failed_utf8_versions_have_only_real_raw_bytes_and_no_spans stdout ----
+
+thread 'source_model::tests::failed_utf8_versions_have_only_real_raw_bytes_and_no_spans' (399959) panicked at crates/noetome-cli/src/source_model.rs:1356:56:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：导入的明确选取路径必须为非空绝对路径。没有修改数据库或快照。" }
+
+---- source_model::tests::pending_count_constraint_rejects_a_different_count_without_changing_the_report stdout ----
+
+thread 'source_model::tests::pending_count_constraint_rejects_a_different_count_without_changing_the_report' (399961) panicked at crates/noetome-cli/src/source_model.rs:1256:56:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：导入的明确选取路径必须为非空绝对路径。没有修改数据库或快照。" }
+
+---- source_model::tests::snapshots_reject_unknown_cache_content_and_invalid_owner stdout ----
+
+thread 'source_model::tests::snapshots_reject_unknown_cache_content_and_invalid_owner' (399965) panicked at crates/noetome-cli/src/source_model.rs:1279:9:
+assertion `left == right` failed
+  left: "SOURCE_INVALID_RECORD"
+ right: "SOURCE_SNAPSHOT_CONFLICT"
+
+---- source_model::tests::staged_snapshot_validation_is_restricted_to_the_current_writer_directory stdout ----
+
+thread 'source_model::tests::staged_snapshot_validation_is_restricted_to_the_current_writer_directory' (399966) panicked at crates/noetome-cli/src/source_model.rs:1311:14:
+called `Result::unwrap()` on an `Err` value: ProjectError { code: "SOURCE_INVALID_RECORD", exit_code: 2, message: "来源记录无效：导入的明确选取路径必须为非空绝对路径。没有修改数据库或快照。" }
+
+---- source_write::pdf_tests::controlled_pdf_write_errors_restore_old_text_and_both_project_files_at_seven_stages stdout ----
+
+thread 'source_write::pdf_tests::controlled_pdf_write_errors_restore_old_text_and_both_project_files_at_seven_stages' (400000) panicked at crates/noetome-cli/src/../tests/support/pdf_source_write_tests.rs:478:5:
+fresh valid registration must succeed
+
+---- source_write::pdf_tests::unregistered_files_at_pdf_publication_preserve_human_bytes_and_recovery_backups stdout ----
+
+thread 'source_write::pdf_tests::unregistered_files_at_pdf_publication_preserve_human_bytes_and_recovery_backups' (400003) panicked at crates/noetome-cli/src/../tests/support/pdf_source_write_tests.rs:478:5:
+fresh valid registration must succeed
+
+---- source_write::pdf_tests::real_pdf_writer_process_kill_preserves_old_history_at_five_publish_stages stdout ----
+
+thread 'source_write::pdf_tests::real_pdf_writer_process_kill_preserves_old_history_at_five_publish_stages' (400002) panicked at crates/noetome-cli/src/../tests/support/pdf_source_write_tests.rs:478:5:
+fresh valid registration must succeed
+
+
+failures:
+    extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work
+    extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body
+    extraction_source::tests::actual_pdf_parse_produces_page_resource_and_bbox_without_legacy_span
+    pdf_parse::tests::cancellation_before_launch_does_not_create_an_output_root
+    pdf_parse::tests::input_byte_limit_never_invents_confirmed_sha_or_pages
+    pdf_parse::tests::real_parser_report_collision_preserves_existing_report_bytes_and_cannot_inspect_as_complete
+    pdf_parse::tests::real_parser_resource_limit_returns_nonzero_with_a_locatable_reason
+    pdf_parse::tests::stdout_overflow_is_not_truncated_into_a_successful_pdf_report
+    pdf_parse::tests::synthetic_producer_is_refused_by_the_pdf_wrapper
+    pdf_parse::tests::unsuccessful_real_child_preserves_bounded_diagnostics_and_unconfirmed_failure
+    pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion
+    pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages
+    pdf_source_model::tests::global_import_history_rejects_cross_table_ids_and_rowid_collisions
+    pdf_source_model::tests::historical_adapter_sha_recomputes_key_while_unsupported_actual_parser_is_rejected
+    pdf_source_model::tests::host_failure_keeps_partial_non_utf8_parser_bytes_unconfirmed
+    pdf_source_model::tests::host_failure_rejects_fabricated_confirmed_pages_even_with_outer_hashes_updated
+    pdf_source_model::tests::native_semantic_inspector_rejects_utf8_cut_even_with_sql_and_all_outer_shas_updated
+    pdf_source_model::tests::native_snapshot_reader_binds_full_page_region_and_core_resource_inventory
+    pdf_source_model::tests::needs_review_reports_hydrate_actual_bound_issues_and_keep_knowledge_pending
+    pdf_source_model::tests::next_global_import_order_reports_i64_overflow_without_wrapping
+    pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version
+    pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw
+    pdf_source_model::tests::report_hydration_rejects_caller_altered_sql_facts
+    pdf_source_model::tests::report_hydration_rejects_foreign_import_identity
+    pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states
+    pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history
+    pdf_source_model::tests::staged_pdf_reader_only_accepts_registered_ids_in_the_current_writer_paths
+    pdf_source_model::tests::unified_source_helpers_follow_global_rowid_even_when_clock_moves_backwards
+    sidecar_process::tests::actual_input_fingerprint_is_complete
+    sidecar_process::tests::bounded_diagnostic_overflow_is_explicit
+    sidecar_process::tests::concurrent_stderr_is_drained
+    sidecar_process::tests::crashed_process
+    sidecar_process::tests::diagnostics_are_separate
+    sidecar_process::tests::duplicate_units
+    sidecar_process::tests::empty_parser_version
+    sidecar_process::tests::empty_response
+    sidecar_process::tests::failed_protocol_retains_diagnostics
+    sidecar_process::tests::failed_unit_without_issue
+    sidecar_process::tests::hardlink_resource_rejected_with_external_sentinel_unchanged
+    sidecar_process::tests::input_write_is_denied
+    sidecar_process::tests::invalid_json_response
+    sidecar_process::tests::invalid_utf8_response
+    sidecar_process::tests::issue_count_limit
+    sidecar_process::tests::missing_nullable_text_field
+    sidecar_process::tests::missing_ordinal
+    sidecar_process::tests::missing_units
+    sidecar_process::tests::no_stdin_reader_times_out
+    sidecar_process::tests::public_entry_rejects_fake
+    sidecar_process::tests::real_parser_zero_units_rejected
+    sidecar_process::tests::resource_absolute_path
+    sidecar_process::tests::resource_byte_limit
+    sidecar_process::tests::resource_case_collision
+    sidecar_process::tests::resource_count_limit
+    sidecar_process::tests::resource_directory_depth_limit
+    sidecar_process::tests::resource_invalid_utf8
+    sidecar_process::tests::resource_parent_path
+    sidecar_process::tests::resource_prefix_collision
+    sidecar_process::tests::resource_range_splits_character
+    sidecar_process::tests::resource_reserved_name
+    sidecar_process::tests::resource_trailing_dot
+    sidecar_process::tests::resource_unknown_directory
+    sidecar_process::tests::resource_unknown_file
+    sidecar_process::tests::resource_unknown_reference
+    sidecar_process::tests::resource_unreferenced
+    sidecar_process::tests::resource_wrong_length
+    sidecar_process::tests::resource_wrong_sha
+    sidecar_process::tests::review_large_resource_timeout_latency
+    sidecar_process::tests::review_large_resource_validation_cancel_latency
+    sidecar_process::tests::review_unit_without_issue
+    sidecar_process::tests::review_units_preserve_status_and_issue
+    sidecar_process::tests::second_stdout_json
+    sidecar_process::tests::start_failure
+    sidecar_process::tests::stderr_byte_limit
+    sidecar_process::tests::stdout_byte_limit
+    sidecar_process::tests::total_resource_byte_limit
+    sidecar_process::tests::trailing_whitespace_is_accepted
+    sidecar_process::tests::truncated_response
+    sidecar_process::tests::unit_count_limit
+    sidecar_process::tests::unknown_capability
+    sidecar_process::tests::unknown_enum
+    sidecar_process::tests::unknown_field
+    sidecar_process::tests::unknown_issue_reference
+    sidecar_process::tests::unknown_nested_field
+    sidecar_process::tests::unknown_unit_cannot_be_parsed
+    sidecar_process::tests::unsupported_capability_version
+    sidecar_process::tests::unsupported_version
+    sidecar_process::tests::valid_json_with_nonzero_exit_is_failure
+    sidecar_process::tests::valid_resources
+    sidecar_process::tests::wrong_length
+    sidecar_process::tests::wrong_request_id
+    sidecar_process::tests::wrong_sha
+    sidecar_process::tests::wrong_workspace_identity
+    source_model::tests::failed_utf8_versions_have_only_real_raw_bytes_and_no_spans
+    source_model::tests::loading_and_validating_real_snapshots_preserves_complete_records
+    source_model::tests::pending_count_constraint_rejects_a_different_count_without_changing_the_report
+    source_model::tests::snapshots_reject_unknown_cache_content_and_invalid_owner
+    source_model::tests::staged_snapshot_validation_is_restricted_to_the_current_writer_directory
+    source_write::pdf_tests::controlled_pdf_write_errors_restore_old_text_and_both_project_files_at_seven_stages
+    source_write::pdf_tests::real_pdf_writer_process_kill_preserves_old_history_at_five_publish_stages
+    source_write::pdf_tests::unregistered_files_at_pdf_publication_preserve_human_bytes_and_recovery_backups
+
+test result: FAILED. 304 passed; 100 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.41s
+

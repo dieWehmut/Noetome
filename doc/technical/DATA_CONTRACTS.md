@@ -385,3 +385,7 @@ RenderedFile将正文与链接分开定位，保存文件指纹、note_id、sect
 ## 有界过程关系交换 v1
 
 过程关系使用独立的[过程流程 v1 契约](PROCESS_FLOW_CONTRACT.md)，不改变下述比较表或旧 fixture 字段。来源 document 的 process/steps/relations/evidence 全部来自实际选定文字；每个完整声明有 UTF-8 半开区间。sequence、branch、causes、promotes、inhibits、correlates、unknown 明确区分；nullable 判据与空数组保留未知语义。流程计划保存目标能力、表示理由、实际节点/边及正文映射；保存 review 必须从原项目重新核对，不能仅靠自报 passed 消费。
+
+## 明确选定公式交换 v1
+
+[公式保真 v1](FORMULA_FIDELITY_CONTRACT.md)另外保存 selection_id、原始 TeX/语义声明/PNG 的文件 SHA 和区域页号/画布/矩形。作者语义 expression 是手工转写，不能标为恢复作者原始源码；独立 expected 不进入 CLI 输入。符号定义与单位 nullable 必填，前提、范围及例外不可从正文遗漏。计划记录实际数学 token、兼容改写、回退原因及逐块 UTF-8 来源映射；未知或不可辨输入保存原件与阻断报告，没有成功表达。公式成功仍为知识 pending、科学 not_run 的未发布工程预览，不创建项目数据库迁移或 Release。

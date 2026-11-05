@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "expression": "C_i(t) = C_0 \\exp(-k t)",
+  "symbols": [
+    {
+      "symbol": "C",
+      "definition": "test concentration",
+      "unit": "mmol/L"
+    },
+    {
+      "symbol": "i",
+      "definition": "selected integer sample index",
+      "unit": null
+    },
+    {
+      "symbol": "t",
+      "definition": "elapsed time",
+      "unit": "s"
+    },
+    {
+      "symbol": "k",
+      "definition": "positive decay coefficient",
+      "unit": "1/s"
+    }
+  ],
+  "conditions": [
+    "k > 0"
+  ],
+  "ranges": [
+    "i = 1,2,3",
+    "0 <= t <= 10 s"
+  ],
+  "exceptions": [
+    "Do not apply outside the selected time interval."
+  ]
+}

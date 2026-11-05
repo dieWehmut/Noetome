@@ -1,0 +1,52 @@
+{
+  "checks": [
+    {
+      "name": "baseline",
+      "status": "ACCEPTED",
+      "outcome": {
+        "status": "passed",
+        "case_name": "native",
+        "representation": "native_math",
+        "original_bytes_unchanged": true,
+        "issue_codes": [],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "symbol-label-association",
+      "status": "REJECTED",
+      "outcome": {
+        "exception": "AssertionError",
+        "reason": "adjacent symbol field/value association/2: value"
+      }
+    },
+    {
+      "name": "false-report-body",
+      "status": "REJECTED",
+      "outcome": {
+        "exception": "AssertionError",
+        "reason": "whole visible report shell cannot add false scope, fees or success: value"
+      }
+    },
+    {
+      "name": "png-oversized-allocation",
+      "status": "REJECTED",
+      "reason": "PNG decompressed scanline extent",
+      "bounded_decompression": [
+        {
+          "compressed_input_bytes": 33653,
+          "max_length": 5,
+          "actual_output_bytes": 5
+        }
+      ]
+    }
+  ],
+  "checker_fingerprint": {
+    "sha256": "de28c6aa0d61b3941811b40535658925b6c80b523f127929a09a8d99e0f21aac",
+    "byte_length": 51986
+  },
+  "test_fingerprint": {
+    "sha256": "393ddb0609f2e2881f2181364d9adfce24c8fc43ce4eadf96a5988404f5efc9b",
+    "byte_length": 13219
+  }
+}

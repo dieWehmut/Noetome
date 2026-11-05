@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_formula",
+  "scope": "selected_formula_fidelity_v1",
+  "request_id": "2004bdc2-f803-4c8b-b0aa-585cd2b1aea2",
+  "case": {
+    "schema_version": 1,
+    "purpose": "formula_fidelity",
+    "selection_id": "native",
+    "title": "公式保真样例 native",
+    "source_kind": "tex",
+    "tex": {
+      "file": "original.tex",
+      "sha256": "fa80581f9563c8370c37910639a003d09fb80b3bb5876cbee5f547366d866246"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "c075acc3f5607b5991cd025f94d9ad936418cfcc18699b1b84a416f0e9404929"
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "page": 1,
+      "canvas": [
+        1000,
+        600
+      ],
+      "bounds": [
+        100,
+        120,
+        800,
+        240
+      ],
+      "legibility": "clear"
+    },
+    "data_available": false
+  },
+  "semantics": {
+    "schema_version": 1,
+    "expression": "C_i(t)=-\\frac{a}{b}t^{2}*-b",
+    "symbols": [
+      {
+        "symbol": "C",
+        "definition": "test concentration",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "t",
+        "definition": "elapsed time",
+        "unit": "s"
+      },
+      {
+        "symbol": "a",
+        "definition": "positive scaling constant",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "b",
+        "definition": "positive nonzero divisor",
+        "unit": "s^2"
+      }
+    ],
+    "conditions": [
+      "a > 0 and b > 0",
+      "This is a fictional engineering example, not a scientific claim."
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "decision": {
+    "representation": "native_math",
+    "fallback_reasons": [],
+    "compatibility_rewrites": [],
+    "issue_codes": []
+  },
+  "tokens": [
+    "C",
+    "_",
+    "i",
+    "(",
+    "t",
+    ")",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "}",
+    "{",
+    "b",
+    "}",
+    "t",
+    "^",
+    "{",
+    "2",
+    "}",
+    "*",
+    "-",
+    "b"
+  ],
+  "compiled_expression": "C_i(t)=-\\frac{a}{b}t^{2}*-b"
+}

@@ -1,0 +1,47 @@
+{
+  "status": "red",
+  "argv": [
+    "/tmp/noetome-b05-t03-python/bin/python",
+    "scripts/verify_formula.py",
+    "check",
+    "fixtures/formula-fidelity/native",
+    "fixtures/formula-fidelity/profile-native.json",
+    "/tmp/noetome-formula-checker-review-ufulvima/false-report-body",
+    "fixtures/formula-fidelity/expected-native.json"
+  ],
+  "exit_code": 0,
+  "false_report_body_accepted": true,
+  "stdout": {
+    "sha256": "565cfd79202616018e7196ded42c93cc5533aac2747809f0fc8ac2aa5abf8e2d",
+    "byte_length": 163
+  },
+  "stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byte_length": 0
+  },
+  "archive": {
+    "sha256": "2ff534fec77e99152ce4888f1bebf14775b058c77fb18dc440c31bb7986e2228",
+    "byte_length": 58701
+  },
+  "png_allocation_review": {
+    "status": "REJECTED",
+    "reason": "PNG decompressed scanline extent",
+    "png_bytes": 33710,
+    "pixel_dimensions": [
+      1,
+      1
+    ],
+    "expected_decoded_scanline_bytes": 4,
+    "actual_decompression": [
+      {
+        "input_bytes": 33653,
+        "decompressed_bytes": 34603008,
+        "max_length_argument": null
+      }
+    ],
+    "checker_fingerprint": {
+      "sha256": "e77134babec27fde9caa8401ac0f08a3d1db166a68d3b6091f850b06a340ff65",
+      "byte_length": 48588
+    }
+  }
+}

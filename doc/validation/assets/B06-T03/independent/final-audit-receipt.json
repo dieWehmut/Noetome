@@ -1,0 +1,2939 @@
+{
+  "status": "passed",
+  "before": {
+    "cli": "/tmp/noetome-formula-independent-final-cli-20261106",
+    "cli_fingerprint": {
+      "sha256": "3ba44b110ea0b92f684da9bc55fcaa010b62b6bc1bcbf8f443291da0004cf21e",
+      "byte_length": 144752800
+    },
+    "python": "/home/lyinn/miniconda3/bin/python",
+    "platform": "linux",
+    "fixture_manifest": {
+      "sha256": "7b03260bbad80d2db3127e0e13ec9cfa7cc186a91c8081bf0ad0d3a8301bdd99",
+      "byte_length": 9705
+    },
+    "source_pins": {
+      "crates/noetome-cli/src/formula.rs": {
+        "sha256": "fd3a05c4a643f7ad195e998fc825112b30edb0114b35edcf68c3d5b26786ce71",
+        "byte_length": 14382
+      },
+      "crates/noetome-cli/src/formula_input.rs": {
+        "sha256": "b32e72ab37d57de6274b5bb86d80bbef4d84db86063d49496d201ae7fffa74f0",
+        "byte_length": 8885
+      },
+      "crates/noetome-cli/src/formula_model.rs": {
+        "sha256": "34dc18bc38950c02d999ce65d76f3fc3ba0a772677c80d7840b0cd68eb9de100",
+        "byte_length": 4358
+      },
+      "crates/noetome-cli/src/formula_parser.rs": {
+        "sha256": "55e4f303275707b5caf4fb73dba9148d4bbd96b529121728bcbd16ebb4732725",
+        "byte_length": 8430
+      },
+      "crates/noetome-cli/src/formula_render.rs": {
+        "sha256": "ba63b1b445da004a325e9c22bf8842537dc61f2ff8ba1f1fb5968e8bed3bea06",
+        "byte_length": 4518
+      },
+      "scripts/verify_formula.py": {
+        "sha256": "e77134babec27fde9caa8401ac0f08a3d1db166a68d3b6091f850b06a340ff65",
+        "byte_length": 48588
+      },
+      "tests/test_verify_formula.py": {
+        "sha256": "6633030c7167afe75314287ca375a0a2df8cb8bff3b0ccf956a26e5746b03cab",
+        "byte_length": 11403
+      }
+    },
+    "sentinel": {
+      "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+      "byte_length": 43
+    }
+  },
+  "commands": [
+    {
+      "label": "native",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/native"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.06744054400769528,
+      "stdout": {
+        "sha256": "f466368ff3866989469d6dcbfc2d571f74f8e010d29f0279c7485dd994cd9bfe",
+        "byte_length": 9046
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "native_relational",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native_relational",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/native_relational"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.056364282994763926,
+      "stdout": {
+        "sha256": "01d89d3b96ba5c590674b2aef55c34cdf2620a5969a515bd1a1e64373b510b62",
+        "byte_length": 8445
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native_relational": {
+          "case.json": {
+            "sha256": "43aaacdbb4545eb0c4a34f3037fc2ff3850f4555f1c97c9db94ecb722061b8ac",
+            "byte_length": 737
+          },
+          "original.tex": {
+            "sha256": "55b84085a1bea5fee1a82ce64ea445a6e06c9a96e93c017d1318338924281823",
+            "byte_length": 26
+          },
+          "region.png": {
+            "sha256": "d9661ee17a8985a627c1906093273ac4de8be5322d9c6df97889152c1aff0919",
+            "byte_length": 5274
+          },
+          "semantics.json": {
+            "sha256": "433a352a60fb55564a99308a1626706723aaf5a81ecf0b8cf36fd2df9fa6b118",
+            "byte_length": 750
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native_relational": {
+          "case.json": {
+            "sha256": "43aaacdbb4545eb0c4a34f3037fc2ff3850f4555f1c97c9db94ecb722061b8ac",
+            "byte_length": 737
+          },
+          "original.tex": {
+            "sha256": "55b84085a1bea5fee1a82ce64ea445a6e06c9a96e93c017d1318338924281823",
+            "byte_length": 26
+          },
+          "region.png": {
+            "sha256": "d9661ee17a8985a627c1906093273ac4de8be5322d9c6df97889152c1aff0919",
+            "byte_length": 5274
+          },
+          "semantics.json": {
+            "sha256": "433a352a60fb55564a99308a1626706723aaf5a81ecf0b8cf36fd2df9fa6b118",
+            "byte_length": 750
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "native_exp",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native_exp",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/native_exp"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.06030329898931086,
+      "stdout": {
+        "sha256": "c4630dff28bd96ecdde2f803f0d91ec2aa9b6ed3c15097e14411bf6e4a9ab5b6",
+        "byte_length": 8162
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native_exp": {
+          "case.json": {
+            "sha256": "a906e7cef9ea5f2937fd29651f174ea86c786f20013deeaa4c61525f62d882a8",
+            "byte_length": 723
+          },
+          "original.tex": {
+            "sha256": "8dcd01f607af975e2b0fbb6c98e345c8ecdfd3306cb1e9b6293c9911d55d6c99",
+            "byte_length": 24
+          },
+          "region.png": {
+            "sha256": "a30de55f74c6dccda0e3dabcc064236002d11a772429cf77e69d0da0c67a6a47",
+            "byte_length": 7885
+          },
+          "semantics.json": {
+            "sha256": "5b29469f27149119c9e67cb8b892fe5a6cc4722e8b91fe7972be3a2d0f58347b",
+            "byte_length": 656
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native_exp": {
+          "case.json": {
+            "sha256": "a906e7cef9ea5f2937fd29651f174ea86c786f20013deeaa4c61525f62d882a8",
+            "byte_length": 723
+          },
+          "original.tex": {
+            "sha256": "8dcd01f607af975e2b0fbb6c98e345c8ecdfd3306cb1e9b6293c9911d55d6c99",
+            "byte_length": 24
+          },
+          "region.png": {
+            "sha256": "a30de55f74c6dccda0e3dabcc064236002d11a772429cf77e69d0da0c67a6a47",
+            "byte_length": 7885
+          },
+          "semantics.json": {
+            "sha256": "5b29469f27149119c9e67cb8b892fe5a6cc4722e8b91fe7972be3a2d0f58347b",
+            "byte_length": 656
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "compatibility",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/compatibility",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/compatibility"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.05777840700466186,
+      "stdout": {
+        "sha256": "2652233f102f437c4ec8bb7685962bf9476ab09f5a48ec5aeacc7d5c641d8d55",
+        "byte_length": 9102
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/compatibility": {
+          "case.json": {
+            "sha256": "4ce8f5d0c33d023c8c8a2150ffe7e96bf1eed481fb6be1ccfd4d19a17e9fb04c",
+            "byte_length": 729
+          },
+          "original.tex": {
+            "sha256": "9a6901f2473b4009b50a8ca6bad09d8f5c4e401dfe9352f8c9245784a76fec74",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "6d7db5420b925bd8a0e5ed7940aa5bad33b6680ccd0a64105cb5c6c2e27b3f6c",
+            "byte_length": 847
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/compatibility": {
+          "case.json": {
+            "sha256": "4ce8f5d0c33d023c8c8a2150ffe7e96bf1eed481fb6be1ccfd4d19a17e9fb04c",
+            "byte_length": 729
+          },
+          "original.tex": {
+            "sha256": "9a6901f2473b4009b50a8ca6bad09d8f5c4e401dfe9352f8c9245784a76fec74",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "6d7db5420b925bd8a0e5ed7940aa5bad33b6680ccd0a64105cb5c6c2e27b3f6c",
+            "byte_length": 847
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "image_fallback",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/image_fallback",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/image_fallback"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.07609671400859952,
+      "stdout": {
+        "sha256": "603a51889cfc7ccaab31ae8b94d7c75e792b85c271638c89c0517bd17053dd45",
+        "byte_length": 8971
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/image_fallback": {
+          "case.json": {
+            "sha256": "d5735a8679ea9292c08e6d3844ae62e52a79ce2fc8ecde7ce49610d86b70bb3a",
+            "byte_length": 731
+          },
+          "original.tex": {
+            "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59",
+            "byte_length": 28
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-native.json": {
+          "sha256": "d989a8831fd8992e888c2e2744510fe8e69791946937cffaf07b7475dd988345",
+          "byte_length": 202
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/image_fallback": {
+          "case.json": {
+            "sha256": "d5735a8679ea9292c08e6d3844ae62e52a79ce2fc8ecde7ce49610d86b70bb3a",
+            "byte_length": 731
+          },
+          "original.tex": {
+            "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59",
+            "byte_length": 28
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-native.json": {
+          "sha256": "d989a8831fd8992e888c2e2744510fe8e69791946937cffaf07b7475dd988345",
+          "byte_length": 202
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "region_only",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/region_only",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/region_only"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.12374404699949082,
+      "stdout": {
+        "sha256": "3dae39fd467d413c60929950060af05504b38f8dbf77e7281742ce8b33fbdfca",
+        "byte_length": 8429
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/region_only": {
+          "case.json": {
+            "sha256": "0c945887c019393d1df32b7cc6ca1f6aec58b82bbbae61ba386929b3b23f6026",
+            "byte_length": 626
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/region_only": {
+          "case.json": {
+            "sha256": "0c945887c019393d1df32b7cc6ca1f6aec58b82bbbae61ba386929b3b23f6026",
+            "byte_length": 626
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "unknown_symbol",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/unknown_symbol",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/unknown_symbol"
+      ],
+      "exit_code": 3,
+      "elapsed_seconds": 0.08155408399761654,
+      "stdout": {
+        "sha256": "fce4af769df2461651d66236293a401bf4d19b6eebb653b80448bdb92178b017",
+        "byte_length": 4562
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/unknown_symbol": {
+          "case.json": {
+            "sha256": "d2ef1040efa636bc1bdf825bcc8c9326b6baebcfec19d09d52d77e04c83e699a",
+            "byte_length": 731
+          },
+          "original.tex": {
+            "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59",
+            "byte_length": 28
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "f4b16430e1516d41947f09ae75717c1e795013e1ccfc6f1fee826a41745f02bd",
+            "byte_length": 824
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/unknown_symbol": {
+          "case.json": {
+            "sha256": "d2ef1040efa636bc1bdf825bcc8c9326b6baebcfec19d09d52d77e04c83e699a",
+            "byte_length": 731
+          },
+          "original.tex": {
+            "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59",
+            "byte_length": 28
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "f4b16430e1516d41947f09ae75717c1e795013e1ccfc6f1fee826a41745f02bd",
+            "byte_length": 824
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "unreadable_region",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/unreadable_region",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/unreadable_region"
+      ],
+      "exit_code": 3,
+      "elapsed_seconds": 0.04734298800758552,
+      "stdout": {
+        "sha256": "ac4ac2550da057647655ea9797da2e50dc5d361cefc91fbb95ef9b1828be0ab1",
+        "byte_length": 4213
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/unreadable_region": {
+          "case.json": {
+            "sha256": "b9659b3f511ab579635840bb6601a9a584c1747b0eaca8ba0446587899863507",
+            "byte_length": 643
+          },
+          "region.png": {
+            "sha256": "18d0ed111b7b579c614bc622f4971bef5b85eaf4ed18dd56cc1ad9da7acb8c81",
+            "byte_length": 4253
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/unreadable_region": {
+          "case.json": {
+            "sha256": "b9659b3f511ab579635840bb6601a9a584c1747b0eaca8ba0446587899863507",
+            "byte_length": 643
+          },
+          "region.png": {
+            "sha256": "18d0ed111b7b579c614bc622f4971bef5b85eaf4ed18dd56cc1ad9da7acb8c81",
+            "byte_length": 4253
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "unknown_macro",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/unknown_macro",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/unknown_macro"
+      ],
+      "exit_code": 3,
+      "elapsed_seconds": 0.048669734998838976,
+      "stdout": {
+        "sha256": "ed60e93f475c164fe9cd9567dfec585e6275427ef3e6461b750dfad766377f34",
+        "byte_length": 4054
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/unknown_macro": {
+          "case.json": {
+            "sha256": "cd43b52477b750589495c8006e9e6186b12d300afb4c4aa6f5e95941835221c9",
+            "byte_length": 729
+          },
+          "original.tex": {
+            "sha256": "527bdcf53998080a0c3f88f8d06f1064d6c74bd1f74e974db57ee6aea47eb29e",
+            "byte_length": 16
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "e0445343e7fd841a1972d577e2c47cd6f31c424c65e85c21ffea24428f69cd9b",
+            "byte_length": 523
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/unknown_macro": {
+          "case.json": {
+            "sha256": "cd43b52477b750589495c8006e9e6186b12d300afb4c4aa6f5e95941835221c9",
+            "byte_length": 729
+          },
+          "original.tex": {
+            "sha256": "527bdcf53998080a0c3f88f8d06f1064d6c74bd1f74e974db57ee6aea47eb29e",
+            "byte_length": 16
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "e0445343e7fd841a1972d577e2c47cd6f31c424c65e85c21ffea24428f69cd9b",
+            "byte_length": 523
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "curve_no_data",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/curve_no_data",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/curve_no_data"
+      ],
+      "exit_code": 3,
+      "elapsed_seconds": 0.05707271600840613,
+      "stdout": {
+        "sha256": "4b61006d84c1132ac37be3d9fe9708b88ae95be0e155aada84e64fab05759174",
+        "byte_length": 3289
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/curve_no_data": {
+          "case.json": {
+            "sha256": "dacfc49d8b0d7145f22c0b07585d6f48405fc60209604e212575266745fee39f",
+            "byte_length": 634
+          },
+          "region.png": {
+            "sha256": "129145d5d38c25663701921e9a8ac38587b1043780b9c6eebaa54ad48e0c9179",
+            "byte_length": 5245
+          },
+          "semantics.json": {
+            "sha256": "2353321e126485127850f7ac363fb4c5c30411dc597b0aecf881e9431a811a2b",
+            "byte_length": 172
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/curve_no_data": {
+          "case.json": {
+            "sha256": "dacfc49d8b0d7145f22c0b07585d6f48405fc60209604e212575266745fee39f",
+            "byte_length": 634
+          },
+          "region.png": {
+            "sha256": "129145d5d38c25663701921e9a8ac38587b1043780b9c6eebaa54ad48e0c9179",
+            "byte_length": 5245
+          },
+          "semantics.json": {
+            "sha256": "2353321e126485127850f7ac363fb4c5c30411dc597b0aecf881e9431a811a2b",
+            "byte_length": 172
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "expression_mismatch",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/expression_mismatch",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/expression_mismatch"
+      ],
+      "exit_code": 3,
+      "elapsed_seconds": 0.06497964900336228,
+      "stdout": {
+        "sha256": "757c0d0ca9b3eebd4799096d7865ef202b3ff1f68ad4cb39f8dab70583ccbec1",
+        "byte_length": 4621
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/expression_mismatch": {
+          "case.json": {
+            "sha256": "2aa20f06a6a5ed6227bc2ba049eb5fc19f0e51fc2b72d8644fcc64abfc894439",
+            "byte_length": 741
+          },
+          "original.tex": {
+            "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59",
+            "byte_length": 28
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "05a967a3db6a594feca2dacdf46d456bbc722b2c875808939b3ac98412b401ac",
+            "byte_length": 848
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/expression_mismatch": {
+          "case.json": {
+            "sha256": "2aa20f06a6a5ed6227bc2ba049eb5fc19f0e51fc2b72d8644fcc64abfc894439",
+            "byte_length": 741
+          },
+          "original.tex": {
+            "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59",
+            "byte_length": 28
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "05a967a3db6a594feca2dacdf46d456bbc722b2c875808939b3ac98412b401ac",
+            "byte_length": 848
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "native_unverified",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-unverified.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/native_unverified"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.04762552698957734,
+      "stdout": {
+        "sha256": "9a315273c7a1d4d7befdf88710719522cae950f6fc55b91658c65c8fa0c5312f",
+        "byte_length": 8954
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-unverified.json": {
+          "sha256": "3e5489be3f263a0047874bec9daa3ce60acea1325e6826b4c658161d2879313c",
+          "byte_length": 202
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-unverified.json": {
+          "sha256": "3e5489be3f263a0047874bec9daa3ce60acea1325e6826b4c658161d2879313c",
+          "byte_length": 202
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "native_no_images",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-images.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/native_no_images"
+      ],
+      "exit_code": 3,
+      "elapsed_seconds": 0.049655698996502906,
+      "stdout": {
+        "sha256": "0e305fc6a7387e29c499de66e31b5c5ffee735bc6625d39877b88a7c115399da",
+        "byte_length": 4567
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-images.json": {
+          "sha256": "694ac8944e909fa3028e703e7ba2181399b20561e049d456ec2aa1cf8b70df79",
+          "byte_length": 203
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-images.json": {
+          "sha256": "694ac8944e909fa3028e703e7ba2181399b20561e049d456ec2aa1cf8b70df79",
+          "byte_length": 203
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "compatibility_disabled",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/compatibility",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-dfrac.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/compatibility_disabled"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.05780242399487179,
+      "stdout": {
+        "sha256": "ff0d9661acff1f7332135590d7df898ea226236637624a46277048c61e17155d",
+        "byte_length": 8969
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/compatibility": {
+          "case.json": {
+            "sha256": "4ce8f5d0c33d023c8c8a2150ffe7e96bf1eed481fb6be1ccfd4d19a17e9fb04c",
+            "byte_length": 729
+          },
+          "original.tex": {
+            "sha256": "9a6901f2473b4009b50a8ca6bad09d8f5c4e401dfe9352f8c9245784a76fec74",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "6d7db5420b925bd8a0e5ed7940aa5bad33b6680ccd0a64105cb5c6c2e27b3f6c",
+            "byte_length": 847
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-dfrac.json": {
+          "sha256": "24fbb84d69c5ce9ef86dc9ae7af916a77d8c56dafeaa88f4fa3df750011ad8f7",
+          "byte_length": 202
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/compatibility": {
+          "case.json": {
+            "sha256": "4ce8f5d0c33d023c8c8a2150ffe7e96bf1eed481fb6be1ccfd4d19a17e9fb04c",
+            "byte_length": 729
+          },
+          "original.tex": {
+            "sha256": "9a6901f2473b4009b50a8ca6bad09d8f5c4e401dfe9352f8c9245784a76fec74",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "6d7db5420b925bd8a0e5ed7940aa5bad33b6680ccd0a64105cb5c6c2e27b3f6c",
+            "byte_length": 847
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-dfrac.json": {
+          "sha256": "24fbb84d69c5ce9ef86dc9ae7af916a77d8c56dafeaa88f4fa3df750011ad8f7",
+          "byte_length": 202
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "region_no_images",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/region_only",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-images.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/vaults/region_no_images"
+      ],
+      "exit_code": 3,
+      "elapsed_seconds": 0.04457944500609301,
+      "stdout": {
+        "sha256": "386fdae5743f10367947d826eb75e0eeedefabab41fcbbdf5f5c8930be253b08",
+        "byte_length": 4198
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/region_only": {
+          "case.json": {
+            "sha256": "0c945887c019393d1df32b7cc6ca1f6aec58b82bbbae61ba386929b3b23f6026",
+            "byte_length": 626
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-images.json": {
+          "sha256": "694ac8944e909fa3028e703e7ba2181399b20561e049d456ec2aa1cf8b70df79",
+          "byte_length": 203
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/region_only": {
+          "case.json": {
+            "sha256": "0c945887c019393d1df32b7cc6ca1f6aec58b82bbbae61ba386929b3b23f6026",
+            "byte_length": 626
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-no-images.json": {
+          "sha256": "694ac8944e909fa3028e703e7ba2181399b20561e049d456ec2aa1cf8b70df79",
+          "byte_length": 203
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "fully-synchronized-negative-source",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-negative-source/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-negative-source/vault"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.0636818979983218,
+      "stdout": {
+        "sha256": "669936257861f0d95e8ee97d608546119f6ba24526d66b336e17568bd2aef016",
+        "byte_length": 9046
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-negative-source/case": {
+          "case.json": {
+            "sha256": "6efedcf9ea46deb767c57a127d3ccfdda1533c3faddd5da68711c4042f10d6d7",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "b0df3515cf549a6232e9e35be12e74a979c3e1e01691f8b1635d1e09698bd93a",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "407ff84de8e5fcfa15de7c0981682600a09601aef12a2542e1a68b5b778d6206",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-negative-source/case": {
+          "case.json": {
+            "sha256": "6efedcf9ea46deb767c57a127d3ccfdda1533c3faddd5da68711c4042f10d6d7",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "b0df3515cf549a6232e9e35be12e74a979c3e1e01691f8b1635d1e09698bd93a",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "407ff84de8e5fcfa15de7c0981682600a09601aef12a2542e1a68b5b778d6206",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "fully-synchronized-subscript-source",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-subscript-source/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-subscript-source/vault"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.09087232300953474,
+      "stdout": {
+        "sha256": "868729d67065693e083641983d82826e0733c132211c6ed652a9ec8c71b9e540",
+        "byte_length": 9046
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-subscript-source/case": {
+          "case.json": {
+            "sha256": "3738873cba20e209d37a8693ef75214ea54033b8b0360b74f5a229d47af5d952",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "a03f67e22b58133a1cf75dbb8661f439bc80c2e59f015b9c6b2188f2895bda12",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "3c3e36c7d096bb9f546629de1ea36206697b8deea169cb16d75a5d72423dec01",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-subscript-source/case": {
+          "case.json": {
+            "sha256": "3738873cba20e209d37a8693ef75214ea54033b8b0360b74f5a229d47af5d952",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "a03f67e22b58133a1cf75dbb8661f439bc80c2e59f015b9c6b2188f2895bda12",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "3c3e36c7d096bb9f546629de1ea36206697b8deea169cb16d75a5d72423dec01",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "fully-synchronized-condition-source",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-condition-source/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-condition-source/vault"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.06542371900286525,
+      "stdout": {
+        "sha256": "ec8c986cb563da73f7c6025c3a4d0ad242cb98a8aeb85da1ea41b712920f3a7b",
+        "byte_length": 8617
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-condition-source/case": {
+          "case.json": {
+            "sha256": "5d4aed1f5270b8591bcb50baa0c9dd8caaa82ad13458610bd7211914508ecda8",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "c5000cb132abcb3fa9e70487530a944443df003bbdc5bac35e39f0c3e301bede",
+            "byte_length": 749
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-condition-source/case": {
+          "case.json": {
+            "sha256": "5d4aed1f5270b8591bcb50baa0c9dd8caaa82ad13458610bd7211914508ecda8",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "c5000cb132abcb3fa9e70487530a944443df003bbdc5bac35e39f0c3e301bede",
+            "byte_length": 749
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "fully-synchronized-unit-source",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-unit-source/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-unit-source/vault"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.05635397300648037,
+      "stdout": {
+        "sha256": "644b4cba14d36262849f6c71188636dc195cdba907f8ebad6a081d48fb54b519",
+        "byte_length": 9042
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-unit-source/case": {
+          "case.json": {
+            "sha256": "d773957488505fa4e860fbcca7d910716569b88fc5ab44827bf6760fbec6ce6d",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "44d73484c71d3a81ce98262df8a8191cc3d5309bf0f17e2368044af1b8b6e112",
+            "byte_length": 842
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/fully-synchronized-unit-source/case": {
+          "case.json": {
+            "sha256": "d773957488505fa4e860fbcca7d910716569b88fc5ab44827bf6760fbec6ce6d",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "44d73484c71d3a81ce98262df8a8191cc3d5309bf0f17e2368044af1b8b6e112",
+            "byte_length": 842
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "original-sha-mismatch",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/original-sha-mismatch/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/original-sha-mismatch/profile.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/original-sha-mismatch/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.006733677990268916,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "404124c55fb5c312c8edf6e02adc3fb2efbb171b03caee25cbeea89a7eef1db7",
+        "byte_length": 76
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/original-sha-mismatch/case": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "3b7ecfee3610a0fcf345ddc90bea1b1dfb3590d06fee9f079b9860582052d4cd",
+            "byte_length": 30
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/original-sha-mismatch/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/original-sha-mismatch/case": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "3b7ecfee3610a0fcf345ddc90bea1b1dfb3590d06fee9f079b9860582052d4cd",
+            "byte_length": 30
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/original-sha-mismatch/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "region-out-of-canvas",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-out-of-canvas/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-out-of-canvas/profile.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-out-of-canvas/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.005454363999888301,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "fd8bb19f77c4e54c27812510d98b592aedb9252b26cceb7e18a7ed6b045bb6c3",
+        "byte_length": 76
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-out-of-canvas/case": {
+          "case.json": {
+            "sha256": "b1a28d15a947652e2cd017fec04772520625309e536394c965030e4ad68c6ff6",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-out-of-canvas/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-out-of-canvas/case": {
+          "case.json": {
+            "sha256": "b1a28d15a947652e2cd017fec04772520625309e536394c965030e4ad68c6ff6",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-out-of-canvas/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "region-dimension-mismatch",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-dimension-mismatch/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-dimension-mismatch/profile.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-dimension-mismatch/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.00665253700572066,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "fd8bb19f77c4e54c27812510d98b592aedb9252b26cceb7e18a7ed6b045bb6c3",
+        "byte_length": 76
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-dimension-mismatch/case": {
+          "case.json": {
+            "sha256": "d3c9295b1546571861fc0067fb6e9533f83c3c8ebb8e09c2a88c5055a3ac612f",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-dimension-mismatch/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-dimension-mismatch/case": {
+          "case.json": {
+            "sha256": "d3c9295b1546571861fc0067fb6e9533f83c3c8ebb8e09c2a88c5055a3ac612f",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/region-dimension-mismatch/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "png-corrupted-with-new-sha",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/png-corrupted-with-new-sha/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/png-corrupted-with-new-sha/profile.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/png-corrupted-with-new-sha/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.00684879400068894,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "fd8bb19f77c4e54c27812510d98b592aedb9252b26cceb7e18a7ed6b045bb6c3",
+        "byte_length": 76
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/png-corrupted-with-new-sha/case": {
+          "case.json": {
+            "sha256": "39a940055d425b09be0697adec82d71fd4d72a2a060b13aad257d23fdcf765fc",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "2b81a5ba1daabfd523a572a9db65cc3d67792f5c652eed5f4872c38fcc5fbcea",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/png-corrupted-with-new-sha/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/png-corrupted-with-new-sha/case": {
+          "case.json": {
+            "sha256": "39a940055d425b09be0697adec82d71fd4d72a2a060b13aad257d23fdcf765fc",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "2b81a5ba1daabfd523a572a9db65cc3d67792f5c652eed5f4872c38fcc5fbcea",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/png-corrupted-with-new-sha/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "input-traversal",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-traversal/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-traversal/profile.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-traversal/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.004857674997765571,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "41659ec9cd5247c3a34c7c56f1d1733284e391ded20d507294c76f3cb641fd6a",
+        "byte_length": 63
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-traversal/case": {
+          "case.json": {
+            "sha256": "503bac8f7f1995a25d9a5808b63a2fc20eef0e3da058bf3e5625ea01ec25cfd0",
+            "byte_length": 727
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-traversal/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-traversal/case": {
+          "case.json": {
+            "sha256": "503bac8f7f1995a25d9a5808b63a2fc20eef0e3da058bf3e5625ea01ec25cfd0",
+            "byte_length": 727
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-traversal/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "input-absolute-path",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-absolute-path/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-absolute-path/profile.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-absolute-path/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.005372176005039364,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "41659ec9cd5247c3a34c7c56f1d1733284e391ded20d507294c76f3cb641fd6a",
+        "byte_length": 63
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-absolute-path/case": {
+          "case.json": {
+            "sha256": "f1e51e6a28c0f20a3d4304b8979e3b85bbfdecfcfdcb3b48625549763039fd87",
+            "byte_length": 780
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-absolute-path/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-absolute-path/case": {
+          "case.json": {
+            "sha256": "f1e51e6a28c0f20a3d4304b8979e3b85bbfdecfcfdcb3b48625549763039fd87",
+            "byte_length": 780
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-absolute-path/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "selected-filename-collision",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/selected-filename-collision/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/selected-filename-collision/profile.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/selected-filename-collision/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.00423882799805142,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "41659ec9cd5247c3a34c7c56f1d1733284e391ded20d507294c76f3cb641fd6a",
+        "byte_length": 63
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/selected-filename-collision/case": {
+          "case.json": {
+            "sha256": "2f5c61a8f10be4b36755d93fa22712706abbfd4ed4f6a5acb990d22740b95411",
+            "byte_length": 713
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/selected-filename-collision/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/selected-filename-collision/case": {
+          "case.json": {
+            "sha256": "2f5c61a8f10be4b36755d93fa22712706abbfd4ed4f6a5acb990d22740b95411",
+            "byte_length": 713
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/selected-filename-collision/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "required-nullable-missing",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/required-nullable-missing/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/required-nullable-missing/profile.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/required-nullable-missing/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.005065149001893587,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "5c10a717b5ea217934aaba55183a47171e3b6ccf9ac5ea5d44adfd5851f6c945",
+        "byte_length": 60
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/required-nullable-missing/case": {
+          "case.json": {
+            "sha256": "2b07ec4b07aae6966b4f394c94ee86af1e0e8a14b5c878eac5b1c93f589962b0",
+            "byte_length": 436
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/required-nullable-missing/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/required-nullable-missing/case": {
+          "case.json": {
+            "sha256": "2b07ec4b07aae6966b4f394c94ee86af1e0e8a14b5c878eac5b1c93f589962b0",
+            "byte_length": 436
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/required-nullable-missing/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "unknown-schema-field",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/unknown-schema-field/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/unknown-schema-field/profile.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/unknown-schema-field/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.005202510001254268,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "9657d7cd1d746db43ed3f5c7ac92cc2658785518c6e4bc97cf481a4eda4a1c9e",
+        "byte_length": 200
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/unknown-schema-field/case": {
+          "case.json": {
+            "sha256": "b67cece59e21a9a6d76eedb05d9785bc9df9d21f70c542c4b3e9ec38a6e93dcc",
+            "byte_length": 739
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/unknown-schema-field/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/unknown-schema-field/case": {
+          "case.json": {
+            "sha256": "b67cece59e21a9a6d76eedb05d9785bc9df9d21f70c542c4b3e9ec38a6e93dcc",
+            "byte_length": 739
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/unknown-schema-field/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "occupied-vault",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/occupied-vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.018485321998014115,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "3ccaec7ff03d639177e6a7dc69c6f0f464147d5bc0190cb1be1d7b78f50ec0f2",
+        "byte_length": 76
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/occupied-vault": {
+          "manual.md": {
+            "sha256": "d0f41aedbe8c079a868bec66217ba44159d06055faae165413a4e79897b1260a",
+            "byte_length": 13
+          }
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/occupied-vault": {
+          "manual.md": {
+            "sha256": "d0f41aedbe8c079a868bec66217ba44159d06055faae165413a4e79897b1260a",
+            "byte_length": 13
+          }
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "input-file-symlink",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-file-symlink/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-file-symlink/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.004089608992217109,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "950a5d2e7886cdfa6380fe95cc19fe5da028b53b8813beef6bbf1d1aa70732c7",
+        "byte_length": 294
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-file-symlink/external.tex": {
+          "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+          "byte_length": 29
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-file-symlink/external.tex": {
+          "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+          "byte_length": 29
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "input-file-hardlink",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-file-hardlink/case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-file-hardlink/vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.004402228005346842,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e5623a7af4ded7b28e19f750cc8071e2dd0d375a84cb1ee66c7b49a37ebdc959",
+        "byte_length": 85
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-file-hardlink/external.tex": {
+          "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+          "byte_length": 29
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-file-hardlink/external.tex": {
+          "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+          "byte_length": 29
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "output-ancestor-symlink",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/linked-parent/new-vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.0043983540090266615,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "a0215d025020a75793d724e0fac124c0851bad64fa4ebc82f2ee73a90a13248d",
+        "byte_length": 215
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/real-parent": {}
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/real-parent": {}
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    },
+    {
+      "label": "input-ancestor-symlink",
+      "argv": [
+        "/tmp/noetome-formula-independent-final-cli-20261106",
+        "knowledge",
+        "formula",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/linked-case",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json",
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/guards/input-ancestor-vault"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.004693801995017566,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "c43d69a65999ad3a538f98698a764c0c0d6a3ac97864bfa0fc2d9555c88c3da8",
+        "byte_length": 248
+      },
+      "protected_before": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "protected_after": {
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/native": {
+          "case.json": {
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "original.tex": {
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "region.png": {
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "semantics.json": {
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          }
+        },
+        "/tmp/noetome-formula-independent-final-audit-2-20261106/frozen-authors/profile-native.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        }
+      },
+      "sentinel_before": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      },
+      "sentinel_after": {
+        "sha256": "bd7484499641a55005e118af9ea0ce9e4d919fcef1e724844f97089a6caa6651",
+        "byte_length": 43
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "native",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "native",
+        "representation": "native_math",
+        "original_bytes_unchanged": true,
+        "issue_codes": [],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "native_relational",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "native_relational",
+        "representation": "native_math",
+        "original_bytes_unchanged": true,
+        "issue_codes": [],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "native_exp",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "native_exp",
+        "representation": "native_math",
+        "original_bytes_unchanged": true,
+        "issue_codes": [],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "compatibility",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "compatibility",
+        "representation": "native_math",
+        "original_bytes_unchanged": true,
+        "issue_codes": [],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "image_fallback",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "image_fallback",
+        "representation": "formula_image",
+        "original_bytes_unchanged": true,
+        "issue_codes": [],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "region_only",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "region_only",
+        "representation": "formula_image",
+        "original_bytes_unchanged": true,
+        "issue_codes": [],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "unknown_symbol",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "unknown_symbol",
+        "representation": null,
+        "original_bytes_unchanged": true,
+        "issue_codes": [
+          "FORMULA_UNKNOWN_SYMBOL"
+        ],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "unreadable_region",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "unreadable_region",
+        "representation": null,
+        "original_bytes_unchanged": true,
+        "issue_codes": [
+          "FORMULA_REGION_UNREADABLE"
+        ],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "unknown_macro",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "unknown_macro",
+        "representation": null,
+        "original_bytes_unchanged": true,
+        "issue_codes": [
+          "FORMULA_UNSUPPORTED_SYNTAX"
+        ],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "curve_no_data",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "curve_no_data",
+        "representation": null,
+        "original_bytes_unchanged": true,
+        "issue_codes": [
+          "FORMULA_CURVE_NO_DATA"
+        ],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "expression_mismatch",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "expression_mismatch",
+        "representation": null,
+        "original_bytes_unchanged": true,
+        "issue_codes": [
+          "FORMULA_TEX_SEMANTIC_MISMATCH"
+        ],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "native_unverified",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "native_unverified",
+        "representation": "formula_image",
+        "original_bytes_unchanged": true,
+        "issue_codes": [],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "native_no_images",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "native_no_images",
+        "representation": null,
+        "original_bytes_unchanged": true,
+        "issue_codes": [
+          "FORMULA_IMAGE_UNAVAILABLE"
+        ],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "compatibility_disabled",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "compatibility_disabled",
+        "representation": "formula_image",
+        "original_bytes_unchanged": true,
+        "issue_codes": [],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "region_no_images",
+      "status": "passed",
+      "verification": {
+        "status": "passed",
+        "case_name": "region_no_images",
+        "representation": null,
+        "original_bytes_unchanged": true,
+        "issue_codes": [
+          "FORMULA_IMAGE_UNAVAILABLE"
+        ],
+        "scientific_quality": "not_run"
+      }
+    },
+    {
+      "name": "negative-sign",
+      "status": "rejected",
+      "reason": "actual display meaning including sign/scripts/grouping/7: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "wrong-subscript",
+      "status": "rejected",
+      "reason": "actual display meaning including sign/scripts/grouping/2: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "wrong-superscript",
+      "status": "rejected",
+      "reason": "actual display meaning including sign/scripts/grouping/18: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "condition-loss",
+      "status": "rejected",
+      "reason": "visible author conditions/0: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "unit-loss",
+      "status": "rejected",
+      "reason": "every visible symbol/definition/unit/2: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "range-loss",
+      "status": "rejected",
+      "reason": "visible author ranges/1: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "definition-replaced",
+      "status": "rejected",
+      "reason": "every visible symbol/definition/unit/13: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "exception-loss",
+      "status": "rejected",
+      "reason": "visible author exceptions/0: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "wrong-original-tex-link",
+      "status": "rejected",
+      "reason": "unexpected user-visible Markdown content",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "relational-sign",
+      "status": "rejected",
+      "reason": "actual display meaning including sign/scripts/grouping/9: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "original-image-replaced",
+      "status": "rejected",
+      "reason": "preserved original bytes original.png: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "image-path-traversal",
+      "status": "rejected",
+      "reason": "unexpected user-visible Markdown content",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "image-redrawn",
+      "status": "rejected",
+      "reason": "unexpected user-visible Markdown content",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "preserved-tex-replaced",
+      "status": "rejected",
+      "reason": "preserved original bytes original.tex: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "mapping-out-of-range",
+      "status": "rejected",
+      "reason": "exact content-to-source mapping denominator and byte ranges/0/start_byte: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "mapping-denominator-loss",
+      "status": "rejected",
+      "reason": "exact content-to-source mapping denominator and byte ranges: length",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "fake-scientific-publication",
+      "status": "rejected",
+      "reason": "unpublished engineering namespace scientific_quality: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "false-success-unknown_symbol",
+      "status": "rejected",
+      "reason": "source-grounded expression outcome/representation: type",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "false-success-unreadable_region",
+      "status": "rejected",
+      "reason": "source-grounded expression outcome/representation: type",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "false-success-unknown_macro",
+      "status": "rejected",
+      "reason": "source-grounded expression outcome/representation: type",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "false-success-curve_no_data",
+      "status": "rejected",
+      "reason": "source-grounded expression outcome/representation: type",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "false-symbol-definition-check",
+      "status": "rejected",
+      "reason": "all and only source symbols explicitly confirmed: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "false-expression-match-check",
+      "status": "rejected",
+      "reason": "actual structural source match: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "fabricated-curve-data",
+      "status": "rejected",
+      "reason": "no unknown result/hidden redraw or falsely successful files: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "fully-synchronized-negative-source",
+      "status": "rejected",
+      "reason": "original selection equals frozen author/tex/sha256: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "fully-synchronized-subscript-source",
+      "status": "rejected",
+      "reason": "original selection equals frozen author/tex/sha256: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "fully-synchronized-condition-source",
+      "status": "rejected",
+      "reason": "original selection equals frozen author/semantics/sha256: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "fully-synchronized-unit-source",
+      "status": "rejected",
+      "reason": "original selection equals frozen author/semantics/sha256: value",
+      "exception": "AssertionError"
+    },
+    {
+      "name": "original-sha-mismatch",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "region-out-of-canvas",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "region-dimension-mismatch",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "png-corrupted-with-new-sha",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "input-traversal",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "input-absolute-path",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "selected-filename-collision",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "required-nullable-missing",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "unknown-schema-field",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "occupied-vault",
+      "status": "rejected_unchanged"
+    },
+    {
+      "name": "input-file-symlink",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "input-file-hardlink",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "output-ancestor-symlink",
+      "status": "rejected_before_output"
+    },
+    {
+      "name": "input-ancestor-symlink",
+      "status": "rejected_before_output"
+    }
+  ]
+}

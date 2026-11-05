@@ -1,0 +1,354 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_formula",
+  "scope": "selected_formula_fidelity_v1",
+  "request_id": "2004bdc2-f803-4c8b-b0aa-585cd2b1aea2",
+  "status": "passed",
+  "preview_status": "rendered",
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "published": false,
+  "network_calls": 0,
+  "paid_calls": 0,
+  "case": {
+    "schema_version": 1,
+    "purpose": "formula_fidelity",
+    "selection_id": "native",
+    "title": "公式保真样例 native",
+    "source_kind": "tex",
+    "tex": {
+      "file": "original.tex",
+      "sha256": "fa80581f9563c8370c37910639a003d09fb80b3bb5876cbee5f547366d866246"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "c075acc3f5607b5991cd025f94d9ad936418cfcc18699b1b84a416f0e9404929"
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "page": 1,
+      "canvas": [
+        1000,
+        600
+      ],
+      "bounds": [
+        100,
+        120,
+        800,
+        240
+      ],
+      "legibility": "clear"
+    },
+    "data_available": false
+  },
+  "semantics": {
+    "schema_version": 1,
+    "expression": "C_i(t)=-\\frac{a}{b}t^{2}*-b",
+    "symbols": [
+      {
+        "symbol": "C",
+        "definition": "test concentration",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "t",
+        "definition": "elapsed time",
+        "unit": "s"
+      },
+      {
+        "symbol": "a",
+        "definition": "positive scaling constant",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "b",
+        "definition": "positive nonzero divisor",
+        "unit": "s^2"
+      }
+    ],
+    "conditions": [
+      "a > 0 and b > 0",
+      "This is a fictional engineering example, not a scientific claim."
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "profile": {
+    "schema_version": 1,
+    "app": "Obsidian",
+    "app_version": "1.6.7",
+    "mathjax_version": "3.2.2",
+    "native_math": true,
+    "compatibility_dfrac": true,
+    "local_images": true,
+    "verified": true
+  },
+  "checks": {
+    "source_preservation": "passed",
+    "expression_match": "passed",
+    "symbol_definitions": "passed",
+    "semantic_review": "passed",
+    "note_plan": "passed",
+    "rendering": "passed",
+    "saved_output": "passed"
+  },
+  "decision": {
+    "representation": "native_math",
+    "fallback_reasons": [],
+    "compatibility_rewrites": [],
+    "issue_codes": []
+  },
+  "tokens": [
+    "C",
+    "_",
+    "i",
+    "(",
+    "t",
+    ")",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "}",
+    "{",
+    "b",
+    "}",
+    "t",
+    "^",
+    "{",
+    "2",
+    "}",
+    "*",
+    "-",
+    "b"
+  ],
+  "plan_fingerprint": {
+    "sha256": "31066377dca7e29a4ac5e4495fd4c7bbddd78ad7e6041a0aec12f1689616e392",
+    "byte_length": 2320
+  },
+  "inputs": {
+    "original.png": {
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "byte_length": 6656
+    },
+    "original.tex": {
+      "sha256": "fa80581f9563c8370c37910639a003d09fb80b3bb5876cbee5f547366d866246",
+      "byte_length": 28
+    },
+    "profile.json": {
+      "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+      "byte_length": 201
+    },
+    "source-case.json": {
+      "sha256": "eade3c2061485295e74a00146ba62f77cab3e07d5cddcc88c1ae529b8ac230fe",
+      "byte_length": 715
+    },
+    "source-semantics.json": {
+      "sha256": "c075acc3f5607b5991cd025f94d9ad936418cfcc18699b1b84a416f0e9404929",
+      "byte_length": 846
+    }
+  },
+  "files": [
+    {
+      "relative_path": "公式预览.md",
+      "content_sha256": "8259ed1aa89f87df6dfbb23cffb29c5eda682ca5f073f95a8e8df15c27ff80f4",
+      "byte_length": 1064,
+      "mappings": [
+        {
+          "kind": "title",
+          "source_field": "case.title",
+          "start_byte": 35,
+          "end_byte": 60
+        },
+        {
+          "kind": "expression",
+          "source_field": "tex",
+          "start_byte": 80,
+          "end_byte": 107
+        },
+        {
+          "kind": "symbol",
+          "source_field": "semantics.symbols[0].symbol",
+          "start_byte": 162,
+          "end_byte": 163
+        },
+        {
+          "kind": "definition",
+          "source_field": "semantics.symbols[0].definition",
+          "start_byte": 188,
+          "end_byte": 206
+        },
+        {
+          "kind": "unit",
+          "source_field": "semantics.symbols[0].unit",
+          "start_byte": 231,
+          "end_byte": 237
+        },
+        {
+          "kind": "symbol",
+          "source_field": "semantics.symbols[1].symbol",
+          "start_byte": 276,
+          "end_byte": 277
+        },
+        {
+          "kind": "definition",
+          "source_field": "semantics.symbols[1].definition",
+          "start_byte": 302,
+          "end_byte": 331
+        },
+        {
+          "kind": "unit",
+          "source_field": "semantics.symbols[1].unit",
+          "start_byte": 356,
+          "end_byte": 377
+        },
+        {
+          "kind": "symbol",
+          "source_field": "semantics.symbols[2].symbol",
+          "start_byte": 416,
+          "end_byte": 417
+        },
+        {
+          "kind": "definition",
+          "source_field": "semantics.symbols[2].definition",
+          "start_byte": 442,
+          "end_byte": 454
+        },
+        {
+          "kind": "unit",
+          "source_field": "semantics.symbols[2].unit",
+          "start_byte": 479,
+          "end_byte": 480
+        },
+        {
+          "kind": "symbol",
+          "source_field": "semantics.symbols[3].symbol",
+          "start_byte": 519,
+          "end_byte": 520
+        },
+        {
+          "kind": "definition",
+          "source_field": "semantics.symbols[3].definition",
+          "start_byte": 545,
+          "end_byte": 570
+        },
+        {
+          "kind": "unit",
+          "source_field": "semantics.symbols[3].unit",
+          "start_byte": 595,
+          "end_byte": 601
+        },
+        {
+          "kind": "symbol",
+          "source_field": "semantics.symbols[4].symbol",
+          "start_byte": 640,
+          "end_byte": 641
+        },
+        {
+          "kind": "definition",
+          "source_field": "semantics.symbols[4].definition",
+          "start_byte": 666,
+          "end_byte": 690
+        },
+        {
+          "kind": "unit",
+          "source_field": "semantics.symbols[4].unit",
+          "start_byte": 715,
+          "end_byte": 718
+        },
+        {
+          "kind": "condition",
+          "source_field": "semantics.conditions[0]",
+          "start_byte": 749,
+          "end_byte": 764
+        },
+        {
+          "kind": "condition",
+          "source_field": "semantics.conditions[1]",
+          "start_byte": 778,
+          "end_byte": 842
+        },
+        {
+          "kind": "range",
+          "source_field": "semantics.ranges[0]",
+          "start_byte": 867,
+          "end_byte": 876
+        },
+        {
+          "kind": "range",
+          "source_field": "semantics.ranges[1]",
+          "start_byte": 890,
+          "end_byte": 904
+        },
+        {
+          "kind": "exception",
+          "source_field": "semantics.exceptions[0]",
+          "start_byte": 929,
+          "end_byte": 977
+        },
+        {
+          "kind": "attachment_link",
+          "source_field": "tex",
+          "start_byte": 1000,
+          "end_byte": 1026
+        },
+        {
+          "kind": "attachment_link",
+          "source_field": "region",
+          "start_byte": 1028,
+          "end_byte": 1062
+        }
+      ]
+    }
+  ],
+  "artifacts": {
+    ".owner.json": {
+      "sha256": "a85d3bcc16a8e3d10aaab57e8df18cbba7f8d17ef08202da7483ae158940e7bf",
+      "byte_length": 152
+    },
+    "compiled.tex": {
+      "sha256": "2501c9ffaf8134a6f22491e34c2e242151921ad43f1d4d8bbf13c5e1c9bae10e",
+      "byte_length": 27
+    },
+    "original.png": {
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "byte_length": 6656
+    },
+    "original.tex": {
+      "sha256": "fa80581f9563c8370c37910639a003d09fb80b3bb5876cbee5f547366d866246",
+      "byte_length": 28
+    },
+    "plan.json": {
+      "sha256": "31066377dca7e29a4ac5e4495fd4c7bbddd78ad7e6041a0aec12f1689616e392",
+      "byte_length": 2320
+    },
+    "profile.json": {
+      "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+      "byte_length": 201
+    },
+    "source-case.json": {
+      "sha256": "eade3c2061485295e74a00146ba62f77cab3e07d5cddcc88c1ae529b8ac230fe",
+      "byte_length": 715
+    },
+    "source-semantics.json": {
+      "sha256": "c075acc3f5607b5991cd025f94d9ad936418cfcc18699b1b84a416f0e9404929",
+      "byte_length": 846
+    },
+    "公式预览.md": {
+      "sha256": "8259ed1aa89f87df6dfbb23cffb29c5eda682ca5f073f95a8e8df15c27ff80f4",
+      "byte_length": 1064
+    }
+  }
+}

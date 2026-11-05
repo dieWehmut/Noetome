@@ -29,6 +29,7 @@
 | [有据冲突与证据不足](technical/KNOWLEDGE_CONFLICTS_CONTRACT.md) | 严格v3冲突、可比较十进制、反证保留与逐原出现处理记录 | 冲突分类、证据不足、处理记录或相关分母变化 |
 | [有据主动表达](technical/ACTIVE_PRESENTATION_CONTRACT.md) | 来源与协调重验、比较表/正文选择、逐格映射及新测试Vault | knowledge present、表达计划、渲染与预览报告变化 |
 | [有界过程与流程表达](technical/PROCESS_FLOW_CONTRACT.md) | 独立过程来源核对、明确步骤/关系、流程图及有据文字回退 | process-review、flow、节点/边映射与目标能力变化 |
+| [明确选定公式保真](technical/FORMULA_FIDELITY_CONTRACT.md) | 原始 TeX、作者语义声明、公式 PNG 区域及 MathJax/原图回退 | formula、公式源码/附件、语义及目标能力变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
 | [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |
@@ -52,4 +53,4 @@ B04R收束提交已普通推送并核对远端，执行卡归档于[B04R步骤](
 
 遇到标准冲突时：当前用户指令优先，其次已采纳产品需求与决策；技术和设计负责具体实现；近期步骤缩小本轮范围，不得取消产品硬约束。将实质冲突写入日志并修正文档，不暗中选择方便的一边。
 
-B05 三项已完成实际验收，[B05-T03记录](validation/B05-T03.md)保留完整 Windows 回归、真实路径保护、独立审查及失败历史。[B06执行卡](execution/B06_STEPS.md)中的主动比较表与有据流程图已完成，来源重建、完整回归、独立语义篡改、NTFS和真实Obsidian证据分别见[B06-T01记录](validation/B06-T01.md)与[B06-T02记录](validation/B06-T02.md)。下一项为原始TeX/公式原图回退，尚未启动，继续按[近期步骤](execution/NEXT_STEPS.md)推进；当前工程预览不代表科学核实或生产发布。
+B05 三项已完成实际验收，[B05-T03记录](validation/B05-T03.md)保留完整 Windows 回归、真实路径保护、独立审查及失败历史。[B06执行卡](execution/B06_STEPS.md)中的主动比较表与有据流程图已完成，来源重建、完整回归、独立语义篡改、NTFS和真实Obsidian证据分别见[B06-T01记录](validation/B06-T01.md)与[B06-T02记录](validation/B06-T02.md)。原始TeX/公式原图回退按[公式契约](technical/FORMULA_FIDELITY_CONTRACT.md)推进，真实状态仍见[近期步骤](execution/NEXT_STEPS.md)及账本；当前工程预览不代表科学核实或生产发布。
