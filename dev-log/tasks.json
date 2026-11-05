@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B06R",
+  "current_batch": "B06V",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -92,6 +92,13 @@
       "from_batch": "B06U",
       "to_batch": "B06R",
       "note": "设置侧栏UI任务已浏览器验收；恢复公式任务入口，本轮不启动"
+    },
+    {
+      "at": "2026-11-05T23:47:05Z",
+      "action": "batch",
+      "from_batch": "B06R",
+      "to_batch": "B06V",
+      "note": "B06-T03按真实TeX/原图/语义阻断、独立篡改、干净Obsidian、完整Windows Rust和最终Python验收；B06三项有界表达已完成，剩余一般图像、单页扫描公式和最低/当前稳定兼容矩阵细化为B06V三张todo卡，不start下一项。"
     }
   ],
   "tasks": [
@@ -1942,7 +1949,7 @@
       "id": "B06-T03",
       "title": "保真输出原始TeX及公式原图回退",
       "batch": "B06R",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B06-T02"
       ],
@@ -1960,7 +1967,64 @@
         "实际CLI到新测试Vault、独立expected与篡改矩阵拒绝换负号/下标、丢前提/单位、公式附件替换/越界、虚假重绘和假成功；原始TeX/公式区域指纹不变、双报告对账，附件及祖先路径/碰撞/哨兵保护实测。",
         "记录版本的干净Obsidian实际验证MathJax、公式原图/本地附件及回退，保存语义对照与真实渲染原件；完整Rust/Python、表格/流程图回归和独立审查通过后complete、提交推送。扫描公式重建、完整图像知识抽取/重绘与发布兼容矩阵仍按剩余视觉目标滚动验收，不能据本项直接宣布整个视觉阶段完成。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-05T23:03:47Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "续接已验收设置重装后待办：明确选定TeX/公式原区域的严格有界语义保真、原件留存、回退/阻断、独立篡改与真实Obsidian验收；不写生产Vault。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-05T23:47:05Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成明确选定TeX/PNG原区域的严格有界保真CLI、原件留存、受控兼容与回退/语义阻断；独立expected、同步篡改、实际Obsidian和完整支持平台回归已验收。原生/校验器/环境失败历史全部保留，未验证整个视觉阶段或科学正确率。",
+          "validation": [
+            "Windows固定产品/测试源码完整fmt/check/test/build通过，670 Rust测试0失败0忽略；独立公式15作者场景29CLI/56记录场景，Unix矩阵明确not_run；487当前文件对照一致和702原件ZIP逐字节读回。",
+            "Linux fmt/check workspace通过；最终CPython3.12.14全套231项214通过17平台跳过0失败；Linux全Rust首次101、304通过100失败（严格运行时路径/平台/两超时断言）如实保留，不算Linux完整兼容通过。",
+            "最终独立audit4实跑15场景33普通CLI59矩阵记录，26专项Python测试0跳过；source/semantics/两报告/文件/hash同步篡改拒绝，标签错配/虚假报告正文/PNG无界解压原攻击RED→GREEN，原件及7源码pin匹配。",
+            "干净Obsidian1.6.7运行时MathJax3.2.2实测10产物：4公式3原图3阻断；44可见glyph、33符号字段归组、7PNG点击及最终源/副本/原生SHA联结通过，1570原件归档逐项读回。独立产品/校验器/文档审查和diff检查通过。"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/formula.rs",
+              "sha256": "fd3a05c4a643f7ad195e998fc825112b30edb0114b35edcf68c3d5b26786ce71"
+            },
+            {
+              "path": "scripts/verify_formula.py",
+              "sha256": "585b9688fbcaf838743128c4a35f0d7f869f6f8d93fb151b851def1ce726828b"
+            },
+            {
+              "path": "fixtures/formula-fidelity/frozen-sha256.json",
+              "sha256": "7b03260bbad80d2db3127e0e13ec9cfa7cc186a91c8081bf0ad0d3a8301bdd99"
+            },
+            {
+              "path": "doc/validation/B06-T03.md",
+              "sha256": "ed816a6702d4f9ec18924c22765dbe233696ef303832ee618c90a187f37a2a08"
+            },
+            {
+              "path": "doc/validation/assets/B06-T03/windows/native-final.json",
+              "sha256": "c1887c4e7238bdabad87fa46e92cf0a64f768799715886e74e50346722caf666"
+            },
+            {
+              "path": "doc/validation/assets/B06-T03/native/summary.json",
+              "sha256": "d23b63638caf80be3a74feef0a15cc0f98c70461f2b47d75e6055b9a4e7b555e"
+            },
+            {
+              "path": "doc/validation/assets/B06-T03/independent/final-audit-4-receipt.json",
+              "sha256": "1e594f7ba85746967b13d778676b66da2fa31ff0b2e93c516ccf8a9402405f67"
+            },
+            {
+              "path": "doc/validation/assets/B06-T03/full-checks/python-final-grammar.receipt.json",
+              "sha256": "8a5084aefae7b19821cb2d5a0b1cacc95f560a9ed862f696511816ef3cb9ddc4"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B06U-T01",
@@ -2130,6 +2194,74 @@
           ]
         }
       ]
+    },
+    {
+      "id": "B06V-T01",
+      "title": "一般来源图像有据重现与重绘回退",
+      "batch": "B06V",
+      "status": "todo",
+      "depends_on": [
+        "B06-T03"
+      ],
+      "requirements": [
+        "FR-22",
+        "FR-23",
+        "FR-25",
+        "FR-26",
+        "NFR-06"
+      ],
+      "acceptance": [
+        "明确选定公开原图、关键标签/方向/正负/单位/图例/空间关系和独立expected先冻结，再取得普通CLI真实RED；不把手工结构声明伪装成一般自动图像理解。",
+        "实际CLI在新Vault保留来源图像及可核对有限重绘，保存元素/关系映射和回退理由；无数据曲线保留原图，不伪造精确数据，不可辨原图阻断受影响表达。",
+        "独立expected及同步图/计划/双报告/指纹篡改拒绝语义遗漏、方向错误、单位丢失、虚假重绘和假成功；原件指纹、祖先/碰撞/哨兵保护实测。",
+        "干净记录版本Obsidian实测本地图像/附件和回退；完整Rust/Python及表格/流程/公式回归、独立审查通过后complete提交推送。"
+      ],
+      "history": []
+    },
+    {
+      "id": "B06V-T02",
+      "title": "单个明确扫描页公式重建与语义复核",
+      "batch": "B06V",
+      "status": "todo",
+      "depends_on": [
+        "B06V-T01"
+      ],
+      "requirements": [
+        "FR-03",
+        "FR-24",
+        "FR-25",
+        "FR-26",
+        "NFR-06"
+      ],
+      "acceptance": [
+        "识别前冻结公开授权扫描页/区域、符号前提和独立expected，取得真实CLI RED；只选一个实际方案锁版本，不扫描私人目录或搭建通用OCR系统。",
+        "保存原始识别响应、等价表达、原区域及语义核对；可辨公式与不可分清负号/下标/关键符号均实测，未知阻断成功，不承诺恢复作者原始TeX。",
+        "实际CLI新Vault、独立语义及同步篡改拒绝换符号/丢前提/区域替换越界和假成功；资源/祖先/碰撞/哨兵保护实测，模型能力/凭据/累计预算按既有授权核对。",
+        "干净Obsidian实测重建与原区回退、完整Rust/Python/既有视觉回归和独立审查通过；如实记录未识别范围后complete提交推送。"
+      ],
+      "history": []
+    },
+    {
+      "id": "B06V-T03",
+      "title": "视觉输出最低与当前稳定版兼容矩阵",
+      "batch": "B06V",
+      "status": "todo",
+      "depends_on": [
+        "B06V-T01",
+        "B06V-T02"
+      ],
+      "requirements": [
+        "FR-25",
+        "NFR-06",
+        "NFR-16"
+      ],
+      "acceptance": [
+        "执行时从官方来源核验当前稳定Obsidian及明确最低支持版，冻结代表性输出和独立语义expected，记录实际应用/MathJax/Mermaid运行时与安装指纹。",
+        "各自干净配置实测表格/中文路径链接、流程方向标签/回退、公式语义、原图本地附件及扫描阻断，不覆盖日常安装或生产Vault。",
+        "仅真实验收组合写入能力矩阵，未知版本保留未经验证或有据回退；同步伪造兼容声明不得放宽语义门槛。",
+        "完整Rust/Python和全部既有视觉回归、独立审查通过后保存可重复矩阵/原件/未运行项，complete提交推送，再依据剩余需求判断B07进入条件。"
+      ],
+      "history": []
     }
   ]
 }
