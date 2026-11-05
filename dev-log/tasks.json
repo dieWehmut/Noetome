@@ -2074,6 +2074,60 @@
               "sha256": "e79db6c424110141a888a44aae4f745e47b72b7465dc5ba9c9dcfdcfb47d67e2"
             }
           ]
+        },
+        {
+          "at": "2026-11-05T13:22:26Z",
+          "action": "reopen",
+          "from_status": "done",
+          "to_status": "todo",
+          "note": "Git对象读回发现4份Windows证据被自动转换换行；安装及功能验证不变，补充归档属性恢复原始字节并重新核对",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-05T13:22:26Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "仅修复已记录证据的Git换行保存，核对索引原始字节与记录SHA",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-05T13:22:27Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "本地重装与全部实际验证通过；额外修复Git自动换行并核对37份证据原始指纹，原生程序保持已验收版本",
+          "validation": [
+            "继承本轮Windows构建/安装/native6组、Rust657通过和Python188通过17跳过结果；新增Git索引37份记录指纹全部匹配，devlog check与git diff --check通过。修复仅为证据保存属性，无产品更改。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/technical/LOCAL_BUILD.md",
+              "sha256": "dedefdbbad409084b6c670a3a24a2a1b253da289b93f64478a739c4c8e19741b"
+            },
+            {
+              "path": "doc/validation/B06U-T02.md",
+              "sha256": "e569858c6859b60536403f9c93c69445ca6a7eeb0af84081ae132994b3a27025"
+            },
+            {
+              "path": "doc/validation/assets/B06U-T02/desktop-install.json",
+              "sha256": "28d51def4a7ac8dd829e3eaf882eb50033c725e6c0e86a999cf3cad3475185ea"
+            },
+            {
+              "path": "doc/validation/assets/B06U-T02/native-verification.json",
+              "sha256": "224604dbc10fc88d146bd635e0f5ac87b38f1cf540b763b5537ce2a09b2e513a"
+            },
+            {
+              "path": "doc/validation/assets/B06U-T02/git-evidence-readback.json",
+              "sha256": "99de4b74c6897d952bda0ab6c939bbccf6f6eb443345a4d927c0f1d9ee1866b4"
+            },
+            {
+              "path": ".gitattributes",
+              "sha256": "92c2960e9c8d9d72d806f23322bdde179102efc290071bacc7bb5c43af3f73a3"
+            }
+          ]
         }
       ]
     }
