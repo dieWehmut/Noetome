@@ -33,6 +33,11 @@ mod knowledge_coordinate_variants;
 mod knowledge_coordination_model;
 mod knowledge_coordination_v2_model;
 mod knowledge_coordination_v3_model;
+pub mod knowledge_presentation;
+mod knowledge_presentation_input;
+mod knowledge_presentation_model;
+mod knowledge_presentation_plan;
+mod knowledge_presentation_render;
 mod pdf_model;
 pub mod pdf_parse;
 mod pdf_source;
@@ -64,6 +69,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome extract api <项目路径> <import-id> <config.json> <尚不存在的测试输出根>
       noetome extract verify <项目路径> <import-id> <review目录> <尚不存在的测试输出根>
       noetome knowledge coordinate <项目路径> <coordination-case> <尚不存在的测试输出根>
+      noetome knowledge present <项目路径> <coordination-case> <协调输出根> <尚不存在的测试Vault>
       noetome case verify <fixture目录>
       noetome case compile <fixture目录> <尚不存在的测试输出根>
 
@@ -79,6 +85,8 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   extract fake            离线回放并核对选定来源的候选、证据与单请求预算
   extract api             按明确配置与预算发送一次文本API请求并核对候选
   extract verify          离线复核保存候选与原gold的有界来源事实
+  knowledge coordinate    按明确身份、来源背景及证据保留多来源事实和未决关系
+  knowledge present       重验协调来源并主动选择有据比较表或正文，保存未发布预览
   case verify             只读校验明确fixture的来源、IR、计划与独立预期
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
 
@@ -168,6 +176,12 @@ pub enum CliCommand {
     KnowledgeCoordinate {
         project: PathBuf,
         case: PathBuf,
+        output: PathBuf,
+    },
+    KnowledgePresent {
+        project: PathBuf,
+        case: PathBuf,
+        coordinated: PathBuf,
         output: PathBuf,
     },
     ProjectHelp,
@@ -487,23 +501,26 @@ pub fn render(args: &[OsString]) -> Result<String, &'static str> {
     }
 }
 
-pub const KNOWLEDGE_HELP:&str="Noetome 有界多来源知识协调
+pub const KNOWLEDGE_HELP:&str="Noetome 有界多来源知识协调与表达
 
 用法：noetome knowledge coordinate <项目路径> <coordination-case> <尚不存在的测试输出根>
+      noetome knowledge present <项目路径> <coordination-case> <协调输出根> <尚不存在的测试Vault>
 
 只重新核对同项目2至3份成功的单原子来源依据，通过显式组件身份映射保留重复／互补事实和全部出处；严格协调Schema2还保留有来源背景的条件与历史变体。
 未知语义差异保持needs_review；不调用模型或研究服务。知识pending，published=false，scientific_quality=not_run。
-输出必须为已有父目录下的新测试根；以连字符开头的路径在coordinate后加 --，中文和空格路径作为单独参数。
+present：重验严格v1/v2/v3协调输出及完整原始来源，再主动选择比较表或正文，保留原值、单位、条件、例外、版本及来源映射。
+未决冲突或证据不足返回3，保存无成功计划或笔记的失败双报告；成功仅表示未发布的工程预览。
+输出必须为已有父目录下的新测试根；以连字符开头的路径在coordinate或present后加 --，中文和空格路径作为单独参数。
 ";
 fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     if args.is_empty()
         || matches!(args,[h] if h=="--help"||h=="-h")
-        || matches!(args,[v,h] if v=="coordinate"&&(h=="--help"||h=="-h"))
+        || matches!(args,[v,h] if (v=="coordinate"||v=="present")&&(h=="--help"||h=="-h"))
     {
         return Ok(CliCommand::KnowledgeHelp);
     }
     let (v, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
-    if v != "coordinate" {
+    if v != "coordinate" && v != "present" {
         return Err(INVALID_ARGUMENT);
     }
     let (tail, sep) = if tail.first().is_some_and(|v| v == "--") {
@@ -513,14 +530,29 @@ fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     };
     match tail {
         [p, c, o]
-            if [p, c, o].iter().all(|s| {
-                s.to_str()
-                    .is_some_and(|s| !s.is_empty() && (sep || !s.starts_with('-')))
-            }) =>
+            if v == "coordinate"
+                && [p, c, o].iter().all(|s| {
+                    s.to_str()
+                        .is_some_and(|s| !s.is_empty() && (sep || !s.starts_with('-')))
+                }) =>
         {
             Ok(CliCommand::KnowledgeCoordinate {
                 project: p.into(),
                 case: c.into(),
+                output: o.into(),
+            })
+        }
+        [p, c, saved, o]
+            if v == "present"
+                && [p, c, saved, o].iter().all(|s| {
+                    s.to_str()
+                        .is_some_and(|s| !s.is_empty() && (sep || !s.starts_with('-')))
+                }) =>
+        {
+            Ok(CliCommand::KnowledgePresent {
+                project: p.into(),
+                case: c.into(),
+                coordinated: saved.into(),
                 output: o.into(),
             })
         }

@@ -71,7 +71,7 @@ struct HeldFile {
     modified: SystemTime,
     path: PathBuf,
 }
-struct Held {
+pub(crate) struct Held {
     root: PathBuf,
     parent: Directory,
     directory: Directory,
@@ -79,7 +79,7 @@ struct Held {
     inventory: BTreeSet<std::ffi::OsString>,
 }
 impl Held {
-    fn open(path: &Path) -> Result<Self, ProjectError> {
+    pub(crate) fn open(path: &Path) -> Result<Self, ProjectError> {
         let root = project::check_components(path).map_err(|e| err("COORD_INPUT_PATH", 2, e))?;
         let parent = Directory::capture(
             root.parent()
@@ -105,7 +105,7 @@ impl Held {
             .collect::<Result<_, _>>()
             .map_err(|e| err("COORD_INPUT_PATH", 2, e))
     }
-    fn add(&mut self, name: &str, max: u64, c: &Control) -> Result<(), ProjectError> {
+    pub(crate) fn add(&mut self, name: &str, max: u64, c: &Control) -> Result<(), ProjectError> {
         check(c)?;
         if !filename(name) || self.files.contains_key(name) {
             return Err(err(
@@ -147,7 +147,7 @@ impl Held {
         );
         self.verify(c)
     }
-    fn verify(&self, c: &Control) -> Result<(), ProjectError> {
+    pub(crate) fn verify(&self, c: &Control) -> Result<(), ProjectError> {
         check(c)?;
         self.parent
             .verify("COORD_INPUT_CHANGED")
@@ -170,18 +170,21 @@ impl Held {
         }
         Ok(())
     }
-    fn bytes(&self, name: &str) -> Result<&[u8], ProjectError> {
+    pub(crate) fn bytes(&self, name: &str) -> Result<&[u8], ProjectError> {
         self.files
             .get(name)
             .map(|f| f.bytes.as_slice())
             .ok_or_else(|| err("COORD_SCHEMA", 2, "missing held file"))
     }
-    fn exact(&self, names: &[String]) -> Result<(), ProjectError> {
+    pub(crate) fn exact(&self, names: &[String]) -> Result<(), ProjectError> {
         let expected = names.iter().map(std::ffi::OsString::from).collect();
         if self.inventory != expected {
             return Err(err("COORD_SCHEMA", 2, "unexpected case/bundle inventory"));
         }
         Ok(())
+    }
+    pub(crate) fn root(&self) -> &Path {
+        &self.root
     }
 }
 pub(crate) struct CaseInputs {

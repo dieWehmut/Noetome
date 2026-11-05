@@ -161,6 +161,39 @@ impl OutputRoot {
     pub(crate) fn create_coordination(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
         Self::create_owned(path, request_id, Some("knowledge_coordination"))
     }
+    pub(crate) fn create_presentation(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
+        Self::create_owned(path, request_id, Some("knowledge_presentation"))
+    }
+    pub(crate) fn discard_presentation_result(&mut self) -> Result<(), ProjectError> {
+        let names: Vec<String> = self
+            .files
+            .keys()
+            .filter(|name| !name.starts_with('.'))
+            .cloned()
+            .collect();
+        let names = ["presentation.json", "presentation.md"]
+            .into_iter()
+            .map(String::from)
+            .chain(
+                names
+                    .into_iter()
+                    .filter(|name| name != "presentation.json" && name != "presentation.md"),
+            );
+        // Continue proving each captured pathname even if another result changed.
+        // Changed and unknown bytes remain; unchanged success reports can be removed.
+        let mut first_error = None;
+        for name in names {
+            if let Err(error) = self.discard_names_inner(&[name.as_str()], true) {
+                if first_error.is_none() {
+                    first_error = Some(error);
+                }
+            }
+        }
+        match first_error {
+            Some(error) => Err(error),
+            None => Ok(()),
+        }
+    }
     pub(crate) fn discard_coordination_result(&mut self) -> Result<(), ProjectError> {
         self.discard_names_inner(
             &[
@@ -199,8 +232,9 @@ impl OutputRoot {
         };
         let coordination = mode == Some("knowledge_coordination");
         let review = mode == Some("source_review");
-        let mut owner = serde_json::json!({"schema_version":1,"producer":if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
-        if let Some(mode) = mode.filter(|_| !review && !coordination) {
+        let presentation = mode == Some("knowledge_presentation");
+        let mut owner = serde_json::json!({"schema_version":1,"producer":if presentation {"knowledge_presentation"} else if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if presentation {"unpublished_presentation"} else if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
+        if let Some(mode) = mode.filter(|_| !review && !coordination && !presentation) {
             owner["transport_mode"] = serde_json::json!(mode);
         }
         let owner = serde_json::to_vec_pretty(&owner).map_err(|_| changed())?;
@@ -314,4 +348,55 @@ pub(crate) fn inside(path: &Path, root: &Path) -> Result<bool, ProjectError> {
         cursor = parent.parent();
     }
     Ok(false)
+}
+
+#[cfg(all(test, unix))]
+mod presentation_cleanup_tests {
+    use super::*;
+
+    #[test]
+    fn a_changed_plan_preserves_changed_and_unknown_bytes_but_removes_passed_reports() {
+        let root = std::env::temp_dir().join(format!(
+            "noetome-presentation-cleanup-{}",
+            uuid::Uuid::new_v4()
+        ));
+        let mut output =
+            OutputRoot::create_presentation(&root, &uuid::Uuid::new_v4().to_string()).unwrap();
+        output
+            .add(".selection-original.json", b"original selection")
+            .unwrap();
+        output.add("plan.json", b"validated plan").unwrap();
+        output
+            .add("presentation.json", b"{\"status\":\"passed\"}")
+            .unwrap();
+        output.add("presentation.md", b"passed").unwrap();
+        fs::write(root.join("plan.json"), b"changed by another writer").unwrap();
+        fs::write(root.join("human.md"), b"unknown human content").unwrap();
+        assert_eq!(
+            output.discard_presentation_result().unwrap_err().code(),
+            "EXTRACT_OUTPUT_CHANGED"
+        );
+        assert_eq!(
+            fs::read(root.join("plan.json")).unwrap(),
+            b"changed by another writer"
+        );
+        assert_eq!(
+            fs::read(root.join("human.md")).unwrap(),
+            b"unknown human content"
+        );
+        assert_eq!(
+            fs::read(root.join(".selection-original.json")).unwrap(),
+            b"original selection"
+        );
+        assert!(
+            !root.join("presentation.json").exists(),
+            "passed JSON must be removed even when a captured plan changed"
+        );
+        assert!(
+            !root.join("presentation.md").exists(),
+            "passed Markdown must be removed even when a captured plan changed"
+        );
+        drop(output);
+        fs::remove_dir_all(root).unwrap();
+    }
 }
