@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "producer": "independent_process_flow_review",
+  "reviewer": "independent_audit_subagent",
+  "created_utc": "2026-11-05T06:36:52.603287+00:00",
+  "status": "no_new_substantive_product_finding",
+  "findings": [],
+  "independence": {
+    "authored_product_rust": false,
+    "authored_fixture_before_product_and_cli": true,
+    "authored_python_checker": true,
+    "python_checker_needs_separate_peer_review": true,
+    "no_rust_validator_imports": true
+  },
+  "files": {
+    "crates/noetome-cli/src/process_flow.rs": {
+      "sha256": "91f991203ff5c73e58f0ccfc04f9d74523d5376775ceb9e3899f476600256163",
+      "byte_length": 12954
+    },
+    "crates/noetome-cli/src/process_flow_model.rs": {
+      "sha256": "1501e6ffbc9816486ec296c6082eaf3d85f7f124c1d6c8c7d9137c40fc19212f",
+      "byte_length": 5354
+    },
+    "crates/noetome-cli/src/process_flow_plan.rs": {
+      "sha256": "6e6d9a09a8bc5110d8ffb18f05d47555deefbffca19a6b22118180d9b671a3ce",
+      "byte_length": 29965
+    },
+    "crates/noetome-cli/src/process_flow_render.rs": {
+      "sha256": "65f3138ba0d79a62f27695150df3d7b0e057923a5cb6b9a773bb1dc5e4114e3d",
+      "byte_length": 32917
+    },
+    "crates/noetome-cli/src/process_input.rs": {
+      "sha256": "7fa9ab510d3e5e60b20232000266a0105cbbe2c1c7ef35594a48810c6f592653",
+      "byte_length": 10597
+    },
+    "crates/noetome-cli/src/process_model.rs": {
+      "sha256": "9618f777744a2a1d2e6c8204308e9b19626dd11bf8e3ba48b6a99eeee6fd2a28",
+      "byte_length": 7934
+    },
+    "crates/noetome-cli/src/process_parser.rs": {
+      "sha256": "293186a6571abb31cd6cff1b8fe38567aa239633c490e1a910c5c3564d056533",
+      "byte_length": 24977
+    },
+    "crates/noetome-cli/src/process_review.rs": {
+      "sha256": "5fa7b6407edc71f93553e6d7f105aa30544fb983af554d1c7707bfce0e89a6f5",
+      "byte_length": 6918
+    },
+    "crates/noetome-cli/src/lib.rs": {
+      "sha256": "089f2d96a2fac39b04dea57ec8e971a577091cddd86608e2147491f5927e119b",
+      "byte_length": 26004
+    },
+    "crates/noetome-cli/src/main.rs": {
+      "sha256": "86f1ab82d40e98215e063c9366674fc1c73afaa7d2c84f3f5d454965317fd9dc",
+      "byte_length": 11457
+    },
+    "crates/noetome-cli/src/extraction_output.rs": {
+      "sha256": "84330a9318dc066b085c11f6c841dc2853f35a843c04820decc1ff1e5a1b2129",
+      "byte_length": 16464
+    },
+    "crates/noetome-cli/src/sidecar_model.rs": {
+      "sha256": "40c55da414d5a15fedac46bd03d7ff3920d5cfaba24e2216b7fd9415bfdf78a0",
+      "byte_length": 4561
+    },
+    "crates/noetome-cli/src/knowledge_coordinate_input.rs": {
+      "sha256": "70ece9e4fb3d4ace371adb1539822d6dbd23f3837df5691cd1e3087c19d9ea1d",
+      "byte_length": 23265
+    },
+    "crates/noetome-cli/src/extraction_source.rs": {
+      "sha256": "0c4efcbeee67284aa8c73484de7268b0314f8c57c25b543993ca64d3ee6ecab8",
+      "byte_length": 29101
+    },
+    "crates/noetome-cli/tests/process_flow.rs": {
+      "sha256": "b7368266ffb76c057fd7a4303a31d719331aa64ce57f52e738059c9f32615257",
+      "byte_length": 10811
+    },
+    "crates/noetome-cli/tests/support/process_guard_tests.rs": {
+      "sha256": "2bec6a1cd82e30e7f58c9f3a66ac12bc459bf6952c6bfd48b8dd2c02b50ae07b",
+      "byte_length": 9220
+    },
+    "doc/technical/PROCESS_FLOW_CONTRACT.md": {
+      "sha256": "2d99ed629410998c3706a113b71670002fd3f94e8b351bb8bdc7d2a79bda728c",
+      "byte_length": 7658
+    },
+    "scripts/verify_process_flow.py": {
+      "sha256": "77c4a482b0d282633c73539213f1be1851266a24eb0b59107be595ffa15f7e41",
+      "byte_length": 64218
+    },
+    "tests/test_verify_process_flow.py": {
+      "sha256": "1aed94ac0c5a089a4e1a8074bfcc5d9a7dbe543d16d4887d5e1cb2d817aa8c86",
+      "byte_length": 12190
+    }
+  },
+  "read_scope": [
+    "All new process_model, process_parser, process_input, process_review, process_flow_model, process_flow_plan, process_flow_render, process_flow production logic; focused Rust unit/integration/guard test review.",
+    "CLI knowledge command arity and optional -- path delimiter; main dispatch and exit code behavior.",
+    "OutputRoot new owner modes and discard_process_result change; Artifact identity/byte checks and captured-result cleanup call chain.",
+    "Held exact inventory, file holds and verification; SourceSession text selection and real resource binding as invoked by new inputs. Existing lower platform implementation was not exhaustively re-audited."
+  ],
+  "verified_properties": [
+    "Source parser consumes full JSON-delimited Chinese lines and has no gold input; graph semantics cannot be hand-supplied by a candidate renderer.",
+    "Canonical IDs/evidence and complete source-vs-gold comparison; unmatched statements prevent IR while observation totals retain consumed source declarations.",
+    "SavedReview reconstructs same-owner bytes from currently held actual SourceSession and case, compares exact whole inventory before flow use.",
+    "Fixed namespace, required nullable fields, unknown-field rejection, canonical case UUIDs, gold hash; no schema cross-use with prior coordination formats.",
+    "Decision criterion / true-false branch, correlation / unknown direction, full-graph cycle, reachability and declared terminal checks precede compatibility fallback.",
+    "causes does not gain plus sign; promotes and inhibits retain signs; branch displays same exact source decision criterion.",
+    "Every process/step/relation full text retains original fields and empty-array not-listed meaning. LF/TAB and other conservatively unverified whitespace use fenced ordered prose.",
+    "Finite graph encoding and independent Rust read-back do not call renderer for expected output; complete node/edge lines, text blocks and links are mapped and observed intervals compared.",
+    "New outputs created only after holds/checks; late input/output changes remove unchanged captured success results while preserving altered/unknown bytes."
+  ],
+  "actual_validation": {
+    "first_real_audit": {
+      "root": "/home/lyinn/project/Noetome/target/process-flow-independent-0ee774383ca74243a6eee6a384d617a5",
+      "status": "passed",
+      "ordinary_cli_commands": 73,
+      "author_cases": 16,
+      "scenarios": 41,
+      "archive": "first-audit-originals.zip",
+      "archive_members": 1167,
+      "all_members_crc_sha_original_readback": true
+    },
+    "first_audit_coverage": {
+      "ordinary_case_chains": 16,
+      "saved_review_and_synchronized_source_gold_mutations_rejected_by_checker_and_real_cli": 7,
+      "final_output_plan_markdown_mapping_hash_mutations_rejected_by_checker": 16,
+      "existing_output_roots_rejected_readonly_by_real_cli": 2
+    },
+    "latest_targeted_python": {
+      "command": "python -m unittest discover -s tests -p test_verify_process_flow.py -v",
+      "tests": 16,
+      "exit_code": 0,
+      "receipt": "targeted-python.receipt.json",
+      "includes_latest_conservative_whitespace_rule": true
+    },
+    "large_audit_rerun_after_whitespace_change": "not_run_by_this_reviewer; root requested final native candidate gate to own second round"
+  },
+  "limitations": [
+    "First audit pins pre-final conservative-whitespace planner text. Final candidate native full audit and full workspace regressions remain separate root-run evidence.",
+    "This reviewer did not run installed Obsidian or native Windows/NTFS. Actual app rendering and platform claims require the other independently recorded runs.",
+    "Self-authored bounded process grammar and frozen gold test engineering fidelity, not arbitrary-language extraction or scientific truth; scientific_quality remains not_run.",
+    "Python verifier deliberately targets the frozen 16-case accepted/needs-review input domain and output-forgery matrix. It rejects malformed structural input, but does not independently report every possible invalid-source observation denominator.",
+    "No source or ledger was changed as part of this read-only product review; checker changes are separately pinned and need peer review."
+  ]
+}

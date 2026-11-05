@@ -12,6 +12,12 @@ object!(Fingerprint {
     sha256: String,
     byte_length: u64
 });
+impl PartialEq for Fingerprint {
+    fn eq(&self, other: &Self) -> bool {
+        self.sha256 == other.sha256 && self.byte_length == other.byte_length
+    }
+}
+impl Eq for Fingerprint {}
 object!(Input {
     path: String,
     access: InputAccess,

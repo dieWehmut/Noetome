@@ -44,6 +44,14 @@ mod pdf_source;
 mod pdf_source_model;
 mod pdf_validate;
 mod pdf_workspace;
+pub mod process_flow;
+mod process_flow_model;
+mod process_flow_plan;
+mod process_flow_render;
+mod process_input;
+mod process_model;
+mod process_parser;
+pub mod process_review;
 pub mod project;
 pub mod sidecar_model;
 pub mod sidecar_process;
@@ -173,6 +181,18 @@ fake以UTF8字节计量，价格及真实模型用量未知，网络和付费调
 pub enum CliCommand {
     Help,
     KnowledgeHelp,
+    ProcessReview {
+        project: PathBuf,
+        case: PathBuf,
+        output: PathBuf,
+    },
+    ProcessFlow {
+        project: PathBuf,
+        case: PathBuf,
+        reviewed: PathBuf,
+        profile: PathBuf,
+        output: PathBuf,
+    },
     KnowledgeCoordinate {
         project: PathBuf,
         case: PathBuf,
@@ -505,22 +525,27 @@ pub const KNOWLEDGE_HELP:&str="Noetome 有界多来源知识协调与表达
 
 用法：noetome knowledge coordinate <项目路径> <coordination-case> <尚不存在的测试输出根>
       noetome knowledge present <项目路径> <coordination-case> <协调输出根> <尚不存在的测试Vault>
+      noetome knowledge process-review <项目路径> <process-case> <尚不存在的review根>
+      noetome knowledge flow <项目路径> <process-case> <review根> <profile.json> <尚不存在的测试Vault>
 
 只重新核对同项目2至3份成功的单原子来源依据，通过显式组件身份映射保留重复／互补事实和全部出处；严格协调Schema2还保留有来源背景的条件与历史变体。
 未知语义差异保持needs_review；不调用模型或研究服务。知识pending，published=false，scientific_quality=not_run。
 present：重验严格v1/v2/v3协调输出及完整原始来源，再主动选择比较表或正文，保留原值、单位、条件、例外、版本及来源映射。
+process-review：从明确选取的实际文字完整解析有界步骤/关系语法，与独立gold核对；未解析语句无成功过程IR。
+flow：从实际来源重建保存的过程核对结果，明确方向、分支、正负作用并保留全部条件与例外；相关性、歧义、循环和缺关系阻断。
+已测目标能力支持时生成Mermaid，能力未核验或标签换行不能保真时使用完整有据文字回退；成功仍仅为未发布工程预览。
 未决冲突或证据不足返回3，保存无成功计划或笔记的失败双报告；成功仅表示未发布的工程预览。
-输出必须为已有父目录下的新测试根；以连字符开头的路径在coordinate或present后加 --，中文和空格路径作为单独参数。
+输出必须为已有父目录下的新测试根；以连字符开头的路径在动词后加 --，中文和空格路径作为单独参数。
 ";
 fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     if args.is_empty()
         || matches!(args,[h] if h=="--help"||h=="-h")
-        || matches!(args,[v,h] if (v=="coordinate"||v=="present")&&(h=="--help"||h=="-h"))
+        || matches!(args,[v,h] if (v=="coordinate"||v=="present"||v=="process-review"||v=="flow")&&(h=="--help"||h=="-h"))
     {
         return Ok(CliCommand::KnowledgeHelp);
     }
     let (v, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
-    if v != "coordinate" && v != "present" {
+    if v != "coordinate" && v != "present" && v != "process-review" && v != "flow" {
         return Err(INVALID_ARGUMENT);
     }
     let (tail, sep) = if tail.first().is_some_and(|v| v == "--") {
@@ -529,6 +554,34 @@ fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         (tail, false)
     };
     match tail {
+        [p, c, o]
+            if v == "process-review"
+                && [p, c, o].iter().all(|s| {
+                    s.to_str()
+                        .is_some_and(|s| !s.is_empty() && (sep || !s.starts_with('-')))
+                }) =>
+        {
+            Ok(CliCommand::ProcessReview {
+                project: p.into(),
+                case: c.into(),
+                output: o.into(),
+            })
+        }
+        [p, c, reviewed, profile, o]
+            if v == "flow"
+                && [p, c, reviewed, profile, o].iter().all(|s| {
+                    s.to_str()
+                        .is_some_and(|s| !s.is_empty() && (sep || !s.starts_with('-')))
+                }) =>
+        {
+            Ok(CliCommand::ProcessFlow {
+                project: p.into(),
+                case: c.into(),
+                reviewed: reviewed.into(),
+                profile: profile.into(),
+                output: o.into(),
+            })
+        }
         [p, c, o]
             if v == "coordinate"
                 && [p, c, o].iter().all(|s| {

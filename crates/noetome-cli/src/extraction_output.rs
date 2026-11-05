@@ -164,6 +164,44 @@ impl OutputRoot {
     pub(crate) fn create_presentation(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
         Self::create_owned(path, request_id, Some("knowledge_presentation"))
     }
+    pub(crate) fn create_process_review(
+        path: &Path,
+        request_id: &str,
+    ) -> Result<Self, ProjectError> {
+        Self::create_owned(path, request_id, Some("process_source_review"))
+    }
+    pub(crate) fn create_flow(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
+        Self::create_owned(path, request_id, Some("knowledge_flow"))
+    }
+    pub(crate) fn discard_process_result(&mut self) -> Result<(), ProjectError> {
+        let mut names: Vec<String> = self
+            .files
+            .keys()
+            .filter(|n| !n.starts_with('.'))
+            .cloned()
+            .collect();
+        names.sort_by_key(|n| {
+            (
+                !matches!(
+                    n.as_str(),
+                    "review.json" | "review.md" | "flow.json" | "flow.md"
+                ),
+                n.clone(),
+            )
+        });
+        let mut first_error = None;
+        for name in names {
+            if let Err(error) = self.discard_names_inner(&[name.as_str()], true) {
+                if first_error.is_none() {
+                    first_error = Some(error);
+                }
+            }
+        }
+        match first_error {
+            Some(error) => Err(error),
+            None => Ok(()),
+        }
+    }
     pub(crate) fn discard_presentation_result(&mut self) -> Result<(), ProjectError> {
         let names: Vec<String> = self
             .files
@@ -233,8 +271,12 @@ impl OutputRoot {
         let coordination = mode == Some("knowledge_coordination");
         let review = mode == Some("source_review");
         let presentation = mode == Some("knowledge_presentation");
-        let mut owner = serde_json::json!({"schema_version":1,"producer":if presentation {"knowledge_presentation"} else if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if presentation {"unpublished_presentation"} else if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
-        if let Some(mode) = mode.filter(|_| !review && !coordination && !presentation) {
+        let process = mode == Some("process_source_review");
+        let flow = mode == Some("knowledge_flow");
+        let mut owner = serde_json::json!({"schema_version":1,"producer":if flow {"knowledge_flow"} else if process {"process_source_review"} else if presentation {"knowledge_presentation"} else if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if flow {"unpublished_flow"} else if process {"unpublished_process_source_review"} else if presentation {"unpublished_presentation"} else if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
+        if let Some(mode) =
+            mode.filter(|_| !review && !coordination && !presentation && !process && !flow)
+        {
             owner["transport_mode"] = serde_json::json!(mode);
         }
         let owner = serde_json::to_vec_pretty(&owner).map_err(|_| changed())?;

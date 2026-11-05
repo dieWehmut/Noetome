@@ -1,0 +1,78 @@
+   Compiling noetome-cli v0.1.0 (/home/lyinn/project/Noetome/crates/noetome-cli)
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib) generated 4 warnings (run `cargo fix --lib -p noetome-cli` to apply 3 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.16s
+     Running tests/process_flow.rs (target/debug/deps/process_flow-cc9701023e5015ed)
+
+running 6 tests
+test command_parsing_keeps_os_paths_and_requires_exact_new_entrypoint_arity ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-0b17095c-0230-4b54-834d-0225d06fcdbd author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-4a4bf9f2-8eb6-470e-a702-1fb2c384734d author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-ceecbe2d-b53a-4271-ac74-dd7a5522cf4d author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-3c557f9f-08b5-4477-b52e-c4a9aa3f6c2c author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-20543293-b0f6-4e1b-913f-1917be882505 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-40497071-e9ad-4f6b-9293-576aaf577ede author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-5559c075-3851-4bf0-a4b5-7d4bbf5f2573 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-cf8aacc2-bda6-4a2c-90f8-625b6e13fc90 author=linear
+test hardlinked_profile_and_linked_case_ancestors_are_rejected ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-43424389-a6c9-4703-b934-096da51eb0c1 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-2576a1bf-a616-40e5-9e08-37e560758a55 author=branch
+test new_roots_collisions_and_profile_reuse_are_checked_without_writes ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-20f8281a-2cf8-4568-b60e-38bad1008009 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-0aa9e45a-87c3-4a23-88c5-1e904a92eb92 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-451d74d4-fa10-4efa-a9a6-58899a375722 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-8a218f10-0e10-4b52-9afa-64054286fd15 author=causes
+test strict_case_gold_and_profile_fields_cannot_be_relaxed ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-46c9e255-6926-425b-b9d1-c3605a1879db author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-08cd0875-f74d-42f0-b2e5-646dbc051378 author=promotes
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-d4c194b4-5a5b-448e-aaa9-b53f2c0666c8 author=linear
+test changed_saved_review_and_synchronized_gold_are_rebuilt_against_actual_source ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-2d7c93ef-4ff6-4d3d-8e31-ad66be651697 author=inhibits
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-29c3f642-3697-4d3d-b43a-d0608636e30d author=correlation
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-84f202fd-b8ee-48b0-8c82-6a9655302138 author=missing_branch
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-ca03ab04-6b4e-4b8b-9786-77f1c6a3f30a author=cycle
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-f94cd937-f633-4153-9e6b-44cd81b036cd author=direction_unknown
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-b584f7f1-5ee5-468b-a1d6-094af168a4f1 author=missing_connection
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-d22b4030-e715-408b-b5b1-a070e25bbbbb author=complex_labels
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-86515d69-0a31-4748-ae2d-0dc8001d18fc author=multiline_labels
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-cf6411ae-f775-4b4c-a4c3-b593850e5c21 author=compatibility_fallback
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-4454723d-cd3e-4356-be85-0b8f730f2a6f author=unknown_criterion
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-e2fbd761-4015-43b2-85ea-46f149428036 author=unparsed_tail
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-a9b6dab2-c5d7-478a-8ae6-ef72a0ec080b author=negated_relation
+test ordinary_cli_covers_all_frozen_sources_graphs_fallbacks_and_semantic_blocks ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.27s
+

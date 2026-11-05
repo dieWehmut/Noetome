@@ -1,0 +1,76 @@
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib) generated 4 warnings (run `cargo fix --lib -p noetome-cli` to apply 3 suggestions)
+   Compiling noetome-cli v0.1.0 (/home/lyinn/project/Noetome/crates/noetome-cli)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.71s
+     Running tests/process_flow.rs (target/debug/deps/process_flow-cc9701023e5015ed)
+
+running 6 tests
+test command_parsing_keeps_os_paths_and_requires_exact_new_entrypoint_arity ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-5d2749e1-832e-4e7f-9cd5-0b196d1267af author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-736e756c-b70d-472a-8ad2-d145329b1497 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-3ea47ba7-3b63-48fe-a124-11211b83d1e1 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-bfbed2d2-2efa-450d-aa0a-d78bf7a2dbf9 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-d684fbdd-0b7b-43e7-8de0-0847a88916bb author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-f964cb49-ef18-41df-a2eb-a71037d40161 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-cd1675fb-ed8c-4714-a990-928673cb6c8a author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-37710300-8fdc-4646-9d31-205466f69154 author=linear
+test hardlinked_profile_and_linked_case_ancestors_are_rejected ... ok
+
+thread 'ordinary_cli_covers_all_frozen_sources_graphs_fallbacks_and_semantic_blocks' (289840) panicked at crates/noetome-cli/tests/process_flow.rs:89:9:
+assertion `left == right` failed: linear: PROJECT_IO_ERROR：无法访问项目路径 /home/lyinn/project/Noetome/target/compiler-temp/process-3ea47ba7-3b63-48fe-a124-11211b83d1e1/test-Vault：No such file or directory (os error 2)
+
+  left: Some(3)
+ right: Some(0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test ordinary_cli_covers_all_frozen_sources_graphs_fallbacks_and_semantic_blocks ... FAILED
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-582dc227-b850-4222-b1b0-9274266889cb author=linear
+test new_roots_collisions_and_profile_reuse_are_checked_without_writes ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-ae263b8e-215b-4b03-8bbb-001dc00be60b author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-d1aa8539-2c6a-4a84-a394-ac30ff728663 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-f86baf20-3bf6-4815-8740-cddd28c35409 author=linear
+test strict_case_gold_and_profile_fields_cannot_be_relaxed ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-00cd1616-1a07-4e28-8079-1d4994ed45a2 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-25b3051d-dc5e-4d2f-bc66-276dae5e30dc author=linear
+test changed_saved_review_and_synchronized_gold_are_rebuilt_against_actual_source ... ok
+
+failures:
+
+failures:
+    ordinary_cli_covers_all_frozen_sources_graphs_fallbacks_and_semantic_blocks
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+
+error: test failed, to rerun pass `-p noetome-cli --test process_flow`

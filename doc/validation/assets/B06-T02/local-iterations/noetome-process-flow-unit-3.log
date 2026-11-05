@@ -1,0 +1,104 @@
+   Compiling noetome-cli v0.1.0 (/home/lyinn/project/Noetome/crates/noetome-cli)
+warning: unused imports: `sync::atomic::Ordering`, `thread`, and `time::Duration`
+ --> crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:5:30
+  |
+5 | use std::{fs, path::PathBuf, sync::atomic::Ordering, thread, time::Duration};
+  |                              ^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^  ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `snapshot`
+ --> crates/noetome-cli/src/../tests/support/process_guard_tests.rs:2:54
+  |
+2 | use super::test_case::{ProcessCase, assert_snapshot, snapshot, write};
+  |                                                      ^^^^^^^^
+
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `std::process::Command`
+ --> crates/noetome-cli/src/../tests/support/sidecar_tests.rs:2:5
+  |
+2 | use std::process::Command;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `sync::atomic::Ordering`
+ --> crates/noetome-cli/src/../tests/support/sidecar_tests.rs:5:5
+  |
+5 |     sync::atomic::Ordering,
+  |     ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib test) generated 8 warnings (run `cargo fix --lib -p noetome-cli --tests` to apply 7 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.11s
+     Running unittests src/lib.rs (target/debug/deps/noetome_cli-b992511cfbc2924b)
+
+running 21 tests
+test process_flow_plan::tests::detached_cycle_is_diagnosed_before_secondary_disconnection ... ok
+test process_flow_plan::tests::goals_must_equal_actual_terminal_set ... ok
+test process_flow_plan::tests::body_only_whitespace_does_not_disable_an_otherwise_verified_diagram ... ok
+test process_flow_plan::tests::multiline_labels_fall_back_without_losing_characters_or_semantics ... ok
+test process_flow_plan::tests::profile_claim_cannot_promote_an_unmeasured_target ... ok
+test process_flow_plan::tests::frozen_semantic_cases_have_their_primary_issue ... ok
+test process_flow_plan::tests::strict_profile_rejects_missing_extra_and_codec_fields ... ok
+test process_flow_render::tests::body_fence_delimiters_and_trailing_whitespace_preserve_literal_text ... ok
+test process_flow_render::tests::punctuation_codec_is_one_pass_and_rejects_raw_syntax ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-2f2e5b9d-ad19-4cb8-b649-3138e217ebab author=linear
+test process_flow_render::tests::missing_nullable_fields_do_not_deserialize_as_implicit_null ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-455b5d08-3abc-4252-8d06-fc0af86d0ffe author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-565f2982-d560-4880-aeb1-1da6ac8b7106 author=linear
+test process_flow_render::tests::reversed_arrow_rejected_even_when_fingerprint_is_rewritten ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-b72a0094-04c8-45d6-8cfc-f24e6223d1ca author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-46575f28-e4a8-4511-8bbd-d56d5a8c4d52 author=linear
+test process_flow_render::tests::extra_mermaid_instruction_and_broken_link_are_rejected ... ok
+test process_flow_render::tests::synchronized_mapping_and_plan_forgery_rejected_against_document ... ok
+test process_flow_plan::tests::label_and_criterion_whitespace_have_a_conservative_display_boundary ... ok
+test process_flow_render::tests::negative_sign_branch_criterion_and_exception_cannot_disappear ... ok
+test process_flow_render::tests::every_frozen_success_renders_and_independently_reads_back ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-97dbffc9-4f2a-458a-92a0-25780af6b888 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-3131d138-3a96-44e2-8dce-093f5195e93f author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-e83cd663-ef82-484a-9fdb-7b670d1424a2 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-3ffecf5c-6703-4ff0-8b22-9d5079073b1b author=linear
+test process_flow::guard_tests::late_output_hardlink_does_not_delete_external_alias_bytes ... ok
+test process_flow::guard_tests::changed_generated_note_is_preserved_but_unchanged_success_report_is_removed ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-ad344b3b-79c6-4f14-829e-824cfd6a536f author=linear
+test process_flow::guard_tests::changed_profile_is_detected_or_denied_while_held ... ok
+test process_flow::guard_tests::unknown_output_addition_survives_and_captured_generated_results_are_removed ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-dd2edb1b-e652-49e9-88c3-9e24517375f0 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-35153300-eb91-4e6b-916a-e1756d7c0e9d author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-323f60c8-5dd6-4572-b5a1-9c45bb965bfb author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-6d502d18-0e65-47f4-8f54-2c475f265cab author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-37a78593-0c0b-4ba8-b806-192bb28a459d author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-a3d2a27e-01cd-429c-9787-82ca1e853bac author=linear
+test process_flow::guard_tests::input_inventory_changes_before_output_and_after_save_never_keep_success_results ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 376 filtered out; finished in 1.16s
+

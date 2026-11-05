@@ -1,0 +1,72 @@
+warning: unused imports: `sync::atomic::Ordering`, `thread`, and `time::Duration`
+ --> crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:5:30
+  |
+5 | use std::{fs, path::PathBuf, sync::atomic::Ordering, thread, time::Duration};
+  |                              ^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^  ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `snapshot`
+ --> crates/noetome-cli/src/../tests/support/process_guard_tests.rs:2:54
+  |
+2 | use super::test_case::{ProcessCase, assert_snapshot, snapshot, write};
+  |                                                      ^^^^^^^^
+
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `std::process::Command`
+ --> crates/noetome-cli/src/../tests/support/sidecar_tests.rs:2:5
+  |
+2 | use std::process::Command;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `sync::atomic::Ordering`
+ --> crates/noetome-cli/src/../tests/support/sidecar_tests.rs:5:5
+  |
+5 |     sync::atomic::Ordering,
+  |     ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib test) generated 8 warnings (run `cargo fix --lib -p noetome-cli --tests` to apply 7 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.10s
+     Running unittests src/lib.rs (target/debug/deps/noetome_cli-b992511cfbc2924b)
+
+running 6 tests
+test process_parser::tests::known_but_invalid_structure_cannot_create_a_document ... ok
+test process_parser::tests::complete_consumption_rejects_unknown_fields_tails_and_physical_blank_lines ... ok
+test process_parser::tests::json_tokens_preserve_quoted_delimiters_and_do_not_infer_relations ... ok
+test process_parser::tests::limits_and_empty_arrays_are_explicit_and_normalization_preserves_author_order ... ok
+test process_parser::tests::document_validation_rejects_counterfeit_evidence_and_type_fields ... ok
+test process_parser::tests::frozen_authors_match_all_parsed_fields_and_real_utf8_ranges ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 389 filtered out; finished in 0.01s
+

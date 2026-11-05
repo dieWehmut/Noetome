@@ -1,0 +1,22 @@
+ssssssssssssssss............s................................E....................................................................................................................
+======================================================================
+ERROR: setUpClass (test_knowledge_conflicts_verifier.ConflictsVerifierTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_knowledge_conflicts_verifier.py", line 33, in setUpClass
+    cls.audit.call(name, ["knowledge", "coordinate", "--", project, case, output],
+  File "/home/lyinn/project/Noetome/scripts/knowledge_conflicts_audit.py", line 116, in call
+    exact(receipt["cli_after"], before, "per-command CLI unchanged")
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 66, in exact
+    exact(actual[key], expected[key], label + "/" + key)
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_coordination.py", line 72, in exact
+    assert actual == expected, label + ": value"
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: per-command CLI unchanged/sha256: value
+
+----------------------------------------------------------------------
+Ran 177 tests in 65.915s
+
+FAILED (errors=1, skipped=17)
+Retained actual v2 test root: /home/lyinn/project/Noetome/target/python-variants-9b21cc7f2f9d44aea705bbef76bff4e0
+Retained multiline presentation verifier root: /home/lyinn/project/Noetome/target/presentation-display-python-14d3379bc4d54cab9f88ac79a1caa144

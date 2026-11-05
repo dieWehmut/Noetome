@@ -21,6 +21,40 @@ fn main() -> ExitCode {
     let mut result_code = 0;
     let output = match command {
         CliCommand::KnowledgeHelp => noetome_cli::KNOWLEDGE_HELP.to_owned(),
+        CliCommand::ProcessReview {
+            project,
+            case,
+            output,
+        } => match noetome_cli::process_review::run(&project, &case, &output) {
+            Ok(output) => {
+                if output.failed {
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
+        CliCommand::ProcessFlow {
+            project,
+            case,
+            reviewed,
+            profile,
+            output,
+        } => match noetome_cli::process_flow::run(&project, &case, &reviewed, &profile, &output) {
+            Ok(output) => {
+                if output.failed {
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
         CliCommand::KnowledgePresent {
             project,
             case,

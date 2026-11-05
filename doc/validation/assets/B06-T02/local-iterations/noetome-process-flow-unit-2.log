@@ -1,0 +1,102 @@
+   Compiling noetome-cli v0.1.0 (/home/lyinn/project/Noetome/crates/noetome-cli)
+warning: unused imports: `sync::atomic::Ordering`, `thread`, and `time::Duration`
+ --> crates/noetome-cli/src/../tests/support/pdf_parse_tests.rs:5:30
+  |
+5 | use std::{fs, path::PathBuf, sync::atomic::Ordering, thread, time::Duration};
+  |                              ^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^  ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `snapshot`
+ --> crates/noetome-cli/src/../tests/support/process_guard_tests.rs:2:54
+  |
+2 | use super::test_case::{ProcessCase, assert_snapshot, snapshot, write};
+  |                                                      ^^^^^^^^
+
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `std::process::Command`
+ --> crates/noetome-cli/src/../tests/support/sidecar_tests.rs:2:5
+  |
+2 | use std::process::Command;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `sync::atomic::Ordering`
+ --> crates/noetome-cli/src/../tests/support/sidecar_tests.rs:5:5
+  |
+5 |     sync::atomic::Ordering,
+  |     ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-cli` (lib test) generated 8 warnings (run `cargo fix --lib -p noetome-cli --tests` to apply 7 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.02s
+     Running unittests src/lib.rs (target/debug/deps/noetome_cli-b992511cfbc2924b)
+
+running 19 tests
+test process_flow_plan::tests::detached_cycle_is_diagnosed_before_secondary_disconnection ... ok
+test process_flow_plan::tests::goals_must_equal_actual_terminal_set ... ok
+test process_flow_plan::tests::strict_profile_rejects_missing_extra_and_codec_fields ... ok
+test process_flow_plan::tests::multiline_labels_fall_back_without_losing_characters_or_semantics ... ok
+test process_flow_plan::tests::profile_claim_cannot_promote_an_unmeasured_target ... ok
+test process_flow_plan::tests::frozen_semantic_cases_have_their_primary_issue ... ok
+test process_flow_render::tests::punctuation_codec_is_one_pass_and_rejects_raw_syntax ... ok
+test process_flow_render::tests::missing_nullable_fields_do_not_deserialize_as_implicit_null ... ok
+test process_flow_render::tests::body_fence_delimiters_and_trailing_whitespace_preserve_literal_text ... ok
+test process_flow_render::tests::reversed_arrow_rejected_even_when_fingerprint_is_rewritten ... ok
+test process_flow_render::tests::extra_mermaid_instruction_and_broken_link_are_rejected ... ok
+test process_flow_render::tests::synchronized_mapping_and_plan_forgery_rejected_against_document ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-98d479e7-1dfc-47ca-9bd4-b65bba866550 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-784ed18a-0884-45ac-932d-704e7abdf057 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-9528f0d4-142c-49c5-a642-1893dcee74c8 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-2e7e0422-7933-4da4-a61a-90fb89a47300 author=linear
+test process_flow_render::tests::negative_sign_branch_criterion_and_exception_cannot_disappear ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-a8288ce8-a2ab-4a99-9f62-604a3050848c author=linear
+test process_flow_render::tests::every_frozen_success_renders_and_independently_reads_back ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-ef3811d1-daf8-4bcc-b97b-4cd3c30788b7 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-f83ab287-a1a4-405e-9c6e-f83a82469b5a author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-2fe093f2-715d-4671-b54b-d1b61172a2a8 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-e3744b63-118a-48d5-a49e-217634f26c2c author=linear
+test process_flow::guard_tests::late_output_hardlink_does_not_delete_external_alias_bytes ... ok
+test process_flow::guard_tests::changed_generated_note_is_preserved_but_unchanged_success_report_is_removed ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-65985203-a5f7-4ace-b298-e66ee61c3879 author=linear
+test process_flow::guard_tests::unknown_output_addition_survives_and_captured_generated_results_are_removed ... ok
+test process_flow::guard_tests::changed_profile_is_detected_or_denied_while_held ... ok
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-78ab58c6-af2b-46ce-834c-5f4eb6c15faf author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-dbe6ec0e-a34b-47e3-91e4-b03ce5fcc71b author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-7b4521e8-4e32-4d2b-af3a-f5ebc23ad0bf author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-deea68b5-e07b-4d98-935b-50e7d892b50f author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-393e3d51-d401-4fb6-8b6f-7c93084228e7 author=linear
+process_case=/home/lyinn/project/Noetome/target/compiler-temp/process-cff7150c-d02f-4430-976a-c3f59ea88247 author=linear
+test process_flow::guard_tests::input_inventory_changes_before_output_and_after_save_never_keep_success_results ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 376 filtered out; finished in 1.09s
+
