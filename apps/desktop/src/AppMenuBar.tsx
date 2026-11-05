@@ -19,6 +19,7 @@ interface AppMenuBarProps {
   canGoBack: boolean;
   canGoForward: boolean;
   sidebarVisible: boolean;
+  sidebarDisabled?: boolean;
   onBack: () => void;
   onForward: () => void;
   onToggleSidebar: () => void;
@@ -143,7 +144,7 @@ export default function AppMenuBar(props: AppMenuBarProps) {
       <div className="app-navigation" aria-label="页面导航">
         <button className="app-navigation-button" aria-label="后退" title="后退" disabled={!props.canGoBack} onClick={props.onBack}><NavigationIcon name="back" /></button>
         <button className="app-navigation-button" aria-label="前进" title="前进" disabled={!props.canGoForward} onClick={props.onForward}><NavigationIcon name="forward" /></button>
-        <button className="app-navigation-button" aria-label="切换侧栏" title="切换侧栏" aria-controls="app-sidebar" aria-expanded={props.sidebarVisible} onClick={props.onToggleSidebar}><NavigationIcon name="sidebar" /></button>
+        <button className="app-navigation-button" aria-label="切换侧栏" title="切换侧栏" disabled={props.sidebarDisabled} aria-controls="app-sidebar" aria-expanded={props.sidebarVisible} onClick={props.onToggleSidebar}><NavigationIcon name="sidebar" /></button>
       </div>
       <div className="app-menubar" role="menubar" aria-label="应用菜单" ref={menubarRef}>
         {menus.map((menu, index) => (

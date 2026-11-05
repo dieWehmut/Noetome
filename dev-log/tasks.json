@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B06",
+  "current_batch": "B06R",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -78,6 +78,20 @@
       "from_batch": "B05R",
       "to_batch": "B06",
       "note": "B05三项按真实Windows完整回归、独立核对与审查验收，收束043ae8c已正常推送并核对远端；只细化B06三张todo卡：主动比较表、有据流程图、TeX公式保真/原区域回退。一般图像与扫描等剩余视觉目标保留，本次切批次不start产品任务。"
+    },
+    {
+      "at": "2026-11-05T11:11:56Z",
+      "action": "batch",
+      "from_batch": "B06",
+      "to_batch": "B06U",
+      "note": "用户追加设置页隐藏侧栏，优先处理独立UI任务；公式任务保留于B06R"
+    },
+    {
+      "at": "2026-11-05T11:19:14Z",
+      "action": "batch",
+      "from_batch": "B06U",
+      "to_batch": "B06R",
+      "note": "设置侧栏UI任务已浏览器验收；恢复公式任务入口，本轮不启动"
     }
   ],
   "tasks": [
@@ -1927,7 +1941,7 @@
     {
       "id": "B06-T03",
       "title": "保真输出原始TeX及公式原图回退",
-      "batch": "B06",
+      "batch": "B06R",
       "status": "todo",
       "depends_on": [
         "B06-T02"
@@ -1947,6 +1961,59 @@
         "记录版本的干净Obsidian实际验证MathJax、公式原图/本地附件及回退，保存语义对照与真实渲染原件；完整Rust/Python、表格/流程图回归和独立审查通过后complete、提交推送。扫描公式重建、完整图像知识抽取/重绘与发布兼容矩阵仍按剩余视觉目标滚动验收，不能据本项直接宣布整个视觉阶段完成。"
       ],
       "history": []
+    },
+    {
+      "id": "B06U-T01",
+      "title": "设置页面隐藏主导航侧栏",
+      "batch": "B06U",
+      "status": "done",
+      "depends_on": [
+        "B06-T02"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "设置三个分类隐藏主侧栏并释放空间，快捷图标栏保留；返回恢复原展开选择。",
+        "前端类型及构建、浏览器交互、Python和日志检查通过；记录未运行的原生安装验证。"
+      ],
+      "history": [
+        {
+          "at": "2026-11-05T11:11:56Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "设置分类隐藏主导航并保留工作台侧栏偏好，验证浏览器布局与导航",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-05T11:19:14Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "设置三分类隐藏主导航、保留展开选择、同步禁用切换入口；浏览器布局导航通过，未安装Windows版本",
+          "validation": [
+            "web:build含类型检查通过；Chromium三个分类/返回偏好/前后退/窄屏通过，释放238px；Python205项188通过17跳过；fmt、devlog、diff检查通过。Rust额外构建受Linux依赖阻断，未运行原生安装。"
+          ],
+          "artifacts": [
+            {
+              "path": "apps/desktop/src/App.tsx",
+              "sha256": "4645a74e335e233cdd4d5ec202d4e9a936d15dcaebffeeec3ead983072ac4722"
+            },
+            {
+              "path": "apps/desktop/src/AppMenuBar.tsx",
+              "sha256": "681e22d934cee209543f894d7046b33a50f53156e3a19fb74e061d62b2e17165"
+            },
+            {
+              "path": "doc/validation/B06U-T01.md",
+              "sha256": "bfff54fb80a6aac79005dc94214596769660d80a179087af8f1c1eb52a702829"
+            },
+            {
+              "path": "doc/validation/assets/B06U-T01/python-final.log",
+              "sha256": "d150ad892fd0eb34ba7e5a229ad549e547e7ec08bad7bd8819aa209d444763fc"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

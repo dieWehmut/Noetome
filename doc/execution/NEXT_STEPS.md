@@ -1,6 +1,6 @@
 # 近期开发步骤
 
-真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B06-T01、B06-T02 均已通过工具 complete；比较表的实际验收见[B06-T01记录](../validation/B06-T01.md)，有据流程的固定源码完整回归、独立语义/NTFS核对及最终 Obsidian 字节联结见[B06-T02记录](../validation/B06-T02.md)。下一项为 B06-T03，尚未启动。
+真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B06-T01、B06-T02 均已通过工具 complete；比较表的实际验收见[B06-T01记录](../validation/B06-T01.md)，有据流程的固定源码完整回归、独立语义/NTFS核对及最终 Obsidian 字节联结见[B06-T02记录](../validation/B06-T02.md)。用户追加 B06U-T01 设置页隐藏侧栏已完成前端及浏览器验收（见[验证记录](../validation/B06U-T01.md)，未更新Windows安装版）；当前恢复 B06R，B06-T03 尚未启动。
 
 B05 收束提交 `043ae8c` 已普通推送并核对远端相同。下一批详细卡见[B06 步骤](B06_STEPS.md)，原 B05 执行范围归档于[B05步骤](B05_STEPS.md)。只规划以下三项，切批次不会自动 start。
 

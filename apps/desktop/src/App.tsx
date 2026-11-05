@@ -48,9 +48,11 @@ function StateBadge({ phase }: { phase: Phase }) {
 export default function App() {
   const [history, setHistory] = useState<{ entries: Page[]; index: number }>({ entries: ["workspace"], index: 0 });
   const page = history.entries[history.index];
+  const inSettings = page === "appearance" || page === "window" || page === "about";
   const theme = useThemePreference();
   const recentPages = [...new Set(history.entries.slice(0, history.index + 1).reverse())].slice(0, 5);
   const [sidebarVisible, setSidebarVisible] = useState(() => !window.matchMedia(sidebarOverlayQuery).matches);
+  const showSidebar = sidebarVisible && !inSettings;
   const [focusTarget, setFocusTarget] = useState<{ id: string; request: number } | null>(null);
   const mainRef = useRef<HTMLElement>(null);
   const [hasSelection, setHasSelection] = useState(false);
@@ -105,6 +107,7 @@ export default function App() {
   }, []);
 
   function toggleSidebar() {
+    if (inSettings) return;
     if (sidebarVisible && document.getElementById("app-sidebar")?.contains(document.activeElement)) {
       mainRef.current?.focus({ preventScroll: true });
     }
@@ -191,7 +194,7 @@ export default function App() {
       { id: "copy", label: "复制", disabled: !hasSelection, onSelect: () => void copySelectedContent() },
     ] },
     { label: "View", actions: [
-      { id: "sidebar", label: "显示侧栏", checked: sidebarVisible, onSelect: toggleSidebar },
+      { id: "sidebar", label: "显示侧栏", checked: showSidebar, disabled: inSettings, onSelect: toggleSidebar },
       ...pages.map((item) => ({ id: item.id, label: item.label, onSelect: () => navigate(item.id) })),
     ] },
     { label: "Help", actions: [
@@ -203,9 +206,9 @@ export default function App() {
 
   return (
     <div className="app-layout">
-      <AppMenuBar canGoBack={history.index > 0} canGoForward={history.index < history.entries.length - 1} sidebarVisible={sidebarVisible} onBack={() => moveHistory(-1)} onForward={() => moveHistory(1)} onToggleSidebar={toggleSidebar} menus={menus} />
+      <AppMenuBar canGoBack={history.index > 0} canGoForward={history.index < history.entries.length - 1} sidebarVisible={showSidebar} sidebarDisabled={inSettings} onBack={() => moveHistory(-1)} onForward={() => moveHistory(1)} onToggleSidebar={toggleSidebar} menus={menus} />
       <div className="app-body">
-      <AppSidebar page={page} visible={sidebarVisible} recentPages={recentPages} theme={theme.theme} onNavigate={navigate} onToggleTheme={() => theme.setTheme(theme.theme === "light" ? "dark" : "light")} />
+      <AppSidebar page={page} visible={showSidebar} recentPages={recentPages} theme={theme.theme} onNavigate={navigate} onToggleTheme={() => theme.setTheme(theme.theme === "light" ? "dark" : "light")} />
 
       <div className="main-layout">
         <main id="main-content" className="main-content" tabIndex={-1} ref={mainRef}>
