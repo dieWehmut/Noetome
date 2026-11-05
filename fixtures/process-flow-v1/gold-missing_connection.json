@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_gold",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "process": {
+    "title": "归档连接缺失的说明",
+    "entry": "s1",
+    "goals": [
+      "s3"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "接收卡片",
+      "description": "接收样例卡",
+      "criterion": null,
+      "inputs": [
+        "样例卡"
+      ],
+      "outputs": [
+        "已接收卡"
+      ],
+      "conditions": [
+        "卡片可读"
+      ],
+      "exceptions": [
+        "破损卡暂停"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "校对卡片",
+      "description": "校对已接收卡的编号",
+      "criterion": null,
+      "inputs": [
+        "已接收卡"
+      ],
+      "outputs": [
+        "已校对卡"
+      ],
+      "conditions": [
+        "接收完成"
+      ],
+      "exceptions": [
+        "编号缺失时暂停"
+      ]
+    },
+    {
+      "id": "s3",
+      "kind": "step",
+      "label": "归档卡片",
+      "description": "目标是归档，但来源未说明从校对到归档的关系",
+      "criterion": null,
+      "inputs": [
+        "可归档卡"
+      ],
+      "outputs": [
+        "归档条目"
+      ],
+      "conditions": [
+        "归档依据完整"
+      ],
+      "exceptions": [
+        "连接未核对前不能启动"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [
+        "接收完成"
+      ],
+      "exceptions": [
+        "破损卡不进入校对"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "object_id": "process",
+      "start_byte": 0,
+      "end_byte": 147,
+      "quote": "过程：\"归档连接缺失的说明\"。入口：s1。目标：[\"s3\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+    },
+    {
+      "object_id": "s1",
+      "start_byte": 148,
+      "end_byte": 318,
+      "quote": "步骤 s1：\"接收卡片\"。说明：\"接收样例卡\"。输入：[\"样例卡\"]。输出：[\"已接收卡\"]。条件：[\"卡片可读\"]。例外：[\"破损卡暂停\"]。"
+    },
+    {
+      "object_id": "s2",
+      "start_byte": 319,
+      "end_byte": 510,
+      "quote": "步骤 s2：\"校对卡片\"。说明：\"校对已接收卡的编号\"。输入：[\"已接收卡\"]。输出：[\"已校对卡\"]。条件：[\"接收完成\"]。例外：[\"编号缺失时暂停\"]。"
+    },
+    {
+      "object_id": "s3",
+      "start_byte": 511,
+      "end_byte": 753,
+      "quote": "步骤 s3：\"归档卡片\"。说明：\"目标是归档，但来源未说明从校对到归档的关系\"。输入：[\"可归档卡\"]。输出：[\"归档条目\"]。条件：[\"归档依据完整\"]。例外：[\"连接未核对前不能启动\"]。"
+    },
+    {
+      "object_id": "r1",
+      "start_byte": 754,
+      "end_byte": 858,
+      "quote": "关系 r1：s1 完成后执行 s2。条件：[\"接收完成\"]。例外：[\"破损卡不进入校对\"]。"
+    }
+  ]
+}

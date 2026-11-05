@@ -1,0 +1,678 @@
+{
+  "status": "completed_observations",
+  "scope": "installed Obsidian Mermaid capability only; self-authored non-scientific probes, not Noetome flow output or product acceptance",
+  "product_feature_verified": false,
+  "scientific_quality": "not_run",
+  "finished_utc": "2026-11-05T06:24:14.792Z",
+  "identity": {
+    "appVersion": "1.6.7",
+    "userData": "D:\\Noetome\\target\\compiler-temp\\b06-flow-whitespace-20261105\\profile",
+    "vaultPath": "D:\\Noetome\\target\\compiler-temp\\b06-flow-whitespace-20261105\\vault",
+    "communityPlugins": [],
+    "electron": "30.1.2",
+    "chromium": "124.0.6367.243"
+  },
+  "mermaid_version": "10.6.1",
+  "mermaid_version_evidence": "../bundled-mermaid.json",
+  "flowchart_config": {
+    "useMaxWidth": false,
+    "titleTopMargin": 25,
+    "diagramPadding": 8,
+    "htmlLabels": true,
+    "nodeSpacing": 50,
+    "rankSpacing": 50,
+    "curve": "basis",
+    "padding": 15,
+    "defaultRenderer": "dagre-wrapper",
+    "wrappingWidth": 200,
+    "arrowMarkerAbsolute": false
+  },
+  "security_level": "strict",
+  "notes_captured": 11,
+  "whitespace_cases": [
+    {
+      "name": "间隔基准",
+      "source": "05-间隔基准.md",
+      "expected_text": "甲 乙",
+      "dom_text": "甲 乙",
+      "inner_text": "甲 乙",
+      "css_white_space": "nowrap",
+      "glyph_ranges_css_pixels": [
+        {
+          "character": "甲",
+          "codepoint": 30002,
+          "x": 631.5,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 631.5,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": " ",
+          "codepoint": 32,
+          "x": 647.5,
+          "y": 268.4765625,
+          "width": 4.3828125,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 647.5,
+              "y": 268.4765625,
+              "width": 4.3828125,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": "乙",
+          "codepoint": 20057,
+          "x": 651.8828125,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 651.8828125,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        }
+      ],
+      "node_rect_css_pixels": {
+        "x": 624,
+        "y": 259.9765625,
+        "width": 51.3828125,
+        "height": 35.796875
+      },
+      "finding": "single_ascii_space_preserved",
+      "observation": "Internal single ASCII space retained its codepoint and one visible gap.",
+      "screenshot_archive_member": "note-4.png",
+      "dom_equals_expected": true,
+      "inner_text_equals_expected": true
+    },
+    {
+      "name": "首部空格",
+      "source": "06-首部空格.md",
+      "expected_text": "  甲乙",
+      "dom_text": "甲乙",
+      "inner_text": "甲乙",
+      "css_white_space": "nowrap",
+      "glyph_ranges_css_pixels": [
+        {
+          "character": "甲",
+          "codepoint": 30002,
+          "x": 633.69140625,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 633.69140625,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": "乙",
+          "codepoint": 20057,
+          "x": 649.69140625,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 649.69140625,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        }
+      ],
+      "node_rect_css_pixels": {
+        "x": 626.19140625,
+        "y": 259.9765625,
+        "width": 47,
+        "height": 35.796875
+      },
+      "finding": "leading_spaces_removed",
+      "observation": "Both leading spaces disappeared before DOM text readback.",
+      "screenshot_archive_member": "note-5.png",
+      "dom_equals_expected": false,
+      "inner_text_equals_expected": false
+    },
+    {
+      "name": "尾部空格",
+      "source": "07-尾部空格.md",
+      "expected_text": "甲乙  ",
+      "dom_text": "甲乙",
+      "inner_text": "甲乙",
+      "css_white_space": "nowrap",
+      "glyph_ranges_css_pixels": [
+        {
+          "character": "甲",
+          "codepoint": 30002,
+          "x": 633.69140625,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 633.69140625,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": "乙",
+          "codepoint": 20057,
+          "x": 649.69140625,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 649.69140625,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        }
+      ],
+      "node_rect_css_pixels": {
+        "x": 626.19140625,
+        "y": 259.9765625,
+        "width": 47,
+        "height": 35.796875
+      },
+      "finding": "trailing_spaces_removed",
+      "observation": "Both trailing spaces disappeared before DOM text readback.",
+      "screenshot_archive_member": "note-6.png",
+      "dom_equals_expected": false,
+      "inner_text_equals_expected": false
+    },
+    {
+      "name": "连续空格",
+      "source": "08-连续空格.md",
+      "expected_text": "甲  乙",
+      "dom_text": "甲  乙",
+      "inner_text": "甲 乙",
+      "css_white_space": "nowrap",
+      "glyph_ranges_css_pixels": [
+        {
+          "character": "甲",
+          "codepoint": 30002,
+          "x": 631.5,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 631.5,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": " ",
+          "codepoint": 32,
+          "x": 647.5,
+          "y": 268.4765625,
+          "width": 4.3828125,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 647.5,
+              "y": 268.4765625,
+              "width": 4.3828125,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": " ",
+          "codepoint": 32,
+          "x": 651.8828125,
+          "y": 268.4765625,
+          "width": 0,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 651.8828125,
+              "y": 268.4765625,
+              "width": 0,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": "乙",
+          "codepoint": 20057,
+          "x": 651.8828125,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 651.8828125,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        }
+      ],
+      "node_rect_css_pixels": {
+        "x": 624,
+        "y": 259.9765625,
+        "width": 51.3828125,
+        "height": 35.796875
+      },
+      "finding": "double_ascii_space_collapsed",
+      "observation": "DOM retained two spaces; innerText had one and the second Range had width zero.",
+      "screenshot_archive_member": "note-7.png",
+      "dom_equals_expected": true,
+      "inner_text_equals_expected": false
+    },
+    {
+      "name": "Unicode行分隔符",
+      "source": "09-Unicode行分隔符.md",
+      "expected_text": "甲 乙",
+      "dom_text": "甲 乙",
+      "inner_text": "甲 乙",
+      "css_white_space": "nowrap",
+      "glyph_ranges_css_pixels": [
+        {
+          "character": "甲",
+          "codepoint": 30002,
+          "x": 631.5,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 631.5,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": " ",
+          "codepoint": 8232,
+          "x": 647.5,
+          "y": 268.4765625,
+          "width": 4.3828125,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 647.5,
+              "y": 268.4765625,
+              "width": 4.3828125,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": "乙",
+          "codepoint": 20057,
+          "x": 651.8828125,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 651.8828125,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        }
+      ],
+      "node_rect_css_pixels": {
+        "x": 624,
+        "y": 259.9765625,
+        "width": 51.3828125,
+        "height": 35.796875
+      },
+      "finding": "unicode_line_separator_not_line_break",
+      "observation": "U+2028 survived text and innerText but both Chinese glyphs stayed on the same baseline; separator geometry matched an ASCII space.",
+      "screenshot_archive_member": "note-8.png",
+      "dom_equals_expected": true,
+      "inner_text_equals_expected": true
+    },
+    {
+      "name": "Unicode段分隔符",
+      "source": "10-Unicode段分隔符.md",
+      "expected_text": "甲 乙",
+      "dom_text": "甲 乙",
+      "inner_text": "甲 乙",
+      "css_white_space": "nowrap",
+      "glyph_ranges_css_pixels": [
+        {
+          "character": "甲",
+          "codepoint": 30002,
+          "x": 631.5,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 631.5,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": " ",
+          "codepoint": 8233,
+          "x": 647.5,
+          "y": 268.4765625,
+          "width": 4.3828125,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 647.5,
+              "y": 268.4765625,
+              "width": 4.3828125,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": "乙",
+          "codepoint": 20057,
+          "x": 651.8828125,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 651.8828125,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        }
+      ],
+      "node_rect_css_pixels": {
+        "x": 624,
+        "y": 259.9765625,
+        "width": 51.3828125,
+        "height": 35.796875
+      },
+      "finding": "unicode_paragraph_separator_not_paragraph_break",
+      "observation": "U+2029 survived text and innerText but both Chinese glyphs stayed on the same baseline; separator geometry matched an ASCII space.",
+      "screenshot_archive_member": "note-9.png",
+      "dom_equals_expected": true,
+      "inner_text_equals_expected": true
+    },
+    {
+      "name": "NBSP",
+      "source": "11-NBSP.md",
+      "expected_text": "甲 乙",
+      "dom_text": "甲 乙",
+      "inner_text": "甲 乙",
+      "css_white_space": "nowrap",
+      "glyph_ranges_css_pixels": [
+        {
+          "character": "甲",
+          "codepoint": 30002,
+          "x": 631.5,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 631.5,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": " ",
+          "codepoint": 160,
+          "x": 647.5,
+          "y": 268.4765625,
+          "width": 4.3828125,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 647.5,
+              "y": 268.4765625,
+              "width": 4.3828125,
+              "height": 21.5
+            }
+          ]
+        },
+        {
+          "character": "乙",
+          "codepoint": 20057,
+          "x": 651.8828125,
+          "y": 268.4765625,
+          "width": 16,
+          "height": 21.5,
+          "clientRects": [
+            {
+              "x": 651.8828125,
+              "y": 268.4765625,
+              "width": 16,
+              "height": 21.5
+            }
+          ]
+        }
+      ],
+      "node_rect_css_pixels": {
+        "x": 624,
+        "y": 259.9765625,
+        "width": 51.3828125,
+        "height": 35.796875
+      },
+      "finding": "nbsp_single_gap_preserved_limited",
+      "observation": "NBSP codepoint and single gap retained. The nowrap label does not establish independent nonbreaking behavior.",
+      "screenshot_archive_member": "note-10.png",
+      "dom_equals_expected": true,
+      "inner_text_equals_expected": true
+    }
+  ],
+  "baseline_controls": [
+    {
+      "name": "基础顺序",
+      "checks": {
+        "svgPresent": true,
+        "nodesMatch": true,
+        "edgesMatch": true,
+        "edgeLabelsMatch": true,
+        "arrowsPresent": true,
+        "listMatches": true,
+        "noActiveTags": true
+      }
+    },
+    {
+      "name": "条件分支",
+      "checks": {
+        "svgPresent": true,
+        "nodesMatch": true,
+        "edgesMatch": true,
+        "edgeLabelsMatch": true,
+        "arrowsPresent": true,
+        "listMatches": true,
+        "noActiveTags": true
+      }
+    },
+    {
+      "name": "正负作用标签",
+      "checks": {
+        "svgPresent": true,
+        "nodesMatch": true,
+        "edgesMatch": true,
+        "edgeLabelsMatch": true,
+        "arrowsPresent": true,
+        "listMatches": true,
+        "noActiveTags": true
+      }
+    },
+    {
+      "name": "文字回退",
+      "checks": {
+        "svgPresent": true,
+        "nodesMatch": true,
+        "edgesMatch": true,
+        "edgeLabelsMatch": true,
+        "arrowsPresent": true,
+        "listMatches": true,
+        "noActiveTags": true
+      }
+    }
+  ],
+  "actual_link_navigation": [
+    {
+      "source": "02-条件分支.md",
+      "target": "04-文字回退.md",
+      "link": "04-文字回退#完整步骤",
+      "actualClick": true
+    },
+    {
+      "source": "04-文字回退.md",
+      "target": "02-条件分支.md",
+      "link": "02-条件分支#条件分支",
+      "actualClick": true
+    }
+  ],
+  "protection_cleanup": {
+    "markdown_unchanged": true,
+    "markdown_after": {
+      "01-基础流程.md": {
+        "sha256": "066cc87682d1be996a7f98d8ccb95b1bdd637dadbf5a0463faaaf2c391e6e69d",
+        "byte_length": 215
+      },
+      "02-条件分支.md": {
+        "sha256": "ed8617bb5fdaaac2d2c49d29cc5d27e8a4f562e703e1e00011647a8d29de47fb",
+        "byte_length": 351
+      },
+      "03-正负标签.md": {
+        "sha256": "55e7e14bc7f2024da09870da65e41457815dabbd76f9033253cd8ae45deb91ac",
+        "byte_length": 248
+      },
+      "04-文字回退.md": {
+        "sha256": "a40f22407fe8a7bc1ab737df2bf69c5f61b7061a945fb5e7914ab51233bd50dd",
+        "byte_length": 443
+      },
+      "05-间隔基准.md": {
+        "sha256": "a47fea4e08b375797a587b3bda16e7e394370696723693602d64d5b33fe7568a",
+        "byte_length": 172
+      },
+      "06-首部空格.md": {
+        "sha256": "139ce2ad157701a98cda08f6d0da8b74c8577c6b72d92e0b75fbbb5cde1b4e9c",
+        "byte_length": 173
+      },
+      "07-尾部空格.md": {
+        "sha256": "b3acbc7eba67fc51a283f74321489924f38d89fd9e9fbdef8965e6f5e1abcb69",
+        "byte_length": 173
+      },
+      "08-连续空格.md": {
+        "sha256": "c91be6f3f631e69da73ea306371732aa040debc3f5afc4572401b19be10f8b20",
+        "byte_length": 173
+      },
+      "09-Unicode行分隔符.md": {
+        "sha256": "4525f16df1290faa01e34fbe2a98c661c81dfc9de44ba7ffaf340f9c95469456",
+        "byte_length": 181
+      },
+      "10-Unicode段分隔符.md": {
+        "sha256": "d1c8410edd577b2ccc56219d88c82bb5e4e5d4e5e0c773510bfc11eb0c4909a3",
+        "byte_length": 181
+      },
+      "11-NBSP.md": {
+        "sha256": "9177e42f63d4e6f382b010525ecda9a2b1796b506716554fd52c10d1bc57bc2c",
+        "byte_length": 165
+      }
+    },
+    "pid": 27960,
+    "port": 59046,
+    "ownedPidAbsent": true,
+    "ownedListenerAbsent": true
+  },
+  "recommended_finite_policy": {
+    "allow_whitespace": "Only isolated interior ASCII U+0020 space in graph labels.",
+    "fallback_whitespace": "Leading/trailing ASCII spaces, consecutive ASCII spaces, and any non-ASCII whitespace use source-preserving text fallback.",
+    "basis": "Conservative product boundary, distinct from observed unsupported cases; the NBSP single-gap result was not a demonstrated loss.",
+    "prior_lf_tab_evidence": "../summary.json and its immutable originals.zip"
+  },
+  "readback_caveat": "The original normalized nodesMatch and visualWhitespacePreserved flags do not by themselves establish visual fidelity. Unicode line/paragraph separators require Range geometry plus screenshot interpretation.",
+  "parent_evidence_before": {
+    "originals.zip": {
+      "sha256": "f46791ce8d023ed195918322de123d00245f5ccdbecb45951b0bcdfa3cd79531",
+      "byte_length": 1374923
+    },
+    "archive.json": {
+      "sha256": "d0b1ace99d9a2cbc674d4d74d5fd19ce030caed5c451f7d6d3ad21b43f60f376",
+      "byte_length": 23402
+    },
+    "summary.json": {
+      "sha256": "6723cc6c58657039d0724ae98d8d10e18670472bbd99ac368598a0213eade673",
+      "byte_length": 11491
+    }
+  },
+  "archive": {
+    "path": "originals.zip",
+    "sha256": "5334bf495a226b6f39687cd8d14d747ccc4779ed8010c1bcbc6d84cfb5ceb6f8",
+    "byte_length": 744363,
+    "member_count": 75
+  },
+  "screenshots": {
+    "leading-spaces.png": {
+      "archive_member": "note-5.png",
+      "sha256": "12e05f9ea14b3b0dcab5303704e773a4f9a157ef64bc4dbb84ac2907f60b8072",
+      "byte_length": 59658
+    },
+    "double-spaces.png": {
+      "archive_member": "note-7.png",
+      "sha256": "e05ff11443853af03746bdd716e2057f4a4332bcf8e04f79034639ba61fb9dcb",
+      "byte_length": 62428
+    },
+    "unicode-line-separator.png": {
+      "archive_member": "note-8.png",
+      "sha256": "a84e3849c553aa0e77857a2bfc934aaa06339a65f5829b4f3783d367035b4a4f",
+      "byte_length": 66245
+    },
+    "unicode-paragraph-separator.png": {
+      "archive_member": "note-9.png",
+      "sha256": "45901245458cb13be075469cb4274f94064dd5824dba3b9f6faea454f2b2cb92",
+      "byte_length": 66950
+    },
+    "nbsp.png": {
+      "archive_member": "note-10.png",
+      "sha256": "a7751158c0cf4edb63c0e505464bcb48d2f72ad581ae9e8e865e807fb6269d9a",
+      "byte_length": 53226
+    }
+  },
+  "limitations": [
+    "Only one installed Obsidian/Mermaid pair and default clean profile were observed.",
+    "No product CLI, source parsing, flow planning, science or full Unicode compatibility was tested by these authored notes.",
+    "Geometry is in CSS pixels at this recorded viewport; it is not a cross-platform layout guarantee."
+  ],
+  "parent_evidence_unchanged": true
+}

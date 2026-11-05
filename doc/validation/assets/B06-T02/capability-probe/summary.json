@@ -1,0 +1,343 @@
+{
+  "scope": "B06-T02 installed-renderer capability probe only; self-authored non-scientific Markdown; NOT Noetome flow feature acceptance",
+  "status": "completed",
+  "product_feature_verified": false,
+  "knowledge_status": "not_evaluated",
+  "scientific_quality": "not_run",
+  "published": false,
+  "identity": {
+    "appVersion": "1.6.7",
+    "userData": "D:\\Noetome\\target\\compiler-temp\\b06-flow-capability-20261105-b\\profile",
+    "vaultPath": "D:\\Noetome\\target\\compiler-temp\\b06-flow-capability-20261105-b\\vault",
+    "communityPlugins": [],
+    "electron": "30.1.2",
+    "chromium": "124.0.6367.243"
+  },
+  "bundled_mermaid_version": "10.6.1",
+  "bundled_mermaid_pin": {
+    "member": "lib/mermaid.min.js",
+    "sha256": "662f8b68d21daac0e9bc0d0b7adc78e2c556e69e70881edccb81a5cf384eee64",
+    "byte_length": 2937458,
+    "asar_member_integrity_matches": true
+  },
+  "runtime_exposed_mermaid_version": null,
+  "runtime_config": {
+    "securityLevel": "strict",
+    "flowchart": {
+      "useMaxWidth": false,
+      "titleTopMargin": 25,
+      "diagramPadding": 8,
+      "htmlLabels": true,
+      "nodeSpacing": 50,
+      "rankSpacing": 50,
+      "curve": "basis",
+      "padding": 15,
+      "defaultRenderer": "dagre-wrapper",
+      "wrappingWidth": 200,
+      "arrowMarkerAbsolute": false
+    }
+  },
+  "core_capabilities": [
+    {
+      "name": "基础顺序",
+      "file": "01-基础流程.md",
+      "checks": {
+        "svgPresent": true,
+        "nodesMatch": true,
+        "edgesMatch": true,
+        "edgeLabelsMatch": true,
+        "arrowsPresent": true,
+        "listMatches": true,
+        "noActiveTags": true
+      },
+      "node_count": 3,
+      "edge_count": 2,
+      "edge_labels": [],
+      "directed_endpoints": [
+        [
+          "n0",
+          "n1"
+        ],
+        [
+          "n1",
+          "n2"
+        ]
+      ],
+      "direction_geometry_and_end_arrow_match": true
+    },
+    {
+      "name": "条件分支",
+      "file": "02-条件分支.md",
+      "checks": {
+        "svgPresent": true,
+        "nodesMatch": true,
+        "edgesMatch": true,
+        "edgeLabelsMatch": true,
+        "arrowsPresent": true,
+        "listMatches": true,
+        "noActiveTags": true
+      },
+      "node_count": 4,
+      "edge_count": 3,
+      "edge_labels": [
+        "yes：条件成立",
+        "no：条件不成立"
+      ],
+      "directed_endpoints": [
+        [
+          "n0",
+          "n1"
+        ],
+        [
+          "n1",
+          "n2"
+        ],
+        [
+          "n1",
+          "n3"
+        ]
+      ],
+      "direction_geometry_and_end_arrow_match": true
+    },
+    {
+      "name": "正负作用标签",
+      "file": "03-正负标签.md",
+      "checks": {
+        "svgPresent": true,
+        "nodesMatch": true,
+        "edgesMatch": true,
+        "edgeLabelsMatch": true,
+        "arrowsPresent": true,
+        "listMatches": true,
+        "noActiveTags": true
+      },
+      "node_count": 3,
+      "edge_count": 2,
+      "edge_labels": [
+        "+：启用",
+        "−：停用"
+      ],
+      "directed_endpoints": [
+        [
+          "n0",
+          "n1"
+        ],
+        [
+          "n0",
+          "n2"
+        ]
+      ],
+      "direction_geometry_and_end_arrow_match": true
+    },
+    {
+      "name": "文字回退",
+      "file": "04-文字回退.md",
+      "checks": {
+        "svgPresent": true,
+        "nodesMatch": true,
+        "edgesMatch": true,
+        "edgeLabelsMatch": true,
+        "arrowsPresent": true,
+        "listMatches": true,
+        "noActiveTags": true
+      },
+      "node_count": 0,
+      "edge_count": 0,
+      "edge_labels": []
+    }
+  ],
+  "actual_navigation": [
+    {
+      "source": "02-条件分支.md",
+      "target": "04-文字回退.md",
+      "link": "04-文字回退#完整步骤",
+      "actualClick": true
+    },
+    {
+      "source": "04-文字回退.md",
+      "target": "02-条件分支.md",
+      "link": "02-条件分支#条件分支",
+      "actualClick": true
+    }
+  ],
+  "label_boundaries": [
+    {
+      "profile": "default htmlLabels=true, quoted labels, ASCII punctuation encoded as Mermaid decimal entities #N;",
+      "visible_text_exact": true,
+      "tested_labels": [
+        "中文 [括号] (圆括号) {花括号} | 竖线 ; 分号",
+        "引号 \"Q\" 与 & 与字面 <br>",
+        "反斜线 \\ 反引号 ` 星号 * 下划线 _ 美元 $"
+      ],
+      "edge_label": "条件 < 2 | 另一路",
+      "verdict": "supported for these finite single-line labels; no arbitrary-language guarantee"
+    },
+    {
+      "profile": "same entity codec with htmlLabels=false",
+      "visible_text_exact": false,
+      "observed_labels": [
+        "中文 &#91;括号&#93; &#40;圆括号&#41; &#123;花括号&#125; &#124; 竖线 &#59; 分号",
+        "引号 &#34;Q&#34; 与 &#38; 与字面 &#60;br&#62;",
+        "反斜线 &#92; 反引号 &#96; 星号 &#42; 下划线 &#95; 美元 &#36;"
+      ],
+      "verdict": "incompatible: literal HTML numeric references remain visible; do not silently switch to this profile"
+    },
+    {
+      "profile": "default label with #10; newline or #9; tab",
+      "dom_characters_retained": true,
+      "visible_text_exact": false,
+      "observed": [
+        {
+          "source": "第一行\n第二行",
+          "visible": "第一行 第二行",
+          "white_space": "nowrap"
+        },
+        {
+          "source": "Tab A\tB",
+          "visible": "Tab A B",
+          "white_space": "nowrap"
+        }
+      ],
+      "verdict": "visual whitespace collapses: bounded compiler should use explicit validated fallback for control-bearing labels"
+    },
+    {
+      "profile": "unterminated quoted label",
+      "svg_produced": false,
+      "error_text": "08-故意无效语法\n故意无效语法\n\n仅为自造渲染能力探针，无科学含义，不是 Noetome 产品输出。\n\nError parsing Mermaid diagram!\n\nParse error on line 4:\n...hart TD  n0[\"没有闭合\n--------------------^\nExpecting 'SQE', 'DOUBLECIRCLEEND', 'PE', '-)', 'STADIUMEND', 'SUBROUTINEEND', 'PIPE', 'CYLINDEREND', 'DIAMOND_STOP', 'TAGEND', 'TRAPEND', 'INVTRAPEND', 'UNICODE_TEXT', 'TEXT', 'TAGSTART', got '1'",
+      "verdict": "rendering failure is visible, not a valid graph"
+    }
+  ],
+  "protection_cleanup": [
+    {
+      "attempt": "attempt-1-metadata-failure",
+      "markdown_unchanged": true,
+      "markdown_after": {
+        "01-基础流程.md": {
+          "sha256": "066cc87682d1be996a7f98d8ccb95b1bdd637dadbf5a0463faaaf2c391e6e69d",
+          "byte_length": 215
+        },
+        "02-条件分支.md": {
+          "sha256": "ed8617bb5fdaaac2d2c49d29cc5d27e8a4f562e703e1e00011647a8d29de47fb",
+          "byte_length": 351
+        },
+        "03-正负标签.md": {
+          "sha256": "55e7e14bc7f2024da09870da65e41457815dabbd76f9033253cd8ae45deb91ac",
+          "byte_length": 248
+        },
+        "04-文字回退.md": {
+          "sha256": "a40f22407fe8a7bc1ab737df2bf69c5f61b7061a945fb5e7914ab51233bd50dd",
+          "byte_length": 443
+        },
+        "05-默认标签编码.md": {
+          "sha256": "e236e392c4e2f5f7f5bd9678c0d34a16c6575247e423ce12d41f943e539c25ca",
+          "byte_length": 416
+        },
+        "06-SVG标签编码.md": {
+          "sha256": "eb79740a599cef93f7e4f57b52381361cde3945ec022405a63a16aba6bdac93a",
+          "byte_length": 467
+        },
+        "07-标签换行边界.md": {
+          "sha256": "15b91aa2991afe0bcf3966ebdefa7251b3e7355a82d1e765270e1d441707c0a9",
+          "byte_length": 195
+        }
+      },
+      "pid": 1716,
+      "port": 60498,
+      "ownedPidAbsent": true,
+      "ownedListenerAbsent": true
+    },
+    {
+      "attempt": "baseline-complete",
+      "markdown_unchanged": true,
+      "markdown_after": {
+        "01-基础流程.md": {
+          "sha256": "066cc87682d1be996a7f98d8ccb95b1bdd637dadbf5a0463faaaf2c391e6e69d",
+          "byte_length": 215
+        },
+        "02-条件分支.md": {
+          "sha256": "ed8617bb5fdaaac2d2c49d29cc5d27e8a4f562e703e1e00011647a8d29de47fb",
+          "byte_length": 351
+        },
+        "03-正负标签.md": {
+          "sha256": "55e7e14bc7f2024da09870da65e41457815dabbd76f9033253cd8ae45deb91ac",
+          "byte_length": 248
+        },
+        "04-文字回退.md": {
+          "sha256": "a40f22407fe8a7bc1ab737df2bf69c5f61b7061a945fb5e7914ab51233bd50dd",
+          "byte_length": 443
+        },
+        "05-默认标签编码.md": {
+          "sha256": "e236e392c4e2f5f7f5bd9678c0d34a16c6575247e423ce12d41f943e539c25ca",
+          "byte_length": 416
+        },
+        "06-SVG标签编码.md": {
+          "sha256": "eb79740a599cef93f7e4f57b52381361cde3945ec022405a63a16aba6bdac93a",
+          "byte_length": 467
+        },
+        "07-标签换行边界.md": {
+          "sha256": "15b91aa2991afe0bcf3966ebdefa7251b3e7355a82d1e765270e1d441707c0a9",
+          "byte_length": 195
+        }
+      },
+      "pid": 15240,
+      "port": 54803,
+      "ownedPidAbsent": true,
+      "ownedListenerAbsent": true
+    },
+    {
+      "attempt": "boundaries-complete",
+      "markdown_unchanged": true,
+      "markdown_after": {
+        "01-基础流程.md": {
+          "sha256": "066cc87682d1be996a7f98d8ccb95b1bdd637dadbf5a0463faaaf2c391e6e69d",
+          "byte_length": 215
+        },
+        "02-条件分支.md": {
+          "sha256": "ed8617bb5fdaaac2d2c49d29cc5d27e8a4f562e703e1e00011647a8d29de47fb",
+          "byte_length": 351
+        },
+        "03-正负标签.md": {
+          "sha256": "55e7e14bc7f2024da09870da65e41457815dabbd76f9033253cd8ae45deb91ac",
+          "byte_length": 248
+        },
+        "04-文字回退.md": {
+          "sha256": "a40f22407fe8a7bc1ab737df2bf69c5f61b7061a945fb5e7914ab51233bd50dd",
+          "byte_length": 443
+        },
+        "05-默认标签编码.md": {
+          "sha256": "e236e392c4e2f5f7f5bd9678c0d34a16c6575247e423ce12d41f943e539c25ca",
+          "byte_length": 416
+        },
+        "06-SVG标签编码.md": {
+          "sha256": "eb79740a599cef93f7e4f57b52381361cde3945ec022405a63a16aba6bdac93a",
+          "byte_length": 467
+        },
+        "07-标签换行边界.md": {
+          "sha256": "15b91aa2991afe0bcf3966ebdefa7251b3e7355a82d1e765270e1d441707c0a9",
+          "byte_length": 195
+        },
+        "08-故意无效语法.md": {
+          "sha256": "c36390ddf400a9d6989e3e2637a4e85545d601d5edcb21118526618a32ee8dd3",
+          "byte_length": 153
+        }
+      },
+      "pid": 2472,
+      "port": 62135,
+      "ownedPidAbsent": true,
+      "ownedListenerAbsent": true
+    }
+  ],
+  "setup_history": [
+    {
+      "attempt": "attempt-1-metadata-failure",
+      "result": "Seven notes rendered and were captured, but unconditional require(obsidian) failed outside plugin module context before metadata/navigation completed. Kept as failure; changed version probe to read existing window.mermaid and catch unavailable module. New complete run and boundary run followed."
+    }
+  ],
+  "limitations": [
+    "No Noetome source-review/coordinate/flow planner was exercised. These authored graphs are renderer capability input only.",
+    "Only installed Obsidian1.6.7 and bundled Mermaid10.6.1 were probed, no full compatibility matrix.",
+    "No correctness of causal direction or scientific statement is implied by arrow rendering.",
+    "No CSS themes, community plugins, arbitrary labels/macros, large graph performance or cycle semantics validated.",
+    "Ordinary note links, not graph-internal click directives, were used for navigation."
+  ]
+}

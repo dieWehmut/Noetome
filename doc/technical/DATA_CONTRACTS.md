@@ -381,3 +381,7 @@ v2 occurrence新增实际背景context及UTF8范围/SHA/原支持ID，fact新增
 事实保留原fact_id及occurrence_ids；value/unit/conditions/exceptions来自组内首个原始出现，全部原候选内容和supports/refutes/qualifies保存在逐出现出处中。v1没有声明的applicability/time为null，不升级为known。标签的空fact_ids不代表缺少出处；其concept_ids及完整occurrence_ids定位身份。缺值单元格明确missing、无事实引用，不能填零或混同不适用。
 
 RenderedFile将正文与链接分开定位，保存文件指纹、note_id、section/node/row/column/kind和UTF8半开范围。section在所属文件内定位；正文范围完整显示事实，链接别名不作事实内容。双报告严格区分工程预览通过、知识pending、science=not_run和published=false；非法准入在建根前拒绝，合法未决可保存无计划/笔记的失败报告。
+
+## 有界过程关系交换 v1
+
+过程关系使用独立的[过程流程 v1 契约](PROCESS_FLOW_CONTRACT.md)，不改变下述比较表或旧 fixture 字段。来源 document 的 process/steps/relations/evidence 全部来自实际选定文字；每个完整声明有 UTF-8 半开区间。sequence、branch、causes、promotes、inhibits、correlates、unknown 明确区分；nullable 判据与空数组保留未知语义。流程计划保存目标能力、表示理由、实际节点/边及正文映射；保存 review 必须从原项目重新核对，不能仅靠自报 passed 消费。

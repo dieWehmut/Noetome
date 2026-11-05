@@ -1,6 +1,6 @@
 # 近期开发步骤
 
-真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B06-T01 已通过工具 complete；最终固定源码的完整 Windows Rust/Python、独立语义/路径核对及真实 Obsidian 表格/链接验收见[B06-T01 记录](../validation/B06-T01.md)。下一执行入口为 B06-T02，尚未启动。
+真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。B06-T01 已通过工具 complete；最终固定源码的完整 Windows Rust/Python、独立语义/路径核对及真实 Obsidian 表格/链接验收见[B06-T01 记录](../validation/B06-T01.md)。B06-T02 已启动，当前增加独立的有界过程来源核对和流程表达契约，先冻结作者预期与普通 CLI RED，再实现并验收。
 
 B05 收束提交 `043ae8c` 已普通推送并核对远端相同。下一批详细卡见[B06 步骤](B06_STEPS.md)，原 B05 执行范围归档于[B05步骤](B05_STEPS.md)。只规划以下三项，切批次不会自动 start。
 

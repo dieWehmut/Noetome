@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "producer": "process_flow_expected",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case_name": "multiline_labels",
+  "profile": "obsidian_1_6_7_flowchart",
+  "review_status": "passed",
+  "flow_status": "passed",
+  "representation": "ordered_list",
+  "issues": [
+    "FLOW_LABEL_WHITESPACE_FALLBACK"
+  ],
+  "process": {
+    "title": "多行标签的保真流程",
+    "entry": "s1",
+    "goals": [
+      "s2"
+    ],
+    "conditions": [],
+    "exceptions": [
+      "不可读资料需复核"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "检查\n卡片\t[α]",
+      "description": "完整保留来源标签中的换行和制表符",
+      "criterion": null,
+      "inputs": [
+        "样例卡"
+      ],
+      "outputs": [
+        "检查结果"
+      ],
+      "conditions": [],
+      "exceptions": [
+        "卡片缺失时停止"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "记录检查结果",
+      "description": "记录来源明示的检查结果",
+      "criterion": null,
+      "inputs": [
+        "检查结果"
+      ],
+      "outputs": [
+        "检查记录"
+      ],
+      "conditions": [
+        "检查完成"
+      ],
+      "exceptions": []
+    }
+  ],
+  "edges": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [],
+      "exceptions": [
+        "检查未完成时不得登记"
+      ]
+    }
+  ],
+  "required_precedence": [
+    [
+      "s1",
+      "s2"
+    ]
+  ],
+  "totals": {
+    "source_statements": 4,
+    "parsed_statements": 4,
+    "unparsed_statements": 0,
+    "steps": 2,
+    "decision_steps": 0,
+    "relations": 1,
+    "sequence_relations": 1,
+    "branch_relations": 0,
+    "causes_relations": 0,
+    "promotes_relations": 0,
+    "inhibits_relations": 0,
+    "correlates_relations": 0,
+    "unknown_relations": 0,
+    "evidence_records": 4,
+    "node_inputs": 2,
+    "node_outputs": 2,
+    "process_conditions": 0,
+    "process_exceptions": 1,
+    "node_conditions": 1,
+    "node_exceptions": 1,
+    "relation_conditions": 0,
+    "relation_exceptions": 1,
+    "flow_nodes": 2,
+    "flow_edges": 1
+  },
+  "unparsed_lines": [],
+  "empty_list_meaning": "not_listed_in_selected_source",
+  "scope": "bounded_self_authored_engineering_only"
+}

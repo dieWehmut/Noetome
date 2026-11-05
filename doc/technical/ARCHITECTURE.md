@@ -279,3 +279,7 @@ B05-T03新增[严格v3契约](KNOWLEDGE_CONFLICTS_CONTRACT.md)，复用完整来
 B06-T01增加普通 `knowledge present`，从原协调case和已保存输出重新持有全部来源核对材料及真实SourceSession。`knowledge_presentation_input`复用三个旧协调算法重建完整结果，再严格核对旧版本IR、双报告和原件；`knowledge_presentation_plan`从明确对象/属性及原始出现记录选择比较表或正文。它恢复原词面并保留完整事实组，未决输入不进入成功规划。
 
 `knowledge_presentation_render`编译结构化节点，独立解析实际Markdown、正文和链接字节范围；入口将结果写到全新测试Vault并复验来源和输出身份。新的[表达契约](ACTIVE_PRESENTATION_CONTRACT.md)使用独立schema/scope，与B02 fixture发布数据库分开。独立[Python校核](../../scripts/verify_knowledge_presentation.py)从调用前作者和真实来源重建计划，不借Rust计划生成expected。知识pending、science未运行和未发布状态保持；完整任务验收以账本为准。
+
+## 有界过程与流程表达
+
+B06-T02 的过程来源核对采用独立 `process_source_review / bounded_process_text_v1` 命名空间；不扩展旧测量原子或协调版本来容纳图。受控文字解析先从实际 SourceSession 得到完整过程/步骤/关系及逐行证据，再与独立 gold 比较。`knowledge flow` 重建并核对整个保存的 review 后才提交流程计划，语义支持与渲染能力分别判定。明确有向无环过程进入有限 Mermaid 编译，能力不兼容时使用完整有据文字；相关性、歧义或缺关键关系阻断。详细字段、阶段和验收边界见[过程流程契约](PROCESS_FLOW_CONTRACT.md)。

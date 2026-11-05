@@ -28,6 +28,7 @@
 | [条件与来源时间协调](technical/KNOWLEDGE_VARIANTS_CONTRACT.md) | 严格v2条件状态、来源背景、并列变体与历史先后 | 条件、时间证据、协调版本或分母变化 |
 | [有据冲突与证据不足](technical/KNOWLEDGE_CONFLICTS_CONTRACT.md) | 严格v3冲突、可比较十进制、反证保留与逐原出现处理记录 | 冲突分类、证据不足、处理记录或相关分母变化 |
 | [有据主动表达](technical/ACTIVE_PRESENTATION_CONTRACT.md) | 来源与协调重验、比较表/正文选择、逐格映射及新测试Vault | knowledge present、表达计划、渲染与预览报告变化 |
+| [有界过程与流程表达](technical/PROCESS_FLOW_CONTRACT.md) | 独立过程来源核对、明确步骤/关系、流程图及有据文字回退 | process-review、flow、节点/边映射与目标能力变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
 | [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |

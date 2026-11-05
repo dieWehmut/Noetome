@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "producer": "process_flow_expected",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case_name": "direction_unknown",
+  "profile": "obsidian_1_6_7_flowchart",
+  "review_status": "passed",
+  "flow_status": "blocked",
+  "representation": null,
+  "issues": [
+    "FLOW_DIRECTION_UNKNOWN"
+  ],
+  "process": {
+    "title": "演示信号关系待核对",
+    "entry": "s1",
+    "goals": [
+      "s2"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "信号 A",
+      "description": "表示演示信号 A",
+      "criterion": null,
+      "inputs": [
+        "A 的记录"
+      ],
+      "outputs": [
+        "A 的状态"
+      ],
+      "conditions": [
+        "记录可读"
+      ],
+      "exceptions": [
+        "记录缺失时未知"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "信号 B",
+      "description": "表示演示信号 B",
+      "criterion": null,
+      "inputs": [
+        "B 的记录"
+      ],
+      "outputs": [
+        "B 的状态"
+      ],
+      "conditions": [
+        "记录可读"
+      ],
+      "exceptions": [
+        "记录缺失时未知"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "unknown",
+      "branch_outcome": null,
+      "conditions": [
+        "仅知两者存在关系"
+      ],
+      "exceptions": [
+        "不能据名称顺序补方向"
+      ]
+    }
+  ],
+  "required_precedence": [],
+  "totals": {
+    "source_statements": 4,
+    "parsed_statements": 4,
+    "unparsed_statements": 0,
+    "steps": 2,
+    "decision_steps": 0,
+    "relations": 1,
+    "sequence_relations": 0,
+    "branch_relations": 0,
+    "causes_relations": 0,
+    "promotes_relations": 0,
+    "inhibits_relations": 0,
+    "correlates_relations": 0,
+    "unknown_relations": 1,
+    "evidence_records": 4,
+    "node_inputs": 2,
+    "node_outputs": 2,
+    "process_conditions": 1,
+    "process_exceptions": 1,
+    "node_conditions": 2,
+    "node_exceptions": 2,
+    "relation_conditions": 1,
+    "relation_exceptions": 1,
+    "flow_nodes": 0,
+    "flow_edges": 0
+  },
+  "unparsed_lines": [],
+  "empty_list_meaning": "not_listed_in_selected_source",
+  "scope": "bounded_self_authored_engineering_only"
+}

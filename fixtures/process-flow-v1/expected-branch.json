@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "producer": "process_flow_expected",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case_name": "branch",
+  "profile": "obsidian_1_6_7_flowchart",
+  "review_status": "passed",
+  "flow_status": "passed",
+  "representation": "flowchart",
+  "issues": [],
+  "process": {
+    "title": "样例签名分流",
+    "entry": "s1",
+    "goals": [
+      "s2",
+      "s3"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "接收卡片",
+      "description": "接收待判断的样例卡",
+      "criterion": null,
+      "inputs": [
+        "待判断卡"
+      ],
+      "outputs": [
+        "已接收卡"
+      ],
+      "conditions": [
+        "卡片可读"
+      ],
+      "exceptions": [
+        "卡片破损时暂停"
+      ]
+    },
+    {
+      "id": "d1",
+      "kind": "decision",
+      "label": "检查签名",
+      "description": "只判断签名是否完整",
+      "criterion": "签名完整",
+      "inputs": [
+        "已接收卡"
+      ],
+      "outputs": [
+        "签名判定结果"
+      ],
+      "conditions": [
+        "卡片已接收"
+      ],
+      "exceptions": [
+        "签名区域不可读时暂停判定"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "进入归档队列",
+      "description": "将真分支卡片加入归档队列",
+      "criterion": null,
+      "inputs": [
+        "判据为真的卡片"
+      ],
+      "outputs": [
+        "待归档卡"
+      ],
+      "conditions": [
+        "签名完整"
+      ],
+      "exceptions": [
+        "队列不可用时保留卡片"
+      ]
+    },
+    {
+      "id": "s3",
+      "kind": "step",
+      "label": "进入补签队列",
+      "description": "将假分支卡片加入补签队列",
+      "criterion": null,
+      "inputs": [
+        "判据为假的卡片"
+      ],
+      "outputs": [
+        "待补签卡"
+      ],
+      "conditions": [
+        "签名完整这一判据为假"
+      ],
+      "exceptions": [
+        "队列不可用时保留卡片"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "d1",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [
+        "接收完成"
+      ],
+      "exceptions": [
+        "破损卡不进入判定"
+      ]
+    },
+    {
+      "id": "r2",
+      "left": "d1",
+      "right": "s2",
+      "kind": "branch",
+      "branch_outcome": true,
+      "conditions": [
+        "签名区域可读"
+      ],
+      "exceptions": [
+        "归档队列不可用时暂停"
+      ]
+    },
+    {
+      "id": "r3",
+      "left": "d1",
+      "right": "s3",
+      "kind": "branch",
+      "branch_outcome": false,
+      "conditions": [
+        "签名区域可读"
+      ],
+      "exceptions": [
+        "补签队列不可用时暂停"
+      ]
+    }
+  ],
+  "required_precedence": [
+    [
+      "s1",
+      "d1"
+    ],
+    [
+      "d1",
+      "s2"
+    ],
+    [
+      "d1",
+      "s3"
+    ]
+  ],
+  "totals": {
+    "source_statements": 8,
+    "parsed_statements": 8,
+    "unparsed_statements": 0,
+    "steps": 4,
+    "decision_steps": 1,
+    "relations": 3,
+    "sequence_relations": 1,
+    "branch_relations": 2,
+    "causes_relations": 0,
+    "promotes_relations": 0,
+    "inhibits_relations": 0,
+    "correlates_relations": 0,
+    "unknown_relations": 0,
+    "evidence_records": 8,
+    "node_inputs": 4,
+    "node_outputs": 4,
+    "process_conditions": 1,
+    "process_exceptions": 1,
+    "node_conditions": 4,
+    "node_exceptions": 4,
+    "relation_conditions": 3,
+    "relation_exceptions": 3,
+    "flow_nodes": 4,
+    "flow_edges": 3
+  },
+  "unparsed_lines": [],
+  "empty_list_meaning": "not_listed_in_selected_source",
+  "scope": "bounded_self_authored_engineering_only"
+}
