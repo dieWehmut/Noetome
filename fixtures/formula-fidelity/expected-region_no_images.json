@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "producer": "formula_fidelity_expected",
+  "author": "independent_self_authored_engineering_fixture",
+  "case_name": "region_no_images",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "scope": "selected_formula_only_not_ocr_or_science",
+  "source_pins": {
+    "semantics.json": {
+      "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+      "byte_length": 846
+    },
+    "case.json": {
+      "sha256": "0c945887c019393d1df32b7cc6ca1f6aec58b82bbbae61ba386929b3b23f6026",
+      "byte_length": 626
+    },
+    "region.png": {
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "byte_length": 6656
+    }
+  },
+  "case": {
+    "schema_version": 1,
+    "purpose": "formula_fidelity",
+    "selection_id": "region_only",
+    "title": "公式保真样例 region_only",
+    "source_kind": "formula_region",
+    "tex": null,
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf"
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "page": 1,
+      "canvas": [
+        1000,
+        600
+      ],
+      "bounds": [
+        100,
+        120,
+        800,
+        240
+      ],
+      "legibility": "clear"
+    },
+    "data_available": false
+  },
+  "semantics": {
+    "schema_version": 1,
+    "expression": "C_i(t) = -\\frac{a}{b} t^{2}",
+    "symbols": [
+      {
+        "symbol": "C",
+        "definition": "test concentration",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "t",
+        "definition": "elapsed time",
+        "unit": "s"
+      },
+      {
+        "symbol": "a",
+        "definition": "positive scaling constant",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "b",
+        "definition": "positive nonzero divisor",
+        "unit": "s^2"
+      }
+    ],
+    "conditions": [
+      "a > 0 and b > 0",
+      "This is a fictional engineering example, not a scientific claim."
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "tokens": [
+    "C",
+    "_",
+    "i",
+    "(",
+    "t",
+    ")",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "}",
+    "{",
+    "b",
+    "}",
+    "t",
+    "^",
+    "{",
+    "2",
+    "}"
+  ],
+  "profile_name": "no-images",
+  "representation": null,
+  "issue_codes": [
+    "FORMULA_IMAGE_UNAVAILABLE"
+  ],
+  "fallback_reasons": [],
+  "compatibility_rewrites": []
+}

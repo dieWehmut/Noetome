@@ -173,6 +173,29 @@ impl OutputRoot {
     pub(crate) fn create_flow(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
         Self::create_owned(path, request_id, Some("knowledge_flow"))
     }
+    pub(crate) fn create_formula(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
+        Self::create_owned(path, request_id, Some("knowledge_formula"))
+    }
+    pub(crate) fn discard_formula_result(&mut self) -> Result<(), ProjectError> {
+        let mut first_error = None;
+        for name in [
+            "formula.json",
+            "formula.md",
+            "plan.json",
+            "compiled.tex",
+            "公式预览.md",
+        ] {
+            if let Err(error) = self.discard_names_inner(&[name], true) {
+                if first_error.is_none() {
+                    first_error = Some(error);
+                }
+            }
+        }
+        match first_error {
+            Some(error) => Err(error),
+            None => Ok(()),
+        }
+    }
     pub(crate) fn discard_process_result(&mut self) -> Result<(), ProjectError> {
         let mut names: Vec<String> = self
             .files
@@ -273,9 +296,10 @@ impl OutputRoot {
         let presentation = mode == Some("knowledge_presentation");
         let process = mode == Some("process_source_review");
         let flow = mode == Some("knowledge_flow");
-        let mut owner = serde_json::json!({"schema_version":1,"producer":if flow {"knowledge_flow"} else if process {"process_source_review"} else if presentation {"knowledge_presentation"} else if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if flow {"unpublished_flow"} else if process {"unpublished_process_source_review"} else if presentation {"unpublished_presentation"} else if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
-        if let Some(mode) =
-            mode.filter(|_| !review && !coordination && !presentation && !process && !flow)
+        let formula = mode == Some("knowledge_formula");
+        let mut owner = serde_json::json!({"schema_version":1,"producer":if formula {"knowledge_formula"} else if flow {"knowledge_flow"} else if process {"process_source_review"} else if presentation {"knowledge_presentation"} else if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if formula {"unpublished_formula"} else if flow {"unpublished_flow"} else if process {"unpublished_process_source_review"} else if presentation {"unpublished_presentation"} else if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
+        if let Some(mode) = mode
+            .filter(|_| !review && !coordination && !presentation && !process && !flow && !formula)
         {
             owner["transport_mode"] = serde_json::json!(mode);
         }

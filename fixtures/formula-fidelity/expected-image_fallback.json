@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "producer": "formula_fidelity_expected",
+  "author": "independent_self_authored_engineering_fixture",
+  "case_name": "image_fallback",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "scope": "selected_formula_only_not_ocr_or_science",
+  "source_pins": {
+    "semantics.json": {
+      "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+      "byte_length": 846
+    },
+    "original.tex": {
+      "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59",
+      "byte_length": 28
+    },
+    "case.json": {
+      "sha256": "d5735a8679ea9292c08e6d3844ae62e52a79ce2fc8ecde7ce49610d86b70bb3a",
+      "byte_length": 731
+    },
+    "region.png": {
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "byte_length": 6656
+    }
+  },
+  "case": {
+    "schema_version": 1,
+    "purpose": "formula_fidelity",
+    "selection_id": "image_fallback",
+    "title": "公式保真样例 image_fallback",
+    "source_kind": "tex",
+    "tex": {
+      "file": "original.tex",
+      "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf"
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "page": 1,
+      "canvas": [
+        1000,
+        600
+      ],
+      "bounds": [
+        100,
+        120,
+        800,
+        240
+      ],
+      "legibility": "clear"
+    },
+    "data_available": false
+  },
+  "semantics": {
+    "schema_version": 1,
+    "expression": "C_i(t) = -\\frac{a}{b} t^{2}",
+    "symbols": [
+      {
+        "symbol": "C",
+        "definition": "test concentration",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "t",
+        "definition": "elapsed time",
+        "unit": "s"
+      },
+      {
+        "symbol": "a",
+        "definition": "positive scaling constant",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "b",
+        "definition": "positive nonzero divisor",
+        "unit": "s^2"
+      }
+    ],
+    "conditions": [
+      "a > 0 and b > 0",
+      "This is a fictional engineering example, not a scientific claim."
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "tokens": [
+    "C",
+    "_",
+    "i",
+    "(",
+    "t",
+    ")",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "}",
+    "{",
+    "b",
+    "}",
+    "t",
+    "^",
+    "{",
+    "2",
+    "}"
+  ],
+  "profile_name": "no-native",
+  "representation": "formula_image",
+  "issue_codes": [],
+  "fallback_reasons": [
+    "FORMULA_NATIVE_UNAVAILABLE"
+  ],
+  "compatibility_rewrites": []
+}
