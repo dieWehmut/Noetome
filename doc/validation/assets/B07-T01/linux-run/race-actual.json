@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "producer": "independent_native_transaction_race_followup",
+  "actual_race_sha256": "b5eb348dd5593ab2693e1495a61b9354d85e46d332aeb3fa8ce39c760d941ab8",
+  "driver_receipt_sha256": "0244374b71f58cdfdfd575d0df56b254064833c474e1724769e9b2706ec5236d",
+  "actual_cli_calls": 2,
+  "commands": [
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome",
+        "run",
+        "status",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-run-final-launch-06-20261107/race/actual-race/run"
+      ],
+      "label": "independent native terminal race status",
+      "exit_code": 0,
+      "started_ns": 1793986805970937416,
+      "finished_ns": 1793986806170394286,
+      "elapsed_seconds": 0.19920843400177546,
+      "timed_out": false,
+      "stdout_sha256": "aef9967b59ba4e37b495bf2737c034b9528beee93694652057177bd2ecfa480b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512"
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome",
+        "run",
+        "resume",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-run-final-launch-06-20261107/race/actual-race/fixture",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-run-final-launch-06-20261107/race/actual-race/run"
+      ],
+      "label": "independent native terminal race resume",
+      "exit_code": 0,
+      "started_ns": 1793986806381349101,
+      "finished_ns": 1793986806585820734,
+      "elapsed_seconds": 0.2043150340032298,
+      "timed_out": false,
+      "stdout_sha256": "be78728328533527c806b73f736669b27640277892a2b2245af08132aa1b1171",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512"
+    }
+  ],
+  "actual_driver_calls": 0,
+  "drivers": [],
+  "real_model_calls": 0,
+  "actual_auxiliary_process_calls": 0,
+  "auxiliary_processes": [],
+  "author_pins": {
+    "case.json": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+    "expected.json": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+    "ir.json": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+    "note-plan.json": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+    "sources/材料乙.md": "ed8491e5b6935d46ba4708da6d969593f1c79c06739294bde7376435bbfa6535",
+    "sources/材料甲.md": "4f5c914504aaab35408dfcc88813b838b9b5ff99efd7023af60888e258425562"
+  },
+  "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512",
+  "source_scope": "workspace production Rust sources/manifests/build scripts, selected checker and its tests; separate actual build receipts required",
+  "source_before_after_equal": true
+}

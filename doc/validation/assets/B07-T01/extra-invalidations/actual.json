@@ -1,0 +1,536 @@
+{
+  "status": "passed",
+  "producer": "independent_actual_partial_dependency_invalidation",
+  "scope": "three explicitly copied inputs/new Runs; ownPID kill at reports unit_prepared with four actual confirmations then ordinary Core05 resume",
+  "cases": [
+    {
+      "case": "source-bytes-after-four-confirmed",
+      "status": "passed",
+      "run_id": "1b3bfbf1-8c9c-47da-b6eb-9f5881ec2841",
+      "release_id": "910e2665-dc3d-4149-9306-78b39e3d18af",
+      "driver_PID": 665989,
+      "driver_real_OS_kill": "SIGKILL",
+      "driver_exit": -9,
+      "held_boundary": {
+        "compiler_fingerprint": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+        "event": "unit_prepared",
+        "occurrence": 1,
+        "pid": 665989,
+        "producer": "run_checkpoint_test_handshake",
+        "run_id": "1b3bfbf1-8c9c-47da-b6eb-9f5881ec2841",
+        "sequence": 23,
+        "unit": "reports"
+      },
+      "old_confirmed": 4,
+      "new_confirmed": 4,
+      "old_compiler_fingerprint": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+      "resume_current_compiler_actual_driver_binding": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+      "actual_status": "invalidated",
+      "diagnostic": "RUN_INPUT_CHANGED: RUN_INPUT_CHANGED：实际输入字节与本次已加载来源契约不符。",
+      "old_prefix_count": 23,
+      "new_checkpoint_count": 24,
+      "raw_prefix_exact": true,
+      "owner_raw_identity_unchanged": true,
+      "metadata_raw_exact": true,
+      "output_full_inventory_exact": true,
+      "publication_SQL_count": 0,
+      "confirmations": {
+        "source_contract": 1,
+        "render": 1,
+        "stage_verification": 1,
+        "vault_readback": 1,
+        "reports": 0,
+        "publication": 0
+      },
+      "attempts": {
+        "source_contract": 1,
+        "render": 1,
+        "stage_verification": 1,
+        "vault_readback": 1,
+        "reports": 1,
+        "publication": 0
+      },
+      "source_old": {
+        "identity": {
+          "platform": "unix",
+          "device": 2096,
+          "inode": 2248890
+        },
+        "sha256": "4f5c914504aaab35408dfcc88813b838b9b5ff99efd7023af60888e258425562",
+        "byte_length": 170,
+        "modified": "1793806211154758475",
+        "mode": 420
+      },
+      "source_new": {
+        "identity": {
+          "platform": "unix",
+          "device": 2096,
+          "inode": 2248890
+        },
+        "sha256": "dc9a3364582cdd9669917a09c9180bc61c451851dc9dd01ce5730518bc5e0738",
+        "byte_length": 258,
+        "modified": "1793985760603288177",
+        "mode": 420
+      },
+      "source_after_resume_exact": true,
+      "repeat_resume_full_Run_tree_equal": true,
+      "real_model_calls": 0
+    },
+    {
+      "case": "same-source-bytes-new-file-ID-after-four-confirmed",
+      "status": "passed",
+      "run_id": "3821798f-198b-45e7-ba18-84181d694356",
+      "release_id": "f4ce4b05-10b4-45c3-986a-80c25fb316a5",
+      "driver_PID": 665997,
+      "driver_real_OS_kill": "SIGKILL",
+      "driver_exit": -9,
+      "held_boundary": {
+        "compiler_fingerprint": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+        "event": "unit_prepared",
+        "occurrence": 1,
+        "pid": 665997,
+        "producer": "run_checkpoint_test_handshake",
+        "run_id": "3821798f-198b-45e7-ba18-84181d694356",
+        "sequence": 23,
+        "unit": "reports"
+      },
+      "old_confirmed": 4,
+      "new_confirmed": 4,
+      "old_compiler_fingerprint": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+      "resume_current_compiler_actual_driver_binding": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+      "actual_status": "invalidated",
+      "diagnostic": "RUN_INPUT_INVALIDATED: RUN_INPUT_INVALIDATED：输入、编译版本或根身份已改变，依赖结果失效；请为新版本创建新的运行，保留原现场。",
+      "old_prefix_count": 23,
+      "new_checkpoint_count": 24,
+      "raw_prefix_exact": true,
+      "owner_raw_identity_unchanged": true,
+      "metadata_raw_exact": true,
+      "output_full_inventory_exact": true,
+      "publication_SQL_count": 0,
+      "confirmations": {
+        "source_contract": 1,
+        "render": 1,
+        "stage_verification": 1,
+        "vault_readback": 1,
+        "reports": 0,
+        "publication": 0
+      },
+      "attempts": {
+        "source_contract": 1,
+        "render": 1,
+        "stage_verification": 1,
+        "vault_readback": 1,
+        "reports": 1,
+        "publication": 0
+      },
+      "source_old": {
+        "identity": {
+          "platform": "unix",
+          "device": 2096,
+          "inode": 2248991
+        },
+        "sha256": "4f5c914504aaab35408dfcc88813b838b9b5ff99efd7023af60888e258425562",
+        "byte_length": 170,
+        "modified": "1793806211154758475",
+        "mode": 420
+      },
+      "source_new": {
+        "identity": {
+          "platform": "unix",
+          "device": 2096,
+          "inode": 2249055
+        },
+        "sha256": "4f5c914504aaab35408dfcc88813b838b9b5ff99efd7023af60888e258425562",
+        "byte_length": 170,
+        "modified": "1793806211154758475",
+        "mode": 420
+      },
+      "source_after_resume_exact": true,
+      "repeat_resume_full_Run_tree_equal": true,
+      "real_model_calls": 0
+    },
+    {
+      "case": "actual-Core04-to-Core05-after-four-confirmed",
+      "status": "passed",
+      "run_id": "8baaf143-2f49-4512-9db3-5a7003c71641",
+      "release_id": "320b134c-b400-42f8-9ad6-7b5fdde08492",
+      "driver_PID": 666003,
+      "driver_real_OS_kill": "SIGKILL",
+      "driver_exit": -9,
+      "held_boundary": {
+        "compiler_fingerprint": "437c21d5c101c9ba5f950557f42b3c41cf6c63c54112312a2d6ecd79e93da0ac",
+        "event": "unit_prepared",
+        "occurrence": 1,
+        "pid": 666003,
+        "producer": "run_checkpoint_test_handshake",
+        "run_id": "8baaf143-2f49-4512-9db3-5a7003c71641",
+        "sequence": 23,
+        "unit": "reports"
+      },
+      "old_confirmed": 4,
+      "new_confirmed": 4,
+      "old_compiler_fingerprint": "437c21d5c101c9ba5f950557f42b3c41cf6c63c54112312a2d6ecd79e93da0ac",
+      "resume_current_compiler_actual_driver_binding": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+      "actual_status": "invalidated",
+      "diagnostic": "RUN_INPUT_INVALIDATED: RUN_INPUT_INVALIDATED：输入、编译版本或根身份已改变，依赖结果失效；请为新版本创建新的运行，保留原现场。",
+      "old_prefix_count": 23,
+      "new_checkpoint_count": 24,
+      "raw_prefix_exact": true,
+      "owner_raw_identity_unchanged": true,
+      "metadata_raw_exact": true,
+      "output_full_inventory_exact": true,
+      "publication_SQL_count": 0,
+      "confirmations": {
+        "source_contract": 1,
+        "render": 1,
+        "stage_verification": 1,
+        "vault_readback": 1,
+        "reports": 0,
+        "publication": 0
+      },
+      "attempts": {
+        "source_contract": 1,
+        "render": 1,
+        "stage_verification": 1,
+        "vault_readback": 1,
+        "reports": 1,
+        "publication": 0
+      },
+      "source_old": {
+        "identity": {
+          "platform": "unix",
+          "device": 2096,
+          "inode": 2249084
+        },
+        "sha256": "4f5c914504aaab35408dfcc88813b838b9b5ff99efd7023af60888e258425562",
+        "byte_length": 170,
+        "modified": "1793806211154758475",
+        "mode": 420
+      },
+      "source_new": {
+        "identity": {
+          "platform": "unix",
+          "device": 2096,
+          "inode": 2249084
+        },
+        "sha256": "4f5c914504aaab35408dfcc88813b838b9b5ff99efd7023af60888e258425562",
+        "byte_length": 170,
+        "modified": "1793806211154758475",
+        "mode": 420
+      },
+      "source_after_resume_exact": true,
+      "repeat_resume_full_Run_tree_equal": true,
+      "real_model_calls": 0
+    }
+  ],
+  "fixed_checker_sha256": "87cb1580d26ca216061a9ef129ff92904958c099866d7811f9bcb79139b936da",
+  "scientific_quality": "not_run",
+  "paid_calls": 0,
+  "actual_cli_calls": 7,
+  "commands": [
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome",
+        "case",
+        "verify",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/source-bytes-after-four-confirmed-input"
+      ],
+      "label": "actual changed UTF8 source load and contract verification",
+      "exit_code": 3,
+      "started_ns": 1793985760604970407,
+      "finished_ns": 1793985760611566730,
+      "elapsed_seconds": 0.006236228015040979,
+      "timed_out": false,
+      "stdout_sha256": "702fdac71d3ae394947a73f35267c34530be263960893e8ebad9fbe85c02e3b9",
+      "stderr_sha256": "870e33b4a4cb6ec5c7127c6582bda149675991b4f1be0acfa975ff29a7ae7c66",
+      "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512"
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome",
+        "run",
+        "resume",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/source-bytes-after-four-confirmed-input",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/source-bytes-after-four-confirmed"
+      ],
+      "label": "ordinary Core05 resume after actual4-confirmed input/compiler change",
+      "exit_code": 3,
+      "started_ns": 1793985760774899651,
+      "finished_ns": 1793985760870915946,
+      "elapsed_seconds": 0.09585605698521249,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c937b0f835ad62c65286c168b393fad37e0b1ba37ad69242b5f5c300767ed61c",
+      "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512"
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome",
+        "run",
+        "resume",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/source-bytes-after-four-confirmed-input",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/source-bytes-after-four-confirmed"
+      ],
+      "label": "already invalidated partialRun repeated resume preserves exact tree",
+      "exit_code": 3,
+      "started_ns": 1793985761035444643,
+      "finished_ns": 1793985761096195054,
+      "elapsed_seconds": 0.06049704601173289,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "c937b0f835ad62c65286c168b393fad37e0b1ba37ad69242b5f5c300767ed61c",
+      "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512"
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome",
+        "run",
+        "resume",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/same-source-bytes-new-file-ID-after-four-confirmed-input",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/same-source-bytes-new-file-ID-after-four-confirmed"
+      ],
+      "label": "ordinary Core05 resume after actual4-confirmed input/compiler change",
+      "exit_code": 3,
+      "started_ns": 1793985762107774724,
+      "finished_ns": 1793985762210763452,
+      "elapsed_seconds": 0.1026061890006531,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "71cd27bbfad44c4ae6aa90722b7dfa981e29feef7ffe1e51ff5a1577f2df8ceb",
+      "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512"
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome",
+        "run",
+        "resume",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/same-source-bytes-new-file-ID-after-four-confirmed-input",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/same-source-bytes-new-file-ID-after-four-confirmed"
+      ],
+      "label": "already invalidated partialRun repeated resume preserves exact tree",
+      "exit_code": 3,
+      "started_ns": 1793985762409655821,
+      "finished_ns": 1793985762480739767,
+      "elapsed_seconds": 0.07092197999008931,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "71cd27bbfad44c4ae6aa90722b7dfa981e29feef7ffe1e51ff5a1577f2df8ceb",
+      "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512"
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome",
+        "run",
+        "resume",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/actual-Core04-to-Core05-after-four-confirmed-input",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/actual-Core04-to-Core05-after-four-confirmed"
+      ],
+      "label": "ordinary Core05 resume after actual4-confirmed input/compiler change",
+      "exit_code": 3,
+      "started_ns": 1793985763600844633,
+      "finished_ns": 1793985763668185068,
+      "elapsed_seconds": 0.06719852797687054,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "71cd27bbfad44c4ae6aa90722b7dfa981e29feef7ffe1e51ff5a1577f2df8ceb",
+      "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512"
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome",
+        "run",
+        "resume",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/actual-Core04-to-Core05-after-four-confirmed-input",
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/actual-Core04-to-Core05-after-four-confirmed"
+      ],
+      "label": "already invalidated partialRun repeated resume preserves exact tree",
+      "exit_code": 3,
+      "started_ns": 1793985763864600555,
+      "finished_ns": 1793985763931586023,
+      "elapsed_seconds": 0.06687248600064777,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "71cd27bbfad44c4ae6aa90722b7dfa981e29feef7ffe1e51ff5a1577f2df8ceb",
+      "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512"
+    }
+  ],
+  "actual_driver_calls": 3,
+  "drivers": [
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/run-test-driver",
+        "--exact",
+        "fixture_run::tests::checkpoint_child",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "test_environment": {
+        "NOETOME_RUN_TEST_CASE": "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/source-bytes-after-four-confirmed-input",
+        "NOETOME_RUN_TEST_ROOT": "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/source-bytes-after-four-confirmed",
+        "NOETOME_RUN_TEST_EVENT": "unit_prepared",
+        "NOETOME_RUN_TEST_UNIT": "reports",
+        "NOETOME_RUN_TEST_OCCURRENCE": "1",
+        "NOETOME_RUN_TEST_OPERATION": "start"
+      },
+      "pid": 665989,
+      "started_ns": 1793985759751791453,
+      "driver_sha256": "77c7043d38dfefc18227fae33646ad2fb676816b83dd9b6060e6af90eaa5a45e",
+      "handshake": {
+        "compiler_fingerprint": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+        "event": "unit_prepared",
+        "occurrence": 1,
+        "pid": 665989,
+        "producer": "run_checkpoint_test_handshake",
+        "run_id": "1b3bfbf1-8c9c-47da-b6eb-9f5881ec2841",
+        "sequence": 23,
+        "unit": "reports"
+      },
+      "handshakes": [
+        {
+          "compiler_fingerprint": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+          "event": "unit_prepared",
+          "occurrence": 1,
+          "pid": 665989,
+          "producer": "run_checkpoint_test_handshake",
+          "run_id": "1b3bfbf1-8c9c-47da-b6eb-9f5881ec2841",
+          "sequence": 23,
+          "unit": "reports"
+        }
+      ],
+      "handshake_received_ns": 1793985760340633960,
+      "alive_at_handshake": true,
+      "alive_before_termination": true,
+      "termination_requested_ns": 1793985760388931710,
+      "termination_method": "SIGKILL",
+      "action": "force_killed",
+      "exit_code": -9,
+      "finished_ns": 1793985760390406357,
+      "elapsed_seconds": 0.6386154339998029,
+      "stdout_sha256": "c0837d86b16eb25bed88051a02babd0003a2a0af77b300a636832e35702a1041",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "driver_before_after_equal": true
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/run-test-driver",
+        "--exact",
+        "fixture_run::tests::checkpoint_child",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "test_environment": {
+        "NOETOME_RUN_TEST_CASE": "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/same-source-bytes-new-file-ID-after-four-confirmed-input",
+        "NOETOME_RUN_TEST_ROOT": "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/same-source-bytes-new-file-ID-after-four-confirmed",
+        "NOETOME_RUN_TEST_EVENT": "unit_prepared",
+        "NOETOME_RUN_TEST_UNIT": "reports",
+        "NOETOME_RUN_TEST_OCCURRENCE": "1",
+        "NOETOME_RUN_TEST_OPERATION": "start"
+      },
+      "pid": 665997,
+      "started_ns": 1793985761428166305,
+      "driver_sha256": "77c7043d38dfefc18227fae33646ad2fb676816b83dd9b6060e6af90eaa5a45e",
+      "handshake": {
+        "compiler_fingerprint": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+        "event": "unit_prepared",
+        "occurrence": 1,
+        "pid": 665997,
+        "producer": "run_checkpoint_test_handshake",
+        "run_id": "3821798f-198b-45e7-ba18-84181d694356",
+        "sequence": 23,
+        "unit": "reports"
+      },
+      "handshakes": [
+        {
+          "compiler_fingerprint": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219",
+          "event": "unit_prepared",
+          "occurrence": 1,
+          "pid": 665997,
+          "producer": "run_checkpoint_test_handshake",
+          "run_id": "3821798f-198b-45e7-ba18-84181d694356",
+          "sequence": 23,
+          "unit": "reports"
+        }
+      ],
+      "handshake_received_ns": 1793985761887469249,
+      "alive_at_handshake": true,
+      "alive_before_termination": true,
+      "termination_requested_ns": 1793985761902350284,
+      "termination_method": "SIGKILL",
+      "action": "force_killed",
+      "exit_code": -9,
+      "finished_ns": 1793985761904314397,
+      "elapsed_seconds": 0.47614763301680796,
+      "stdout_sha256": "70b944e2d74678799bc61c13aa8f6adbf8dca69332e4a08c87f89e26c9551c10",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "driver_before_after_equal": true
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-04-20261107/run-test-driver",
+        "--exact",
+        "fixture_run::tests::checkpoint_child",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "test_environment": {
+        "NOETOME_RUN_TEST_CASE": "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/actual-Core04-to-Core05-after-four-confirmed-input",
+        "NOETOME_RUN_TEST_ROOT": "/home/lyinn/project/Noetome/.artifacts/b07-t01-partial-invalidation-extra-05-20261107/actual-Core04-to-Core05-after-four-confirmed",
+        "NOETOME_RUN_TEST_EVENT": "unit_prepared",
+        "NOETOME_RUN_TEST_UNIT": "reports",
+        "NOETOME_RUN_TEST_OCCURRENCE": "1",
+        "NOETOME_RUN_TEST_OPERATION": "start"
+      },
+      "pid": 666003,
+      "started_ns": 1793985762906792428,
+      "driver_sha256": "f62c5172016145dea9c9a0b5685df7f7b5126af3daf1501b7570440fce67c51c",
+      "handshake": {
+        "compiler_fingerprint": "437c21d5c101c9ba5f950557f42b3c41cf6c63c54112312a2d6ecd79e93da0ac",
+        "event": "unit_prepared",
+        "occurrence": 1,
+        "pid": 666003,
+        "producer": "run_checkpoint_test_handshake",
+        "run_id": "8baaf143-2f49-4512-9db3-5a7003c71641",
+        "sequence": 23,
+        "unit": "reports"
+      },
+      "handshakes": [
+        {
+          "compiler_fingerprint": "437c21d5c101c9ba5f950557f42b3c41cf6c63c54112312a2d6ecd79e93da0ac",
+          "event": "unit_prepared",
+          "occurrence": 1,
+          "pid": 666003,
+          "producer": "run_checkpoint_test_handshake",
+          "run_id": "8baaf143-2f49-4512-9db3-5a7003c71641",
+          "sequence": 23,
+          "unit": "reports"
+        }
+      ],
+      "handshake_received_ns": 1793985763402754128,
+      "alive_at_handshake": true,
+      "alive_before_termination": true,
+      "termination_requested_ns": 1793985763416331829,
+      "termination_method": "SIGKILL",
+      "action": "force_killed",
+      "exit_code": -9,
+      "finished_ns": 1793985763417753213,
+      "elapsed_seconds": 0.5109607659978792,
+      "stdout_sha256": "22825189cf9ea7875d8c36bf58676ca787388ed176069f4a6579d7b3cfefe90f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "driver_before_after_equal": true
+    }
+  ],
+  "real_model_calls": 0,
+  "actual_auxiliary_process_calls": 0,
+  "auxiliary_processes": [],
+  "author_pins": {
+    "case.json": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+    "expected.json": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+    "ir.json": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+    "note-plan.json": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+    "sources/材料乙.md": "ed8491e5b6935d46ba4708da6d969593f1c79c06739294bde7376435bbfa6535",
+    "sources/材料甲.md": "4f5c914504aaab35408dfcc88813b838b9b5ff99efd7023af60888e258425562"
+  },
+  "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512",
+  "source_scope": "workspace production Rust sources/manifests/build scripts, selected checker and its tests; separate actual build receipts required",
+  "source_before_after_equal": true
+}

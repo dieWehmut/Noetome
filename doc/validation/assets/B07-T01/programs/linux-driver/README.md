@@ -1,0 +1,11 @@
+# CoreRound05 Linux driver 完整程序归档
+
+当前用途状态为 `clean_build_identity_verified_full_gates_pending`。程序的clean构建和完整本体/来源身份已实际核验，真实helper12测试也通过；新Python检查器、完整Python、独立95场景及原生门禁仍须后续实际验收。不改变原build receipt，不用旧04通过替代05最终检查。
+
+`originals.zip` 为40181696B，SHA `1c69c8dac48870da7b6fab023e62923c70dc4f2e4a18ee0c45955e569902476b`，小于100MiB，无需分卷。43个成员全部CRC、SHA、长度完整回读成功，各原文件ID、mtime、字节前后相等。ZIP完整包含188081528B ELF本体，SHA `77c7043d38dfefc18227fae33646ad2fb676816b83dd9b6060e6af90eaa5a45e`。
+
+125项source ZIP SHA `6c79f7b7bbdab160135ae2e46bc7f932cde59b902d36ad3ca4981b820ce9df4c`、实际build receipt SHA `bc18bb13e5a57751131d672e7abc75559034557c390f91a959bada4608779634`分别绑定，source原件、source前后、verbose构建及fmt/clean/rustc/cargo stdout/stderr/launch/receipt均保存。另含实际helper12 raw/launch/source前后和独立04→05全文/差分。Helper实际PID659693，driver SHA与本build05完全匹配，125源SHA/长度也匹配。
+
+独立差异审查证明只有cfg(test) fixture setup新增52B的canonicalize行；删去这一整行后全文精确等于捕获04，唯一cfg(test)之前的生产部分全部逐字相同。Owner、shadow、journal结构、input/output、RecoveryWitness的生产门禁没有放宽。真实Linux helper stdout有12个唯一ok、退出0、stderr0B；focused12不等于完整Linux Rust。
+
+解压后核对ELF SHA并按原mode恢复执行位。Compiler fingerprint与ELF SHA分别核对，不承诺将既存Run跨平台搬移。归档没有执行新的Cargo/CLI或模型请求，没有推定Windows passed。旧04所有原件、native04失败及早期捕获限制保留在独立历史包。

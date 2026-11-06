@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "producer": "exact_doc_only_post_validation_scope",
+  "executed_native08_source_snapshot": {
+    "sha256": "5ebf97755b2a9b3e0c10fd37173782aaa1d3c752a083f184a3f10515c982f96e",
+    "byte_length": 412885
+  },
+  "executed_native08_final": {
+    "sha256": "30f70dd942b1ce787326b3d0d155d4551291cde4228660378448ec1718521496",
+    "byte_length": 19783
+  },
+  "source_count": 2002,
+  "unchanged_source_count": 1999,
+  "only_changed_files": {
+    "doc/execution/B07-T01_RUN_PLAN.md": {
+      "before": {
+        "sha256": "cc3a3d2aed57f065a3d80dbc5691db182a3fa1f67e69749c7d44a464e89be1ee",
+        "byte_length": 9602
+      },
+      "after": {
+        "sha256": "491b0101c9dc35e03d9b9917b3d04f2f3b298c9cdd7e203a6ccbaad1ff4922aa",
+        "byte_length": 9737
+      }
+    },
+    "doc/standards/DESIGN.md": {
+      "before": {
+        "sha256": "1f1316f8aa1121e99db914277d3f1298eb6631a01890545e127107e9f3679963",
+        "byte_length": 44734
+      },
+      "after": {
+        "sha256": "1c0f5dfc2dd5245f13e792c1e01ff20638c4eb19ed7059219c0517da89d339f0",
+        "byte_length": 44735
+      }
+    },
+    "doc/technical/RUN_CHECKPOINT_CONTRACT.md": {
+      "before": {
+        "sha256": "81311f211a0e20f3b46e3e02d85e211a894699f52feea9bc7db5c90162509660",
+        "byte_length": 16776
+      },
+      "after": {
+        "sha256": "9d51e5959c0e9bef1e2edfb57f3d78581b615cb185451cd6a277a39f6e8a7d8b",
+        "byte_length": 16946
+      }
+    }
+  },
+  "minimum_diff": {
+    "sha256": "ed7c53eec11f23b9fd1efbefa7ed358fa4e06418ecfdc8d2977a710372c7abef",
+    "byte_length": 5662
+  },
+  "product_rust_python_tests_and_author_inputs_unchanged": true,
+  "required_runtime_scopes_unchanged": [
+    "direct89",
+    "root_cli_cargo_tests125",
+    "all_workspace_rs125",
+    "conservative1864"
+  ],
+  "reason": "after all source gates ended, align displayed Run success enum, distinguish UTC audit times from epoch-nanosecond FileStamp.modified, link execution plan to actual report",
+  "checks": "whole2002 source inventory rehashed: only authorized3 Markdown files differ; no executing code or frozen author/expected modifications",
+  "link_check": "pending Root creation of validation/B07-T01.md then final local links check"
+}

@@ -1,0 +1,222 @@
+{
+  "schema_version": 1,
+  "task": "B07-T01",
+  "status": "passed",
+  "scope": "fixed synthetic fixture six-unit recovery on Linux and native Windows; no production/model/scientific acceptance",
+  "frozen_author_manifest": {
+    "path": "fixtures/run-checkpoint-v1/frozen-sha256.json",
+    "sha256": "240cf6bf13c082c24c93d92ab47a5e76cadb799beb4fe162d2665e9fbc12ccd1",
+    "members": 17
+  },
+  "runtime_checks": {
+    "linux_matrix": {
+      "passed": 95,
+      "not_run": 0,
+      "ordinary_cli_calls": 320,
+      "driver_calls": 65,
+      "forced_driver_terminations": 57,
+      "sqlite_writer_calls": 16,
+      "forced_sqlite_writer_terminations": 16
+    },
+    "windows_matrix": {
+      "passed": 94,
+      "not_run": 1,
+      "not_run_reason": "POSIX permissions do not establish Windows failure behavior",
+      "ordinary_cli_calls": 319,
+      "driver_calls": 64,
+      "forced_driver_terminations": 57,
+      "sqlite_writer_calls": 16,
+      "forced_sqlite_writer_terminations": 16
+    },
+    "terminal_transaction_race": {
+      "linux": {
+        "passed": true,
+        "additional_ordinary_cli_calls": 2
+      },
+      "windows": {
+        "passed": true,
+        "additional_ordinary_cli_calls": 2
+      }
+    },
+    "partial_invalidation_extra": {
+      "passed": 3,
+      "ordinary_cli_calls": 7,
+      "forced_driver_terminations": 3,
+      "checker_scope": "previous 35-case checker, 87cb version; unchanged validation functions and Linux inventory path verified against final 36 version"
+    },
+    "linux_python": {
+      "total": 416,
+      "passed": 395,
+      "skipped": 21,
+      "failed": 0,
+      "errors": 0,
+      "elapsed_seconds": 179.48385524749756
+    },
+    "windows_python_final08": {
+      "total": 477,
+      "passed": 469,
+      "skipped": 8,
+      "failed": 0,
+      "errors": 0,
+      "elapsed_seconds": 443.875,
+      "old_test_identities_retained": 441,
+      "new_test_identities": 36,
+      "credential_engines": "Windows PowerShell 5.1 and Codex runtime PowerShell 7.6.5"
+    },
+    "windows_rust_native06": {
+      "passed": 756,
+      "failed": 0,
+      "ignored": 0,
+      "suites": 23,
+      "fmt_exit": 0,
+      "check_exit": 0,
+      "test_exit": 0,
+      "build_exit": 0
+    },
+    "linux_rust_helper": {
+      "passed": 12,
+      "filtered": 457,
+      "failed": 0
+    },
+    "linux_full_workspace_rust": "not_run"
+  },
+  "source_scopes": {
+    "compiler_fingerprint_inputs": 89,
+    "cli_build_and_tests": 125,
+    "all_workspace_rust_files": 125,
+    "conservative_rust_and_fixture_dependencies": 1864,
+    "note": "two 125-file sets have different members; native06 Rust is reused for native08 Python via four exact name/SHA scopes. No native08 Cargo rerun claimed."
+  },
+  "final_checker": {
+    "path": "scripts/verify_run_checkpoint.py",
+    "sha256": "2a247639c097ecc4a1c52e3376fe02f8f51c8579869af5927819ba8aa1e032b9",
+    "byte_length": 131174
+  },
+  "final_checker_tests": {
+    "path": "tests/test_verify_run_checkpoint.py",
+    "sha256": "3c414d77c2536265d70ab723dde1d43635d5b8ee410d617cac79992361a0b668",
+    "byte_length": 29187
+  },
+  "programs": {
+    "linux": {
+      "cli_sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512",
+      "driver_sha256": "77c7043d38dfefc18227fae33646ad2fb676816b83dd9b6060e6af90eaa5a45e",
+      "compiler_fingerprint": "24fb87375fe96510eaffc3369980935a5aadb77e28256ac0321c89b0edf24219"
+    },
+    "windows": {
+      "cli_sha256": "7acd2ea0cad8c852dc6b147925bfff7d063387d2db274d23f5d7648eba4a2830",
+      "driver_sha256": "95fc2905a901b64095e4eb661c18bc5e1f89e92bdf1ea01c12cd295a8040e725",
+      "compiler_fingerprint": "03b1674c9739fe39581d0736784b28f51582f58749801eba778df917f94eb52e"
+    }
+  },
+  "real_model_calls": 0,
+  "paid_calls": 0,
+  "scientific_quality": "not_run",
+  "production_vault": "not_accessed",
+  "archives": [
+    {
+      "path": "extra-invalidations/originals.zip",
+      "sha256": "c448fa27b895855ed8479a811543b94eb27c85aaec0dbc0fb3203f7da7bc92c0",
+      "byte_length": 380732,
+      "members": 210
+    },
+    {
+      "path": "history/native-prechecks/originals.zip",
+      "sha256": "bc2e3466b103c0dfe2e23a9504899bba90d77fd303162f66d6ae23dde4a8dc8a",
+      "byte_length": 57509639,
+      "members": 344
+    },
+    {
+      "path": "history/native06/originals.zip",
+      "sha256": "ac77491e7205312941245955fbd877546507dbb5b6910b3129aaf0d4a16ab0f1",
+      "byte_length": 1075314,
+      "members": 822
+    },
+    {
+      "path": "history/python35/originals.zip",
+      "sha256": "f66b85c68a60155bdd2d89ea8dc55fe83fe3fec391714fc6c928d15131f5c73c",
+      "byte_length": 412002,
+      "members": 91
+    },
+    {
+      "path": "linux-python/originals.zip",
+      "sha256": "6b38ca6b19dd9be10f4aacf7a414aeaa28126e841e392e1f528ba4470de47f2a",
+      "byte_length": 36715112,
+      "members": 15176
+    },
+    {
+      "path": "linux-run/originals.zip",
+      "sha256": "33c38adb058c94fd828235f9db1f46514b7fb2aa55bc7d5bd5c433e084782b77",
+      "byte_length": 5743814,
+      "members": 3439
+    },
+    {
+      "path": "programs/linux-cli/originals.zip",
+      "sha256": "e76b3fe81c08d99365dfb5b2daf3921eb58bfdd9083527e7ad6c959069491d8a",
+      "byte_length": 33995704,
+      "members": 43
+    },
+    {
+      "path": "programs/linux-driver/originals.zip",
+      "sha256": "1c69c8dac48870da7b6fab023e62923c70dc4f2e4a18ee0c45955e569902476b",
+      "byte_length": 40181696,
+      "members": 43
+    },
+    {
+      "path": "review/current-source/originals.zip",
+      "sha256": "40a7a9acebf02032657814597c536a075eae8a2b84caabb476ef9a020577fd10",
+      "byte_length": 88157,
+      "members": 2
+    },
+    {
+      "path": "review/peer/originals.zip",
+      "sha256": "a3564a3ac41a181660d751bb4ceaffc4e2971c6d0b5256307e0373d1106b5797",
+      "byte_length": 9748,
+      "members": 8
+    },
+    {
+      "path": "review/readbackmanifest.zip",
+      "sha256": "0669298a74736c97c4235b027ec02efcb6b6a36e13b6640f778037195a621727",
+      "byte_length": 6675473,
+      "members": 1359
+    },
+    {
+      "path": "windows-python/originals.zip",
+      "sha256": "97fa133eed4ce0e14b469c80fbcf1537b217b283c39c88aae7ae7198c8b92ddc",
+      "byte_length": 15572317,
+      "members": 101
+    },
+    {
+      "path": "windows-run/originals.zip",
+      "sha256": "81c732e11e24cda4a35722d6869271a7e5127fb103ef0f1210909a5a3f365a45",
+      "byte_length": 12460338,
+      "members": 5259
+    },
+    {
+      "path": "windows-rust/originals.zip",
+      "sha256": "7267b68cf11e919f3c1fdbf7482b2ebab9c293f74305c54b94bec4b8fcce7772",
+      "byte_length": 26821256,
+      "members": 107
+    }
+  ],
+  "supplemental_review_archives": [
+    {
+      "path": "review/final-report/originals.zip",
+      "sha256": "0e86eeef0925578d2d6c15ab12b8f09142014f5374f60d3201a741b40d2fabcb",
+      "byte_length": 139769,
+      "members": 27,
+      "scope": "final 101-check report/Git audit, including its action-tag wrapper failure; no new runtime product runs"
+    }
+  ],
+  "archive_totals": {
+    "primary_archives": 14,
+    "primary_members": 27004,
+    "primary_zip_bytes": 237641302,
+    "supplemental_archives": 1,
+    "supplemental_members": 27,
+    "supplemental_zip_bytes": 139769,
+    "all_archives": 15,
+    "all_members": 27031,
+    "all_zip_bytes": 237781071
+  }
+}

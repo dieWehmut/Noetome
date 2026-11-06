@@ -1,0 +1,60 @@
+{
+  "status": "passed",
+  "producer": "independent_native_transaction_race_followup",
+  "actual_race_sha256": "bf063db8c272e42cb58eb62c12022539107b2fe7d19dffdce11e1bb8bd82b6d4",
+  "driver_receipt_sha256": "0c36200c5f55d9fcd734ff272f3b6235659e8f6a93e211a7b652dc553ea4596d",
+  "actual_cli_calls": 2,
+  "commands": [
+    {
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b07-t01-windows-final-06-20261107\\selected\\noetome.exe",
+        "run",
+        "status",
+        "\\\\?\\D:\\Noetome\\.artifacts\\b07-t01-windows-matrix-final-07-20261107\\race\\actual-race\\run"
+      ],
+      "label": "independent native terminal race status",
+      "exit_code": 0,
+      "started_ns": 1793986807767683900,
+      "finished_ns": 1793986808129769600,
+      "elapsed_seconds": 0.35999999998603016,
+      "timed_out": false,
+      "stdout_sha256": "6e0bb1a795eb92f76afff48c44044a4b64fdd3504ea95b378e3fcf17b2adae07",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cli_sha256": "7acd2ea0cad8c852dc6b147925bfff7d063387d2db274d23f5d7648eba4a2830"
+    },
+    {
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b07-t01-windows-final-06-20261107\\selected\\noetome.exe",
+        "run",
+        "resume",
+        "D:\\Noetome\\.artifacts\\b07-t01-windows-matrix-final-07-20261107\\race\\actual-race\\fixture",
+        "\\\\?\\D:\\Noetome\\.artifacts\\b07-t01-windows-matrix-final-07-20261107\\race\\actual-race\\run"
+      ],
+      "label": "independent native terminal race resume",
+      "exit_code": 0,
+      "started_ns": 1793986808237461300,
+      "finished_ns": 1793986808621763700,
+      "elapsed_seconds": 0.375,
+      "timed_out": false,
+      "stdout_sha256": "77a38d60cbbd4dd7e677cf98752a2eadd992acaaf9687769aeed3b386ea4c43f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cli_sha256": "7acd2ea0cad8c852dc6b147925bfff7d063387d2db274d23f5d7648eba4a2830"
+    }
+  ],
+  "actual_driver_calls": 0,
+  "drivers": [],
+  "real_model_calls": 0,
+  "actual_auxiliary_process_calls": 0,
+  "auxiliary_processes": [],
+  "author_pins": {
+    "case.json": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+    "expected.json": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+    "ir.json": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+    "note-plan.json": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb",
+    "sources/材料乙.md": "ed8491e5b6935d46ba4708da6d969593f1c79c06739294bde7376435bbfa6535",
+    "sources/材料甲.md": "4f5c914504aaab35408dfcc88813b838b9b5ff99efd7023af60888e258425562"
+  },
+  "cli_sha256": "7acd2ea0cad8c852dc6b147925bfff7d063387d2db274d23f5d7648eba4a2830",
+  "source_scope": "workspace production Rust sources/manifests/build scripts, selected checker and its tests; separate actual build receipts required",
+  "source_before_after_equal": true
+}

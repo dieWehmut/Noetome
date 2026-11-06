@@ -4,11 +4,13 @@
 
 B06V 三项现已实际验收：[一般图像](../validation/B06V-T01.md)、[单页扫描公式](../validation/B06V-T02.md)、[最低与当前稳定兼容矩阵](../validation/B06V-T03.md)。T03 覆盖 Windows Obsidian 1.6.7/1.15.0 明暗64唯一组合，完整 Windows Rust726、Windows Python441（434通过/7跳过）、Linux Python380（361通过/19跳过）、五视觉317次CLI及有编译来源锚的Windows30目标命令和15来源setup；科学质量仍 not_run、知识仍 pending、生产发布未进行。T03 收束提交 b7f60ac 已普通推送并核对远端一致，失败和原件保留，归档卡见[B06V 步骤](B06V_STEPS.md)。Linux完整Rust、其他平台原生渲染及未运行规模指标不从这些结果推定。
 
-依据[独立进入评估](../validation/assets/B06V-T03/review/b07-entry-assessment.md)，下一批只展开[B07 三张有界可靠维护执行卡](B07_STEPS.md)。三项均为 `todo`；切批次不自动启动实现。按持续开发授权，下一轮先通过日志工具开始B07-T01，再依次独立验收。
+依据[独立进入评估](../validation/assets/B06V-T03/review/b07-entry-assessment.md)，当前批次只展开[B07 三张有界可靠维护执行卡](B07_STEPS.md)。B07-T01 已按[实际验收](../validation/B07-T01.md)完成有限流程实现和最终回归；状态由日志工具维护，T02、T03 保持 `todo`，不随验收自动启动。本轮执行细节见[T01计划](B07-T01_RUN_PLAN.md)及[检查点契约](../technical/RUN_CHECKPOINT_CONTRACT.md)。
 
 ## 1 B07-T01 一个固定有限流程的持久检查点与恢复
 
 依赖B06V-T03。冻结一个确定性fixture有限工作图，新增严格Run/WorkUnit及输入、依赖、策略、版本、状态、输出和检查点。每个持久边界真实强制终止后恢复，复用已确认单元；规范内容和稳定知识/计划ID与从头运行一致，运行UUID、时间和attempt审计分别保留。暂停、取消、版本失效、未知检查点和输入/owner保护实际验证后，完成完整回归、独立审计、日志及提交推送。限定新测试项目/Vault，不扩大到全部知识命令或24小时恢复。
+
+作者包 [run-checkpoint-v1](../../fixtures/run-checkpoint-v1/README.md) 与旧CLI真实RED先冻结；最终Linux矩阵95通过、Windows原生94通过/1 POSIX权限not_run，分别320/319普通CLI，39实际持久边界逐一强制终止恢复，独立双线程竞态及迟到控制确认通过。Windows完整Rust756、最终Windows Python477（469通过/8跳过）、Linux Python416（395通过/21跳过）与原件/来源审查均已实际完成；Native08 Python以四份精确不变Rust输入清单复用Native06 Rust，不声称再次运行Cargo。失败历史、当前完整程序体和14原始ZIP见[验收记录](../validation/B07-T01.md)。Linux完整Rust、24小时和生产Vault恢复not_run；下一项为T02，当前未启动。
 
 ## 2 B07-T02 持久预算预留下的有界重试与隔离
 

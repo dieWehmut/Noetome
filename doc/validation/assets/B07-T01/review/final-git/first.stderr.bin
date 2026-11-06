@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/.artifacts/b07-t01-final-git-index-independent-20261107/verify.py", line 56, in <module>
+    for n in ['manifest.json','actual.json','index-check.json']:assert digest(supp/n)==digest(origin.parent/n)
+                                                                                       ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/.artifacts/b07-t01-final-git-index-independent-20261107/verify.py", line 5, in digest
+    def digest(p):return {'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'byte_length':p.stat().st_size}
+                                                  ~~~~~~~~~~~~^^
+  File "/home/lyinn/miniconda3/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/miniconda3/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/lyinn/project/Noetome/.artifacts/b07-t01-final-report-review-package-20261107/actual.json'

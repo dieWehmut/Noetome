@@ -1,0 +1,13 @@
+# B07-T01 Native06独立原件与Windows零字节锁范围复核
+
+本包为独立review及历史补充。完整Native06两PE本体/top raw/build/source ZIP/runtime探针已在peer 7267b68c ZIP，本包不重复该body；独立审计已逐107成员CRC/SHA/长度与真实原文件before/after复读，nested source ZIP全部2005成员（2002repo源码+snapshot/subset/runner三aux）精确读回；单derived schema在body独立member且等pinned desktop schema。
+
+Native06原Rust23suite=756通过/0失败/0忽略；四真实raw sharing violation mode0/1 Applied、2/3 Blocked；17命令源/derived/sentinel全等且exit0。26294 registry展开文件与446 crate archive记录前后整对象相等。当前125编译源和1864保守依赖逐byte仍等该构建原件；当前2002完整源码精确只两份Python变化，明确不声称全部2002当前相等。Native06 fullPython437=429通过/8跳过属旧35检查器/单PowerShell引擎，root比较原件指出39个额外pwsh测试未在这一轮discovery；不推成最新36或所有引擎验收。
+
+首Native06matrix实际121CLI+1driver后因Python试图读取真实NTFS强制锁住的0B worker.lock而PermissionError。helddriver65640真实TerminateProcess/wait退出1。原独立race driver41632退出0，但wrapper的fixture路径后验失败原件仍保留，不算独立race passed。该矩阵不是完整通过，所有原失败/DB/源/CLI/driver raw完整保留。
+
+额外direct2CLI status/pause均在真实helddriver26260仍活跃时exit0；锁0B同ID，实际强制终止并wait退出1。另direct4CLI live-status/live-pause/released→paused-status/same-run-resume均exit0，driver63688真实release并exit0；同Run6确认/唯一发布及完整author/SQL/tree只读后验通过。第一次后验误用fixture路径失败及后续readback原件分开保留。
+
+新版2a247639检查器/3c414d77测试的36focused在实际Windows为35通过/1symlink跳过，源两件before/after逐字等。源码精确归一证明：移除两个Win0B metadata/copy helper并还原两个调用点，新checker整文件等旧87cb；移除唯一新增NTFS test，新tests整文件等旧18d。源派生、SQL、Owner、状态/检查点及非空读取判据原字节未变。0B通过普通非reparse、单link、前后lstat size/mtime/身份和WinID重查证明空字节；Linux及所有非空仍沿用普通读取/copy失败。新真实NTFS test同时证明0B被锁仍能inventory/copy、1B锁时两路径均PermissionError。没有发现阻断性新问题。
+
+绿色focused成功临时目录已清理，本包只提供unit原raw和冻结源码断言，不冒称逐CLI raw或临时DB完整留存；矩阵/direct诊断owned roots完整保留，符号链接只记录target不跟随。所有进程终态由原进程拥有者明确确认，不伪造新OS进程raw。本包不包含最终Current36双平台matrix，那些由checker另归档，不推为科学/生产Vault/24小时或跨平台迁移通过。所有写入只在.artifacts。

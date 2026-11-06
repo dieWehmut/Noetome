@@ -1,0 +1,488 @@
+{
+  "producer": "independent raw unittest/source/ELF audit",
+  "rounds": {
+    "01": {
+      "actual_pin": {
+        "sha256": "e0c3d1c068f750ee2dd3bfb0b11b2da8b229a20425a1fb63334c0bf25cbadbe7",
+        "byte_length": 5660
+      },
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "launch": {
+        "argv": [
+          "/tmp/noetome-b05-t03-python/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_*.py",
+          "-v"
+        ],
+        "cwd": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-python-final-01-20261107/repo",
+        "pid": 644223,
+        "environment_names": [
+          "LANG",
+          "LC_ALL",
+          "LOGNAME",
+          "NOETOME_TEST_BINARY",
+          "PATH",
+          "PYTHONDONTWRITEBYTECODE",
+          "PYTHONUTF8",
+          "TMPDIR",
+          "USER"
+        ],
+        "selected_binary": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-02-20261107/noetome",
+        "binary": {
+          "sha256": "7f85c631bef09024b98595ebb91cf68adba0b3d160e0e092fd8536c37afc18e9",
+          "byte_length": 159242872
+        },
+        "started_unix": 1793981556.067442,
+        "real_model_calls": 0,
+        "paid_calls": 0
+      },
+      "tests_run": 410,
+      "actual_ok_lines": 391,
+      "actual_skipped_lines": 19,
+      "unique_test_rows": 410,
+      "result_line": "OK (skipped=19)",
+      "snapshot2001_all_members_SHA_length_exact": true,
+      "source_before_after_equal": true,
+      "worktree1999_before_after_equal": false,
+      "changed_worktree_files": [
+        "README.md",
+        "doc/execution/B07-T01_RUN_PLAN.md",
+        "doc/standards/DESIGN.md",
+        "doc/standards/TESTING.md",
+        "doc/technical/DATA_CONTRACTS.md",
+        "doc/technical/RUN_CHECKPOINT_CONTRACT.md"
+      ],
+      "skip_reasons": [
+        [
+          "test_child_gets_explicit_environment_arguments_redaction_and_exit_code (test_api_credential_scripts.TestCredentialsUnavailable.test_child_gets_explicit_environment_arguments_redaction_and_exit_code)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_encrypts_and_roundtrips_without_plaintext (test_api_credential_scripts.TestCredentialsUnavailable.test_encrypts_and_roundtrips_without_plaintext)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_existing_file_never_overwritten (test_api_credential_scripts.TestCredentialsUnavailable.test_existing_file_never_overwritten)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_hardlinked_credential_rejected_before_child (test_api_credential_scripts.TestCredentialsUnavailable.test_hardlinked_credential_rejected_before_child)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_invalid_environment_and_corrupt_credential_stop_before_child (test_api_credential_scripts.TestCredentialsUnavailable.test_invalid_environment_and_corrupt_credential_stop_before_child)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_invalid_keys_never_create_file (test_api_credential_scripts.TestCredentialsUnavailable.test_invalid_keys_never_create_file)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_invoker_rejects_repository_credential_and_directory (test_api_credential_scripts.TestCredentialsUnavailable.test_invoker_rejects_repository_credential_and_directory)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_junction_ancestor_rejected_by_both_scripts (test_api_credential_scripts.TestCredentialsUnavailable.test_junction_ancestor_rejected_by_both_scripts)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_maximum_ascii_key_is_accepted (test_api_credential_scripts.TestCredentialsUnavailable.test_maximum_ascii_key_is_accepted)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_native_arguments_preserve_embedded_quotes_and_backslashes (test_api_credential_scripts.TestCredentialsUnavailable.test_native_arguments_preserve_embedded_quotes_and_backslashes)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_parent_environment_preserved_after_launch_failure (test_api_credential_scripts.TestCredentialsUnavailable.test_parent_environment_preserved_after_launch_failure)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_parent_environment_preserved_when_present_or_absent (test_api_credential_scripts.TestCredentialsUnavailable.test_parent_environment_preserved_when_present_or_absent)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_real_wpf_controls_load_without_showing_operator_dialog (test_api_credential_scripts.TestCredentialsUnavailable.test_real_wpf_controls_load_without_showing_operator_dialog)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_real_wpf_save_handler_rejects_empty_and_whitespace_without_showing (test_api_credential_scripts.TestCredentialsUnavailable.test_real_wpf_save_handler_rejects_empty_and_whitespace_without_showing)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_repository_relative_ads_and_missing_parent_paths_stop (test_api_credential_scripts.TestCredentialsUnavailable.test_repository_relative_ads_and_missing_parent_paths_stop)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_setter_rejects_non_origin_and_conflicting_inputs (test_api_credential_scripts.TestCredentialsUnavailable.test_setter_rejects_non_origin_and_conflicting_inputs)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_sql_snapshot_releases_database_without_waiting_for_gc (test_extraction_audit.ExtractionAuditTests.test_sql_snapshot_releases_database_without_waiting_for_gc)",
+          "'Windows file sharing boundary'"
+        ],
+        [
+          "test_native_windows_created_then_delayed_write_hash_and_read (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_native_windows_created_then_delayed_write_hash_and_read)",
+          "'native Windows creation/change time regression'"
+        ],
+        [
+          "test_actual_windows_required (test_scan_api_credential.ScanCredentialsUnavailable.test_actual_windows_required)",
+          "'Actual Windows DPAPI and file sharing are tested on the selected Windows runtime'"
+        ]
+      ],
+      "elapsed_raw_seconds": 168.404,
+      "declared_status": "failed",
+      "stdout": {
+        "sha256": "652a89f36e528dbb351406cf3794649f7f1f11a4844325cfed85fdac0e2e2122",
+        "byte_length": 537
+      },
+      "stderr": {
+        "sha256": "927fa3f682eca36ee59e77861e9a795ea944406200b5b260bed3a450eadc22bc",
+        "byte_length": 73176
+      },
+      "source_build_receipt": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-02-20261107/actual.json"
+    },
+    "04": {
+      "actual_pin": {
+        "sha256": "ffebdd28acd915af0a448e3dc5f3d0663d56e1806cab5bfe6d77f3de147d7024",
+        "byte_length": 6227
+      },
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "launch": {
+        "argv": [
+          "/tmp/noetome-b05-t03-python/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_*.py",
+          "-v"
+        ],
+        "cwd": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-python-final-04-20261107/repo",
+        "pid": 669990,
+        "environment_names": [
+          "LANG",
+          "LC_ALL",
+          "LOGNAME",
+          "NOETOME_TEST_BINARY",
+          "PATH",
+          "PYTHONDONTWRITEBYTECODE",
+          "PYTHONUTF8",
+          "TMPDIR",
+          "USER"
+        ],
+        "selected_binary": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome",
+        "binary": {
+          "sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512",
+          "byte_length": 159246752
+        },
+        "started_unix": 1793986701.4159834,
+        "real_model_calls": 0,
+        "paid_calls": 0
+      },
+      "tests_run": 416,
+      "actual_ok_lines": 395,
+      "actual_skipped_lines": 21,
+      "unique_test_rows": 416,
+      "result_line": "OK (skipped=21)",
+      "snapshot2001_all_members_SHA_length_exact": true,
+      "source_before_after_equal": true,
+      "worktree1999_before_after_equal": true,
+      "changed_worktree_files": [],
+      "skip_reasons": [
+        [
+          "test_child_gets_explicit_environment_arguments_redaction_and_exit_code (test_api_credential_scripts.TestCredentialsUnavailable.test_child_gets_explicit_environment_arguments_redaction_and_exit_code)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_encrypts_and_roundtrips_without_plaintext (test_api_credential_scripts.TestCredentialsUnavailable.test_encrypts_and_roundtrips_without_plaintext)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_existing_file_never_overwritten (test_api_credential_scripts.TestCredentialsUnavailable.test_existing_file_never_overwritten)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_hardlinked_credential_rejected_before_child (test_api_credential_scripts.TestCredentialsUnavailable.test_hardlinked_credential_rejected_before_child)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_invalid_environment_and_corrupt_credential_stop_before_child (test_api_credential_scripts.TestCredentialsUnavailable.test_invalid_environment_and_corrupt_credential_stop_before_child)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_invalid_keys_never_create_file (test_api_credential_scripts.TestCredentialsUnavailable.test_invalid_keys_never_create_file)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_invoker_rejects_repository_credential_and_directory (test_api_credential_scripts.TestCredentialsUnavailable.test_invoker_rejects_repository_credential_and_directory)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_junction_ancestor_rejected_by_both_scripts (test_api_credential_scripts.TestCredentialsUnavailable.test_junction_ancestor_rejected_by_both_scripts)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_maximum_ascii_key_is_accepted (test_api_credential_scripts.TestCredentialsUnavailable.test_maximum_ascii_key_is_accepted)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_native_arguments_preserve_embedded_quotes_and_backslashes (test_api_credential_scripts.TestCredentialsUnavailable.test_native_arguments_preserve_embedded_quotes_and_backslashes)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_parent_environment_preserved_after_launch_failure (test_api_credential_scripts.TestCredentialsUnavailable.test_parent_environment_preserved_after_launch_failure)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_parent_environment_preserved_when_present_or_absent (test_api_credential_scripts.TestCredentialsUnavailable.test_parent_environment_preserved_when_present_or_absent)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_real_wpf_controls_load_without_showing_operator_dialog (test_api_credential_scripts.TestCredentialsUnavailable.test_real_wpf_controls_load_without_showing_operator_dialog)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_real_wpf_save_handler_rejects_empty_and_whitespace_without_showing (test_api_credential_scripts.TestCredentialsUnavailable.test_real_wpf_save_handler_rejects_empty_and_whitespace_without_showing)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_repository_relative_ads_and_missing_parent_paths_stop (test_api_credential_scripts.TestCredentialsUnavailable.test_repository_relative_ads_and_missing_parent_paths_stop)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_setter_rejects_non_origin_and_conflicting_inputs (test_api_credential_scripts.TestCredentialsUnavailable.test_setter_rejects_non_origin_and_conflicting_inputs)",
+          "'Windows PowerShell and CurrentUser DPAPI are required'"
+        ],
+        [
+          "test_sql_snapshot_releases_database_without_waiting_for_gc (test_extraction_audit.ExtractionAuditTests.test_sql_snapshot_releases_database_without_waiting_for_gc)",
+          "'Windows file sharing boundary'"
+        ],
+        [
+          "test_native_windows_created_then_delayed_write_hash_and_read (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_native_windows_created_then_delayed_write_hash_and_read)",
+          "'native Windows creation/change time regression'"
+        ],
+        [
+          "test_actual_windows_required (test_scan_api_credential.ScanCredentialsUnavailable.test_actual_windows_required)",
+          "'Actual Windows DPAPI and file sharing are tested on the selected Windows runtime'"
+        ],
+        [
+          "test_actual_empty_locked_file_is_proved_and_copied_but_nonempty_lock_is_refused (test_verify_run_checkpoint.SQLiteNamespaceTests.test_actual_empty_locked_file_is_proved_and_copied_but_nonempty_lock_is_refused)",
+          "'actual Windows mandatory empty/nonempty range locks require NTFS'"
+        ],
+        [
+          "test_main_normal_windows_path_matches_actual_owned_canonical_run (test_verify_run_checkpoint.SQLiteNamespaceTests.test_main_normal_windows_path_matches_actual_owned_canonical_run)",
+          "'actual Windows main/NTFS proof requires Windows'"
+        ]
+      ],
+      "elapsed_raw_seconds": 178.712,
+      "declared_status": "passed",
+      "stdout": {
+        "sha256": "aaebce3a1f0e67ce2276a7fe81ce61e612903aa3751fe7249a2df45b6cce41ba",
+        "byte_length": 537
+      },
+      "stderr": {
+        "sha256": "db4dc9f18076ff64aec7285950b3ba95b7f37e7b03669cbfba2889c0235f6dc9",
+        "byte_length": 74458
+      },
+      "source_build_receipt": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/actual.json"
+    }
+  },
+  "final_expected": {
+    "tests_run": 416,
+    "passed": 395,
+    "skipped": 21
+  },
+  "early01_test_success_did_not_pass_source_gate": true,
+  "final_source_files": 2001,
+  "source_copy_non_elf_members": 1999,
+  "all125_build05_source_pins_equal_final_python_snapshot": true,
+  "current_worktree_differences_at_later_archive_time": [],
+  "snapshot_scope_preserved_regardless_of_later_doc_work": true,
+  "historical_source_overlay": {
+    "README.md": {
+      "sha256": "6fb7b3681af1e78023545f82de4d247e12b0818e3982be7e6218f69c42d49c84",
+      "byte_length": 35162,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/README.md"
+    },
+    "crates/noetome-cli/src/fixture_run.rs": {
+      "sha256": "86ebd7ee004d70a3e9500ea859dc16e0526e192ac8bc894878f66d64b62d03a0",
+      "byte_length": 31450,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/crates/noetome-cli/src/fixture_run.rs"
+    },
+    "crates/noetome-cli/src/run_recovery.rs": {
+      "sha256": "0ded7ddf2a88f7c373e83961980686e17eba28282f95c00b0ef70125550b71c0",
+      "byte_length": 42603,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/crates/noetome-cli/src/run_recovery.rs"
+    },
+    "crates/noetome-cli/src/run_store.rs": {
+      "sha256": "f251a78992983cbf3ea5a3cd72090aa5a959ca76233f2f7be21edd0028e832a9",
+      "byte_length": 45074,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/crates/noetome-cli/src/run_store.rs"
+    },
+    "doc/execution/B07-T01_RUN_PLAN.md": {
+      "sha256": "682c20203f93b83105cc15bf175ee17f38a406d4d7860a9b8f546428f8e07183",
+      "byte_length": 8718,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/doc/execution/B07-T01_RUN_PLAN.md"
+    },
+    "doc/standards/DESIGN.md": {
+      "sha256": "8910b3fb2d5e2e2489cf1516a1849b69d61492a4974b35bc3511ce5b61465d08",
+      "byte_length": 44199,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/doc/standards/DESIGN.md"
+    },
+    "doc/standards/TESTING.md": {
+      "sha256": "6d5a01c8f59deeeb5b9111b87266d13304d58029a7eb10d83e5db6c0e5f3ef53",
+      "byte_length": 44545,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/doc/standards/TESTING.md"
+    },
+    "doc/technical/ARCHITECTURE.md": {
+      "sha256": "6288e29769b5cdfd0237cef01e20636cf889220849539b7aa507af3e317a8124",
+      "byte_length": 46895,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/doc/technical/ARCHITECTURE.md"
+    },
+    "doc/technical/DATA_CONTRACTS.md": {
+      "sha256": "834f1ece96914f3e0e04082857d2af04b02696fa1c5c07b8c9a4a8d82518edc2",
+      "byte_length": 54633,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/doc/technical/DATA_CONTRACTS.md"
+    },
+    "doc/technical/RUN_CHECKPOINT_CONTRACT.md": {
+      "sha256": "bcb387c503b4f871f01865db57cbeb163483930917ac432b061b2698b0031332",
+      "byte_length": 15290,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/doc/technical/RUN_CHECKPOINT_CONTRACT.md"
+    },
+    "scripts/verify_run_checkpoint.py": {
+      "sha256": "e7343cf5e2ec7a9b4708175bb3e6f41a6c5f1a4e54ae9f2aed6d7744640a0d36",
+      "byte_length": 125392,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/scripts/verify_run_checkpoint.py"
+    },
+    "target/debug/noetome": {
+      "sha256": "7f85c631bef09024b98595ebb91cf68adba0b3d160e0e092fd8536c37afc18e9",
+      "byte_length": 159242872,
+      "body_in_this_zip": false,
+      "original_path": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-python-final-01-20261107/repo/target/debug/noetome",
+      "reason": "historical CLI alias, fixed old build02 actual binary remains local"
+    },
+    "target/debug/noetome.exe": {
+      "sha256": "7f85c631bef09024b98595ebb91cf68adba0b3d160e0e092fd8536c37afc18e9",
+      "byte_length": 159242872,
+      "body_in_this_zip": false,
+      "original_path": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-python-final-01-20261107/repo/target/debug/noetome.exe",
+      "reason": "historical CLI alias, fixed old build02 actual binary remains local"
+    },
+    "tests/test_verify_run_checkpoint.py": {
+      "sha256": "5474d325a90c56f46e92357710b1f11da4b438acf93b9d174f56223f109fd4bc",
+      "byte_length": 21404,
+      "body_in_this_zip": true,
+      "zip_path": "historical-source-overlay/tests/test_verify_run_checkpoint.py"
+    }
+  },
+  "omitted_elf_bodies": [
+    {
+      "path": "repo/target/debug/noetome",
+      "original_path": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-python-final-04-20261107/repo/target/debug/noetome",
+      "sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512",
+      "byte_length": 159246752,
+      "reason": "explicit duplicate selected CLI ELF; actual body separately program-archived"
+    },
+    {
+      "path": "repo/target/debug/noetome.exe",
+      "original_path": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-python-final-04-20261107/repo/target/debug/noetome.exe",
+      "sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512",
+      "byte_length": 159246752,
+      "reason": "explicit duplicate selected CLI ELF; actual body separately program-archived"
+    },
+    {
+      "path": "repo/target/presentation-display-python-957e3467894840ad81b0a896fef7a908/noetome",
+      "original_path": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-python-final-04-20261107/repo/target/presentation-display-python-957e3467894840ad81b0a896fef7a908/noetome",
+      "sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512",
+      "byte_length": 159246752,
+      "reason": "explicit duplicate selected CLI ELF; actual body separately program-archived"
+    }
+  ],
+  "symlink_evidence_not_followed": [
+    {
+      "path": "repo/target/python-conflicts-16e08da7cade4745bee942af50769cc3/alias-parent-eabe9392810d495ca460e74a5c139fab",
+      "original_path": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-python-final-04-20261107/repo/target/python-conflicts-16e08da7cade4745bee942af50769cc3/alias-parent-eabe9392810d495ca460e74a5c139fab",
+      "link_target": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-python-final-04-20261107/repo/target/python-conflicts-16e08da7cade4745bee942af50769cc3/true_conflict",
+      "not_followed": true
+    }
+  ],
+  "program_body_bindings": {
+    "cli": {
+      "body_in_this_python_zip": false,
+      "body_archive_original_path": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-program-archives-05-20261107/cli/originals.zip",
+      "body_archive": {
+        "sha256": "e76b3fe81c08d99365dfb5b2daf3921eb58bfdd9083527e7ad6c959069491d8a",
+        "byte_length": 33995704
+      },
+      "program": {
+        "sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512",
+        "byte_length": 159246752
+      },
+      "manifest_pin": {
+        "sha256": "45e2e026f404a084526e28b4b10d523745b405def30e3c17db94403a38e26a85",
+        "byte_length": 25204
+      },
+      "runtime_original_path": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/noetome"
+    },
+    "driver": {
+      "body_in_this_python_zip": false,
+      "body_archive_original_path": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-program-archives-05-20261107/driver/originals.zip",
+      "body_archive": {
+        "sha256": "1c69c8dac48870da7b6fab023e62923c70dc4f2e4a18ee0c45955e569902476b",
+        "byte_length": 40181696
+      },
+      "program": {
+        "sha256": "77c7043d38dfefc18227fae33646ad2fb676816b83dd9b6060e6af90eaa5a45e",
+        "byte_length": 188081528
+      },
+      "manifest_pin": {
+        "sha256": "06626d3cab4f3100197fcf07187f624defbd0de77f86df246bff2d9919c1620b",
+        "byte_length": 25223
+      },
+      "runtime_original_path": "/home/lyinn/project/Noetome/.artifacts/b07-t01-linux-build-05-20261107/run-test-driver"
+    }
+  },
+  "Windows_execution_claim": false,
+  "full_Linux_Rust": "not_run",
+  "real_model_calls": 0,
+  "paid_calls": 0
+}

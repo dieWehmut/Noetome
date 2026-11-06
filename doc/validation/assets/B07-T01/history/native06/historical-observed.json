@@ -1,0 +1,51 @@
+{
+  "native06_program_and_build_body_archive": {
+    "sha256": "7267b68cf11e919f3c1fdbf7482b2ebab9c293f74305c54b94bec4b8fcce7772",
+    "byte_length": 26821256
+  },
+  "native06_program_and_build_body_original_path": "/mnt/d/Noetome/.artifacts/b07-t01-native-final-evidence-06-20261107/originals.zip",
+  "complete_body_in_this_review_zip": false,
+  "first_matrix06": {
+    "status": "failed",
+    "CLI": 121,
+    "driver": 1,
+    "error": "PermissionError on reading actual empty NTFS worker.lock; actual driver killed and waited",
+    "separate_race_postcheck_error": "selected input root identity differs; original race driver exit0 is not treated as passed independent postcheck"
+  },
+  "empty_lock_direct2": {
+    "status": "observed",
+    "actual_cli_calls": 2,
+    "actual_driver_calls": 1,
+    "owned_driver_pid": 26260,
+    "driver_exit_code": 1,
+    "force_terminated": true,
+    "lock_after_byte_length": 0,
+    "lock_after_identity": {
+      "platform": "windows",
+      "volume": 3934836358,
+      "index": 281474978228708
+    },
+    "real_model_calls": 0
+  },
+  "live_lock_direct4": {
+    "status": "passed_readonly_postcheck",
+    "CLI": 4,
+    "released_driver_PID": 63688,
+    "driver_exit": 0,
+    "whole_product_before_after_equal": true,
+    "same_lock_identity": true,
+    "first_postcheck_fixture_path_failure_preserved": true
+  },
+  "focused36": {
+    "tests": 36,
+    "pass": 35,
+    "skip": 1,
+    "source_two_before_after_equal": true,
+    "test_PID": 42496,
+    "temporary_product_per_CLI_raw_not_retained": true
+  },
+  "owned_processes_closed_confirmation": "review_scan_tools explicit current collaboration confirmation for all four roots; rust audit owns live-lock released-driver confirmation; no additional OS process probe fabricated",
+  "public_files_mutated": false,
+  "real_model_calls": 0,
+  "new_matrix_final07_scope": "separate final archive by checker agent; not counted into historical121"
+}

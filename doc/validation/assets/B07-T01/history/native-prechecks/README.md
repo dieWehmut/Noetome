@@ -1,0 +1,19 @@
+# B07-T01 Native 历史原件独立归档
+
+只记录历史，不作为 Native06 或最终 Windows 验收。全部产物写在 .artifacts，公开复制由根代理在新 source checks 完成后处理；没有修改公共代码、标准或账本，也没有遍历 repo/build-target 缓存。
+
+范围是明确选取的 native-final01..05 顶层 runner、raw、snapshot、receipts、registry inventory、完整 source ZIP，加 Root hot-owner-diagnostic01/02 和检查器 hot-diagnostic04/04b 的全部原件。五份源 ZIP 各2005成员（2002 repo 源+snapshot/rust-dependency-subset/runner），所有成员CRC/SHA/长度逐项与原snapshot和顶层原件核对。原源码通过ZIP保存，不重复复制GB级缓存。
+
+01只是 prepared 且显式未启动。02实际执行七个解释器/工具链/版本查询，包括 cargo --version；registry缺 .cargo-checksum.json 阻断，fmt/check/test/build阶段均未启动。03实际fmt和workspace-check退出0，但新生成windows-schema.json使sourceguard失败；原已冻结文件未改/缺，后继test/build未执行，不能记为整体通过。05只是prepare，无native命令或Cargo阶段。
+
+04实际workspace-tests PID69272，退出101；原stdout为498项=496通过+2失败，原stderr有两个helper正例的panic名称。源、declared build asset和外部sentinel门禁全true。两个失败名是 real_sqlite_hot_journal_is_validated_without_disk_writes / real_sqlite_small_page_hot_journal_is_validated。代码修复和最终验收分轮记录，不改该失败raw。
+
+本ZIP完整包含04 PE（27589120B，ee5dde731f73d506a9f9a4c61136067446d2da111e5cad3b450f1b9537bb25b0）及driver（35273728B，2113ab84b1d96ec059e5a5f65afca8f903f2e0b5dfc0173cd758e806da46ca3b），不是仅其hash。二者绑定04 sourceZIP d239c45fe55e464554189cd396cb124a2b28bcb4fe224cc5cf075f29ea00fea0、实际selected build receipt df5900911e24162d93065eb02df4d0c4752f711ba521fab0f66628470ec8ed86 和compiler fingerprint 15b31d1d9bd3c72c17b45b9bc88e4e890bb7b479f9cc16361203976cd509c79f。整体分发ZIP小于100MiB，无需分卷；不称04程序为当前05/06最终程序。
+
+Owner诊断01只是import ModuleNotFoundError，CLI0。诊断02实际四次普通CLI（两种page-size各start paused/resume）都退出0，同Run恢复六确认且实际publication SQL各1。真实FULL/DELETE journal spill后复制/恢复同DB身份，不是强杀测试；original/dirty DB、journal、前置inventory、path evidence及四stdout/stderr保存。另独立启动一次只读Windows查询，重新读取两个明确历史根的12项真实句柄身份；每项与原Owner及原diagnostic值相等，GetFinalPathNameByHandleW与Owner原canonical字符串相等，普通字符串不同。没有执行额外CLI或写SQL恢复。
+
+检查器04在一次真实paused CLI后因URI invalid authority失败，无writer。04b临时URI wrapper通过initial SQL，随后实际writer的CRLF与旧LF精确握手不符；failure-receipt保存writer PID34652/exit1。检查器代理确认所有原子进程已退出，全部raw稳定后才capture；这两项不是产品hot gate成功或失败的证据。后续公开checker修复和最终95矩阵须在新原件中验收。
+
+每个列出的成员是实际物理文件，完整ZIP CRC/SHA/长度及对应原文件ID/mtime/bytes回读核对。早期helper四编译错误/tool22923和race首次NotFound/tool56789无standalone raw，只在会话保留原merged工具输出；不在本包伪造那些历史原件，捕获限制在另一个审查历史索引中明确。
+
+第一版collector将自身尚未关闭的0B stdout纳入snapshot，完成后才写总结。历史native原件没有变化；第一版包保留，最终包替换为已关闭的完整collector日志/receipt，避免对源文件做未来不变的错误声明。所有既有原ZIP都未删除或改写。

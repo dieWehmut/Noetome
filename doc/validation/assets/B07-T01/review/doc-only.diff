@@ -1,0 +1,37 @@
+--- doc/standards/DESIGN.md before
++++ doc/standards/DESIGN.md after
+@@ -177,7 +177,7 @@
+ 
+ stdout为`producer=fixture_run`的严格Schema1 JSON，显示实际Run/Release、run_status、已确认单元数、各单元state/attempts、checkpoint_sequence、release_status、输入/编译指纹、实际产物路径和持久报告。控制区保留latest/request/acknowledged序号与动作；“请求已保存”“在途单元仍运行”“已安全暂停”是不同状态，不提前显示落盘完成。暂停2秒约束是停止新调度；当前在途单元可以继续到安全边界。取消保留确认结果，尚未开始的后继单元不再调度，也不清理现场或撤销已提交publication。
+ 
+-运行的paused/failed/finished与发布状态分别展示。只有原六表编译数据库唯一publication事务及双报告/manifest核验成立才显示published；报告validated、Markdown已生成或日志succeeded都不能单独替代。COMMIT后外层确认前的status可以如实显示published与日志running/五确认单元并存，不能只为显示一致而追加成功检查点。failed显示实际诊断和最后确认前缀，只有明确修复条件后显式resume才可尝试继续；cancelled/invalidated不显示“继续”成功建议。输入/版本/身份或未知现场失配时提示保留原件并为新版本选择新运行根，不提供force接管。
++运行的paused/failed/succeeded与发布状态分别展示。只有原六表编译数据库唯一publication事务及双报告/manifest核验成立才显示published；报告validated、Markdown已生成或日志succeeded都不能单独替代。COMMIT后外层确认前的status可以如实显示published与日志running/五确认单元并存，不能只为显示一致而追加成功检查点。failed显示实际诊断和最后确认前缀，只有明确修复条件后显式resume才可尝试继续；cancelled/invalidated不显示“继续”成功建议。输入/版本/身份或未知现场失配时提示保留原件并为新版本选择新运行根，不提供force接管。
+ 
+ 完成前保存但未生效的迟到控制最终显示 `completed before control took effect`，保留succeeded/published及原确认结果。publication确认后中断的显式resume可以补控制ACK，不能将已完成内容显示成取消或重新发布；请求响应、控制确认和工作确认仍分别展示。
+ 
+--- doc/technical/RUN_CHECKPOINT_CONTRACT.md before
++++ doc/technical/RUN_CHECKPOINT_CONTRACT.md after
+@@ -52,13 +52,13 @@
+ 
+ ## 持久字段与版本
+ 
+-运行 DTO、嵌套 snapshot/intent 与身份字段拒绝未知字段和未知枚举。允许 `null` 的 `output_snapshot`、`pending_intent`、`validation_report`、`diagnostic` 仍为必填项，缺失不能当作 `null`。时间保留真实 RFC3339 UTC 审计值；单元与控制顺序由持久序号确定，不能用时间或文件修改时间代替内容指纹。
++运行 DTO、嵌套 snapshot/intent 与身份字段拒绝未知字段和未知枚举。允许 `null` 的 `output_snapshot`、`pending_intent`、`validation_report`、`diagnostic` 仍为必填项，缺失不能当作 `null`。Run、检查点与控制记录的审计时间保留真实 RFC3339 UTC 值；输入文件的 `FileStamp.modified` 则保存自 Unix epoch 起的纳秒数十进制字符串。单元与控制顺序由持久序号确定，不能用时间或文件修改时间代替内容指纹。
+ 
+ | 对象 | 严格字段与不变量 |
+ | --- | --- |
+ | `Owner` | `schema_version`、`producer=fixture_run`、`run_id`、`release_id`、`root`、`case_root`、根/父级/control/数据库/锁/fixture 的实际身份、`compiler_fingerprint`、`policy_version` |
+ | `RunMetadata` | `owner`、`owner_file_identity`、原 `CompileContext`、选取输入的 `inputs`；数据库中的 owner 与磁盘原 `owner.json` 字节和身份均重验 |
+-| `FileStamp` | `identity`、`sha256`、`byte_length`、`modified`；作用于实际选取输入文件，mtime 是附加观察，不代替 SHA |
++| `FileStamp` | `identity`、`sha256`、`byte_length`、`modified`；后者为实际文件 mtime 自 Unix epoch 起的纳秒数十进制字符串，作为附加观察，不代替 SHA |
+ | `WorkUnit` | `unit_id`、`dependencies`、`state`、`attempts`、`output_paths`；已确认前缀不改写，后继只能在依赖确认后开始 |
+ | `RunState` | `schema_version`、`status`、六个 `units`、`acknowledged_control`、`checks`、`manifest`、`output_snapshot`、`pending_intent`、`validation_report`、`diagnostic` |
+ | `Checkpoint` | `schema_version`、`sequence`、`event`、`at`、`run_id`、完整 `state`；序号连续、原 payload 指纹匹配，并逐项检查状态迁移 |
+--- doc/execution/B07-T01_RUN_PLAN.md before
++++ doc/execution/B07-T01_RUN_PLAN.md after
+@@ -82,3 +82,5 @@
+ 最终执行完整 `cargo test --workspace --locked --offline`、Python `unittest discover`、日志检查及 `git diff --check`；旧 fixture 编译与受影响旧行为按源码作用域执行或提供严格无变化复用证明。独立审阅 Core/state machine、作者核对器、原件库存、编译来源、每条边界和真实失败历史后，才由根代理完成日志与提交推送。原生 Obsidian 输出未变时本项不新增渲染兼容声明，既有 B06V 验收范围也不因检查点测试扩大。
+ 
+ 本轮完整回归、最终源码平台行为与热 journal 接线结果仍须在主验证报告登记；本计划不预先填写 passed、最终计数或性能结论。
++
++实际执行结果、最终源码绑定、保留的失败原件与验收边界见 [B07-T01 验证报告](../validation/B07-T01.md)。

@@ -1,0 +1,134 @@
+{
+  "producer": "independent_final36_matrix_archives_and_named_source_readback",
+  "at": "2026-11-06T17:52:14.558900+00:00",
+  "status": "passed",
+  "platforms": {
+    "linux": {
+      "archive": {
+        "sha256": "33c38adb058c94fd828235f9db1f46514b7fb2aa55bc7d5bd5c433e084782b77",
+        "byte_length": 5743814
+      },
+      "manifest": {
+        "sha256": "85c6e5609c2715243fc0a7ab266992c0d940596d9afb51fd4a21d8a51a377fce",
+        "byte_length": 1623276
+      },
+      "members": 3439,
+      "all_member_CRC_SHA_length_independently_verified": true,
+      "peer_reported_original_ID_mtime_before_after_equal": true,
+      "independent_all_original_ID_reprobe_claim": false,
+      "all_CLI_receipts_and_stdout_stderr_SHA_linked": true,
+      "matrix": {
+        "CLI": 320,
+        "driver": 65,
+        "SQLite_aux": 16,
+        "case_groups": {
+          "cases": 3,
+          "refusal_cases": 22,
+          "active_controls": 2,
+          "concurrency_cases": 1,
+          "publication_control_cases": 3,
+          "publication_control_interruption_cases": 6,
+          "temporary_io_cases": 1,
+          "hot_journal_cases": 14,
+          "compiler_version_cases": 1,
+          "interruption_cases": 39,
+          "publication_visibility_cases": 1,
+          "partial_refusal_cases": 2
+        },
+        "passed_cases": 95,
+        "not_run": 0
+      },
+      "actual_race": {
+        "driver": 1,
+        "ordinary_CLI": 2,
+        "actual_driver_PID": 670922,
+        "exit0": true,
+        "controller_running_check_before_worker_done": true,
+        "controller_after_sqlite_writer_lock_sees_terminal": true,
+        "controller_result": "Err RUN_TERMINAL",
+        "controls": 0,
+        "whole_before_after_database_byte_equal": true
+      },
+      "actual_pin": {
+        "sha256": "413935c1045d6400cf4c287bdbf6cf737987bcc181634d375631864d0317d5e7",
+        "byte_length": 695358
+      },
+      "race_pin": {
+        "sha256": "b5eb348dd5593ab2693e1495a61b9354d85e46d332aeb3fa8ce39c760d941ab8",
+        "byte_length": 13458
+      },
+      "real_model_calls": 0
+    },
+    "windows": {
+      "archive": {
+        "sha256": "81c732e11e24cda4a35722d6869271a7e5127fb103ef0f1210909a5a3f365a45",
+        "byte_length": 12460338
+      },
+      "manifest": {
+        "sha256": "f82be515d48b21853b6ad41f31f2f26079a066da4b26b6d45dce902cf127b890",
+        "byte_length": 2614436
+      },
+      "members": 5259,
+      "all_member_CRC_SHA_length_independently_verified": true,
+      "peer_reported_original_ID_mtime_before_after_equal": true,
+      "independent_all_original_ID_reprobe_claim": false,
+      "all_CLI_receipts_and_stdout_stderr_SHA_linked": true,
+      "matrix": {
+        "CLI": 319,
+        "driver": 64,
+        "SQLite_aux": 16,
+        "case_groups": {
+          "cases": 3,
+          "refusal_cases": 22,
+          "active_controls": 2,
+          "concurrency_cases": 1,
+          "publication_control_cases": 3,
+          "publication_control_interruption_cases": 6,
+          "temporary_io_cases": 1,
+          "hot_journal_cases": 14,
+          "compiler_version_cases": 1,
+          "interruption_cases": 39,
+          "publication_visibility_cases": 1,
+          "partial_refusal_cases": 2
+        },
+        "passed_cases": 94,
+        "not_run": 1
+      },
+      "actual_race": {
+        "driver": 1,
+        "ordinary_CLI": 2,
+        "actual_driver_PID": 63864,
+        "exit0": true,
+        "controller_running_check_before_worker_done": true,
+        "controller_after_sqlite_writer_lock_sees_terminal": true,
+        "controller_result": "Err RUN_TERMINAL",
+        "controls": 0,
+        "whole_before_after_database_byte_equal": true
+      },
+      "actual_pin": {
+        "sha256": "fac8d8b8925596c39b7baad096a2d5e1a9bb27a7d78d6c5798233a6780487e4b",
+        "byte_length": 693507
+      },
+      "race_pin": {
+        "sha256": "bf063db8c272e42cb58eb62c12022539107b2fe7d19dffdce11e1bb8bd82b6d4",
+        "byte_length": 13455
+      },
+      "real_model_calls": 0
+    }
+  },
+  "exact_source_sidecar": {
+    "sha256": "e6b94e90e815e798091c476c77514a9c6c1ed97f3f9767be8ad47771da87f5de",
+    "byte_length": 549595
+  },
+  "exact_source_sidecar_zip": {
+    "sha256": "40a7a9acebf02032657814597c536a075eae8a2b84caabb476ef9a020577fd10",
+    "byte_length": 88157
+  },
+  "core125_and_native1864_current_byte_equal_verified": true,
+  "compiler_fingerprint89_names_exact": true,
+  "raw_source2000_field_means_snapshot2002_minus_two_python_including_docs_and_fixtures": "not a claim of 2000 production build dependencies",
+  "primary_body_and_programs_recompressed": false,
+  "new_product_runs": 0,
+  "earlier_wrapper_assertion_failure": "125 Linux source records include device/inode/mtime metadata; first wrapper incorrectly compared complete dict against Windows SHA/length dict. No byte mismatch; first script/stdout/stderr physically preserved. Second comparison uses exact SHA and length while preserving full original metadata.",
+  "public_files_mutated": false
+}

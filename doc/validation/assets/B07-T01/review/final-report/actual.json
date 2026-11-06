@@ -1,0 +1,903 @@
+{
+  "status": "passed",
+  "producer": "independent_final_report_and_summary_review",
+  "checks": [
+    {
+      "claim": "linux case row/status accounting",
+      "actual": [
+        95,
+        95,
+        0
+      ],
+      "expected": [
+        95,
+        95,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "claim": "linux summary passed",
+      "actual": 95,
+      "expected": 95,
+      "passed": true
+    },
+    {
+      "claim": "linux summary not_run",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "claim": "linux summary ordinary_cli_calls",
+      "actual": 320,
+      "expected": 320,
+      "passed": true
+    },
+    {
+      "claim": "linux summary driver_calls",
+      "actual": 65,
+      "expected": 65,
+      "passed": true
+    },
+    {
+      "claim": "linux summary sqlite_writer_calls",
+      "actual": 16,
+      "expected": 16,
+      "passed": true
+    },
+    {
+      "claim": "linux exact CLI/driver receipts",
+      "actual": [
+        320,
+        65,
+        16
+      ],
+      "expected": [
+        320,
+        65,
+        16
+      ],
+      "passed": true
+    },
+    {
+      "claim": "linux driver terminations",
+      "actual": 57,
+      "expected": 57,
+      "passed": true
+    },
+    {
+      "claim": "linux all SQLite auxiliary real kills",
+      "actual": 16,
+      "expected": 16,
+      "passed": true
+    },
+    {
+      "claim": "linux author source/CLI source unchanged",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "claim": "linux publication gap state",
+      "actual": [
+        5,
+        "running",
+        "published"
+      ],
+      "expected": [
+        5,
+        "running",
+        "published"
+      ],
+      "passed": true
+    },
+    {
+      "claim": "linux independent durable callbacks",
+      "actual": 39,
+      "expected": 39,
+      "passed": true
+    },
+    {
+      "claim": "linux late ACK kill boundaries",
+      "actual": 6,
+      "expected": 6,
+      "passed": true
+    },
+    {
+      "claim": "linux hot journal cases",
+      "actual": 14,
+      "expected": 14,
+      "passed": true
+    },
+    {
+      "claim": "linux race followup ordinaryCLI",
+      "actual": 2,
+      "expected": 2,
+      "passed": true
+    },
+    {
+      "claim": "linux race followup passed",
+      "actual": "passed",
+      "expected": "passed",
+      "passed": true
+    },
+    {
+      "claim": "linux race separate from matrix",
+      "actual": 2,
+      "expected": 2,
+      "passed": true
+    },
+    {
+      "claim": "windows case row/status accounting",
+      "actual": [
+        95,
+        94,
+        1
+      ],
+      "expected": [
+        95,
+        94,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "claim": "windows summary passed",
+      "actual": 94,
+      "expected": 94,
+      "passed": true
+    },
+    {
+      "claim": "windows summary not_run",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "claim": "windows summary ordinary_cli_calls",
+      "actual": 319,
+      "expected": 319,
+      "passed": true
+    },
+    {
+      "claim": "windows summary driver_calls",
+      "actual": 64,
+      "expected": 64,
+      "passed": true
+    },
+    {
+      "claim": "windows summary sqlite_writer_calls",
+      "actual": 16,
+      "expected": 16,
+      "passed": true
+    },
+    {
+      "claim": "windows exact CLI/driver receipts",
+      "actual": [
+        319,
+        64,
+        16
+      ],
+      "expected": [
+        319,
+        64,
+        16
+      ],
+      "passed": true
+    },
+    {
+      "claim": "windows driver terminations",
+      "actual": 57,
+      "expected": 57,
+      "passed": true
+    },
+    {
+      "claim": "windows all SQLite auxiliary real kills",
+      "actual": 16,
+      "expected": 16,
+      "passed": true
+    },
+    {
+      "claim": "windows author source/CLI source unchanged",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "claim": "windows publication gap state",
+      "actual": [
+        5,
+        "running",
+        "published"
+      ],
+      "expected": [
+        5,
+        "running",
+        "published"
+      ],
+      "passed": true
+    },
+    {
+      "claim": "windows independent durable callbacks",
+      "actual": 39,
+      "expected": 39,
+      "passed": true
+    },
+    {
+      "claim": "windows late ACK kill boundaries",
+      "actual": 6,
+      "expected": 6,
+      "passed": true
+    },
+    {
+      "claim": "windows hot journal cases",
+      "actual": 14,
+      "expected": 14,
+      "passed": true
+    },
+    {
+      "claim": "windows race followup ordinaryCLI",
+      "actual": 2,
+      "expected": 2,
+      "passed": true
+    },
+    {
+      "claim": "windows race followup passed",
+      "actual": "passed",
+      "expected": "passed",
+      "passed": true
+    },
+    {
+      "claim": "windows race separate from matrix",
+      "actual": 2,
+      "expected": 2,
+      "passed": true
+    },
+    {
+      "claim": "Linux active timing exact rounded",
+      "actual": [
+        0.037608,
+        2.058607
+      ],
+      "expected": [
+        0.037608,
+        2.058607
+      ],
+      "passed": true
+    },
+    {
+      "claim": "Windows active timing exact rounded",
+      "actual": [
+        0.109,
+        2.062
+      ],
+      "expected": [
+        0.109,
+        2.062
+      ],
+      "passed": true
+    },
+    {
+      "claim": "final checker pin",
+      "actual": "2a247639c097ecc4a1c52e3376fe02f8f51c8579869af5927819ba8aa1e032b9",
+      "expected": "2a247639c097ecc4a1c52e3376fe02f8f51c8579869af5927819ba8aa1e032b9",
+      "passed": true
+    },
+    {
+      "claim": "final checker bytes",
+      "actual": 131174,
+      "expected": 131174,
+      "passed": true
+    },
+    {
+      "claim": "final checker test pin",
+      "actual": "3c414d77c2536265d70ab723dde1d43635d5b8ee410d617cac79992361a0b668",
+      "expected": "3c414d77c2536265d70ab723dde1d43635d5b8ee410d617cac79992361a0b668",
+      "passed": true
+    },
+    {
+      "claim": "final checker tests bytes",
+      "actual": 29187,
+      "expected": 29187,
+      "passed": true
+    },
+    {
+      "claim": "Extra exact old checker pin",
+      "actual": "87cb1580d26ca216061a9ef129ff92904958c099866d7811f9bcb79139b936da",
+      "expected": "87cb1580d26ca216061a9ef129ff92904958c099866d7811f9bcb79139b936da",
+      "passed": true
+    },
+    {
+      "claim": "old35 to final36 only existing top-level function delta",
+      "actual": [
+        "inventory"
+      ],
+      "expected": [
+        "inventory"
+      ],
+      "passed": true
+    },
+    {
+      "claim": "old35 to final36 added empty-file helpers",
+      "actual": [
+        "copy_observed_file",
+        "read_observed_file"
+      ],
+      "expected": [
+        "copy_observed_file",
+        "read_observed_file"
+      ],
+      "passed": true
+    },
+    {
+      "claim": "Extra old35 SHA scoped",
+      "actual": "87cb1580d26ca216061a9ef129ff92904958c099866d7811f9bcb79139b936da",
+      "expected": "87cb1580d26ca216061a9ef129ff92904958c099866d7811f9bcb79139b936da",
+      "passed": true
+    },
+    {
+      "claim": "Extra counts",
+      "actual": [
+        3,
+        7,
+        3
+      ],
+      "expected": [
+        3,
+        7,
+        3
+      ],
+      "passed": true
+    },
+    {
+      "claim": "Extra source old/new byte lengths",
+      "actual": [
+        170,
+        258
+      ],
+      "expected": [
+        170,
+        258
+      ],
+      "passed": true
+    },
+    {
+      "claim": "Extra four-confirmed immutable prefix source-bytes-after-four-confirmed",
+      "actual": [
+        23,
+        24,
+        4,
+        4,
+        true,
+        true,
+        true
+      ],
+      "expected": [
+        23,
+        24,
+        4,
+        4,
+        true,
+        true,
+        true
+      ],
+      "passed": true
+    },
+    {
+      "claim": "Extra four-confirmed immutable prefix same-source-bytes-new-file-ID-after-four-confirmed",
+      "actual": [
+        23,
+        24,
+        4,
+        4,
+        true,
+        true,
+        true
+      ],
+      "expected": [
+        23,
+        24,
+        4,
+        4,
+        true,
+        true,
+        true
+      ],
+      "passed": true
+    },
+    {
+      "claim": "Extra four-confirmed immutable prefix actual-Core04-to-Core05-after-four-confirmed",
+      "actual": [
+        23,
+        24,
+        4,
+        4,
+        true,
+        true,
+        true
+      ],
+      "expected": [
+        23,
+        24,
+        4,
+        4,
+        true,
+        true,
+        true
+      ],
+      "passed": true
+    },
+    {
+      "claim": "independent authored Markdown byte match 笔记/甲容器.md",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "claim": "independent authored Markdown byte match 笔记/乙容器.md",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "claim": "normative note exact lengths",
+      "actual": [
+        244,
+        462
+      ],
+      "expected": [
+        244,
+        462
+      ],
+      "passed": true
+    },
+    {
+      "claim": "normative endings",
+      "actual": true,
+      "expected": true,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA extra-invalidations/originals.zip",
+      "actual": "c448fa27b895855ed8479a811543b94eb27c85aaec0dbc0fb3203f7da7bc92c0",
+      "expected": "c448fa27b895855ed8479a811543b94eb27c85aaec0dbc0fb3203f7da7bc92c0",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length extra-invalidations/originals.zip",
+      "actual": 380732,
+      "expected": 380732,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members extra-invalidations/originals.zip",
+      "actual": 210,
+      "expected": 210,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA history/native-prechecks/originals.zip",
+      "actual": "bc2e3466b103c0dfe2e23a9504899bba90d77fd303162f66d6ae23dde4a8dc8a",
+      "expected": "bc2e3466b103c0dfe2e23a9504899bba90d77fd303162f66d6ae23dde4a8dc8a",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length history/native-prechecks/originals.zip",
+      "actual": 57509639,
+      "expected": 57509639,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members history/native-prechecks/originals.zip",
+      "actual": 344,
+      "expected": 344,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA history/native06/originals.zip",
+      "actual": "ac77491e7205312941245955fbd877546507dbb5b6910b3129aaf0d4a16ab0f1",
+      "expected": "ac77491e7205312941245955fbd877546507dbb5b6910b3129aaf0d4a16ab0f1",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length history/native06/originals.zip",
+      "actual": 1075314,
+      "expected": 1075314,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members history/native06/originals.zip",
+      "actual": 822,
+      "expected": 822,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA history/python35/originals.zip",
+      "actual": "f66b85c68a60155bdd2d89ea8dc55fe83fe3fec391714fc6c928d15131f5c73c",
+      "expected": "f66b85c68a60155bdd2d89ea8dc55fe83fe3fec391714fc6c928d15131f5c73c",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length history/python35/originals.zip",
+      "actual": 412002,
+      "expected": 412002,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members history/python35/originals.zip",
+      "actual": 91,
+      "expected": 91,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA linux-python/originals.zip",
+      "actual": "6b38ca6b19dd9be10f4aacf7a414aeaa28126e841e392e1f528ba4470de47f2a",
+      "expected": "6b38ca6b19dd9be10f4aacf7a414aeaa28126e841e392e1f528ba4470de47f2a",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length linux-python/originals.zip",
+      "actual": 36715112,
+      "expected": 36715112,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members linux-python/originals.zip",
+      "actual": 15176,
+      "expected": 15176,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA linux-run/originals.zip",
+      "actual": "33c38adb058c94fd828235f9db1f46514b7fb2aa55bc7d5bd5c433e084782b77",
+      "expected": "33c38adb058c94fd828235f9db1f46514b7fb2aa55bc7d5bd5c433e084782b77",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length linux-run/originals.zip",
+      "actual": 5743814,
+      "expected": 5743814,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members linux-run/originals.zip",
+      "actual": 3439,
+      "expected": 3439,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA programs/linux-cli/originals.zip",
+      "actual": "e76b3fe81c08d99365dfb5b2daf3921eb58bfdd9083527e7ad6c959069491d8a",
+      "expected": "e76b3fe81c08d99365dfb5b2daf3921eb58bfdd9083527e7ad6c959069491d8a",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length programs/linux-cli/originals.zip",
+      "actual": 33995704,
+      "expected": 33995704,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members programs/linux-cli/originals.zip",
+      "actual": 43,
+      "expected": 43,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA programs/linux-driver/originals.zip",
+      "actual": "1c69c8dac48870da7b6fab023e62923c70dc4f2e4a18ee0c45955e569902476b",
+      "expected": "1c69c8dac48870da7b6fab023e62923c70dc4f2e4a18ee0c45955e569902476b",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length programs/linux-driver/originals.zip",
+      "actual": 40181696,
+      "expected": 40181696,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members programs/linux-driver/originals.zip",
+      "actual": 43,
+      "expected": 43,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA review/current-source/originals.zip",
+      "actual": "40a7a9acebf02032657814597c536a075eae8a2b84caabb476ef9a020577fd10",
+      "expected": "40a7a9acebf02032657814597c536a075eae8a2b84caabb476ef9a020577fd10",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length review/current-source/originals.zip",
+      "actual": 88157,
+      "expected": 88157,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members review/current-source/originals.zip",
+      "actual": 2,
+      "expected": 2,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA review/peer/originals.zip",
+      "actual": "a3564a3ac41a181660d751bb4ceaffc4e2971c6d0b5256307e0373d1106b5797",
+      "expected": "a3564a3ac41a181660d751bb4ceaffc4e2971c6d0b5256307e0373d1106b5797",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length review/peer/originals.zip",
+      "actual": 9748,
+      "expected": 9748,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members review/peer/originals.zip",
+      "actual": 8,
+      "expected": 8,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA review/readbackmanifest.zip",
+      "actual": "0669298a74736c97c4235b027ec02efcb6b6a36e13b6640f778037195a621727",
+      "expected": "0669298a74736c97c4235b027ec02efcb6b6a36e13b6640f778037195a621727",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length review/readbackmanifest.zip",
+      "actual": 6675473,
+      "expected": 6675473,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members review/readbackmanifest.zip",
+      "actual": 1359,
+      "expected": 1359,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA windows-python/originals.zip",
+      "actual": "97fa133eed4ce0e14b469c80fbcf1537b217b283c39c88aae7ae7198c8b92ddc",
+      "expected": "97fa133eed4ce0e14b469c80fbcf1537b217b283c39c88aae7ae7198c8b92ddc",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length windows-python/originals.zip",
+      "actual": 15572317,
+      "expected": 15572317,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members windows-python/originals.zip",
+      "actual": 101,
+      "expected": 101,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA windows-run/originals.zip",
+      "actual": "81c732e11e24cda4a35722d6869271a7e5127fb103ef0f1210909a5a3f365a45",
+      "expected": "81c732e11e24cda4a35722d6869271a7e5127fb103ef0f1210909a5a3f365a45",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length windows-run/originals.zip",
+      "actual": 12460338,
+      "expected": 12460338,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members windows-run/originals.zip",
+      "actual": 5259,
+      "expected": 5259,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP exact SHA windows-rust/originals.zip",
+      "actual": "7267b68cf11e919f3c1fdbf7482b2ebab9c293f74305c54b94bec4b8fcce7772",
+      "expected": "7267b68cf11e919f3c1fdbf7482b2ebab9c293f74305c54b94bec4b8fcce7772",
+      "passed": true
+    },
+    {
+      "claim": "public ZIP length windows-rust/originals.zip",
+      "actual": 26821256,
+      "expected": 26821256,
+      "passed": true
+    },
+    {
+      "claim": "public ZIP central members windows-rust/originals.zip",
+      "actual": 107,
+      "expected": 107,
+      "passed": true
+    },
+    {
+      "claim": "public archive totals",
+      "actual": [
+        14,
+        27004,
+        237641302
+      ],
+      "expected": [
+        14,
+        27004,
+        237641302
+      ],
+      "passed": true
+    },
+    {
+      "claim": "Linux fullPython exact total/result",
+      "actual": [
+        416,
+        "OK (skipped=21)"
+      ],
+      "expected": [
+        416,
+        "OK (skipped=21)"
+      ],
+      "passed": true
+    },
+    {
+      "claim": "Windows final fullPython exact counts",
+      "actual": [
+        477,
+        469,
+        0,
+        0,
+        8
+      ],
+      "expected": [
+        477,
+        469,
+        0,
+        0,
+        8
+      ],
+      "passed": true
+    },
+    {
+      "claim": "Linux fullRust explicit not_run",
+      "actual": "not_run",
+      "expected": "not_run",
+      "passed": true
+    },
+    {
+      "claim": "real model and science boundary",
+      "actual": [
+        0,
+        0,
+        "not_run",
+        "not_accessed"
+      ],
+      "expected": [
+        0,
+        0,
+        "not_run",
+        "not_accessed"
+      ],
+      "passed": true
+    },
+    {
+      "claim": "selected product/test sources unchanged",
+      "actual": {
+        "scripts/verify_run_checkpoint.py": {
+          "sha256": "2a247639c097ecc4a1c52e3376fe02f8f51c8579869af5927819ba8aa1e032b9",
+          "byte_length": 131174
+        },
+        "tests/test_verify_run_checkpoint.py": {
+          "sha256": "3c414d77c2536265d70ab723dde1d43635d5b8ee410d617cac79992361a0b668",
+          "byte_length": 29187
+        }
+      },
+      "expected": {
+        "scripts/verify_run_checkpoint.py": {
+          "sha256": "2a247639c097ecc4a1c52e3376fe02f8f51c8579869af5927819ba8aa1e032b9",
+          "byte_length": 131174
+        },
+        "tests/test_verify_run_checkpoint.py": {
+          "sha256": "3c414d77c2536265d70ab723dde1d43635d5b8ee410d617cac79992361a0b668",
+          "byte_length": 29187
+        }
+      },
+      "passed": true
+    }
+  ],
+  "check_count": 101,
+  "timing_observations": {
+    "linux": {
+      "case": "active-pause-inflight",
+      "status": "passed",
+      "pause_receipt_seconds": 0.03760771302040666,
+      "deadline_observation_seconds": 2.0586073030135594,
+      "inflight_unit": "render",
+      "confirmed_when_paused": 2
+    },
+    "windows": {
+      "case": "active-pause-inflight",
+      "status": "passed",
+      "pause_receipt_seconds": 0.10899999999674037,
+      "deadline_observation_seconds": 2.0619999999762513,
+      "inflight_unit": "render",
+      "confirmed_when_paused": 2
+    }
+  },
+  "normative_outputs": [
+    {
+      "path": "笔记/甲容器.md",
+      "length": 462,
+      "sha256": "33eedf491e2ab58e5ee7d2da80c701e91bb0c77700b0212672a1ddbed2bfa376",
+      "ending_twoLF": true,
+      "CR_absent": true
+    },
+    {
+      "path": "笔记/乙容器.md",
+      "length": 244,
+      "sha256": "349f06a40ea199f4d2fb2f6ebcecf61aa652a571ea18e1e81f665a11cf505b88",
+      "ending_twoLF": true,
+      "CR_absent": true
+    }
+  ],
+  "selected_doc_before_after_equal": true,
+  "source_before": {
+    "doc/validation/B07-T01.md": {
+      "sha256": "3932bc74175419b8f577b944147ba93f5a6f4ef2040f6652ee8dd09ee0df708f",
+      "byte_length": 19649
+    },
+    "doc/validation/assets/B07-T01/README.md": {
+      "sha256": "2941b8402d55d7b3a1103ec25bf7a7fb41a1443ec5e304a3731479c09fab3298",
+      "byte_length": 4916
+    },
+    "doc/validation/assets/B07-T01/verification-summary.json": {
+      "sha256": "32e64c020ad2ad79b51b342da0cf786f9bdd40f7661b04dc7c306c6cef68758b",
+      "byte_length": 6588
+    },
+    "doc/execution/NEXT_STEPS.md": {
+      "sha256": "d2437b5b64399020fe2a5e01e23983fdd50fc98487678264f1631f619529d090",
+      "byte_length": 4449
+    },
+    "scripts/verify_run_checkpoint.py": {
+      "sha256": "2a247639c097ecc4a1c52e3376fe02f8f51c8579869af5927819ba8aa1e032b9",
+      "byte_length": 131174
+    },
+    "tests/test_verify_run_checkpoint.py": {
+      "sha256": "3c414d77c2536265d70ab723dde1d43635d5b8ee410d617cac79992361a0b668",
+      "byte_length": 29187
+    }
+  },
+  "source_after": {
+    "doc/validation/B07-T01.md": {
+      "sha256": "3932bc74175419b8f577b944147ba93f5a6f4ef2040f6652ee8dd09ee0df708f",
+      "byte_length": 19649
+    },
+    "doc/validation/assets/B07-T01/README.md": {
+      "sha256": "2941b8402d55d7b3a1103ec25bf7a7fb41a1443ec5e304a3731479c09fab3298",
+      "byte_length": 4916
+    },
+    "doc/validation/assets/B07-T01/verification-summary.json": {
+      "sha256": "32e64c020ad2ad79b51b342da0cf786f9bdd40f7661b04dc7c306c6cef68758b",
+      "byte_length": 6588
+    },
+    "doc/execution/NEXT_STEPS.md": {
+      "sha256": "d2437b5b64399020fe2a5e01e23983fdd50fc98487678264f1631f619529d090",
+      "byte_length": 4449
+    },
+    "scripts/verify_run_checkpoint.py": {
+      "sha256": "2a247639c097ecc4a1c52e3376fe02f8f51c8579869af5927819ba8aa1e032b9",
+      "byte_length": 131174
+    },
+    "tests/test_verify_run_checkpoint.py": {
+      "sha256": "3c414d77c2536265d70ab723dde1d43635d5b8ee410d617cac79992361a0b668",
+      "byte_length": 29187
+    }
+  },
+  "findings": [],
+  "resolved_wording": [
+    {
+      "path": "doc/validation/B07-T01.md",
+      "line": 58,
+      "original_timing_definition_clarified_by_root": true
+    }
+  ],
+  "scope": "readonly final36/final matrices/race/Extra previous35/timing/authored outputs/public summary and archive identity; no product commands or model calls; not a rerun of every public ZIP member CRC",
+  "real_model_calls": 0,
+  "finished_ns": 1793988622368829357
+}
