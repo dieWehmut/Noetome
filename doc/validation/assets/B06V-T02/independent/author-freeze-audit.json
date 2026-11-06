@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "producer": "independent_author_pre_recognition_audit",
+  "at_utc": "2026-11-06T01:19:49.950853+00:00",
+  "author_formula_count": 1,
+  "scan_states": 3,
+  "freeze_sha256": "99789373318a9e2f93c5b8449e471567e58f448754e59f757164b7ad18ab4b54",
+  "frozen_files": 33,
+  "checks": [
+    {
+      "state": "clear",
+      "physical_pages": 1,
+      "media_size": [
+        800.0,
+        1000.0
+      ],
+      "pdfium_text": "",
+      "pdfminer_text": "\f",
+      "pdfium_raster_equals_frozen_page_pixels": true,
+      "region_equals_actual_page_crop_pixels": true,
+      "case_originals_bytes_equal": true,
+      "input_semantics_expression_known": true,
+      "unknown_positions": []
+    },
+    {
+      "state": "unreadable_sign",
+      "physical_pages": 1,
+      "media_size": [
+        800.0,
+        1000.0
+      ],
+      "pdfium_text": "",
+      "pdfminer_text": "\f",
+      "pdfium_raster_equals_frozen_page_pixels": true,
+      "region_equals_actual_page_crop_pixels": true,
+      "case_originals_bytes_equal": true,
+      "input_semantics_expression_known": false,
+      "unknown_positions": [
+        {
+          "kind": "sign",
+          "description": "Missing scan material covers the sign before the fraction; that sign is unknown."
+        }
+      ]
+    },
+    {
+      "state": "unreadable_subscript",
+      "physical_pages": 1,
+      "media_size": [
+        800.0,
+        1000.0
+      ],
+      "pdfium_text": "",
+      "pdfminer_text": "\f",
+      "pdfium_raster_equals_frozen_page_pixels": true,
+      "region_equals_actual_page_crop_pixels": true,
+      "case_originals_bytes_equal": true,
+      "input_semantics_expression_known": false,
+      "unknown_positions": [
+        {
+          "kind": "subscript",
+          "description": "Missing scan material covers the denominator subscript; that subscript is unknown."
+        }
+      ]
+    }
+  ],
+  "visual_review": "Actual clear page and both damaged region PNGs viewed: all clear sign/subscript marks legible; covered mark absent in each damaged region; no recovery by guessing allowed.",
+  "recognition_calls": 0,
+  "normal_cli_calls": 0,
+  "font_sha_guard_initial_failure": "Initial generation exited 2 on incorrect serif fingerprint before creating an output root. Exact installed font hashes were then measured and fixed; generated originals only afterward. This is author preparation, not recognition or CLI acceptance.",
+  "generator_sha256": "4cc11736734682f5bfa85b6787973ebede0a91596b8d14ebd475e9d5a12187bf",
+  "python_version": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+  "pillow_version": "12.3.0",
+  "pdfium_version": "5.14.0",
+  "pdfium_pdf_version": "156.0.8076.0",
+  "initial_generated_freeze_sha256": "5dd7fa4d9d5da88d46960e038fbbbeeb512ab906fb78bd4b0cc767e9372bcaf8",
+  "python_executable": "/tmp/noetome-b05-t03-python/bin/python"
+}
