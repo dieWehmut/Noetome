@@ -2199,7 +2199,7 @@
       "id": "B06V-T01",
       "title": "一般来源图像有据重现与重绘回退",
       "batch": "B06V",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B06-T03"
       ],
@@ -2216,7 +2216,65 @@
         "独立expected及同步图/计划/双报告/指纹篡改拒绝语义遗漏、方向错误、单位丢失、虚假重绘和假成功；原件指纹、祖先/碰撞/哨兵保护实测。",
         "干净记录版本Obsidian实测本地图像/附件和回退；完整Rust/Python及表格/流程/公式回归、独立审查通过后complete提交推送。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-05T23:52:02Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "推进明确选定PNG来源的结构声明、有据有限SVG重绘、原图/曲线留存及未知阻断；先冻结独立作者与普通CLI RED，再实现独立语义/资源校验、真实Obsidian与完整支持平台回归。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-06T01:04:48Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "交付严格选定PNG/作者手工结构声明的图像CLI、有限安全SVG与完整原图/关键未知阻断。冻结12作者，修复深色透明画布、箭头头部遮挡与黑底黑字，完整独立同步篡改、Windows回归和17次真实Obsidian验收闭环；保持知识pending、科学not_run和未发布。",
+          "validation": [
+            "Windows fmt/check/build与真实image namespace均退出0，Rust workspace688 passed/0 failed/0 ignored；Windows完整Python256 run=254 passed+2平台skip，Linux256 run=239 passed+17 Windows skip，0 failed。图像独立25 tests/0skip、12冻结作者55 CLI/91场景（Windows51/88）全passed；表格124 CLI/39场景、流程73/41、公式29/56均0。干净Obsidian1.6.7最终17场(6SVG/6PNG/5阻断)、12原PNG实际click全部passed，明暗SVG及同实例解码RGBA相等，原件/spec未变、所有自有PID/port/profile退出。新鲜颜色问题同源RED到原图GREEN并独立2测试关闭；1173原生、547源/config、37625运行原件读回，ZIP SHA/库存及545当前源码/PE绑定再次核对。devlog check、git diff --cached --check通过；Linux完整Rust宿主限制、扫描重建/当前最低版本矩阵/科学正确率未运行，不从Windows或工程样例推定。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B06V-T01.md",
+              "sha256": "7f217f4d3bd2203b1768bc49a07fcefce0ab5682cfa120dfc005a9ba4d78d0e2"
+            },
+            {
+              "path": "doc/technical/IMAGE_FIDELITY_CONTRACT.md",
+              "sha256": "22a465e452b5c0ad346a643c7ae347e7e82f941b9807f62e27937d2da2c667ff"
+            },
+            {
+              "path": "crates/noetome-cli/src/image_fidelity.rs",
+              "sha256": "ee172c7c5c392fca82501e28fb9e64c834573648b7ffb24aae2c8337eca8fc6c"
+            },
+            {
+              "path": "scripts/verify_image.py",
+              "sha256": "ccd4dad185961c94ddbff16cf7eb6e6e5688912c7a1b530ba8db5958c71b2a3a"
+            },
+            {
+              "path": "fixtures/image-fidelity/frozen-sha256.json",
+              "sha256": "b74d28cc98598f53d5efbf47bacdab9aa80bb23f938ffb2537c3a2f7c072af1e"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T01/independent/safe-colors-v2/summary.json",
+              "sha256": "02dead815ff0c8618e0d8923daf3ea3dc1830b4a96c2b94cbf00fa290089ea34"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T01/native/final-summary.json",
+              "sha256": "85d1aecb006bca789033c348a5e0211a8dbfc10eafe160f69dd3f33701d7c1e5"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T01/windows/native-final.json",
+              "sha256": "89643b9813597ba0cf2adf023b43675844ba8acbbdd37620bd4fd1235bbb608c"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T01/review/final-delta-review.md",
+              "sha256": "4c92d0247b0e77a54880c6d257aca8087e9d3999cc27c915788d37bf4b8bee54"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B06V-T02",

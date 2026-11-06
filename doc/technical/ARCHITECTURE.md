@@ -285,3 +285,9 @@ B06-T01增加普通 `knowledge present`，从原协调case和已保存输出重�
 ## 有界过程与流程表达
 
 B06-T02 的过程来源核对采用独立 `process_source_review / bounded_process_text_v1` 命名空间；不扩展旧测量原子或协调版本来容纳图。受控文字解析先从实际 SourceSession 得到完整过程/步骤/关系及逐行证据，再与独立 gold 比较。`knowledge flow` 重建并核对整个保存的 review 后才提交流程计划，语义支持与渲染能力分别判定。明确有向无环过程进入有限 Mermaid 编译，能力不兼容时使用完整有据文字；相关性、歧义或缺关键关系阻断。详细字段、阶段和验收边界见[过程流程契约](PROCESS_FLOW_CONTRACT.md)。
+
+## 明确选定图像与有限重绘
+
+B06V-T01 使用独立 image Schema1，`image_input` 持有选定整图 PNG、作者手工语义与 profile，完整解码而非只信任 PNG 首部。`image_fidelity` 分开核对关键语义、边端点与空间几何、目标能力和文字布局，再决定有限 SVG、原图或阻断。`image_render` 只生成固定本地安全图元和字面 Markdown，并保存原字段到实际图元/正文的 UTF-8 映射；不引入 OCR、图像模型或完整知识图谱。
+
+输出沿用新根和输入/祖先/库存持有守卫，独立 Python 从冻结作者原图、预期和实际输出重验含义，原件保存不等于语义已经通过。曲线/观测保留原图，未知标签/关系与矛盾几何不能靠原图回退冒充成功。接口与限额见[图像契约](IMAGE_FIDELITY_CONTRACT.md)，扫描重建与跨版本矩阵分别验收。

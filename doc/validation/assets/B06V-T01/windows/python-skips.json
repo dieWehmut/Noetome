@@ -1,0 +1,27 @@
+{
+  "tests_run": 256,
+  "passed": 254,
+  "skipped": [
+    {
+      "test": "test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_ancestor_links_rejected_before_source_read",
+      "reason": "ancestor symlinks require separate Windows reparse environment"
+    },
+    {
+      "test": "test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution",
+      "reason": "directory symbolic links unavailable"
+    }
+  ],
+  "failed": 0,
+  "boundary_probe": {
+    "tests_run": 2,
+    "skips": [
+      {
+        "test": "test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution",
+        "reason": "directory symbolic links unavailable"
+      }
+    ],
+    "errors": 0,
+    "failures": 0
+  },
+  "scope": "actual unittest full result, explicit skip discovery and a limited actual rerun of only dynamic platform boundary methods to identify observed skip reasons; skips are not passes"
+}

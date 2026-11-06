@@ -389,3 +389,7 @@ RenderedFile将正文与链接分开定位，保存文件指纹、note_id、sect
 ## 明确选定公式交换 v1
 
 [公式保真 v1](FORMULA_FIDELITY_CONTRACT.md)另外保存 selection_id、原始 TeX/语义声明/PNG 的文件 SHA 和区域页号/画布/矩形。作者语义 expression 是手工转写，不能标为恢复作者原始源码；独立 expected 不进入 CLI 输入。符号定义与单位 nullable 必填，前提、范围及例外不可从正文遗漏。计划记录实际数学 token、兼容改写、回退原因及逐块 UTF-8 来源映射；未知或不可辨输入保存原件与阻断报告，没有成功表达。公式成功仍为知识 pending、科学 not_run 的未发布工程预览，不创建项目数据库迁移或 Release。
+
+## 明确选定图像交换 v1
+
+[图像保真 v1](IMAGE_FIDELITY_CONTRACT.md)使用独立 image case、author_image_declaration 和目标 profile。整张 PNG 的真实尺寸/字节与元素 bbox、关系端点、单位、图例归属、空间声明绑定；作者结构不是图像识别结果。各 nullable 必填字段区分已知未给出与关键未知，完整条件/例外保留。计划和双报告保存有限重绘、原图回退或阻断决策，以及实际图元/正文 UTF-8 字段映射。原 PNG 始终保留，缺原始数据的曲线不被生成精确数据；输出仍为未发布工程预览，不修改旧公式/流程/fixture 契约。
