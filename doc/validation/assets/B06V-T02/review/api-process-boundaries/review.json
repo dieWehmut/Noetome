@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "reviewer": "scan_api_review",
+  "status": "focused_delta_passed_final_full_workspace_pending",
+  "selected_sources": [
+    {
+      "path": "scripts/invoke_scan_api_credential.ps1",
+      "sha256": "b63714af62b005f7a5e7c19482c47f39c8048d55289b61dadd7c0dd0972f4b3b",
+      "byte_length": 31332
+    },
+    {
+      "path": "scripts/set_api_credential.ps1",
+      "sha256": "99001ed7a90266480440b753659965dfed875d85b055821ec76ccabbd0b3c0cb",
+      "byte_length": 7743
+    },
+    {
+      "path": "tests/test_scan_api_credential.py",
+      "sha256": "117b8fcc6dc5a0609fa96b301f5311bb91829f05b3ad8a971f7cad566322da7b",
+      "byte_length": 31656
+    }
+  ],
+  "final_result": {
+    "tests_run": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "success": true,
+    "real_http_calls": 0,
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "test_ids": [
+      "ScanCredentials_powershell.test_parent_exit_with_inherited_pipes_is_bounded_and_descendant_terminated",
+      "ScanCredentials_powershell.test_live_parent_and_descendant_timeout_preserves_pending_budget",
+      "ScanCredentials_powershell.test_output_limit_terminates_observed_tree_and_retains_failure_receipt",
+      "ScanCredentials_pwsh.test_parent_exit_with_inherited_pipes_is_bounded_and_descendant_terminated",
+      "ScanCredentials_pwsh.test_live_parent_and_descendant_timeout_preserves_pending_budget",
+      "ScanCredentials_pwsh.test_output_limit_terminates_observed_tree_and_retains_failure_receipt"
+    ],
+    "source_binding_after": [
+      {
+        "path": "scripts/invoke_scan_api_credential.ps1",
+        "sha256": "b63714af62b005f7a5e7c19482c47f39c8048d55289b61dadd7c0dd0972f4b3b"
+      },
+      {
+        "path": "scripts/set_api_credential.ps1",
+        "sha256": "99001ed7a90266480440b753659965dfed875d85b055821ec76ccabbd0b3c0cb"
+      },
+      {
+        "path": "tests/test_scan_api_credential.py",
+        "sha256": "117b8fcc6dc5a0609fa96b301f5311bb91829f05b3ad8a971f7cad566322da7b"
+      }
+    ]
+  },
+  "process_tree_checks": [
+    {
+      "mode": "tree_timeout",
+      "observed_test_pids": [
+        22768,
+        29108
+      ],
+      "all_handles_signaled": true,
+      "helper_exit": 2,
+      "failure_receipt": {
+        "code": "child-timeout",
+        "stdout_complete": true,
+        "stderr_complete": true,
+        "termination": {
+          "strategy": "windows_job",
+          "root_pid": 12436,
+          "containment_assignment": "after_process_start",
+          "active_processes_before": 5,
+          "active_processes_after": 0,
+          "job_empty_confirmed": true,
+          "root_exit_confirmed": true
+        }
+      }
+    },
+    {
+      "mode": "tree_output_limit",
+      "observed_test_pids": [
+        5196,
+        3908
+      ],
+      "all_handles_signaled": true,
+      "helper_exit": 2,
+      "failure_receipt": {
+        "code": "child-output-limit",
+        "stdout_complete": false,
+        "stderr_complete": true,
+        "termination": {
+          "strategy": "windows_job",
+          "root_pid": 2596,
+          "containment_assignment": "after_process_start",
+          "active_processes_before": 5,
+          "active_processes_after": 0,
+          "job_empty_confirmed": true,
+          "root_exit_confirmed": true
+        }
+      }
+    },
+    {
+      "mode": "parent_exit_pipe",
+      "observed_test_pids": [
+        68824,
+        54424
+      ],
+      "all_handles_signaled": true,
+      "helper_exit": 2,
+      "failure_receipt": {
+        "code": "child-timeout",
+        "stdout_complete": true,
+        "stderr_complete": true,
+        "termination": {
+          "strategy": "windows_job",
+          "root_pid": 73940,
+          "containment_assignment": "after_process_start",
+          "active_processes_before": 3,
+          "active_processes_after": 0,
+          "job_empty_confirmed": true,
+          "root_exit_confirmed": true
+        }
+      }
+    },
+    {
+      "mode": "tree_timeout",
+      "observed_test_pids": [
+        17904,
+        18760
+      ],
+      "all_handles_signaled": true,
+      "helper_exit": 2,
+      "failure_receipt": {
+        "code": "child-timeout",
+        "stdout_complete": true,
+        "stderr_complete": true,
+        "termination": {
+          "strategy": "windows_job",
+          "root_pid": 27812,
+          "containment_assignment": "after_process_start",
+          "active_processes_before": 5,
+          "active_processes_after": 0,
+          "job_empty_confirmed": true,
+          "root_exit_confirmed": true
+        }
+      }
+    },
+    {
+      "mode": "tree_output_limit",
+      "observed_test_pids": [
+        41504,
+        75608
+      ],
+      "all_handles_signaled": true,
+      "helper_exit": 2,
+      "failure_receipt": {
+        "code": "child-output-limit",
+        "stdout_complete": false,
+        "stderr_complete": true,
+        "termination": {
+          "strategy": "windows_job",
+          "root_pid": 58492,
+          "containment_assignment": "after_process_start",
+          "active_processes_before": 4,
+          "active_processes_after": 0,
+          "job_empty_confirmed": true,
+          "root_exit_confirmed": true
+        }
+      }
+    },
+    {
+      "mode": "parent_exit_pipe",
+      "observed_test_pids": [
+        25136,
+        49664
+      ],
+      "all_handles_signaled": true,
+      "helper_exit": 2,
+      "failure_receipt": {
+        "code": "child-timeout",
+        "stdout_complete": true,
+        "stderr_complete": true,
+        "termination": {
+          "strategy": "windows_job",
+          "root_pid": 54040,
+          "containment_assignment": "after_process_start",
+          "active_processes_before": 2,
+          "active_processes_after": 0,
+          "job_empty_confirmed": true,
+          "root_exit_confirmed": true
+        }
+      }
+    }
+  ],
+  "red": {
+    "tests_run": 1,
+    "errors": 1,
+    "skipped": 0,
+    "observed": "actual parent exited and live descendant inherited stdout/stderr; original helper exceeded 20-second observation and produced TimeoutExpired",
+    "originals_prefix": "red-original-parent-exit/"
+  },
+  "historical_full": {
+    "tests_run": 46,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 165.078,
+    "scope": "before RanToCompletion and Stopwatch delta; not a current final full-workspace pass"
+  },
+  "final_boundary_seconds": 52.188,
+  "http_requests": 0,
+  "real_credential_read": false,
+  "real_ledger_mutations": 0,
+  "successful_four_phase_schema_unchanged": true,
+  "failed_phase_addition": [
+    "failure.code",
+    "failure.stdout_complete",
+    "failure.stderr_complete",
+    "failure.termination"
+  ],
+  "limitations": [
+    "Job assignment occurs after Process.Start; a pre-assignment spawn window remains and is not claimed safe for arbitrary hostile child binaries.",
+    "The actual scan CLI does not spawn descendants; synthetic children are only used to verify this wrapper path.",
+    "Windows Job controls processes, not filesystem/network authority.",
+    "No live recognition, actual user ledger recovery or Obsidian acceptance performed in this focused review."
+  ],
+  "originals_archive": {
+    "path": "originals.zip",
+    "sha256": "fc74f291477cb1cdb6b64bcda7ca4d39609c9896214aaa69755e3885cd3de590",
+    "byte_length": 1123154
+  }
+}

@@ -1,0 +1,612 @@
+{
+  "schema_version": 1,
+  "task": "B06V-T02",
+  "reviewer": "scan_native_evidence",
+  "observed_at": "2026-11-06T09:11:31.863240+00:00",
+  "status": "focused_final_helper_lifecycle_delta_verified",
+  "scope": "Independent read-only static review, actual x64 Windows C# ABI/empty-job probe, and complete readback of other reviewer actual process-tree test originals. No duplicate child-tree tests, live HTTP, user credentials, actual usage-ledger mutations or product-source edits.",
+  "selected_sources": {
+    "scripts/invoke_scan_api_credential.ps1": {
+      "sha256": "b63714af62b005f7a5e7c19482c47f39c8048d55289b61dadd7c0dd0972f4b3b",
+      "byte_length": 31332
+    },
+    "tests/test_scan_api_credential.py": {
+      "sha256": "117b8fcc6dc5a0609fa96b301f5311bb91829f05b3ad8a971f7cad566322da7b",
+      "byte_length": 31656
+    },
+    "scripts/set_api_credential.ps1": {
+      "sha256": "99001ed7a90266480440b753659965dfed875d85b055821ec76ccabbd0b3c0cb",
+      "byte_length": 7743
+    }
+  },
+  "reviewed_behaviors": {
+    "job_abi": "Exact C# field types/order match documented JOBOBJECT basic/extended/accounting structures; actual Windows5.1 offsets and sizes below.",
+    "job_lifetime": "Create before selected Process.Start; assign after Start. Failure path TerminateJob, WaitEmpty and root WaitForExit occur before closing Job. KILL_ON_JOB_CLOSE remains final cleanup. No production call to ActiveProcesses after Dispose.",
+    "deadline": "Monotonic Stopwatch includes root-process exit wait and both redirected-pipe task completion; a parent-only exit cannot satisfy completion while descendant holds inherited pipes.",
+    "unknown_budget": "Lifecycle errors retain existing conservative reservation; failed ledger snapshots match actual retained unknown records in all six actual boundary cases.",
+    "task_completion_fix": "Failure receipt stream-complete now requires RanToCompletion. Faulted/oversized output is not marked complete. Actual output-limit receipts assert stdout_complete=false in both shells.",
+    "successful_phase_schema": "Current Save-Phase keeps common successful four-phase fields; failure-specific addition is limited to phase failed."
+  },
+  "closed_finding": {
+    "code": "faulted_task_misreported_stream_complete",
+    "original_problem": "Task.IsCompleted is true for Faulted/Canceled as well as successful completion.",
+    "fix_verified": "Failed phase uses TaskStatus.RanToCompletion and both actual stdout-limit cases report false.",
+    "actual_faulted_task_probe": {
+      "IsFaulted": true,
+      "Status": "Faulted",
+      "IsCompleted": true
+    }
+  },
+  "native_abi_probe": {
+    "result": {
+      "double_dispose_succeeded": true,
+      "powerShell": "5.1.26100.7920",
+      "structures": [
+        {
+          "fields": [
+            {
+              "offset": 0,
+              "name": "ProcessTime",
+              "type": "System.Int64"
+            },
+            {
+              "offset": 8,
+              "name": "JobTime",
+              "type": "System.Int64"
+            },
+            {
+              "offset": 16,
+              "name": "Flags",
+              "type": "System.UInt32"
+            },
+            {
+              "offset": 24,
+              "name": "MinimumWorkingSet",
+              "type": "System.UIntPtr"
+            },
+            {
+              "offset": 32,
+              "name": "MaximumWorkingSet",
+              "type": "System.UIntPtr"
+            },
+            {
+              "offset": 40,
+              "name": "ActiveLimit",
+              "type": "System.UInt32"
+            },
+            {
+              "offset": 48,
+              "name": "Affinity",
+              "type": "System.UIntPtr"
+            },
+            {
+              "offset": 56,
+              "name": "Priority",
+              "type": "System.UInt32"
+            },
+            {
+              "offset": 60,
+              "name": "Scheduling",
+              "type": "System.UInt32"
+            }
+          ],
+          "name": "BasicLimit",
+          "size": 64
+        },
+        {
+          "fields": [
+            {
+              "offset": 0,
+              "name": "Reads",
+              "type": "System.UInt64"
+            },
+            {
+              "offset": 8,
+              "name": "Writes",
+              "type": "System.UInt64"
+            },
+            {
+              "offset": 16,
+              "name": "Other",
+              "type": "System.UInt64"
+            },
+            {
+              "offset": 24,
+              "name": "ReadBytes",
+              "type": "System.UInt64"
+            },
+            {
+              "offset": 32,
+              "name": "WriteBytes",
+              "type": "System.UInt64"
+            },
+            {
+              "offset": 40,
+              "name": "OtherBytes",
+              "type": "System.UInt64"
+            }
+          ],
+          "name": "IoCounters",
+          "size": 48
+        },
+        {
+          "fields": [
+            {
+              "offset": 0,
+              "name": "Basic",
+              "type": "Noetome.ScanInvokeJob+BasicLimit"
+            },
+            {
+              "offset": 64,
+              "name": "Io",
+              "type": "Noetome.ScanInvokeJob+IoCounters"
+            },
+            {
+              "offset": 112,
+              "name": "ProcessMemory",
+              "type": "System.UIntPtr"
+            },
+            {
+              "offset": 120,
+              "name": "JobMemory",
+              "type": "System.UIntPtr"
+            },
+            {
+              "offset": 128,
+              "name": "PeakProcessMemory",
+              "type": "System.UIntPtr"
+            },
+            {
+              "offset": 136,
+              "name": "PeakJobMemory",
+              "type": "System.UIntPtr"
+            }
+          ],
+          "name": "ExtendedLimit",
+          "size": 144
+        },
+        {
+          "fields": [
+            {
+              "offset": 0,
+              "name": "User",
+              "type": "System.Int64"
+            },
+            {
+              "offset": 8,
+              "name": "Kernel",
+              "type": "System.Int64"
+            },
+            {
+              "offset": 16,
+              "name": "PeriodUser",
+              "type": "System.Int64"
+            },
+            {
+              "offset": 24,
+              "name": "PeriodKernel",
+              "type": "System.Int64"
+            },
+            {
+              "offset": 32,
+              "name": "Faults",
+              "type": "System.UInt32"
+            },
+            {
+              "offset": 36,
+              "name": "TotalProcesses",
+              "type": "System.UInt32"
+            },
+            {
+              "offset": 40,
+              "name": "ActiveProcesses",
+              "type": "System.UInt32"
+            },
+            {
+              "offset": 44,
+              "name": "TerminatedProcesses",
+              "type": "System.UInt32"
+            }
+          ],
+          "name": "Accounting",
+          "size": 48
+        }
+      ],
+      "pointer_size": 8,
+      "fresh_job_empty": true,
+      "disposed_query_rejected": false,
+      "faulted_task": {
+        "IsFaulted": true,
+        "Status": "Faulted",
+        "IsCompleted": true
+      },
+      "fresh_job_active": 0
+    },
+    "helper_cs_fingerprint": {
+      "sha256": "3eac5980f712ac6bc2f44b47a40943543bd2378f3c531263a9da15e5c0fe11ff",
+      "byte_length": 11787
+    },
+    "final_attempt_exit": 0,
+    "originals_archive": {
+      "path": "probe-originals.zip",
+      "sha256": "ac3b6c92fb60e9d4a92dd4b05e4e5536d5ec21b0f7bc78c0e0ef79054d3ab328",
+      "byte_length": 16788
+    },
+    "members": {
+      "attempt-1/receipt.json": {
+        "sha256": "2d27e36cedcda12b45c2495aaa9e2ebe0774f4a94c0b9c3ce9ee9a5f242235d1",
+        "byte_length": 884
+      },
+      "attempt-1/stderr.bin": {
+        "sha256": "6e40e6ea4a57a96fd6935477ede0974605f7e0904315662e43c5ce8730f26d3a",
+        "byte_length": 80
+      },
+      "attempt-1/stdout.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "attempt-2/probe.ps1": {
+        "sha256": "84a63750f6fcc26a8b4e704a47a5d22f619ac5b904ca8ae6f6cda9b77f8cd8a5",
+        "byte_length": 13065
+      },
+      "attempt-2/receipt.json": {
+        "sha256": "143807e6082cbbbe5dc24fa807e6de14c08e06ed9d6c9b0818181278eb9fed69",
+        "byte_length": 1095
+      },
+      "attempt-2/stderr.bin": {
+        "sha256": "db0a7a19f7cebea1ed629d9475da3faba76f41ffbdb4f07efdecc45026c670f5",
+        "byte_length": 556
+      },
+      "attempt-2/stdout.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "attempt-3/probe.ps1": {
+        "sha256": "84a63750f6fcc26a8b4e704a47a5d22f619ac5b904ca8ae6f6cda9b77f8cd8a5",
+        "byte_length": 13065
+      },
+      "attempt-3/receipt.json": {
+        "sha256": "e8037f771221e40a1f1a83bfe914fcc4f296e2b91632c3af0029c142c98a5306",
+        "byte_length": 1052
+      },
+      "attempt-3/stderr.bin": {
+        "sha256": "017e6c97dc20a877a33f9d4875b4e52cdfa8d3df4c0f43d249ed425f31c2fa4f",
+        "byte_length": 561
+      },
+      "attempt-3/stdout.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "attempt-4/probe.ps1": {
+        "sha256": "d6e8d8127d8f1c738ec86f9b16941cab40ed1abc0cadfba5860207959d5fafa6",
+        "byte_length": 13094
+      },
+      "attempt-4/receipt.json": {
+        "sha256": "d8a21d4c88095ceadda603dba0c7cf6938a46406ba073e2ce9632cf583d03608",
+        "byte_length": 1017
+      },
+      "attempt-4/stderr.bin": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "attempt-4/stdout.bin": {
+        "sha256": "a3073d659b881a623ac99582ab1284737e36c27d1b8a4db72a2401cb4bf10680",
+        "byte_length": 9935
+      }
+    },
+    "probe_history": [
+      {
+        "attempt": 1,
+        "exit_code": 1,
+        "reason": "WSL long EncodedCommand argument rejected before Windows probe."
+      },
+      {
+        "attempt": 2,
+        "exit_code": 1,
+        "reason": "UNC script execution policy denied before probe; no global policy changed."
+      },
+      {
+        "attempt": 3,
+        "exit_code": 1,
+        "reason": "PowerShell selected Marshal.SizeOf(object) for RuntimeType; probe corrected to boxed struct instance. This was a probe overload error, not product ABI failure."
+      },
+      {
+        "attempt": 4,
+        "exit_code": 0,
+        "reason": "Process-local execution policy override and correct boxed Marshal overload; current C# ABI and empty-job checks passed."
+      }
+    ]
+  },
+  "process_tree_originals": {
+    "review_json": {
+      "path": "doc/validation/assets/B06V-T02/review/api-process-boundaries/review.json",
+      "sha256": "4e26b401decb97648a5b0dc39b7764da10c30ed93fefe683ed31efa730523f50",
+      "byte_length": 7348
+    },
+    "manifest": {
+      "path": "doc/validation/assets/B06V-T02/review/api-process-boundaries/originals-manifest.json",
+      "sha256": "f633e90ef10b6f2a679d14f1efd0d92d7bab9fd606e1f2d8cedd1b940d47bc30",
+      "byte_length": 395983
+    },
+    "archive": {
+      "path": "doc/validation/assets/B06V-T02/review/api-process-boundaries/originals.zip",
+      "sha256": "fc74f291477cb1cdb6b64bcda7ca4d39609c9896214aaa69755e3885cd3de590",
+      "byte_length": 1123154
+    },
+    "all_1329_member_fingerprints_readback_verified": true,
+    "member_count": 1329,
+    "final_archived_sources_match_current": true,
+    "archived_final_result_matches_review": true,
+    "test_totals": {
+      "run": 6,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "checked_cases": [
+      {
+        "archive_member": "final-current-source-boundaries/evidence/ScanCredentials_powershell/test_live_parent_and_descendant_timeout_preserves_pending_budget/process-tree-check.json",
+        "check": {
+          "mode": "tree_timeout",
+          "observed_test_pids": [
+            22768,
+            29108
+          ],
+          "all_handles_signaled": true,
+          "helper_exit": 2,
+          "failure_receipt": {
+            "code": "child-timeout",
+            "stdout_complete": true,
+            "stderr_complete": true,
+            "termination": {
+              "strategy": "windows_job",
+              "root_pid": 12436,
+              "containment_assignment": "after_process_start",
+              "active_processes_before": 5,
+              "active_processes_after": 0,
+              "job_empty_confirmed": true,
+              "root_exit_confirmed": true
+            }
+          }
+        },
+        "failed_receipt_member": "final-current-source-boundaries/evidence/ScanCredentials_powershell/test_live_parent_and_descendant_timeout_preserves_pending_budget/usage.json.scan-abbef9f5-54b0-4de9-a554-9de1fae2b229.failed.json",
+        "failed_receipt_fingerprint": {
+          "sha256": "dddc158e3d28b76c764aaa316de158201fec4346ec4eedaba3e80ae6a614836f",
+          "byte_length": 2842
+        },
+        "failed_ledger_matches_retained_current_ledger": true,
+        "ledger_totals": {
+          "accounted_tokens": 0,
+          "pending_reserved_tokens": 65536,
+          "remaining_tokens": 9934464
+        }
+      },
+      {
+        "archive_member": "final-current-source-boundaries/evidence/ScanCredentials_powershell/test_output_limit_terminates_observed_tree_and_retains_failure_receipt/process-tree-check.json",
+        "check": {
+          "mode": "tree_output_limit",
+          "observed_test_pids": [
+            5196,
+            3908
+          ],
+          "all_handles_signaled": true,
+          "helper_exit": 2,
+          "failure_receipt": {
+            "code": "child-output-limit",
+            "stdout_complete": false,
+            "stderr_complete": true,
+            "termination": {
+              "strategy": "windows_job",
+              "root_pid": 2596,
+              "containment_assignment": "after_process_start",
+              "active_processes_before": 5,
+              "active_processes_after": 0,
+              "job_empty_confirmed": true,
+              "root_exit_confirmed": true
+            }
+          }
+        },
+        "failed_receipt_member": "final-current-source-boundaries/evidence/ScanCredentials_powershell/test_output_limit_terminates_observed_tree_and_retains_failure_receipt/usage.json.scan-dc52de51-17f4-45be-8c56-47d58b4bb5dc.failed.json",
+        "failed_receipt_fingerprint": {
+          "sha256": "f80040122db363b6ea57328840caba18a7117c570fd8b966170dc67dd212800d",
+          "byte_length": 2846
+        },
+        "failed_ledger_matches_retained_current_ledger": true,
+        "ledger_totals": {
+          "accounted_tokens": 0,
+          "pending_reserved_tokens": 65536,
+          "remaining_tokens": 9934464
+        }
+      },
+      {
+        "archive_member": "final-current-source-boundaries/evidence/ScanCredentials_powershell/test_parent_exit_with_inherited_pipes_is_bounded_and_descendant_terminated/process-tree-check.json",
+        "check": {
+          "mode": "parent_exit_pipe",
+          "observed_test_pids": [
+            68824,
+            54424
+          ],
+          "all_handles_signaled": true,
+          "helper_exit": 2,
+          "failure_receipt": {
+            "code": "child-timeout",
+            "stdout_complete": true,
+            "stderr_complete": true,
+            "termination": {
+              "strategy": "windows_job",
+              "root_pid": 73940,
+              "containment_assignment": "after_process_start",
+              "active_processes_before": 3,
+              "active_processes_after": 0,
+              "job_empty_confirmed": true,
+              "root_exit_confirmed": true
+            }
+          }
+        },
+        "failed_receipt_member": "final-current-source-boundaries/evidence/ScanCredentials_powershell/test_parent_exit_with_inherited_pipes_is_bounded_and_descendant_terminated/usage.json.scan-1c9cc9e6-cb9f-4005-8419-6a2a52dbefb7.failed.json",
+        "failed_receipt_fingerprint": {
+          "sha256": "b20303347206d51b9a7177aa3f0587f3dfa981ca110fedbc44facf942ffa87bb",
+          "byte_length": 2842
+        },
+        "failed_ledger_matches_retained_current_ledger": true,
+        "ledger_totals": {
+          "accounted_tokens": 0,
+          "pending_reserved_tokens": 65536,
+          "remaining_tokens": 9934464
+        }
+      },
+      {
+        "archive_member": "final-current-source-boundaries/evidence/ScanCredentials_pwsh/test_live_parent_and_descendant_timeout_preserves_pending_budget/process-tree-check.json",
+        "check": {
+          "mode": "tree_timeout",
+          "observed_test_pids": [
+            17904,
+            18760
+          ],
+          "all_handles_signaled": true,
+          "helper_exit": 2,
+          "failure_receipt": {
+            "code": "child-timeout",
+            "stdout_complete": true,
+            "stderr_complete": true,
+            "termination": {
+              "strategy": "windows_job",
+              "root_pid": 27812,
+              "containment_assignment": "after_process_start",
+              "active_processes_before": 5,
+              "active_processes_after": 0,
+              "job_empty_confirmed": true,
+              "root_exit_confirmed": true
+            }
+          }
+        },
+        "failed_receipt_member": "final-current-source-boundaries/evidence/ScanCredentials_pwsh/test_live_parent_and_descendant_timeout_preserves_pending_budget/usage.json.scan-5b6684fb-2124-48f0-b4fa-edaa78356c7a.failed.json",
+        "failed_receipt_fingerprint": {
+          "sha256": "ef175b051f5e1d0a6942bb7c1066cf1280bcfa54d051cb2cfe8acfa1755f076c",
+          "byte_length": 2036
+        },
+        "failed_ledger_matches_retained_current_ledger": true,
+        "ledger_totals": {
+          "accounted_tokens": 0,
+          "pending_reserved_tokens": 65536,
+          "remaining_tokens": 9934464
+        }
+      },
+      {
+        "archive_member": "final-current-source-boundaries/evidence/ScanCredentials_pwsh/test_output_limit_terminates_observed_tree_and_retains_failure_receipt/process-tree-check.json",
+        "check": {
+          "mode": "tree_output_limit",
+          "observed_test_pids": [
+            41504,
+            75608
+          ],
+          "all_handles_signaled": true,
+          "helper_exit": 2,
+          "failure_receipt": {
+            "code": "child-output-limit",
+            "stdout_complete": false,
+            "stderr_complete": true,
+            "termination": {
+              "strategy": "windows_job",
+              "root_pid": 58492,
+              "containment_assignment": "after_process_start",
+              "active_processes_before": 4,
+              "active_processes_after": 0,
+              "job_empty_confirmed": true,
+              "root_exit_confirmed": true
+            }
+          }
+        },
+        "failed_receipt_member": "final-current-source-boundaries/evidence/ScanCredentials_pwsh/test_output_limit_terminates_observed_tree_and_retains_failure_receipt/usage.json.scan-7243de9a-c07d-4e79-9d5d-6ad5ced53463.failed.json",
+        "failed_receipt_fingerprint": {
+          "sha256": "46794703f8324aa0c5d29eb54a072358c97b470aac2052c57f4878165b55bc48",
+          "byte_length": 2042
+        },
+        "failed_ledger_matches_retained_current_ledger": true,
+        "ledger_totals": {
+          "accounted_tokens": 0,
+          "pending_reserved_tokens": 65536,
+          "remaining_tokens": 9934464
+        }
+      },
+      {
+        "archive_member": "final-current-source-boundaries/evidence/ScanCredentials_pwsh/test_parent_exit_with_inherited_pipes_is_bounded_and_descendant_terminated/process-tree-check.json",
+        "check": {
+          "mode": "parent_exit_pipe",
+          "observed_test_pids": [
+            25136,
+            49664
+          ],
+          "all_handles_signaled": true,
+          "helper_exit": 2,
+          "failure_receipt": {
+            "code": "child-timeout",
+            "stdout_complete": true,
+            "stderr_complete": true,
+            "termination": {
+              "strategy": "windows_job",
+              "root_pid": 54040,
+              "containment_assignment": "after_process_start",
+              "active_processes_before": 2,
+              "active_processes_after": 0,
+              "job_empty_confirmed": true,
+              "root_exit_confirmed": true
+            }
+          }
+        },
+        "failed_receipt_member": "final-current-source-boundaries/evidence/ScanCredentials_pwsh/test_parent_exit_with_inherited_pipes_is_bounded_and_descendant_terminated/usage.json.scan-aae44812-824b-45cd-b7f5-cea5a0c81072.failed.json",
+        "failed_receipt_fingerprint": {
+          "sha256": "30a13ad340f5e466325ad077a9cfe621fc13a31be6a7c5359167c58f801824ce",
+          "byte_length": 2036
+        },
+        "failed_ledger_matches_retained_current_ledger": true,
+        "ledger_totals": {
+          "accounted_tokens": 0,
+          "pending_reserved_tokens": 65536,
+          "remaining_tokens": 9934464
+        }
+      }
+    ]
+  },
+  "nonblocking_limitations": [
+    {
+      "issue": "Assignment follows Process.Start; a pre-assignment child-spawn window remains. Current selected scan CLI does not spawn child processes and these tests do not claim containment of arbitrary hostile binaries."
+    },
+    {
+      "issue": "Dispose zeros handle; ActiveProcesses after Dispose can query caller host Job via QueryInformationJobObject(NULL), as observed in ABI probe. Current script never uses Job methods after Dispose, so no active execution-path failure was found."
+    },
+    {
+      "issue": "ReadBounded failure does not retain arbitrary incomplete output as a full original; failed receipts keep complete flags false for faulted streams. This review does not claim complete captured contents of an oversized stream."
+    },
+    {
+      "issue": "This focused delta review does not replace the pending final full Python/workspace audits or actual recognition/Obsidian acceptance."
+    }
+  ],
+  "verified_primary_sources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_limit_information",
+      "supports": "Basic field types/order and KILL_ON_JOB_CLOSE=0x2000."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_extended_limit_information",
+      "supports": "Extended field layout."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-jobobject_basic_accounting_information",
+      "supports": "Accounting field layout and ActiveProcesses."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task.iscompleted?view=net-10.0",
+      "supports": "IsCompleted covers successful/faulted/canceled terminal states."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-queryinformationjobobject",
+      "supports": "Class1 accounting, class9 extended limit, and NULL handle means caller Job."
+    }
+  ],
+  "sources_obtained_via": "Microsoft Learn official docs fetch MCP; initial general web endpoint returned404, no unsupported claims derived from that failure.",
+  "real_http_requests": 0,
+  "real_credentials_read": false,
+  "actual_user_ledger_mutations": 0,
+  "product_source_edits": false
+}
