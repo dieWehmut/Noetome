@@ -574,6 +574,13 @@ impl BudgetStore {
         &mut self,
         decide: impl FnOnce(&BudgetView, &str) -> Result<(R, Option<BudgetEvent>), ProjectError>,
     ) -> Result<R, ProjectError> {
+        self.update_checked(|_| Ok(()), decide)
+    }
+    fn update_checked<R>(
+        &mut self,
+        guard: impl FnOnce(&BudgetView) -> Result<(), ProjectError>,
+        decide: impl FnOnce(&BudgetView, &str) -> Result<(R, Option<BudgetEvent>), ProjectError>,
+    ) -> Result<R, ProjectError> {
         if !self.writable {
             return Err(error(
                 "REQUEST_BUDGET_READ_ONLY",
@@ -589,6 +596,7 @@ impl BudgetStore {
             .map_err(database)?;
         let mut view = load(&tx, &self.owner.authority)?;
         witnesses(&view)?;
+        guard(&view)?;
         let at = now()?;
         let (result, event) = decide(&view, &at)?;
         if let Some(event) = event {
@@ -738,8 +746,23 @@ impl BudgetStore {
         plan: &AttemptPlan,
     ) -> Result<ReservationDecision, ProjectError> {
         self.prepare(plan)?;
-        self.update(|view, at| {
+        self.reserve_prepared_checked(plan, |_| Ok(()))
+    }
+    /// Prepared already has its own durable boundary. Admission still rebuilds
+    /// the complete authority inside this new transaction, without a redundant
+    /// no-event Prepared transaction or a caller's cached balance.
+    pub(crate) fn reserve_prepared_checked(
+        &mut self,
+        plan: &AttemptPlan,
+        guard: impl FnOnce(&BudgetView) -> Result<(), ProjectError>,
+    ) -> Result<ReservationDecision, ProjectError> {
+        self.verify_version()?;
+        validate_plan(plan)?;
+        self.update_checked(guard, |view, at| {
             let a = attempt(view, &plan.key)?;
+            if a.plan != *plan {
+                return Err(invalid("同attempt不能更换请求或预留。"));
+            }
             if a.state != AttemptState::Prepared {
                 return Ok((ReservationDecision::AlreadyReserved, None));
             }
@@ -759,8 +782,15 @@ impl BudgetStore {
         &mut self,
         key: &AttemptKey,
     ) -> Result<DispatchDecision, ProjectError> {
+        self.mark_may_send_checked(key, |_| Ok(()))
+    }
+    pub(crate) fn mark_may_send_checked(
+        &mut self,
+        key: &AttemptKey,
+        guard: impl FnOnce(&BudgetView) -> Result<(), ProjectError>,
+    ) -> Result<DispatchDecision, ProjectError> {
         self.verify_version()?;
-        self.update(|view, at| {
+        self.update_checked(guard, |view, at| {
             let r = run(view, &key.run_id)?;
             let u = unit(r, &key.unit_id)?;
             let a = attempt(view, key)?;
@@ -2452,6 +2482,115 @@ mod tests {
             output_tokens: 100,
             total_tokens: 700,
         }
+    }
+
+    #[test]
+    fn budget_checked_reserve_requires_the_original_prepared_plan() {
+        let f = Fixture::new(100_000);
+        let mut s = f.store();
+        let p = f.plan("first", 1);
+        assert!(s.reserve_prepared_checked(&p, |_| Ok(())).is_err());
+        assert_eq!(s.view().unwrap().sequence, 1);
+        s.prepare(&p).unwrap();
+        let mut changed = p.clone();
+        changed.request_body.sha256 = sha256(b"different body");
+        assert!(s.reserve_prepared_checked(&changed, |_| Ok(())).is_err());
+        assert_eq!(s.view().unwrap().sequence, 2);
+        assert_eq!(
+            s.reserve_prepared_checked(&p, |_| Ok(())).unwrap(),
+            ReservationDecision::Reserved
+        );
+        assert_eq!(s.view().unwrap().sequence, 3);
+    }
+
+    #[test]
+    fn budget_checked_guards_reject_before_reserve_or_send_commit() {
+        let f = Fixture::new(100_000);
+        let mut s = f.store();
+        let p = f.plan("first", 1);
+        s.prepare(&p).unwrap();
+        let before = s.view().unwrap();
+        assert!(
+            s.reserve_prepared_checked(&p, |view| {
+                assert_eq!(view, &before);
+                Err(invalid("guard rejected reservation"))
+            })
+            .is_err()
+        );
+        assert_eq!(s.view().unwrap(), before);
+        s.reserve_prepared_checked(&p, |_| Ok(())).unwrap();
+        let reserved = s.view().unwrap();
+        assert!(
+            s.mark_may_send_checked(&p.key, |view| {
+                assert_eq!(view, &reserved);
+                Err(invalid("guard rejected send"))
+            })
+            .is_err()
+        );
+        assert_eq!(s.view().unwrap(), reserved);
+        assert_eq!(
+            s.mark_may_send_checked(&p.key, |_| Ok(())).unwrap(),
+            DispatchDecision::Permitted
+        );
+    }
+
+    #[test]
+    fn budget_checked_reserve_rebuilds_another_workers_latest_commitment() {
+        let mut f = Fixture::new(100_000);
+        let p = f.plan("first", 1);
+        let q = f.plan("second", 1);
+        f.spec.global_limits.max_total_tokens = p.reserved_tokens * 2 - 1;
+        f.spec.policy_sha256 = sha256(&Fixture::policy(&f.spec));
+        let mut s = f.store();
+        s.prepare(&p).unwrap();
+        let stale = s.view().unwrap();
+        let mut other = BudgetStore::open(&f.authority).unwrap();
+        assert_eq!(other.reserve(&q).unwrap(), ReservationDecision::Reserved);
+        assert!(matches!(
+            s.reserve_prepared_checked(&p, |view| {
+                assert!(view.sequence > stale.sequence);
+                assert_eq!(view.totals.held_tokens, q.reserved_tokens);
+                Ok(())
+            })
+            .unwrap(),
+            ReservationDecision::Denied {
+                scope: DenialScope::Global,
+                ..
+            }
+        ));
+        assert_eq!(s.view().unwrap().totals.held_tokens, q.reserved_tokens);
+    }
+
+    #[test]
+    fn budget_checked_guard_precedes_decision_clock_and_input_recheck() {
+        let f = Fixture::new(100_000);
+        let mut s = f.store();
+        let completed = std::cell::Cell::new(OffsetDateTime::now_utc());
+        s.update_checked(
+            |_| {
+                thread::sleep(Duration::from_millis(20));
+                completed.set(OffsetDateTime::now_utc());
+                Ok(())
+            },
+            |_, at| {
+                assert!(utc(at).unwrap() >= completed.get());
+                Ok(((), None))
+            },
+        )
+        .unwrap();
+        let p = f.plan("first", 1);
+        s.prepare(&p).unwrap();
+        let input = Path::new(f.run.input_pins.keys().next().unwrap());
+        assert!(
+            s.reserve_prepared_checked(&p, |_| {
+                fs::write(input, b"changed during checked guard\n").unwrap();
+                Ok(())
+            })
+            .is_err()
+        );
+        let v = s.view().unwrap();
+        assert_eq!(attempt(&v, &p.key).unwrap().state, AttemptState::Prepared);
+        assert_eq!(v.totals.held_tokens, 0);
     }
 
     #[test]

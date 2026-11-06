@@ -1175,12 +1175,24 @@ fn unit_loop(
 ) -> Result<(), ProjectError> {
     let cfg = &g.owner.config.units[index];
     let mut store = BudgetStore::open(Path::new(&g.owner.budget_root))?;
+    let mut expect_receipt: Option<AttemptKey> = None;
     loop {
         g.verify()?;
         g.inputs()?;
         let view = store.view()?;
         g.inventory(&view)?;
         let u = unit_view(&view, &g, index)?;
+        if let Some(key) = expect_receipt.take() {
+            if !u
+                .attempts
+                .iter()
+                .any(|a| a.plan.key == key && a.receipt.is_some())
+            {
+                return Err(invalid(
+                    "API exited without an authoritative final receipt; original promise retained。",
+                ));
+            }
+        }
         if u.outcome.is_some() {
             return Ok(());
         }
@@ -1422,7 +1434,7 @@ fn unit_loop(
             guard: g.clone(),
             index,
             attempt_no,
-            store: BudgetStore::open(Path::new(&g.owner.budget_root))?,
+            store: &mut store,
             plan: prepared.map(|a| a.plan.clone()),
             stop: stop.clone(),
             denial: None,
@@ -1451,6 +1463,9 @@ fn unit_loop(
                 &mut hooks,
             )
         };
+        let denial = hooks.denial.take();
+        let finished_key = hooks.plan.as_ref().map(|p| p.key.clone());
+        drop(hooks);
         drop(claimed);
         // A guard/output failure is not a pure budget denial. The outer joined
         // worker path performs only safe accounting, releases never-sent plans
@@ -1458,7 +1473,7 @@ fn unit_loop(
         if let Err(e) = execution {
             return Err(e);
         }
-        if let Some(scope) = hooks.denial {
+        if let Some(scope) = denial {
             let outcome = if matches!(
                 scope,
                 DenialScope::UnitAttempts | DenialScope::UnitRetryTokens | DenialScope::Deadline
@@ -1477,33 +1492,34 @@ fn unit_loop(
             )?;
             return Ok(());
         }
-        // A successful invocation or an ordinary API semantic failure both must
-        // have passed finished(), which committed a typed original receipt.
-        let after = store.view()?;
-        let a = unit_view(&after, &g, index)?.attempts.last().cloned();
-        if a.as_ref().is_some_and(|a| a.receipt.is_some()) {
-            continue;
-        }
-        return Err(invalid(
-            "API exited without an authoritative final receipt; original promise retained。",
-        ));
+        // Check the authoritative receipt in the next iteration's fresh full
+        // view, after the original input/owner checks, before any retry decision.
+        expect_receipt =
+            Some(finished_key.ok_or_else(|| invalid("API exited without a Prepared identity。"))?);
     }
 }
-struct Hooks {
+struct Hooks<'a> {
     guard: Arc<RunGuard>,
     index: usize,
     attempt_no: u32,
-    store: BudgetStore,
+    store: &'a mut BudgetStore,
     plan: Option<AttemptPlan>,
     stop: Arc<AtomicBool>,
     denial: Option<DenialScope>,
 }
-impl Hooks {
+impl Hooks<'_> {
     fn guard(&self) -> Result<(), ProjectError> {
-        self.guard.verify()?;
-        self.guard.inventory(&self.store.view()?)?;
-        self.guard.inputs()?;
-        if self.stop.load(Ordering::SeqCst) {
+        Self::guard_view(&self.guard, &self.stop, &self.store.view()?)
+    }
+    fn guard_view(
+        guard: &RunGuard,
+        stop: &AtomicBool,
+        view: &BudgetView,
+    ) -> Result<(), ProjectError> {
+        guard.verify()?;
+        guard.inventory(view)?;
+        guard.inputs()?;
+        if stop.load(Ordering::SeqCst) {
             return Err(err("REQUEST_RUN_STOPPED", "其他worker要求停止新请求。"));
         }
         Ok(())
@@ -1524,7 +1540,7 @@ impl Hooks {
         )
     }
 }
-impl ApiHooks for Hooks {
+impl ApiHooks for Hooks<'_> {
     fn enabled(&self) -> bool {
         true
     }
@@ -1631,8 +1647,12 @@ impl ApiHooks for Hooks {
         self.plan = Some(plan.clone());
         self.event("request_body_original_sync")?;
         loop {
-            self.guard()?;
-            match self.store.reserve(&plan)? {
+            let guard = &self.guard;
+            let stop = &self.stop;
+            match self
+                .store
+                .reserve_prepared_checked(&plan, |view| Self::guard_view(guard, stop, view))?
+            {
                 ReservationDecision::Reserved => {
                     self.event("attempt_reserved_commit")?;
                     return Ok(());
@@ -1685,9 +1705,13 @@ impl ApiHooks for Hooks {
         }
     }
     fn before_send(&mut self, _output: &Path, _request: &Value) -> Result<(), ProjectError> {
-        self.guard()?;
         let key = self.key()?.clone();
-        match self.store.mark_may_send(&key)? {
+        let guard = &self.guard;
+        let stop = &self.stop;
+        match self
+            .store
+            .mark_may_send_checked(&key, |view| Self::guard_view(guard, stop, view))?
+        {
             DispatchDecision::Permitted => self.event("dispatch_intent_commit"),
             DispatchDecision::Denied => {
                 let v = self.store.view()?;
@@ -1847,6 +1871,9 @@ mod tests {
             || (selected == event
                 && (selected_unit.is_empty() || selected_unit == unit)
                 && (selected_attempt == 0 || selected_attempt == attempt));
+        if !matched && selected != "observe" {
+            return Ok(());
+        }
         let _held = HANDSHAKE
             .get_or_init(|| Mutex::new(()))
             .lock()
@@ -1871,6 +1898,9 @@ mod tests {
                 .and_then(|_| out.write_all(b"\n"))
                 .and_then(|_| out.flush())
                 .map_err(|e| invalid(e.to_string()))?;
+        }
+        if selected != "trace" {
+            drop(_held);
         }
         if matched {
             if let Some(path) = env::var_os("NOETOME_REQUEST_TEST_READY_PATH") {

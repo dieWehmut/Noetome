@@ -1557,54 +1557,117 @@ def unit_has_safe_completion(budget, unit, authority_file):
 
 def dual_unit_kill_case(recorder, case, driver, *, accepted=False):
     selected = prepare_case(recorder, case)
-    def gate(unit, key, step):
-        if unit != "unit-a" or key[2] != 1: return
-        end = time.monotonic() + 0.125
-        while not unit_has_safe_completion(selected["budget"], "unit-b", selected["authority_file"]):
-            require(time.monotonic() < end, "independent B lacks a trusted settled success within first A response timing window")
-            threading.Event().wait(0.005)
-    server = ArtificialHttp(selected["server_root"], recorder.fixture, selected["routes"], case["units"], lambda request_id: lookup_persistent_attempt(selected["budget"], request_id, selected["authority_file"]), before_response=None if accepted else gate)
+    server = ArtificialHttp(selected["server_root"], recorder.fixture, selected["routes"], case["units"], lambda request_id: lookup_persistent_attempt(selected["budget"], request_id, selected["authority_file"]))
     with server:
         write_api_configs(recorder, selected, server, case)
         recorder.command(["run", "api", "init", selected["authority_file"], selected["budget"]], expected=0)
-        active = RequestDriver(recorder, selected, driver, event="observe" if accepted else "retry_schedule_commit", unit="unit-a", attempt=1)
+        active = RequestDriver(recorder, selected, driver, event="dispatch_intent_commit" if accepted else "retry_schedule_commit", unit="unit-a", attempt=1)
         if accepted:
+            row = active.next()
+            require(row["event"] == "dispatch_intent_commit" and row["unit"] == "unit-a" and row["attempt"] == 1 and row["will_wait"] is True,
+                    "actual selected A dispatch boundary holds before HTTP timer")
             end = time.monotonic() + 10
             while True:
                 with server.lock:
-                    accepted_a = [r for r in server.receipts if r["unit_id"] == "unit-a" and r["attempt_no"] == 1]
+                    require(not any(r["unit_id"] == "unit-a" for r in server.receipts), "A has no actual HTTP while selected dispatch callback is held")
                     received_b = copy.deepcopy([r for r in server.receipts if r["unit_id"] == "unit-b"])
+                fast = coordination_chain(selected["budget"], selected["authority_file"])
+                b_fast = settled_success_attempts(fast, "unit-b")
+                if len(b_fast) == 1 and len(received_b) == 1 and all(run["units"]["unit-b"]["outcome"] == "succeeded" for run in fast.runs.values()):
+                    b_key, b_attempt = next(iter(b_fast.items()))
+                    require(received_b[0]["request_id"] == b_key[3] and received_b[0].get("advertised_status") == 200
+                            and "response_flush_utc_ns" in received_b[0]
+                            and received_b[0]["response_sha256"] == b_attempt["receipt"]["response"]["sha256"]
+                            and received_b[0]["request_body_sha256"] == b_attempt["plan"]["request_body"]["sha256"],
+                            "live settled B key/body/full response equals actual server receipt")
+                    break
+                require(time.monotonic() < end and not server.errors and active.child.poll() is None, "selected A hold/B trusted receipt prerequisite not observed")
+                threading.Event().wait(0.005)
+            pre_release, pre_release_evidence = phase_evidence(active, row)
+            require_event_prefix(fast, pre_release)
+            b_fast = settled_success_attempts(pre_release, "unit-b")
+            require(len(b_fast) == 1, "B complete trusted Known700 originals audited while A held")
+            a_key, a_plan = next((key, a) for key, a in pre_release.attempts.items() if key[1:3] == ("unit-a", 1))
+            require(time.time_ns() < utc_ns(pre_release.runs[a_key[0]]["units"]["unit-a"]["spec"]["deadline_utc"]), "selected hold cannot reset original A deadline")
+            b_terminal_before = any(run["units"]["unit-b"]["outcome"] == "succeeded" for run in pre_release.runs.values())
+            active.release()
+            while True:
+                with server.lock:
+                    accepted_a = copy.deepcopy([r for r in server.receipts if r["unit_id"] == "unit-a"])
                 if accepted_a:
-                    fast = coordination_chain(selected["budget"], selected["authority_file"])
-                    a_fast = next(a for key, a in fast.attempts.items() if key[1:3] == ("unit-a", 1))
-                    require(a_fast["state"] == "may_send" and a_fast["receipt"] is None and not a_fast["transport_sealed"], "accepted OS interruption window ended before actual kill")
-                    b_fast = settled_success_attempts(fast, "unit-b")
-                    if len(b_fast) == 1 and len(received_b) == 1:
-                        b_key, b_attempt = next(iter(b_fast.items()))
-                        require(received_b[0]["request_id"] == b_key[3] and received_b[0].get("advertised_status") == 200
-                                and "response_flush_utc_ns" in received_b[0]
-                                and received_b[0]["response_sha256"] == b_attempt["receipt"]["response"]["sha256"]
-                                and received_b[0]["request_body_sha256"] == b_attempt["plan"]["request_body"]["sha256"],
-                                "live settled B key/body/full response equals actual server receipt")
-                        observed_before_kill = time.time_ns()
-                        break
-                require(time.monotonic() < end and not server.errors and active.child.poll() is None, "real A accept/B trusted receipt prerequisite not observed before interruption")
+                    require(len(accepted_a) == 1 and accepted_a[0]["request_id"] == a_key[3]
+                            and accepted_a[0]["request_body_sha256"] == a_plan["plan"]["request_body"]["sha256"], "released original A key/body actually accepted once")
+                    observed_before_kill = time.time_ns()
+                    break
+                require(time.monotonic() < end and not server.errors and active.child.poll() is None, "released A actual server acceptance not observed")
                 threading.Event().wait(0.005)
             active.kill()
             before, evidence_before = read_authority(selected["budget"], fixture=recorder.fixture, authority_config=selected["authority_file"], selected_run_roots=selected["run_roots"].values())
-            require_event_prefix(fast, before)
+            require_event_prefix(pre_release, before)
             require(all(before.attempts[key] == attempt for key, attempt in b_fast.items()), "stable postkill B full original audit equals live known key/receipt/file witnesses")
             a = next(a for key, a in before.attempts.items() if key[1:3] == ("unit-a", 1))
             require(a["state"] == "may_send" and a["receipt"] is None and not a["transport_sealed"], "actual killed A still lacks sealed/final receipt; timer completion cannot count as interruption")
-            b_terminal_before = any(run["units"]["unit-b"]["outcome"] == "succeeded" for run in fast.runs.values())
-            save_json(selected["root"] / "actual-prekill-chain.json", {"observed_before_kill_utc_ns": observed_before_kill, "live_validated_chain": fast.rows, "B_actual_server_receipt": received_b, "stable_postkill_full_original_audit": evidence_before, "scope": "live chain/server phase only before immediate kill; every request/response/report/FileStamp audited after actual old PID death and before ordinary resume"})
+            save_json(selected["root"] / "actual-prekill-chain.json", {"observed_before_kill_utc_ns": observed_before_kill, "actual_selected_A_handshake": row, "pre_release_chain": pre_release.rows, "pre_release_full_original_audit": pre_release_evidence, "B_actual_server_receipt": received_b, "A_actual_server_acceptance": accepted_a, "stable_postkill_full_original_audit": evidence_before, "scope": "chosen controlled schedule: original A held after durable MaySend and before HTTP timer, B full originals audited, exact release then real accept/immediate OS kill; original deadlines unchanged, no natural concurrency claim"})
         else:
             row = active.next()
-            require(row["event"] == "retry_schedule_commit" and row["unit"] == "unit-a" and row["attempt"] == 1, "actual selected first retry schedule")
-            phase_evidence(active, row)
+            require(row["event"] == "retry_schedule_commit" and row["unit"] == "unit-a" and row["attempt"] == 1 and row["will_wait"] is True,
+                    "actual selected held first retry COMMIT; response was not artificially delayed")
+            end = time.monotonic() + 10
+            while True:
+                require(not server.errors and active.child.poll() is None, "held retry/B original prerequisite: " + str(server.errors))
+                fast = coordination_chain(selected["budget"], selected["authority_file"])
+                b_fast = settled_success_attempts(fast, "unit-b")
+                with server.lock:
+                    received_b = copy.deepcopy([r for r in server.receipts if r["unit_id"] == "unit-b"])
+                if len(b_fast) == 1 and len(received_b) == 1 and all(run["units"]["unit-b"]["outcome"] == "succeeded" for run in fast.runs.values()):
+                    b_key, b_attempt = next(iter(b_fast.items()))
+                    require(received_b[0]["request_id"] == b_key[3] and received_b[0].get("advertised_status") == 200
+                            and "response_flush_monotonic_ns" in received_b[0]
+                            and received_b[0]["response_sha256"] == b_attempt["receipt"]["response"]["sha256"]
+                            and received_b[0]["request_body_sha256"] == b_attempt["plan"]["request_body"]["sha256"],
+                            "B independently completes while A holds retry callback, actual server body/full200 agrees")
+                    break
+                require(time.monotonic() < end, "held retry cannot wait indefinitely for B trusted original receipt")
+                threading.Event().wait(0.005)
+            pre_kill, evidence_held = phase_evidence(active, row)
+            require_event_prefix(fast, pre_kill)
+            b_fast = settled_success_attempts(pre_kill, "unit-b")
+            require(len(b_fast) == 1, "B Known700 complete original files/source audit before actual kill")
+            a_key, first_a = next((key, a) for key, a in pre_kill.attempts.items() if key[1:3] == ("unit-a", 1))
+            require({key for key in pre_kill.attempts if key[1] == "unit-a"} == {a_key}
+                    and first_a["state"] == "unknown" and first_a["transport_sealed"] and first_a["retry"] is not None
+                    and first_a["receipt"]["network_attempts"] == 1 and first_a["receipt"]["http_status"] == 429
+                    and first_a["receipt"]["response_complete"] is True and first_a["receipt"]["usage"] is None
+                    and first_a["receipt"]["error_code"] == "EXTRACT_API_HTTP_RATE_LIMIT"
+                    and first_a["retry"]["error_code"] == "EXTRACT_API_HTTP_RATE_LIMIT",
+                    "actual held first A full429/RATE_LIMIT and no second attempt; never substitute transport failure")
+            with server.lock:
+                first_received = copy.deepcopy([r for r in server.receipts if r["unit_id"] == "unit-a"])
+            require(len(first_received) == 1 and first_received[0]["request_id"] == a_key[3]
+                    and first_received[0].get("advertised_status") == 429
+                    and "response_before_write_monotonic_ns" in first_received[0] and "response_flush_monotonic_ns" in first_received[0],
+                    "actual first429 write/flush timestamp exists, never defaults to receive time")
+            actual429 = paths.read_observed_file(server.root / first_received[0]["response_file"])
+            require(actual429 == paths.read_observed_file(recorder.fixture / "wire/http-429.bin")
+                    and sha(actual429) == first_received[0]["response_sha256"] == first_a["receipt"]["response"]["sha256"]
+                    and first_received[0]["request_body_sha256"] == first_a["plan"]["request_body"]["sha256"],
+                    "first actual server429 bytes/request equal the complete settled original pins")
+            scheduled = [r for r in pre_kill.rows if r["event"]["kind"] == "retry_scheduled" and r["event"]["key"] == first_a["plan"]["key"]]
+            require(len(scheduled) == 1 and scheduled[0]["sequence"] <= row["sequence"]
+                    and utc_ns(scheduled[0]["at_utc"]) < utc_ns(pre_kill.runs[a_key[0]]["units"]["unit-a"]["spec"]["deadline_utc"])
+                    and utc_ns(first_a["retry"]["retry_at_utc"]) - utc_ns(scheduled[0]["at_utc"]) == 1_000_000_000,
+                    "actual retry COMMIT before original A deadline and exact original1000ms not-before")
+            b_terminal_before = any(run["units"]["unit-b"]["outcome"] == "succeeded" for run in pre_kill.runs.values())
+            killed = active.kill()
+            require(killed[2]["kill_requested_utc_ns"] < utc_ns(first_a["retry"]["retry_at_utc"]), "actual kill requested inside original retry interval")
             before, evidence_before = read_authority(selected["budget"], fixture=recorder.fixture, authority_config=selected["authority_file"], selected_run_roots=selected["run_roots"].values())
-            b_terminal_before = any(run["units"]["unit-b"]["outcome"] == "succeeded" for run in before.runs.values())
-            active.kill()
+            require_event_prefix(pre_kill, before)
+            require({key for key in before.attempts if key[1] == "unit-a"} == {a_key} and before.attempts[a_key] == first_a
+                    and all(before.attempts[key] == attempt for key, attempt in b_fast.items()),
+                    "postkill first429/not-before/B original key/body/files unchanged; held callback never dispatched A2")
+            save_json(selected["root"] / "actual-held-retry-chain.json", {"actual_selected_retry_handshake": row, "pre_kill_chain": pre_kill.rows,
+                      "full_original_audit_before_kill": evidence_held, "A_actual429_server_receipt": first_received, "B_actual200_server_receipt": received_b,
+                      "stable_postkill_full_original_audit": evidence_before, "scope": "chosen selected retry COMMIT hold after immediate real429; nontrace lock released so B progresses independently; no125ms response gate, original deadlines/API200/retry1000 and1700ms wait unchanged"})
         b_before = settled_success_attempts(before, "unit-b")
         require(len(b_before) == 1, "B Known700 validated complete200 transport-sealed originals fully audited before resume")
         if case["case_id"].startswith("elapsed-limit-persists-through-kill"):
@@ -1619,17 +1682,18 @@ def dual_unit_kill_case(recorder, case, driver, *, accepted=False):
             "independent B same known key/body/raw/file witnesses unchanged; resume only completes its unit")
     require(len([receipt for receipt in server.receipts if receipt["unit_id"] == "unit-b"]) == 1,
             "independent B trustworthy settled success recovery sends no additional HTTP")
+    require(not server.errors and len(server.incoming) == len(server.receipts), "all dual-unit HTTP originals valid: " + str(server.errors))
     traffic = verify_server_receipts(ledger, server.receipts, selected["server_root"])
     case_expected_check(case, ledger, traffic)
     if case["case_id"].startswith("retry-backoff-persists-through-kill"):
         a_receipts = sorted((r for r in server.receipts if r["unit_id"] == "unit-a"), key=lambda r: r["attempt_no"])
-        require(len(a_receipts) == 2 and a_receipts[1]["request_received_monotonic_ns"] - a_receipts[0]["response_before_write_monotonic_ns"] >= 1_000_000_000, "actual server retry delay lower bound1000ms")
+        require(len(a_receipts) == 2 and "response_before_write_monotonic_ns" in a_receipts[0] and a_receipts[1]["request_received_monotonic_ns"] - a_receipts[0]["response_before_write_monotonic_ns"] >= 1_000_000_000, "actual server retry delay lower bound1000ms")
     require(not server.errors and len(server.incoming) == len(server.receipts), "all dual-unit HTTP originals valid; no silently rejected extra request")
     sources_after = {str(p): paths.inventory(p) for p in selected["projects"].values()}
     require(sources_after == selected["source_before"], "dual-unit OS interruption preserves complete source originals")
     save_json(selected["root"] / "source-after.json", sources_after)
     verify_saved_envelopes(recorder, selected, ledger)
-    save_json(selected["root"] / "independent-audit.json", {"before": evidence_before, "after": evidence_after, "traffic": traffic, "B_unit_terminal_before_kill": b_terminal_before, "B_known700_validated_receipt_in_live_chain_before_kill": True, "B_all_originals_audited_before_resume": True, "B_original_attempts_unchanged_no_additional_HTTP": True, "scope": "original two-unit author layout; actual ownPID kill/wait follows trusted settled B success; accepted variant audits stable originals after death and preserves unknown500ms/API200ms without extra response gate"})
+    save_json(selected["root"] / "independent-audit.json", {"before": evidence_before, "after": evidence_after, "traffic": traffic, "B_unit_terminal_before_kill": b_terminal_before, "B_known700_validated_receipt_in_live_chain_before_kill": True, "B_all_originals_audited_before_resume": True, "B_original_attempts_unchanged_no_additional_HTTP": True, "scope": "original dual-unit author: accepted uses selected A preHTTP dispatch hold; backoff/elapsed immediately send original429 then hold selected retry COMMIT while B independently settles. Actual kill, complete original audits, unchanged absolute deadline/not-before; controlled schedule, no natural concurrency claim"})
     recorder.cases.append({"case_id": case["case_id"], "status": "passed", "actual_HTTP_requests": len(server.receipts), "independent_totals": ledger.totals(), "actual_OS_kill_and_wait": True})
 
 
