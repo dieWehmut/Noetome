@@ -1,0 +1,10 @@
+--- snapshot02/scripts/prepare_visual_compatibility.py
++++ snapshot03/scripts/prepare_visual_compatibility.py
+@@ -708,6 +708,7 @@
+   const norm=p=>p.replace(/\\+/g,'/').toLowerCase();
+   assert.equal(norm(identity.userData),norm(input.profile));assert.equal(norm(identity.vaultPath),norm(input.vault));
+   owned=true;assert.deepEqual(identity.communityPlugins,[]);
++  result.identity=identity;
+   result.compatibilityIdentity=await compatibilityIdentity();
+   const name=input.spec.notes[0],expected=input.spec.format_expected;
+   await obs.waitForFunction(p=>window.app.vault.getAbstractFileByPath(p),name);

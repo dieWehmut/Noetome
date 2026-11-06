@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_scan_formula",
+  "scope": "selected_scan_formula_v1",
+  "request_id": "eec9fcf4-ca6d-4c1a-9a51-3c60dc43401c",
+  "status": "needs_review",
+  "preview_status": "blocked",
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "published": false,
+  "network_calls": 1,
+  "paid_calls": 0,
+  "case": {
+    "schema_version": 1,
+    "purpose": "scan_formula",
+    "selection_id": "scan_scalar_unreadable_subscript",
+    "title": "单页扫描公式下标缺损",
+    "source_kind": "scanned_page",
+    "pdf": {
+      "file": "page.pdf",
+      "sha256": "945d35792f24732ab90ad296eadf2596ac53ee847cc37133b6aa22447fe62970"
+    },
+    "page": {
+      "file": "page.png",
+      "sha256": "b08f28c60807a30d2777e092a1bf94359332e9ee3cb9bebe3a620ec8195f18de",
+      "page": 1,
+      "canvas": [
+        800,
+        1000
+      ]
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "8a673a96084428fb3938219a2de990edc645b7e3c64b39b6044ac55363fb881e",
+      "bounds": [
+        120,
+        175,
+        560,
+        200
+      ],
+      "legibility": "unreadable"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "da8f2665eb37c59b3fa044fb1dbace3e7df149bc99d0c1a6f5efae832c62c733"
+    }
+  },
+  "semantics": {
+    "schema_version": 1,
+    "producer": "author_scan_declaration",
+    "expression": null,
+    "symbols": [
+      {
+        "symbol": "x",
+        "definition": "Reported displacement.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "a",
+        "definition": "Input amount.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "b",
+        "definition": "Positive scale.",
+        "unit": "dimensionless"
+      },
+      {
+        "symbol": "i",
+        "definition": "Sample index.",
+        "unit": "dimensionless"
+      }
+    ],
+    "conditions": [
+      "a_i >= 0.",
+      "b_i > 0."
+    ],
+    "ranges": [
+      "i in {1, 2}.",
+      "x_i <= 0."
+    ],
+    "exceptions": [
+      "If b_i = 0, the expression is undefined."
+    ],
+    "uncertainties": [
+      {
+        "kind": "subscript",
+        "description": "Missing scan material covers the denominator subscript; that subscript is unknown."
+      }
+    ]
+  },
+  "profile": {
+    "schema_version": 1,
+    "app": "Obsidian",
+    "app_version": "1.15.0",
+    "mathjax_version": "4.1.3",
+    "native_math": true,
+    "compatibility_dfrac": true,
+    "local_images": true,
+    "verified": true
+  },
+  "checks": {
+    "source_preservation": "passed",
+    "region_match": "passed",
+    "recognition": "needs_review",
+    "expression_match": "needs_review",
+    "symbol_definitions": "needs_review",
+    "semantic_review": "needs_review",
+    "note_plan": "not_run",
+    "rendering": "not_run",
+    "saved_output": "passed"
+  },
+  "decision": {
+    "representation": null,
+    "fallback_reasons": [],
+    "compatibility_rewrites": [],
+    "issue_codes": [
+      "SCAN_REGION_UNREADABLE",
+      "SCAN_CRITICAL_SYMBOL_UNKNOWN",
+      "SCAN_SEMANTICS_UNKNOWN",
+      "SCAN_RECOGNITION_UNCERTAIN",
+      "SCAN_RECOGNITION_FAILED"
+    ]
+  },
+  "recognition": {
+    "schema_version": 1,
+    "recognized_tex": null,
+    "uncertainties": [
+      {
+        "kind": "subscript",
+        "description": "The subscript on the denominator b is obscured by a gray mark, so its presence or value cannot be determined."
+      }
+    ]
+  },
+  "api": {
+    "actual_model": "deepseek-flash",
+    "confidence": null,
+    "configured_model": "noetome-test-independent-scan",
+    "endpoint": "http://127.0.0.1:36895/v1/chat/completions",
+    "errors": [],
+    "finish_reason": "stop",
+    "http_request_id": null,
+    "http_status": 200,
+    "provider": "openai_chat_completions",
+    "request_strategy": "tangmao-vision-scan-v1",
+    "response_complete": true,
+    "response_id": "chatcmpl-1793960919",
+    "response_receipt": {
+      "byte_length": 3269,
+      "omission_reason": null,
+      "sha256": "2e3400d9d6c9c18b641517cbfa4addacb8689c93d8120220d18142bf8661cb7f"
+    },
+    "service_tier": null,
+    "transport_mode": "local_http_test",
+    "usage": {
+      "input_reserved_tokens": 8465,
+      "model_tokenizer": null,
+      "model_usage": {
+        "input_tokens": 444,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 626,
+        "total_tokens": 1070
+      },
+      "model_usage_status": "validated",
+      "network_attempts": 1,
+      "paid_calls": 0,
+      "price_usd": null,
+      "raw_model_usage": {
+        "completion_tokens": 626,
+        "prompt_tokens": 444,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "total_tokens": 1070
+      },
+      "real_model_calls": 0,
+      "request_utf8_bytes": 7441,
+      "reservation_policy": "request_utf8_bytes_plus_1024_v1",
+      "reserved_tokens": 16657
+    }
+  },
+  "recognition_request_fingerprint": {
+    "sha256": "175324fa7294f2c6bb889d3d08367e55110f04eb55529ba03fdc3376d54f7841",
+    "byte_length": 7441
+  },
+  "recognition_response_fingerprint": {
+    "sha256": "2e3400d9d6c9c18b641517cbfa4addacb8689c93d8120220d18142bf8661cb7f",
+    "byte_length": 3269
+  },
+  "tokens": null,
+  "plan_fingerprint": null,
+  "inputs": {
+    "original.pdf": {
+      "sha256": "945d35792f24732ab90ad296eadf2596ac53ee847cc37133b6aa22447fe62970",
+      "byte_length": 41214
+    },
+    "original.png": {
+      "sha256": "8a673a96084428fb3938219a2de990edc645b7e3c64b39b6044ac55363fb881e",
+      "byte_length": 4496
+    },
+    "page.png": {
+      "sha256": "b08f28c60807a30d2777e092a1bf94359332e9ee3cb9bebe3a620ec8195f18de",
+      "byte_length": 49716
+    },
+    "profile.json": {
+      "sha256": "1be77b79b3d7dfb08c93a44e0cf5d26647cba13344e8df0a4dbc866aa5735fde",
+      "byte_length": 202
+    },
+    "source-api-config.json": {
+      "sha256": "0bd308593df7f9148e52b34c653981ba896c899855ab56b8f7da4826d69c39f7",
+      "byte_length": 624
+    },
+    "source-case.json": {
+      "sha256": "eec48688ef0de35973bcf43ba8df7df6f67158233acf68a7726551f908237bec",
+      "byte_length": 847
+    },
+    "source-semantics.json": {
+      "sha256": "da8f2665eb37c59b3fa044fb1dbace3e7df149bc99d0c1a6f5efae832c62c733",
+      "byte_length": 852
+    }
+  },
+  "files": [],
+  "artifacts": {
+    ".owner.json": {
+      "sha256": "ef6eda90861de222bc651f468a8a3ced97a22a70453ff16cb51c52e6751ba7af",
+      "byte_length": 162
+    },
+    "original.pdf": {
+      "sha256": "945d35792f24732ab90ad296eadf2596ac53ee847cc37133b6aa22447fe62970",
+      "byte_length": 41214
+    },
+    "original.png": {
+      "sha256": "8a673a96084428fb3938219a2de990edc645b7e3c64b39b6044ac55363fb881e",
+      "byte_length": 4496
+    },
+    "page.png": {
+      "sha256": "b08f28c60807a30d2777e092a1bf94359332e9ee3cb9bebe3a620ec8195f18de",
+      "byte_length": 49716
+    },
+    "profile.json": {
+      "sha256": "1be77b79b3d7dfb08c93a44e0cf5d26647cba13344e8df0a4dbc866aa5735fde",
+      "byte_length": 202
+    },
+    "recognition.json": {
+      "sha256": "0d5f91dc3e64a87c09d23f749065b36e09149b69f5eda5a5b3a944a6fb63ddbf",
+      "byte_length": 249
+    },
+    "request-body.json": {
+      "sha256": "175324fa7294f2c6bb889d3d08367e55110f04eb55529ba03fdc3376d54f7841",
+      "byte_length": 7441
+    },
+    "request.json": {
+      "sha256": "5e0d3b0ca3a78c81991ebbd2c0edd9f74e1857e47cbe8e766cb1f42c6921cb6b",
+      "byte_length": 1568
+    },
+    "response.bin": {
+      "sha256": "2e3400d9d6c9c18b641517cbfa4addacb8689c93d8120220d18142bf8661cb7f",
+      "byte_length": 3269
+    },
+    "source-api-config.json": {
+      "sha256": "0bd308593df7f9148e52b34c653981ba896c899855ab56b8f7da4826d69c39f7",
+      "byte_length": 624
+    },
+    "source-case.json": {
+      "sha256": "eec48688ef0de35973bcf43ba8df7df6f67158233acf68a7726551f908237bec",
+      "byte_length": 847
+    },
+    "source-semantics.json": {
+      "sha256": "da8f2665eb37c59b3fa044fb1dbace3e7df149bc99d0c1a6f5efae832c62c733",
+      "byte_length": 852
+    }
+  }
+}

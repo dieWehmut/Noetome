@@ -1,0 +1,653 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_flow",
+  "scope": "active_flow_v1",
+  "representation_origin": "deterministic_planner",
+  "request_id": "e10180ea-5e21-4c22-8ec9-571ce52ab7fd",
+  "revision": 1,
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "research_status": "not_requested",
+  "published": false,
+  "document": {
+    "process": {
+      "title": "样例签名分流",
+      "entry": "s1",
+      "goals": [
+        "s2",
+        "s3"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "资料不可读时暂停"
+      ]
+    },
+    "steps": [
+      {
+        "id": "d1",
+        "kind": "decision",
+        "label": "检查签名",
+        "description": "只判断签名是否完整",
+        "criterion": "签名完整",
+        "inputs": [
+          "已接收卡"
+        ],
+        "outputs": [
+          "签名判定结果"
+        ],
+        "conditions": [
+          "卡片已接收"
+        ],
+        "exceptions": [
+          "签名区域不可读时暂停判定"
+        ]
+      },
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "接收卡片",
+        "description": "接收待判断的样例卡",
+        "criterion": null,
+        "inputs": [
+          "待判断卡"
+        ],
+        "outputs": [
+          "已接收卡"
+        ],
+        "conditions": [
+          "卡片可读"
+        ],
+        "exceptions": [
+          "卡片破损时暂停"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "进入归档队列",
+        "description": "将真分支卡片加入归档队列",
+        "criterion": null,
+        "inputs": [
+          "判据为真的卡片"
+        ],
+        "outputs": [
+          "待归档卡"
+        ],
+        "conditions": [
+          "签名完整"
+        ],
+        "exceptions": [
+          "队列不可用时保留卡片"
+        ]
+      },
+      {
+        "id": "s3",
+        "kind": "step",
+        "label": "进入补签队列",
+        "description": "将假分支卡片加入补签队列",
+        "criterion": null,
+        "inputs": [
+          "判据为假的卡片"
+        ],
+        "outputs": [
+          "待补签卡"
+        ],
+        "conditions": [
+          "签名完整这一判据为假"
+        ],
+        "exceptions": [
+          "队列不可用时保留卡片"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "d1",
+        "kind": "sequence",
+        "branch_outcome": null,
+        "conditions": [
+          "接收完成"
+        ],
+        "exceptions": [
+          "破损卡不进入判定"
+        ]
+      },
+      {
+        "id": "r2",
+        "left": "d1",
+        "right": "s2",
+        "kind": "branch",
+        "branch_outcome": true,
+        "conditions": [
+          "签名区域可读"
+        ],
+        "exceptions": [
+          "归档队列不可用时暂停"
+        ]
+      },
+      {
+        "id": "r3",
+        "left": "d1",
+        "right": "s3",
+        "kind": "branch",
+        "branch_outcome": false,
+        "conditions": [
+          "签名区域可读"
+        ],
+        "exceptions": [
+          "补签队列不可用时暂停"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "object_id": "d1",
+        "start_byte": 336,
+        "end_byte": 577,
+        "quote": "判定 d1：\"检查签名\"。判据：\"签名完整\"。说明：\"只判断签名是否完整\"。输入：[\"已接收卡\"]。输出：[\"签名判定结果\"]。条件：[\"卡片已接收\"]。例外：[\"签名区域不可读时暂停判定\"]。"
+      },
+      {
+        "object_id": "process",
+        "start_byte": 0,
+        "end_byte": 143,
+        "quote": "过程：\"样例签名分流\"。入口：s1。目标：[\"s2\",\"s3\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+      },
+      {
+        "object_id": "r1",
+        "start_byte": 1046,
+        "end_byte": 1150,
+        "quote": "关系 r1：s1 完成后执行 d1。条件：[\"接收完成\"]。例外：[\"破损卡不进入判定\"]。"
+      },
+      {
+        "object_id": "r2",
+        "start_byte": 1151,
+        "end_byte": 1276,
+        "quote": "关系 r2：d1 的判据为真时执行 s2。条件：[\"签名区域可读\"]。例外：[\"归档队列不可用时暂停\"]。"
+      },
+      {
+        "object_id": "r3",
+        "start_byte": 1277,
+        "end_byte": 1402,
+        "quote": "关系 r3：d1 的判据为假时执行 s3。条件：[\"签名区域可读\"]。例外：[\"补签队列不可用时暂停\"]。"
+      },
+      {
+        "object_id": "s1",
+        "start_byte": 144,
+        "end_byte": 335,
+        "quote": "步骤 s1：\"接收卡片\"。说明：\"接收待判断的样例卡\"。输入：[\"待判断卡\"]。输出：[\"已接收卡\"]。条件：[\"卡片可读\"]。例外：[\"卡片破损时暂停\"]。"
+      },
+      {
+        "object_id": "s2",
+        "start_byte": 578,
+        "end_byte": 802,
+        "quote": "步骤 s2：\"进入归档队列\"。说明：\"将真分支卡片加入归档队列\"。输入：[\"判据为真的卡片\"]。输出：[\"待归档卡\"]。条件：[\"签名完整\"]。例外：[\"队列不可用时保留卡片\"]。"
+      },
+      {
+        "object_id": "s3",
+        "start_byte": 803,
+        "end_byte": 1045,
+        "quote": "步骤 s3：\"进入补签队列\"。说明：\"将假分支卡片加入补签队列\"。输入：[\"判据为假的卡片\"]。输出：[\"待补签卡\"]。条件：[\"签名完整这一判据为假\"]。例外：[\"队列不可用时保留卡片\"]。"
+      }
+    ]
+  },
+  "profile": {
+    "schema_version": 2,
+    "producer": "flow_render_profile",
+    "profile_id": "obsidian_1_15_0_pele_flowchart",
+    "app": "Obsidian",
+    "app_version": "1.15.0",
+    "mermaid_version": null,
+    "renderer": {
+      "name": "pele",
+      "version": "99.0",
+      "source_sha256": "9bf34b3a9a19351dc69d0d238e365560331a8ae392c41656df7f5090653253d0"
+    },
+    "flowchart_support": "supported",
+    "label_encoding": "decimal_ascii_punctuation_v1",
+    "html_labels": false
+  },
+  "representation": "ordered_list",
+  "decision": {
+    "rule_id": "verified_relations_text_fallback_v1",
+    "reason": "来源关系已通过流程语义检查；当前显示条件采用有据文字回退。",
+    "fallback_reasons": [
+      {
+        "code": "FLOW_TARGET_UNVERIFIED",
+        "object_ids": [],
+        "message": "所选目标版本或标签配置尚无本版实测依据，使用保留完整关系的文字表达。"
+      }
+    ]
+  },
+  "topological_order": [
+    "s1",
+    "d1",
+    "s2",
+    "s3"
+  ],
+  "diagram": null,
+  "notes": [
+    {
+      "note_id": "flow_overview",
+      "output_path": "流程总览.md",
+      "title": "流程总览",
+      "sections": [
+        {
+          "section_id": "flow",
+          "heading": "流程表达",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "process_title",
+                "text": "过程名称：样例签名分流",
+                "source_object_ids": [
+                  "process"
+                ]
+              }
+            },
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "reading_scope",
+                "text": "图和列表仅表达来源明确列出的关系。步骤的输入、输出、条件和例外，以及每条关系的条件和例外，见过程明细；这些限定仍然适用。文字编号用于定位和阅读，不另行主张步骤之间的执行顺序。",
+                "source_object_ids": []
+              }
+            },
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "fallback_reason",
+                "text": "所选目标版本或标签配置尚无本版实测依据，使用保留完整关系的文字表达。",
+                "source_object_ids": []
+              }
+            },
+            {
+              "kind": "links",
+              "block_id": "detail_links",
+              "links": [
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "过程说明",
+                  "display_text": "查看完整过程说明",
+                  "source_object_ids": [
+                    "process"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "步骤-d1",
+                  "display_text": "查看步骤明细",
+                  "source_object_ids": [
+                    "d1"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "步骤-s1",
+                  "display_text": "查看步骤明细",
+                  "source_object_ids": [
+                    "s1"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "步骤-s2",
+                  "display_text": "查看步骤明细",
+                  "source_object_ids": [
+                    "s2"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "步骤-s3",
+                  "display_text": "查看步骤明细",
+                  "source_object_ids": [
+                    "s3"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "关系-r1",
+                  "display_text": "查看关系明细",
+                  "source_object_ids": [
+                    "r1"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "关系-r2",
+                  "display_text": "查看关系明细",
+                  "source_object_ids": [
+                    "r2"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "关系-r3",
+                  "display_text": "查看关系明细",
+                  "source_object_ids": [
+                    "r3"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "section_id": "step_list",
+          "heading": "步骤列表",
+          "blocks": [
+            {
+              "kind": "ordered_list",
+              "block_id": "steps",
+              "items": [
+                {
+                  "item_id": "s1",
+                  "text": "步骤：s1\n类型：步骤\n名称：接收卡片\n说明：接收待判断的样例卡\n判据：不适用（普通步骤）\n输入：\n1. 待判断卡\n输出：\n1. 已接收卡\n条件：\n1. 卡片可读\n例外：\n1. 卡片破损时暂停",
+                  "source_object_ids": [
+                    "s1"
+                  ],
+                  "links": [
+                    {
+                      "target_path": "过程明细.md",
+                      "target_heading": "步骤-s1",
+                      "display_text": "查看步骤明细",
+                      "source_object_ids": [
+                        "s1"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "item_id": "d1",
+                  "text": "步骤：d1\n类型：判定\n名称：检查签名\n说明：只判断签名是否完整\n判据：签名完整\n输入：\n1. 已接收卡\n输出：\n1. 签名判定结果\n条件：\n1. 卡片已接收\n例外：\n1. 签名区域不可读时暂停判定",
+                  "source_object_ids": [
+                    "d1"
+                  ],
+                  "links": [
+                    {
+                      "target_path": "过程明细.md",
+                      "target_heading": "步骤-d1",
+                      "display_text": "查看步骤明细",
+                      "source_object_ids": [
+                        "d1"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "item_id": "s2",
+                  "text": "步骤：s2\n类型：步骤\n名称：进入归档队列\n说明：将真分支卡片加入归档队列\n判据：不适用（普通步骤）\n输入：\n1. 判据为真的卡片\n输出：\n1. 待归档卡\n条件：\n1. 签名完整\n例外：\n1. 队列不可用时保留卡片",
+                  "source_object_ids": [
+                    "s2"
+                  ],
+                  "links": [
+                    {
+                      "target_path": "过程明细.md",
+                      "target_heading": "步骤-s2",
+                      "display_text": "查看步骤明细",
+                      "source_object_ids": [
+                        "s2"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "item_id": "s3",
+                  "text": "步骤：s3\n类型：步骤\n名称：进入补签队列\n说明：将假分支卡片加入补签队列\n判据：不适用（普通步骤）\n输入：\n1. 判据为假的卡片\n输出：\n1. 待补签卡\n条件：\n1. 签名完整这一判据为假\n例外：\n1. 队列不可用时保留卡片",
+                  "source_object_ids": [
+                    "s3"
+                  ],
+                  "links": [
+                    {
+                      "target_path": "过程明细.md",
+                      "target_heading": "步骤-s3",
+                      "display_text": "查看步骤明细",
+                      "source_object_ids": [
+                        "s3"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "section_id": "relation_list",
+          "heading": "明确关系列表",
+          "blocks": [
+            {
+              "kind": "ordered_list",
+              "block_id": "relations",
+              "items": [
+                {
+                  "item_id": "r1",
+                  "text": "关系：r1\n起点：s1\n起点名称：接收卡片\n终点：d1\n终点名称：检查签名\n含义：随后\n条件：\n1. 接收完成\n例外：\n1. 破损卡不进入判定",
+                  "source_object_ids": [
+                    "d1",
+                    "r1",
+                    "s1"
+                  ],
+                  "links": [
+                    {
+                      "target_path": "过程明细.md",
+                      "target_heading": "关系-r1",
+                      "display_text": "查看关系明细",
+                      "source_object_ids": [
+                        "r1"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "item_id": "r2",
+                  "text": "关系：r2\n起点：d1\n起点名称：检查签名\n终点：s2\n终点名称：进入归档队列\n含义：判据为真：签名完整\n条件：\n1. 签名区域可读\n例外：\n1. 归档队列不可用时暂停",
+                  "source_object_ids": [
+                    "d1",
+                    "r2",
+                    "s2"
+                  ],
+                  "links": [
+                    {
+                      "target_path": "过程明细.md",
+                      "target_heading": "关系-r2",
+                      "display_text": "查看关系明细",
+                      "source_object_ids": [
+                        "r2"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "item_id": "r3",
+                  "text": "关系：r3\n起点：d1\n起点名称：检查签名\n终点：s3\n终点名称：进入补签队列\n含义：判据为假：签名完整\n条件：\n1. 签名区域可读\n例外：\n1. 补签队列不可用时暂停",
+                  "source_object_ids": [
+                    "d1",
+                    "r3",
+                    "s3"
+                  ],
+                  "links": [
+                    {
+                      "target_path": "过程明细.md",
+                      "target_heading": "关系-r3",
+                      "display_text": "查看关系明细",
+                      "source_object_ids": [
+                        "r3"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "note_id": "process_details",
+      "output_path": "过程明细.md",
+      "title": "过程明细",
+      "sections": [
+        {
+          "section_id": "process_detail",
+          "heading": "过程说明",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "process",
+                "text": "过程名称：样例签名分流\n入口：s1\n目标：\n1. s2\n2. s3\n条件：\n1. 演示模式开启\n例外：\n1. 资料不可读时暂停",
+                "source_object_ids": [
+                  "process"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "step_d1",
+          "heading": "步骤-d1",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "d1",
+                "text": "步骤：d1\n类型：判定\n名称：检查签名\n说明：只判断签名是否完整\n判据：签名完整\n输入：\n1. 已接收卡\n输出：\n1. 签名判定结果\n条件：\n1. 卡片已接收\n例外：\n1. 签名区域不可读时暂停判定",
+                "source_object_ids": [
+                  "d1"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "step_s1",
+          "heading": "步骤-s1",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "s1",
+                "text": "步骤：s1\n类型：步骤\n名称：接收卡片\n说明：接收待判断的样例卡\n判据：不适用（普通步骤）\n输入：\n1. 待判断卡\n输出：\n1. 已接收卡\n条件：\n1. 卡片可读\n例外：\n1. 卡片破损时暂停",
+                "source_object_ids": [
+                  "s1"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "step_s2",
+          "heading": "步骤-s2",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "s2",
+                "text": "步骤：s2\n类型：步骤\n名称：进入归档队列\n说明：将真分支卡片加入归档队列\n判据：不适用（普通步骤）\n输入：\n1. 判据为真的卡片\n输出：\n1. 待归档卡\n条件：\n1. 签名完整\n例外：\n1. 队列不可用时保留卡片",
+                "source_object_ids": [
+                  "s2"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "step_s3",
+          "heading": "步骤-s3",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "s3",
+                "text": "步骤：s3\n类型：步骤\n名称：进入补签队列\n说明：将假分支卡片加入补签队列\n判据：不适用（普通步骤）\n输入：\n1. 判据为假的卡片\n输出：\n1. 待补签卡\n条件：\n1. 签名完整这一判据为假\n例外：\n1. 队列不可用时保留卡片",
+                "source_object_ids": [
+                  "s3"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "relation_r1",
+          "heading": "关系-r1",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "r1",
+                "text": "关系：r1\n起点：s1\n起点名称：接收卡片\n终点：d1\n终点名称：检查签名\n含义：随后\n条件：\n1. 接收完成\n例外：\n1. 破损卡不进入判定",
+                "source_object_ids": [
+                  "d1",
+                  "r1",
+                  "s1"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "relation_r2",
+          "heading": "关系-r2",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "r2",
+                "text": "关系：r2\n起点：d1\n起点名称：检查签名\n终点：s2\n终点名称：进入归档队列\n含义：判据为真：签名完整\n条件：\n1. 签名区域可读\n例外：\n1. 归档队列不可用时暂停",
+                "source_object_ids": [
+                  "d1",
+                  "r2",
+                  "s2"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "relation_r3",
+          "heading": "关系-r3",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "r3",
+                "text": "关系：r3\n起点：d1\n起点名称：检查签名\n终点：s3\n终点名称：进入补签队列\n含义：判据为假：签名完整\n条件：\n1. 签名区域可读\n例外：\n1. 补签队列不可用时暂停",
+                "source_object_ids": [
+                  "d1",
+                  "r3",
+                  "s3"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "return",
+          "heading": "返回总览",
+          "blocks": [
+            {
+              "kind": "links",
+              "block_id": "return_link",
+              "links": [
+                {
+                  "target_path": "流程总览.md",
+                  "target_heading": "流程表达",
+                  "display_text": "返回流程总览",
+                  "source_object_ids": [
+                    "process"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,492 @@
+# 有据流程表达预览
+
+状态：passed；预览：rendered；知识状态：pending；发布：false。
+
+科学质量：not_run；研究：not_requested；网络与付费调用：0。
+
+```json
+{
+  "schema_version": 1,
+  "producer": "knowledge_flow",
+  "scope": "active_flow_v1",
+  "request_id": "72a472d4-ae93-4864-bb64-ef2487935e56",
+  "binding": {
+    "project_id": "c8f0d542-1bb6-4c24-82b6-ad20fc189af4",
+    "import_id": "63f6f00c-2007-424a-9a1d-990aa0dc9726",
+    "source_id": "fcd1028d-31fd-453e-b2b7-21afa69b3214",
+    "version_id": "026cdb13-335a-48c7-8f8f-cb4e9927b193",
+    "content_sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+    "normalized_sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+    "parse_id": null,
+    "manifest_sha256": null
+  },
+  "status": "passed",
+  "preview_status": "rendered",
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "research_status": "not_requested",
+  "published": false,
+  "network_calls": 0,
+  "paid_calls": 0,
+  "checks": {
+    "source_review": "passed",
+    "model_support": "passed",
+    "note_plan": "passed",
+    "rendering": "passed",
+    "saved_output": "passed"
+  },
+  "issue_codes": [],
+  "issues": [],
+  "process_document": {
+    "process": {
+      "title": "演示鸣响抑制规则",
+      "entry": "s1",
+      "goals": [
+        "s2"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "资料不可读时暂停"
+      ]
+    },
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "启用演示静音控制",
+        "description": "把演示静音控制设为启用",
+        "criterion": null,
+        "inputs": [
+          "静音命令"
+        ],
+        "outputs": [
+          "已启用静音控制"
+        ],
+        "conditions": [
+          "演示模式开启"
+        ],
+        "exceptions": [
+          "控制器断开时不生效"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "蜂鸣器鸣响响应",
+        "description": "表示可能受到抑制的鸣响响应，不断言响应已发生",
+        "criterion": null,
+        "inputs": [
+          "鸣响请求"
+        ],
+        "outputs": [
+          "可能的鸣响响应"
+        ],
+        "conditions": [
+          "蜂鸣器可用"
+        ],
+        "exceptions": [
+          "蜂鸣器断开时不可观察"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "s2",
+        "kind": "inhibits",
+        "branch_outcome": null,
+        "conditions": [
+          "演示静音通道接通"
+        ],
+        "exceptions": [
+          "旁路开启时该抑制不成立"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "object_id": "process",
+        "start_byte": 0,
+        "end_byte": 144,
+        "quote": "过程：\"演示鸣响抑制规则\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+      },
+      {
+        "object_id": "r1",
+        "start_byte": 637,
+        "end_byte": 753,
+        "quote": "关系 r1：s1 抑制 s2。条件：[\"演示静音通道接通\"]。例外：[\"旁路开启时该抑制不成立\"]。"
+      },
+      {
+        "object_id": "s1",
+        "start_byte": 145,
+        "end_byte": 375,
+        "quote": "步骤 s1：\"启用演示静音控制\"。说明：\"把演示静音控制设为启用\"。输入：[\"静音命令\"]。输出：[\"已启用静音控制\"]。条件：[\"演示模式开启\"]。例外：[\"控制器断开时不生效\"]。"
+      },
+      {
+        "object_id": "s2",
+        "start_byte": 376,
+        "end_byte": 636,
+        "quote": "步骤 s2：\"蜂鸣器鸣响响应\"。说明：\"表示可能受到抑制的鸣响响应，不断言响应已发生\"。输入：[\"鸣响请求\"]。输出：[\"可能的鸣响响应\"]。条件：[\"蜂鸣器可用\"]。例外：[\"蜂鸣器断开时不可观察\"]。"
+      }
+    ]
+  },
+  "profile": {
+    "schema_version": 2,
+    "producer": "flow_render_profile",
+    "profile_id": "obsidian_1_15_0_pele_flowchart",
+    "app": "Obsidian",
+    "app_version": "1.15.0",
+    "mermaid_version": null,
+    "renderer": {
+      "name": "pele",
+      "version": "1.8.0",
+      "source_sha256": "9bf34b3a9a19351dc69d0d238e365560331a8ae392c41656df7f5090653253d0"
+    },
+    "flowchart_support": "supported",
+    "label_encoding": "decimal_ascii_punctuation_v1",
+    "html_labels": false
+  },
+  "representation": "flowchart",
+  "decision": {
+    "rule_id": "verified_directed_acyclic_flow_v1",
+    "reason": "来源明确给出完整有向无环关系，且所选目标的当前图形及标签配置已有实测依据。",
+    "fallback_reasons": []
+  },
+  "review_ir_fingerprint": {
+    "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+    "byte_length": 5303
+  },
+  "plan_fingerprint": {
+    "sha256": "4caa6bf1ed0d8e2471ae2f5c0a884dfa23f07872d99e1f2f2db48388d3d4ae40",
+    "byte_length": 10207
+  },
+  "totals": {
+    "branch_relations": 0,
+    "causes_relations": 0,
+    "content_mappings": 9,
+    "correlates_relations": 0,
+    "decision_steps": 0,
+    "evidence_records": 4,
+    "flow_edges": 1,
+    "flow_nodes": 2,
+    "inhibits_relations": 1,
+    "links": 5,
+    "node_conditions": 2,
+    "node_exceptions": 2,
+    "node_inputs": 2,
+    "node_outputs": 2,
+    "parsed_statements": 4,
+    "process_conditions": 1,
+    "process_exceptions": 1,
+    "promotes_relations": 0,
+    "relation_conditions": 1,
+    "relation_exceptions": 1,
+    "relations": 1,
+    "rendered_notes": 2,
+    "sequence_relations": 0,
+    "source_statements": 4,
+    "steps": 2,
+    "unknown_relations": 0,
+    "unparsed_statements": 0
+  },
+  "inputs": {
+    ".case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    ".gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    ".profile.json": {
+      "sha256": "6d2051f224d92b93fc25ddefa34f22ebd706d6a80027ec01cf09a99c21213469",
+      "byte_length": 453
+    },
+    ".review-.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    ".review-.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    ".review-.owner.json": {
+      "sha256": "261271023876d8e3e788380c3f3b6285f9c22dca39c8ba4e1924647d5fb5bd97",
+      "byte_length": 170
+    },
+    ".review-.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    ".review-process-ir.json": {
+      "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+      "byte_length": 5303
+    },
+    ".review-review.json": {
+      "sha256": "dbb0b70fa58cb113770ada269e6e9348baaa8e14753833ca594fb77718cc4c21",
+      "byte_length": 6483
+    },
+    ".review-review.md": {
+      "sha256": "690047cf07ee1e8d9c158ad90bdf93cb0c956064567951e1c58f17ae45366870",
+      "byte_length": 6666
+    },
+    ".source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    }
+  },
+  "files": [
+    {
+      "relative_path": "流程总览.md",
+      "note_id": "flow_overview",
+      "plan_revision": 1,
+      "content_sha256": "34f05a5ff316b31b5f26c9a2fa4b15adad4d233cb08cef1b81381b77aec5df6f",
+      "byte_length": 675,
+      "content_mappings": [
+        {
+          "section_id": "flow",
+          "block_id": "process_title",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "process"
+          ],
+          "start_byte": 41,
+          "end_byte": 80
+        },
+        {
+          "section_id": "flow",
+          "block_id": "reading_scope",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [],
+          "start_byte": 94,
+          "end_byte": 355
+        },
+        {
+          "section_id": "flow",
+          "block_id": "process_diagram",
+          "kind": "diagram_node",
+          "item_id": "n0",
+          "source_object_ids": [
+            "s1"
+          ],
+          "start_byte": 385,
+          "end_byte": 417
+        },
+        {
+          "section_id": "flow",
+          "block_id": "process_diagram",
+          "kind": "diagram_node",
+          "item_id": "n1",
+          "source_object_ids": [
+            "s2"
+          ],
+          "start_byte": 418,
+          "end_byte": 447
+        },
+        {
+          "section_id": "flow",
+          "block_id": "process_diagram",
+          "kind": "diagram_edge",
+          "item_id": "e0",
+          "source_object_ids": [
+            "r1"
+          ],
+          "start_byte": 448,
+          "end_byte": 475
+        }
+      ],
+      "links": [
+        {
+          "section_id": "flow",
+          "block_id": "detail_links",
+          "item_id": null,
+          "target_path": "过程明细.md",
+          "target_heading": "过程说明",
+          "display_text": "查看完整过程说明",
+          "source_object_ids": [
+            "process"
+          ],
+          "start_byte": 481,
+          "end_byte": 535
+        },
+        {
+          "section_id": "flow",
+          "block_id": "detail_links",
+          "item_id": null,
+          "target_path": "过程明细.md",
+          "target_heading": "步骤-s1",
+          "display_text": "查看步骤明细",
+          "source_object_ids": [
+            "s1"
+          ],
+          "start_byte": 536,
+          "end_byte": 581
+        },
+        {
+          "section_id": "flow",
+          "block_id": "detail_links",
+          "item_id": null,
+          "target_path": "过程明细.md",
+          "target_heading": "步骤-s2",
+          "display_text": "查看步骤明细",
+          "source_object_ids": [
+            "s2"
+          ],
+          "start_byte": 582,
+          "end_byte": 627
+        },
+        {
+          "section_id": "flow",
+          "block_id": "detail_links",
+          "item_id": null,
+          "target_path": "过程明细.md",
+          "target_heading": "关系-r1",
+          "display_text": "查看关系明细",
+          "source_object_ids": [
+            "r1"
+          ],
+          "start_byte": 628,
+          "end_byte": 673
+        }
+      ]
+    },
+    {
+      "relative_path": "过程明细.md",
+      "note_id": "process_details",
+      "plan_revision": 1,
+      "content_sha256": "2f71cda055f87a2f459e966d4b12bf4788e4ae0b21ec45efd4f48291df5c1144",
+      "byte_length": 1134,
+      "content_mappings": [
+        {
+          "section_id": "process_detail",
+          "block_id": "process",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "process"
+          ],
+          "start_byte": 41,
+          "end_byte": 178
+        },
+        {
+          "section_id": "step_s1",
+          "block_id": "s1",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "s1"
+          ],
+          "start_byte": 206,
+          "end_byte": 481
+        },
+        {
+          "section_id": "step_s2",
+          "block_id": "s2",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "s2"
+          ],
+          "start_byte": 509,
+          "end_byte": 814
+        },
+        {
+          "section_id": "relation_r1",
+          "block_id": "r1",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "r1",
+            "s1",
+            "s2"
+          ],
+          "start_byte": 842,
+          "end_byte": 1061
+        }
+      ],
+      "links": [
+        {
+          "section_id": "return",
+          "block_id": "return_link",
+          "item_id": null,
+          "target_path": "流程总览.md",
+          "target_heading": "流程表达",
+          "display_text": "返回流程总览",
+          "source_object_ids": [
+            "process"
+          ],
+          "start_byte": 1084,
+          "end_byte": 1132
+        }
+      ]
+    }
+  ],
+  "artifacts": {
+    ".case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    ".gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    ".owner.json": {
+      "sha256": "d8fe31c3dfcf2611cff37864811b95e4433b40a440a2deb45d32bf781a2d5be5",
+      "byte_length": 146
+    },
+    ".profile.json": {
+      "sha256": "6d2051f224d92b93fc25ddefa34f22ebd706d6a80027ec01cf09a99c21213469",
+      "byte_length": 453
+    },
+    ".review-.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    ".review-.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    ".review-.owner.json": {
+      "sha256": "261271023876d8e3e788380c3f3b6285f9c22dca39c8ba4e1924647d5fb5bd97",
+      "byte_length": 170
+    },
+    ".review-.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    ".review-process-ir.json": {
+      "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+      "byte_length": 5303
+    },
+    ".review-review.json": {
+      "sha256": "dbb0b70fa58cb113770ada269e6e9348baaa8e14753833ca594fb77718cc4c21",
+      "byte_length": 6483
+    },
+    ".review-review.md": {
+      "sha256": "690047cf07ee1e8d9c158ad90bdf93cb0c956064567951e1c58f17ae45366870",
+      "byte_length": 6666
+    },
+    ".source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "plan.json": {
+      "sha256": "4caa6bf1ed0d8e2471ae2f5c0a884dfa23f07872d99e1f2f2db48388d3d4ae40",
+      "byte_length": 10207
+    },
+    "流程总览.md": {
+      "sha256": "34f05a5ff316b31b5f26c9a2fa4b15adad4d233cb08cef1b81381b77aec5df6f",
+      "byte_length": 675
+    },
+    "过程明细.md": {
+      "sha256": "2f71cda055f87a2f459e966d4b12bf4788e4ae0b21ec45efd4f48291df5c1144",
+      "byte_length": 1134
+    }
+  }
+}
+```

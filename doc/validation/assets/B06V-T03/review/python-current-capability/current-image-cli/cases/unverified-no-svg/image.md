@@ -1,0 +1,644 @@
+# 选定图像保真预览报告
+
+状态：passed；预览：rendered；知识：pending；科学质量：not_run；发布：false。
+
+仅选定图像和手工结构声明工程核对；不执行自动图像理解；网络与付费调用：0。
+
+```json
+{
+  "schema_version": 1,
+  "producer": "knowledge_image",
+  "scope": "selected_image_fidelity_v1",
+  "request_id": "4e222253-e6f7-48c0-92ad-d2ee77942a07",
+  "status": "passed",
+  "preview_status": "rendered",
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "published": false,
+  "network_calls": 0,
+  "paid_calls": 0,
+  "case": {
+    "schema_version": 1,
+    "purpose": "image_fidelity",
+    "selection_id": "signed_arrows",
+    "title": "图像保真样例 signed_arrows",
+    "source_kind": "diagram",
+    "image": {
+      "file": "source.png",
+      "sha256": "c010a5884ad8c0442a320bc57f61f17d6c01d828816426a4c3e28774c5dbd64f"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "842df03fe191041c24b099841c97ee7402eff40d3a350d907594153bb57abb51"
+    },
+    "dimensions": [
+      960,
+      520
+    ],
+    "readability": "clear"
+  },
+  "semantics": {
+    "schema_version": 1,
+    "producer": "author_image_declaration",
+    "author": "independent_cc0_fixture_author",
+    "complete": true,
+    "data_available": false,
+    "caption": "Fictional engineering diagram; manual source declaration, no image recognition.",
+    "conditions": [
+      "Only the selected schematic relationships are asserted."
+    ],
+    "exceptions": [
+      "No scientific accuracy or measured data is claimed."
+    ],
+    "elements": [
+      {
+        "id": "feed",
+        "kind": "rect",
+        "bbox": [
+          40,
+          150,
+          220,
+          120
+        ],
+        "label": "Feed",
+        "unit": "mmol/L",
+        "legend_id": null
+      },
+      {
+        "id": "response",
+        "kind": "circle",
+        "bbox": [
+          390,
+          120,
+          180,
+          180
+        ],
+        "label": "Response",
+        "unit": "a.u.",
+        "legend_id": null
+      },
+      {
+        "id": "output",
+        "kind": "rect",
+        "bbox": [
+          700,
+          150,
+          220,
+          120
+        ],
+        "label": "Outlet",
+        "unit": "mmol/L",
+        "legend_id": null
+      }
+    ],
+    "relations": [
+      {
+        "id": "gain",
+        "from": "feed",
+        "to": "response",
+        "start": [
+          260,
+          210
+        ],
+        "end": [
+          390,
+          210
+        ],
+        "direction": "forward",
+        "effect": "positive",
+        "label": "activates",
+        "unit": "s^-1",
+        "legend_id": "positive"
+      },
+      {
+        "id": "loss",
+        "from": "response",
+        "to": "output",
+        "start": [
+          570,
+          210
+        ],
+        "end": [
+          700,
+          210
+        ],
+        "direction": "forward",
+        "effect": "negative",
+        "label": "inhibits",
+        "unit": "s^-1",
+        "legend_id": "negative"
+      }
+    ],
+    "spatial_relations": [
+      {
+        "id": "feed-left",
+        "a": "feed",
+        "b": "response",
+        "relation": "left_of"
+      },
+      {
+        "id": "response-left",
+        "a": "response",
+        "b": "output",
+        "relation": "left_of"
+      }
+    ],
+    "legend": [
+      {
+        "id": "positive",
+        "label": "+",
+        "meaning": "positive activation",
+        "color": "#c5efcb",
+        "bbox": [
+          40,
+          360,
+          360,
+          45
+        ]
+      },
+      {
+        "id": "negative",
+        "label": "-",
+        "meaning": "negative inhibition",
+        "color": "#f5c1c1",
+        "bbox": [
+          500,
+          360,
+          400,
+          45
+        ]
+      }
+    ]
+  },
+  "profile": {
+    "schema_version": 1,
+    "app": "Obsidian",
+    "app_version": "1.15.0",
+    "svg_supported": false,
+    "local_images": true,
+    "verified": false
+  },
+  "checks": {
+    "source_preservation": "passed",
+    "author_declaration": "passed",
+    "geometry_review": "passed",
+    "semantic_review": "passed",
+    "note_plan": "passed",
+    "rendering": "passed",
+    "saved_output": "passed"
+  },
+  "decision": {
+    "representation": "original_image",
+    "fallback_reasons": [
+      "IMAGE_TARGET_UNVERIFIED",
+      "IMAGE_SVG_UNAVAILABLE"
+    ],
+    "issue_codes": []
+  },
+  "plan_fingerprint": {
+    "sha256": "387f0877b5086f60cf7a22f6141ff306ac4baeb6eeab9517931771b2940ae8c7",
+    "byte_length": 3532
+  },
+  "inputs": {
+    "original.png": {
+      "sha256": "c010a5884ad8c0442a320bc57f61f17d6c01d828816426a4c3e28774c5dbd64f",
+      "byte_length": 22138
+    },
+    "profile.json": {
+      "sha256": "51f34b6dde01dc5d1e6034a9a47d0d3885976a8b7c6d5e514bbc56cc921a7195",
+      "byte_length": 145
+    },
+    "source-case.json": {
+      "sha256": "0ecc345bec924324376006434ea615da492ec2e3931921b10560aa877e8027e6",
+      "byte_length": 491
+    },
+    "source-semantics.json": {
+      "sha256": "842df03fe191041c24b099841c97ee7402eff40d3a350d907594153bb57abb51",
+      "byte_length": 2378
+    }
+  },
+  "files": [
+    {
+      "relative_path": "图像预览.md",
+      "content_sha256": "09ef0c2bcc0159bd39abc5f68163a622f853596accf65fa57c3f83d5ad3ca6d4",
+      "byte_length": 2733,
+      "mappings": [
+        {
+          "kind": "title",
+          "source_field": "case.title",
+          "start_byte": 35,
+          "end_byte": 67
+        },
+        {
+          "kind": "image_embed",
+          "source_field": "case.image",
+          "start_byte": 84,
+          "end_byte": 101
+        },
+        {
+          "kind": "fallback_reason",
+          "source_field": "decision.fallback_reasons[0]",
+          "start_byte": 111,
+          "end_byte": 162
+        },
+        {
+          "kind": "fallback_reason",
+          "source_field": "decision.fallback_reasons[1]",
+          "start_byte": 176,
+          "end_byte": 218
+        },
+        {
+          "kind": "caption",
+          "source_field": "semantics.caption",
+          "start_byte": 243,
+          "end_byte": 322
+        },
+        {
+          "kind": "element_id",
+          "source_field": "semantics.elements[0].id",
+          "start_byte": 372,
+          "end_byte": 376
+        },
+        {
+          "kind": "element_kind",
+          "source_field": "semantics.elements[0].kind",
+          "start_byte": 401,
+          "end_byte": 405
+        },
+        {
+          "kind": "element_label",
+          "source_field": "semantics.elements[0].label",
+          "start_byte": 430,
+          "end_byte": 434
+        },
+        {
+          "kind": "element_unit",
+          "source_field": "semantics.elements[0].unit",
+          "start_byte": 459,
+          "end_byte": 465
+        },
+        {
+          "kind": "element_legend",
+          "source_field": "semantics.elements[0].legend_id",
+          "start_byte": 490,
+          "end_byte": 511
+        },
+        {
+          "kind": "element_geometry",
+          "source_field": "semantics.elements[0].bbox",
+          "start_byte": 542,
+          "end_byte": 558
+        },
+        {
+          "kind": "element_id",
+          "source_field": "semantics.elements[1].id",
+          "start_byte": 597,
+          "end_byte": 605
+        },
+        {
+          "kind": "element_kind",
+          "source_field": "semantics.elements[1].kind",
+          "start_byte": 630,
+          "end_byte": 636
+        },
+        {
+          "kind": "element_label",
+          "source_field": "semantics.elements[1].label",
+          "start_byte": 661,
+          "end_byte": 669
+        },
+        {
+          "kind": "element_unit",
+          "source_field": "semantics.elements[1].unit",
+          "start_byte": 694,
+          "end_byte": 698
+        },
+        {
+          "kind": "element_legend",
+          "source_field": "semantics.elements[1].legend_id",
+          "start_byte": 723,
+          "end_byte": 744
+        },
+        {
+          "kind": "element_geometry",
+          "source_field": "semantics.elements[1].bbox",
+          "start_byte": 775,
+          "end_byte": 792
+        },
+        {
+          "kind": "element_id",
+          "source_field": "semantics.elements[2].id",
+          "start_byte": 831,
+          "end_byte": 837
+        },
+        {
+          "kind": "element_kind",
+          "source_field": "semantics.elements[2].kind",
+          "start_byte": 862,
+          "end_byte": 866
+        },
+        {
+          "kind": "element_label",
+          "source_field": "semantics.elements[2].label",
+          "start_byte": 891,
+          "end_byte": 897
+        },
+        {
+          "kind": "element_unit",
+          "source_field": "semantics.elements[2].unit",
+          "start_byte": 922,
+          "end_byte": 928
+        },
+        {
+          "kind": "element_legend",
+          "source_field": "semantics.elements[2].legend_id",
+          "start_byte": 953,
+          "end_byte": 974
+        },
+        {
+          "kind": "element_geometry",
+          "source_field": "semantics.elements[2].bbox",
+          "start_byte": 1005,
+          "end_byte": 1022
+        },
+        {
+          "kind": "relation_id",
+          "source_field": "semantics.relations[0].id",
+          "start_byte": 1072,
+          "end_byte": 1076
+        },
+        {
+          "kind": "relation_from",
+          "source_field": "semantics.relations[0].from",
+          "start_byte": 1107,
+          "end_byte": 1111
+        },
+        {
+          "kind": "relation_to",
+          "source_field": "semantics.relations[0].to",
+          "start_byte": 1142,
+          "end_byte": 1150
+        },
+        {
+          "kind": "relation_start",
+          "source_field": "semantics.relations[0].start",
+          "start_byte": 1181,
+          "end_byte": 1190
+        },
+        {
+          "kind": "relation_end",
+          "source_field": "semantics.relations[0].end",
+          "start_byte": 1221,
+          "end_byte": 1230
+        },
+        {
+          "kind": "relation_direction",
+          "source_field": "semantics.relations[0].direction",
+          "start_byte": 1261,
+          "end_byte": 1268
+        },
+        {
+          "kind": "relation_effect",
+          "source_field": "semantics.relations[0].effect",
+          "start_byte": 1299,
+          "end_byte": 1307
+        },
+        {
+          "kind": "relation_label",
+          "source_field": "semantics.relations[0].label",
+          "start_byte": 1332,
+          "end_byte": 1341
+        },
+        {
+          "kind": "relation_unit",
+          "source_field": "semantics.relations[0].unit",
+          "start_byte": 1366,
+          "end_byte": 1370
+        },
+        {
+          "kind": "relation_legend",
+          "source_field": "semantics.relations[0].legend_id",
+          "start_byte": 1395,
+          "end_byte": 1403
+        },
+        {
+          "kind": "relation_id",
+          "source_field": "semantics.relations[1].id",
+          "start_byte": 1442,
+          "end_byte": 1446
+        },
+        {
+          "kind": "relation_from",
+          "source_field": "semantics.relations[1].from",
+          "start_byte": 1477,
+          "end_byte": 1485
+        },
+        {
+          "kind": "relation_to",
+          "source_field": "semantics.relations[1].to",
+          "start_byte": 1516,
+          "end_byte": 1522
+        },
+        {
+          "kind": "relation_start",
+          "source_field": "semantics.relations[1].start",
+          "start_byte": 1553,
+          "end_byte": 1562
+        },
+        {
+          "kind": "relation_end",
+          "source_field": "semantics.relations[1].end",
+          "start_byte": 1593,
+          "end_byte": 1602
+        },
+        {
+          "kind": "relation_direction",
+          "source_field": "semantics.relations[1].direction",
+          "start_byte": 1633,
+          "end_byte": 1640
+        },
+        {
+          "kind": "relation_effect",
+          "source_field": "semantics.relations[1].effect",
+          "start_byte": 1671,
+          "end_byte": 1679
+        },
+        {
+          "kind": "relation_label",
+          "source_field": "semantics.relations[1].label",
+          "start_byte": 1704,
+          "end_byte": 1712
+        },
+        {
+          "kind": "relation_unit",
+          "source_field": "semantics.relations[1].unit",
+          "start_byte": 1737,
+          "end_byte": 1741
+        },
+        {
+          "kind": "relation_legend",
+          "source_field": "semantics.relations[1].legend_id",
+          "start_byte": 1766,
+          "end_byte": 1774
+        },
+        {
+          "kind": "spatial_relation",
+          "source_field": "semantics.spatial_relations[0].id",
+          "start_byte": 1836,
+          "end_byte": 1845
+        },
+        {
+          "kind": "spatial_relation",
+          "source_field": "semantics.spatial_relations[0].a",
+          "start_byte": 1870,
+          "end_byte": 1874
+        },
+        {
+          "kind": "spatial_relation",
+          "source_field": "semantics.spatial_relations[0].b",
+          "start_byte": 1905,
+          "end_byte": 1913
+        },
+        {
+          "kind": "spatial_relation",
+          "source_field": "semantics.spatial_relations[0].relation",
+          "start_byte": 1944,
+          "end_byte": 1951
+        },
+        {
+          "kind": "spatial_relation",
+          "source_field": "semantics.spatial_relations[1].id",
+          "start_byte": 1996,
+          "end_byte": 2009
+        },
+        {
+          "kind": "spatial_relation",
+          "source_field": "semantics.spatial_relations[1].a",
+          "start_byte": 2034,
+          "end_byte": 2042
+        },
+        {
+          "kind": "spatial_relation",
+          "source_field": "semantics.spatial_relations[1].b",
+          "start_byte": 2073,
+          "end_byte": 2079
+        },
+        {
+          "kind": "spatial_relation",
+          "source_field": "semantics.spatial_relations[1].relation",
+          "start_byte": 2110,
+          "end_byte": 2117
+        },
+        {
+          "kind": "legend_id",
+          "source_field": "semantics.legend[0].id",
+          "start_byte": 2167,
+          "end_byte": 2175
+        },
+        {
+          "kind": "legend_label",
+          "source_field": "semantics.legend[0].label",
+          "start_byte": 2200,
+          "end_byte": 2201
+        },
+        {
+          "kind": "legend_meaning",
+          "source_field": "semantics.legend[0].meaning",
+          "start_byte": 2226,
+          "end_byte": 2245
+        },
+        {
+          "kind": "legend_color",
+          "source_field": "semantics.legend[0].color",
+          "start_byte": 2270,
+          "end_byte": 2277
+        },
+        {
+          "kind": "legend_geometry",
+          "source_field": "semantics.legend[0].bbox",
+          "start_byte": 2308,
+          "end_byte": 2323
+        },
+        {
+          "kind": "legend_id",
+          "source_field": "semantics.legend[1].id",
+          "start_byte": 2362,
+          "end_byte": 2370
+        },
+        {
+          "kind": "legend_label",
+          "source_field": "semantics.legend[1].label",
+          "start_byte": 2395,
+          "end_byte": 2396
+        },
+        {
+          "kind": "legend_meaning",
+          "source_field": "semantics.legend[1].meaning",
+          "start_byte": 2421,
+          "end_byte": 2440
+        },
+        {
+          "kind": "legend_color",
+          "source_field": "semantics.legend[1].color",
+          "start_byte": 2465,
+          "end_byte": 2472
+        },
+        {
+          "kind": "legend_geometry",
+          "source_field": "semantics.legend[1].bbox",
+          "start_byte": 2503,
+          "end_byte": 2519
+        },
+        {
+          "kind": "conditions",
+          "source_field": "semantics.conditions[0]",
+          "start_byte": 2550,
+          "end_byte": 2605
+        },
+        {
+          "kind": "exceptions",
+          "source_field": "semantics.exceptions[0]",
+          "start_byte": 2630,
+          "end_byte": 2681
+        },
+        {
+          "kind": "attachment_link",
+          "source_field": "case.image",
+          "start_byte": 2704,
+          "end_byte": 2732
+        }
+      ]
+    }
+  ],
+  "artifacts": {
+    ".owner.json": {
+      "sha256": "ecfc5ab634b689b2d25624fddd9b1b56a7017c19a95978fa9ced807b69665cd4",
+      "byte_length": 148
+    },
+    "original.png": {
+      "sha256": "c010a5884ad8c0442a320bc57f61f17d6c01d828816426a4c3e28774c5dbd64f",
+      "byte_length": 22138
+    },
+    "plan.json": {
+      "sha256": "387f0877b5086f60cf7a22f6141ff306ac4baeb6eeab9517931771b2940ae8c7",
+      "byte_length": 3532
+    },
+    "profile.json": {
+      "sha256": "51f34b6dde01dc5d1e6034a9a47d0d3885976a8b7c6d5e514bbc56cc921a7195",
+      "byte_length": 145
+    },
+    "source-case.json": {
+      "sha256": "0ecc345bec924324376006434ea615da492ec2e3931921b10560aa877e8027e6",
+      "byte_length": 491
+    },
+    "source-semantics.json": {
+      "sha256": "842df03fe191041c24b099841c97ee7402eff40d3a350d907594153bb57abb51",
+      "byte_length": 2378
+    },
+    "图像预览.md": {
+      "sha256": "09ef0c2bcc0159bd39abc5f68163a622f853596accf65fa57c3f83d5ad3ca6d4",
+      "byte_length": 2733
+    }
+  }
+}
+```

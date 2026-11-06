@@ -1,0 +1,330 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_flow",
+  "scope": "active_flow_v1",
+  "representation_origin": "deterministic_planner",
+  "request_id": "015ff438-6422-42c3-82a7-8911fb6d91dc",
+  "revision": 1,
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "research_status": "not_requested",
+  "published": false,
+  "document": {
+    "process": {
+      "title": "演示提示促进规则",
+      "entry": "s1",
+      "goals": [
+        "s2"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "资料不可读时暂停"
+      ]
+    },
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "启用演示优先控制",
+        "description": "把演示优先控制设为启用",
+        "criterion": null,
+        "inputs": [
+          "优先控制命令"
+        ],
+        "outputs": [
+          "已启用优先控制"
+        ],
+        "conditions": [
+          "演示模式开启"
+        ],
+        "exceptions": [
+          "控制器断开时不生效"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "提示被选择的倾向",
+        "description": "表示被促进的选择倾向，不提供比例或概率数值",
+        "criterion": null,
+        "inputs": [
+          "提示候选"
+        ],
+        "outputs": [
+          "选择倾向"
+        ],
+        "conditions": [
+          "演示筛选器可用"
+        ],
+        "exceptions": [
+          "筛选器不可用时未知"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "s2",
+        "kind": "promotes",
+        "branch_outcome": null,
+        "conditions": [
+          "演示优先通道接通"
+        ],
+        "exceptions": [
+          "旁路开启时该促进不成立"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "object_id": "process",
+        "start_byte": 0,
+        "end_byte": 144,
+        "quote": "过程：\"演示提示促进规则\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+      },
+      {
+        "object_id": "r1",
+        "start_byte": 637,
+        "end_byte": 753,
+        "quote": "关系 r1：s1 促进 s2。条件：[\"演示优先通道接通\"]。例外：[\"旁路开启时该促进不成立\"]。"
+      },
+      {
+        "object_id": "s1",
+        "start_byte": 145,
+        "end_byte": 381,
+        "quote": "步骤 s1：\"启用演示优先控制\"。说明：\"把演示优先控制设为启用\"。输入：[\"优先控制命令\"]。输出：[\"已启用优先控制\"]。条件：[\"演示模式开启\"]。例外：[\"控制器断开时不生效\"]。"
+      },
+      {
+        "object_id": "s2",
+        "start_byte": 382,
+        "end_byte": 636,
+        "quote": "步骤 s2：\"提示被选择的倾向\"。说明：\"表示被促进的选择倾向，不提供比例或概率数值\"。输入：[\"提示候选\"]。输出：[\"选择倾向\"]。条件：[\"演示筛选器可用\"]。例外：[\"筛选器不可用时未知\"]。"
+      }
+    ]
+  },
+  "profile": {
+    "schema_version": 2,
+    "producer": "flow_render_profile",
+    "profile_id": "obsidian_1_15_0_pele_flowchart",
+    "app": "Obsidian",
+    "app_version": "1.15.0",
+    "mermaid_version": null,
+    "renderer": {
+      "name": "pele",
+      "version": "1.8.0",
+      "source_sha256": "9bf34b3a9a19351dc69d0d238e365560331a8ae392c41656df7f5090653253d0"
+    },
+    "flowchart_support": "supported",
+    "label_encoding": "decimal_ascii_punctuation_v1",
+    "html_labels": false
+  },
+  "representation": "flowchart",
+  "decision": {
+    "rule_id": "verified_directed_acyclic_flow_v1",
+    "reason": "来源明确给出完整有向无环关系，且所选目标的当前图形及标签配置已有实测依据。",
+    "fallback_reasons": []
+  },
+  "topological_order": [
+    "s1",
+    "s2"
+  ],
+  "diagram": {
+    "direction": "TD",
+    "nodes": [
+      {
+        "node_id": "n0",
+        "step_id": "s1",
+        "kind": "step",
+        "text": "启用演示优先控制"
+      },
+      {
+        "node_id": "n1",
+        "step_id": "s2",
+        "kind": "step",
+        "text": "提示被选择的倾向"
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "e0",
+        "relation_id": "r1",
+        "left_node_id": "n0",
+        "right_node_id": "n1",
+        "kind": "promotes",
+        "branch_outcome": null,
+        "text": "+：促进"
+      }
+    ]
+  },
+  "notes": [
+    {
+      "note_id": "flow_overview",
+      "output_path": "流程总览.md",
+      "title": "流程总览",
+      "sections": [
+        {
+          "section_id": "flow",
+          "heading": "流程表达",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "process_title",
+                "text": "过程名称：演示提示促进规则",
+                "source_object_ids": [
+                  "process"
+                ]
+              }
+            },
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "reading_scope",
+                "text": "图和列表仅表达来源明确列出的关系。步骤的输入、输出、条件和例外，以及每条关系的条件和例外，见过程明细；这些限定仍然适用。文字编号用于定位和阅读，不另行主张步骤之间的执行顺序。",
+                "source_object_ids": []
+              }
+            },
+            {
+              "kind": "diagram",
+              "block_id": "process_diagram"
+            },
+            {
+              "kind": "links",
+              "block_id": "detail_links",
+              "links": [
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "过程说明",
+                  "display_text": "查看完整过程说明",
+                  "source_object_ids": [
+                    "process"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "步骤-s1",
+                  "display_text": "查看步骤明细",
+                  "source_object_ids": [
+                    "s1"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "步骤-s2",
+                  "display_text": "查看步骤明细",
+                  "source_object_ids": [
+                    "s2"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "关系-r1",
+                  "display_text": "查看关系明细",
+                  "source_object_ids": [
+                    "r1"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "note_id": "process_details",
+      "output_path": "过程明细.md",
+      "title": "过程明细",
+      "sections": [
+        {
+          "section_id": "process_detail",
+          "heading": "过程说明",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "process",
+                "text": "过程名称：演示提示促进规则\n入口：s1\n目标：\n1. s2\n条件：\n1. 演示模式开启\n例外：\n1. 资料不可读时暂停",
+                "source_object_ids": [
+                  "process"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "step_s1",
+          "heading": "步骤-s1",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "s1",
+                "text": "步骤：s1\n类型：步骤\n名称：启用演示优先控制\n说明：把演示优先控制设为启用\n判据：不适用（普通步骤）\n输入：\n1. 优先控制命令\n输出：\n1. 已启用优先控制\n条件：\n1. 演示模式开启\n例外：\n1. 控制器断开时不生效",
+                "source_object_ids": [
+                  "s1"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "step_s2",
+          "heading": "步骤-s2",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "s2",
+                "text": "步骤：s2\n类型：步骤\n名称：提示被选择的倾向\n说明：表示被促进的选择倾向，不提供比例或概率数值\n判据：不适用（普通步骤）\n输入：\n1. 提示候选\n输出：\n1. 选择倾向\n条件：\n1. 演示筛选器可用\n例外：\n1. 筛选器不可用时未知",
+                "source_object_ids": [
+                  "s2"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "relation_r1",
+          "heading": "关系-r1",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "r1",
+                "text": "关系：r1\n起点：s1\n起点名称：启用演示优先控制\n终点：s2\n终点名称：提示被选择的倾向\n含义：+：促进\n条件：\n1. 演示优先通道接通\n例外：\n1. 旁路开启时该促进不成立",
+                "source_object_ids": [
+                  "r1",
+                  "s1",
+                  "s2"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "return",
+          "heading": "返回总览",
+          "blocks": [
+            {
+              "kind": "links",
+              "block_id": "return_link",
+              "links": [
+                {
+                  "target_path": "流程总览.md",
+                  "target_heading": "流程表达",
+                  "display_text": "返回流程总览",
+                  "source_object_ids": [
+                    "process"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

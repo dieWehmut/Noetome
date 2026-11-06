@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-06T12:50:36.308397+00:00",
+  "final_audit_script": {
+    "sha256": "3699fcae28c20138414155adc2982eff3a949c1b56c3ddf4eb3c8b27c0881e2a",
+    "byte_length": 17957
+  },
+  "runs": [
+    {
+      "name": "audit-build",
+      "command": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "doc/validation/assets/B06V-T03/minimum/audit_minimum.py",
+        "--build"
+      ],
+      "exit_code": 1,
+      "scope": "archives written and fully read back; original source snapshot schema adapter missing",
+      "raw": {
+        "stdout": {
+          "file": "audit-build.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "stderr": {
+          "file": "audit-build.stderr.bin",
+          "sha256": "777a34f039e133734d22ee3b5483fdc199418acabeea242196d64fb360b719de",
+          "byte_length": 570
+        }
+      }
+    },
+    {
+      "name": "audit-02",
+      "command": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "doc/validation/assets/B06V-T03/minimum/audit_minimum.py"
+      ],
+      "exit_code": 1,
+      "scope": "archive/source verified; registry dimensions incorrectly interpreted as required clicks for blocked scan",
+      "raw": {
+        "stdout": {
+          "file": "audit-02.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "stderr": {
+          "file": "audit-02.stderr.bin",
+          "sha256": "3859ac504db288ad58c74714014c897207df3c10bf57fe87735519e47ae17946",
+          "byte_length": 828
+        }
+      }
+    },
+    {
+      "name": "audit-03",
+      "command": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "doc/validation/assets/B06V-T03/minimum/audit_minimum.py"
+      ],
+      "exit_code": 1,
+      "scope": "explicit clicks selected; table/flow string-note adapter missing",
+      "raw": {
+        "stdout": {
+          "file": "audit-03.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "stderr": {
+          "file": "audit-03.stderr.bin",
+          "sha256": "0e588107a92c92b1e4dc75691fbe33b65a5e85beda11e5b36ae01991d747c1bb",
+          "byte_length": 903
+        }
+      }
+    },
+    {
+      "name": "audit-04",
+      "command": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "doc/validation/assets/B06V-T03/minimum/audit_minimum.py"
+      ],
+      "exit_code": 0,
+      "scope": "full final selected matrix original audit passed",
+      "raw": {
+        "stdout": {
+          "file": "audit-04.stdout.bin",
+          "sha256": "0e36a1bf80b7b7893c51ea6db5e78979d3ebe5e85a852a6ca4e0fd82dc0947a3",
+          "byte_length": 714
+        },
+        "stderr": {
+          "file": "audit-04.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        }
+      }
+    }
+  ],
+  "all_product_capture_originals_unchanged": true,
+  "model_calls": 0
+}

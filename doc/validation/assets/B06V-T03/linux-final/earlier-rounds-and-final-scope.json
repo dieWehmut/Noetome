@@ -1,0 +1,35 @@
+{
+  "rounds": [
+    {
+      "round": "01",
+      "aggregate_status": "failed",
+      "full_python_exit": 1,
+      "tests_run": 380,
+      "result_line": "FAILED (errors=16, skipped=19)",
+      "snapshot_inputs_unchanged": true,
+      "worktree_related_subset_unchanged": false,
+      "acceptance_scope": "Failed fixture-mode setup: 16 full-unit ERRORs are PermissionError in copied mutation cases; formula/image/scan audits aborted for the same reason. All original bytes and traces preserved."
+    },
+    {
+      "round": "02",
+      "aggregate_status": "failed",
+      "full_python_exit": 0,
+      "tests_run": 380,
+      "result_line": "OK (skipped=19)",
+      "snapshot_inputs_unchanged": true,
+      "worktree_related_subset_unchanged": false,
+      "acceptance_scope": "380-unit suite and all five audits passed on prior prepare b22 source, but aggregate is honestly failed because the worktree acquired one FORMAT identity serialization line. Only byte-bound five-audit subset is reused."
+    },
+    {
+      "round": "03",
+      "aggregate_status": "passed",
+      "full_python_exit": 0,
+      "tests_run": 380,
+      "result_line": "OK (skipped=19)",
+      "snapshot_inputs_unchanged": true,
+      "worktree_related_subset_unchanged": true,
+      "acceptance_scope": "Accepted final full Python source snapshot 9c28 and final ELF; source and related production/Python subset unchanged."
+    }
+  ],
+  "earlier_source_bytes_equal": true
+}

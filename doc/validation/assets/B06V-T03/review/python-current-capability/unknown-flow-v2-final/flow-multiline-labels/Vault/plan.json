@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_flow",
+  "scope": "active_flow_v1",
+  "representation_origin": "deterministic_planner",
+  "request_id": "367e922c-1739-4696-b6f9-72f289da0a7d",
+  "revision": 1,
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "research_status": "not_requested",
+  "published": false,
+  "document": {
+    "process": {
+      "title": "多行标签的保真流程",
+      "entry": "s1",
+      "goals": [
+        "s2"
+      ],
+      "conditions": [],
+      "exceptions": [
+        "不可读资料需复核"
+      ]
+    },
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "检查\n卡片\t[α]",
+        "description": "完整保留来源标签中的换行和制表符",
+        "criterion": null,
+        "inputs": [
+          "样例卡"
+        ],
+        "outputs": [
+          "检查结果"
+        ],
+        "conditions": [],
+        "exceptions": [
+          "卡片缺失时停止"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "记录检查结果",
+        "description": "记录来源明示的检查结果",
+        "criterion": null,
+        "inputs": [
+          "检查结果"
+        ],
+        "outputs": [
+          "检查记录"
+        ],
+        "conditions": [
+          "检查完成"
+        ],
+        "exceptions": []
+      }
+    ],
+    "relations": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "s2",
+        "kind": "sequence",
+        "branch_outcome": null,
+        "conditions": [],
+        "exceptions": [
+          "检查未完成时不得登记"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "object_id": "process",
+        "start_byte": 0,
+        "end_byte": 127,
+        "quote": "过程：\"多行标签的保真流程\"。入口：s1。目标：[\"s2\"]。条件：[]。例外：[\"不可读资料需复核\"]。"
+      },
+      {
+        "object_id": "r1",
+        "start_byte": 513,
+        "end_byte": 609,
+        "quote": "关系 r1：s1 完成后执行 s2。条件：[]。例外：[\"检查未完成时不得登记\"]。"
+      },
+      {
+        "object_id": "s1",
+        "start_byte": 128,
+        "end_byte": 331,
+        "quote": "步骤 s1：\"检查\\n卡片\\t[α]\"。说明：\"完整保留来源标签中的换行和制表符\"。输入：[\"样例卡\"]。输出：[\"检查结果\"]。条件：[]。例外：[\"卡片缺失时停止\"]。"
+      },
+      {
+        "object_id": "s2",
+        "start_byte": 332,
+        "end_byte": 512,
+        "quote": "步骤 s2：\"记录检查结果\"。说明：\"记录来源明示的检查结果\"。输入：[\"检查结果\"]。输出：[\"检查记录\"]。条件：[\"检查完成\"]。例外：[]。"
+      }
+    ]
+  },
+  "profile": {
+    "schema_version": 2,
+    "producer": "flow_render_profile",
+    "profile_id": "obsidian_1_15_0_pele_flowchart",
+    "app": "Obsidian",
+    "app_version": "1.15.0",
+    "mermaid_version": null,
+    "renderer": {
+      "name": "pele",
+      "version": "99.0",
+      "source_sha256": "9bf34b3a9a19351dc69d0d238e365560331a8ae392c41656df7f5090653253d0"
+    },
+    "flowchart_support": "supported",
+    "label_encoding": "decimal_ascii_punctuation_v1",
+    "html_labels": false
+  },
+  "representation": "ordered_list",
+  "decision": {
+    "rule_id": "verified_relations_text_fallback_v1",
+    "reason": "来源关系已通过流程语义检查；当前显示条件采用有据文字回退。",
+    "fallback_reasons": [
+      {
+        "code": "FLOW_TARGET_UNVERIFIED",
+        "object_ids": [],
+        "message": "所选目标版本或标签配置尚无本版实测依据，使用保留完整关系的文字表达。"
+      },
+      {
+        "code": "FLOW_LABEL_WHITESPACE_FALLBACK",
+        "object_ids": [
+          "s1"
+        ],
+        "message": "图标签含当前显示契约未确认可保真的空白，改用预格式文字保留原字符。"
+      }
+    ]
+  },
+  "topological_order": [
+    "s1",
+    "s2"
+  ],
+  "diagram": null,
+  "notes": [
+    {
+      "note_id": "flow_overview",
+      "output_path": "流程总览.md",
+      "title": "流程总览",
+      "sections": [
+        {
+          "section_id": "flow",
+          "heading": "流程表达",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "process_title",
+                "text": "过程名称：多行标签的保真流程",
+                "source_object_ids": [
+                  "process"
+                ]
+              }
+            },
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "reading_scope",
+                "text": "图和列表仅表达来源明确列出的关系。步骤的输入、输出、条件和例外，以及每条关系的条件和例外，见过程明细；这些限定仍然适用。文字编号用于定位和阅读，不另行主张步骤之间的执行顺序。",
+                "source_object_ids": []
+              }
+            },
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "fallback_reason",
+                "text": "所选目标版本或标签配置尚无本版实测依据，使用保留完整关系的文字表达。\n图标签含当前显示契约未确认可保真的空白，改用预格式文字保留原字符。",
+                "source_object_ids": []
+              }
+            },
+            {
+              "kind": "links",
+              "block_id": "detail_links",
+              "links": [
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "过程说明",
+                  "display_text": "查看完整过程说明",
+                  "source_object_ids": [
+                    "process"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "步骤-s1",
+                  "display_text": "查看步骤明细",
+                  "source_object_ids": [
+                    "s1"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "步骤-s2",
+                  "display_text": "查看步骤明细",
+                  "source_object_ids": [
+                    "s2"
+                  ]
+                },
+                {
+                  "target_path": "过程明细.md",
+                  "target_heading": "关系-r1",
+                  "display_text": "查看关系明细",
+                  "source_object_ids": [
+                    "r1"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "section_id": "step_list",
+          "heading": "步骤列表",
+          "blocks": [
+            {
+              "kind": "ordered_list",
+              "block_id": "steps",
+              "items": [
+                {
+                  "item_id": "s1",
+                  "text": "步骤：s1\n类型：步骤\n名称：检查\n卡片\t[α]\n说明：完整保留来源标签中的换行和制表符\n判据：不适用（普通步骤）\n输入：\n1. 样例卡\n输出：\n1. 检查结果\n条件：选定来源未列出\n例外：\n1. 卡片缺失时停止",
+                  "source_object_ids": [
+                    "s1"
+                  ],
+                  "links": [
+                    {
+                      "target_path": "过程明细.md",
+                      "target_heading": "步骤-s1",
+                      "display_text": "查看步骤明细",
+                      "source_object_ids": [
+                        "s1"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "item_id": "s2",
+                  "text": "步骤：s2\n类型：步骤\n名称：记录检查结果\n说明：记录来源明示的检查结果\n判据：不适用（普通步骤）\n输入：\n1. 检查结果\n输出：\n1. 检查记录\n条件：\n1. 检查完成\n例外：选定来源未列出",
+                  "source_object_ids": [
+                    "s2"
+                  ],
+                  "links": [
+                    {
+                      "target_path": "过程明细.md",
+                      "target_heading": "步骤-s2",
+                      "display_text": "查看步骤明细",
+                      "source_object_ids": [
+                        "s2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "section_id": "relation_list",
+          "heading": "明确关系列表",
+          "blocks": [
+            {
+              "kind": "ordered_list",
+              "block_id": "relations",
+              "items": [
+                {
+                  "item_id": "r1",
+                  "text": "关系：r1\n起点：s1\n起点名称：检查\n卡片\t[α]\n终点：s2\n终点名称：记录检查结果\n含义：随后\n条件：选定来源未列出\n例外：\n1. 检查未完成时不得登记",
+                  "source_object_ids": [
+                    "r1",
+                    "s1",
+                    "s2"
+                  ],
+                  "links": [
+                    {
+                      "target_path": "过程明细.md",
+                      "target_heading": "关系-r1",
+                      "display_text": "查看关系明细",
+                      "source_object_ids": [
+                        "r1"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "note_id": "process_details",
+      "output_path": "过程明细.md",
+      "title": "过程明细",
+      "sections": [
+        {
+          "section_id": "process_detail",
+          "heading": "过程说明",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "process",
+                "text": "过程名称：多行标签的保真流程\n入口：s1\n目标：\n1. s2\n条件：选定来源未列出\n例外：\n1. 不可读资料需复核",
+                "source_object_ids": [
+                  "process"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "step_s1",
+          "heading": "步骤-s1",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "s1",
+                "text": "步骤：s1\n类型：步骤\n名称：检查\n卡片\t[α]\n说明：完整保留来源标签中的换行和制表符\n判据：不适用（普通步骤）\n输入：\n1. 样例卡\n输出：\n1. 检查结果\n条件：选定来源未列出\n例外：\n1. 卡片缺失时停止",
+                "source_object_ids": [
+                  "s1"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "step_s2",
+          "heading": "步骤-s2",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "s2",
+                "text": "步骤：s2\n类型：步骤\n名称：记录检查结果\n说明：记录来源明示的检查结果\n判据：不适用（普通步骤）\n输入：\n1. 检查结果\n输出：\n1. 检查记录\n条件：\n1. 检查完成\n例外：选定来源未列出",
+                "source_object_ids": [
+                  "s2"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "relation_r1",
+          "heading": "关系-r1",
+          "blocks": [
+            {
+              "kind": "text",
+              "content": {
+                "block_id": "r1",
+                "text": "关系：r1\n起点：s1\n起点名称：检查\n卡片\t[α]\n终点：s2\n终点名称：记录检查结果\n含义：随后\n条件：选定来源未列出\n例外：\n1. 检查未完成时不得登记",
+                "source_object_ids": [
+                  "r1",
+                  "s1",
+                  "s2"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_id": "return",
+          "heading": "返回总览",
+          "blocks": [
+            {
+              "kind": "links",
+              "block_id": "return_link",
+              "links": [
+                {
+                  "target_path": "流程总览.md",
+                  "target_heading": "流程表达",
+                  "display_text": "返回流程总览",
+                  "source_object_ids": [
+                    "process"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

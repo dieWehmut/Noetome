@@ -1,0 +1,75 @@
+{
+  "scope": "Read-only actual interpreter observations during Windows Python attempt03; no env or credentials read",
+  "records": {
+    "pdf": {
+      "argv": [
+        "/mnt/d/Noetome/.artifacts/b03-t02-python312/Scripts/python.exe",
+        "-X",
+        "utf8",
+        "-c",
+        "import sys,json,importlib.metadata as m; print(json.dumps(dict(version=sys.version,executable=sys.executable,platform=sys.platform,packages={n:m.version(n) for n in [\"pdfplumber\",\"pdfminer.six\",\"pypdfium2\",\"Pillow\",\"charset-normalizer\",\"cryptography\",\"cffi\",\"pycparser\"]})))"
+      ],
+      "exit_code": 0,
+      "executable_pin": {
+        "sha256": "9f29b8965d6bf169315bbc20946f33b23c9dacb4587c3cccaf1f536b844b2dc2",
+        "byte_length": 277808
+      },
+      "observed": {
+        "version": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+        "executable": "D:\\Noetome\\.artifacts\\b03-t02-python312\\Scripts\\python.exe",
+        "platform": "win32",
+        "packages": {
+          "pdfplumber": "0.11.9",
+          "pdfminer.six": "20251230",
+          "pypdfium2": "5.14.0",
+          "Pillow": "12.3.0",
+          "charset-normalizer": "3.5.2",
+          "cryptography": "50.0.2",
+          "cffi": "2.1.1",
+          "pycparser": "3.11"
+        }
+      },
+      "stdout": {
+        "sha256": "cf9d6d2bb7becbee7c516b55d0932e131f9b7d0ed2e69c33b52e048a3e81c5e4",
+        "byte_length": 388
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    "fake": {
+      "argv": [
+        "/mnt/c/Users/Lyinn/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe",
+        "-X",
+        "utf8",
+        "-c",
+        "import sys,json; print(json.dumps(dict(version=sys.version,executable=sys.executable,platform=sys.platform)))"
+      ],
+      "exit_code": 0,
+      "executable_pin": {
+        "sha256": "17e6b9d2e702b43fd88154d9df419d32eab10728151f81d921bf32684ffd459e",
+        "byte_length": 107312
+      },
+      "observed": {
+        "version": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+        "executable": "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "platform": "win32"
+      },
+      "stdout": {
+        "sha256": "70c0e55a17e08646595dac66a9c9b1af478756b6b729b5b47beba887ac8e721e",
+        "byte_length": 218
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    }
+  },
+  "rust_c_native_runtime": {
+    "path": "/mnt/d/Noetome/target/b06v-t03-final-rust-20261106-c/native-runtime.json",
+    "sha256": "8c914882b7fa825ed2f05845178b11530960836bb40f42fcdda24b0d4c0451d1",
+    "byte_length": 1217
+  },
+  "pdf_versions_equal_rust_c": true
+}

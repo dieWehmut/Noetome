@@ -1,0 +1,20 @@
+   Compiling noetome-cli v0.1.0 (D:\Noetome\target\b06v-t03-final-rust-20261106-a\repo\crates\noetome-cli)
+   Compiling noetome-desktop v0.1.0 (D:\Noetome\target\b06v-t03-final-rust-20261106-a\repo\crates\noetome-desktop)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 07s
+     Running unittests src\lib.rs (D:\Noetome\target\debug\deps\noetome_cli-7f8b8bb98aad8247.exe)
+Observed live raw sharing violation; mode=2, outcome=Blocked
+Observed live raw sharing violation; mode=1, outcome=Applied
+Observed live raw sharing violation; mode=3, outcome=Blocked
+
+thread '<unnamed>' (21784) panicked at crates\noetome-cli\src\..\tests\support\source_cache_race_tests.rs:63:13:
+no live raw guard observed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'pdf_source_model::tests::source_cache_races::unknown_source_cache_entry_added_during_raw_read_is_rejected' (41364) panicked at crates\noetome-cli\src\..\tests\support\source_cache_race_tests.rs:92:30:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+PDF_WRITER_INTERRUPTION_FACT {"alive_before_kill":true,"exit_code":1,"exited_and_reaped":true,"independent_retry_ready":true,"inspection_read_only":true,"old_config_sha256":"1742ad55ca0b6113fc7bc306cdecd5822f5a36b7bddd28b48d71d149593c9375","old_database_sha256":"c159eb56468e84c24a13d70333afd2464f52b8c21a35b61f4f0918f3c8df8b1f","old_history_and_snapshots_preserved":true,"pid":66648,"readiness_published":true,"selected_pdf_sha256":"1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457","stage":"Prepared"}
+PDF_WRITER_INTERRUPTION_FACT {"alive_before_kill":true,"exit_code":1,"exited_and_reaped":true,"independent_retry_ready":true,"inspection_read_only":true,"old_config_sha256":"05be7eb8765e5e2fa21c609e7e5d5478ea3e45ff6a24197830bef05f5c8d63a9","old_database_sha256":"9e6a5680aa5370bc53dfecbb23d247e112b69ccc1bc514c09563b12ff4037072","old_history_and_snapshots_preserved":true,"pid":27264,"readiness_published":true,"selected_pdf_sha256":"1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457","stage":"VersionPublished"}
+PDF_WRITER_INTERRUPTION_FACT {"alive_before_kill":true,"exit_code":1,"exited_and_reaped":true,"independent_retry_ready":true,"inspection_read_only":true,"old_config_sha256":"903819d59fd61bf50601ca55ac561f4f7b91c95e43b03efb12b177145fccc676","old_database_sha256":"6095b4b36d6b2ad14b817fd4d74d90d4528067290d1edfe6fdc8df29526be5ec","old_history_and_snapshots_preserved":true,"pid":53376,"readiness_published":true,"selected_pdf_sha256":"1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457","stage":"ParsePublished"}
+PDF_WRITER_INTERRUPTION_FACT {"alive_before_kill":true,"exit_code":1,"exited_and_reaped":true,"independent_retry_ready":true,"inspection_read_only":true,"old_config_sha256":"fa2ad43b2efd3cd8caa723b6fa185e86fd0e7c9af25ec2d117a9108e63fd3891","old_database_sha256":"670f4cade5a8a96ef1861bd359b2867cdeda0c01167491786de842604e16ff67","old_history_and_snapshots_preserved":true,"pid":10776,"readiness_published":true,"selected_pdf_sha256":"1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457","stage":"DatabasePublished"}
+PDF_WRITER_INTERRUPTION_FACT {"alive_before_kill":true,"exit_code":1,"exited_and_reaped":true,"independent_retry_ready":true,"inspection_read_only":true,"old_config_sha256":"f8b84033eab76f5abb8b363b6f807f08f5c2e78b1bbeb28bfc6e94356762ef54","old_database_sha256":"c3cdc33c020ebcc4ab79c24c8da017b8ace044efd62ce28f07e561ccb3054dfb","old_history_and_snapshots_preserved":true,"pid":62140,"readiness_published":true,"selected_pdf_sha256":"1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457","stage":"ConfigPublished"}
+error: test failed, to rerun pass `-p noetome-cli --lib`

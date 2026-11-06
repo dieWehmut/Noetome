@@ -1,0 +1,240 @@
+# 选定图像保真预览报告
+
+状态：needs_review；预览：not_run；知识：pending；科学质量：not_run；发布：false。
+
+仅选定图像和手工结构声明工程核对；不执行自动图像理解；网络与付费调用：0。
+
+```json
+{
+  "schema_version": 1,
+  "producer": "knowledge_image",
+  "scope": "selected_image_fidelity_v1",
+  "request_id": "f061d77b-6e8e-45a3-9776-b2b601f7b48a",
+  "status": "needs_review",
+  "preview_status": "not_run",
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "published": false,
+  "network_calls": 0,
+  "paid_calls": 0,
+  "case": {
+    "schema_version": 1,
+    "purpose": "image_fidelity",
+    "selection_id": "unknown_relation",
+    "title": "图像保真样例 unknown_relation",
+    "source_kind": "diagram",
+    "image": {
+      "file": "source.png",
+      "sha256": "c94fff4b230d1d50ec75b73bcf80d90b789afde4e25f894f2422d344c414d86c"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "ba8216f83d8963782824b2c81b5b422f26055b2b0fd65eec8805351d6f550a7e"
+    },
+    "dimensions": [
+      960,
+      520
+    ],
+    "readability": "clear"
+  },
+  "semantics": {
+    "schema_version": 1,
+    "producer": "author_image_declaration",
+    "author": "independent_cc0_fixture_author",
+    "complete": true,
+    "data_available": false,
+    "caption": "Fictional engineering diagram; manual source declaration, no image recognition.",
+    "conditions": [
+      "Only the selected schematic relationships are asserted."
+    ],
+    "exceptions": [
+      "No scientific accuracy or measured data is claimed."
+    ],
+    "elements": [
+      {
+        "id": "feed",
+        "kind": "rect",
+        "bbox": [
+          40,
+          150,
+          220,
+          120
+        ],
+        "label": "Feed",
+        "unit": "mmol/L",
+        "legend_id": null
+      },
+      {
+        "id": "response",
+        "kind": "circle",
+        "bbox": [
+          390,
+          120,
+          180,
+          180
+        ],
+        "label": "Response",
+        "unit": "a.u.",
+        "legend_id": null
+      },
+      {
+        "id": "output",
+        "kind": "rect",
+        "bbox": [
+          700,
+          150,
+          220,
+          120
+        ],
+        "label": "Outlet",
+        "unit": "mmol/L",
+        "legend_id": null
+      }
+    ],
+    "relations": [
+      {
+        "id": "gain",
+        "from": "feed",
+        "to": "response",
+        "start": [
+          260,
+          210
+        ],
+        "end": [
+          390,
+          210
+        ],
+        "direction": "unknown",
+        "effect": "positive",
+        "label": "activates",
+        "unit": "s^-1",
+        "legend_id": "positive"
+      },
+      {
+        "id": "loss",
+        "from": "response",
+        "to": "output",
+        "start": [
+          570,
+          210
+        ],
+        "end": [
+          700,
+          210
+        ],
+        "direction": "forward",
+        "effect": "negative",
+        "label": "inhibits",
+        "unit": "s^-1",
+        "legend_id": "negative"
+      }
+    ],
+    "spatial_relations": [
+      {
+        "id": "feed-left",
+        "a": "feed",
+        "b": "response",
+        "relation": "left_of"
+      },
+      {
+        "id": "response-left",
+        "a": "response",
+        "b": "output",
+        "relation": "left_of"
+      }
+    ],
+    "legend": [
+      {
+        "id": "positive",
+        "label": "+",
+        "meaning": "positive activation",
+        "color": "#c5efcb",
+        "bbox": [
+          40,
+          360,
+          360,
+          45
+        ]
+      },
+      {
+        "id": "negative",
+        "label": "-",
+        "meaning": "negative inhibition",
+        "color": "#f5c1c1",
+        "bbox": [
+          500,
+          360,
+          400,
+          45
+        ]
+      }
+    ]
+  },
+  "profile": {
+    "schema_version": 1,
+    "app": "Obsidian",
+    "app_version": "1.15.0",
+    "svg_supported": true,
+    "local_images": true,
+    "verified": true
+  },
+  "checks": {
+    "source_preservation": "passed",
+    "author_declaration": "needs_review",
+    "geometry_review": "passed",
+    "semantic_review": "needs_review",
+    "note_plan": "not_run",
+    "rendering": "not_run",
+    "saved_output": "passed"
+  },
+  "decision": {
+    "representation": null,
+    "fallback_reasons": [],
+    "issue_codes": [
+      "IMAGE_UNKNOWN_RELATION"
+    ]
+  },
+  "plan_fingerprint": null,
+  "inputs": {
+    "original.png": {
+      "sha256": "c94fff4b230d1d50ec75b73bcf80d90b789afde4e25f894f2422d344c414d86c",
+      "byte_length": 22106
+    },
+    "profile.json": {
+      "sha256": "6f58c1a7fc6d4f914be5dae19cc39cb9f43c11c4252a8bc3419b38ebf9c1bf01",
+      "byte_length": 143
+    },
+    "source-case.json": {
+      "sha256": "55ffc3369dee192f70ed0a8a1b969ddb627e523763e6a86bbe3c4ee325c44f56",
+      "byte_length": 497
+    },
+    "source-semantics.json": {
+      "sha256": "ba8216f83d8963782824b2c81b5b422f26055b2b0fd65eec8805351d6f550a7e",
+      "byte_length": 2378
+    }
+  },
+  "files": [],
+  "artifacts": {
+    ".owner.json": {
+      "sha256": "6504e6b8a29f9ed5c3df25eeddc91768875a8c4518a4b3254cd6aee90bee7dbb",
+      "byte_length": 148
+    },
+    "original.png": {
+      "sha256": "c94fff4b230d1d50ec75b73bcf80d90b789afde4e25f894f2422d344c414d86c",
+      "byte_length": 22106
+    },
+    "profile.json": {
+      "sha256": "6f58c1a7fc6d4f914be5dae19cc39cb9f43c11c4252a8bc3419b38ebf9c1bf01",
+      "byte_length": 143
+    },
+    "source-case.json": {
+      "sha256": "55ffc3369dee192f70ed0a8a1b969ddb627e523763e6a86bbe3c4ee325c44f56",
+      "byte_length": 497
+    },
+    "source-semantics.json": {
+      "sha256": "ba8216f83d8963782824b2c81b5b422f26055b2b0fd65eec8805351d6f550a7e",
+      "byte_length": 2378
+    }
+  }
+}
+```

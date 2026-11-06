@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "platform": "windows",
+  "argv": [
+    "/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "D:\\Noetome\\.artifacts\\b06v-t03-windows-python-final-01-20261106\\run-python.ps1"
+  ],
+  "exit_code": 1,
+  "wall_seconds": 487.39245584601304,
+  "tests_run": 438,
+  "test_seconds": 493.791,
+  "summary": "    ^^^^^^^^^^^\r\n  File \"D:\\Noetome\\.artifacts\\b06v-t03-windows-python-final-01-20261106\\repo\\scripts\\prepare_scan_obsidian.py\", line 88, in guard\r\n    info = prefix.lstat()\r\n           ^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\pathlib.py\", line 847, in lstat\r\n    return self.stat(follow_symlinks=False)\r\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\pathlib.py\", line 840, in stat\r\n    return os.stat(self, follow_symlinks=follow_symlinks)\r\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\nFileNotFoundError: [WinError 2] 系统找不到指定的文件。: 'D:\\\\Noetome\\\\.artifacts\\\\b06v-t03-windows-python-final-01-20261106\\\\repo\\\\doc\\\\validation\\\\assets\\\\B06-T01'\r\n\r\n======================================================================\r\nERROR: setUpClass (test_verify_process_flow.FlowTargetCliTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\Noetome\\.artifacts\\b06v-t03-windows-python-final-01-20261106\\repo\\tests\\test_verify_process_flow.py\", line 231, in setUpClass\r\n    assert r.returncode==0,r.stderr.decode(errors=\"replace\")\r\n           ^^^^^^^^^^^^^^^\r\nAssertionError: SOURCE_INVALID_RECORD：来源记录无效：导入的明确选取路径必须为非空绝对路径。没有修改数据库或快照。\r\n\r\n\r\n----------------------------------------------------------------------\r\nRan 438 tests in 493.791s\r\n\r\nFAILED (errors=11, skipped=7)\r\n",
+  "skips": [
+    "test_linked_original_receipt_is_refused (test_capture_scan_budget_originals.ScanBudgetCaptureTests.test_linked_original_receipt_is_refused) ... skipped 'symlink setup needs separate Windows privilege'",
+    "test_ancestor_links_rejected_before_source_read (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_ancestor_links_rejected_before_source_read) ... skipped 'ancestor symlinks require separate Windows reparse environment'",
+    "test_source_symlink_refused_without_reading_the_target (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_source_symlink_refused_without_reading_the_target) ... skipped 'symbolic links unavailable'",
+    "test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests.test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel) ... skipped 'host does not permit directory symlinks; native Windows reparse guards need separate capture'",
+    "test_ancestor_link_is_rejected_before_any_read_or_resolution (test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution) ... skipped 'directory symbolic links unavailable'",
+    "test_ancestor_link_refused_before_source_read (test_verify_scan_formula.ScanAuthorTests.test_ancestor_link_refused_before_source_read) ... skipped 'directory symbolic link unavailable on this host'",
+    "test_flat_inventory_rejects_linked_ancestor_before_listing (test_verify_scan_formula.ScanAuthorTests.test_flat_inventory_rejects_linked_ancestor_before_listing) ... skipped 'directory symbolic link unavailable on this host'"
+  ],
+  "source_count": 1916,
+  "snapshot_unchanged": true,
+  "worktree_unchanged": true,
+  "cli_unchanged": true,
+  "cli": {
+    "sha256": "e42c534d07f66662411fc52f22561510b79ba1c63f14f8b6f419db7c4e0e3274",
+    "byte_length": 25939968
+  },
+  "stdout": {
+    "sha256": "26c54f3035e0879a9070912d95370885483acd5b847a20b136c84631f256bbb1",
+    "byte_length": 498
+  },
+  "stderr": {
+    "sha256": "cac05384ed06d6c9be1445bb28bf325af457d758c542a15608ffddf021730f32",
+    "byte_length": 99657
+  },
+  "source_archive": {
+    "sha256": "4d1009f14982e6fe8fa362143a9eaae846c0157f8f53b38deae67635fc79735d",
+    "byte_length": 7251064
+  },
+  "real_model_calls": 0,
+  "scope": "Full Python on frozen final source; ordinary selected native PE; synthetic local HTTP and DPAPI test inputs, no real credentials or production Vault"
+}

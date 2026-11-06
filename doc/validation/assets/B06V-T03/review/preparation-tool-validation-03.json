@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "checks": [
+    {
+      "name": "focused-tests",
+      "argv": [
+        "/tmp/noetome-ui-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_prepare_visual_compatibility.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 25.959652423858643,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "29421ad04a591b5d57a7972374c4c2f66006b2e07190baca4e7916bfa2f1c595",
+        "byte_length": 118
+      }
+    },
+    {
+      "name": "table-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-block-check-bs0qg2oy/table.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.022872209548950195,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "flow-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-block-check-bs0qg2oy/flow.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.018790483474731445,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "formula-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-block-check-bs0qg2oy/formula.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.01835036277770996,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "scan-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-block-check-bs0qg2oy/scan.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.02012157440185547,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "image-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-block-check-bs0qg2oy/image.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.019964933395385742,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "format-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-block-check-bs0qg2oy/format.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.0206754207611084,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.019498109817504883,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    }
+  ],
+  "before": {
+    "scripts/prepare_visual_compatibility.py": {
+      "sha256": "1214ddd76216a2ac781f8b6e6dfb6a3dddd57c2ca9e2093506c2f2aa8624781b",
+      "byte_length": 48586
+    },
+    "tests/test_prepare_visual_compatibility.py": {
+      "sha256": "468ea073956695357acb21e9bf92bb2518d6af2b3137540b22102c38a2008af4",
+      "byte_length": 21948
+    }
+  },
+  "after": {
+    "scripts/prepare_visual_compatibility.py": {
+      "sha256": "1214ddd76216a2ac781f8b6e6dfb6a3dddd57c2ca9e2093506c2f2aa8624781b",
+      "byte_length": 48586
+    },
+    "tests/test_prepare_visual_compatibility.py": {
+      "sha256": "468ea073956695357acb21e9bf92bb2518d6af2b3137540b22102c38a2008af4",
+      "byte_length": 21948
+    }
+  },
+  "source_unchanged": true,
+  "prior_native_failure": {
+    "root": "/mnt/d/Noetome/.artifacts/b06v-t03-minimum-20261106-c/captures/hand-authored-format-probe-light",
+    "pins": {
+      "result.json": {
+        "sha256": "4e256ed8f7c4fc4817ef76ae883f4a349d4d18af18733301fc3092ab7dd6f624",
+        "byte_length": 13362
+      },
+      "note-0.html": {
+        "sha256": "caa474c2cb16dabcbcd9f780352e979dd5bf8cc745f71c069dbb95ca3d3f7eb0",
+        "byte_length": 9818
+      },
+      "click-1.png": {
+        "sha256": "f6451ef0e6f57af13271ef59fb286e96b5f25fa5866501daaae253647e077630",
+        "byte_length": 139185
+      }
+    },
+    "reason": "block paragraph rendered terminal BR+LF caused exact innerText visibility lookup to reject; native Properties/H2 real click passed"
+  },
+  "change": "only observed one terminal BR newline comparison; preserve original paragraph, exact cached block ID/source line, actual clicked fragment, unique target geometry/visibility, and failure DOM/screenshots; no corrective scroll/expected change",
+  "native_acceptance": "not established by focused checks; root/minimum agent separately recapture",
+  "models_requested": 0,
+  "apps_launched": 0,
+  "archive": "doc/validation/assets/B06V-T03/review/preparation-tool-validation-03-originals.zip",
+  "archive_pin": {
+    "sha256": "9f77eb44043a4ee93060045a9e6c9fbf349e12a05888a1c4430e4878b9ceb398",
+    "byte_length": 199554
+  }
+}

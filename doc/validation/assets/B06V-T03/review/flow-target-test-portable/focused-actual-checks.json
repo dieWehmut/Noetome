@@ -1,0 +1,116 @@
+{
+  "status": "passed",
+  "tests_run": 17,
+  "skipped": 0,
+  "failures": 0,
+  "errors": 0,
+  "commands": [
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b06v-t03-knowledge-final-build/noetome",
+        "project",
+        "init",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/project"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.008972814976004884,
+      "stdout": {
+        "sha256": "fef397b6689ee6f4197cb31b396b0e001f7d6ec93b6b41cdeaf93fcad31f9371",
+        "byte_length": 496
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b06v-t03-knowledge-final-build/noetome",
+        "source",
+        "import",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/project",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/source.txt"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.03245498301112093,
+      "stdout": {
+        "sha256": "2de0eea7ae7eb4e91450e1163cf7af3b24b5c665fd12a9d85bd4a8518be8c177",
+        "byte_length": 1720
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b06v-t03-knowledge-final-build/noetome",
+        "knowledge",
+        "process-review",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/project",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/case",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/review"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.03541665599914268,
+      "stdout": {
+        "sha256": "48b292abc8753da06efa44300e4198434d5898898d2afc9971177b43bc4b3d5a",
+        "byte_length": 9036
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b06v-t03-knowledge-final-build/noetome",
+        "knowledge",
+        "flow",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/project",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/case",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/review",
+        "/tmp/noetome-flow-target-221ibxy7/target.json",
+        "/tmp/noetome-flow-target-221ibxy7/Vault"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.08934178602066822,
+      "stdout": {
+        "sha256": "da8aa55b9101150c97f4b00d6cbf395d163e3d2835e9a3b20bb4c5ea80187910",
+        "byte_length": 23641
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "argv": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "/home/lyinn/project/Noetome/scripts/verify_process_flow.py",
+        "check",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/project",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/case",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/review",
+        "/tmp/noetome-flow-target-221ibxy7/inputs/profile.json",
+        "/tmp/noetome-flow-target-221ibxy7/Vault",
+        "/home/lyinn/project/Noetome/fixtures/visual-compatibility/source-originals/fixtures/process-flow-v1/expected-branch.json",
+        "--target-profile",
+        "/tmp/noetome-flow-target-221ibxy7/target.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.10937951799132861,
+      "stdout": {
+        "sha256": "8f0c58176e3821fa3ffabd08f0c4bdefe5d88f3081a72d7657e5fc4fdaf5fb4d",
+        "byte_length": 807
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    }
+  ],
+  "source_unchanged": true,
+  "real_model_calls": 0,
+  "paid_calls": 0
+}

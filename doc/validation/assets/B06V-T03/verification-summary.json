@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "producer": "bounded_visual_verification_summary",
+  "actual_checks_status": "passed",
+  "native": {
+    "platform": "Windows x64",
+    "minimum": "1.6.7",
+    "stable_at_verification": "1.15.0",
+    "cases": 16,
+    "product_cases": 15,
+    "hand_authored_probe_cases": 1,
+    "themes": 2,
+    "unique_combinations": 64
+  },
+  "windows_rust": {
+    "passed": 726,
+    "failed": 0,
+    "ignored": 0
+  },
+  "windows_python": {
+    "run": 441,
+    "passed": 434,
+    "skipped": 7,
+    "failed": 0,
+    "errors": 0
+  },
+  "linux_python": {
+    "run": 380,
+    "passed": 361,
+    "skipped": 19,
+    "failed": 0,
+    "errors": 0
+  },
+  "old_visual_audits": {
+    "table_cli": 125,
+    "flow_cli": 73,
+    "formula_cli": 33,
+    "image_cli": 55,
+    "scan_cli": 31,
+    "total_cli": 317
+  },
+  "current_final_pe": {
+    "primary_cli": 30,
+    "setup_cli": 15,
+    "total_cli": 45,
+    "independent_domain_rows": 27,
+    "meaningful_forgery_rejections": 7,
+    "additional_preliminary_schema_rejections": 2,
+    "native_byte_binding_cases": 13,
+    "native_markdown_byte_bindings": 16,
+    "synthetic_loopback_post": 4,
+    "compiled_rust_dependency_files": 1825,
+    "pe": {
+      "sha256": "e42c534d07f66662411fc52f22561510b79ba1c63f14f8b6f419db7c4e0e3274",
+      "byte_length": 25939968
+    }
+  },
+  "originals": [
+    {
+      "path": "doc/validation/assets/B06V-T03/matrix.json",
+      "sha256": "8934eeef639665d0dc7c2e652dc1590d38fe452a21d4c1e0bae59d0c03bc294d",
+      "byte_length": 254957
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/windows-rust/audit-result.json",
+      "sha256": "9787fd720e6eede9f3c265cfc17686364dc00be53faafc4cf9f6354b3eb44f79",
+      "byte_length": 2843
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/windows-python/final/result.json",
+      "sha256": "f7e35e13209a3b915223d079c00df431e1c0d0aa39fcba8d371b3a3baad2d37f",
+      "byte_length": 4461
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/linux-final-after-portable-test/full-python-receipt.json",
+      "sha256": "6b8348504f331d8f487d27b051cc88d6aa3bbae7447c0a357bf9150157ca6bc0",
+      "byte_length": 5514
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/linux-final/actual-checks.json",
+      "sha256": "dd8345fe2d8c3c9d823ceae95fca0465e25a1e8aa511b4ed334c22f7d9483a3b",
+      "byte_length": 21234
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/review/current-final-pe/actual-checks.json",
+      "sha256": "b2ae2b65dd682bf05ea5c957eefbde0913fef6132bb0784b858495f74ef0dc85",
+      "byte_length": 106074
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/review/final-native-format-overrides-audit.json",
+      "sha256": "3272590ea04cff4580a4306e2730e28bdabd59d7009bde960387f7e63b625fa4",
+      "byte_length": 49980
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/review/final-code-capability-audit-final.json",
+      "sha256": "708337ec751ee896ad21935a86fe39cbed50e25ba23cfd25685fec75f2529f5c",
+      "byte_length": 8164
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/review/final-doc-only-source-scope.json",
+      "sha256": "c97c0f39ad0b0186cca48fabecd0e474fb6f3766369e509f490a4cf62b4f3331",
+      "byte_length": 741
+    }
+  ],
+  "real_model_calls": 0,
+  "paid_calls": 0,
+  "real_ledger_access": false,
+  "scientific_quality": "not_run",
+  "published": false,
+  "confidence": "UnknownConfidence",
+  "not_run": [
+    "macOS/Linux Obsidian native rendering",
+    "scientific accuracy benchmark",
+    "general OCR or arbitrary formulas",
+    "production Vault publication or manual-edit protection",
+    "24-hour or large-project performance",
+    "full Linux Rust workspace host behavior"
+  ],
+  "scope": "Original failures remain; accepted exact combinations only; no production Vault or general OCR/scientific benchmark acceptance"
+}

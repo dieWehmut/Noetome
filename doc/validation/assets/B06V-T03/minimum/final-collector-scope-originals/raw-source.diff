@@ -1,0 +1,71 @@
+--- captured-b7
++++ final-b22
+@@ -489,6 +489,17 @@
+   for(let p=0;p<width*height;p++){rgba[p*4]=decoded[p*channels];rgba[p*4+1]=decoded[p*channels+1];rgba[p*4+2]=decoded[p*channels+2];rgba[p*4+3]=channels===4?decoded[p*channels+3]:255;}
+   return {width,height,rgba,sha256:compatibilityCrypto.createHash('sha256').update(rgba).digest('hex')};
+ };
++const compatibilityPixelDifference=(original,hidden)=>{
++  assert.equal(original.width,hidden.width);assert.equal(original.height,hidden.height);
++  let left=original.width,top=original.height,right=-1,bottom=-1,count=0;
++  for(let p=0;p<original.width*original.height;p++){
++    if(original.rgba[p*4]===hidden.rgba[p*4] && original.rgba[p*4+1]===hidden.rgba[p*4+1] &&
++      original.rgba[p*4+2]===hidden.rgba[p*4+2] && original.rgba[p*4+3]===hidden.rgba[p*4+3])continue;
++    const x=p%original.width,y=Math.floor(p/original.width);left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x);bottom=Math.max(bottom,y);count++;
++  }
++  assert(count>0,'the exact native SVG text changes actual auxiliary rendered pixels');
++  return {x:left,y:top,width:right-left+1,height:bottom-top+1,changedPixels:count};
++};
+ """
+ 
+ 
+@@ -555,6 +566,39 @@
+ """
+ 
+ 
++INTRINSIC_INK = r"""
++        if(native.pixelMethod && semantic.source){
++          assert.equal(geometry.root.rect.x,0);assert.equal(geometry.root.rect.y,0);
++          assert.equal(geometry.root.rect.width,native.naturalWidth);assert.equal(geometry.root.rect.height,native.naturalHeight);
++          await auxiliary.evaluate(()=>document.fonts.ready);
++          const clip={x:0,y:0,width:native.naturalWidth,height:native.naturalHeight};
++          const fullPng=await auxiliary.screenshot({clip,scale:'css',timeout:60000}),full=compatibilityPng(fullPng);
++          assert.equal(full.width,native.naturalWidth);assert.equal(full.height,native.naturalHeight);
++          const fullFile='note-'+index+'-svg-intrinsic-all-labels.png';fs.writeFileSync(path.join(work,fullFile),fullPng,{flag:'wx'});
++          record.svgEvidence.intrinsicInk={fullFile,width:full.width,height:full.height,fullRgbaSha256:full.sha256,labels:[],method:'original full pinned SVG at intrinsic geometry; hide only one exact text element in the owned auxiliary; complete screenshot RGBA differential'};
++          for(const [number,label] of geometry.renderedLabels.entries()){
++            const before=await auxiliary.evaluate(id=>{const e=document.getElementById(id),s=getComputedStyle(e);return {text:e.textContent,style:e.getAttribute('style'),font:s.font,fontFamily:s.fontFamily,fontSize:s.fontSize,fontWeight:s.fontWeight,letterSpacing:s.letterSpacing,textLength:e.getComputedTextLength()};},label.id);
++            assert.equal(before.text,label.text);
++            let hiddenPng;
++            try {
++              await auxiliary.evaluate(id=>document.getElementById(id).style.visibility='hidden',label.id);
++              hiddenPng=await auxiliary.screenshot({clip,scale:'css',timeout:60000});
++            } finally {
++              await auxiliary.evaluate(({id,style})=>{const e=document.getElementById(id);if(style===null)e.removeAttribute('style');else e.setAttribute('style',style);},{id:label.id,style:before.style});
++            }
++            const hidden=compatibilityPng(hiddenPng),difference=compatibilityPixelDifference(full,hidden),hiddenFile='note-'+index+'-svg-hide-label-'+number+'.png';
++            fs.writeFileSync(path.join(work,hiddenFile),hiddenPng,{flag:'wx'});
++            const evidence={id:label.id,text:before.text,computedFont:before,nominalBbox:label.bbox,bbox:{x:difference.x,y:difference.y,width:difference.width,height:difference.height},changedPixels:difference.changedPixels,
++              fullFile,hiddenFile,hiddenRgbaSha256:hidden.sha256,method:'actual full-versus-one-hidden-text RGBA pixels in the same intrinsic SVG document; original label restored'};
++            geometry.renderedElements.find(e=>e.id===label.id).actualInk=evidence;label.actualInk=evidence;record.svgEvidence.intrinsicInk.labels.push(evidence);
++          }
++          const restoredPng=await auxiliary.screenshot({clip,scale:'css',timeout:60000}),restored=compatibilityPng(restoredPng),restoredFile='note-'+index+'-svg-intrinsic-restored.png';
++          fs.writeFileSync(path.join(work,restoredFile),restoredPng,{flag:'wx'});record.svgEvidence.intrinsicInk.restoredFile=restoredFile;record.svgEvidence.intrinsicInk.restoredRgbaSha256=restored.sha256;
++          assert.equal(restored.sha256,full.sha256,'every original auxiliary SVG text is restored to exactly the original full RGBA pixels');
++        }
++"""
++
++
+ def screenshot_image_collector(text):
+     start = "      const native = await obs.evaluate(file => {"
+     end = "      // Electron CDP rejects Target.createTarget."
+@@ -564,6 +608,10 @@
+     text = text[:a] + "      let native,nativeDecodedPng,nativePreviewScreenshot;\n      if(input.spec.runtime.app_version==='1.15.0'){\n" + NATIVE_SCREENSHOT + "      }else{\n" + legacy + "      }\n" + text[b:]
+     text = replace_once(text, "        const auxiliaryRgbaSha256 = createHash('sha256').update(Buffer.from(rgba)).digest('hex');",
+                         "        let auxiliaryRgbaSha256 = createHash('sha256').update(Buffer.from(rgba)).digest('hex');" + AUXILIARY_SCREENSHOT)
++    text = replace_once(text, "        assert.deepEqual(geometry.activeElements, [], 'bounded SVG has no active or external resources');",
++                        "        assert.deepEqual(geometry.activeElements, [], 'bounded SVG has no active or external resources');" + INTRINSIC_INK)
++    text = replace_once(text, "    if(bounds) assert(e.bbox.x>=bounds.x-1&&e.bbox.y>=bounds.y-1&&e.bbox.x+e.bbox.width<=bounds.x+bounds.width+1&&e.bbox.y+e.bbox.height<=bounds.y+bounds.height+1,'actual label lies in its source-associated shape/legend within one nominal font-metric pixel');",
++                        "    const measuredBounds=e.actualInk?.bbox??e.bbox;\n    if(bounds) assert(measuredBounds.x>=bounds.x-1&&measuredBounds.y>=bounds.y-1&&measuredBounds.x+measuredBounds.width<=bounds.x+bounds.width+1&&measuredBounds.y+measuredBounds.height<=bounds.y+bounds.height+1,'actual label lies in its source-associated shape/legend within one nominal font-metric pixel');")
+     text = replace_once(text, "          native:nativeReceipt, auxiliaryRgbaSha256, geometry, semanticExpected:semantic,",
+                         "          ...record.svgEvidence,native:nativeReceipt, auxiliaryRgbaSha256, geometry, semanticExpected:semantic,")
+     text = replace_once(text, "method:'native Obsidian external SVG img decoding plus exact-byte auxiliary same-Chromium rendered bbox; equal decoded RGBA hashes',",

@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "scope": "Independent complete fixed ZIP/member/raw-stream/build-source/display-byte and final test-source readback; no subprocess CLI, app, model or mutation executed by this auditor",
+  "current_capability": {
+    "status": "passed",
+    "archives": [
+      {
+        "archive": "doc/validation/assets/B06V-T03/review/current-final-pe/source-originals.zip",
+        "pin": {
+          "sha256": "0a1e2782df12a5d9cd9a91fc76e4d2f65c01c68889da116da6ebc5478a3792b6",
+          "byte_length": 14826159
+        },
+        "crc_sha_length_members": 1946
+      },
+      {
+        "archive": "doc/validation/assets/B06V-T03/review/current-final-pe/native-originals.zip",
+        "pin": {
+          "sha256": "764629cf2b6e5cde1dff2cee1778493e3e89f8163aa72e2267e87ef308bb6bbd",
+          "byte_length": 1756810
+        },
+        "crc_sha_length_members": 813
+      }
+    ],
+    "result_pin": {
+      "sha256": "b2ae2b65dd682bf05ea5c957eefbde0913fef6132bb0784b858495f74ef0dc85",
+      "byte_length": 106074
+    },
+    "runtime_source_files": 1928,
+    "current_independent_source_files_equal": true,
+    "generated_python_cache_scope": "all archived original cache bytes verified against the frozen runtime input; warmed workspace __pycache__ is excluded from current source equality",
+    "compiled_source_files": 1915,
+    "compiled_rust_dependencies": 1825,
+    "actual_cli_calls": 45,
+    "primary_calls": 30,
+    "additional_setup_calls": 15,
+    "domain_rows": 27,
+    "bound_cases": 13,
+    "bound_files": 40,
+    "bound_markdown": 16,
+    "substantive_rejections": [
+      {
+        "name": "formula-negative",
+        "reason": "actual display meaning including sign/scripts/grouping: length"
+      },
+      {
+        "name": "flow-condition-loss",
+        "reason": "actual Mermaid node meaning/3: value"
+      },
+      {
+        "name": "flow-renderer-forgery",
+        "reason": "flow issue_codes: length"
+      },
+      {
+        "name": "image-arrowhead-loss",
+        "reason": "complete actual element/label/arrow/legend denominator"
+      },
+      {
+        "name": "image-invented-curve-data",
+        "reason": "no fake redraw/curve/data or unowned output: value"
+      },
+      {
+        "name": "formula-target-forgery-semantic",
+        "reason": "source-grounded expression outcome/representation: value"
+      },
+      {
+        "name": "image-target-forgery-semantic",
+        "reason": "source-grounded image outcome/representation: value"
+      }
+    ],
+    "preliminary_structure_rejections": 2,
+    "synthetic_post_calls": 4,
+    "scan_original_responses_byte_equal": 4,
+    "actual_pe": {
+      "sha256": "e42c534d07f66662411fc52f22561510b79ba1c63f14f8b6f419db7c4e0e3274",
+      "byte_length": 25939968
+    },
+    "old_elf_build_source_gap": "closed for the final replacement checks; old records and all harness failures retained"
+  },
+  "linux_final_python": {
+    "status": "passed",
+    "archives": [
+      {
+        "archive": "doc/validation/assets/B06V-T03/linux-final-after-portable-test/source-originals.zip",
+        "pin": {
+          "sha256": "6604b9dca47d560d52cfaa820824187bf6cece3295f49e0a7e26a25dc2843b28",
+          "byte_length": 71338036
+        },
+        "crc_sha_length_members": 1979
+      },
+      {
+        "archive": "doc/validation/assets/B06V-T03/linux-final-after-portable-test/final-run-originals.zip",
+        "pin": {
+          "sha256": "752e141671396c80245630890e920e350284ebac79b447f2ae07e7b7e79357d1",
+          "byte_length": 59368398
+        },
+        "crc_sha_length_members": 13131
+      }
+    ],
+    "source_files": 1973,
+    "source_before_after_equal": true,
+    "worktree_related_before_after_equal": true,
+    "actual_run": 380,
+    "actual_ok_lines": 361,
+    "actual_skip_lines": 19,
+    "actual_exit_code": 0,
+    "current_document_only_differences": [
+      "doc/technical/VISUAL_COMPATIBILITY.md"
+    ],
+    "final_prepare_pin": {
+      "sha256": "9c28fd119634c14d2c28d24451799175fe3fa9aceaeae10566f000e52767c83f",
+      "byte_length": 68922
+    },
+    "final_flow_test_pin": {
+      "sha256": "42b63646f045fd15c75c43cbbb48a58f7b6394b4665fcde92be95e7e4c6e54c5",
+      "byte_length": 31744
+    },
+    "elf_alias_pins": {
+      "target/debug/noetome": {
+        "sha256": "038f106a483945b31594009598decec882bc19d53c73ffc1b462c778b793bfe4",
+        "byte_length": 151148440
+      },
+      "target/debug/noetome.exe": {
+        "sha256": "038f106a483945b31594009598decec882bc19d53c73ffc1b462c778b793bfe4",
+        "byte_length": 151148440
+      }
+    },
+    "full_linux_rust": "not_run"
+  },
+  "windows_final_python": "final-windows-python-source-readback.json",
+  "final_native64": "final-native-format-overrides-audit.json",
+  "models_requested": 0,
+  "scientific_quality": "not_run",
+  "published": false
+}

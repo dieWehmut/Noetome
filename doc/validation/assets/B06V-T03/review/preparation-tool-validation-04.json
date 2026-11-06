@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "checks": [
+    {
+      "name": "focused-tests",
+      "argv": [
+        "/tmp/noetome-ui-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_prepare_visual_compatibility.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 26.63948106765747,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e2fb99ac2f453e12e00af065d6eaf6e1523cff783e629b61e9db531cebd942d4",
+        "byte_length": 121
+      }
+    },
+    {
+      "name": "table-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-current-screenshot-check-bqu0nhzi/table.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.02077770233154297,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "flow-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-current-screenshot-check-bqu0nhzi/flow.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.019942283630371094,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "formula-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-current-screenshot-check-bqu0nhzi/formula.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.01649022102355957,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "scan-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-current-screenshot-check-bqu0nhzi/scan.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.01759815216064453,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "image-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-current-screenshot-check-bqu0nhzi/image.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.020309925079345703,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "format-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-current-screenshot-check-bqu0nhzi/format.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.019966840744018555,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.017482519149780273,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    }
+  ],
+  "before": {
+    "scripts/prepare_visual_compatibility.py": {
+      "sha256": "b22fc9c0f91812fac99dd0087291c67cc98249f00f4da068271bdd2c0f551a49",
+      "byte_length": 68894
+    },
+    "tests/test_prepare_visual_compatibility.py": {
+      "sha256": "324fa89215b147da96284f3e6d8a39cadc7ebceeef0bf10a25003449d2e1c796",
+      "byte_length": 26554
+    }
+  },
+  "after": {
+    "scripts/prepare_visual_compatibility.py": {
+      "sha256": "b22fc9c0f91812fac99dd0087291c67cc98249f00f4da068271bdd2c0f551a49",
+      "byte_length": 68894
+    },
+    "tests/test_prepare_visual_compatibility.py": {
+      "sha256": "324fa89215b147da96284f3e6d8a39cadc7ebceeef0bf10a25003449d2e1c796",
+      "byte_length": 26554
+    }
+  },
+  "unchanged": true,
+  "prior_failures": [
+    {
+      "name": "tainted-native",
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-current-matrix-round-03-20261106/capture-image-signed-arrows-light/result.json",
+      "sha256": "d79c410b8a0bf71a7fde1a305b6fcbbb8b1949418d0854d54369eaff29539535",
+      "byte_length": 418492
+    },
+    {
+      "name": "nominal-bbox",
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-current-matrix-round-04-20261106/capture-image-signed-arrows-light/result.json",
+      "sha256": "17b9e415d62cb639ba0f794a0ddad26f64877619535a232f49ac861ff4ba8982",
+      "byte_length": 473986
+    },
+    {
+      "name": "current-property-child",
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-current-matrix-round-03-20261106/capture-hand-authored-format-probe-light/result.json",
+      "sha256": "d0fdd086ae4e0adfcd77e38fa2ce419bb3109f88142360e9cd5f08fb14f9f940",
+      "byte_length": 14308
+    }
+  ],
+  "changes": "current native app-protocol SVG screenshot matched to same-instance pinned auxiliary complete PNG RGBA; source geometry at intrinsic dimensions, one-hidden-text screenshot differential actual ink bounds with full restoration, original nominal bbox preserved and old 1px limit unchanged; current real child Properties type and visible UI values; corrected diagnostic fixture separate freeze",
+  "native_acceptance": "pending actual root SVG recapture; these algorithm/parser/derivation tests are not native compatibility acceptance",
+  "apps_launched": 0,
+  "models_requested": 0,
+  "archive": "doc/validation/assets/B06V-T03/review/preparation-tool-validation-04-originals.zip",
+  "archive_pin": {
+    "sha256": "cdf149aef7908fa00f06ecbc9ef929aa4c8af097a691254142fffbed2e528ab3",
+    "byte_length": 136540
+  }
+}

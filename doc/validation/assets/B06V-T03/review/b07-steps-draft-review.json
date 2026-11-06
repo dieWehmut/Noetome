@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "role": "Current B06V-T03 read-only entry assessment, not an effective B07 plan or task transition",
+  "status": "aligned_with_three_scope_clarifications",
+  "reviewed_draft": {
+    "path": "/home/lyinn/project/Noetome/.artifacts/b06v-t03-b07-steps-draft.md",
+    "sha256": "3bbb1746b67eef19e87829252c3b011db51aa6354660ffb610fdf894184a825a",
+    "byte_length": 7065
+  },
+  "preserved_original": {
+    "path": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/review/b07-steps-draft-reviewed-original.txt",
+    "sha256": "3bbb1746b67eef19e87829252c3b011db51aa6354660ffb610fdf894184a825a",
+    "byte_length": 7065
+  },
+  "sources": {
+    "doc/requirements/PRD.md": {
+      "sha256": "d1d54e8d1f76073b3f0540f23de5204230b9df3d99e9c7f35b819a1c0db654b2",
+      "byte_length": 78403
+    },
+    "doc/requirements/DECISIONS.md": {
+      "sha256": "cebb791ed065d321eb8d98c9091e0d7a90f91acefe54d626514be712712be15e",
+      "byte_length": 8139
+    },
+    "doc/execution/ROADMAP.md": {
+      "sha256": "a08c2ce76d5afa22a573ec01969909a271a094f9b7b7570c938ba3738cb0111f",
+      "byte_length": 8946
+    },
+    "doc/technical/DATA_CONTRACTS.md": {
+      "sha256": "791b37f59f3d55f3dbe5e5e7c29136cef854429ba2e10a7fec8dfd4a822ac09f",
+      "byte_length": 52792
+    },
+    "doc/standards/TESTING.md": {
+      "sha256": "621db1d8466c368b5c5cbd3e1f8f6548031211c58c8debf3e364bea0c2b1958c",
+      "byte_length": 41989
+    },
+    "doc/standards/WORKFLOW.md": {
+      "sha256": "1f87a96a5ce53905ad20441651435bf779aad0ca7d803d604da11310d863d021",
+      "byte_length": 4672
+    },
+    "crates/noetome-cli/src/fixture_compile.rs": {
+      "sha256": "bfeed5d868c7378164a7bd5e80890d4c1ea634f6c2dd5328915ff4b96a96c50c",
+      "byte_length": 39280
+    },
+    "crates/noetome-cli/src/compile_store.rs": {
+      "sha256": "a1a67f747a220e67c0b946e6e62158d87fbbd792891f928ed1a4bd11e8d41382",
+      "byte_length": 81464
+    },
+    "doc/validation/assets/B06V-T03/review/b07-entry-assessment.md": {
+      "sha256": "395f68dd5e1d322059250ad124bcd9b861fdf73f8a4de5b30e9f24da39f76528",
+      "byte_length": 10322
+    }
+  },
+  "dependency_order": "B06V-T03 acceptance/complete/commit/push/remote verification -> B07-T01 -> B07-T02 -> B07-T03; creating definitions/render/batch does not start any B07 product work",
+  "findings": [
+    {
+      "card": "B07-T01",
+      "topic": "Deterministic comparison domain",
+      "draft_text": "最终文件/ID与从头确定性执行一致",
+      "evidence": "fixture_compile.rs creates fresh run_id/release_id UUIDs and started_at; reports include run/ release IDs and timestamps. DATA_CONTRACTS says production IDs are generated and persisted, and fixture entity IDs are fixed.",
+      "clarification": "Compare frozen normative output files and stable fixture/knowledge IDs; preserve the same persisted Run/Release identity during recovery. New independent baseline runs may have distinct Run/Release/attempt IDs and audit times, which must be fully retained and checked for ownership rather than normalized away without a declared rule. Also freeze the finite graph and specify changed-dependent units vs unaffected reusable units."
+    },
+    {
+      "card": "B07-T02",
+      "topic": "Budget levels and attempt settlement identity",
+      "draft_text": "坏单元耗尽预算后可定位，不阻断独立单元",
+      "evidence": "FR-36 isolates bad work, while FR-38 requires stopping new requests at shared budget cap. Same response body bytes can belong to two different paid attempts.",
+      "clarification": "Define WorkUnit retry allocation and shared Run/global commitment budget separately. An exhausted unit may not block independent units while shared budget remains; shared budget exhaustion must prevent every new request. Settlement idempotency is bound to persisted Run/WorkUnit/request-attempt identity, not response content SHA alone; two distinct attempts returning identical bytes must both be accounted for."
+    },
+    {
+      "card": "B07-T03",
+      "topic": "Initial managed baseline and finite operation scope",
+      "draft_text": "没有旧基准的Vault仍只读",
+      "evidence": "FR-34 applies default read-only to an existing Vault without an old release baseline; D09 permits only new test roots before manual protection. Publishing needs a trusted previous baseline.",
+      "clarification": "Retain read-only behavior for existing or unknown Vaults with no baseline. State how the brand-new owned test collection creates its first baseline or explicitly imports a verified ordinary fixture release, with exact content/owner/source binding. Freeze a finite managed-file inventory, dependency set, and supported add/edit/move/delete/rollback cases; unfamiliar files and operations remain outside management."
+    }
+  ],
+  "requirements_not_fully_closed": [
+    "Formal independent scientific benchmark of 200 atoms/98% and critical atoms100%",
+    "Production Vault takeover and broad manual-edit protection",
+    "24h mixed workload,1000pages/10000atoms,3000notes/200manualchanges",
+    "NFR-12 P95 2s and NFR-13 2s stop-new-scheduling timing until actually measured",
+    "Sleep/network-switch recovery, general multi-source knowledge generation, arbitrary OCR and complete desktop approval GUI"
+  ],
+  "mutations": "Only this review evidence and verbatim draft copy written; no draft, product code, official plan or ledger modified"
+}

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/minimum/audit_minimum.py", line 254, in <module>
+    main()
+  File "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/minimum/audit_minimum.py", line 232, in main
+    records = [selected_record(case, theme, module, runtime, archived_native, installed_members) for case in cases for theme in ('light', 'dark')]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/minimum/audit_minimum.py", line 191, in selected_record
+    expected_attachments = {target for note in spec.get('notes', []) for target in note.get('click_attachments', [])}
+                                                                                   ^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'

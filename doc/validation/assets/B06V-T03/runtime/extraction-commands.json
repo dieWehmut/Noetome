@@ -1,0 +1,93 @@
+[
+  {
+    "name": "installer-list",
+    "command": [
+      "/mnt/c/Program Files/7-Zip/7z.exe",
+      "l",
+      "-slt",
+      "D:\\Noetome\\.artifacts\\b06v-t03-runtime-20261106\\Obsidian-1.15.0.exe"
+    ],
+    "started_at": "2026-11-06T11:38:30.159532+00:00",
+    "completed_at": "2026-11-06T11:38:30.284882+00:00",
+    "exit_code": 0,
+    "stdout": {
+      "file": "installer-list.stdout.bin",
+      "sha256": "e06d16069f5cf8713d92402859ebc0a6a4a6e153deb0c44e242779d839587077",
+      "byte_length": 3976
+    },
+    "stderr": {
+      "file": "installer-list.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    }
+  },
+  {
+    "name": "extract-x64-payload",
+    "command": [
+      "/mnt/c/Program Files/7-Zip/7z.exe",
+      "x",
+      "-y",
+      "-oD:\\Noetome\\.artifacts\\b06v-t03-runtime-20261106\\installer-payload",
+      "D:\\Noetome\\.artifacts\\b06v-t03-runtime-20261106\\Obsidian-1.15.0.exe",
+      "$PLUGINSDIR\\app-64.7z"
+    ],
+    "started_at": "2026-11-06T11:38:30.284967+00:00",
+    "completed_at": "2026-11-06T11:38:30.472709+00:00",
+    "exit_code": 0,
+    "stdout": {
+      "file": "extract-x64-payload.stdout.bin",
+      "sha256": "049724a03b4153bf2608ebca656efa431ed62eb52e659f99300d87743fb092ab",
+      "byte_length": 1719
+    },
+    "stderr": {
+      "file": "extract-x64-payload.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    }
+  },
+  {
+    "name": "x64-payload-list",
+    "command": [
+      "/mnt/c/Program Files/7-Zip/7z.exe",
+      "l",
+      "-slt",
+      "D:\\Noetome\\.artifacts\\b06v-t03-runtime-20261106\\installer-payload\\$PLUGINSDIR\\app-64.7z"
+    ],
+    "started_at": "2026-11-06T11:38:30.472805+00:00",
+    "completed_at": "2026-11-06T11:38:30.506861+00:00",
+    "exit_code": 0,
+    "stdout": {
+      "file": "x64-payload-list.stdout.bin",
+      "sha256": "a151ebe097cfd6a383bcec041ca0dc85fc79282f6c81299e630132e95646f528",
+      "byte_length": 14526
+    },
+    "stderr": {
+      "file": "x64-payload-list.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    }
+  },
+  {
+    "name": "extract-x64-runtime",
+    "command": [
+      "/mnt/c/Program Files/7-Zip/7z.exe",
+      "x",
+      "-y",
+      "-oD:\\Noetome\\.artifacts\\b06v-t03-runtime-20261106\\win-x64",
+      "D:\\Noetome\\.artifacts\\b06v-t03-runtime-20261106\\installer-payload\\$PLUGINSDIR\\app-64.7z"
+    ],
+    "started_at": "2026-11-06T11:38:30.506930+00:00",
+    "completed_at": "2026-11-06T11:38:31.744349+00:00",
+    "exit_code": 0,
+    "stdout": {
+      "file": "extract-x64-runtime.stdout.bin",
+      "sha256": "154b80d46b89b60666518ed4611cc6ba703d65a72918ca6d4d9576bc8661fbe1",
+      "byte_length": 551
+    },
+    "stderr": {
+      "file": "extract-x64-runtime.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    }
+  }
+]

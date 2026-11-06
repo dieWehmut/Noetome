@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_formula",
+  "scope": "selected_formula_fidelity_v1",
+  "request_id": "92e1a481-4b5e-4f73-bb86-726fc02295c5",
+  "case": {
+    "schema_version": 1,
+    "purpose": "formula_fidelity",
+    "selection_id": "native_relational",
+    "title": "公式保真样例 native_relational",
+    "source_kind": "tex",
+    "tex": {
+      "file": "original.tex",
+      "sha256": "55b84085a1bea5fee1a82ce64ea445a6e06c9a96e93c017d1318338924281823"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "433a352a60fb55564a99308a1626706723aaf5a81ecf0b8cf36fd2df9fa6b118"
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "d9661ee17a8985a627c1906093273ac4de8be5322d9c6df97889152c1aff0919",
+      "page": 1,
+      "canvas": [
+        1000,
+        600
+      ],
+      "bounds": [
+        100,
+        120,
+        800,
+        240
+      ],
+      "legibility": "clear"
+    },
+    "data_available": false
+  },
+  "semantics": {
+    "schema_version": 1,
+    "expression": "x_{i}^{2} \\le \\frac{a}{b}",
+    "symbols": [
+      {
+        "symbol": "x",
+        "definition": "test coordinate",
+        "unit": "mm"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "a",
+        "definition": "positive scaling constant",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "b",
+        "definition": "positive nonzero divisor",
+        "unit": "s^2"
+      }
+    ],
+    "conditions": [
+      "a > 0 and b > 0",
+      "This is a fictional engineering example, not a scientific claim."
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "decision": {
+    "representation": "native_math",
+    "fallback_reasons": [],
+    "compatibility_rewrites": [],
+    "issue_codes": []
+  },
+  "tokens": [
+    "x",
+    "_",
+    "{",
+    "i",
+    "}",
+    "^",
+    "{",
+    "2",
+    "}",
+    "\\le",
+    "\\frac",
+    "{",
+    "a",
+    "}",
+    "{",
+    "b",
+    "}"
+  ],
+  "compiled_expression": "x_{i}^{2} \\le \\frac{a}{b}"
+}

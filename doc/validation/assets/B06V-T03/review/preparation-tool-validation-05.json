@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "checks": [
+    {
+      "name": "focused-tests",
+      "argv": [
+        "/tmp/noetome-ui-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_prepare_visual_compatibility.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 34.66628420300549,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "54512b8b10a4e68c1574421ab120d1780fe5390d4f13ff80beb159e777dd350e",
+        "byte_length": 121
+      }
+    },
+    {
+      "name": "table-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-identity-final-check-vtax21t8/table.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.024358846014365554,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "flow-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-identity-final-check-vtax21t8/flow.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.023136112984502688,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "formula-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-identity-final-check-vtax21t8/formula.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.025047283008461818,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "scan-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-identity-final-check-vtax21t8/scan.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.0258904290094506,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "image-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-identity-final-check-vtax21t8/image.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.030976128997281194,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "format-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-format-identity-final-check-vtax21t8/format.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.022030214982805774,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.022079101006966084,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    }
+  ],
+  "before": {
+    "scripts/prepare_visual_compatibility.py": {
+      "sha256": "9c28fd119634c14d2c28d24451799175fe3fa9aceaeae10566f000e52767c83f",
+      "byte_length": 68922
+    },
+    "tests/test_prepare_visual_compatibility.py": {
+      "sha256": "324fa89215b147da96284f3e6d8a39cadc7ebceeef0bf10a25003449d2e1c796",
+      "byte_length": 26554
+    }
+  },
+  "after": {
+    "scripts/prepare_visual_compatibility.py": {
+      "sha256": "9c28fd119634c14d2c28d24451799175fe3fa9aceaeae10566f000e52767c83f",
+      "byte_length": 68922
+    },
+    "tests/test_prepare_visual_compatibility.py": {
+      "sha256": "324fa89215b147da96284f3e6d8a39cadc7ebceeef0bf10a25003449d2e1c796",
+      "byte_length": 26554
+    }
+  },
+  "unchanged": true,
+  "prior_b22_source": {
+    "sha256": "b22fc9c0f91812fac99dd0087291c67cc98249f00f4da068271bdd2c0f551a49",
+    "byte_length": 68894
+  },
+  "change": "one line serializes already observed and asserted format profile/Vault/plugins identity; all ownership and semantic assertions byte-preserved",
+  "exact_single_line_delta": true,
+  "apps_launched": 0,
+  "models_requested": 0,
+  "ordinary_cli_runs": 0,
+  "native_acceptance": "pending four new format captures; all previous originals retained",
+  "archive": "doc/validation/assets/B06V-T03/review/preparation-tool-validation-05-originals.zip",
+  "archive_pin": {
+    "sha256": "76c73a13ea001517e71962e177450587c3a1c646caa9588510eaca4265d9a46a",
+    "byte_length": 103705
+  }
+}

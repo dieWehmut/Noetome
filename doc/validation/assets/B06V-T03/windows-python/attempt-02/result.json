@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "platform": "windows",
+  "argv": [
+    "/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "D:\\Noetome\\.artifacts\\b06v-t03-windows-python-final-02-20261106\\run-python.ps1"
+  ],
+  "exit_code": 1,
+  "wall_seconds": 480.2018310180283,
+  "tests_run": 438,
+  "test_seconds": 482.856,
+  "summary": "okens) ... ok\r\ntest_scan_changed_negative_and_subscript_remain_semantic_mismatch (test_visual_capability_registry.IndependentCapabilityTests.test_scan_changed_negative_and_subscript_remain_semantic_mismatch) ... ok\r\ntest_scan_uses_same_pairs_and_never_fills_unknown_sign_or_subscript (test_visual_capability_registry.IndependentCapabilityTests.test_scan_uses_same_pairs_and_never_fills_unknown_sign_or_subscript) ... ok\r\ntest_separately_measured_current_targets_keep_exact_engine_profiles (test_visual_capability_registry.IndependentCapabilityTests.test_separately_measured_current_targets_keep_exact_engine_profiles) ... ok\r\ntest_svg_unknown_target_and_flag_keep_separate_diagnostics (test_visual_capability_registry.IndependentCapabilityTests.test_svg_unknown_target_and_flag_keep_separate_diagnostics) ... ok\r\n\r\n======================================================================\r\nERROR: setUpClass (test_verify_process_flow.FlowTargetCliTests)\r\n----------------------------------------------------------------------\r\nTraceback (most recent call last):\r\n  File \"D:\\Noetome\\.artifacts\\b06v-t03-windows-python-final-02-20261106\\repo\\tests\\test_verify_process_flow.py\", line 231, in setUpClass\r\n    assert r.returncode==0,r.stderr.decode(errors=\"replace\")\r\n           ^^^^^^^^^^^^^^^\r\nAssertionError: SOURCE_INVALID_RECORD：来源记录无效：导入的明确选取路径必须为非空绝对路径。没有修改数据库或快照。\r\n\r\n\r\n----------------------------------------------------------------------\r\nRan 438 tests in 482.856s\r\n\r\nFAILED (errors=1, skipped=7)\r\n",
+  "skips": [
+    "test_linked_original_receipt_is_refused (test_capture_scan_budget_originals.ScanBudgetCaptureTests.test_linked_original_receipt_is_refused) ... skipped 'symlink setup needs separate Windows privilege'",
+    "test_ancestor_links_rejected_before_source_read (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_ancestor_links_rejected_before_source_read) ... skipped 'ancestor symlinks require separate Windows reparse environment'",
+    "test_source_symlink_refused_without_reading_the_target (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_source_symlink_refused_without_reading_the_target) ... skipped 'symbolic links unavailable'",
+    "test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests.test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel) ... skipped 'host does not permit directory symlinks; native Windows reparse guards need separate capture'",
+    "test_ancestor_link_is_rejected_before_any_read_or_resolution (test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution) ... skipped 'directory symbolic links unavailable'",
+    "test_ancestor_link_refused_before_source_read (test_verify_scan_formula.ScanAuthorTests.test_ancestor_link_refused_before_source_read) ... skipped 'directory symbolic link unavailable on this host'",
+    "test_flat_inventory_rejects_linked_ancestor_before_listing (test_verify_scan_formula.ScanAuthorTests.test_flat_inventory_rejects_linked_ancestor_before_listing) ... skipped 'directory symbolic link unavailable on this host'"
+  ],
+  "source_count": 1971,
+  "snapshot_unchanged": true,
+  "worktree_unchanged": false,
+  "cli_unchanged": true,
+  "cli": {
+    "sha256": "e42c534d07f66662411fc52f22561510b79ba1c63f14f8b6f419db7c4e0e3274",
+    "byte_length": 25939968
+  },
+  "stdout": {
+    "sha256": "51e64433842184aff652dfa89215e41799fa9ac90bda134d076dcfb9de0dbd2f",
+    "byte_length": 498
+  },
+  "stderr": {
+    "sha256": "955af76f467236ade56580597316ffabd843daf26d4ee5001a22e120bbbfa06b",
+    "byte_length": 78055
+  },
+  "source_archive": {
+    "sha256": "4ed5e2b6b597e67bb925d8ac5488706eb6d1d528faaff470b59ef8cf528c0b36",
+    "byte_length": 7687963
+  },
+  "real_model_calls": 0,
+  "scope": "Full Python on frozen final source; ordinary selected native PE; synthetic local HTTP and DPAPI test inputs, no real credentials or production Vault"
+}

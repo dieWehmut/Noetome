@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "status": "passed_with_seven_explicit_host_permission_skips",
+  "scope": "Read-only independent audit of actual full Windows Python attempt03; raw counts and source/PE/runtime/ZIP validated, no task or product state changes",
+  "base": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106",
+  "tests": {
+    "run": 441,
+    "ok": 434,
+    "skip": 7,
+    "error": 0,
+    "fail": 0,
+    "native_exit_code": 0,
+    "native_stderr_summary": "OK (skipped=7)",
+    "native_unittest_seconds": 484.505,
+    "driver_wall_seconds": 480.673187376,
+    "flow_target_cli_actual_passed_methods": [
+      "test_explicit_target_recomputes_fallback_and_default_keeps_author_decision (test_verify_process_flow.FlowTargetCliTests.test_explicit_target_recomputes_fallback_and_default_keeps_author_decision) ... ok",
+      "test_explicit_target_rejects_synchronized_false_flowchart_claim (test_verify_process_flow.FlowTargetCliTests.test_explicit_target_rejects_synchronized_false_flowchart_claim) ... ok",
+      "test_explicit_target_rejects_synchronized_loss_of_visible_source_condition (test_verify_process_flow.FlowTargetCliTests.test_explicit_target_rejects_synchronized_loss_of_visible_source_condition) ... ok"
+    ],
+    "skips": [
+      "test_linked_original_receipt_is_refused (test_capture_scan_budget_originals.ScanBudgetCaptureTests.test_linked_original_receipt_is_refused) ... skipped 'symlink setup needs separate Windows privilege'",
+      "test_ancestor_links_rejected_before_source_read (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_ancestor_links_rejected_before_source_read) ... skipped 'ancestor symlinks require separate Windows reparse environment'",
+      "test_source_symlink_refused_without_reading_the_target (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_source_symlink_refused_without_reading_the_target) ... skipped 'symbolic links unavailable'",
+      "test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests.test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel) ... skipped 'host does not permit directory symlinks; native Windows reparse guards need separate capture'",
+      "test_ancestor_link_is_rejected_before_any_read_or_resolution (test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution) ... skipped 'directory symbolic links unavailable'",
+      "test_ancestor_link_refused_before_source_read (test_verify_scan_formula.ScanAuthorTests.test_ancestor_link_refused_before_source_read) ... skipped 'directory symbolic link unavailable on this host'",
+      "test_flat_inventory_rejects_linked_ancestor_before_listing (test_verify_scan_formula.ScanAuthorTests.test_flat_inventory_rejects_linked_ancestor_before_listing) ... skipped 'directory symbolic link unavailable on this host'"
+    ]
+  },
+  "pins": {
+    "orchestrator.py": {
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/orchestrator.py",
+      "sha256": "9c2a7bf9c18018e5a1a5d409a887cd294a3fc3e90369310cf170f04e065a64b6",
+      "byte_length": 5534
+    },
+    "run-python.ps1": {
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/run-python.ps1",
+      "sha256": "f355a9d3556f3a08c923af75a5c495aa022db7909009eae6a05aeaf82cec8c31",
+      "byte_length": 843
+    },
+    "launch.json": {
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/launch.json",
+      "sha256": "192e113af7d3295b29cdf81aba9ab9f94e885b44d5b1f1745f9cd71f83713ab5",
+      "byte_length": 471
+    },
+    "result.json": {
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/result.json",
+      "sha256": "f7e35e13209a3b915223d079c00df431e1c0d0aa39fcba8d371b3a3baad2d37f",
+      "byte_length": 4461
+    },
+    "source-before.json": {
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/source-before.json",
+      "sha256": "c5f4bf10c76c293e4c7210af519bc4be39375a8ebca2d9c60f2d10342bb4cb33",
+      "byte_length": 391399
+    },
+    "source-after.json": {
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/source-after.json",
+      "sha256": "c5f4bf10c76c293e4c7210af519bc4be39375a8ebca2d9c60f2d10342bb4cb33",
+      "byte_length": 391399
+    },
+    "worktree-after.json": {
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/worktree-after.json",
+      "sha256": "c5f4bf10c76c293e4c7210af519bc4be39375a8ebca2d9c60f2d10342bb4cb33",
+      "byte_length": 391399
+    },
+    "python.stdout.bin": {
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/python.stdout.bin",
+      "sha256": "e376dc9510cd26520d97889cf78a4844c2543bb91ea561469b8a83b2727d3cd3",
+      "byte_length": 498
+    },
+    "python.stderr.bin": {
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/python.stderr.bin",
+      "sha256": "7144d2cac923d9e1270787272276f67bdb4e2f8b40a9a112828a29a4731fa254",
+      "byte_length": 77933
+    },
+    "source-originals.zip": {
+      "path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/source-originals.zip",
+      "sha256": "5cb145aed407c7fc6aba404b9fa491aa621e78dabdebe571607ffcff4ccded15",
+      "byte_length": 7690364
+    }
+  },
+  "source": {
+    "count": 1971,
+    "archive_unique_members": 1972,
+    "all_members_crc_sha_length_verified": true,
+    "snapshot_before_after_worktree_maps_equal": true,
+    "actual_snapshot_and_current_worktree_all_pins_equal": true,
+    "critical_inventory_files": 1871,
+    "critical_inventory_missing_files": [],
+    "prepare": {
+      "sha256": "9c28fd119634c14d2c28d24451799175fe3fa9aceaeae10566f000e52767c83f",
+      "byte_length": 68922
+    },
+    "portable_flow_test": {
+      "sha256": "42b63646f045fd15c75c43cbbb48a58f7b6394b4665fcde92be95e7e4c6e54c5",
+      "byte_length": 31744
+    },
+    "collectors": {
+      "doc/validation/assets/B06-T01/obsidian/capture_obsidian.mjs": {
+        "sha256": "af49d3a104d76a362f540138c4980c46c8966402adcd134a58f79fc3907fc906",
+        "byte_length": 7762
+      },
+      "doc/validation/assets/B06-T02/obsidian/capture_obsidian.mjs": {
+        "sha256": "2558ee63710edfe9e469998b80f4e3f04d672af8cc5c08149ee374a02c47072c",
+        "byte_length": 19653
+      },
+      "doc/validation/assets/B06-T03/native/capture_formula.mjs": {
+        "sha256": "55eab1e071c39d276cd42a504b3873288746c2aca60d31c538bcd68c93c82c87",
+        "byte_length": 17281
+      },
+      "doc/validation/assets/B06V-T01/native/capture_image.mjs": {
+        "sha256": "e70cf1622ae66b3e1af097b1b723f5be32304f5dd408cca50e6e61d351228b9c",
+        "byte_length": 33659
+      }
+    },
+    "rust_c_dependency_subset_total": 1825,
+    "rust_c_dependency_overlap": 1821,
+    "rust_c_overlap_all_pins_equal": true,
+    "rust_c_absent_generated_files": [
+      "crates/noetome-desktop/gen/schemas/acl-manifests.json",
+      "crates/noetome-desktop/gen/schemas/capabilities.json",
+      "crates/noetome-desktop/gen/schemas/desktop-schema.json",
+      "crates/noetome-desktop/gen/schemas/linux-schema.json"
+    ]
+  },
+  "pe": {
+    "selected_path": "/mnt/d/Noetome/target/b06v-t03-final-rust-20261106-c/noetome-selected.exe",
+    "copied_path": "/mnt/d/Noetome/.artifacts/b06v-t03-windows-python-final-03-20261106/repo/target/debug/noetome.exe",
+    "pin": {
+      "sha256": "e42c534d07f66662411fc52f22561510b79ba1c63f14f8b6f419db7c4e0e3274",
+      "byte_length": 25939968
+    },
+    "copied_nlink": 1,
+    "selected_and_copied_pre_post_pins_equal": true
+  },
+  "launch": {
+    "argv": [
+      "/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe",
+      "-NoProfile",
+      "-NonInteractive",
+      "-ExecutionPolicy",
+      "Bypass",
+      "-File",
+      "D:\\Noetome\\.artifacts\\b06v-t03-windows-python-final-03-20261106\\run-python.ps1"
+    ],
+    "pid": 602963,
+    "platform": "windows",
+    "selected_cli": {
+      "sha256": "e42c534d07f66662411fc52f22561510b79ba1c63f14f8b6f419db7c4e0e3274",
+      "byte_length": 25939968
+    },
+    "source_count": 1971
+  },
+  "runtime_observation": {
+    "path": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/review/windows-python-runtime-originals-03/result.json",
+    "sha256": "0651c1835b454f4ef655ab0975301853982b121b118838c0b5b2a1e666f95484",
+    "byte_length": 2886
+  },
+  "failed_history": {
+    "path": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/review/windows-python-independent-history.json",
+    "sha256": "eb4c82fec893e4df17987c0391f0dc6c80f3c61139a13e7456cc66a4f0c7be21",
+    "byte_length": 13044
+  },
+  "limits": [
+    "Seven native Windows symbolic link/reparse setup cases were skipped for host privileges; these are not counted as passed.",
+    "This run uses synthetic local HTTP/DPAPI fixtures and the selected ordinary Windows CLI; it makes no scientific quality, arbitrary OCR, production Vault, or additional GUI compatibility claim.",
+    "Python-only final collector identity line and portable source-registration test are newer than Rust C source; the 1821 shared Rust dependencies remain byte-identical."
+  ]
+}

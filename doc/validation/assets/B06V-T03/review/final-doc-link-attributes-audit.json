@@ -1,0 +1,787 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "scope": "read-only local Markdown path existence and task asset Git normalization protection; external URL content not fetched",
+  "documents_before": {
+    "doc/validation/B06V-T03.md": {
+      "sha256": "debb5fddcd45bd68d8bb9073cc4dc5d90a929494a1d0c6cc5bf29e2e06202608",
+      "byte_length": 14635
+    },
+    "doc/technical/VISUAL_COMPATIBILITY.md": {
+      "sha256": "bdfbf4eb881f84bf2de34a15595255a7662b4dcc063575bbad71b3a4c419d2c5",
+      "byte_length": 4131
+    },
+    "doc/technical/FORMULA_FIDELITY_CONTRACT.md": {
+      "sha256": "5aa655b82e3bb13de36f5e9b618f11ca8c2f454c89e30df3bb62c1992474d93d",
+      "byte_length": 6628
+    },
+    "doc/technical/SCAN_FORMULA_CONTRACT.md": {
+      "sha256": "5551fe02bd0d18b315c3ef0f5e1113bde79d31eef2a3ddfa563b58068d8a9425",
+      "byte_length": 13031
+    },
+    "doc/technical/PROCESS_FLOW_CONTRACT.md": {
+      "sha256": "77328c2528b5680d82b20366deed14ecb1b0afa5bf33b45dd51a5369d79702ca",
+      "byte_length": 8223
+    },
+    "doc/technical/IMAGE_FIDELITY_CONTRACT.md": {
+      "sha256": "1cb8248a2697095c5f8b0785de1657b13e89f59914fc2183e6510c496e036b1f",
+      "byte_length": 8488
+    },
+    "doc/execution/B06V-T03_COMPATIBILITY_PLAN.md": {
+      "sha256": "ee8fc26efe86d500153c5c27c71168574596196d7795faee044b1e4ff2b2669a",
+      "byte_length": 5297
+    },
+    "README.md": {
+      "sha256": "746afe60eaa31b4551c7845d5ca994664eb290d575aff55343e03710226322ac",
+      "byte_length": 33593
+    }
+  },
+  "documents_after": {
+    "doc/validation/B06V-T03.md": {
+      "sha256": "debb5fddcd45bd68d8bb9073cc4dc5d90a929494a1d0c6cc5bf29e2e06202608",
+      "byte_length": 14635
+    },
+    "doc/technical/VISUAL_COMPATIBILITY.md": {
+      "sha256": "bdfbf4eb881f84bf2de34a15595255a7662b4dcc063575bbad71b3a4c419d2c5",
+      "byte_length": 4131
+    },
+    "doc/technical/FORMULA_FIDELITY_CONTRACT.md": {
+      "sha256": "5aa655b82e3bb13de36f5e9b618f11ca8c2f454c89e30df3bb62c1992474d93d",
+      "byte_length": 6628
+    },
+    "doc/technical/SCAN_FORMULA_CONTRACT.md": {
+      "sha256": "5551fe02bd0d18b315c3ef0f5e1113bde79d31eef2a3ddfa563b58068d8a9425",
+      "byte_length": 13031
+    },
+    "doc/technical/PROCESS_FLOW_CONTRACT.md": {
+      "sha256": "77328c2528b5680d82b20366deed14ecb1b0afa5bf33b45dd51a5369d79702ca",
+      "byte_length": 8223
+    },
+    "doc/technical/IMAGE_FIDELITY_CONTRACT.md": {
+      "sha256": "1cb8248a2697095c5f8b0785de1657b13e89f59914fc2183e6510c496e036b1f",
+      "byte_length": 8488
+    },
+    "doc/execution/B06V-T03_COMPATIBILITY_PLAN.md": {
+      "sha256": "ee8fc26efe86d500153c5c27c71168574596196d7795faee044b1e4ff2b2669a",
+      "byte_length": 5297
+    },
+    "README.md": {
+      "sha256": "746afe60eaa31b4551c7845d5ca994664eb290d575aff55343e03710226322ac",
+      "byte_length": 33593
+    }
+  },
+  "local_links": [
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "../../dev-log/tasks.json",
+      "target": "/home/lyinn/project/Noetome/dev-log/tasks.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "../execution/B06V-T03_COMPATIBILITY_PLAN.md",
+      "target": "/home/lyinn/project/Noetome/doc/execution/B06V-T03_COMPATIBILITY_PLAN.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/matrix.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/matrix.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/runtime/",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/runtime",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "../../fixtures/visual-compatibility-flow-extensions/",
+      "target": "/home/lyinn/project/Noetome/fixtures/visual-compatibility-flow-extensions",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "../../fixtures/visual-compatibility-corrected-v2/",
+      "target": "/home/lyinn/project/Noetome/fixtures/visual-compatibility-corrected-v2",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/minimum/audit-result.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/minimum/audit-result.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/minimum/final-index.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/minimum/final-index.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/minimum/format-identity-override.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/minimum/format-identity-override.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/current/native-archive-receipt.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/current/native-archive-receipt.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/current/format-identity-supplement/override-records.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/current/format-identity-supplement/override-records.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/build_matrix.py",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/build_matrix.py",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/review/final-native-format-overrides-audit.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/review/final-native-format-overrides-audit.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/review/independent-python-current-review.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/review/independent-python-current-review.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/review/python-flow-schema2-review.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/review/python-flow-schema2-review.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/review/final-code-capability-audit-current.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/review/final-code-capability-audit-current.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/windows-rust/audit-result.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/windows-rust/audit-result.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/linux-final/full-python-receipt.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/linux-final/full-python-receipt.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/linux-final/actual-checks.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/linux-final/actual-checks.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/review/",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/review",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/linux-final/",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/linux-final",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03",
+      "exists": true
+    },
+    {
+      "doc": "doc/validation/B06V-T03.md",
+      "link": "assets/B06V-T03/review/b07-entry-assessment.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/review/b07-entry-assessment.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/VISUAL_COMPATIBILITY.md",
+      "link": "../validation/assets/B06V-T03/matrix.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/matrix.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/VISUAL_COMPATIBILITY.md",
+      "link": "../validation/B06V-T03.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B06V-T03.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/FORMULA_FIDELITY_CONTRACT.md",
+      "link": "../../fixtures/formula-fidelity/README.md",
+      "target": "/home/lyinn/project/Noetome/fixtures/formula-fidelity/README.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/FORMULA_FIDELITY_CONTRACT.md",
+      "link": "VISUAL_COMPATIBILITY.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/VISUAL_COMPATIBILITY.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/FORMULA_FIDELITY_CONTRACT.md",
+      "link": "../validation/assets/B06V-T03/matrix.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/matrix.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/SCAN_FORMULA_CONTRACT.md",
+      "link": "../../dev-log/tasks.json",
+      "target": "/home/lyinn/project/Noetome/dev-log/tasks.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/SCAN_FORMULA_CONTRACT.md",
+      "link": "../requirements/MODEL_SERVICE.md",
+      "target": "/home/lyinn/project/Noetome/doc/requirements/MODEL_SERVICE.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/SCAN_FORMULA_CONTRACT.md",
+      "link": "../../scripts/capture_scan_budget_originals.py",
+      "target": "/home/lyinn/project/Noetome/scripts/capture_scan_budget_originals.py",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/SCAN_FORMULA_CONTRACT.md",
+      "link": "../../scripts/prepare_scan_obsidian.py",
+      "target": "/home/lyinn/project/Noetome/scripts/prepare_scan_obsidian.py",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/SCAN_FORMULA_CONTRACT.md",
+      "link": "FORMULA_FIDELITY_CONTRACT.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/FORMULA_FIDELITY_CONTRACT.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/SCAN_FORMULA_CONTRACT.md",
+      "link": "VISUAL_COMPATIBILITY.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/VISUAL_COMPATIBILITY.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/PROCESS_FLOW_CONTRACT.md",
+      "link": "../../fixtures/process-flow-v1/GRAMMAR.md",
+      "target": "/home/lyinn/project/Noetome/fixtures/process-flow-v1/GRAMMAR.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/PROCESS_FLOW_CONTRACT.md",
+      "link": "VISUAL_COMPATIBILITY.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/VISUAL_COMPATIBILITY.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/PROCESS_FLOW_CONTRACT.md",
+      "link": "../validation/assets/B06V-T03/matrix.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/matrix.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/PROCESS_FLOW_CONTRACT.md",
+      "link": "../validation/assets/B06-T02/capability-probe/README.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06-T02/capability-probe/README.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/PROCESS_FLOW_CONTRACT.md",
+      "link": "../validation/assets/B06-T02/capability-probe/whitespace/README.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06-T02/capability-probe/whitespace/README.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/IMAGE_FIDELITY_CONTRACT.md",
+      "link": "VISUAL_COMPATIBILITY.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/VISUAL_COMPATIBILITY.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/IMAGE_FIDELITY_CONTRACT.md",
+      "link": "../validation/assets/B06V-T03/matrix.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/matrix.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/IMAGE_FIDELITY_CONTRACT.md",
+      "link": "../../fixtures/image-fidelity/README.md",
+      "target": "/home/lyinn/project/Noetome/fixtures/image-fidelity/README.md",
+      "exists": true
+    },
+    {
+      "doc": "doc/technical/IMAGE_FIDELITY_CONTRACT.md",
+      "link": "../../scripts/verify_image.py",
+      "target": "/home/lyinn/project/Noetome/scripts/verify_image.py",
+      "exists": true
+    },
+    {
+      "doc": "doc/execution/B06V-T03_COMPATIBILITY_PLAN.md",
+      "link": "../validation/assets/B06V-T03/matrix.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/matrix.json",
+      "exists": true
+    },
+    {
+      "doc": "doc/execution/B06V-T03_COMPATIBILITY_PLAN.md",
+      "link": "../validation/B06V-T03.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B06V-T03.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B05U-T01.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B05U-T01.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "dev-log/STATUS.md",
+      "target": "/home/lyinn/project/Noetome/dev-log/STATUS.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/VISUAL_COMPATIBILITY.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/VISUAL_COMPATIBILITY.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/assets/B06V-T03/matrix.json",
+      "target": "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/matrix.json",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "AGENTS.md",
+      "target": "/home/lyinn/project/Noetome/AGENTS.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/README.md",
+      "target": "/home/lyinn/project/Noetome/doc/README.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/execution/NEXT_STEPS.md",
+      "target": "/home/lyinn/project/Noetome/doc/execution/NEXT_STEPS.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "dev-log/STATUS.md",
+      "target": "/home/lyinn/project/Noetome/dev-log/STATUS.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "dev-log/TODO.md",
+      "target": "/home/lyinn/project/Noetome/dev-log/TODO.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "dev-log/DONE.md",
+      "target": "/home/lyinn/project/Noetome/dev-log/DONE.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/requirements/PRD.md",
+      "target": "/home/lyinn/project/Noetome/doc/requirements/PRD.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/requirements/PRD.html",
+      "target": "/home/lyinn/project/Noetome/doc/requirements/PRD.html",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/requirements/DECISIONS.md",
+      "target": "/home/lyinn/project/Noetome/doc/requirements/DECISIONS.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "sidecars/pdf_parser/README.md",
+      "target": "/home/lyinn/project/Noetome/sidecars/pdf_parser/README.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B01-T01.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B01-T01.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B01-T02.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B01-T02.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B02-T01.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B02-T01.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/requirements/MODEL_SERVICE.md",
+      "target": "/home/lyinn/project/Noetome/doc/requirements/MODEL_SERVICE.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/EXTRACTION_API_CONTRACT.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/EXTRACTION_API_CONTRACT.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B04-T03.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B04-T03.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/EXTRACTION_REVIEW_CONTRACT.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/EXTRACTION_REVIEW_CONTRACT.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/ACTIVE_PRESENTATION_CONTRACT.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/ACTIVE_PRESENTATION_CONTRACT.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B06-T01.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B06-T01.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B05-T01.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B05-T01.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/KNOWLEDGE_COORDINATION_CONTRACT.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/KNOWLEDGE_COORDINATION_CONTRACT.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "fixtures/extraction-gateway-v1/README.md",
+      "target": "/home/lyinn/project/Noetome/fixtures/extraction-gateway-v1/README.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/EXTRACTION_CONTRACT.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/EXTRACTION_CONTRACT.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "fixtures/text-compare-v1/README.md",
+      "target": "/home/lyinn/project/Noetome/fixtures/text-compare-v1/README.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "schemas/fixture-v1.json",
+      "target": "/home/lyinn/project/Noetome/schemas/fixture-v1.json",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B02-T02.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B02-T02.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B02-T03.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B02-T03.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/SIDECAR_PROTOCOL.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/SIDECAR_PROTOCOL.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B03-T01.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B03-T01.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "sidecars/pdf_parser/README.md",
+      "target": "/home/lyinn/project/Noetome/sidecars/pdf_parser/README.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/SIDECAR_PROTOCOL.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/SIDECAR_PROTOCOL.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B03-T02.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B03-T02.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/PDF_PARSE_CONTRACT.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/PDF_PARSE_CONTRACT.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "fixtures/pdf-text-v1/README.md",
+      "target": "/home/lyinn/project/Noetome/fixtures/pdf-text-v1/README.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B01-T03.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B01-T03.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "apps/desktop/public/phosphor-icons-LICENSE.txt",
+      "target": "/home/lyinn/project/Noetome/apps/desktop/public/phosphor-icons-LICENSE.txt",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B01A-T01-settings-refresh.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B01A-T01-settings-refresh.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B04-T03-ui-single-row.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B04-T03-ui-single-row.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "dev-log/README.md",
+      "target": "/home/lyinn/project/Noetome/dev-log/README.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B06U-T02.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B06U-T02.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/LOCAL_BUILD.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/LOCAL_BUILD.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/FORMULA_FIDELITY_CONTRACT.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/FORMULA_FIDELITY_CONTRACT.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "fixtures/formula-fidelity/README.md",
+      "target": "/home/lyinn/project/Noetome/fixtures/formula-fidelity/README.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/validation/B06-T03.md",
+      "target": "/home/lyinn/project/Noetome/doc/validation/B06-T03.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/IMAGE_FIDELITY_CONTRACT.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/IMAGE_FIDELITY_CONTRACT.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "fixtures/image-fidelity/README.md",
+      "target": "/home/lyinn/project/Noetome/fixtures/image-fidelity/README.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/technical/SCAN_FORMULA_CONTRACT.md",
+      "target": "/home/lyinn/project/Noetome/doc/technical/SCAN_FORMULA_CONTRACT.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "fixtures/scan-formula/README.md",
+      "target": "/home/lyinn/project/Noetome/fixtures/scan-formula/README.md",
+      "exists": true
+    },
+    {
+      "doc": "README.md",
+      "link": "doc/execution/B06V-T02_SCAN_PLAN.md",
+      "target": "/home/lyinn/project/Noetome/doc/execution/B06V-T02_SCAN_PLAN.md",
+      "exists": true
+    }
+  ],
+  "local_missing": [],
+  "external_links_not_fetched": 3,
+  "asset_paths_checked": 2240,
+  "attributes_admit_raw_bytes": true,
+  "wrong_attributes": [],
+  "actual_CRLF_hash_samples": [
+    {
+      "path": "doc/validation/assets/B06V-T03/runtime/minimum-obsidian.asar-package.json",
+      "blob_hash": "73bf246968855a887c130a61e44af0a5bf0a4dd9",
+      "raw_pin": {
+        "sha256": "85162fbd681ec5c7a55f13a0c89e68b147491bcb52ee0dbc008ad41b337da0bd",
+        "byte_length": 321
+      },
+      "filtered_equals_unfiltered": true
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/runtime/extract-x64-payload.stdout.bin",
+      "blob_hash": "d21819b32cf96a9afd09f0bf715d20cb228d072e",
+      "raw_pin": {
+        "sha256": "049724a03b4153bf2608ebca656efa431ed62eb52e659f99300d87743fb092ab",
+        "byte_length": 1719
+      },
+      "filtered_equals_unfiltered": true
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/runtime/minimum-app.asar-package.json",
+      "blob_hash": "d904cf00f7eded5a00ee5e273f20199d63891626",
+      "raw_pin": {
+        "sha256": "c139727fb141e390972708fa25476c8ca63ee61eab5004cc9c72846deb0a5d56",
+        "byte_length": 359
+      },
+      "filtered_equals_unfiltered": true
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/runtime/x64-payload-list.stdout.bin",
+      "blob_hash": "90dd097bb82d63f6854bf623fac945b42fda59ec",
+      "raw_pin": {
+        "sha256": "a151ebe097cfd6a383bcec041ca0dc85fc79282f6c81299e630132e95646f528",
+        "byte_length": 14526
+      },
+      "filtered_equals_unfiltered": true
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/runtime/extract-x64-runtime.stdout.bin",
+      "blob_hash": "29cbfef8c90a07d8bc69cf7cbabf13671e906f23",
+      "raw_pin": {
+        "sha256": "154b80d46b89b60666518ed4611cc6ba703d65a72918ca6d4d9576bc8661fbe1",
+        "byte_length": 551
+      },
+      "filtered_equals_unfiltered": true
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/runtime/official-minimum-1.6.7-changelog.bin",
+      "blob_hash": "9ac21ddb5cdf924e053e2511620e19d6b12ff4c4",
+      "raw_pin": {
+        "sha256": "116a58b5dc43e387f71756f74f46e9d6195a42688fc2e528aa7ba3a56361319e",
+        "byte_length": 37987
+      },
+      "filtered_equals_unfiltered": true
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/runtime/official-download-page.bin",
+      "blob_hash": "f4f05ee141004481e994854bec8250ae7ad0a0e0",
+      "raw_pin": {
+        "sha256": "b1386ceaf93b140feb0213f7b9720da575563cae3ea33f93fb5a215e836aeea7",
+        "byte_length": 52268
+      },
+      "filtered_equals_unfiltered": true
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/runtime/installer-list.stdout.bin",
+      "blob_hash": "f5e161263cfcde6d6cd62057f0bfc38b3ae01ebf",
+      "raw_pin": {
+        "sha256": "e06d16069f5cf8713d92402859ebc0a6a4a6e153deb0c44e242779d839587077",
+        "byte_length": 3976
+      },
+      "filtered_equals_unfiltered": true
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/runtime/official-changelog-page.bin",
+      "blob_hash": "4d55a86f0e14ece84b7a51c55324f5ef203e8a83",
+      "raw_pin": {
+        "sha256": "3bf72c36265f46462f6b85eb04852f7ffe2d5268e35b99955368d28ce997c566",
+        "byte_length": 111705
+      },
+      "filtered_equals_unfiltered": true
+    },
+    {
+      "path": "doc/validation/assets/B06V-T03/windows-python/attempt-02/python.stderr.bin",
+      "blob_hash": "81683cedea0123cf719c76e573e67759c53d7542",
+      "raw_pin": {
+        "sha256": "955af76f467236ade56580597316ffabd843daf26d4ee5001a22e120bbbfa06b",
+        "byte_length": 78055
+      },
+      "filtered_equals_unfiltered": true
+    }
+  ],
+  "git_check_attr_stdout": {
+    "sha256": "734ec904d77ec0a72d0ce2dc52ef7612ffa5153aaf9a0809628e0a50f4fb15b1",
+    "byte_length": 840555
+  },
+  "documents_unchanged_during_read": true,
+  "review_findings": [
+    {
+      "priority": "validation-scope",
+      "file": "doc/validation/B06V-T03.md",
+      "description": "paragraph61 presents old 19 ELF CLI as current30-count source association; its real compile-time Rust source anchor was absent, so mark historical/checker-only and final19 WindowsC run pending until new receipt exists"
+    },
+    {
+      "priority": "validation-scope",
+      "file": "doc/validation/B06V-T03.md",
+      "description": "fullLinux380 third snapshot passed before FlowTargetCliTests local import setup changed; final test SHA42b636 requires later actual run/readback; mark prior source and current full final pending until finished"
+    },
+    {
+      "priority": "failure-history",
+      "file": "doc/validation/B06V-T03.md",
+      "description": "Windows failure paragraph81 lists missing collectors but must also preserve subsequent Core-correct import_path rejection, test-only setup rebuild and old19 ELF build-source gap as separate real failures"
+    },
+    {
+      "priority": "wording",
+      "file": "doc/technical/VISUAL_COMPATIBILITY.md",
+      "description": "paragraph5 says capability judgment then source checks; actual formula/scan planners verify source/recognition and semantic blockers before target selection; recommend stating that order explicitly"
+    }
+  ]
+}

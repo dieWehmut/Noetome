@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "scope": "Independent raw receipt/source ZIP readback; does not execute the full suite again; document-only changes after the run are listed separately",
+  "result_pin": {
+    "sha256": "f7e35e13209a3b915223d079c00df431e1c0d0aa39fcba8d371b3a3baad2d37f",
+    "byte_length": 4461
+  },
+  "source_archive_pin": {
+    "sha256": "5cb145aed407c7fc6aba404b9fa491aa621e78dabdebe571607ffcff4ccded15",
+    "byte_length": 7690364
+  },
+  "raw_stderr_pin": {
+    "sha256": "7144d2cac923d9e1270787272276f67bdb4e2f8b40a9a112828a29a4731fa254",
+    "byte_length": 77933
+  },
+  "actual_tests_run": 441,
+  "actual_ok_verbose_lines": 434,
+  "actual_skip_verbose_lines": 7,
+  "actual_exit_code": 0,
+  "actual_source_count": 1971,
+  "all_archive_crc_and_sha_checked": 1972,
+  "source_before_after_worktree_equal": true,
+  "current_tree_differences_from_test_snapshot": [
+    "doc/technical/VISUAL_COMPATIBILITY.md"
+  ],
+  "current_production_scripts_tests_frozen_inputs_equal": true,
+  "final_preparer_pin": {
+    "sha256": "9c28fd119634c14d2c28d24451799175fe3fa9aceaeae10566f000e52767c83f",
+    "byte_length": 68922
+  },
+  "final_flow_test_pin": {
+    "sha256": "42b63646f045fd15c75c43cbbb48a58f7b6394b4665fcde92be95e7e4c6e54c5",
+    "byte_length": 31744
+  },
+  "raw_flow_target_pass_lines": [
+    "test_explicit_target_recomputes_fallback_and_default_keeps_author_decision (test_verify_process_flow.FlowTargetCliTests.test_explicit_target_recomputes_fallback_and_default_keeps_author_decision) ... ok\r",
+    "test_explicit_target_rejects_synchronized_false_flowchart_claim (test_verify_process_flow.FlowTargetCliTests.test_explicit_target_rejects_synchronized_false_flowchart_claim) ... ok\r",
+    "test_explicit_target_rejects_synchronized_loss_of_visible_source_condition (test_verify_process_flow.FlowTargetCliTests.test_explicit_target_rejects_synchronized_loss_of_visible_source_condition) ... ok\r"
+  ],
+  "cli_pin": {
+    "sha256": "e42c534d07f66662411fc52f22561510b79ba1c63f14f8b6f419db7c4e0e3274",
+    "byte_length": 25939968
+  },
+  "cli_build_source_audit": "final-index-rust-source-audit.json",
+  "skips": [
+    "test_linked_original_receipt_is_refused (test_capture_scan_budget_originals.ScanBudgetCaptureTests.test_linked_original_receipt_is_refused) ... skipped 'symlink setup needs separate Windows privilege'",
+    "test_ancestor_links_rejected_before_source_read (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_ancestor_links_rejected_before_source_read) ... skipped 'ancestor symlinks require separate Windows reparse environment'",
+    "test_source_symlink_refused_without_reading_the_target (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_source_symlink_refused_without_reading_the_target) ... skipped 'symbolic links unavailable'",
+    "test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests.test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel) ... skipped 'host does not permit directory symlinks; native Windows reparse guards need separate capture'",
+    "test_ancestor_link_is_rejected_before_any_read_or_resolution (test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution) ... skipped 'directory symbolic links unavailable'",
+    "test_ancestor_link_refused_before_source_read (test_verify_scan_formula.ScanAuthorTests.test_ancestor_link_refused_before_source_read) ... skipped 'directory symbolic link unavailable on this host'",
+    "test_flat_inventory_rejects_linked_ancestor_before_listing (test_verify_scan_formula.ScanAuthorTests.test_flat_inventory_rejects_linked_ancestor_before_listing) ... skipped 'directory symbolic link unavailable on this host'"
+  ],
+  "full_linux_rust_run": false
+}

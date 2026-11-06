@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_review",
+  "scope": "bounded_process_text_v1",
+  "request_id": "a3473294-fcc4-4f88-a28a-d4d2d9ef78c1",
+  "binding": {
+    "project_id": "c8f0d542-1bb6-4c24-82b6-ad20fc189af4",
+    "import_id": "63f6f00c-2007-424a-9a1d-990aa0dc9726",
+    "source_id": "fcd1028d-31fd-453e-b2b7-21afa69b3214",
+    "version_id": "026cdb13-335a-48c7-8f8f-cb4e9927b193",
+    "content_sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+    "normalized_sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+    "parse_id": null,
+    "manifest_sha256": null
+  },
+  "unit": {
+    "unit_id": "unit-0",
+    "locator": {
+      "kind": "text",
+      "span_id": "212d97ae-b671-4db0-a280-de209653167b",
+      "ordinal": 0,
+      "resource_sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242"
+    },
+    "source_status": "parsed",
+    "start_byte": 0,
+    "end_byte": 754,
+    "text": "过程：\"演示鸣响抑制规则\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。\n步骤 s1：\"启用演示静音控制\"。说明：\"把演示静音控制设为启用\"。输入：[\"静音命令\"]。输出：[\"已启用静音控制\"]。条件：[\"演示模式开启\"]。例外：[\"控制器断开时不生效\"]。\n步骤 s2：\"蜂鸣器鸣响响应\"。说明：\"表示可能受到抑制的鸣响响应，不断言响应已发生\"。输入：[\"鸣响请求\"]。输出：[\"可能的鸣响响应\"]。条件：[\"蜂鸣器可用\"]。例外：[\"蜂鸣器断开时不可观察\"]。\n关系 r1：s1 抑制 s2。条件：[\"演示静音通道接通\"]。例外：[\"旁路开启时该抑制不成立\"]。\n"
+  },
+  "source_match": "passed",
+  "gold_match": "passed",
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "published": false,
+  "document": {
+    "process": {
+      "title": "演示鸣响抑制规则",
+      "entry": "s1",
+      "goals": [
+        "s2"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "资料不可读时暂停"
+      ]
+    },
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "启用演示静音控制",
+        "description": "把演示静音控制设为启用",
+        "criterion": null,
+        "inputs": [
+          "静音命令"
+        ],
+        "outputs": [
+          "已启用静音控制"
+        ],
+        "conditions": [
+          "演示模式开启"
+        ],
+        "exceptions": [
+          "控制器断开时不生效"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "蜂鸣器鸣响响应",
+        "description": "表示可能受到抑制的鸣响响应，不断言响应已发生",
+        "criterion": null,
+        "inputs": [
+          "鸣响请求"
+        ],
+        "outputs": [
+          "可能的鸣响响应"
+        ],
+        "conditions": [
+          "蜂鸣器可用"
+        ],
+        "exceptions": [
+          "蜂鸣器断开时不可观察"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "s2",
+        "kind": "inhibits",
+        "branch_outcome": null,
+        "conditions": [
+          "演示静音通道接通"
+        ],
+        "exceptions": [
+          "旁路开启时该抑制不成立"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "object_id": "process",
+        "start_byte": 0,
+        "end_byte": 144,
+        "quote": "过程：\"演示鸣响抑制规则\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+      },
+      {
+        "object_id": "r1",
+        "start_byte": 637,
+        "end_byte": 753,
+        "quote": "关系 r1：s1 抑制 s2。条件：[\"演示静音通道接通\"]。例外：[\"旁路开启时该抑制不成立\"]。"
+      },
+      {
+        "object_id": "s1",
+        "start_byte": 145,
+        "end_byte": 375,
+        "quote": "步骤 s1：\"启用演示静音控制\"。说明：\"把演示静音控制设为启用\"。输入：[\"静音命令\"]。输出：[\"已启用静音控制\"]。条件：[\"演示模式开启\"]。例外：[\"控制器断开时不生效\"]。"
+      },
+      {
+        "object_id": "s2",
+        "start_byte": 376,
+        "end_byte": 636,
+        "quote": "步骤 s2：\"蜂鸣器鸣响响应\"。说明：\"表示可能受到抑制的鸣响响应，不断言响应已发生\"。输入：[\"鸣响请求\"]。输出：[\"可能的鸣响响应\"]。条件：[\"蜂鸣器可用\"]。例外：[\"蜂鸣器断开时不可观察\"]。"
+      }
+    ]
+  },
+  "evidence_fingerprints": {
+    "process": {
+      "sha256": "f038e458f7a236c269438b456c295a85113b9ede41a7c5a34eea0ddc4688b4cd",
+      "byte_length": 144
+    },
+    "r1": {
+      "sha256": "78e746bf9e6d52762118672a7e7b2cfdd39434985e3f785e5a6ca0b45cf51263",
+      "byte_length": 116
+    },
+    "s1": {
+      "sha256": "05d9580fa14aa034f25897a8faeca995085f1c2af9ef28faa368740c2ca70757",
+      "byte_length": 230
+    },
+    "s2": {
+      "sha256": "dcfa3377940b77dc74ab4531c017f83a00ac2f828ee16784f7ee5d3885304e83",
+      "byte_length": 260
+    }
+  }
+}

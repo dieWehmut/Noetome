@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "scope": "whole current visual capability/source/verifier delta read-only review plus independent disposable-output forgery checks",
+  "checks": [
+    {
+      "name": "registry-source-gates",
+      "argv": [
+        "/tmp/noetome-ui-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_visual_capability_registry.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.3371574959892314,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "c181588a274b247ce2c9166b4515d6be39b9890aa21c8096422121f1e388416f",
+        "byte_length": 1694
+      }
+    },
+    {
+      "name": "flow-schema-two",
+      "argv": [
+        "/tmp/noetome-ui-venv/bin/python",
+        "-m",
+        "unittest",
+        "test_verify_process_flow.FlowRendererProfileTests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.06294620400876738,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "0d1e69e4ce3babfa2a7587ac049dca797fa60e4570f04788bcfddaa37f096b13",
+        "byte_length": 1290
+      }
+    }
+  ],
+  "synchronized_mutations": [
+    {
+      "name": "formula-synchronized-unknown-native-claim",
+      "status": "rejected",
+      "actual_error": "source-grounded expression outcome/representation: value",
+      "mutant_files": {
+        "target-profile.json": {
+          "sha256": "e0a32d8125fcb0bb36632d0ad5994db32f7fa3c57cef066453b66a27b8f78385",
+          "byte_length": 200
+        },
+        "formula.json": {
+          "sha256": "df48e0e36b07345280397c4ff34409ff30b8d2228a704158444841a6cb1c8c3e",
+          "byte_length": 9045
+        }
+      }
+    },
+    {
+      "name": "formula-synchronized-semantic-loss",
+      "status": "rejected",
+      "actual_error": "actual display meaning including sign/scripts/grouping/7: value",
+      "mutant_files": {
+        "公式预览.md": {
+          "sha256": "4d02a7a6c0084e2ba2741bf243fdf6cac1d51ca07b53420b9eaac369b4647ade",
+          "byte_length": 1064
+        },
+        "formula.json": {
+          "sha256": "0f7f2179e83cefadd76fea0d6a0559932a2795366dd4c2f0c056a664c3a74490",
+          "byte_length": 9046
+        }
+      }
+    },
+    {
+      "name": "image-synchronized-unknown-native-claim",
+      "status": "rejected",
+      "actual_error": "source-grounded image outcome/representation: value",
+      "mutant_files": {
+        "target-profile.json": {
+          "sha256": "3e5cdee4c0f2dbf15d30910215c30c9d6d62aa2a21d4ba70e94d3474ee6ff4cd",
+          "byte_length": 141
+        },
+        "image.json": {
+          "sha256": "a5d4c0c0bd6a55c33c638f254bad1aaa5d249d5965ee95339c199e7ad2a49a71",
+          "byte_length": 21195
+        }
+      }
+    },
+    {
+      "name": "image-synchronized-semantic-loss",
+      "status": "rejected",
+      "actual_error": "complete actual element/label/arrow/legend denominator",
+      "mutant_files": {
+        "redrawn.svg": {
+          "sha256": "43a3fc05f3ecb2988a27681e1ef867c34e321dc33c28538a5de3eb95fd2b6da2",
+          "byte_length": 3437
+        },
+        "image.json": {
+          "sha256": "1d1d50f1e41eb9f03eacda7a4060c4c4be4f3ab9816193019b40a66b159cd3ed",
+          "byte_length": 21021
+        }
+      }
+    },
+    {
+      "name": "flow-synchronized-unknown-engine-flowchart-claim",
+      "status": "rejected",
+      "actual_error": "flow issue_codes: length",
+      "mutant_files": {
+        "target-profile.json": {
+          "sha256": "fedaaf1ecb2a9c974b52f912d211aec38ad9a224145598f002e2634047adc5b6",
+          "byte_length": 452
+        },
+        "plan.json": {
+          "sha256": "5f59e5223f39adc369f500791aea20512d02c1e8e578ae21b7d9bf36021da6b2",
+          "byte_length": 17058
+        },
+        "flow.json": {
+          "sha256": "912e1c3f1c33b1db8ff11d35392c50c924d29375a6bb569cea4da9962c108c09",
+          "byte_length": 20514
+        }
+      }
+    },
+    {
+      "name": "flow-synchronized-visible-source-loss",
+      "status": "rejected",
+      "actual_error": "actual complete semantic body: value",
+      "mutant_files": {
+        "过程明细.md": {
+          "sha256": "d784f77d36a005357c55eacb7af65457a746918601ae3a3ce8835e8f780d82d7",
+          "byte_length": 2078
+        },
+        "flow.json": {
+          "sha256": "aaaa597b4b4f81c446b71fcf864c34fb3bc3db53c95fc935ab581ce41b7fb147",
+          "byte_length": 20348
+        }
+      }
+    }
+  ],
+  "source_before": {
+    "crates/noetome-cli/src/visual_capabilities.rs": {
+      "sha256": "b5d0511182833fa14aafaab512f96c60d2c19c3aca0af70691ba0c33ef834963",
+      "byte_length": 4974
+    },
+    "crates/noetome-cli/src/formula.rs": {
+      "sha256": "5483b22bdc8a0c88ca2142aa4112605ec7a636abfa3e4a87f003c9fc0dc932b6",
+      "byte_length": 14418
+    },
+    "crates/noetome-cli/src/scan_formula.rs": {
+      "sha256": "3be9be40f6e90fab61adfc23fded31b33e2b314605ecde9cf14feae066940267",
+      "byte_length": 21189
+    },
+    "crates/noetome-cli/src/image_fidelity.rs": {
+      "sha256": "27dd7b428c6de593f1b4b5ece32ac80508a74f0416eb6c829f8c458d56faebba",
+      "byte_length": 25625
+    },
+    "crates/noetome-cli/src/process_flow.rs": {
+      "sha256": "19a073db379063b681d58452e169726afd70061302adba8c248624136dffe1a5",
+      "byte_length": 13112
+    },
+    "crates/noetome-cli/src/process_flow_model.rs": {
+      "sha256": "41f70550b7e198da0ce8d9b8d7cfd2d8b85c8579207cb5e8aac0fbc167000d66",
+      "byte_length": 11742
+    },
+    "crates/noetome-cli/src/process_flow_plan.rs": {
+      "sha256": "b4f903992d7b66cbc71481c7d0db75ca4fe8ba206baf1defaf150cbc10f215fd",
+      "byte_length": 29567
+    },
+    "crates/noetome-cli/src/lib.rs": {
+      "sha256": "7553e7d74d4b6970fe3dcfb4f4c82e1ad6d9f45489b47c959213fbe484ba7809",
+      "byte_length": 29938
+    },
+    "scripts/visual_capability_registry.py": {
+      "sha256": "1cc82771fce9395151e752052a5e9fd1e72f909de7298c83dbaec7cd9d0c9030",
+      "byte_length": 3545
+    },
+    "scripts/verify_formula.py": {
+      "sha256": "c1cefd664340e5b9da5c98dd7ecd279cc88bdab119b255315421d3856ca0e5e3",
+      "byte_length": 53366
+    },
+    "scripts/verify_image.py": {
+      "sha256": "b90593bb5e893f5ad5814dbe2fe2ae2045500952e6eac27e5b097179bb66f694",
+      "byte_length": 62389
+    },
+    "scripts/verify_process_flow.py": {
+      "sha256": "7afd5e476359feb3d5aa6e93fb547d3be8befb55a11ce46284d0769308d33e12",
+      "byte_length": 75732
+    },
+    "scripts/verify_scan_formula.py": {
+      "sha256": "5c75e5d72cccfc7ee6ac08cf7d1a1b6d5097f26c86ceea678155c08809d11d98",
+      "byte_length": 89439
+    },
+    "scripts/prepare_visual_compatibility.py": {
+      "sha256": "b22fc9c0f91812fac99dd0087291c67cc98249f00f4da068271bdd2c0f551a49",
+      "byte_length": 68894
+    },
+    "tests/test_visual_capability_registry.py": {
+      "sha256": "2031a6670d7f395b9bdb453dfc6aa9538c4962c4d4df825d689cffee7d688ef4",
+      "byte_length": 7911
+    },
+    "tests/test_verify_formula.py": {
+      "sha256": "d4b707fa1109598267dfe67bdddbe7ae283abf08fa0863e1d352a403f4d5c02a",
+      "byte_length": 17294
+    },
+    "tests/test_verify_image.py": {
+      "sha256": "a5b533f814c7307138b4da0e215de20addfac31cb52f9efff0b403e24f9238a8",
+      "byte_length": 21413
+    },
+    "tests/test_verify_process_flow.py": {
+      "sha256": "1c57f5a40cbac50fc01cb03cd0545b9f265d1bc76b2221d2a1e70cdaef25bd0b",
+      "byte_length": 29954
+    },
+    "tests/test_prepare_visual_compatibility.py": {
+      "sha256": "324fa89215b147da96284f3e6d8a39cadc7ebceeef0bf10a25003449d2e1c796",
+      "byte_length": 26554
+    }
+  },
+  "source_after": {
+    "crates/noetome-cli/src/visual_capabilities.rs": {
+      "sha256": "b5d0511182833fa14aafaab512f96c60d2c19c3aca0af70691ba0c33ef834963",
+      "byte_length": 4974
+    },
+    "crates/noetome-cli/src/formula.rs": {
+      "sha256": "5483b22bdc8a0c88ca2142aa4112605ec7a636abfa3e4a87f003c9fc0dc932b6",
+      "byte_length": 14418
+    },
+    "crates/noetome-cli/src/scan_formula.rs": {
+      "sha256": "3be9be40f6e90fab61adfc23fded31b33e2b314605ecde9cf14feae066940267",
+      "byte_length": 21189
+    },
+    "crates/noetome-cli/src/image_fidelity.rs": {
+      "sha256": "27dd7b428c6de593f1b4b5ece32ac80508a74f0416eb6c829f8c458d56faebba",
+      "byte_length": 25625
+    },
+    "crates/noetome-cli/src/process_flow.rs": {
+      "sha256": "19a073db379063b681d58452e169726afd70061302adba8c248624136dffe1a5",
+      "byte_length": 13112
+    },
+    "crates/noetome-cli/src/process_flow_model.rs": {
+      "sha256": "41f70550b7e198da0ce8d9b8d7cfd2d8b85c8579207cb5e8aac0fbc167000d66",
+      "byte_length": 11742
+    },
+    "crates/noetome-cli/src/process_flow_plan.rs": {
+      "sha256": "b4f903992d7b66cbc71481c7d0db75ca4fe8ba206baf1defaf150cbc10f215fd",
+      "byte_length": 29567
+    },
+    "crates/noetome-cli/src/lib.rs": {
+      "sha256": "7553e7d74d4b6970fe3dcfb4f4c82e1ad6d9f45489b47c959213fbe484ba7809",
+      "byte_length": 29938
+    },
+    "scripts/visual_capability_registry.py": {
+      "sha256": "1cc82771fce9395151e752052a5e9fd1e72f909de7298c83dbaec7cd9d0c9030",
+      "byte_length": 3545
+    },
+    "scripts/verify_formula.py": {
+      "sha256": "c1cefd664340e5b9da5c98dd7ecd279cc88bdab119b255315421d3856ca0e5e3",
+      "byte_length": 53366
+    },
+    "scripts/verify_image.py": {
+      "sha256": "b90593bb5e893f5ad5814dbe2fe2ae2045500952e6eac27e5b097179bb66f694",
+      "byte_length": 62389
+    },
+    "scripts/verify_process_flow.py": {
+      "sha256": "7afd5e476359feb3d5aa6e93fb547d3be8befb55a11ce46284d0769308d33e12",
+      "byte_length": 75732
+    },
+    "scripts/verify_scan_formula.py": {
+      "sha256": "5c75e5d72cccfc7ee6ac08cf7d1a1b6d5097f26c86ceea678155c08809d11d98",
+      "byte_length": 89439
+    },
+    "scripts/prepare_visual_compatibility.py": {
+      "sha256": "b22fc9c0f91812fac99dd0087291c67cc98249f00f4da068271bdd2c0f551a49",
+      "byte_length": 68894
+    },
+    "tests/test_visual_capability_registry.py": {
+      "sha256": "2031a6670d7f395b9bdb453dfc6aa9538c4962c4d4df825d689cffee7d688ef4",
+      "byte_length": 7911
+    },
+    "tests/test_verify_formula.py": {
+      "sha256": "d4b707fa1109598267dfe67bdddbe7ae283abf08fa0863e1d352a403f4d5c02a",
+      "byte_length": 17294
+    },
+    "tests/test_verify_image.py": {
+      "sha256": "a5b533f814c7307138b4da0e215de20addfac31cb52f9efff0b403e24f9238a8",
+      "byte_length": 21413
+    },
+    "tests/test_verify_process_flow.py": {
+      "sha256": "1c57f5a40cbac50fc01cb03cd0545b9f265d1bc76b2221d2a1e70cdaef25bd0b",
+      "byte_length": 29954
+    },
+    "tests/test_prepare_visual_compatibility.py": {
+      "sha256": "324fa89215b147da96284f3e6d8a39cadc7ebceeef0bf10a25003449d2e1c796",
+      "byte_length": 26554
+    }
+  },
+  "sources_unchanged": true,
+  "author_files_unchanged": true,
+  "app_launches": 0,
+  "model_requests": 0,
+  "ordinary_cli_runs": 0,
+  "linux_full_rust": "not_run",
+  "archive": "doc/validation/assets/B06V-T03/review/final-code-audit-originals.zip",
+  "archive_pin": {
+    "sha256": "1a319aa760ce1dcdb527ab0bc4bd1f072d5ff35f30e0597300080c5e5041d025",
+    "byte_length": 201426
+  }
+}

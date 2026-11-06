@@ -1,0 +1,608 @@
+# 有据流程表达预览
+
+状态：passed；预览：rendered；知识状态：pending；发布：false。
+
+科学质量：not_run；研究：not_requested；网络与付费调用：0。
+
+```json
+{
+  "schema_version": 1,
+  "producer": "knowledge_flow",
+  "scope": "active_flow_v1",
+  "request_id": "5e3f10f2-355c-4ef4-a559-17c4a4b016e2",
+  "binding": {
+    "project_id": "cf347274-d7f5-47a7-8e26-7ef86c900fbf",
+    "import_id": "bb22af70-b451-458f-b866-0eb8ecaf3229",
+    "source_id": "5dce65c6-cc76-41ee-a027-4ed97de3b40e",
+    "version_id": "1e05e4c9-2af7-42e4-a0af-a589abd97c62",
+    "content_sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+    "normalized_sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+    "parse_id": null,
+    "manifest_sha256": null
+  },
+  "status": "passed",
+  "preview_status": "rendered",
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "research_status": "not_requested",
+  "published": false,
+  "network_calls": 0,
+  "paid_calls": 0,
+  "checks": {
+    "source_review": "passed",
+    "model_support": "passed",
+    "note_plan": "passed",
+    "rendering": "passed",
+    "saved_output": "passed"
+  },
+  "issue_codes": [],
+  "issues": [],
+  "process_document": {
+    "process": {
+      "title": "特殊名称的卡片流程",
+      "entry": "s1",
+      "goals": [
+        "s3"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "资料不可读时暂停"
+      ]
+    },
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "预检 [α] | \"卡片\"",
+        "description": "先做预检；本步骤在文字中后声明，不改变明确关系顺序",
+        "criterion": null,
+        "inputs": [
+          "卡片 A\\B"
+        ],
+        "outputs": [
+          "预检结果"
+        ],
+        "conditions": [
+          "卡片可读"
+        ],
+        "exceptions": [
+          "卡片缺失时停止"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "复核 #2 / x < 3",
+        "description": "保留复核名称中的符号，不解释为指令",
+        "criterion": null,
+        "inputs": [
+          "预检结果"
+        ],
+        "outputs": [
+          "复核结果"
+        ],
+        "conditions": [
+          "字段包含竖线 | 和双引号 \""
+        ],
+        "exceptions": [
+          "不得删除名称符号"
+        ]
+      },
+      {
+        "id": "s3",
+        "kind": "step",
+        "label": "归档入口 & 保留",
+        "description": "保留标签中的连接符",
+        "criterion": null,
+        "inputs": [
+          "复核结果"
+        ],
+        "outputs": [
+          "归档结果"
+        ],
+        "conditions": [
+          "复核完成"
+        ],
+        "exceptions": [
+          "存储不可用时暂停"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "s2",
+        "kind": "sequence",
+        "branch_outcome": null,
+        "conditions": [
+          "预检完成"
+        ],
+        "exceptions": [
+          "缺卡时停止"
+        ]
+      },
+      {
+        "id": "r2",
+        "left": "s2",
+        "right": "s3",
+        "kind": "sequence",
+        "branch_outcome": null,
+        "conditions": [
+          "复核完成"
+        ],
+        "exceptions": [
+          "存储不可用时暂停"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "object_id": "process",
+        "start_byte": 0,
+        "end_byte": 147,
+        "quote": "过程：\"特殊名称的卡片流程\"。入口：s1。目标：[\"s3\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+      },
+      {
+        "object_id": "r1",
+        "start_byte": 956,
+        "end_byte": 1051,
+        "quote": "关系 r1：s1 完成后执行 s2。条件：[\"预检完成\"]。例外：[\"缺卡时停止\"]。"
+      },
+      {
+        "object_id": "r2",
+        "start_byte": 851,
+        "end_byte": 955,
+        "quote": "关系 r2：s2 完成后执行 s3。条件：[\"复核完成\"]。例外：[\"存储不可用时暂停\"]。"
+      },
+      {
+        "object_id": "s1",
+        "start_byte": 396,
+        "end_byte": 646,
+        "quote": "步骤 s1：\"预检 [α] | \\\"卡片\\\"\"。说明：\"先做预检；本步骤在文字中后声明，不改变明确关系顺序\"。输入：[\"卡片 A\\\\B\"]。输出：[\"预检结果\"]。条件：[\"卡片可读\"]。例外：[\"卡片缺失时停止\"]。"
+      },
+      {
+        "object_id": "s2",
+        "start_byte": 148,
+        "end_byte": 395,
+        "quote": "步骤 s2：\"复核 #2 / x < 3\"。说明：\"保留复核名称中的符号，不解释为指令\"。输入：[\"预检结果\"]。输出：[\"复核结果\"]。条件：[\"字段包含竖线 | 和双引号 \\\"\"]。例外：[\"不得删除名称符号\"]。"
+      },
+      {
+        "object_id": "s3",
+        "start_byte": 647,
+        "end_byte": 850,
+        "quote": "步骤 s3：\"归档入口 & 保留\"。说明：\"保留标签中的连接符\"。输入：[\"复核结果\"]。输出：[\"归档结果\"]。条件：[\"复核完成\"]。例外：[\"存储不可用时暂停\"]。"
+      }
+    ]
+  },
+  "profile": {
+    "schema_version": 2,
+    "producer": "flow_render_profile",
+    "profile_id": "obsidian_1_15_0_pele_flowchart",
+    "app": "Obsidian",
+    "app_version": "1.15.0",
+    "mermaid_version": null,
+    "renderer": {
+      "name": "pele",
+      "version": "1.8.0",
+      "source_sha256": "9bf34b3a9a19351dc69d0d238e365560331a8ae392c41656df7f5090653253d0"
+    },
+    "flowchart_support": "supported",
+    "label_encoding": "decimal_ascii_punctuation_v1",
+    "html_labels": false
+  },
+  "representation": "flowchart",
+  "decision": {
+    "rule_id": "verified_directed_acyclic_flow_v1",
+    "reason": "来源明确给出完整有向无环关系，且所选目标的当前图形及标签配置已有实测依据。",
+    "fallback_reasons": []
+  },
+  "review_ir_fingerprint": {
+    "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+    "byte_length": 7117
+  },
+  "plan_fingerprint": {
+    "sha256": "ae0e10e99f38771d044eba51a3c06528b4ddc1f12986225acb183007f8e9f4cd",
+    "byte_length": 13562
+  },
+  "totals": {
+    "branch_relations": 0,
+    "causes_relations": 0,
+    "content_mappings": 13,
+    "correlates_relations": 0,
+    "decision_steps": 0,
+    "evidence_records": 6,
+    "flow_edges": 2,
+    "flow_nodes": 3,
+    "inhibits_relations": 0,
+    "links": 7,
+    "node_conditions": 3,
+    "node_exceptions": 3,
+    "node_inputs": 3,
+    "node_outputs": 3,
+    "parsed_statements": 6,
+    "process_conditions": 1,
+    "process_exceptions": 1,
+    "promotes_relations": 0,
+    "relation_conditions": 2,
+    "relation_exceptions": 2,
+    "relations": 2,
+    "rendered_notes": 2,
+    "sequence_relations": 2,
+    "source_statements": 6,
+    "steps": 3,
+    "unknown_relations": 0,
+    "unparsed_statements": 0
+  },
+  "inputs": {
+    ".case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    ".gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    ".profile.json": {
+      "sha256": "6d2051f224d92b93fc25ddefa34f22ebd706d6a80027ec01cf09a99c21213469",
+      "byte_length": 453
+    },
+    ".review-.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    ".review-.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    ".review-.owner.json": {
+      "sha256": "b5ee9578b118ee1f5d30c63e6613c8ba12f8fcf01e600ba17098c966d9bd6133",
+      "byte_length": 170
+    },
+    ".review-.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    ".review-process-ir.json": {
+      "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+      "byte_length": 7117
+    },
+    ".review-review.json": {
+      "sha256": "312b845e1c26299b7d87aa588007f884067839599208ae997a11ad935e2c86b4",
+      "byte_length": 7717
+    },
+    ".review-review.md": {
+      "sha256": "c56348916b5ee712e373b10f90ece4fa74cc4e895d5c38d44a868a5188e592f4",
+      "byte_length": 7900
+    },
+    ".source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    }
+  },
+  "files": [
+    {
+      "relative_path": "流程总览.md",
+      "note_id": "flow_overview",
+      "plan_revision": 1,
+      "content_sha256": "bec715cfdcb6ff5475175c006d36cf7bbb06c843f24db0fc3e641ba9ff10f539",
+      "byte_length": 838,
+      "content_mappings": [
+        {
+          "section_id": "flow",
+          "block_id": "process_title",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "process"
+          ],
+          "start_byte": 41,
+          "end_byte": 83
+        },
+        {
+          "section_id": "flow",
+          "block_id": "reading_scope",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [],
+          "start_byte": 97,
+          "end_byte": 358
+        },
+        {
+          "section_id": "flow",
+          "block_id": "process_diagram",
+          "kind": "diagram_node",
+          "item_id": "n0",
+          "source_object_ids": [
+            "s1"
+          ],
+          "start_byte": 388,
+          "end_byte": 434
+        },
+        {
+          "section_id": "flow",
+          "block_id": "process_diagram",
+          "kind": "diagram_node",
+          "item_id": "n1",
+          "source_object_ids": [
+            "s2"
+          ],
+          "start_byte": 435,
+          "end_byte": 469
+        },
+        {
+          "section_id": "flow",
+          "block_id": "process_diagram",
+          "kind": "diagram_node",
+          "item_id": "n2",
+          "source_object_ids": [
+            "s3"
+          ],
+          "start_byte": 470,
+          "end_byte": 502
+        },
+        {
+          "section_id": "flow",
+          "block_id": "process_diagram",
+          "kind": "diagram_edge",
+          "item_id": "e0",
+          "source_object_ids": [
+            "r1"
+          ],
+          "start_byte": 503,
+          "end_byte": 524
+        },
+        {
+          "section_id": "flow",
+          "block_id": "process_diagram",
+          "kind": "diagram_edge",
+          "item_id": "e1",
+          "source_object_ids": [
+            "r2"
+          ],
+          "start_byte": 525,
+          "end_byte": 546
+        }
+      ],
+      "links": [
+        {
+          "section_id": "flow",
+          "block_id": "detail_links",
+          "item_id": null,
+          "target_path": "过程明细.md",
+          "target_heading": "过程说明",
+          "display_text": "查看完整过程说明",
+          "source_object_ids": [
+            "process"
+          ],
+          "start_byte": 552,
+          "end_byte": 606
+        },
+        {
+          "section_id": "flow",
+          "block_id": "detail_links",
+          "item_id": null,
+          "target_path": "过程明细.md",
+          "target_heading": "步骤-s1",
+          "display_text": "查看步骤明细",
+          "source_object_ids": [
+            "s1"
+          ],
+          "start_byte": 607,
+          "end_byte": 652
+        },
+        {
+          "section_id": "flow",
+          "block_id": "detail_links",
+          "item_id": null,
+          "target_path": "过程明细.md",
+          "target_heading": "步骤-s2",
+          "display_text": "查看步骤明细",
+          "source_object_ids": [
+            "s2"
+          ],
+          "start_byte": 653,
+          "end_byte": 698
+        },
+        {
+          "section_id": "flow",
+          "block_id": "detail_links",
+          "item_id": null,
+          "target_path": "过程明细.md",
+          "target_heading": "步骤-s3",
+          "display_text": "查看步骤明细",
+          "source_object_ids": [
+            "s3"
+          ],
+          "start_byte": 699,
+          "end_byte": 744
+        },
+        {
+          "section_id": "flow",
+          "block_id": "detail_links",
+          "item_id": null,
+          "target_path": "过程明细.md",
+          "target_heading": "关系-r1",
+          "display_text": "查看关系明细",
+          "source_object_ids": [
+            "r1"
+          ],
+          "start_byte": 745,
+          "end_byte": 790
+        },
+        {
+          "section_id": "flow",
+          "block_id": "detail_links",
+          "item_id": null,
+          "target_path": "过程明细.md",
+          "target_heading": "关系-r2",
+          "display_text": "查看关系明细",
+          "source_object_ids": [
+            "r2"
+          ],
+          "start_byte": 791,
+          "end_byte": 836
+        }
+      ]
+    },
+    {
+      "relative_path": "过程明细.md",
+      "note_id": "process_details",
+      "plan_revision": 1,
+      "content_sha256": "9c5878b69316f24ef442f7ffcb7fd1174049c1d468629ce51b9eb97511754359",
+      "byte_length": 1587,
+      "content_mappings": [
+        {
+          "section_id": "process_detail",
+          "block_id": "process",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "process"
+          ],
+          "start_byte": 41,
+          "end_byte": 181
+        },
+        {
+          "section_id": "step_s1",
+          "block_id": "s1",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "s1"
+          ],
+          "start_byte": 209,
+          "end_byte": 501
+        },
+        {
+          "section_id": "step_s2",
+          "block_id": "s2",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "s2"
+          ],
+          "start_byte": 529,
+          "end_byte": 820
+        },
+        {
+          "section_id": "step_s3",
+          "block_id": "s3",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "s3"
+          ],
+          "start_byte": 848,
+          "end_byte": 1096
+        },
+        {
+          "section_id": "relation_r1",
+          "block_id": "r1",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "r1",
+            "s1",
+            "s2"
+          ],
+          "start_byte": 1124,
+          "end_byte": 1301
+        },
+        {
+          "section_id": "relation_r2",
+          "block_id": "r2",
+          "kind": "text",
+          "item_id": null,
+          "source_object_ids": [
+            "r2",
+            "s2",
+            "s3"
+          ],
+          "start_byte": 1329,
+          "end_byte": 1514
+        }
+      ],
+      "links": [
+        {
+          "section_id": "return",
+          "block_id": "return_link",
+          "item_id": null,
+          "target_path": "流程总览.md",
+          "target_heading": "流程表达",
+          "display_text": "返回流程总览",
+          "source_object_ids": [
+            "process"
+          ],
+          "start_byte": 1537,
+          "end_byte": 1585
+        }
+      ]
+    }
+  ],
+  "artifacts": {
+    ".case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    ".gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    ".owner.json": {
+      "sha256": "f490591e8f49f87c730ff4d1446dba26f938f21c83ab8592d31ddf1423eea1bc",
+      "byte_length": 146
+    },
+    ".profile.json": {
+      "sha256": "6d2051f224d92b93fc25ddefa34f22ebd706d6a80027ec01cf09a99c21213469",
+      "byte_length": 453
+    },
+    ".review-.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    ".review-.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    ".review-.owner.json": {
+      "sha256": "b5ee9578b118ee1f5d30c63e6613c8ba12f8fcf01e600ba17098c966d9bd6133",
+      "byte_length": 170
+    },
+    ".review-.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    ".review-process-ir.json": {
+      "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+      "byte_length": 7117
+    },
+    ".review-review.json": {
+      "sha256": "312b845e1c26299b7d87aa588007f884067839599208ae997a11ad935e2c86b4",
+      "byte_length": 7717
+    },
+    ".review-review.md": {
+      "sha256": "c56348916b5ee712e373b10f90ece4fa74cc4e895d5c38d44a868a5188e592f4",
+      "byte_length": 7900
+    },
+    ".source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "plan.json": {
+      "sha256": "ae0e10e99f38771d044eba51a3c06528b4ddc1f12986225acb183007f8e9f4cd",
+      "byte_length": 13562
+    },
+    "流程总览.md": {
+      "sha256": "bec715cfdcb6ff5475175c006d36cf7bbb06c843f24db0fc3e641ba9ff10f539",
+      "byte_length": 838
+    },
+    "过程明细.md": {
+      "sha256": "9c5878b69316f24ef442f7ffcb7fd1174049c1d468629ce51b9eb97511754359",
+      "byte_length": 1587
+    }
+  }
+}
+```

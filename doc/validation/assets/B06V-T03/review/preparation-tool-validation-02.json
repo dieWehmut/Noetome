@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "checks": [
+    {
+      "name": "focused-tests",
+      "argv": [
+        "/tmp/noetome-ui-venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_prepare_visual_compatibility.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 29.51128625869751,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "3c58c92a49cba118c7fb5dcc6af37cda0d4c645467a21f5bc65cbc393e79a2df",
+        "byte_length": 117
+      }
+    },
+    {
+      "name": "table-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-preparation-final-56ma3m6n/table.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.020389795303344727,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "flow-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-preparation-final-56ma3m6n/flow.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.020811796188354492,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "formula-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-preparation-final-56ma3m6n/formula.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.021668434143066406,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "scan-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-preparation-final-56ma3m6n/scan.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.020745515823364258,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "image-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-preparation-final-56ma3m6n/image.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.02409815788269043,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "format-syntax",
+      "argv": [
+        "node",
+        "--check",
+        "/tmp/noetome-preparation-final-56ma3m6n/format.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.02010631561279297,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.01995539665222168,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    }
+  ],
+  "before": {
+    "scripts/prepare_visual_compatibility.py": {
+      "sha256": "b494f94ef25959e98b125da5286c2f7363b1c360602e7c388cf0d03e626abc67",
+      "byte_length": 44849
+    },
+    "tests/test_prepare_visual_compatibility.py": {
+      "sha256": "87da9f05f64998fb52828fde8dab87a3bd005a991a97c9457f51533cf77535f6",
+      "byte_length": 20664
+    }
+  },
+  "after": {
+    "scripts/prepare_visual_compatibility.py": {
+      "sha256": "b494f94ef25959e98b125da5286c2f7363b1c360602e7c388cf0d03e626abc67",
+      "byte_length": 44849
+    },
+    "tests/test_prepare_visual_compatibility.py": {
+      "sha256": "87da9f05f64998fb52828fde8dab87a3bd005a991a97c9457f51533cf77535f6",
+      "byte_length": 20664
+    }
+  },
+  "unchanged": true,
+  "cause": "minimum actual native aliases property reported multitext for frozen YAML array/list semantics; explicit renderer enum mapping preserves authored semantics and raw actual; first formal failure retained",
+  "prior_failure_source": {
+    "path": "/mnt/d/Noetome/.artifacts/b06v-t03-minimum-20261106-b/captures/hand-authored-format-probe-light/result.json",
+    "sha256": "498b1f9ba512ed82a41ba5de5735fda8321ef16a58ffa1d2c834d682cda51e6d",
+    "byte_length": 1284
+  },
+  "native_acceptance": "not established by these focused checks; formal captures owned by root and runtime agent",
+  "models_requested": 0,
+  "apps_launched": 0,
+  "archive": "doc/validation/assets/B06V-T03/review/preparation-tool-validation-02-originals.zip",
+  "archive_pin": {
+    "sha256": "ae4fbe474877b82d0dc60a702b2cd05a93b15712109b91f3b39088c05ea319b5",
+    "byte_length": 74180
+  }
+}

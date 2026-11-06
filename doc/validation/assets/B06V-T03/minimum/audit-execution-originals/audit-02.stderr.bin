@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/minimum/audit_minimum.py", line 243, in <module>
+    main()
+  File "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/minimum/audit_minimum.py", line 221, in main
+    records = [selected_record(case, theme, module, runtime) for case in cases for theme in ('light', 'dark')]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/minimum/audit_minimum.py", line 191, in selected_record
+    require(len(matching) == 1, 'exact actual attachment click')
+  File "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T03/minimum/audit_minimum.py", line 27, in require
+    raise AssertionError(message)
+AssertionError: exact actual attachment click
