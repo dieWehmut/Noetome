@@ -5,6 +5,8 @@ import json
 import os
 from pathlib import Path
 import sqlite3
+import shutil
+import subprocess
 import tempfile
 import unittest
 import uuid
@@ -136,6 +138,134 @@ class ProcessAuthorTests(unittest.TestCase):
                     self.assertEqual(V.fallback_reasons(doc, ["FLOW_LABEL_WHITESPACE_FALLBACK"])[0]["object_ids"], [node["id"]])
         doc = self.document(); doc["steps"][0]["label"] = "a b"
         self.assertEqual(V.classify(doc, self.profile())[0], "flowchart")
+
+
+class FlowRendererProfileTests(unittest.TestCase):
+    """A valid runtime identity declaration alone never grants rendering."""
+    def profile(self):
+        return dict(schema_version=2, producer="flow_render_profile",
+                    profile_id="obsidian_1_15_0_pele_flowchart", app="Obsidian",
+                    app_version="1.15.0", mermaid_version=None,
+                    flowchart_support="supported", label_encoding="decimal_ascii_punctuation_v1",
+                    html_labels=False, renderer=dict(name="pele", version="1.8.0",
+                    source_sha256="9bf34b3a9a19351dc69d0d238e365560331a8ae392c41656df7f5090653253d0"))
+
+    def document(self, name="linear"):
+        return V.parse_source((FIXTURE / (name + ".txt")).read_bytes())[0]
+
+    def test_measured_schema_two_requires_exact_profile_and_keeps_whitespace_fallback(self):
+        profile = self.profile();V.profile_schema(profile)
+        self.assertEqual(V.classify(self.document(), profile),
+                         ("flowchart", [], ["s1", "s2", "s3"]))
+        self.assertEqual(V.classify(self.document("multiline_labels"), profile)[0:2],
+                         ("ordered_list", ["FLOW_LABEL_WHITESPACE_FALLBACK"]))
+
+    def test_schema_one_forbids_renderer_even_null_and_requires_mermaid_string(self):
+        legacy = json.loads((FIXTURE / "profile-obsidian_1_6_7_flowchart.json").read_bytes())
+        V.profile_schema(legacy)
+        for edit in ({"renderer": None}, {"renderer": self.profile()["renderer"]},
+                     {"mermaid_version": None}):
+            with self.subTest(edit=edit), self.assertRaises(AssertionError):
+                V.profile_schema(dict(legacy, **edit))
+
+    def test_schema_two_requires_explicit_null_mermaid_and_exact_renderer_fields(self):
+        edits = [lambda p: p.pop("renderer"), lambda p: p.pop("mermaid_version"),
+                 lambda p: p.update(renderer=None), lambda p: p.update(renderer=[]),
+                 lambda p: p.update(mermaid_version="10.6.1"),
+                 lambda p: p.update(mermaid_version="1.8.0"),
+                 lambda p: p["renderer"].pop("name"), lambda p: p["renderer"].pop("version"),
+                 lambda p: p["renderer"].pop("source_sha256"),
+                 lambda p: p["renderer"].update(extra="forbidden"),
+                 lambda p: p.update(extra="forbidden")]
+        for index, edit in enumerate(edits):
+            profile = self.profile();edit(profile)
+            with self.subTest(edit=index), self.assertRaises(AssertionError):
+                V.profile_schema(profile)
+
+    def test_renderer_strings_sha_and_unknown_schema_reject_coercion(self):
+        for key, value in (("name", None), ("name", 1), ("name", ""), ("version", False),
+                           ("version", ""), ("source_sha256", None), ("source_sha256", 1),
+                           ("source_sha256", "a" * 63), ("source_sha256", "a" * 65),
+                           ("source_sha256", "A" * 64), ("source_sha256", "g" * 64)):
+            profile = self.profile();profile["renderer"][key] = value
+            with self.subTest(key=key, value=value), self.assertRaises(AssertionError):
+                V.profile_schema(profile)
+        for version in (None, True, 0, 3, "2", 2.0):
+            profile = self.profile();profile["schema_version"] = version
+            with self.subTest(version=version), self.assertRaises(AssertionError):
+                V.profile_schema(profile)
+
+    def test_unknown_renderer_versions_hashes_and_mixed_identities_stay_fallback(self):
+        for edit in (lambda p: p.update(app_version="1.6.7"),
+                     lambda p: p.update(profile_id="obsidian_1_6_7_flowchart"),
+                     lambda p: p["renderer"].update(name="mermaid"),
+                     lambda p: p["renderer"].update(version="99.0"),
+                     lambda p: p["renderer"].update(source_sha256="0" * 64),
+                     lambda p: p.update(html_labels=True),
+                     lambda p: p.update(flowchart_support="unverified")):
+            profile = self.profile();edit(profile);V.profile_schema(profile)
+            with self.subTest(profile=profile):
+                self.assertEqual(V.classify(self.document(), profile)[:2],
+                                 ("ordered_list", ["FLOW_TARGET_UNVERIFIED"]))
+                self.assertEqual(V.classify(self.document("direction_unknown"), profile),
+                                 (None, ["FLOW_DIRECTION_UNKNOWN"], []))
+
+    def test_legal_schema_two_cannot_overrule_source_semantic_blockers(self):
+        for name, issue in (("correlation", "FLOW_CORRELATION_UNDIRECTED"),
+                            ("direction_unknown", "FLOW_DIRECTION_UNKNOWN"),
+                            ("missing_branch", "FLOW_DECISION_INCOMPLETE"),
+                            ("unknown_criterion", "FLOW_UNKNOWN_CRITERION")):
+            with self.subTest(name=name):
+                self.assertEqual(V.classify(self.document(name), self.profile()), (None, [issue], []))
+
+
+class FlowTargetCliTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        selected=os.environ.get("NOETOME_TEST_BINARY")
+        if not selected:raise unittest.SkipTest("ordinary Schema2 CLI selected explicitly by NOETOME_TEST_BINARY")
+        cls.cli=Path(selected);cls.temp=tempfile.TemporaryDirectory(prefix="noetome-flow-target-");cls.root=Path(cls.temp.name)
+        cls.pack=ROOT/"fixtures/visual-compatibility";cls.inputs=cls.root/"inputs";cls.inputs.mkdir();cls.expected=cls.pack/"source-originals/fixtures/process-flow-v1/expected-branch.json"
+        # Stored project.sqlite records contain the original host's absolute
+        # import path. Build this same frozen author through the ordinary CLI
+        # so the independent source check uses a real local import on each OS.
+        author=next(case for case in V.verify_fixture()["cases"] if case["name"]=="branch")
+        source=cls.inputs/"source.txt";source.write_bytes(V.read(FIXTURE/author["source_file"]))
+        cls.inputs.joinpath("profile.json").write_bytes(V.read(FIXTURE/author["profile_file"]))
+        def command(args):
+            result=subprocess.run([str(cls.cli),*map(str,args)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=60)
+            assert result.returncode==0,result.stderr.decode(errors="replace")
+            return result
+        command(["project","init",cls.inputs/"project"])
+        imported=command(["source","import",cls.inputs/"project",source])
+        import_id=V.strict_json(imported.stdout)["import_id"]
+        selected_source=V.actual_source(cls.inputs/"project",import_id,dict(kind="text",ordinal=0))
+        V.exact(selected_source["units"][0]["text"].encode(),source.read_bytes(),"ordinary imported frozen branch bytes")
+        case=cls.inputs/"case";case.mkdir();gold=V.read(FIXTURE/author["gold_file"]);case.joinpath("gold.json").write_bytes(gold)
+        V.save(case/"process-review.json",dict(schema_version=1,purpose="process_source_review",
+            project_id=selected_source["binding"]["project_id"],import_id=import_id,selection=[dict(kind="text",ordinal=0)],
+            gold_file="gold.json",gold_sha256=V.fingerprint(gold)["sha256"]))
+        command(["knowledge","process-review",cls.inputs/"project",case,cls.inputs/"review"])
+        V.verify_review(cls.inputs/"project",case,cls.inputs/"review",cls.expected)
+        cls.profile=cls.root/"target.json";p=FlowRendererProfileTests().profile();p["renderer"]["version"]="99.0";V.save(cls.profile,p);cls.vault=cls.root/"Vault"
+        r=subprocess.run([str(cls.cli),"knowledge","flow",str(cls.inputs/"project"),str(cls.inputs/"case"),str(cls.inputs/"review"),str(cls.profile),str(cls.vault)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=60)
+        assert r.returncode==0,r.stderr.decode(errors="replace")
+    @classmethod
+    def tearDownClass(cls):cls.temp.cleanup()
+    def check(self,vault,baseline=None):
+        return V.verify_flow(self.inputs/"project",self.inputs/"case",self.inputs/"review",baseline or self.inputs/"profile.json",vault,self.expected,target_profile=self.profile)
+    def test_explicit_target_recomputes_fallback_and_default_keeps_author_decision(self):
+        checked=self.check(self.vault);self.assertEqual(checked["representation"],"ordered_list");self.assertEqual(checked["issue_codes"],["FLOW_TARGET_UNVERIFIED"])
+        with self.assertRaisesRegex(AssertionError,"author expression"):
+            V.verify_flow(self.inputs/"project",self.inputs/"case",self.inputs/"review",self.profile,self.vault,self.expected)
+        with self.assertRaisesRegex(AssertionError,"frozen selected flow baseline profile"):self.check(self.vault,self.profile)
+        r=subprocess.run([V.sys.executable,str(ROOT/"scripts/verify_process_flow.py"),"check",str(self.inputs/"project"),str(self.inputs/"case"),str(self.inputs/"review"),str(self.inputs/"profile.json"),str(self.vault),str(self.expected),"--target-profile",str(self.profile)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=30);self.assertEqual(r.returncode,0,r.stderr.decode(errors="replace"));self.assertEqual(V.strict_json(r.stdout)["representation"],"ordered_list")
+    def test_explicit_target_rejects_synchronized_false_flowchart_claim(self):
+        vault=self.root/"false-flowchart";shutil.copytree(self.vault,vault);r=V.strict_json(V.read(vault/"flow.json"));r["representation"]="flowchart";r["issue_codes"]=[];V.save(vault/"flow.json",r);V.refresh_flow(vault)
+        with self.assertRaises(AssertionError):self.check(vault)
+    def test_explicit_target_rejects_synchronized_loss_of_visible_source_condition(self):
+        vault=self.root/"false-source-context";shutil.copytree(self.vault,vault);p=vault/"过程明细.md";raw=p.read_bytes();original="签名区域可读".encode();self.assertIn(original,raw);p.write_bytes(raw.replace(original,"签名区域不可读".encode(),1));V.refresh_flow(vault)
+        with self.assertRaises(AssertionError):self.check(vault)
 
 
 class MarkdownCodecTests(unittest.TestCase):

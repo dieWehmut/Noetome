@@ -31,6 +31,7 @@ from verify_extraction_knowledge import strict_json, fingerprint
 from verify_knowledge_coordination import fields, exact, display_text, uuid_string, safe_name
 from verify_knowledge_conflicts import guard_path
 from verify_formula import tokens as lexical_tokens, png_info, profile_schema
+from visual_capability_registry import supports_native_math
 
 _strict_json = strict_json
 
@@ -543,7 +544,7 @@ def classify(case, semantics, profile, recognition, api_issue=None):
     if declared is not None and recognized is not None and declared!=recognized: issues.append('SCAN_RECOGNITION_SEMANTIC_MISMATCH')
     representation=None; fallback=[]
     if not issues:
-        measured=profile['app']=='Obsidian' and profile['app_version']=='1.6.7' and profile['mathjax_version']=='3.2.2' and profile['verified'] and profile['native_math']
+        measured=supports_native_math(profile)
         reason='SCAN_NATIVE_UNAVAILABLE' if not measured else 'SCAN_DFRAC_UNAVAILABLE' if '\\dfrac' in raw and not profile['compatibility_dfrac'] else None
         if reason:
             if profile['local_images']: representation='formula_image'; fallback=[reason]

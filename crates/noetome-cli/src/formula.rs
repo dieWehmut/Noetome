@@ -131,9 +131,11 @@ fn evaluate(inputs: &Inputs, profile: &Profile) -> Result<Evaluation, ProjectErr
     if decision.issue_codes.is_empty() {
         let native = profile.native_math
             && profile.verified
-            && profile.app == "Obsidian"
-            && profile.app_version == "1.6.7"
-            && profile.mathjax_version == "3.2.2";
+            && crate::visual_capabilities::math(
+                &profile.app,
+                &profile.app_version,
+                &profile.mathjax_version,
+            );
         let fallback = if inputs.case.source_kind == SourceKind::FormulaRegion {
             Some("FORMULA_REGION_ONLY")
         } else if !native {

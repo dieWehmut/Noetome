@@ -24,6 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from verify_extraction_knowledge import strict_json, fingerprint
 from verify_knowledge_coordination import fields, exact, display_text, uuid_string, safe_name
 from verify_knowledge_conflicts import guard_path
+from visual_capability_registry import supports_native_math
 
 REPO = Path(__file__).resolve().parents[1]
 FIXTURE = REPO / "fixtures/formula-fidelity"
@@ -321,10 +322,9 @@ def classify(case, semantics, profile):
     if issues:
         return None, issues, [], [], semantic_tokens
     reasons = []
-    target_known = (profile["app"], profile["app_version"], profile["mathjax_version"]) == ("Obsidian", "1.6.7", "3.2.2")
     if case["tex"] is None:
         reasons.append("FORMULA_REGION_ONLY")
-    elif not profile["verified"] or not profile["native_math"] or not target_known:
+    elif not supports_native_math(profile):
         reasons.append("FORMULA_NATIVE_UNAVAILABLE")
     elif "\\dfrac" in case["_tex_bytes"].decode() and not profile["compatibility_dfrac"]:
         reasons.append("FORMULA_DFRAC_UNAVAILABLE")
@@ -505,7 +505,14 @@ def verify_note(raw, case, semantics, decision, expression, file_report):
     exact(file_report["mappings"], expected_mappings, "exact content-to-source mapping denominator and byte ranges")
 
 
-def verify_output(case_root, profile_path, vault, expected_path):
+def verify_output(case_root, profile_path, vault, expected_path, target_profile=None):
+    """Audit frozen author meaning, optionally against an explicit new target.
+
+    The positional profile remains the author's frozen baseline. The optional
+    target is an independently selected input original, never taken from the
+    result under audit. Only its representation decision is recomputed; author
+    cases, token structure, semantic fields and source SHA stay frozen.
+    """
     expected = expectation(expected_path)
     case, semantics, source = selected_source(case_root)
     exact(case, expected["case"], "original selection equals frozen author")
@@ -514,6 +521,18 @@ def verify_output(case_root, profile_path, vault, expected_path):
     profile_raw = read(profile_path); profile = strict_json(profile_raw)
     profile_schema(profile)
     exact(profile, strict_json(read(Path(expected_path).parent / ("profile-" + expected["profile_name"] + ".json"))), "frozen selected capability profile")
+    decision = dict(representation=expected["representation"], fallback_reasons=expected["fallback_reasons"],
+                    compatibility_rewrites=expected["compatibility_rewrites"], issue_codes=expected["issue_codes"])
+    if target_profile is not None:
+        profile_raw = read(target_profile); profile = strict_json(profile_raw)
+        profile_schema(profile)
+        selected_case = copy.deepcopy(case)
+        if case["tex"] is not None:
+            selected_case["_tex_bytes"] = source["original.tex"]
+        representation, issues, fallback, rewrites, semantic_tokens = classify(selected_case, semantics, profile)
+        exact(semantic_tokens, expected["tokens"], "new target cannot alter frozen author token structure")
+        decision = dict(representation=representation, fallback_reasons=fallback,
+                        compatibility_rewrites=rewrites, issue_codes=issues)
     source["profile.json"] = profile_raw
     actual = inventory(vault)
     for name, raw in source.items():
@@ -525,11 +544,9 @@ def verify_output(case_root, profile_path, vault, expected_path):
     uuid_string(report["request_id"])
     for key, value in (("case", case), ("semantics", semantics), ("profile", profile)):
         exact(report[key], value, "report binds actual source " + key)
-    decision = dict(representation=expected["representation"], fallback_reasons=expected["fallback_reasons"],
-                    compatibility_rewrites=expected["compatibility_rewrites"], issue_codes=expected["issue_codes"])
     exact(report["decision"], decision, "source-grounded expression outcome")
     exact(report["tokens"], expected["tokens"], "independent formula token structure")
-    ready = expected["representation"] is not None
+    ready = decision["representation"] is not None
     exact(report["status"], "passed" if ready else "needs_review", "semantic status")
     exact(report["preview_status"], "rendered" if ready else "not_run", "affected preview status")
     checks = report["checks"]
@@ -557,7 +574,7 @@ def verify_output(case_root, profile_path, vault, expected_path):
     expected_inventory = set(source) | {".owner.json", "formula.json", "formula.md"}
     if ready:
         expected_inventory |= {"plan.json", "公式预览.md"}
-        expression = compiled_expression(case, profile, source) if expected["representation"] == "native_math" else None
+        expression = compiled_expression(case, profile, source) if decision["representation"] == "native_math" else None
         if expression is not None:
             expected_inventory.add("compiled.tex")
             exact(actual["compiled.tex"], expression.encode(), "separate compiled TeX bytes")
@@ -589,8 +606,8 @@ def verify_output(case_root, profile_path, vault, expected_path):
     outside_payload = re.sub(r"```json\n.*?\n```", "<checked-report-payload>", markdown, flags=re.S)
     expected_shell = "# 选定公式保真预览报告\n\n状态：" + report["status"] + "；预览：" + report["preview_status"] + "；知识：pending；科学质量：not_run；发布：false。\n\n仅选定公式/原区域工程核对；网络与付费调用：0。\n\n<checked-report-payload>\n"
     exact(outside_payload, expected_shell, "whole visible report shell cannot add false scope, fees or success")
-    return dict(status="passed", case_name=expected["case_name"], representation=expected["representation"],
-                original_bytes_unchanged=True, issue_codes=expected["issue_codes"], scientific_quality="not_run")
+    return dict(status="passed", case_name=expected["case_name"], representation=decision["representation"],
+                original_bytes_unchanged=True, issue_codes=decision["issue_codes"], scientific_quality="not_run")
 
 
 def resynchronize_result(vault):
@@ -859,13 +876,14 @@ def main():
     check = sub.add_parser("check")
     check.add_argument("case", type=Path); check.add_argument("profile", type=Path)
     check.add_argument("vault", type=Path); check.add_argument("expected", type=Path)
+    check.add_argument("--target-profile", type=Path, help="explicit selected target original; positional profile remains frozen author baseline")
     audit = sub.add_parser("audit")
     audit.add_argument("cli", type=Path); audit.add_argument("output", type=Path)
     args = parser.parse_args()
     if args.command == "fixture":
         print(json.dumps(dict(status="passed", cases=len(verify_fixture()["cases"])), ensure_ascii=False))
     elif args.command == "check":
-        print(json.dumps(verify_output(args.case, args.profile, args.vault, args.expected), ensure_ascii=False))
+        print(json.dumps(verify_output(args.case, args.profile, args.vault, args.expected, target_profile=args.target_profile), ensure_ascii=False))
     else:
         print(json.dumps(run_audit(args.cli, args.output), ensure_ascii=False))
 

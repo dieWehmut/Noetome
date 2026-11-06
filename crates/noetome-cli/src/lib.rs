@@ -75,6 +75,7 @@ mod source_model;
 mod source_schema;
 mod source_write;
 pub mod text;
+mod visual_capabilities;
 
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const INVALID_ARGUMENT: &str = "CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。";

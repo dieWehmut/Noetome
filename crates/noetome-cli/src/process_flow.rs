@@ -151,15 +151,14 @@ pub fn run(
     let reviewed = SavedReview::open(saved, &inputs, &control)?;
     let profile_input = SingleInput::open(profile, &control)?;
     let profile: FlowProfile = parse(&profile_input.bytes)?;
-    if [
-        &profile.profile_id,
-        &profile.app,
-        &profile.app_version,
-        &profile.mermaid_version,
-    ]
-    .iter()
-    .any(|v| !plain(v))
-    {
+    let mut labels = vec![&profile.profile_id, &profile.app, &profile.app_version];
+    if let Some(version) = &profile.mermaid_version {
+        labels.push(version);
+    }
+    if let Some(renderer) = &profile.renderer {
+        labels.extend([&renderer.name, &renderer.version]);
+    }
+    if labels.iter().any(|v| !plain(v)) {
         return Err(error(
             "FLOW_PROFILE_SCHEMA",
             2,

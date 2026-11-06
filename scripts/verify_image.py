@@ -24,6 +24,7 @@ from verify_formula import read, save, inventory, pins, png_info
 from verify_extraction_knowledge import strict_json, fingerprint
 from verify_knowledge_coordination import fields, exact, display_text, uuid_string, safe_name
 from verify_knowledge_conflicts import guard_path
+from visual_capability_registry import supports_svg_target
 
 REPO=Path(__file__).resolve().parents[1]
 FIXTURE=REPO/'fixtures/image-fidelity'
@@ -177,7 +178,7 @@ def classify(c,s,p):
     if c['source_kind']=='observation':return 'original_image',[],['IMAGE_OBSERVATION_ORIGINAL']
     fallback=[]
     if any(e['kind']=='unsupported' for e in s['elements']):fallback.append('IMAGE_GEOMETRY_UNSUPPORTED')
-    if not p['verified'] or p['app']!='Obsidian' or p['app_version']!='1.6.7':fallback.append('IMAGE_TARGET_UNVERIFIED')
+    if not supports_svg_target(p):fallback.append('IMAGE_TARGET_UNVERIFIED')
     if not p['svg_supported']:fallback.append('IMAGE_SVG_UNAVAILABLE')
     if not fallback:
         reason=layout(s,c['dimensions'])
@@ -456,18 +457,24 @@ def verify_note(raw,case,semantics,decision,file_report):
     exact(file_report['mappings'],mappings,'actual Markdown content-to-source field positions')
 
 
-def verify_output(case_root,profile_path,vault,expected_path):
+def verify_output(case_root,profile_path,vault,expected_path,target_profile=None):
+    """Optional target is a selected external original; author meaning stays frozen."""
     expected=expectation(expected_path);c,s,source=selected_source(case_root)
     exact(c,expected['case'],'source selection is frozen author original');exact(s,expected['semantics'],'source semantics are frozen independent declarations');exact(pins(inventory(case_root)),expected['source_pins'],'author source original bytes')
     profile_raw=read(profile_path);profile=strict_json(profile_raw);profile_schema(profile)
     exact(profile,strict_json(read(Path(expected_path).parent/('profile-'+expected['profile_name']+'.json'))),'selected frozen target profile')
+    decision=dict(representation=expected['representation'],fallback_reasons=expected['fallback_reasons'],issue_codes=expected['issue_codes'])
+    if target_profile is not None:
+        profile_raw=read(target_profile);profile=strict_json(profile_raw);profile_schema(profile)
+        representation,issues,fallback=classify(c,s,profile)
+        decision=dict(representation=representation,fallback_reasons=fallback,issue_codes=issues)
     source['profile.json']=profile_raw;actual=inventory(vault)
     for name,raw in source.items():exact(actual[name],raw,'actual original source bytes preserved '+name)
     report=strict_json(actual['image.json']);fields(report,REPORT_FIELDS)
     for key,value in COMMON.items():exact(report[key],value,'unpublished manual engineering scope '+key)
     uuid_string(report['request_id'])
     for key,value in [('case',c),('semantics',s),('profile',profile)]:exact(report[key],value,'report source binding '+key)
-    decision=dict(representation=expected['representation'],fallback_reasons=expected['fallback_reasons'],issue_codes=expected['issue_codes']);exact(report['decision'],decision,'source-grounded image outcome')
+    exact(report['decision'],decision,'source-grounded image outcome')
     ready=decision['representation'] is not None;exact(report['status'],'passed' if ready else 'needs_review','true semantic status');exact(report['preview_status'],'rendered' if ready else 'not_run','true affected preview status')
     checks=report['checks'];fields(checks,'source_preservation author_declaration geometry_review semantic_review note_plan rendering saved_output')
     for key in ('source_preservation','saved_output'):exact(checks[key],'passed','actual preserved output '+key)
@@ -496,7 +503,7 @@ def verify_output(case_root,profile_path,vault,expected_path):
     outside=re.sub(r'```json\n.*?\n```','<checked-report-payload>',markdown,flags=re.S)
     wanted='# 选定图像保真预览报告\n\n状态：'+report['status']+'；预览：'+report['preview_status']+'；知识：pending；科学质量：not_run；发布：false。\n\n仅选定图像和手工结构声明工程核对；不执行自动图像理解；网络与付费调用：0。\n\n<checked-report-payload>\n'
     exact(outside,wanted,'whole visible report shell including honest scope/status')
-    return dict(status='passed',case_name=expected['case_name'],representation=expected['representation'],original_bytes_unchanged=True,issue_codes=expected['issue_codes'],scientific_quality='not_run')
+    return dict(status='passed',case_name=expected['case_name'],representation=decision['representation'],original_bytes_unchanged=True,issue_codes=decision['issue_codes'],scientific_quality='not_run')
 
 
 def resynchronize_result(vault):
@@ -690,10 +697,10 @@ def run_audit(cli,root):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);sub=parser.add_subparsers(dest='command',required=True);sub.add_parser('fixture')
-    check=sub.add_parser('check');check.add_argument('case',type=Path);check.add_argument('profile',type=Path);check.add_argument('vault',type=Path);check.add_argument('expected',type=Path)
+    check=sub.add_parser('check');check.add_argument('case',type=Path);check.add_argument('profile',type=Path);check.add_argument('vault',type=Path);check.add_argument('expected',type=Path);check.add_argument('--target-profile',type=Path,help='explicit selected target original; positional profile remains frozen author baseline')
     audit=sub.add_parser('audit');audit.add_argument('cli',type=Path);audit.add_argument('output',type=Path);args=parser.parse_args()
     if args.command=='fixture':result=dict(status='passed',cases=len(verify_fixture()['cases']))
-    elif args.command=='check':result=verify_output(args.case,args.profile,args.vault,args.expected)
+    elif args.command=='check':result=verify_output(args.case,args.profile,args.vault,args.expected,target_profile=args.target_profile)
     else:result=run_audit(args.cli,args.output)
     print(json.dumps(result,ensure_ascii=False))
 

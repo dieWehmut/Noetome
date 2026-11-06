@@ -28,6 +28,7 @@ from verify_extraction_knowledge import actual_source, strict_json, fingerprint
 from verify_knowledge_coordination import (fields, exact, display_text, identifier,
                                           uuid_string, safe_name)
 from verify_knowledge_conflicts import guard_path
+from visual_capability_registry import supports_flowchart
 
 REPO = Path(__file__).resolve().parents[1]
 FIXTURE = REPO / "fixtures/process-flow-v1"
@@ -273,11 +274,24 @@ def semantic_totals(doc, unparsed=0):
 
 
 def profile_schema(profile):
-    fields(profile, "schema_version producer profile_id app app_version mermaid_version flowchart_support label_encoding html_labels")
-    exact({k: profile[k] for k in ("schema_version", "producer", "label_encoding")},
-          dict(schema_version=1, producer="flow_render_profile", label_encoding="decimal_ascii_punctuation_v1"), "profile fixed")
-    for key in ("profile_id", "app", "app_version", "mermaid_version"):
+    assert type(profile) is dict, "profile object"
+    version = profile.get("schema_version")
+    assert type(version) is int and version in (1, 2), "profile schema version"
+    names = "schema_version producer profile_id app app_version mermaid_version flowchart_support label_encoding html_labels"
+    fields(profile, names + (" renderer" if version == 2 else ""))
+    exact({k: profile[k] for k in ("producer", "label_encoding")},
+          dict(producer="flow_render_profile", label_encoding="decimal_ascii_punctuation_v1"), "profile fixed")
+    for key in ("profile_id", "app", "app_version"):
         display_text(profile[key])
+    if version == 1:
+        display_text(profile["mermaid_version"])
+    else:
+        exact(profile["mermaid_version"], None, "schema 2 explicit unknown Mermaid version")
+        renderer = profile["renderer"]
+        fields(renderer, "name version source_sha256")
+        for key in ("name", "version"):
+            display_text(renderer[key])
+        assert type(renderer["source_sha256"]) is str and re.fullmatch(r"[0-9a-f]{64}", renderer["source_sha256"]), "renderer lowercase SHA-256"
     assert profile["flowchart_support"] in ("supported", "unverified", "unavailable"), "profile support enum"
     assert type(profile["html_labels"]) is bool, "profile HTML flag"
 
@@ -319,10 +333,7 @@ def classify(doc, profile):
     if reached != set(nodes) or {n for n in nodes if not outgoing[n]} != set(doc["process"]["goals"]):
         return None, ["FLOW_DISCONNECTED"], []
     reasons = []
-    supported = dict(schema_version=1, producer="flow_render_profile", profile_id="obsidian_1_6_7_flowchart",
-        app="Obsidian", app_version="1.6.7", mermaid_version="10.6.1", flowchart_support="supported",
-        label_encoding="decimal_ascii_punctuation_v1", html_labels=True)
-    if profile != supported:
+    if not supports_flowchart(profile):
         reasons.append("FLOW_TARGET_UNVERIFIED")
     if any(label_whitespace(s["label"]) or label_whitespace(s["criterion"] or "") for s in nodes.values()):
         reasons.append("FLOW_LABEL_WHITESPACE_FALLBACK")
@@ -863,9 +874,15 @@ def verify_rendered(plan, files, actual):
     return dict(rendered_notes=len(files), content_mappings=sum(len(f["content_mappings"]) for f in files), links=sum(len(f["links"]) for f in files))
 
 
-def verify_flow(project, case, review, profile_path, vault, expected_path=None):
+def verify_flow(project, case, review, profile_path, vault, expected_path=None, target_profile=None):
+    """Optional target changes renderer decision, never frozen source meaning."""
     reviewed, review_files, doc = verify_review(project, case, review, expected_path)
     profile_raw = read(profile_path); profile = strict_json(profile_raw); profile_schema(profile)
+    if target_profile is not None:
+        assert expected_path is not None, "explicit target requires frozen author expectation"
+        baseline, _ = load_expectation(expected_path)
+        exact(profile, strict_json(read(Path(expected_path).parent / ("profile-" + baseline["profile"] + ".json"))), "frozen selected flow baseline profile")
+        profile_raw = read(target_profile); profile = strict_json(profile_raw); profile_schema(profile)
     files = tree(vault); report = strict_json(files["flow.json"]); fields(report, FLOW_FIELDS)
     uuid_string(report["request_id"])
     source_ready = reviewed["status"] == "passed"
@@ -909,10 +926,22 @@ def verify_flow(project, case, review, profile_path, vault, expected_path=None):
     exact(files["flow.md"], markdown.encode(), "flow full Markdown report")
     if expected_path:
         expected, _ = load_expectation(expected_path)
-        exact(report["representation"], expected["representation"], "author expression")
-        exact(report["checks"]["model_support"], {"passed": "passed", "blocked": "needs_review", "not_run": "not_run"}[expected["flow_status"]], "author flow status")
-        for key, value in expected["totals"].items(): exact(totals[key], value, "author rendered denominator " + key)
-        if source_ready: exact(codes, expected["issues"], "author flow issues")
+        if target_profile is None:
+            exact(report["representation"], expected["representation"], "author expression")
+            exact(report["checks"]["model_support"], {"passed": "passed", "blocked": "needs_review", "not_run": "not_run"}[expected["flow_status"]], "author flow status")
+            for key, value in expected["totals"].items(): exact(totals[key], value, "author rendered denominator " + key)
+            if source_ready: exact(codes, expected["issues"], "author flow issues")
+        else:
+            # Full target decisions, literal notes and actual rendering counts
+            # were independently checked above. Preserve the original author
+            # semantic denominators; only successful expression counts depend
+            # on the explicitly selected target and its capability decision.
+            for key, value in expected["totals"].items():
+                if key == "flow_nodes": value = len(doc["steps"]) if ready else 0
+                elif key == "flow_edges": value = len(doc["relations"]) if ready else 0
+                exact(totals[key], value, "author semantics with selected target denominator " + key)
+            if source_ready and expected["representation"] is None:
+                exact(codes, expected["issues"], "selected target cannot overrule author semantic blockers")
     return report
 
 
@@ -1132,6 +1161,7 @@ def main():
     for name in ("project", "case", "review", "expected"): review.add_argument(name, type=Path)
     check = sub.add_parser("check")
     for name in ("project", "case", "review", "profile", "vault", "expected"): check.add_argument(name, type=Path)
+    check.add_argument("--target-profile", type=Path, help="explicit target original; positional profile remains frozen author baseline")
     run = sub.add_parser("audit"); run.add_argument("cli", type=Path); run.add_argument("root", type=Path)
     sub.add_parser("check-fixture")
     args = parser.parse_args()
@@ -1141,7 +1171,7 @@ def main():
         report, _, _ = verify_review(args.project, args.case, args.review, args.expected)
         result = dict(status="passed", review_status=report["status"], totals=report["totals"])
     else:
-        report = verify_flow(args.project, args.case, args.review, args.profile, args.vault, args.expected)
+        report = verify_flow(args.project, args.case, args.review, args.profile, args.vault, args.expected, target_profile=args.target_profile)
         result = dict(status="passed", flow_status=report["status"], representation=report["representation"], totals=report["totals"])
     print(json.dumps(result, ensure_ascii=False, indent=2))
 

@@ -201,9 +201,11 @@ fn evaluate(
         let uses_dfrac = formula_parser::parse(raw).is_ok_and(|p| p.uses_dfrac);
         let native = profile.native_math
             && profile.verified
-            && profile.app == "Obsidian"
-            && profile.app_version == "1.6.7"
-            && profile.mathjax_version == "3.2.2";
+            && crate::visual_capabilities::math(
+                &profile.app,
+                &profile.app_version,
+                &profile.mathjax_version,
+            );
         let fallback = if !native {
             Some("SCAN_NATIVE_UNAVAILABLE")
         } else if uses_dfrac && !profile.compatibility_dfrac {

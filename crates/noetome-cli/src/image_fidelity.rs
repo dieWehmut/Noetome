@@ -503,7 +503,8 @@ fn evaluate(inputs: &Inputs, profile: &Profile) -> Evaluation {
                 {
                     push(&mut decision.fallback_reasons, "IMAGE_GEOMETRY_UNSUPPORTED");
                 }
-                if !profile.verified || profile.app != "Obsidian" || profile.app_version != "1.6.7"
+                if !profile.verified
+                    || !crate::visual_capabilities::svg(&profile.app, &profile.app_version)
                 {
                     push(&mut decision.fallback_reasons, "IMAGE_TARGET_UNVERIFIED");
                 }

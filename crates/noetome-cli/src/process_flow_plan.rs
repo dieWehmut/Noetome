@@ -192,16 +192,7 @@ pub(crate) fn build(
     }
 
     let mut fallback_reasons = Vec::new();
-    if !(profile.schema_version == 1
-        && profile.producer == "flow_render_profile"
-        && profile.profile_id == "obsidian_1_6_7_flowchart"
-        && profile.app == "Obsidian"
-        && profile.app_version == "1.6.7"
-        && profile.mermaid_version == "10.6.1"
-        && profile.flowchart_support == FlowchartSupport::Supported
-        && profile.label_encoding == "decimal_ascii_punctuation_v1"
-        && profile.html_labels)
-    {
+    if !crate::visual_capabilities::flow(profile) {
         fallback_reasons.push(FallbackReason {
             code: "FLOW_TARGET_UNVERIFIED".into(),
             object_ids: vec![],

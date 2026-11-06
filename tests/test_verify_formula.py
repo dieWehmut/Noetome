@@ -186,6 +186,40 @@ class FormulaCliReaderTests(unittest.TestCase):
     def test_ordinary_cli_readback_has_preserved_sources_and_semantic_expression(self):
         self.assertEqual(self.checked(self.vault)["representation"],"native_math")
 
+    def test_explicit_target_original_recomputes_fallback_and_preserves_author_freeze(self):
+        author_before=V.pins(V.inventory(FIXTURE))
+        profile=self.root/"formula-target.json";value=V.strict_json(V.read(FIXTURE/"profile-native.json"));value["app_version"]="99.0";V.save(profile,value)
+        path=self.root/"formula-explicit-target"
+        result=subprocess.run([str(self.cli),"knowledge","formula",str(FIXTURE/"native"),str(profile),str(path)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=30)
+        self.assertEqual(result.returncode,0,result.stderr.decode(errors="replace"))
+        checked=V.verify_output(FIXTURE/"native",FIXTURE/"profile-native.json",path,FIXTURE/"expected-native.json",target_profile=profile)
+        self.assertEqual(checked["representation"],"formula_image")
+        audit=subprocess.run([V.sys.executable,str(ROOT/"scripts/verify_formula.py"),"check",str(FIXTURE/"native"),str(FIXTURE/"profile-native.json"),str(path),str(FIXTURE/"expected-native.json"),"--target-profile",str(profile)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=30)
+        self.assertEqual(audit.returncode,0,audit.stderr.decode(errors="replace"));self.assertEqual(V.strict_json(audit.stdout),checked)
+        with self.assertRaises(AssertionError):self.checked(path)
+        with self.assertRaisesRegex(AssertionError,"frozen selected capability profile"):
+            V.verify_output(FIXTURE/"native",profile,path,FIXTURE/"expected-native.json",target_profile=profile)
+        self.assertEqual(V.pins(V.inventory(FIXTURE)),author_before)
+
+    def test_explicit_target_cannot_turn_unknown_source_symbol_into_fallback_success(self):
+        profile=self.root/"formula-blocked-target.json";value=V.strict_json(V.read(FIXTURE/"profile-native.json"));value["app_version"]="99.0";V.save(profile,value)
+        path=self.root/"formula-unknown-explicit-target"
+        result=subprocess.run([str(self.cli),"knowledge","formula",str(FIXTURE/"unknown_symbol"),str(profile),str(path)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=30)
+        self.assertEqual(result.returncode,3)
+        checked=V.verify_output(FIXTURE/"unknown_symbol",FIXTURE/"profile-native.json",path,FIXTURE/"expected-unknown_symbol.json",target_profile=profile)
+        self.assertIsNone(checked["representation"]);self.assertEqual(checked["issue_codes"],["FORMULA_UNKNOWN_SYMBOL"])
+
+    def test_synchronized_unknown_target_native_claim_rejected_with_explicit_target(self):
+        path=self.copy_vault();profile=self.root/"formula-forged-target.json";value=V.strict_json(V.read(FIXTURE/"profile-native.json"));value["app_version"]="99.0";V.save(profile,value)
+        (path/"profile.json").write_bytes(profile.read_bytes());report=V.strict_json(V.read(path/"formula.json"));report["profile"]=value;report["inputs"]["profile.json"]=V.fingerprint(profile.read_bytes());V.save(path/"formula.json",report);V.resynchronize_result(path)
+        with self.assertRaisesRegex(AssertionError,"source-grounded expression outcome"):
+            V.verify_output(FIXTURE/"native",FIXTURE/"profile-native.json",path,FIXTURE/"expected-native.json",target_profile=profile)
+
+    def test_explicit_measured_target_still_rejects_synced_negative_sign_loss(self):
+        path=self.copy_vault();note=path/"公式预览.md";note.write_bytes(note.read_bytes().replace(b"= -",b"= +",1));V.resynchronize_result(path)
+        with self.assertRaises(AssertionError):
+            V.verify_output(FIXTURE/"native",FIXTURE/"profile-native.json",path,FIXTURE/"expected-native.json",target_profile=FIXTURE/"profile-native.json")
+
     def test_synced_hashes_do_not_confirm_negative_sign_or_subscript(self):
         for old,new in ((b"= -",b"= +"),(b"C_i",b"C_j"),(b"t^{2}",b"t^{3}")):
             path=self.copy_vault();p=path/"公式预览.md";p.write_bytes(p.read_bytes().replace(old,new,1));V.resynchronize_result(path)

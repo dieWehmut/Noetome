@@ -47,6 +47,13 @@ class ImageAuthorTests(unittest.TestCase):
         for field,value in [('verified',False),('app','UnknownApp'),('app_version','99.0')]:
             p=self.profile();p[field]=value;self.assertEqual(V.classify(c,s,p),('original_image',[],['IMAGE_TARGET_UNVERIFIED']))
 
+    def test_measured_current_target_still_requires_flags_and_complete_source_semantics(self):
+        c,s,_=self.source();p=self.profile();p['app_version']='1.15.0';self.assertEqual(V.classify(c,s,p),('svg_redraw',[],[]))
+        for edits,reasons in [({'verified':False},['IMAGE_TARGET_UNVERIFIED']),({'svg_supported':False},['IMAGE_SVG_UNAVAILABLE']),({'verified':False,'svg_supported':False},['IMAGE_TARGET_UNVERIFIED','IMAGE_SVG_UNAVAILABLE'])]:
+            self.assertEqual(V.classify(c,s,dict(p,**edits)),('original_image',[],reasons))
+        unknown=copy.deepcopy(s);unknown['relations'][0]['effect']='unknown';self.assertEqual(V.classify(c,unknown,p),(None,['IMAGE_UNKNOWN_RELATION'],[]))
+        curve,semantics,_=self.source('curve_no_data');self.assertEqual(V.classify(curve,semantics,p),('original_image',[],['IMAGE_CURVE_NO_DATA']))
+
     def test_spatial_relations_derive_from_actual_original_boxes(self):
         c,s,_=self.source('spatial');elements={e['id']:e for e in s['elements']};self.assertTrue(all(V.spatial_holds(r,elements) for r in s['spatial_relations']))
         changed=copy.deepcopy(s);changed['elements'][1]['bbox']=[100,160,140,140];self.assertEqual(V.classify(c,changed,self.profile())[:2],(None,['IMAGE_GEOMETRY_MISMATCH']))
@@ -145,6 +152,28 @@ class ImageCliReaderTests(unittest.TestCase):
     def checked(self,vault):return V.verify_output(FIXTURE/'signed_arrows',FIXTURE/'profile-native.json',vault,FIXTURE/'expected-signed_arrows.json')
 
     def test_real_cli_readback_preserves_original_and_full_semantics(self):self.assertEqual(self.checked(self.vault)['representation'],'svg_redraw')
+
+    def test_explicit_target_original_recomputes_fallback_and_preserves_author_freeze(self):
+        author_before=V.pins(V.inventory(FIXTURE));profile=self.root/'image-target.json';value=V.strict_json(V.read(FIXTURE/'profile-native.json'));value['app_version']='99.0';V.save(profile,value);target=self.root/'image-explicit-target'
+        result=subprocess.run([str(self.cli),'knowledge','image',str(FIXTURE/'signed_arrows'),str(profile),str(target)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=60);self.assertEqual(result.returncode,0,result.stderr.decode(errors='replace'))
+        checked=V.verify_output(FIXTURE/'signed_arrows',FIXTURE/'profile-native.json',target,FIXTURE/'expected-signed_arrows.json',target_profile=profile);self.assertEqual(checked['representation'],'original_image')
+        audit=subprocess.run([V.sys.executable,str(ROOT/'scripts/verify_image.py'),'check',str(FIXTURE/'signed_arrows'),str(FIXTURE/'profile-native.json'),str(target),str(FIXTURE/'expected-signed_arrows.json'),'--target-profile',str(profile)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=30);self.assertEqual(audit.returncode,0,audit.stderr.decode(errors='replace'));self.assertEqual(V.strict_json(audit.stdout),checked)
+        with self.assertRaises(AssertionError):self.checked(target)
+        with self.assertRaisesRegex(AssertionError,'selected frozen target profile'):V.verify_output(FIXTURE/'signed_arrows',profile,target,FIXTURE/'expected-signed_arrows.json',target_profile=profile)
+        self.assertEqual(V.pins(V.inventory(FIXTURE)),author_before)
+
+    def test_explicit_target_cannot_turn_unknown_source_relation_into_fallback_success(self):
+        profile=self.root/'image-blocked-target.json';value=V.strict_json(V.read(FIXTURE/'profile-native.json'));value['app_version']='99.0';V.save(profile,value);target=self.root/'image-unknown-explicit-target'
+        result=subprocess.run([str(self.cli),'knowledge','image',str(FIXTURE/'unknown_relation'),str(profile),str(target)],stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=60);self.assertEqual(result.returncode,3)
+        checked=V.verify_output(FIXTURE/'unknown_relation',FIXTURE/'profile-native.json',target,FIXTURE/'expected-unknown_relation.json',target_profile=profile);self.assertIsNone(checked['representation']);self.assertEqual(checked['issue_codes'],['IMAGE_UNKNOWN_RELATION'])
+
+    def test_synchronized_unknown_target_svg_claim_rejected_with_explicit_target(self):
+        target=self.cloned();profile=self.root/'image-forged-target.json';value=V.strict_json(V.read(FIXTURE/'profile-native.json'));value['app_version']='99.0';V.save(profile,value);(target/'profile.json').write_bytes(profile.read_bytes());report=V.strict_json(V.read(target/'image.json'));report['profile']=value;report['inputs']['profile.json']=V.fingerprint(profile.read_bytes());V.save(target/'image.json',report);V.resynchronize_result(target)
+        with self.assertRaisesRegex(AssertionError,'source-grounded image outcome'):V.verify_output(FIXTURE/'signed_arrows',FIXTURE/'profile-native.json',target,FIXTURE/'expected-signed_arrows.json',target_profile=profile)
+
+    def test_explicit_measured_target_still_rejects_synced_arrowhead_loss(self):
+        target=self.cloned();V.mutate_svg(target,'relation-gain-head',lambda raw:b'');V.resynchronize_result(target)
+        with self.assertRaises(AssertionError):V.verify_output(FIXTURE/'signed_arrows',FIXTURE/'profile-native.json',target,FIXTURE/'expected-signed_arrows.json',target_profile=FIXTURE/'profile-native.json')
 
     def test_actual_svg_unit_effect_label_and_shape_losses_rejected_after_full_resync(self):
         for id in ('image-canvas','element-feed-label','element-feed-unit','relation-gain-effect','relation-gain-head','legend-positive-meaning','element-feed'):

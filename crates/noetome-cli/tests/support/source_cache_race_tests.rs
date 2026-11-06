@@ -14,10 +14,22 @@ fn mutate_when_raw_is_guarded(
     mode: u8,
 ) -> std::thread::JoinHandle<Mutation> {
     use std::os::windows::fs::OpenOptionsExt;
-    std::thread::spawn(move || {
-        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(5);
+    let (ready_sender, ready_receiver) = std::sync::mpsc::sync_channel(0);
+    let (start_sender, start_receiver) = std::sync::mpsc::sync_channel(0);
+    let worker = std::thread::spawn(move || {
+        let mut probe = fs::OpenOptions::new();
+        probe.write(true).share_mode(7);
+        let mut deadline = None;
         loop {
-            match fs::OpenOptions::new().write(true).share_mode(7).open(&raw) {
+            // Start validation only after this worker has prepared the actual
+            // raw-file probe and entered its loop. The observation deadline
+            // starts after the caller releases this ready worker, not at spawn.
+            let deadline = *deadline.get_or_insert_with(|| {
+                ready_sender.send(()).unwrap();
+                start_receiver.recv().unwrap();
+                std::time::Instant::now() + std::time::Duration::from_secs(5)
+            });
+            match probe.open(&raw) {
                 Ok(file) => drop(file),
                 Err(error) if error.raw_os_error() == Some(32) => {
                     let mutation = match mode {
@@ -63,7 +75,12 @@ fn mutate_when_raw_is_guarded(
             assert!(std::time::Instant::now() < deadline, "no live raw guard observed");
             std::thread::sleep(std::time::Duration::from_millis(1));
         }
-    })
+    });
+    ready_receiver
+        .recv_timeout(std::time::Duration::from_secs(5))
+        .expect("raw-cache mutation worker did not become ready");
+    start_sender.send(()).unwrap();
+    worker
 }
 
 fn large_host() -> (Sandbox, Connection, crate::source_model::Store) {
