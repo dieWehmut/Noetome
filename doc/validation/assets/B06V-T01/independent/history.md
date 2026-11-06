@@ -1,0 +1,15 @@
+# 独立作者冻结与普通CLI RED原件
+
+第一次冻结SHA `b08a2104070137b042b3a9f872b31f5376a3a85aed2fd20e5e6003d686f8e520`，真实旧CLI调用 `knowledge image` 退出2（CLI_INVALID_ARGUMENT）且没有创建新Vault。独立视觉读回随后发现作者原PNG中长作用词靠近节点标签而造成叠字，因此第一版不作为clear图像验收输入，素材和RED全部保留在attempt1 zip。
+
+只修作者手绘标签居中/作用符号位置，以及空间例中内部形状的位置，重新冻结。最终SHA `b74d28cc98598f53d5efbf47bacdab9aa80bb23f938ffb2537c3a2f7c072af1e`。在Rust image实现前再次调用同一个真实旧CLI，退出2（CLI_INVALID_ARGUMENT）且没有创建新Vault。旧CLI SHA `f333e7c69758d1a59c0929c3330c4f5e1483f2dc85256ea18b93f0a848808ab8`，两次调用的前后指纹均保持。最终素材/receipt/argv/stdout/stderr完整保存在final zip。
+
+PNG为作者以Pillow手工绘制整图，结构是作者手工声明。最终独立expected先于实现与候选冻结，未读取Rust SVG生成作者expected；不能据此证明图像自动理解、科学准确率或通用OCR。两个freeze和两次RED属于同一作者包的纠错历史，不相加成24个独立场景。
+
+补充独立审查发现箭头三角形可穿过中心线之外的第三图形：明确relation label空、neutral、unit=null，第三rect bbox=[360,177,28,30]。调用前预期原图回退，普通CLI实际退出0/svg_redraw；triangle与rect共同内部点(381,206)证明实际head遮蔽问题，原始源声明、输出与receipt存于arrowhead-occlusion-real-cli-red.zip。该补充是声明几何故障探针，不新增独立作者场景；PNG原件未改，不称为新图像理解基准。复制Linux CLI本身不入zip，receipt保存其实际SHA。后续实现采用保守箭头与第三图形/图例stroke包络碰撞时原图回退。
+
+完整审计首次准备因为Cargo binary有硬链接在执行普通CLI前拒绝，不作为行为RED；audit-admission-failure.json记录此边界及后续使用单link同字节复制CLI的方式。
+
+最终独立审计status=passed：12冻结作者场景、50次真实普通CLI和86场景；其中15项补充声明故障探针不计作新作者样本。focused23测试全部通过且0skip。CLI097ba5a5…在审计前后保持；脚本和测试源码与audit/source-pins完全一致。原件见final-independent-audit.zip、focused-tests.receipt.json及final-audit-summary.json。
+
+追加fresh review随后发现真实白字黑底PNG在097ba5a5…重绘后黑底blacktext丢标签。此前12作者/50CLI/86场景审计保留为历史，不能外推一般颜色输入已验收。修复只将这套黑字SVG限定在全部RGBchannel>=192的保守亮色范围，其他knowncolors完整原图回退。独立v2源/颜色检查和原旧SVG/同步假重绘拒绝已实际通过；新12作者/55CLI/91场景审计、focused25项0skip和真实黑底PNG1次普通CLI原件保存在safe-colors-v2。作者冻结manifest保持b74d28cc…，不追加或改写12个作者expected。

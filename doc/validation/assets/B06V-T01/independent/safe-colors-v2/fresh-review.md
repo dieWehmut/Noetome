@@ -1,0 +1,11 @@
+# 颜色回退修复后的独立复审
+
+此前097ba5a5…版本的冻结12作者/50普通CLI/86场景审计全部通过，但追加真实公开白字黑底400x250 PNG显示：黑色图形上重绘固定黑字会丢失关键标签。root在修复前冻结真实source/case/semantics/profile、旧普通CLI/计划/SVG/双报告与receipt，独立审计旧结果保留，不改写为已通过一般颜色输入。
+
+本次只补有限SVG颜色准入。合法任意#rrggbb仍保留，关键标签/单位/图例仍为已知；只有全部来源legendfill的三个RGBchannel各自>=192才进入这套固定黑字SVG布局，其余使用original_image+IMAGE_COLOR_CONTRAST。这是保守工程范围，不是一般颜色/字体或科学质量保证。来源颜色、原PNG和语义不被重写成亮色，curve/observation原图保留、语义未知阻断规则保持。固定回退说明是“来源颜色与固定黑字不能在有限重绘中保证可读，保留原图。”
+
+Python独立实现颜色条件，并在actual SVG核对入口检查来源布局/颜色门禁。root真实PNG经视觉读回确认关键Payload/mg、Dark/Selected payload为白字黑底可辨；同一真实source/profile在3fe5ee19…普通CLI输出original_image，无SVG，原件逐字节相同，完整字段、映射、计划和已知检查状态核对通过。旧实际黑底黑字SVG原普通指纹正确，仍因独立IMAGE_COLOR_CONTRAST被拒绝；把旧SVG/旧正文与新结果的源声明、plan、双报告和全部SHA同步后的假重绘也被同一颜色判据拒绝，不使用陈旧SHA作为此项证据。
+
+新完整审计55次普通CLI/91场景passed，其中20项补充声明故障探针不计作新作者；新增#000000及三种单channel191均原图回退，#c0c0c0边界允许有限SVG。另真实黑底PNG复验为1次独立调用，不相加成新作者或科学样本。focused25项全部通过，0skip。脚本和测试源码与audit/source-pins完全一致；外层focused/full-audit实际退出0，CLI前后保持。
+
+最终fresh read image_fidelity布局颜色首门禁、image_render回退字面、private颜色边界保护与独立actualSVG校验后，没有发现本修复的新未处置重要问题。Windows原生进程/持有期、干净Obsidian应用最终渲染及完整多能力回归由native/root原件确认，不能从本Linux复验推定。

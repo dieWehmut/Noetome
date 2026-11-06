@@ -1,0 +1,14 @@
+{
+  "stage": "audit_preparation",
+  "argv": [
+    "scripts/verify_image.py",
+    "audit",
+    "/home/lyinn/project/Noetome/target/debug/noetome",
+    "/tmp/noetome-b06v-t01-image-audit-1"
+  ],
+  "reason": "ordinary single-link file required",
+  "detail": "Cargo build output had multiple hard links; independent audit refused before executing any ordinary CLI command or creating the audit root.",
+  "ordinary_cli_commands": 0,
+  "status": "preparation_failure_not_behavior_red",
+  "next_action": "Use a byte-identical immutable single-link copy of the final CLI."
+}
