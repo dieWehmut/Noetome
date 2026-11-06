@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "producer": "author_image_declaration",
+  "author": "independent_cc0_fixture_author",
+  "complete": true,
+  "data_available": false,
+  "caption": "Fictional engineering diagram; manual source declaration, no image recognition.",
+  "conditions": [
+    "Only the selected schematic relationships are asserted."
+  ],
+  "exceptions": [
+    "No scientific accuracy or measured data is claimed."
+  ],
+  "elements": [
+    {
+      "id": "feed",
+      "kind": "rect",
+      "bbox": [
+        40,
+        150,
+        220,
+        120
+      ],
+      "label": "Feed",
+      "unit": "mmol/L",
+      "legend_id": null
+    },
+    {
+      "id": "response",
+      "kind": "circle",
+      "bbox": [
+        390,
+        120,
+        180,
+        180
+      ],
+      "label": "Response",
+      "unit": "a.u.",
+      "legend_id": null
+    },
+    {
+      "id": "output",
+      "kind": "rect",
+      "bbox": [
+        700,
+        150,
+        220,
+        120
+      ],
+      "label": "Outlet",
+      "unit": "mmol/L",
+      "legend_id": null
+    }
+  ],
+  "relations": [
+    {
+      "id": "gain",
+      "from": "feed",
+      "to": "response",
+      "start": [
+        260,
+        210
+      ],
+      "end": [
+        390,
+        210
+      ],
+      "direction": "forward",
+      "effect": "positive",
+      "label": "activates",
+      "unit": "s^-1",
+      "legend_id": "positive"
+    },
+    {
+      "id": "loss",
+      "from": "response",
+      "to": "output",
+      "start": [
+        570,
+        210
+      ],
+      "end": [
+        700,
+        210
+      ],
+      "direction": "forward",
+      "effect": "negative",
+      "label": "inhibits",
+      "unit": "s^-1",
+      "legend_id": "negative"
+    }
+  ],
+  "spatial_relations": [
+    {
+      "id": "feed-left",
+      "a": "feed",
+      "b": "response",
+      "relation": "left_of"
+    },
+    {
+      "id": "response-left",
+      "a": "response",
+      "b": "output",
+      "relation": "left_of"
+    }
+  ],
+  "legend": [
+    {
+      "id": "positive",
+      "label": "+",
+      "meaning": "positive activation",
+      "color": "#c5efcb",
+      "bbox": [
+        40,
+        360,
+        360,
+        45
+      ]
+    },
+    {
+      "id": "negative",
+      "label": "-",
+      "meaning": "negative inhibition",
+      "color": "#f5c1c1",
+      "bbox": [
+        500,
+        360,
+        400,
+        45
+      ]
+    }
+  ]
+}

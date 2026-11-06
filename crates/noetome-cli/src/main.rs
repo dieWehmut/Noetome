@@ -21,6 +21,22 @@ fn main() -> ExitCode {
     let mut result_code = 0;
     let output = match command {
         CliCommand::KnowledgeHelp => noetome_cli::KNOWLEDGE_HELP.to_owned(),
+        CliCommand::Image {
+            case,
+            profile,
+            output,
+        } => match noetome_cli::image_fidelity::run(&case, &profile, &output) {
+            Ok(output) => {
+                if output.failed {
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
         CliCommand::Formula {
             case,
             profile,

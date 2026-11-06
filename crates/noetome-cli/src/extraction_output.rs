@@ -176,6 +176,29 @@ impl OutputRoot {
     pub(crate) fn create_formula(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
         Self::create_owned(path, request_id, Some("knowledge_formula"))
     }
+    pub(crate) fn create_image(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
+        Self::create_owned(path, request_id, Some("knowledge_image"))
+    }
+    pub(crate) fn discard_image_result(&mut self) -> Result<(), ProjectError> {
+        let mut first_error = None;
+        for name in [
+            "image.json",
+            "image.md",
+            "plan.json",
+            "图像预览.md",
+            "redrawn.svg",
+        ] {
+            if let Err(error) = self.discard_names_inner(&[name], true) {
+                if first_error.is_none() {
+                    first_error = Some(error);
+                }
+            }
+        }
+        match first_error {
+            Some(error) => Err(error),
+            None => Ok(()),
+        }
+    }
     pub(crate) fn discard_formula_result(&mut self) -> Result<(), ProjectError> {
         let mut first_error = None;
         for name in [
@@ -297,10 +320,11 @@ impl OutputRoot {
         let process = mode == Some("process_source_review");
         let flow = mode == Some("knowledge_flow");
         let formula = mode == Some("knowledge_formula");
-        let mut owner = serde_json::json!({"schema_version":1,"producer":if formula {"knowledge_formula"} else if flow {"knowledge_flow"} else if process {"process_source_review"} else if presentation {"knowledge_presentation"} else if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if formula {"unpublished_formula"} else if flow {"unpublished_flow"} else if process {"unpublished_process_source_review"} else if presentation {"unpublished_presentation"} else if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
-        if let Some(mode) = mode
-            .filter(|_| !review && !coordination && !presentation && !process && !flow && !formula)
-        {
+        let image = mode == Some("knowledge_image");
+        let mut owner = serde_json::json!({"schema_version":1,"producer":if image {"knowledge_image"} else if formula {"knowledge_formula"} else if flow {"knowledge_flow"} else if process {"process_source_review"} else if presentation {"knowledge_presentation"} else if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if image {"unpublished_image"} else if formula {"unpublished_formula"} else if flow {"unpublished_flow"} else if process {"unpublished_process_source_review"} else if presentation {"unpublished_presentation"} else if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
+        if let Some(mode) = mode.filter(|_| {
+            !review && !coordination && !presentation && !process && !flow && !formula && !image
+        }) {
             owner["transport_mode"] = serde_json::json!(mode);
         }
         let owner = serde_json::to_vec_pretty(&owner).map_err(|_| changed())?;

@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "producer": "image_fidelity_expected",
+  "author": "independent_self_authored_engineering_fixture",
+  "case_name": "curve_no_data",
+  "scope": "selected_image_only_manual_declaration_not_recognition_or_science",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case": {
+    "schema_version": 1,
+    "purpose": "image_fidelity",
+    "selection_id": "curve_no_data",
+    "title": "图像保真样例 curve_no_data",
+    "source_kind": "experimental_curve",
+    "image": {
+      "file": "source.png",
+      "sha256": "a5b038e2beb6d648c4fdeae7043bafa72ff81b9d35e638f624b03cfe809c413c"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "cd7cbc028393ee6332c37a4bb0ec4dd6c4091ec5473843c9dc56ef7da84fcfb6"
+    },
+    "dimensions": [
+      960,
+      520
+    ],
+    "readability": "clear"
+  },
+  "semantics": {
+    "schema_version": 1,
+    "producer": "author_image_declaration",
+    "author": "independent_cc0_fixture_author",
+    "complete": true,
+    "data_available": false,
+    "caption": "Illustrative experimental curve only: original sample values are unavailable.",
+    "conditions": [
+      "Only the selected schematic relationships are asserted."
+    ],
+    "exceptions": [
+      "No scientific accuracy or measured data is claimed."
+    ],
+    "elements": [
+      {
+        "id": "time",
+        "kind": "rect",
+        "bbox": [
+          650,
+          350,
+          240,
+          45
+        ],
+        "label": "Time",
+        "unit": "s",
+        "legend_id": null
+      },
+      {
+        "id": "response",
+        "kind": "rect",
+        "bbox": [
+          40,
+          40,
+          240,
+          45
+        ],
+        "label": "Response",
+        "unit": "a.u.",
+        "legend_id": null
+      }
+    ],
+    "relations": [],
+    "spatial_relations": [],
+    "legend": []
+  },
+  "source_pins": {
+    "case.json": {
+      "sha256": "5aa91bdaed4a1149ace2a82bcd2199c4a639f8a23094a522a9a335a08db0b2b4",
+      "byte_length": 502
+    },
+    "semantics.json": {
+      "sha256": "cd7cbc028393ee6332c37a4bb0ec4dd6c4091ec5473843c9dc56ef7da84fcfb6",
+      "byte_length": 904
+    },
+    "source.png": {
+      "sha256": "a5b038e2beb6d648c4fdeae7043bafa72ff81b9d35e638f624b03cfe809c413c",
+      "byte_length": 16698
+    }
+  },
+  "profile_name": "native",
+  "representation": "original_image",
+  "issue_codes": [],
+  "fallback_reasons": [
+    "IMAGE_CURVE_NO_DATA"
+  ]
+}
