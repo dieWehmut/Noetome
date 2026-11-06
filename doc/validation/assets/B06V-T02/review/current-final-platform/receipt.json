@@ -1,0 +1,437 @@
+{
+  "schema_version": 1,
+  "reviewer": "scan_native_evidence",
+  "task": "B06V-T02",
+  "observed_at": "2026-11-06T09:32:11.246363+00:00",
+  "status": "current_windows_python_and_five_offline_audits_verified",
+  "scope": "Read-only final platform evidence review of completed commands, current frozen product/test source, exact Rust/PE binding, audit records, preserved argparse failure and runtime/skip/process identity receipts. No new tests, model calls, source mutations or duplicate archive.",
+  "native_root": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02",
+  "source_snapshot": {
+    "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/snapshot.json",
+    "sha256": "f15a287d86f81352fb7ffe6ff4f0291be22a96d6171cd06f5729c27ebf934160",
+    "byte_length": 104724,
+    "file_count": 603,
+    "all_snapshot_source_bytes_match_copied_source": true,
+    "current_source_differences": [],
+    "final_source_map_matches_snapshot": true
+  },
+  "native_final": {
+    "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/native-python-final.json",
+    "sha256": "e30c9c927488f9549db7058e74d20121cc45b361a42fe441e3d89937e9e2e453",
+    "byte_length": 111920
+  },
+  "rust_binding": {
+    "rust_root": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a",
+    "rust_final_reference": {
+      "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/native-rust-final.json",
+      "sha256": "4ae851ccd45ce16e3c2182ba01b4ef7ad61d0e32df8cf7a1b3f03f5bcd23dcef",
+      "byte_length": 108861
+    },
+    "rust_inputs_checked": 139,
+    "all_rust_inputs_match_final_snapshot_and_current": true,
+    "literal_compilation_includes_count": 23,
+    "literal_compilation_includes": {
+      "doc/validation/assets/B04-T02-live-first-response.bin": {
+        "sha256": "73de263b3d469facd25f3a80244c430165d0383b309efb37630fd280dab81d9b",
+        "byte_length": 2210
+      },
+      "fixtures/extraction-gateway-v1/response.json": {
+        "sha256": "db5b69ed13640889fa84149c3c541fe266cbd56e43b621f17d25ceba2b787b09",
+        "byte_length": 1462
+      },
+      "doc/validation/assets/B04-T02-live-fifth-response.bin": {
+        "sha256": "b04c99ff593ee99431f140747a5c088cf4011a1a87237981e03cd176feb07f8f",
+        "byte_length": 2280
+      },
+      "doc/validation/assets/B04-T02-live-fourth-response.bin": {
+        "sha256": "a6081c965ef7f64416639b4cb3ade403ae72bd97331a3af0f8627927f954cbe9",
+        "byte_length": 13739
+      },
+      "doc/validation/assets/B04-T02-live-third-response.bin": {
+        "sha256": "6ed4b15a330aeb8d552d8bd7ef2d684345427d662cbb54b2aae4b1a5732fb04b",
+        "byte_length": 14489
+      },
+      "fixtures/extraction-gateway-v1/fake.json": {
+        "sha256": "0fa4549ed282abde50414af80c5efdd62332c8083923ee917f04af1ffab21dc5",
+        "byte_length": 546
+      },
+      "sidecars/pdf_parser/adapter.zlib": {
+        "sha256": "00f8944d62f2ab10fe4c5c138396006862265f403f8270f3cbe5151390d7fc20",
+        "byte_length": 8926
+      },
+      "sidecars/pdf_parser/adapter.py": {
+        "sha256": "5e0a8c25c531085c5d04d55b094904fb83a79c3b3f2b3cd979e163c5bfc179b8",
+        "byte_length": 31814
+      },
+      "fixtures/process-flow-v1/profile-obsidian_1_6_7_flowchart.json": {
+        "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+        "byte_length": 296
+      },
+      "fixtures/process-flow-v1/gold-linear.json": {
+        "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+        "byte_length": 3790
+      },
+      "fixtures/process-flow-v1/gold-correlation.json": {
+        "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+        "byte_length": 2697
+      },
+      "fixtures/process-flow-v1/gold-direction_unknown.json": {
+        "sha256": "f1884079d6ab220bf0a0b303cc84fcc330a0e8f290330205e5a6dd2da4ed252f",
+        "byte_length": 2522
+      },
+      "fixtures/process-flow-v1/gold-cycle.json": {
+        "sha256": "75c855c1ae1da4436333c1b43a74408131a74d6401e348221e11f4ae902fb630",
+        "byte_length": 4080
+      },
+      "fixtures/process-flow-v1/gold-missing_branch.json": {
+        "sha256": "d2b35b82e10641fffe40190c72d8b91bcae2cc2341c38311379528d47c4c1f81",
+        "byte_length": 2701
+      },
+      "fixtures/process-flow-v1/gold-missing_connection.json": {
+        "sha256": "1938924f3f9cf40936ebbd89932c021ec86e5db84b49338464b84c44d7a0ce2c",
+        "byte_length": 3277
+      },
+      "fixtures/process-flow-v1/gold-unknown_criterion.json": {
+        "sha256": "a09214fe74630677143c32788eb135e2a9d7ca04bb41a78a8d69bcfb739aae65",
+        "byte_length": 3212
+      },
+      "fixtures/process-flow-v1/gold-multiline_labels.json": {
+        "sha256": "79999b21da68b9e80f4313cfce72821163a965540950acc631a9b9ba98d288c4",
+        "byte_length": 2412
+      },
+      "fixtures/process-flow-v1/gold-branch.json": {
+        "sha256": "3a89a171a1113973694d785813fe40f63f294154294cdee5dc049721c326bfaa",
+        "byte_length": 5149
+      },
+      "fixtures/process-flow-v1/gold-causes.json": {
+        "sha256": "081ca1637cc0b58deed117392bfc51c96154c5d225609be6b145a18a5f41fe1d",
+        "byte_length": 3978
+      },
+      "fixtures/process-flow-v1/gold-promotes.json": {
+        "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+        "byte_length": 2775
+      },
+      "fixtures/process-flow-v1/gold-inhibits.json": {
+        "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+        "byte_length": 2775
+      },
+      "fixtures/process-flow-v1/gold-complex_labels.json": {
+        "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+        "byte_length": 3921
+      },
+      "crates/noetome-cli/src/source_schema3.sql": {
+        "sha256": "d688730dbe7e649867a0c11d493796b18588f7c2e66d8db038b7b8b984f8c780",
+        "byte_length": 9821
+      }
+    },
+    "selected_cli": {
+      "sha256": "91fe246b522f8261da8ad678f465021bf76660ee402ad35e3a6bb4c4c2762be7",
+      "byte_length": 25876480
+    },
+    "selected_cli_matches_actual_720_passed_build": true,
+    "retained_rust_totals": {
+      "passed": 720,
+      "failed": 0,
+      "ignored": 0
+    },
+    "scope": "No Rust rebuild needed for Python/helper-only delta; all current Rust source/dependencies and literal compile-time include bytes remain identical to actual final720 Rust/PE. No Linux full Rust compatibility claim."
+  },
+  "python_result": {
+    "parsed_original_totals": {
+      "run": 364,
+      "passed": 360,
+      "skipped": 4,
+      "failed": 0
+    },
+    "stderr": {
+      "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/python-full-attempt-1.stderr.bin",
+      "sha256": "e713a467f441e7b9f22fa3ccbf88bfc44c01d4d9161621b4e9584d30fc3f0ff5",
+      "byte_length": 483
+    },
+    "skip_record": {
+      "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/python-skips.json",
+      "sha256": "2d39bcfd3ab6ca60d55d2775d685b3008affbaffb25850bfd5b34aeb7d03a614",
+      "byte_length": 1824
+    },
+    "skips": [
+      {
+        "test": "test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_ancestor_links_rejected_before_source_read",
+        "reason": "ancestor symlinks require separate Windows reparse environment"
+      },
+      {
+        "test": "test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution",
+        "reason": "directory symbolic links unavailable"
+      },
+      {
+        "test": "test_verify_scan_formula.ScanAuthorTests.test_ancestor_link_refused_before_source_read",
+        "reason": "directory symbolic link unavailable on this host"
+      },
+      {
+        "test": "test_verify_scan_formula.ScanAuthorTests.test_flat_inventory_rejects_linked_ancestor_before_listing",
+        "reason": "directory symbolic link unavailable on this host"
+      }
+    ],
+    "boundary_probe": {
+      "tests_run": 4,
+      "skips": [
+        {
+          "test": "test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution",
+          "reason": "directory symbolic links unavailable"
+        },
+        {
+          "test": "test_verify_scan_formula.ScanAuthorTests.test_ancestor_link_refused_before_source_read",
+          "reason": "directory symbolic link unavailable on this host"
+        },
+        {
+          "test": "test_verify_scan_formula.ScanAuthorTests.test_flat_inventory_rejects_linked_ancestor_before_listing",
+          "reason": "directory symbolic link unavailable on this host"
+        }
+      ],
+      "errors": 0,
+      "failures": 0
+    },
+    "skips_are_not_passes": true
+  },
+  "audit_results": {
+    "actual_cli_records_total": 308,
+    "per_audit_counts": {
+      "knowledge_presentation-audit": 124,
+      "process_flow-audit": 73,
+      "formula-audit": 29,
+      "image-audit": 51,
+      "scan_formula-audit": 31
+    },
+    "summary_original_pins": {
+      "knowledge_presentation-audit": {
+        "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/knowledge_presentation-audit-1/audit-161.json",
+        "sha256": "11b223884aa93fb2bf40b63f6244374a270fdd196bba2e44df83d04daee2c077",
+        "byte_length": 719444,
+        "actual_cli_records": 124,
+        "stdout_summary_matches_final": true
+      },
+      "process_flow-audit": {
+        "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/process_flow-audit-1/audit.json",
+        "sha256": "c938f9b979bfbab59cecb3106914eda1b3e80fc77ec0ca3f91520dfaa90c57bc",
+        "byte_length": 503256,
+        "actual_cli_records": 73,
+        "stdout_summary_matches_final": true
+      },
+      "formula-audit": {
+        "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/formula-audit-1/audit.json",
+        "sha256": "48523fc05b25cbe3af90d539032d6129c8ab594a5821b01ec604fde16aaaa4b9",
+        "byte_length": 112833,
+        "actual_cli_records": 29,
+        "stdout_summary_matches_final": true
+      },
+      "image-audit": {
+        "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/image-audit-1/audit.json",
+        "sha256": "8e7d465d5c2d1cfb1f2e7a7c685260f5b93835faadc4cb97612c19d979c632a9",
+        "byte_length": 181362,
+        "actual_cli_records": 51,
+        "stdout_summary_matches_final": true
+      },
+      "scan_formula-audit": {
+        "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/scan_formula-audit-2/summary.json",
+        "sha256": "831a1db0eee50bbd4ec56f7bae2a7ce4f87dc95542a564a82cbabf4499821284",
+        "byte_length": 213955,
+        "actual_cli_records": 31,
+        "stdout_summary_matches_final": true
+      }
+    },
+    "all_five_stdout_summaries_match_native_final": true,
+    "scan_live_recognition": "not_run",
+    "scan_artificial_http_requests": 21,
+    "scan_real_model_calls": 0,
+    "scientific_quality": "not_run"
+  },
+  "preserved_red_and_resume": {
+    "initial_scan_argparse_exit": 2,
+    "initial_args": [
+      "D:/Noetome/.artifacts/b03-t02-python312/Scripts/python.exe",
+      "-X",
+      "utf8",
+      "scripts/verify_scan_formula.py",
+      "audit",
+      "D:\\Noetome\\target\\b06v-t02-api-regression-current-phase2-final-02\\scan_formula-audit-cli-1.exe",
+      "D:\\Noetome\\target\\b06v-t02-api-regression-current-phase2-final-02\\scan_formula-audit-1"
+    ],
+    "initial_stderr": {
+      "path": "D:\\Noetome\\target\\b06v-t02-api-regression-current-phase2-final-02\\scan_formula-audit-attempt-1.stderr.bin",
+      "sha256": "f2f89d90e8685e55f277622e42fcc6d4a4d90acd95e8d57948001102c74c50ed",
+      "byte_length": 563
+    },
+    "final_scan_attempt": 2,
+    "final_scan_exit": 0,
+    "final_scan_args": [
+      "D:/Noetome/.artifacts/b03-t02-python312/Scripts/python.exe",
+      "-X",
+      "utf8",
+      "scripts/verify_scan_formula.py",
+      "--cli",
+      "D:\\Noetome\\target\\b06v-t02-api-regression-current-phase2-final-02\\scan_formula-audit-cli-2.exe",
+      "--output",
+      "D:\\Noetome\\target\\b06v-t02-api-regression-current-phase2-final-02\\scan_formula-audit-2"
+    ],
+    "product_source_snapshot_and_cli_identical_for_both_attempts": true,
+    "runner_original": {
+      "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/validate_scan_python.py",
+      "sha256": "9cf864d29a00b4d51fdd52b45c8914b6b4eb3f0e9568bb49cd29220cc3fd90c0",
+      "byte_length": 12480
+    },
+    "runner_resume_01": {
+      "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/validate_scan_python-resume-01.py",
+      "sha256": "a977f14fa8d7c8db227b3215b2d972fa9d13b585d06098a2c10d5675843e1152",
+      "byte_length": 13926
+    },
+    "reused_prior_gates": [
+      "python-full",
+      "knowledge_presentation-audit",
+      "process_flow-audit",
+      "formula-audit",
+      "image-audit"
+    ],
+    "reuse_conditions_reviewed": "Strict original snapshot/PE/stdout/stderr fingerprints plus prior exit0, no timeout and prior stable source/sentinel; all conditions independently revalidated. Only scan used new CLI copy/output and corrected --cli/--output arguments. Initial RED outputs remain unchanged.",
+    "previous_gates_invocation_count_each": 1
+  },
+  "command_readback": {
+    "path": "doc/validation/assets/B06V-T02/review/current-final-platform/command-readback.json",
+    "sha256": "f530b1bc4a89d33165dd66f56cb7f9fabb2e920255f9361e87b82e5149883a92",
+    "byte_length": 10093,
+    "all_seven_individual_receipts_equal_command_log": true,
+    "all_seven_stdout_stderr_fingerprints_verified": true
+  },
+  "process_identity_readback": {
+    "path": "doc/validation/assets/B06V-T02/review/current-final-platform/process-readback.json",
+    "sha256": "685357c9092e7e705a391db711ced9d2ead48a5fe7a95749a2623e3b0e2f20f9",
+    "byte_length": 4149,
+    "all_seven_recorded_pids_absent_now": true,
+    "checks": [
+      {
+        "command": "python-full",
+        "attempt": 1,
+        "receipt_pid": 54656,
+        "terminal_receipt_mtime_utc": "2026-11-06T09:22:13.045005+00:00",
+        "native_probe": {
+          "pid": 54656,
+          "name": null,
+          "creation_utc": null,
+          "present": false
+        },
+        "classification": "recorded_process_absent_now"
+      },
+      {
+        "command": "knowledge_presentation-audit",
+        "attempt": 1,
+        "receipt_pid": 68824,
+        "terminal_receipt_mtime_utc": "2026-11-06T09:23:45.457164+00:00",
+        "native_probe": {
+          "pid": 68824,
+          "name": null,
+          "creation_utc": null,
+          "present": false
+        },
+        "classification": "recorded_process_absent_now"
+      },
+      {
+        "command": "process_flow-audit",
+        "attempt": 1,
+        "receipt_pid": 74644,
+        "terminal_receipt_mtime_utc": "2026-11-06T09:24:01.538460+00:00",
+        "native_probe": {
+          "pid": 74644,
+          "name": null,
+          "creation_utc": null,
+          "present": false
+        },
+        "classification": "recorded_process_absent_now"
+      },
+      {
+        "command": "formula-audit",
+        "attempt": 1,
+        "receipt_pid": 43020,
+        "terminal_receipt_mtime_utc": "2026-11-06T09:24:11.801833+00:00",
+        "native_probe": {
+          "pid": 43020,
+          "name": null,
+          "creation_utc": null,
+          "present": false
+        },
+        "classification": "recorded_process_absent_now"
+      },
+      {
+        "command": "image-audit",
+        "attempt": 1,
+        "receipt_pid": 44812,
+        "terminal_receipt_mtime_utc": "2026-11-06T09:24:26.700384+00:00",
+        "native_probe": {
+          "pid": 44812,
+          "name": null,
+          "creation_utc": null,
+          "present": false
+        },
+        "classification": "recorded_process_absent_now"
+      },
+      {
+        "command": "scan_formula-audit",
+        "attempt": 1,
+        "receipt_pid": 72932,
+        "terminal_receipt_mtime_utc": "2026-11-06T09:24:27.112896+00:00",
+        "native_probe": {
+          "pid": 72932,
+          "name": null,
+          "creation_utc": null,
+          "present": false
+        },
+        "classification": "recorded_process_absent_now"
+      },
+      {
+        "command": "scan_formula-audit",
+        "attempt": 2,
+        "receipt_pid": 50812,
+        "terminal_receipt_mtime_utc": "2026-11-06T09:26:25.244293+00:00",
+        "native_probe": {
+          "pid": 50812,
+          "name": null,
+          "creation_utc": null,
+          "present": false
+        },
+        "classification": "recorded_process_absent_now"
+      }
+    ],
+    "pid_reuse_rule": "If PID is present, CreationDate must be compared with recorded terminal-receipt time; creation after terminal receipt means a later reused PID, not the recorded process. All selected PIDs were actually absent in this probe."
+  },
+  "runtime": {
+    "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-current-phase2-final-02/native-runtime-resume-1.json",
+    "sha256": "ef93c48b77f771814ee4e52818bab660d69078d6b01be7a5ca7f5c52fabe5b16",
+    "byte_length": 2026,
+    "platform": "win32",
+    "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+    "powershell_editions": [
+      {
+        "path": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "sha256": "0ff6f2c94bc7e2833a5f7e16de1622e5dba70396f31c7d5f56381870317e8c46",
+        "byte_length": 454656,
+        "version_and_process_policy": "5.1.26100.7920;Bypass"
+      },
+      {
+        "path": "C:\\Users\\Lyinn\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "sha256": "362a356ce7f0940ec74f73a8fc2c990a2cc24a38a11c90bbd8eca947110ad139",
+        "byte_length": 301368,
+        "version_and_process_policy": "7.6.5;Bypass"
+      }
+    ],
+    "scope": "child process environment only; persistent user and machine policies unchanged",
+    "live_credential_removed": true
+  },
+  "limitations": [
+    "Four directory-symlink environment tests are skipped and explicitly listed; these do not count as Windows symlink passes.",
+    "All five visual audits concern bounded engineered fixtures. Fake/local-loopback results do not prove true OCR/model recognition, scientific correctness or Obsidian display.",
+    "Actual user credentials and cumulative usage ledger remain missing; task completion/live recognition is not proven by these engineering gates.",
+    "This review validates actual Windows results and retained unchanged Rust build; it does not assert Linux full-workspace host behavior or arbitrary-platform compatibility."
+  ],
+  "new_tests_run": 0,
+  "live_http_requests": 0,
+  "actual_user_budget_mutations": 0,
+  "source_edits": false,
+  "duplicate_archive_executed": false
+}

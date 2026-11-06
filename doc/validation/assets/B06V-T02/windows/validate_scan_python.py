@@ -58,10 +58,13 @@ rust_inputs = {name: value for name, value in manifest["files"].items()
 assert all(value == rust_final["source_files"].get(name) for name, value in rust_inputs.items()), "current Rust inputs must match completed regression"
 legacy_cli = repo / "target/debug/noetome.exe"
 legacy_cli.parent.mkdir(parents=True, exist_ok=True)
-assert not legacy_cli.exists()
-shutil.copyfile(cli, legacy_cli)
+if legacy_cli.exists():
+    assert args.resume_audits and pin(legacy_cli) == pin(cli), "only unchanged selected legacy CLI can be reused"
+else:
+    shutil.copyfile(cli, legacy_cli)
 assert pin(legacy_cli) == pin(cli) and legacy_cli.stat().st_nlink == 1
-save(root / "legacy-unit-test-cli-copy.json", {"source":str(cli),"legacy_test_path":str(legacy_cli),"fingerprint":pin(cli),"nlink":legacy_cli.stat().st_nlink})
+if not args.resume_audits:
+    save(root / "legacy-unit-test-cli-copy.json", {"source":str(cli),"legacy_test_path":str(legacy_cli),"fingerprint":pin(cli),"nlink":legacy_cli.stat().st_nlink})
 before = {name: pin(repo / name) for name in manifest["files"]}
 assert before == manifest["files"], "exact current-worktree snapshot preflight"
 runtime_temp = root / "runtime-temp"
@@ -96,7 +99,9 @@ package_versions = {name: importlib.metadata.version(name) for name in runtime_l
 assert package_versions == runtime_lock["packages"], "exact selected PDF runtime dependency versions"
 fake_probe = subprocess.run([cfg["fake_python_native"], "--version"], capture_output=True, timeout=15)
 assert fake_probe.returncode == 0
-save(root / "native-runtime.json", {
+runtime_name = ("native-runtime-resume-" + str(1 + len(list(root.glob("native-runtime-resume-*.json")))) + ".json"
+                if args.resume_audits else "native-runtime.json")
+save(root / runtime_name, {
     "inherited_live_credential_present": credential_present, "live_credential_removed_from_test_env": True,
     "python": sys.version, "executable": sys.executable, "platform": sys.platform,
     "selected_env": {key: env[key] for key in ["NOETOME_TEST_PYTHON", "NOETOME_PDF_PYTHON", "NOETOME_TEST_BINARY", "CARGO_TARGET_DIR", "TEMP", "TMP"]},
@@ -156,15 +161,36 @@ def command(name, argv):
 
 
 
-if not command("python-full", [cfg["python_native"], "-X", "utf8", "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"]):
+def reusable_gate(name):
+    previous = next((c for c in reversed(commands) if c["name"] == name), None)
+    if not args.resume_audits or not previous or previous["exit_code"] != 0:
+        return False
+    assert not previous["timed_out"] and previous["source_before_after_equal"] and previous["external_sentinel_before_after_equal"]
+    assert previous["snapshot_fingerprint"] == pin(root / "snapshot.json")
+    assert previous["cli_before"] == previous["cli_after"] == pin(cli)
+    for stream in ("stdout", "stderr"):
+        captured = previous[stream]
+        assert pin(captured["path"]) == {key: captured[key] for key in ("sha256", "byte_length")}
+    print("REUSE_VERIFIED_GATE", name, flush=True)
+    return True
+
+
+if args.resume_audits:
+    assert reusable_gate("python-full"), "resume requires completed exact-source full Python"
+elif not command("python-full", [cfg["python_native"], "-X", "utf8", "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"]):
     sys.exit(1)
 for script, name in zip(cfg["audits"], audit_stages, strict=True):
-    audit_cli = root / (name + "-cli-1.exe")
+    if reusable_gate(name):
+        continue
+    attempt = 1 + sum(c["name"] == name for c in commands)
+    audit_cli = root / (name + "-cli-" + str(attempt) + ".exe")
     with audit_cli.open("xb") as out:
         out.write(cli.read_bytes())
     assert pin(audit_cli) == pin(cli) and audit_cli.stat().st_nlink == 1
-    audit_root = root / (name + "-1")
-    if not command(name, [cfg["python_native"], "-X", "utf8", "scripts/" + script, "audit", str(audit_cli), str(audit_root)]):
+    audit_root = root / (name + "-" + str(attempt))
+    arguments = (["--cli", str(audit_cli), "--output", str(audit_root)]
+                 if script == "verify_scan_formula.py" else ["audit", str(audit_cli), str(audit_root)])
+    if not command(name, [cfg["python_native"], "-X", "utf8", "scripts/" + script] + arguments):
         sys.exit(1)
 latest = {c["name"]: c for c in commands}
 assert all(n in latest and latest[n]["exit_code"] == 0 and not latest[n]["timed_out"] for n in required)

@@ -302,3 +302,11 @@ noetome knowledge image <image-case目录> <profile.json> <尚不存在的新测
 ```
 
 [图像契约](doc/technical/IMAGE_FIDELITY_CONTRACT.md)限定标签、方向/正负、单位、图例和空间核对；[作者样例](fixtures/image-fidelity/README.md)包含 `signed_arrows`、`spatial`、原图回退与关键未知阻断。原 PNG 完整留存，可验证图示才生成有限 SVG，曲线和观测保持原图；结构声明是手工输入，工程预览不证明自动识别、科学质量或生产发布。
+
+明确扫描页的选定公式区域使用独立入口，识别配置与目标阅读器能力分别提供：
+
+```text
+noetome knowledge scan-formula <scan-case目录> <api-config.json> <profile.json> <尚不存在的新测试Vault>
+```
+
+[扫描契约](doc/technical/SCAN_FORMULA_CONTRACT.md)区分原扫描、未经修补的识别响应、手工来源核对与等价表达。[公开作者页](fixtures/scan-formula/README.md)在识别前冻结清晰及两个关键缺损状态；已知未知不能靠模型猜测通过。识别请求只包含固定任务与区域 PNG；真实服务每次单请求、累计预算预留结算，离线数字环回测试不冒充真实模型。失败本地模型实验保持记录。实际实施与验收见[当前方案](doc/execution/B06V-T02_SCAN_PLAN.md)及账本，不从入口存在推定一般扫描或科学正确率通过。

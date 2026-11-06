@@ -1,0 +1,156 @@
+{
+  "argv": [
+    "powershell.exe",
+    "-NoProfile",
+    "-NonInteractive",
+    "-Command",
+    "$ErrorActionPreference=\"Stop\"; $ids=@(43020,44812,50812,54656,68824,72932,74644); $rows=@(); foreach ($id in $ids) { $p=Get-CimInstance Win32_Process -Filter (\"ProcessId=\"+$id); $created=$null; if ($null -ne $p) { $created=$p.CreationDate.ToUniversalTime().ToString(\"o\") }; $rows+=@{pid=$id;present=($null -ne $p);name=$p.Name;creation_utc=$created} }; @{observed_at=[DateTime]::UtcNow.ToString(\"o\");observed_pids=$rows}|ConvertTo-Json -Depth 5"
+  ],
+  "exit_code": 0,
+  "stdout": {
+    "sha256": "8744e942ed7fb8e9b3cca82e7f3f22ceba659fba14a380cd8eaa7bc2f3d622b1",
+    "byte_length": 1886
+  },
+  "stderr": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byte_length": 0
+  },
+  "observed_pids": [
+    {
+      "pid": 43020,
+      "name": null,
+      "creation_utc": null,
+      "present": false
+    },
+    {
+      "pid": 44812,
+      "name": null,
+      "creation_utc": null,
+      "present": false
+    },
+    {
+      "pid": 50812,
+      "name": null,
+      "creation_utc": null,
+      "present": false
+    },
+    {
+      "pid": 54656,
+      "name": null,
+      "creation_utc": null,
+      "present": false
+    },
+    {
+      "pid": 68824,
+      "name": null,
+      "creation_utc": null,
+      "present": false
+    },
+    {
+      "pid": 72932,
+      "name": null,
+      "creation_utc": null,
+      "present": false
+    },
+    {
+      "pid": 74644,
+      "name": null,
+      "creation_utc": null,
+      "present": false
+    }
+  ],
+  "observed_at": "2026-11-06T09:30:43.6974510Z",
+  "identity_checks": [
+    {
+      "command": "python-full",
+      "attempt": 1,
+      "receipt_pid": 54656,
+      "terminal_receipt_mtime_utc": "2026-11-06T09:22:13.045005+00:00",
+      "native_probe": {
+        "pid": 54656,
+        "name": null,
+        "creation_utc": null,
+        "present": false
+      },
+      "classification": "recorded_process_absent_now"
+    },
+    {
+      "command": "knowledge_presentation-audit",
+      "attempt": 1,
+      "receipt_pid": 68824,
+      "terminal_receipt_mtime_utc": "2026-11-06T09:23:45.457164+00:00",
+      "native_probe": {
+        "pid": 68824,
+        "name": null,
+        "creation_utc": null,
+        "present": false
+      },
+      "classification": "recorded_process_absent_now"
+    },
+    {
+      "command": "process_flow-audit",
+      "attempt": 1,
+      "receipt_pid": 74644,
+      "terminal_receipt_mtime_utc": "2026-11-06T09:24:01.538460+00:00",
+      "native_probe": {
+        "pid": 74644,
+        "name": null,
+        "creation_utc": null,
+        "present": false
+      },
+      "classification": "recorded_process_absent_now"
+    },
+    {
+      "command": "formula-audit",
+      "attempt": 1,
+      "receipt_pid": 43020,
+      "terminal_receipt_mtime_utc": "2026-11-06T09:24:11.801833+00:00",
+      "native_probe": {
+        "pid": 43020,
+        "name": null,
+        "creation_utc": null,
+        "present": false
+      },
+      "classification": "recorded_process_absent_now"
+    },
+    {
+      "command": "image-audit",
+      "attempt": 1,
+      "receipt_pid": 44812,
+      "terminal_receipt_mtime_utc": "2026-11-06T09:24:26.700384+00:00",
+      "native_probe": {
+        "pid": 44812,
+        "name": null,
+        "creation_utc": null,
+        "present": false
+      },
+      "classification": "recorded_process_absent_now"
+    },
+    {
+      "command": "scan_formula-audit",
+      "attempt": 1,
+      "receipt_pid": 72932,
+      "terminal_receipt_mtime_utc": "2026-11-06T09:24:27.112896+00:00",
+      "native_probe": {
+        "pid": 72932,
+        "name": null,
+        "creation_utc": null,
+        "present": false
+      },
+      "classification": "recorded_process_absent_now"
+    },
+    {
+      "command": "scan_formula-audit",
+      "attempt": 2,
+      "receipt_pid": 50812,
+      "terminal_receipt_mtime_utc": "2026-11-06T09:26:25.244293+00:00",
+      "native_probe": {
+        "pid": 50812,
+        "name": null,
+        "creation_utc": null,
+        "present": false
+      },
+      "classification": "recorded_process_absent_now"
+    }
+  ]
+}

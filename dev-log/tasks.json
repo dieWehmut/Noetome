@@ -2280,7 +2280,7 @@
       "id": "B06V-T02",
       "title": "单个明确扫描页公式重建与语义复核",
       "batch": "B06V",
-      "status": "in_progress",
+      "status": "blocked",
       "depends_on": [
         "B06V-T01"
       ],
@@ -2304,6 +2304,15 @@
           "from_status": "todo",
           "to_status": "in_progress",
           "note": "明确选定公开扫描页与公式区域，先冻结独立符号/前提expected及普通CLI RED，核实一个实际识别方案和版本，保存原响应并完成语义阻断/回退与实际回归；不启动兼容矩阵，不调用未经核实视觉服务或扫描私人目录。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-06T09:29:04Z",
+          "action": "block",
+          "from_status": "in_progress",
+          "to_status": "blocked",
+          "note": "当前工程实现、Windows720项Rust、364项Python(4skip)、Linux303项Python(18skip)、五项视觉308 CLI及独立审查通过，证据见doc/validation/B06V-T02.md。明确三份本机服务设置/累计账本/DPAPI凭据与指定env再次实测缺失，真实当前余额未知；待用户提供迁移位置或确认恢复范围后，核对当前使用与未结清记录并恢复外部凭据，再完成同一冻结作者清晰/缺损真实视觉识别及干净Obsidian。不以历史30097或人工HTTP验收真实模型，不启动依赖T03。",
           "validation": [],
           "artifacts": []
         }

@@ -48,3 +48,15 @@ v5只明确已有单位/条件与atom.qualifiers的逐字对应规则，严格Co
 严格API候选成功仍为knowledge_status=pending、scientific_quality=not_run、published=false；literal gold数值/完整条件集合的诊断匹配为0，独立知识核对留给B04-T03，不以这次API成功代替科学验收。T02最终整分支469项断言/55指纹审查通过，已通过日志工具complete；提交/推送核对后进入T03。以后直接复用已保存服务、凭据和累计余额，不重新获得10M，不再次弹出密钥窗口。
 
 真实原响应、使用记录和严格候选核对完成后，才按任务卡验收B04-T02并进入B04-T03。假服务、公开synthetic key测试和0请求预检都不得称作真实模型成功；返回别名也不是网关底层模型版本或收费的独立证明。
+
+## 2026年11月6日的实际状态核查
+
+B06V-T02 对同一明确路径实测：服务设置、累计账本和 DPAPI 凭据三文件及对应父目录均不存在；当前 Windows 用户/LocalAppData 与原记录相同，Windows 与 Linux 的指定 key 环境变量均未设置。证据见[当前状态预检](../validation/assets/B06V-T02/recognition/vision-api-preflight/missing-current-state.json)。前文 30,097 / 9,969,903 / pending0 是最后有效结算快照，不能据此声称缺失文件后的当前余额已核实。
+
+服务、别名和累计上限仍沿用用户原授权。已向用户核实文件迁移位置或恢复范围；在实际账本与凭据可用并完成预留核对前，不发送真实模型请求，不重新初始化 10M 或假零使用量。扫描方案的本地失败历史保持原响应，最终视觉客户端能力按[扫描契约](../technical/SCAN_FORMULA_CONTRACT.md)分别验收；官方视觉支持声明不证明糖猫内部路由或精确权重版本。
+
+扫描调用新增独立的[invoke_scan_api_credential.ps1](../../scripts/invoke_scan_api_credential.ps1)，只启动四路径扫描 CLI，复用明确 DPAPI 引用，并锁定实际累计账本。它保守预留本次配置总上限、按有效 usage 结算、未知用量保持未结清；同时保存四阶段公开收据及账本原字节快照，保持中文 stdout 的 UTF-8 字节。旧 `invoke_api_credential.ps1` 仍只用于 `extract api`，没有因此新增累计账本自动控制。
+
+封装的进程和管道共用有界等待，失败时终止本次 Job 内进程并保存 `failed` 收据及未知用量预留。Job 在选定进程启动后分配，保留该窗口局限；进程管理不是文件或网络沙盒。成功四阶段原协议保持，失败阶段单独记录诊断和终止证据。
+
+新脚本已在两个 Windows PowerShell 版本上用人工凭据、人工账本和无 HTTP 的替身子进程验证；见[辅助脚本记录](../validation/assets/B06V-T02/recognition/credential-helper/validation-receipt.json)。这不证明当前真实文件恢复、真实凭据解密或模型调用成功。`set_api_credential.ps1` 只保存缺失 DPAPI 凭据，不创建服务设置或重置累计账本；恢复路径与额度范围仍需依据实际当前记录。

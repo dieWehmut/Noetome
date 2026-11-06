@@ -393,3 +393,9 @@ RenderedFile将正文与链接分开定位，保存文件指纹、note_id、sect
 ## 明确选定图像交换 v1
 
 [图像保真 v1](IMAGE_FIDELITY_CONTRACT.md)使用独立 image case、author_image_declaration 和目标 profile。整张 PNG 的真实尺寸/字节与元素 bbox、关系端点、单位、图例归属、空间声明绑定；作者结构不是图像识别结果。各 nullable 必填字段区分已知未给出与关键未知，完整条件/例外保留。计划和双报告保存有限重绘、原图回退或阻断决策，以及实际图元/正文 UTF-8 字段映射。原 PNG 始终保留，缺原始数据的曲线不被生成精确数据；输出仍为未发布工程预览，不修改旧公式/流程/fixture 契约。
+
+## 单个明确扫描公式交换 v1
+
+[扫描公式 v1](SCAN_FORMULA_CONTRACT.md)保存独立 selection、整页 PNG、实际矩形 crop、可辨性与 `author_scan_declaration`。区域必须逐像素匹配选定页；可选归档 PDF 保留原字节，不冒充通用 PDF 页面验证。声明的 expression 与 uncertainties 保留已知/未知区别，独立 expected 不进入普通 CLI 或识别输入。
+
+单请求识别绑定实际 crop 字节和严格 api config，模型输入只含固定任务与内联原图，不包含手工来源表达。实际 Chat 原响应、HTTP/finish/model 元数据、有效 usage 和规范识别对象分开保存；Core 在返回后才检查有限等价数学结构，来源未知、额外符号或错下标不能由模型猜测升级成功。累计账本按实际当前余额预留结算，缺失或未知不能填零。识别文本、等价编译表达、原件和计划分开保存；报告记录实际字段/正文 UTF-8 映射、网络/模型调用及未知费用，始终知识 pending、科学 not_run、发布 false。

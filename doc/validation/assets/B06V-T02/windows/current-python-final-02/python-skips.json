@@ -1,0 +1,43 @@
+{
+  "tests_run": 364,
+  "passed": 360,
+  "skipped": [
+    {
+      "test": "test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_ancestor_links_rejected_before_source_read",
+      "reason": "ancestor symlinks require separate Windows reparse environment"
+    },
+    {
+      "test": "test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution",
+      "reason": "directory symbolic links unavailable"
+    },
+    {
+      "test": "test_verify_scan_formula.ScanAuthorTests.test_ancestor_link_refused_before_source_read",
+      "reason": "directory symbolic link unavailable on this host"
+    },
+    {
+      "test": "test_verify_scan_formula.ScanAuthorTests.test_flat_inventory_rejects_linked_ancestor_before_listing",
+      "reason": "directory symbolic link unavailable on this host"
+    }
+  ],
+  "failed": 0,
+  "boundary_probe": {
+    "tests_run": 4,
+    "skips": [
+      {
+        "test": "test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution",
+        "reason": "directory symbolic links unavailable"
+      },
+      {
+        "test": "test_verify_scan_formula.ScanAuthorTests.test_ancestor_link_refused_before_source_read",
+        "reason": "directory symbolic link unavailable on this host"
+      },
+      {
+        "test": "test_verify_scan_formula.ScanAuthorTests.test_flat_inventory_rejects_linked_ancestor_before_listing",
+        "reason": "directory symbolic link unavailable on this host"
+      }
+    ],
+    "errors": 0,
+    "failures": 0
+  },
+  "scope": "actual unittest full result, explicit skip discovery and a limited actual rerun of only dynamic platform boundary methods to identify observed skip reasons; skips are not passes"
+}

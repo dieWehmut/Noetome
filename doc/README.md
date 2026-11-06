@@ -31,6 +31,7 @@
 | [有界过程与流程表达](technical/PROCESS_FLOW_CONTRACT.md) | 独立过程来源核对、明确步骤/关系、流程图及有据文字回退 | process-review、flow、节点/边映射与目标能力变化 |
 | [明确选定公式保真](technical/FORMULA_FIDELITY_CONTRACT.md) | 原始 TeX、作者语义声明、公式 PNG 区域及 MathJax/原图回退 | formula、公式源码/附件、语义及目标能力变化 |
 | [明确选定图像保真](technical/IMAGE_FIDELITY_CONTRACT.md) | 原 PNG、作者手工结构声明、有限 SVG 与原图/阻断决策 | image、标签/箭头/单位/图例/空间及图像能力变化 |
+| [明确扫描公式重建](technical/SCAN_FORMULA_CONTRACT.md) | 原扫描页/区域、单请求视觉识别、原响应及等价表达核对 | scan-formula、识别策略、原件映射与关键未知阻断 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
 | [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |
@@ -57,3 +58,5 @@ B04R收束提交已普通推送并核对远端，执行卡归档于[B04R步骤](
 B05 三项已完成实际验收，[B05-T03记录](validation/B05-T03.md)保留完整 Windows 回归、真实路径保护、独立审查及失败历史。[B06执行卡](execution/B06_STEPS.md)中的主动比较表与有据流程图已完成，来源重建、完整回归、独立语义篡改、NTFS和真实Obsidian证据分别见[B06-T01记录](validation/B06-T01.md)与[B06-T02记录](validation/B06-T02.md)。原始TeX/公式原图回退按[公式契约](technical/FORMULA_FIDELITY_CONTRACT.md)推进，真实状态仍见[近期步骤](execution/NEXT_STEPS.md)及账本；当前工程预览不代表科学核实或生产发布。
 
 [B06V-T01记录](validation/B06V-T01.md)保存明确PNG/作者手工声明的有限重绘、原图回退、关键未知阻断，以及真实原生不可读/布局反例与修复、独立同步篡改、完整回归和干净Obsidian证据。边界由[图像契约](technical/IMAGE_FIDELITY_CONTRACT.md)约束；一般自动识别、扫描重建和跨版本支持分别验收，不从有界工程样例推定科学质量。
+
+[B06V-T02实施方案](execution/B06V-T02_SCAN_PLAN.md)限定一个公开自造扫描页公式、冻结的清晰/关键缺损状态与一个固定识别方案。原件、真实识别和语义核对分开；失败不修改独立 expected，不用正确阻断代替清晰公式重建验收。规则见[扫描契约](technical/SCAN_FORMULA_CONTRACT.md)，真实状态仍由账本维护。
