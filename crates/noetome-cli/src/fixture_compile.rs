@@ -42,7 +42,7 @@ fn issue(error: &ProjectError) -> Issue {
     Issue::new(error.code(), Vec::new(), &error.to_string())
 }
 
-fn fact(issues: &[Issue], ran: bool) -> CheckFact {
+pub(crate) fn fact(issues: &[Issue], ran: bool) -> CheckFact {
     CheckFact {
         status: if !ran {
             "not_run"
@@ -56,7 +56,9 @@ fn fact(issues: &[Issue], ran: bool) -> CheckFact {
     }
 }
 
-fn contracts(case: &LoadedCase) -> (BTreeMap<String, CheckFact>, Vec<Issue>, Vec<ResolvedTarget>) {
+pub(crate) fn contracts(
+    case: &LoadedCase,
+) -> (BTreeMap<String, CheckFact>, Vec<Issue>, Vec<ResolvedTarget>) {
     let sources = case.source_issues.clone();
     let ran = sources.is_empty();
     let coverage = if ran {
@@ -96,7 +98,7 @@ fn contracts(case: &LoadedCase) -> (BTreeMap<String, CheckFact>, Vec<Issue>, Vec
     (checks, issues, targets)
 }
 
-fn context(case: &LoadedCase) -> Result<CompileContext, ProjectError> {
+pub(crate) fn context(case: &LoadedCase) -> Result<CompileContext, ProjectError> {
     let counts = BTreeMap::from([
         ("sources".into(), case.manifest.sources.len() as u64),
         ("spans".into(), case.spans.len() as u64),
@@ -197,7 +199,7 @@ fn ensure_input(
     })
 }
 
-fn report(
+pub(crate) fn report(
     ctx: &CompileContext,
     checks: &BTreeMap<String, CheckFact>,
     files: &[RenderedFile],
@@ -344,7 +346,7 @@ fn outcome(
     })
 }
 
-fn write_reports(
+pub(crate) fn write_reports(
     store: &mut Store,
     facts: &CompileReport,
     paths: &ReportPaths,
@@ -369,7 +371,7 @@ fn write_reports(
     Ok(())
 }
 
-fn read_files(
+pub(crate) fn read_files(
     store: &Store,
     prefix: &str,
     manifest: &[RenderedFile],
@@ -386,7 +388,11 @@ fn read_files(
         .collect()
 }
 
-fn output_facts(checks: &mut BTreeMap<String, CheckFact>, stage: &str, issues: &[Issue]) {
+pub(crate) fn output_facts(
+    checks: &mut BTreeMap<String, CheckFact>,
+    stage: &str,
+    issues: &[Issue],
+) {
     checks.insert(stage.into(), fact(issues, true));
     for (key, rule) in [
         ("output_manifest", "OUTPUT_MANIFEST"),

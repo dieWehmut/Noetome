@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | 核心与命令行 | Rust core 与 CLI | 先建立可单独执行和测试的核心，不依赖 GUI |
 | 资料解析 | Rust文本入口及单一pdfplumber adapter的有界sidecar | 来源项目登记明确选定的MD/TXT/PDF；PDF保存原始版本和独立解析尝试，扫描和复杂版面保守需复核 |
-| 持久化 | 本地 SQLite | 来源项目支持Schema1/2/3，PDF在Schema3保存页、区域、资源和真实导入顺序；fixture编译工作区另以Schema1保存Run、Coverage、Release和发布依据，数据库不放进阅读Vault |
+| 持久化 | 本地 SQLite | 来源项目支持Schema1/2/3，PDF在Schema3保存页、区域、资源和真实导入顺序；fixture编译工作区另以Schema1保存Run、Coverage、Release和发布依据，有限运行control日志另用Schema1三表；数据库不放进阅读Vault |
 | 交换契约 | 带版本的 JSON | 显式校验输入、引用与结果；详见 [数据契约](DATA_CONTRACTS.md) |
 | 输出 | 有限Markdown、标题语义链接与比较表 | 当前只写尚不存在的新测试根中的Vault；完整Obsidian兼容及生产库维护需分别验收 |
 | 桌面端 | Tauri 与 React TypeScript | 按用户要求提前桌面骨架及安装实测；调用同一核心接口，完整用例逐项接入 |
@@ -93,6 +93,9 @@ B01-T02的项目初始化与检查逻辑先放在`noetome-cli`库的`project`模
 | [compile_report.rs](../../crates/noetome-cli/src/compile_report.rs) | 从同一typed验证快照生成Markdown事实表，与磁盘JSON保持同一键、理由、计数和问题 |
 | [compile_store.rs](../../crates/noetome-cli/src/compile_store.rs) | 独占新根、目录/文件身份与精确清单保护、独立编译SQLite Schema1、阶段登记及最后发布事务 |
 | [fixture_compile.rs](../../crates/noetome-cli/src/fixture_compile.rs) | case compile预检、输入守卫、暂存/Vault双重验证、报告与存储协调；失败保留可确认现场，不接管已有目录 |
+| [fixture_run.rs](../../crates/noetome-cli/src/fixture_run.rs) | 固定六单元start/status/pause/resume/cancel，重验来源/原件、prepared intent与安全进度，保持已确认前缀 |
+| [run_model.rs](../../crates/noetome-cli/src/run_model.rs)、[run_store.rs](../../crates/noetome-cli/src/run_store.rs) | 独立严格Run/WorkUnit与control日志，输入/编译版本/owner、raw链、控制前缀和合作worker锁 |
+| [compile_identity.rs](../../crates/noetome-cli/src/compile_identity.rs)、[run_recovery.rs](../../crates/noetome-cli/src/run_recovery.rs) | 实际句柄持久身份与有限SQLite热journal只读影像门禁；原库回滚由SQLite执行，恢复后仍完整重验 |
 | [sidecar_model.rs](../../crates/noetome-cli/src/sidecar_model.rs) | 严格protocol_version=1 DTO、解析器能力、来源单元/资源/问题和限额；独立于项目与编译Schema |
 | [sidecar_process.rs](../../crates/noetome-cli/src/sidecar_process.rs) | 可信原生argv、并发有界管道、单请求身份/引用校验及Windows受控进程树停止与退出确认 |
 | [sidecar_workspace.rs](../../crates/noetome-cli/src/sidecar_workspace.rs) | 明确输入只读守卫、独占新目录能力、资源身份/SHA/UTF8/路径与精确清单复核 |
@@ -147,6 +150,14 @@ fixture目录不能作为工作区或输出目录。项目根和编译输出根�
 
 输出 Vault 只包含阅读所需文件。SQLite、日志、凭据、原始资料缓存和未发布候选不混入 Vault。追溯摘要与发布清单保存在相邻报告区，后续再决定可移植索引打包形式。
 
+### B07-T01 固定运行的独立控制根
+
+有限 Run 用新建的外层根保存 `control/owner.json`、`control/worker.lock`、`control/run.sqlite`，将上述原编译布局置于 `output/`。control三表保存调度和控制记录；output六表仍是唯一发布依据，不改来源项目Schema，不接管旧case compile根。完整边界见[运行检查点契约](RUN_CHECKPOINT_CONTRACT.md)，实际验收顺序见[B07-T01计划](../execution/B07-T01_RUN_PLAN.md)。
+
+`unit_prepared`先封存当前来源/报告可重新派生的完整待写字节，严格snapshot保留旧目录、文件和DB身份。文件同步/SQL COMMIT与外层检查点之间允许按intent精确重验接续；未知extra、截断文件、身份替换和不兼容输入/编译指纹保留拒绝。热journal默认不由Store接管，显式Run恢复须经过原所有权/整份原影像的只读前置门禁后才让SQLite回滚，并再次核验原件。无base snapshot的compile bootstrap热journal不接管。
+
+工作图固定为source_contract、render、stage_verification、vault_readback、reports、publication，复用现有纯契约/渲染校验，不建立任意任务图框架。暂停/取消请求与安全确认分开持久；取消保留确认结果，输入/版本失效保留历史。当前CLI恢复不延伸到桌面关闭/托盘、生产Vault、预算API或24小时规模，平台行为以实测记录为准。
+
 ## 5 处理与事务边界
 
 当前单份文本登记按以下顺序执行：
@@ -188,6 +199,8 @@ case compile的两次新根运行保留相同Concept/Atom/Note/Section身份和�
 数据库变化通过顺序迁移管理，项目记录所用schema版本。当前仅来源import提供已实现的项目Schema1到2候选升级；inspect没有迁移入口。编译工作区Schema1拥有独立application_id和精确六表契约，不迁移或复用来源项目Schema2。不支持的版本必须拒绝并说明原因，未完成现场要求保留检查，不能提供假迁移或自动接管能力。
 
 ## 7 命令行边界
+
+有限Run的控制写入由run_store在BEGIN IMMEDIATE内部重验最新完整检查点链，终态在任何metadata或INSERT写入前拒绝；事务前状态读取与最终接纳条件分开，避免执行者完成后再插入无执行者确认的新请求。
 
 当前CLI入口为：
 

@@ -188,6 +188,22 @@ python fixtures/text-compare-v1/audit_fixture.py
 python scripts/verify_fixture_compile.py --cli '<实际可读CLI路径>' --root '<父目录已存在的新测试根>'
 ```
 
+## 固定 fixture 流程的持久检查点
+
+B07-T01 的有限 Run 接口复用明确fixture输入与既有编译/语义核对，使用新运行根保存六单元进度。命令与恢复边界见[运行契约](doc/technical/RUN_CHECKPOINT_CONTRACT.md)，实际验收状态仍见[任务账本](dev-log/tasks.json)与[本项执行计划](doc/execution/B07-T01_RUN_PLAN.md)。以下路径占位符须替换，运行根父目录先存在，初次运行根必须不存在。
+
+```text
+noetome run start fixtures/run-checkpoint-v1/fixture <new-run-root> --paused
+noetome run status <owned-run-root>
+noetome run resume fixtures/run-checkpoint-v1/fixture <owned-run-root>
+noetome run pause <owned-run-root>
+noetome run cancel <owned-run-root>
+```
+
+`control/run.sqlite`保存原Run/Release、输入/版本、工作单元、控制请求与检查点；`output/state/compile.sqlite`保留原六表及唯一发布依据，阅读文件位于`output/vault`。恢复重验原身份、完整字节、来源语义与状态迁移，复用确认结果，不接管旧case compile或陌生Vault。输入/版本变化、未知/损坏或外部替换现场保留拒绝；只有明确拥有且通过前置验证的有限journal可在显式resume中交给SQLite正常回滚。
+
+暂停请求与安全确认分开显示，在途工作可继续落盘；取消保留确认结果且不能继续调度或撤销已提交publication。完成前保存的迟到控制显示 `completed before control took effect`；完成后的resume核对结果或补该控制确认，不增加工作尝试或发布。该接口不调用模型/HTTP或使用生产资料，不表示桌面后台任务、跨平台搬移、24小时或生产Vault恢复已经验收。
+
 ## Parser sidecar 开发入口
 
 `noetome_cli::sidecar_process::run` 接收可信程序与原生argv、明确单文件、尚不存在的工作区、限额和取消令牌。Core保持输入和目录守卫，并复核唯一JSON响应、身份、来源单元、资源实际字节和精确清单；响应及诊断超限、超时、取消或管道失败返回分类错误并收束受控进程树。wire与默认政策见[协议](doc/technical/SIDECAR_PROTOCOL.md)，验收范围见[B03-T01](doc/validation/B03-T01.md)。

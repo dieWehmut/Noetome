@@ -20,6 +20,73 @@ fn main() -> ExitCode {
 
     let mut result_code = 0;
     let output = match command {
+        CliCommand::RunHelp => noetome_cli::RUN_HELP.to_owned(),
+        CliCommand::RunStart {
+            case,
+            output,
+            paused,
+        } => match noetome_cli::fixture_run::start(&case, &output, paused) {
+            Ok(output) => {
+                if output.failed {
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
+        CliCommand::RunResume { case, output } => {
+            match noetome_cli::fixture_run::resume(&case, &output) {
+                Ok(output) => {
+                    if output.failed {
+                        result_code = 3;
+                    }
+                    output.json
+                }
+                Err(error) => {
+                    let _ = writeln!(io::stderr().lock(), "{error}");
+                    return ExitCode::from(error.exit_code());
+                }
+            }
+        }
+        CliCommand::RunStatus(root) => match noetome_cli::fixture_run::status(&root) {
+            Ok(output) => {
+                if output.failed {
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
+        CliCommand::RunPause(root) => match noetome_cli::fixture_run::control(&root, "pause") {
+            Ok(output) => {
+                if output.failed {
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
+        CliCommand::RunCancel(root) => match noetome_cli::fixture_run::control(&root, "cancel") {
+            Ok(output) => {
+                if output.failed {
+                    result_code = 3;
+                }
+                output.json
+            }
+            Err(error) => {
+                let _ = writeln!(io::stderr().lock(), "{error}");
+                return ExitCode::from(error.exit_code());
+            }
+        },
         CliCommand::KnowledgeHelp => noetome_cli::KNOWLEDGE_HELP.to_owned(),
         CliCommand::ScanFormula {
             case,

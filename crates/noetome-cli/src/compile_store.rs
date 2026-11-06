@@ -7,9 +7,11 @@ use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 use rusqlite::{Connection, OpenFlags, TransactionBehavior, params};
+use serde::{Deserialize, Serialize};
 use time::{OffsetDateTime, UtcOffset, format_description::well_known::Rfc3339};
 use uuid::{Uuid, Version};
 
+use crate::compile_identity::{Identity, identity as persistent_identity};
 use crate::compile_model::{CompileContext, CompileReport, ReportPaths};
 use crate::fixture_input::{LoadedCase, valid_relative_path};
 use crate::fixture_render::RenderedFile;
@@ -172,6 +174,52 @@ struct OwnedFile {
     identity: same_file::Handle,
     bytes: Vec<u8>,
 }
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub(crate) struct FileSnapshot {
+    pub(crate) identity: Identity,
+    pub(crate) sha256: String,
+    pub(crate) byte_length: u64,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub(crate) struct DirectorySnapshot {
+    pub(crate) path: PathBuf,
+    pub(crate) identity: Identity,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub(crate) struct StoreSnapshot {
+    pub(crate) schema_version: u32,
+    pub(crate) context: CompileContext,
+    pub(crate) root: PathBuf,
+    pub(crate) parent: DirectorySnapshot,
+    pub(crate) directories: BTreeMap<String, Identity>,
+    pub(crate) files: BTreeMap<String, FileSnapshot>,
+    pub(crate) database: FileSnapshot,
+    pub(crate) phase: String,
+    pub(crate) failure_release_status: String,
+    pub(crate) manifest: Vec<RenderedFile>,
+    pub(crate) published: bool,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub(crate) struct FileExpectation {
+    pub(crate) sha256: String,
+    pub(crate) byte_length: u64,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub(crate) struct StoreIntent {
+    pub(crate) phase: String,
+    pub(crate) manifest: Vec<RenderedFile>,
+    pub(crate) files: BTreeMap<String, FileExpectation>,
+}
 fn read_file(path: &Path, writable_database: bool) -> Result<OwnedFile, ProjectError> {
     project::check_components(path)?;
     let before = project::checked_file(path)?;
@@ -225,6 +273,7 @@ pub(crate) struct Store {
     database_identity: same_file::Handle,
     _database_guard: File,
     database_sha256: Option<String>,
+    recovery_shadow: bool,
     context: CompileContext,
     coverage_rows: Vec<(
         String,
@@ -244,6 +293,678 @@ pub(crate) struct Store {
 }
 
 impl Store {
+    pub(crate) fn snapshot(&self) -> Result<StoreSnapshot, ProjectError> {
+        self.ensure_integrity()?;
+        if self.published {
+            self.validate_committed_publication()?;
+        }
+        let directories = self
+            .directories
+            .iter()
+            .map(|(name, directory)| Ok((name.clone(), persistent_identity(&directory.path)?)))
+            .collect::<Result<_, ProjectError>>()?;
+        let files = self
+            .files
+            .iter()
+            .map(|(name, file)| {
+                Ok((
+                    name.clone(),
+                    Self::file_snapshot(&self.root().join(name), &file.bytes)?,
+                ))
+            })
+            .collect::<Result<_, ProjectError>>()?;
+        let database = read_file(&self.root().join(DATABASE), true)?;
+        let result = StoreSnapshot {
+            schema_version: 1,
+            context: self.context.clone(),
+            root: self.root().to_path_buf(),
+            parent: DirectorySnapshot {
+                path: self.parent.path.clone(),
+                identity: persistent_identity(&self.parent.path)?,
+            },
+            directories,
+            files,
+            database: Self::file_snapshot(&self.root().join(DATABASE), &database.bytes)?,
+            phase: self.phase.clone(),
+            failure_release_status: self.failure_release_status.clone(),
+            manifest: self.manifest.clone(),
+            published: self.published,
+        };
+        self.ensure_integrity()?;
+        Ok(result)
+    }
+
+    fn file_snapshot(path: &Path, bytes: &[u8]) -> Result<FileSnapshot, ProjectError> {
+        Ok(FileSnapshot {
+            identity: persistent_identity(path)?,
+            sha256: crate::text::sha256(bytes),
+            byte_length: bytes.len() as u64,
+        })
+    }
+
+    fn snapshot_layout(snapshot: &StoreSnapshot) -> Result<(), ProjectError> {
+        if snapshot.schema_version != 1
+            || !matches!(
+                snapshot.phase.as_str(),
+                "planned" | "staged" | "verified" | "failed" | "published"
+            )
+            || snapshot.published != (snapshot.phase == "published")
+            || !matches!(
+                snapshot.failure_release_status.as_str(),
+                "staged" | "recovery_required"
+            )
+            || ["", "state", "staging", "vault", "reports"]
+                .iter()
+                .any(|name| !snapshot.directories.contains_key(*name))
+        {
+            return Err(integrity("检查点版本、阶段或必需目录不符。"));
+        }
+        let mut names = BTreeSet::new();
+        for name in snapshot.directories.keys().chain(snapshot.files.keys()) {
+            if name.is_empty() {
+                continue;
+            }
+            let folded = name.to_lowercase();
+            if !valid_relative_path(name)
+                || !matches!(
+                    name.split('/').next(),
+                    Some("state" | "staging" | "vault" | "reports")
+                )
+                || !names.insert(folded.clone())
+                || [
+                    DATABASE,
+                    "state/compile.sqlite-journal",
+                    "state/compile.sqlite-wal",
+                    "state/compile.sqlite-shm",
+                ]
+                .contains(&folded.as_str())
+                || !Path::new(name)
+                    .parent()
+                    .and_then(Path::to_str)
+                    .is_some_and(|parent| snapshot.directories.contains_key(parent))
+            {
+                return Err(integrity("检查点目录/文件路径、碰撞或父级不符。"));
+            }
+        }
+        for file in snapshot
+            .files
+            .values()
+            .chain(std::iter::once(&snapshot.database))
+        {
+            if file.byte_length > MAX_BYTES
+                || file.sha256.len() != 64
+                || !file
+                    .sha256
+                    .bytes()
+                    .all(|ch| ch.is_ascii_digit() || (b'a'..=b'f').contains(&ch))
+            {
+                return Err(integrity("检查点文件指纹或读取上限不合法。"));
+            }
+        }
+        Ok(())
+    }
+
+    /// Only the caller's confirmed, exact inventory is eligible. Unknown partial
+    /// output remains untouched. The separate run journal authenticates this
+    /// snapshot; this function never trusts a saved `passed` flag.
+    pub(crate) fn resume(
+        root: &Path,
+        context: &CompileContext,
+        case: &LoadedCase,
+        snapshot: &StoreSnapshot,
+        allow_publication_reconcile: bool,
+    ) -> Result<Self, ProjectError> {
+        Self::resume_snapshot(
+            root,
+            context,
+            case,
+            snapshot,
+            allow_publication_reconcile,
+            true,
+            None,
+        )
+    }
+    pub(crate) fn resume_readonly(
+        root: &Path,
+        context: &CompileContext,
+        case: &LoadedCase,
+        snapshot: &StoreSnapshot,
+        reconcile: bool,
+    ) -> Result<Self, ProjectError> {
+        Self::resume_snapshot(root, context, case, snapshot, reconcile, false, None)
+    }
+    fn resume_snapshot(
+        root: &Path,
+        context: &CompileContext,
+        case: &LoadedCase,
+        snapshot: &StoreSnapshot,
+        allow_publication_reconcile: bool,
+        writable: bool,
+        recovery_image: Option<&[u8]>,
+    ) -> Result<Self, ProjectError> {
+        Self::snapshot_layout(snapshot)?;
+        Self::validate_context(context, case)?;
+        if snapshot.context != *context {
+            return Err(integrity("检查点不是同一Run/Release、输入或编译上下文。"));
+        }
+        case.check_unchanged()?;
+        let root = project::check_components(root)?;
+        let root = root
+            .canonicalize()
+            .map_err(|e| ProjectError::io(&root, e))?;
+        let case_root = case
+            .root()
+            .canonicalize()
+            .map_err(|e| ProjectError::io(case.root(), e))?;
+        if components(&root).starts_with(&components(&case_root))
+            || components(&case_root).starts_with(&components(&root))
+            || root != snapshot.root
+            || root.parent() != Some(snapshot.parent.path.as_path())
+        {
+            return Err(integrity("检查点根目录、父级或输入/输出范围不符。"));
+        }
+        let parent = Directory::capture(&snapshot.parent.path, true)?;
+        if persistent_identity(&parent.path)? != snapshot.parent.identity {
+            return Err(integrity("检查点父目录被替换。"));
+        }
+        let mut directories = BTreeMap::new();
+        for (name, expected) in &snapshot.directories {
+            let directory = Directory::capture(&root.join(name), name.is_empty())?;
+            if persistent_identity(&directory.path)? != *expected {
+                return Err(integrity(format!("检查点目录身份改变：{name}")));
+            }
+            directories.insert(name.clone(), directory);
+        }
+        let mut files = BTreeMap::new();
+        for (name, expected) in &snapshot.files {
+            let path = root.join(name);
+            let actual = read_file(&path, false)?;
+            if Self::file_snapshot(&path, &actual.bytes)? != *expected {
+                return Err(integrity(format!("检查点文件身份或字节改变：{name}")));
+            }
+            files.insert(name.clone(), actual);
+        }
+        let db_path = root.join(DATABASE);
+        let actual_db = read_file(&db_path, true)?;
+        let actual_snapshot =
+            Self::file_snapshot(&db_path, recovery_image.unwrap_or(&actual_db.bytes))?;
+        if actual_snapshot.identity != snapshot.database.identity {
+            return Err(integrity("检查点SQLite文件被替换。"));
+        }
+        let reconcile = actual_snapshot != snapshot.database;
+        if reconcile
+            && !(allow_publication_reconcile
+                && snapshot.phase == "verified"
+                && !snapshot.published
+                && snapshot.files.contains_key("reports/validation.json")
+                && snapshot.files.contains_key("reports/validation.md"))
+        {
+            return Err(integrity(
+                "SQLite不等于确认检查点，且不属于允许的发布提交窗口。",
+            ));
+        }
+        let mut options = OpenOptions::new();
+        options.read(true);
+        #[cfg(windows)]
+        {
+            use std::os::windows::fs::OpenOptionsExt;
+            options.share_mode(3).custom_flags(0x00200000);
+        }
+        let database_guard = options
+            .open(&db_path)
+            .map_err(|e| ProjectError::io(&db_path, e))?;
+        let mut uri =
+            url::Url::from_file_path(&db_path).map_err(|_| ProjectError::unsafe_path(&db_path))?;
+        uri.query_pairs_mut()
+            .append_pair("mode", "ro")
+            .append_pair("immutable", "1");
+        let connection = if let Some(image) = recovery_image {
+            let mut connection = Connection::open_in_memory().map_err(database)?;
+            let mut buffered = image.to_vec();
+            buffered.extend_from_slice(&[0; 20]);
+            let byte_length = buffered.len();
+            connection
+                .deserialize_read_exact("main", std::io::Cursor::new(buffered), byte_length, true)
+                .map_err(database)?;
+            connection
+        } else {
+            Connection::open_with_flags(
+                uri.as_str(),
+                OpenFlags::SQLITE_OPEN_READ_ONLY | OpenFlags::SQLITE_OPEN_URI,
+            )
+            .map_err(database)?
+        };
+        let mut store = Self {
+            parent,
+            directories,
+            files,
+            connection,
+            database_identity: actual_db.identity,
+            _database_guard: database_guard,
+            database_sha256: Some(actual_snapshot.sha256),
+            recovery_shadow: recovery_image.is_some(),
+            context: context.clone(),
+            coverage_rows: case
+                .ir
+                .coverage
+                .iter()
+                .map(|row| {
+                    Ok((
+                        row.span_id.clone(),
+                        enum_text(&row.disposition)?,
+                        json(&row.atom_ids)?,
+                        json(&row.required_atom_ids)?,
+                        row.duplicate_of_span_id.clone(),
+                        row.exclusion_reason.clone(),
+                        enum_text(&row.decision_source)?,
+                        row.policy_version.clone(),
+                    ))
+                })
+                .collect::<Result<_, ProjectError>>()?,
+            expected_notes: case
+                .plan
+                .notes
+                .iter()
+                .map(|note| (note.output_path.clone(), note.note_id.clone()))
+                .collect(),
+            phase: if reconcile {
+                "published".into()
+            } else {
+                snapshot.phase.clone()
+            },
+            failure_release_status: snapshot.failure_release_status.clone(),
+            manifest: snapshot.manifest.clone(),
+            published: reconcile || snapshot.published,
+        };
+        // Exact inventory is checked before any SQL pragma/query. Immutable
+        // validation cannot recover a journal or create WAL/SHM side files.
+        store.ensure_tree_for(recovery_image.is_some())?;
+        store
+            .connection
+            .execute_batch(
+                "PRAGMA foreign_keys=ON; PRAGMA synchronous=FULL; PRAGMA temp_store=MEMORY;",
+            )
+            .map_err(database)?;
+        let quick: String = store
+            .connection
+            .query_row("PRAGMA quick_check", [], |row| row.get(0))
+            .map_err(database)?;
+        if quick != "ok" {
+            return Err(integrity("检查点SQLite完整性检查失败。"));
+        }
+        if recovery_image.is_some() {
+            store.ensure_schema_for(true)?;
+            store.ensure_records()?;
+        } else {
+            store.ensure_integrity()?;
+        }
+        if !store.manifest.is_empty() {
+            store.validate_manifest(&store.manifest, "staging/vault")?;
+        }
+        if matches!(store.phase.as_str(), "verified" | "published") {
+            store.validate_manifest(&store.manifest, "vault")?;
+        }
+        if store.published {
+            store.validate_committed_publication()?;
+        }
+        case.check_unchanged()?;
+        store.ensure_tree_for(recovery_image.is_some())?;
+        if store.published || !writable || recovery_image.is_some() {
+            return Ok(store);
+        }
+        // The owner has now independently validated the quiescent original.
+        // No schema migration, journal recovery or content replacement occurs.
+        let writable = Connection::open_with_flags(&db_path, OpenFlags::SQLITE_OPEN_READ_WRITE)
+            .map_err(database)?;
+        writable.busy_timeout(Duration::ZERO).map_err(database)?;
+        writable
+            .execute_batch(
+                "PRAGMA foreign_keys=ON; PRAGMA synchronous=FULL; PRAGMA temp_store=MEMORY;",
+            )
+            .map_err(database)?;
+        store.connection = writable;
+        store.ensure_integrity()?;
+        Ok(store)
+    }
+
+    /// The sealed unit intent authorizes only these pending paths and one exact
+    /// logical SQLite transition. Existing snapshot identities never change.
+    pub(crate) fn resume_with_intent(
+        root: &Path,
+        context: &CompileContext,
+        case: &LoadedCase,
+        snapshot: Option<&StoreSnapshot>,
+        intent: &StoreIntent,
+        derived_files: &BTreeMap<String, Vec<u8>>,
+    ) -> Result<Self, ProjectError> {
+        Self::resume_intent(
+            root,
+            context,
+            case,
+            snapshot,
+            intent,
+            derived_files,
+            true,
+            None,
+        )
+    }
+    pub(crate) fn resume_intent_readonly(
+        root: &Path,
+        context: &CompileContext,
+        case: &LoadedCase,
+        snapshot: Option<&StoreSnapshot>,
+        intent: &StoreIntent,
+        derived_files: &BTreeMap<String, Vec<u8>>,
+    ) -> Result<Self, ProjectError> {
+        Self::resume_intent(
+            root,
+            context,
+            case,
+            snapshot,
+            intent,
+            derived_files,
+            false,
+            None,
+        )
+    }
+    fn resume_intent(
+        root: &Path,
+        context: &CompileContext,
+        case: &LoadedCase,
+        snapshot: Option<&StoreSnapshot>,
+        intent: &StoreIntent,
+        derived_files: &BTreeMap<String, Vec<u8>>,
+        writable: bool,
+        recovery_image: Option<&[u8]>,
+    ) -> Result<Self, ProjectError> {
+        Self::validate_context(context, case)?;
+        case.check_unchanged()?;
+        if !matches!(
+            intent.phase.as_str(),
+            "planned" | "staged" | "verified" | "published"
+        ) || intent.files.keys().ne(derived_files.keys())
+            || (intent.phase == "planned" && !intent.manifest.is_empty())
+        {
+            return Err(integrity("prepared intent阶段、派生文件集合或清单不合法。"));
+        }
+        for (name, expectation) in &intent.files {
+            let bytes = &derived_files[name];
+            if !valid_relative_path(name)
+                || !matches!(
+                    name.split('/').next(),
+                    Some("state" | "staging" | "vault" | "reports")
+                )
+                || [
+                    DATABASE,
+                    "state/compile.sqlite-journal",
+                    "state/compile.sqlite-wal",
+                    "state/compile.sqlite-shm",
+                ]
+                .contains(&name.to_lowercase().as_str())
+                || expectation.byte_length > MAX_BYTES
+                || expectation.byte_length != bytes.len() as u64
+                || expectation.sha256 != crate::text::sha256(bytes)
+            {
+                return Err(integrity(
+                    "prepared intent路径或source-derived字节不等于封存期待。",
+                ));
+            }
+        }
+        if let Some(base) = snapshot {
+            Self::snapshot_layout(base)?;
+            let advance = matches!(
+                (base.phase.as_str(), intent.phase.as_str()),
+                ("planned", "staged") | ("staged", "verified") | ("verified", "published")
+            );
+            if base.context != *context
+                || (base.phase != intent.phase && !advance)
+                || (base.phase == intent.phase && base.manifest != intent.manifest)
+                || (base.phase != "planned" && base.manifest != intent.manifest)
+                || (base.published
+                    && intent
+                        .files
+                        .keys()
+                        .any(|name| !base.files.contains_key(name)))
+            {
+                return Err(integrity(
+                    "prepared intent不是同一上下文和一个合法原状态/目标转换。",
+                ));
+            }
+        } else if intent.phase != "planned"
+            || !intent.manifest.is_empty()
+            || !intent.files.is_empty()
+        {
+            return Err(integrity("无旧snapshot只能恢复完整planned初始化。"));
+        }
+        let checked_root = project::check_components(root)?;
+        if !project::exists(&checked_root)? {
+            if snapshot.is_none() && writable && recovery_image.is_none() {
+                return Self::create(&checked_root, context, case);
+            }
+            return Err(integrity("已确认输出根缺失。"));
+        }
+        let root = checked_root
+            .canonicalize()
+            .map_err(|e| ProjectError::io(&checked_root, e))?;
+        let parent = root
+            .parent()
+            .ok_or_else(|| ProjectError::unsafe_path(&root))?;
+        let mut directories = BTreeMap::new();
+        let mut files = BTreeMap::new();
+        if let Some(base) = snapshot {
+            if root != base.root
+                || parent != base.parent.path
+                || persistent_identity(parent)? != base.parent.identity
+            {
+                return Err(integrity("prepared恢复的根/父级不是原身份。"));
+            }
+            for (name, expected) in &base.directories {
+                if persistent_identity(&root.join(name))? != *expected {
+                    return Err(integrity("prepared恢复不能替换已有目录。"));
+                }
+                directories.insert(name.clone(), expected.clone());
+            }
+            for (name, expected) in &base.files {
+                let actual = read_file(&root.join(name), false)?;
+                if Self::file_snapshot(&root.join(name), &actual.bytes)? != *expected {
+                    return Err(integrity("prepared恢复不能替换或改写已有文件。"));
+                }
+                files.insert(name.clone(), expected.clone());
+            }
+        } else {
+            for name in ["", "state", "staging", "vault", "reports"] {
+                directories.insert(name.into(), persistent_identity(&root.join(name))?);
+            }
+        }
+        for (name, expectation) in &intent.files {
+            if let Some(previous) = files.get(name) {
+                if previous.sha256 != expectation.sha256
+                    || previous.byte_length != expectation.byte_length
+                {
+                    return Err(integrity("prepared intent不能覆盖已确认文件。"));
+                }
+            }
+            let path = root.join(name);
+            project::check_components(&path)?;
+            if project::exists(&path)? {
+                let actual = read_file(&path, false)?;
+                if actual.bytes != derived_files[name] {
+                    return Err(integrity(
+                        "pending文件不等于重新派生的完整字节；保留partial现场。",
+                    ));
+                }
+                let captured = Self::file_snapshot(&path, &actual.bytes)?;
+                if files.get(name).is_some_and(|old| old != &captured) {
+                    return Err(integrity("已确认pending文件身份改变。"));
+                }
+                files.insert(name.clone(), captured);
+            }
+            let mut ancestor = Path::new(name).parent();
+            while let Some(relative) = ancestor {
+                let relative = relative
+                    .to_str()
+                    .ok_or_else(|| ProjectError::unsafe_path(&path))?;
+                if !directories.contains_key(relative) && project::exists(&root.join(relative))? {
+                    directories.insert(relative.into(), persistent_identity(&root.join(relative))?);
+                }
+                ancestor = Path::new(relative).parent();
+            }
+        }
+        let db_path = root.join(DATABASE);
+        let actual_db = read_file(&db_path, true)?;
+        let database = Self::file_snapshot(&db_path, recovery_image.unwrap_or(&actual_db.bytes))?;
+        let (phase, manifest, published, failure_status) = if let Some(base) = snapshot {
+            if database.identity != base.database.identity {
+                return Err(integrity("prepared恢复不能替换原SQLite身份。"));
+            }
+            if database == base.database {
+                (
+                    base.phase.clone(),
+                    base.manifest.clone(),
+                    base.published,
+                    base.failure_release_status.clone(),
+                )
+            } else if base.phase != intent.phase {
+                (
+                    intent.phase.clone(),
+                    intent.manifest.clone(),
+                    intent.phase == "published",
+                    base.failure_release_status.clone(),
+                )
+            } else {
+                return Err(integrity("没有预定SQL阶段转换却发生SQLite字节改变。"));
+            }
+        } else {
+            ("planned".into(), Vec::new(), false, "staged".into())
+        };
+        let proposed = StoreSnapshot {
+            schema_version: 1,
+            context: context.clone(),
+            root: root.clone(),
+            parent: DirectorySnapshot {
+                path: parent.to_path_buf(),
+                identity: persistent_identity(parent)?,
+            },
+            directories,
+            files,
+            database,
+            phase,
+            failure_release_status: failure_status,
+            manifest,
+            published,
+        };
+        // The proposal is not trusted: the original strict path independently
+        // rechecks every ordinary entry and every exact six-table record.
+        Self::resume_snapshot(
+            &root,
+            context,
+            case,
+            &proposed,
+            false,
+            writable,
+            recovery_image,
+        )
+    }
+    /// Called only by an explicitly resumed Run while its worker lock is held.
+    /// All known files, source-derived pending paths and six-table SQL records
+    /// are checked against a read-only original image before SQLite may write.
+    pub(crate) fn recover_hot_journal(
+        root: &Path,
+        context: &CompileContext,
+        case: &LoadedCase,
+        snapshot: &StoreSnapshot,
+        intent: Option<&StoreIntent>,
+        derived_files: &BTreeMap<String, Vec<u8>>,
+    ) -> Result<(), ProjectError> {
+        let db = root.join(DATABASE);
+        let journal = root.join("state/compile.sqlite-journal");
+        if persistent_identity(&db)? != snapshot.database.identity {
+            return Err(integrity("热日志数据库不是原已确认身份。"));
+        }
+        let witness = crate::run_recovery::RecoveryWitness::capture(&db, &journal)?;
+        let image = crate::run_recovery::checked_recovery_image(&db, &journal)?;
+        if image.len() as u64 != snapshot.database.byte_length
+            || crate::text::sha256(&image) != snapshot.database.sha256
+        {
+            return Err(integrity("热日志原镜像不等于已有确认数据库的完整字节。"));
+        }
+        {
+            let store = if let Some(intent) = intent {
+                Self::resume_intent(
+                    root,
+                    context,
+                    case,
+                    Some(snapshot),
+                    intent,
+                    derived_files,
+                    false,
+                    Some(&image),
+                )?
+            } else {
+                Self::resume_snapshot(root, context, case, snapshot, false, false, Some(&image))?
+            };
+            let targets = crate::fixture_compile::contracts(case).2;
+            if !store.manifest.is_empty() {
+                let staged =
+                    crate::fixture_compile::read_files(&store, "staging/vault", &store.manifest)?;
+                if !crate::fixture_render::validate_rendered(
+                    case,
+                    &targets,
+                    &store.manifest,
+                    &staged,
+                )
+                .is_empty()
+                {
+                    return Err(integrity("恢复前暂存不等于当前来源与语义。"));
+                }
+                if matches!(store.phase.as_str(), "verified" | "published") {
+                    let vault =
+                        crate::fixture_compile::read_files(&store, "vault", &store.manifest)?;
+                    if !crate::fixture_render::validate_rendered(
+                        case,
+                        &targets,
+                        &store.manifest,
+                        &vault,
+                    )
+                    .is_empty()
+                    {
+                        return Err(integrity("恢复前Vault不等于当前来源与语义。"));
+                    }
+                }
+            }
+            case.check_unchanged()?;
+            store.ensure_tree_for(true)?;
+        }
+        witness.verify(&db, &journal)?;
+        // All read guards from the memory gate are now dropped on Windows.
+        let connection = Connection::open_with_flags(&db, OpenFlags::SQLITE_OPEN_READ_WRITE)
+            .map_err(database)?;
+        let quick: String = connection
+            .query_row("PRAGMA quick_check", [], |r| r.get(0))
+            .map_err(database)?;
+        if quick != "ok" {
+            return Err(integrity("热日志恢复后的完整性检查失败。"));
+        }
+        drop(connection);
+        if project::exists(&journal)? {
+            return Err(integrity("SQLite未完成已拥有热日志恢复，保留现场。"));
+        }
+        if let Some(intent) = intent {
+            Self::resume_intent(
+                root,
+                context,
+                case,
+                Some(snapshot),
+                intent,
+                derived_files,
+                false,
+                None,
+            )?;
+        } else {
+            Self::resume_snapshot(root, context, case, snapshot, false, false, None)?;
+        }
+        Ok(())
+    }
     pub(crate) fn preflight(case_root: &Path, output_root: &Path) -> Result<PathBuf, ProjectError> {
         let case = project::check_components(case_root)?;
         if !fs::symlink_metadata(&case)
@@ -290,12 +1011,7 @@ impl Store {
         }
         Ok(output)
     }
-    pub(crate) fn create(
-        root: &Path,
-        context: &CompileContext,
-        case: &LoadedCase,
-    ) -> Result<Self, ProjectError> {
-        let root = Self::preflight(case.root(), root)?;
+    fn validate_context(context: &CompileContext, case: &LoadedCase) -> Result<(), ProjectError> {
         let hashes = BTreeMap::from([
             ("case_sha256".into(), case.case_sha256.clone()),
             ("ir_sha256".into(), case.ir_sha256.clone()),
@@ -384,6 +1100,15 @@ impl Store {
                 "编译上下文与已读取的fixture身份、版本、指纹或计数不符。",
             ));
         }
+        Ok(())
+    }
+    pub(crate) fn create(
+        root: &Path,
+        context: &CompileContext,
+        case: &LoadedCase,
+    ) -> Result<Self, ProjectError> {
+        let root = Self::preflight(case.root(), root)?;
+        Self::validate_context(context, case)?;
         let ir_revision = integer(context.ir_revision)?;
         let plan_revision = integer(context.plan_revision)?;
         for count in context.counts.values() {
@@ -494,6 +1219,7 @@ impl Store {
             connection,
             database_identity,
             _database_guard: database_guard,
+            recovery_shadow: false,
             database_sha256: None,
             context: context.clone(),
             coverage_rows,
@@ -604,19 +1330,19 @@ impl Store {
         Ok(actual.bytes)
     }
     pub(crate) fn ensure_integrity(&self) -> Result<(), ProjectError> {
-        self.ensure_tree()?;
+        self.ensure_tree_for(self.recovery_shadow)?;
         if !self.connection.is_autocommit() {
             return Err(error(
                 "COMPILE_RECOVERY_REQUIRED",
                 "未结束事务不能用于只读验收。",
             ));
         }
-        self.ensure_schema()?;
+        self.ensure_schema_for(self.recovery_shadow)?;
         self.ensure_records()?;
         if let Some(expected) = &self.database_sha256 {
             let actual = read_file(&self.root().join(DATABASE), true)?;
             if actual.identity != self.database_identity
-                || crate::text::sha256(&actual.bytes) != *expected
+                || (!self.recovery_shadow && crate::text::sha256(&actual.bytes) != *expected)
             {
                 return Err(integrity("SQLite文件在事务边界之外改变。"));
             }
@@ -624,6 +1350,9 @@ impl Store {
         Ok(())
     }
     fn ensure_tree(&self) -> Result<(), ProjectError> {
+        self.ensure_tree_for(false)
+    }
+    fn ensure_tree_for(&self, hot: bool) -> Result<(), ProjectError> {
         self.parent.verify()?;
         for directory in self.directories.values() {
             directory.verify()?;
@@ -659,6 +1388,9 @@ impl Store {
                     );
                 }
             }
+            if hot && relative == "state" {
+                expected.insert("compile.sqlite-journal".into());
+            }
             let actual: BTreeSet<_> = fs::read_dir(&directory.path)
                 .map_err(|e| ProjectError::io(&directory.path, e))?
                 .map(|entry| entry.map(|e| e.file_name()))
@@ -676,7 +1408,7 @@ impl Store {
         }
         Ok(())
     }
-    fn ensure_schema(&self) -> Result<(), ProjectError> {
+    fn ensure_schema_for(&self, shadow: bool) -> Result<(), ProjectError> {
         let version: i64 = self
             .connection
             .query_row("PRAGMA user_version", [], |r| r.get(0))
@@ -701,7 +1433,7 @@ impl Store {
             || app != APPLICATION_ID
             || foreign_keys != 1
             || synchronous != 2
-            || journal != "delete"
+            || (journal != "delete" && !(shadow && journal == "memory"))
         {
             return Err(integrity("SQLite版本、应用或事务配置不符。"));
         }
@@ -816,6 +1548,23 @@ impl Store {
             )
         {
             return Err(integrity("Run身份或阶段转换不符。"));
+        }
+        if expected_state == "running" {
+            let active: (Option<String>, Option<String>, Option<String>, String, String, String) = self.connection
+                .query_row("SELECT finished_at,report_json_path,report_md_path,checks_json,counts_json,issues_json FROM runs", [], |row| Ok((row.get(0)?,row.get(1)?,row.get(2)?,row.get(3)?,row.get(4)?,row.get(5)?)))
+                .map_err(database)?;
+            if active
+                != (
+                    None,
+                    None,
+                    None,
+                    "{}".into(),
+                    json(&self.context.counts)?,
+                    "[]".into(),
+                )
+            {
+                return Err(integrity("活动Run的完整初始审计字段被改变。"));
+            }
         }
         let release: (String,String,String,i64,i64,String,String) = self.connection.query_row("SELECT release_id,run_id,status,ir_revision,plan_revision,renderer_version,manifest_json FROM releases", [], |r| Ok((r.get(0)?,r.get(1)?,r.get(2)?,r.get(3)?,r.get(4)?,r.get(5)?,r.get(6)?))).map_err(database)?;
         let release_status = match self.phase.as_str() {
@@ -1196,6 +1945,49 @@ impl Store {
         self.phase = "published".into();
         Ok(())
     }
+    fn validate_committed_publication(&self) -> Result<(), ProjectError> {
+        if !self.published || self.phase != "published" {
+            return Err(integrity("已提交发布的恢复身份不符。"));
+        }
+        let paths = ReportPaths {
+            json: "reports/validation.json".into(),
+            markdown: "reports/validation.md".into(),
+        };
+        let report: CompileReport = serde_json::from_slice(&self.read_owned(&paths.json)?)
+            .map_err(|e| integrity(format!("已提交报告不能严格解码：{e}")))?;
+        self.validate_manifest(&self.manifest, "staging/vault")?;
+        self.validate_manifest(&self.manifest, "vault")?;
+        let (json_sha, markdown_sha) = self.validate_report(&report, &paths, true)?;
+        let expected_run = (
+            report.finished_at.clone(),
+            paths.json.clone(),
+            paths.markdown.clone(),
+            json(&report.checks)?,
+            json(&report.counts)?,
+            json(&report.issues)?,
+        );
+        let actual_run: (String, String, String, String, String, String) = self.connection
+            .query_row("SELECT finished_at,report_json_path,report_md_path,checks_json,counts_json,issues_json FROM runs WHERE run_id=?1", [&self.context.run_id], |row| Ok((row.get(0)?,row.get(1)?,row.get(2)?,row.get(3)?,row.get(4)?,row.get(5)?)))
+            .map_err(database)?;
+        let expected_commit = (
+            self.context.release_id.clone(),
+            report.finished_at,
+            paths.json,
+            json_sha,
+            paths.markdown,
+            markdown_sha,
+            crate::text::sha256(json(&self.manifest)?.as_bytes()),
+        );
+        let actual_commit: (String, String, String, String, String, String, String) = self.connection
+            .query_row("SELECT release_id,committed_at,report_json_path,report_json_sha256,report_md_path,report_md_sha256,manifest_sha256 FROM publication_commits", [], |row| Ok((row.get(0)?,row.get(1)?,row.get(2)?,row.get(3)?,row.get(4)?,row.get(5)?,row.get(6)?)))
+            .map_err(database)?;
+        if actual_run != expected_run || actual_commit != expected_commit {
+            return Err(integrity(
+                "唯一发布提交、完整Run事实及原双报告不属于同一确认结果。",
+            ));
+        }
+        Ok(())
+    }
     pub(crate) fn recover(
         &mut self,
         report: &CompileReport,
@@ -1386,7 +2178,7 @@ mod tests {
         let case = crate::fixture_input::load(&fixture_root()).unwrap();
         Store::create(&sandbox.0.join("output"), &context(&case), &case).unwrap()
     }
-    fn verified_store(sandbox: &Sandbox) -> (Store, Vec<RenderedFile>) {
+    fn staged_store(sandbox: &Sandbox) -> (Store, Vec<RenderedFile>) {
         let mut store = new_store(sandbox);
         let mut manifest = Vec::new();
         // The store tests ownership and transactional authority. Text semantics
@@ -1407,6 +2199,10 @@ mod tests {
             });
         }
         store.record_staged(&manifest).unwrap();
+        (store, manifest)
+    }
+    fn verified_store(sandbox: &Sandbox) -> (Store, Vec<RenderedFile>) {
+        let (mut store, manifest) = staged_store(sandbox);
         for file in &manifest {
             let bytes = store
                 .read_owned(&format!("staging/vault/{}", file.relative_path))
@@ -1513,6 +2309,647 @@ mod tests {
             .connection
             .query_row("SELECT count(*) FROM publication_commits", [], |r| r.get(0))
             .unwrap()
+    }
+    #[test]
+    fn snapshot_roundtrip_reopens_confirmed_partial_inventory_without_plaintext() {
+        let sandbox = Sandbox::new();
+        let mut store = new_store(&sandbox);
+        let body = b"DO_NOT_PERSIST_ARTIFACT_TEXT_IN_THE_SNAPSHOT\n";
+        store.write_owned("state/confirmed-unit.txt", body).unwrap();
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        let encoded = serde_json::to_string(&snapshot).unwrap();
+        assert!(!encoded.contains("DO_NOT_PERSIST_ARTIFACT_TEXT_IN_THE_SNAPSHOT"));
+        let decoded: StoreSnapshot = serde_json::from_str(&encoded).unwrap();
+        assert_eq!(decoded, snapshot);
+        drop(store);
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        let resumed = Store::resume(&snapshot.root, &context, &case, &snapshot, false).unwrap();
+        assert_eq!(
+            resumed.read_owned("state/confirmed-unit.txt").unwrap(),
+            body
+        );
+        assert_eq!(resumed.snapshot().unwrap(), snapshot);
+        assert_eq!(publication_count(&resumed), 0);
+    }
+    #[test]
+    fn snapshot_schema_and_changed_context_are_rejected_before_reuse() {
+        let sandbox = Sandbox::new();
+        let store = new_store(&sandbox);
+        let snapshot = store.snapshot().unwrap();
+        let context = store.context.clone();
+        let before = fs::read(store.root().join(DATABASE)).unwrap();
+        let mut value = serde_json::to_value(&snapshot).unwrap();
+        value["unknown_field"] = true.into();
+        assert!(serde_json::from_value::<StoreSnapshot>(value).is_err());
+        let mut value = serde_json::to_value(&snapshot).unwrap();
+        value["parent"]["identity"]["unknown_field"] = true.into();
+        assert!(serde_json::from_value::<StoreSnapshot>(value).is_err());
+        drop(store);
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        let mut invalid = snapshot.clone();
+        invalid.schema_version = 2;
+        assert!(Store::resume(&snapshot.root, &context, &case, &invalid, false).is_err());
+        let mut changed = context.clone();
+        changed
+            .versions
+            .insert("compiler".into(), "a-different-compiler".into());
+        assert!(Store::resume(&snapshot.root, &changed, &case, &snapshot, false).is_err());
+        assert_eq!(fs::read(snapshot.root.join(DATABASE)).unwrap(), before);
+    }
+    #[test]
+    fn snapshot_verified_resume_commits_exactly_once_and_keeps_original_ids() {
+        let sandbox = Sandbox::new();
+        let (mut store, manifest) = verified_store(&sandbox);
+        let facts = report(&store, &manifest);
+        let paths = write_report(&mut store, &facts);
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        drop(store);
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        let mut resumed = Store::resume(&snapshot.root, &context, &case, &snapshot, false).unwrap();
+        resumed
+            .commit_publication(&facts, &manifest, &paths)
+            .unwrap();
+        assert_eq!(publication_count(&resumed), 1);
+        let published = resumed.snapshot().unwrap();
+        assert_eq!(published.context.run_id, context.run_id);
+        assert_eq!(published.context.release_id, context.release_id);
+        assert_eq!(published.context.started_at, context.started_at);
+        assert_eq!(published.manifest, manifest);
+        drop(resumed);
+        let mut resumed =
+            Store::resume(&published.root, &context, &case, &published, false).unwrap();
+        assert!(resumed.published);
+        let before = fs::read(published.root.join(DATABASE)).unwrap();
+        assert!(
+            resumed
+                .commit_publication(&facts, &manifest, &paths)
+                .is_err()
+        );
+        assert_eq!(publication_count(&resumed), 1);
+        assert_eq!(fs::read(published.root.join(DATABASE)).unwrap(), before);
+    }
+    #[test]
+    fn snapshot_reconciles_only_a_fully_bound_publication_commit_window() {
+        let sandbox = Sandbox::new();
+        let (mut store, manifest) = verified_store(&sandbox);
+        let facts = report(&store, &manifest);
+        let paths = write_report(&mut store, &facts);
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        store.commit_publication(&facts, &manifest, &paths).unwrap();
+        let committed = fs::read(store.root().join(DATABASE)).unwrap();
+        drop(store);
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        assert!(Store::resume(&snapshot.root, &context, &case, &snapshot, false).is_err());
+        let resumed = Store::resume(&snapshot.root, &context, &case, &snapshot, true).unwrap();
+        assert!(resumed.published);
+        assert_eq!(publication_count(&resumed), 1);
+        drop(resumed);
+        let resumed = Store::resume(&snapshot.root, &context, &case, &snapshot, true).unwrap();
+        assert!(resumed.published);
+        assert_eq!(publication_count(&resumed), 1);
+        assert_eq!(fs::read(snapshot.root.join(DATABASE)).unwrap(), committed);
+    }
+    #[test]
+    fn snapshot_reconciliation_rejects_a_forged_commit_hash_even_with_one_row() {
+        let sandbox = Sandbox::new();
+        let (mut store, manifest) = verified_store(&sandbox);
+        let facts = report(&store, &manifest);
+        let paths = write_report(&mut store, &facts);
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        store.commit_publication(&facts, &manifest, &paths).unwrap();
+        drop(store);
+        let connection = Connection::open(snapshot.root.join(DATABASE)).unwrap();
+        connection
+            .execute(
+                "UPDATE publication_commits SET report_md_sha256=?1",
+                ["0".repeat(64)],
+            )
+            .unwrap();
+        connection.close().unwrap();
+        let corrupted = fs::read(snapshot.root.join(DATABASE)).unwrap();
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        assert!(Store::resume(&snapshot.root, &context, &case, &snapshot, true).is_err());
+        assert_eq!(fs::read(snapshot.root.join(DATABASE)).unwrap(), corrupted);
+    }
+    #[test]
+    fn snapshot_same_bytes_replacement_and_hardlink_are_not_owned() {
+        for database_file in [false, true] {
+            let sandbox = Sandbox::new();
+            let mut store = new_store(&sandbox);
+            store
+                .write_owned("state/unit.txt", b"confirmed bytes\n")
+                .unwrap();
+            let context = store.context.clone();
+            let snapshot = store.snapshot().unwrap();
+            let path = snapshot.root.join(if database_file {
+                DATABASE
+            } else {
+                "state/unit.txt"
+            });
+            let original = fs::read(&path).unwrap();
+            drop(store);
+            let retained = sandbox.0.join("retained-original");
+            fs::rename(&path, &retained).unwrap();
+            fs::write(&path, &original).unwrap();
+            let case = crate::fixture_input::load(&fixture_root()).unwrap();
+            assert!(Store::resume(&snapshot.root, &context, &case, &snapshot, false).is_err());
+            assert_eq!(fs::read(retained).unwrap(), original);
+            assert_eq!(fs::read(path).unwrap(), original);
+        }
+        let sandbox = Sandbox::new();
+        let mut store = new_store(&sandbox);
+        store
+            .write_owned("state/unit.txt", b"confirmed bytes\n")
+            .unwrap();
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        drop(store);
+        fs::hard_link(
+            snapshot.root.join("state/unit.txt"),
+            sandbox.0.join("external-alias"),
+        )
+        .unwrap();
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        assert!(Store::resume(&snapshot.root, &context, &case, &snapshot, false).is_err());
+        assert_eq!(
+            fs::read(sandbox.0.join("external-alias")).unwrap(),
+            b"confirmed bytes\n"
+        );
+    }
+    #[test]
+    fn snapshot_empty_directory_replacement_and_unknown_partial_are_preserved() {
+        let sandbox = Sandbox::new();
+        let store = new_store(&sandbox);
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        let before = fs::read(store.root().join(DATABASE)).unwrap();
+        drop(store);
+        fs::rename(
+            snapshot.root.join("reports"),
+            sandbox.0.join("retained-reports"),
+        )
+        .unwrap();
+        fs::create_dir(snapshot.root.join("reports")).unwrap();
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        assert!(Store::resume(&snapshot.root, &context, &case, &snapshot, false).is_err());
+        assert!(sandbox.0.join("retained-reports").is_dir());
+        assert_eq!(fs::read(snapshot.root.join(DATABASE)).unwrap(), before);
+        let sandbox = Sandbox::new();
+        let store = new_store(&sandbox);
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        let before = fs::read(store.root().join(DATABASE)).unwrap();
+        drop(store);
+        fs::write(
+            snapshot.root.join("vault/unconfirmed.md"),
+            b"preserve unconfirmed artifact\n",
+        )
+        .unwrap();
+        assert_eq!(
+            Store::resume(&snapshot.root, &context, &case, &snapshot, false)
+                .err()
+                .unwrap()
+                .code(),
+            "COMPILE_RECOVERY_REQUIRED"
+        );
+        assert_eq!(
+            fs::read(snapshot.root.join("vault/unconfirmed.md")).unwrap(),
+            b"preserve unconfirmed artifact\n"
+        );
+        assert_eq!(fs::read(snapshot.root.join(DATABASE)).unwrap(), before);
+    }
+    fn pending_staging(store: &Store) -> BTreeMap<String, Vec<u8>> {
+        store
+            .expected_notes
+            .iter()
+            .map(|(path, id)| {
+                (
+                    format!("staging/vault/{path}"),
+                    format!("# Store test {id}\n").into_bytes(),
+                )
+            })
+            .collect()
+    }
+    fn intent(
+        phase: &str,
+        manifest: &[RenderedFile],
+        files: &BTreeMap<String, Vec<u8>>,
+    ) -> StoreIntent {
+        StoreIntent {
+            phase: phase.into(),
+            manifest: manifest.to_vec(),
+            files: files
+                .iter()
+                .map(|(path, bytes)| {
+                    (
+                        path.clone(),
+                        FileExpectation {
+                            sha256: crate::text::sha256(bytes),
+                            byte_length: bytes.len() as u64,
+                        },
+                    )
+                })
+                .collect(),
+        }
+    }
+    #[test]
+    fn snapshot_intent_recovers_first_synced_file_and_staged_commit_gap() {
+        let sandbox = Sandbox::new();
+        let mut store = new_store(&sandbox);
+        let context = store.context.clone();
+        let before_files = store.snapshot().unwrap();
+        let derived = pending_staging(&store);
+        let prepared = intent("planned", &[], &derived);
+        let (first, body) = derived.iter().next().unwrap();
+        store.write_owned(first, body).unwrap();
+        drop(store);
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        assert!(Store::resume(&before_files.root, &context, &case, &before_files, false).is_err());
+        let mut resumed = Store::resume_with_intent(
+            &before_files.root,
+            &context,
+            &case,
+            Some(&before_files),
+            &prepared,
+            &derived,
+        )
+        .unwrap();
+        assert_eq!(resumed.read_owned(first).unwrap(), *body);
+        assert_eq!(resumed.snapshot().unwrap().files.len(), 1);
+        for (path, bytes) in &derived {
+            if path != first {
+                resumed.write_owned(path, bytes).unwrap();
+            }
+        }
+        let manifest: Vec<_> = resumed
+            .expected_notes
+            .iter()
+            .map(|(path, note_id)| {
+                let bytes = &derived[&format!("staging/vault/{path}")];
+                RenderedFile {
+                    relative_path: path.clone(),
+                    note_id: note_id.clone(),
+                    plan_revision: context.plan_revision,
+                    content_sha256: crate::text::sha256(bytes),
+                    byte_length: bytes.len() as u64,
+                    content_mappings: vec![],
+                    links: vec![],
+                }
+            })
+            .collect();
+        let before_sql = resumed.snapshot().unwrap();
+        let staged = intent("staged", &manifest, &BTreeMap::new());
+        resumed.record_staged(&manifest).unwrap();
+        drop(resumed);
+        let mut resumed = Store::resume_with_intent(
+            &before_sql.root,
+            &context,
+            &case,
+            Some(&before_sql),
+            &staged,
+            &BTreeMap::new(),
+        )
+        .unwrap();
+        assert_eq!(resumed.phase, "staged");
+        assert_eq!(resumed.manifest, manifest);
+        assert!(resumed.record_staged(&manifest).is_err());
+        assert_eq!(publication_count(&resumed), 0);
+    }
+    #[test]
+    fn snapshot_intent_recovers_verified_and_published_commits_exactly_once() {
+        let sandbox = Sandbox::new();
+        let (mut store, manifest) = staged_store(&sandbox);
+        let context = store.context.clone();
+        let staged = store.snapshot().unwrap();
+        let derived: BTreeMap<_, _> = manifest
+            .iter()
+            .map(|file| {
+                (
+                    format!("vault/{}", file.relative_path),
+                    store
+                        .read_owned(&format!("staging/vault/{}", file.relative_path))
+                        .unwrap(),
+                )
+            })
+            .collect();
+        let verified = intent("verified", &manifest, &derived);
+        for (path, body) in &derived {
+            store.write_owned(path, body).unwrap();
+        }
+        store.record_verified(&manifest).unwrap();
+        drop(store);
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        let mut resumed = Store::resume_with_intent(
+            &staged.root,
+            &context,
+            &case,
+            Some(&staged),
+            &verified,
+            &derived,
+        )
+        .unwrap();
+        assert_eq!(resumed.phase, "verified");
+        assert!(resumed.record_verified(&manifest).is_err());
+        let facts = report(&resumed, &manifest);
+        let paths = write_report(&mut resumed, &facts);
+        let before_commit = resumed.snapshot().unwrap();
+        let publish = intent("published", &manifest, &BTreeMap::new());
+        resumed
+            .commit_publication(&facts, &manifest, &paths)
+            .unwrap();
+        let original = fs::read(resumed.root().join(DATABASE)).unwrap();
+        drop(resumed);
+        let mut resumed = Store::resume_with_intent(
+            &before_commit.root,
+            &context,
+            &case,
+            Some(&before_commit),
+            &publish,
+            &BTreeMap::new(),
+        )
+        .unwrap();
+        assert!(resumed.published);
+        assert_eq!(publication_count(&resumed), 1);
+        assert!(
+            resumed
+                .commit_publication(&facts, &manifest, &paths)
+                .is_err()
+        );
+        assert_eq!(
+            fs::read(before_commit.root.join(DATABASE)).unwrap(),
+            original
+        );
+    }
+    #[test]
+    fn snapshot_intent_rechecks_complete_initialization_and_restarts_only_absent_root() {
+        let sandbox = Sandbox::new();
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        let context = context(&case);
+        let root = sandbox.0.join("pending-output");
+        let prepared = intent("planned", &[], &BTreeMap::new());
+        let store =
+            Store::resume_with_intent(&root, &context, &case, None, &prepared, &BTreeMap::new())
+                .unwrap();
+        let before = store.snapshot().unwrap();
+        let original = fs::read(root.join(DATABASE)).unwrap();
+        drop(store);
+        let resumed =
+            Store::resume_with_intent(&root, &context, &case, None, &prepared, &BTreeMap::new())
+                .unwrap();
+        assert_eq!(resumed.snapshot().unwrap(), before);
+        assert_eq!(resumed.context.run_id, context.run_id);
+        assert_eq!(resumed.context.release_id, context.release_id);
+        assert_eq!(fs::read(root.join(DATABASE)).unwrap(), original);
+        drop(resumed);
+        fs::write(root.join("vault/unregistered.md"), b"unowned\n").unwrap();
+        assert!(
+            Store::resume_with_intent(&root, &context, &case, None, &prepared, &BTreeMap::new())
+                .is_err()
+        );
+        assert_eq!(
+            fs::read(root.join("vault/unregistered.md")).unwrap(),
+            b"unowned\n"
+        );
+        assert_eq!(fs::read(root.join(DATABASE)).unwrap(), original);
+    }
+    #[test]
+    fn snapshot_intent_rejects_truncated_unknown_and_unsealed_pending_files() {
+        let sandbox = Sandbox::new();
+        let store = new_store(&sandbox);
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        drop(store);
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        let derived = BTreeMap::from([(
+            "state/pending.txt".into(),
+            b"complete expected artifact\n".to_vec(),
+        )]);
+        let prepared = intent("planned", &[], &derived);
+        let original = fs::read(snapshot.root.join(DATABASE)).unwrap();
+        fs::write(snapshot.root.join("state/pending.txt"), b"truncated").unwrap();
+        assert!(
+            Store::resume_with_intent(
+                &snapshot.root,
+                &context,
+                &case,
+                Some(&snapshot),
+                &prepared,
+                &derived
+            )
+            .is_err()
+        );
+        assert_eq!(
+            fs::read(snapshot.root.join("state/pending.txt")).unwrap(),
+            b"truncated"
+        );
+        fs::write(
+            snapshot.root.join("state/pending.txt"),
+            &derived["state/pending.txt"],
+        )
+        .unwrap();
+        let forged =
+            BTreeMap::from([("state/pending.txt".into(), b"forged derived bytes".to_vec())]);
+        assert!(
+            Store::resume_with_intent(
+                &snapshot.root,
+                &context,
+                &case,
+                Some(&snapshot),
+                &prepared,
+                &forged
+            )
+            .is_err()
+        );
+        fs::write(
+            snapshot.root.join("state/unregistered.txt"),
+            b"preserve external extra",
+        )
+        .unwrap();
+        assert!(
+            Store::resume_with_intent(
+                &snapshot.root,
+                &context,
+                &case,
+                Some(&snapshot),
+                &prepared,
+                &derived
+            )
+            .is_err()
+        );
+        assert_eq!(
+            fs::read(snapshot.root.join("state/unregistered.txt")).unwrap(),
+            b"preserve external extra"
+        );
+        assert_eq!(fs::read(snapshot.root.join(DATABASE)).unwrap(), original);
+    }
+    #[test]
+    fn snapshot_intent_does_not_mask_unrelated_sql_changes_or_old_identity_changes() {
+        let sandbox = Sandbox::new();
+        let (mut store, manifest) = staged_store(&sandbox);
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        let derived: BTreeMap<_, _> = manifest
+            .iter()
+            .map(|file| {
+                (
+                    format!("vault/{}", file.relative_path),
+                    store
+                        .read_owned(&format!("staging/vault/{}", file.relative_path))
+                        .unwrap(),
+                )
+            })
+            .collect();
+        for (name, body) in &derived {
+            store.write_owned(name, body).unwrap();
+        }
+        store.record_verified(&manifest).unwrap();
+        drop(store);
+        let connection = Connection::open(snapshot.root.join(DATABASE)).unwrap();
+        connection
+            .execute("UPDATE runs SET checks_json='{}',counts_json='{}'", [])
+            .unwrap();
+        connection.close().unwrap();
+        let original = fs::read(snapshot.root.join(DATABASE)).unwrap();
+        let prepared = intent("verified", &manifest, &derived);
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        assert!(
+            Store::resume_with_intent(
+                &snapshot.root,
+                &context,
+                &case,
+                Some(&snapshot),
+                &prepared,
+                &derived
+            )
+            .is_err()
+        );
+        assert_eq!(fs::read(snapshot.root.join(DATABASE)).unwrap(), original);
+
+        let sandbox = Sandbox::new();
+        let (store, manifest) = staged_store(&sandbox);
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        let derived: BTreeMap<_, _> = manifest
+            .iter()
+            .map(|file| {
+                (
+                    format!("vault/{}", file.relative_path),
+                    store
+                        .read_owned(&format!("staging/vault/{}", file.relative_path))
+                        .unwrap(),
+                )
+            })
+            .collect();
+        let old_path = snapshot.root.join(snapshot.files.keys().next().unwrap());
+        let old_bytes = fs::read(&old_path).unwrap();
+        let original = fs::read(snapshot.root.join(DATABASE)).unwrap();
+        drop(store);
+        let retained = sandbox.0.join("retained-original.md");
+        fs::rename(&old_path, &retained).unwrap();
+        fs::write(&old_path, &old_bytes).unwrap();
+        let prepared = intent("verified", &manifest, &derived);
+        assert!(
+            Store::resume_with_intent(
+                &snapshot.root,
+                &context,
+                &case,
+                Some(&snapshot),
+                &prepared,
+                &derived
+            )
+            .is_err()
+        );
+        assert_eq!(fs::read(&old_path).unwrap(), old_bytes);
+        assert_eq!(fs::read(&retained).unwrap(), old_bytes);
+        assert_eq!(fs::read(snapshot.root.join(DATABASE)).unwrap(), original);
+    }
+    #[test]
+    fn snapshot_resume_refuses_a_real_hot_journal_without_recovery_writes() {
+        use std::io::{BufRead, BufReader};
+        use std::process::{Command, Stdio};
+
+        let sandbox = Sandbox::new();
+        let store = new_store(&sandbox);
+        let context = store.context.clone();
+        let snapshot = store.snapshot().unwrap();
+        let db = snapshot.root.join(DATABASE);
+        let before = fs::read(&db).unwrap();
+        drop(store);
+        let mut child = Command::new(std::env::current_exe().unwrap())
+            .args([
+                "--exact",
+                "compile_store::tests::hot_journal_child",
+                "--nocapture",
+            ])
+            .env("NOETOME_TEST_STORE_HOT_JOURNAL_ROOT", &snapshot.root)
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .spawn()
+            .unwrap();
+        let mut reader = BufReader::new(child.stdout.take().unwrap());
+        let mut reached = false;
+        loop {
+            let mut line = String::new();
+            if reader.read_line(&mut line).unwrap() == 0 {
+                break;
+            }
+            if line.trim() == "NOETOME_STORE_HOT_JOURNAL_READY" {
+                reached = true;
+                break;
+            }
+        }
+        if !reached {
+            let output = child.wait_with_output().unwrap();
+            panic!(
+                "child did not reach a live SQLite write: {}",
+                String::from_utf8_lossy(&output.stderr)
+            );
+        }
+        assert!(child.try_wait().unwrap().is_none());
+        child.kill().unwrap();
+        assert!(!child.wait().unwrap().success());
+        let journal = snapshot.root.join("state/compile.sqlite-journal");
+        let journal_bytes = fs::read(&journal).unwrap();
+        let spilled = fs::read(&db).unwrap();
+        assert_ne!(spilled, before);
+        let case = crate::fixture_input::load(&fixture_root()).unwrap();
+        assert!(Store::resume(&snapshot.root, &context, &case, &snapshot, false).is_err());
+        assert_eq!(fs::read(&db).unwrap(), spilled);
+        assert_eq!(fs::read(&journal).unwrap(), journal_bytes);
+
+        // Even synchronizing the saved SHA to the dirty main file cannot turn
+        // the real journal into an authorized ordinary inventory entry.
+        let mut synchronized = snapshot.clone();
+        synchronized.database = Store::file_snapshot(&db, &spilled).unwrap();
+        assert_eq!(
+            Store::resume(&snapshot.root, &context, &case, &synchronized, false)
+                .err()
+                .unwrap()
+                .code(),
+            "COMPILE_RECOVERY_REQUIRED"
+        );
+        let prepared = intent("planned", &[], &BTreeMap::new());
+        assert_eq!(
+            Store::resume_with_intent(
+                &snapshot.root,
+                &context,
+                &case,
+                Some(&synchronized),
+                &prepared,
+                &BTreeMap::new()
+            )
+            .err()
+            .unwrap()
+            .code(),
+            "COMPILE_RECOVERY_REQUIRED"
+        );
+        assert_eq!(fs::read(&db).unwrap(), spilled);
+        assert_eq!(fs::read(&journal).unwrap(), journal_bytes);
     }
     #[test]
     fn existing_and_input_child_roots_are_rejected_without_writes() {

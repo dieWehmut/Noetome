@@ -7,7 +7,7 @@
 ## 1 公共约定
 
 - JSON 使用 UTF-8。JSON schema 及 Rust 类型定义由实现提交维护，并用同一组契约样例核对。
-- 各文件、报告及数据库的 `schema_version` 独立演进，从整数 `1` 起；不支持的版本拒绝读取和写入。来源项目存储支持Schema1/2/3，旧文本导入报告与缓存owner仍使用版本1，PDF导入报告使用版本2；独立compile.sqlite保持Schema1。
+- 各文件、报告及数据库的 `schema_version` 独立演进，从整数 `1` 起；不支持的版本拒绝读取和写入。来源项目存储支持Schema1/2/3，旧文本导入报告与缓存owner仍使用版本1，PDF导入报告使用版本2；独立compile.sqlite保持Schema1，有限运行的control/run.sqlite另有独立Schema1。
 - `id` 是不透明字符串，不能由名称或输出路径推导。fixture 使用固定 ID，生产实现使用持久化生成的 ID。
 - B02-T01 的项目、来源、来源版本、Span 与导入 ID 必须为标准小写 UUID v4；显式 `source_id` 只允许引用当前项目中的既有来源。后续 fixture 身份由输入包声明，不能冒充生产导入生成的身份。
 - `revision` 是同一对象内递增的正整数；实体身份与内容修订分开。引用需要固定内容时同时保存 ID 和 revision。
@@ -311,7 +311,7 @@ ValidationResult 包含 `run_id`、`candidate_id`、`validator_version`、`check
 
 ## 8 Run 与 Release
 
-Run 保存 `run_id`、输入及配置指纹、producer、开始和结束时间、阶段、执行状态、候选 ID 和报告路径。首闭环执行状态为 `running`、`succeeded`、`blocked`、`failed`、`cancelled`；状态迁移由 core 决定。
+Run 保存 `run_id`、输入及配置指纹、producer、开始和结束时间、阶段、执行状态、候选 ID 和报告路径。这是逻辑扩展方向，具体保存字段与状态以各项已实现契约为准；原编译库与B07有限运行日志的状态枚举分别定义，不能互相直接复制。
 
 Release 保存 `release_id`、`run_id`、IR 与计划版本、渲染器版本、验证结果引用、文件清单和 `status`。status 为 `staged`、`verified`、`published`、`recovery_required`，仅重读校验后的文件集合可记为 published。
 
@@ -336,6 +336,20 @@ Release 保存 `release_id`、`run_id`、IR 与计划版本、渲染器版本、
 数据库使用DELETE journal/FULL sync/外键检查。COMMIT失败显式回滚活动事务，不能把未提交的发布记录带入失败登记；只读核对前拒绝journal/wal/shm，不绕过热日志推断成功。渲染未完成留staged；实际输出验证或后续登记失败留recovery_required，无法更新状态时保留最后已提交阶段和诊断。报告或失败状态登记无法完成时，仅在整个目录及数据库身份仍可确认的场景独占保存recovery.json；未知内容或替换目录继续保留，不能删除、覆盖或接管。
 
 本轮输出根默认保留，重新编译必须另选新目录。暂存后真实进程终止、真实SQLite COMMIT Busy与热日志测试证明受控现场可识别；不表示任意断电自动恢复或生产Vault增量合并已经实现。证据见[B02-T03](../validation/B02-T03.md)。
+
+### B07-T01 有限运行日志与恢复
+
+独立[运行检查点契约](RUN_CHECKPOINT_CONTRACT.md)固定 `control/run.sqlite` Schema1/application_id `0x4e52554e` 的 metadata/checkpoints/controls 三表；`output/state/compile.sqlite` 继续复用上述六表、Schema1及单次发布事务。两库保存同一真实Run/Release身份，日志的 `succeeded` 和验证报告的 `validated` 都不能单独证明发布。
+
+严格 Owner/RunMetadata 保存实际根/父级/目录/文件身份、完整输入SHA/长度/mtime、编译及策略指纹。RunState 保存六个 WorkUnit、原确认前缀、attempts、控制确认序号、checks/manifest、必填nullable的snapshot/intent/report/diagnostic；raw checkpoint逐序号、原字节SHA和状态迁移核验。输入或版本失配保留旧历史并拒绝继续，当前不做跨平台/移动根迁移。
+
+工作事件不能改控制ACK；完成前保存的迟到控制在六单元succeeded后由严格 `completed_control` 确认，保留published和全部原工作结果。成功态resume只能核对或补该未处理控制，不重新执行单元。控制库热恢复须从已同步journal完整取得metadata实际record及全部overflow原页，部分字段或共享页不证明归属。
+
+新请求在BEGIN IMMEDIATE取得写锁后重验完整检查点链和终态，且检查发生在metadata归零/INSERT之前；事务前running观察不能授权完成后的插入。终态拒绝不增加控制记录或改写原数据库。
+
+StoreSnapshot保存原目录/文件/DB身份与SHA/长度，不复制正文。写前持久StoreIntent限定待写路径、源派生完整字节及一个合法阶段转换，补足实际文件/COMMIT已完成而外层确认未提交的窗口。默认Store接续继续拒绝未知/partial和热journal；CLI显式恢复的独立只读影像门禁、原DB锚、worker排他和SQLite回滚后重验另见完整契约。没有旧base snapshot的bootstrap热journal、未知/损坏/外部替换现场不接管。
+
+`run start/status/pause/resume/cancel`只作用于新建且明确拥有的有限运行根。原`case compile`仍要求不存在的输出根，来源project inspect、桌面生命周期和生产Vault不因此获得恢复入口。实现与平台验收按[B07-T01计划](../execution/B07-T01_RUN_PLAN.md)保存实际证据，字段定义不算已测通过。
 
 ## 9 扩展顺序
 

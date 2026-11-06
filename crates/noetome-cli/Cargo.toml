@@ -7,7 +7,7 @@ publish = false
 description = "Noetome 命令行入口"
 
 [dependencies]
-rusqlite = { version = "=0.41.1", features = ["bundled"] }
+rusqlite = { version = "=0.41.1", features = ["bundled", "serialize"] }
 same-file = "=1.0.6"
 serde = { version = "=1.0.229", features = ["derive"] }
 serde_json = { version = "=1.0.154", features = ["raw_value"] }
@@ -24,6 +24,9 @@ png = "=0.18.1"
 [target.'cfg(windows)'.dependencies]
 win32job = "=2.0.3"
 winapi-util = "=0.1.11"
+
+[build-dependencies]
+sha2 = "=0.10.9"
 
 [[bin]]
 name = "noetome"

@@ -171,6 +171,20 @@ stdout外层固定提供`schema_version=1`、`producer=fixture`、`operation=cas
 
 此处为成功compile结果的阅读示例，CLI实际输出为JSON。数量、状态和路径必须来自本次运行及已提交依据；当前来源命令没有这些完成状态或Vault产物。科学质量仍为not_run，不能把确定性质量验证完成描述为事实核验通过。
 
+### B07-T01 有限运行与恢复控制
+
+`run start <fixture-root> <new-run-root> [--paused]`建立明确新根的六单元运行；`run status <root>`核对已保存状态，`run pause/cancel <root>`保存控制，`run resume <same-fixture-root> <root>`显式接续。完整命令和身份/版本/恢复范围见[运行检查点契约](../technical/RUN_CHECKPOINT_CONTRACT.md)，真实验收按[本项计划](../execution/B07-T01_RUN_PLAN.md)保存，不把接口说明当作平台检查通过。
+
+stdout为`producer=fixture_run`的严格Schema1 JSON，显示实际Run/Release、run_status、已确认单元数、各单元state/attempts、checkpoint_sequence、release_status、输入/编译指纹、实际产物路径和持久报告。控制区保留latest/request/acknowledged序号与动作；“请求已保存”“在途单元仍运行”“已安全暂停”是不同状态，不提前显示落盘完成。暂停2秒约束是停止新调度；当前在途单元可以继续到安全边界。取消保留确认结果，尚未开始的后继单元不再调度，也不清理现场或撤销已提交publication。
+
+运行的paused/failed/succeeded与发布状态分别展示。只有原六表编译数据库唯一publication事务及双报告/manifest核验成立才显示published；报告validated、Markdown已生成或日志succeeded都不能单独替代。COMMIT后外层确认前的status可以如实显示published与日志running/五确认单元并存，不能只为显示一致而追加成功检查点。failed显示实际诊断和最后确认前缀，只有明确修复条件后显式resume才可尝试继续；cancelled/invalidated不显示“继续”成功建议。输入/版本/身份或未知现场失配时提示保留原件并为新版本选择新运行根，不提供force接管。
+
+完成前保存但未生效的迟到控制最终显示 `completed before control took effect`，保留succeeded/published及原确认结果。publication确认后中断的显式resume可以补控制ACK，不能将已完成内容显示成取消或重新发布；请求响应、控制确认和工作确认仍分别展示。
+
+控制请求是否接纳以取得数据库写事务后的真实终态为准；若期间工作已完成，显示终态拒绝并保留原件，不能仍显示“请求已保存”或制造新的待确认控制。
+
+`status`不调度、写检查点或触发数据库恢复。显式resume的有限SQLite前置影像门禁与普通读取分别说明；不能向用户把未知/损坏journal说成可恢复，也不能把失配原件删除后显示成功。该CLI不接入当前桌面托盘/关闭选项，不出现生产Vault、后台长任务或科学质量已通过的文案；真实模型/付费调用为0，scientific_quality保持not_run。
+
 ## 4 四类完成状态
 
 | 维度 | 应表达的信息 | 禁止做法 |

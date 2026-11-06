@@ -278,3 +278,19 @@ B06-T02 的流程扩展另外要求无图作者原文/独立节点边预期先�
 实际 PNG 解码/CRC/资源限额、页与 crop 逐像素一致、输入/api config 祖先、硬链接、碰撞、哨兵及持有期变更/清理都须验证。case/Vault 未知空目录和嵌套目录须拒绝，合法嵌套审计归档另行通过。未知人工现场、变更原件和不能确认所有权的目录不得清理。HTTP 矩阵覆盖取消/时间/字节、状态/framing/结构/用量/凭据回显与零预算停止；live 端点测试不得请求，数字环回采用人工凭据。窄凭据封装以实际 Windows synthetic DPAPI/账本测试核对预留、结算、未知保留及外部文件保护；另实测父提前退出而后代占管道、活父与后代超时和输出超限，先确认实际 PID 存活，再核对终止和 failed 收据，未知用量不释放预留。真实账本缺失不能用历史数字新建假零余额。
 
 干净 Obsidian 核对重建公式中的负号、分式和三个下标，原区域/整页及本地附件可追溯，缺损状态不出现成功预览；实际应用与 MathJax 版本、CLI 与原件 SHA 联结到呈现证据。完整 Rust/Python、全部既有视觉回归和独立审查通过才完成；未运行平台、物理扫描、通用公式和科学质量如实记录。
+
+### B07-T01 一个固定流程的持久检查点
+
+先冻结[作者六单元包](../../fixtures/run-checkpoint-v1/README.md)、原来源/语义expected及此前独立规范Markdown字面值，再保存旧普通CLI真实RED。新实现不能生成或改写expected。完整字段、两个数据库与恢复门禁见[运行契约](../technical/RUN_CHECKPOINT_CONTRACT.md)，实施顺序与可复用runner见[B07-T01计划](../execution/B07-T01_RUN_PLAN.md)。
+
+最终冻结源构建实际CLI与同源test driver，分别保存构建日志、完整编译来源、文件SHA/长度和实际compiler_fingerprint。先trace最终driver全部已提交边界，再在每个created/unit_started/unit_prepared/output_committed/unit_progress/unit_confirmed/publication_committed边界独立创建现场、真实终止并用普通CLI接续；边界数由本轮原trace确定，不沿用旧程序数字。独立读取raw JSON链、实际SQLite与文件，核对确认前缀、attempts、Run/Release身份、稳定知识/计划ID、规范全文、scope/链接、双报告及单次publication。成功后的第二次resume须原件不变且无重复确认。
+
+真实在途暂停须分开测请求响应、2秒内停止新调度、在途可见与安全落盘后暂停，不能用命令返回快代替调度观察。cancel后pause、控制确认序号跳过取消的同步伪造、同根worker竞争、临时真实权限/占用失败与显式恢复、输入/策略变化和实际双CLI版本失效各自保存。取消保留确认结果，不调度后继或通过resume绕过终态。
+
+publication已提交、确认前的迟到pause/cancel/cancel后pause分别测试正常释放和控制ACK前后两个持久窗口真实终止。严格completed_control保留六确认、succeeded/published、attempts及全部原件；普通resume可补未确认控制但不能重做工作，诊断必须为 `completed before control took effect`。该额外控制trace不能混入无控制fresh trace的覆盖分母。
+
+控制者先实际读取running、真实worker完成六单元后控制者才取得写事务的竞态须实际复现；终态在metadata归零/INSERT前拒绝，原controls/checkpoints/DB/产物保持。不得以事务前终态判断或普通单进程测试代替此接纳门禁。
+
+真实SQLite spill/SIGKILL或平台等效终止须生成可验证热journal；直接Store拒绝、CLI只读影像门禁、SQLite正常回滚及回滚后原件重验分别核对。未知/super-journal、冷零header、截断/checksum错误、foreign Run、无旧base snapshot的compile bootstrap、原DB身份/整影像SHA失配、硬链接/reparse/替换及输入变更须拒绝并保留现场。仅检测同名文件或相信checksum不算原所有权证明。
+
+同步更改checkpoint payload/前链SHA、正文、manifest、报告和文件指纹后的假确认、取消ack跳过、删单位/条件/例外或错链接仍须被来源/作者语义和状态迁移拒绝。输入freeze、owner文件、原DB/报告、终止PID/退出、外部哨兵及失败历史原件完整归档。完整Rust/Python、受影响旧fixture行为和独立Core/checker/原件审查通过后才能完成；平台跳过、未运行和旧源诊断另列，不推成24小时、任意断电或生产Vault恢复。

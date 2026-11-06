@@ -1,6 +1,7 @@
 use std::ffi::OsString;
 use std::path::PathBuf;
 
+mod compile_identity;
 mod compile_model;
 mod compile_report;
 mod compile_store;
@@ -24,6 +25,7 @@ mod fixture_knowledge;
 mod fixture_model;
 mod fixture_plan;
 mod fixture_render;
+pub mod fixture_run;
 pub mod formula;
 mod formula_input;
 mod formula_model;
@@ -62,6 +64,9 @@ mod process_model;
 mod process_parser;
 pub mod process_review;
 pub mod project;
+mod run_model;
+mod run_recovery;
+mod run_store;
 mod scan_api;
 pub mod scan_formula;
 mod scan_input;
@@ -98,6 +103,9 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome knowledge scan-formula <scan-case> <api-config.json> <profile.json> <尚不存在的测试Vault>
       noetome case verify <fixture目录>
       noetome case compile <fixture目录> <尚不存在的测试输出根>
+      noetome run start <fixture目录> <尚不存在的运行根> [--paused]
+      noetome run resume <原fixture目录> <运行根>
+      noetome run <status|pause|cancel> <运行根>
 
 当前支持：
   -h, --help       显示帮助
@@ -117,8 +125,9 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   knowledge scan-formula  对明确扫描区域执行一次有预算视觉请求，保留原响应并核对语义
   case verify             只读校验明确fixture的来源、IR、计划与独立预期
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
+  run                     执行一个六单元fixture流程，持久保存检查点与暂停/取消请求
 
-不传参数时显示帮助；project --help、source --help 或 extract --help 查看命令说明。
+不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
 完整知识编译与生产Vault增量发布尚未实现。
 ";
@@ -200,6 +209,19 @@ fake以UTF8字节计量，价格及真实模型用量未知，网络和付费调
 #[derive(Debug)]
 pub enum CliCommand {
     Help,
+    RunHelp,
+    RunStart {
+        case: PathBuf,
+        output: PathBuf,
+        paused: bool,
+    },
+    RunResume {
+        case: PathBuf,
+        output: PathBuf,
+    },
+    RunStatus(PathBuf),
+    RunPause(PathBuf),
+    RunCancel(PathBuf),
     KnowledgeHelp,
     ScanFormula {
         case: PathBuf,
@@ -295,6 +317,9 @@ pub enum CliCommand {
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
 pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.first().is_some_and(|arg| arg == "run") {
+        return run_command(&args[1..]);
+    }
     if args.first().is_some_and(|arg| arg == "knowledge") {
         return knowledge_command(&args[1..]);
     }
@@ -326,6 +351,57 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
         [project, verb, separator, path] if project == "project" && separator == "--" => {
             project_command(verb, path, true)
         }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const RUN_HELP: &str = "Noetome 有限fixture任务\n\n用法：noetome run start <fixture目录> <尚不存在的运行根> [--paused]\n      noetome run resume <同一fixture目录> <明确拥有的运行根>\n      noetome run status|pause|cancel <运行根>\n\nstart：校验明确fixture后建立六单元持久任务；--paused仅建立并暂停。\nresume：核对同一输入、版本和检查点，复用确认结果，不重复发布。\nstatus只读核对；pause停止后续调度，cancel保留确认结果且不可继续。\n输入/策略失效或未知现场不会被接管；仅新测试根，不修改生产Vault。\n动词后可加 -- 分隔以 - 开头的路径；中文和空格路径作为单独参数。\n自造fixture不代表真实模型抽取或科学质量已通过。\n";
+
+fn run_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.is_empty() || matches!(args,[help] if help=="--help" || help=="-h") {
+        return Ok(CliCommand::RunHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail,[help] if help=="--help" || help=="-h")
+        && ["start", "resume", "status", "pause", "cancel"]
+            .iter()
+            .any(|v| verb == v)
+    {
+        return Ok(CliCommand::RunHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|p| p == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid =
+        |p: &OsString| !p.is_empty() && (separated || p.as_encoded_bytes().first() != Some(&b'-'));
+    match tail {
+        [case, output] if verb == "start" && valid(case) && valid(output) => {
+            Ok(CliCommand::RunStart {
+                case: case.into(),
+                output: output.into(),
+                paused: false,
+            })
+        }
+        [case, output, flag]
+            if verb == "start" && flag == "--paused" && valid(case) && valid(output) =>
+        {
+            Ok(CliCommand::RunStart {
+                case: case.into(),
+                output: output.into(),
+                paused: true,
+            })
+        }
+        [case, output] if verb == "resume" && valid(case) && valid(output) => {
+            Ok(CliCommand::RunResume {
+                case: case.into(),
+                output: output.into(),
+            })
+        }
+        [root] if verb == "status" && valid(root) => Ok(CliCommand::RunStatus(root.into())),
+        [root] if verb == "pause" && valid(root) => Ok(CliCommand::RunPause(root.into())),
+        [root] if verb == "cancel" && valid(root) => Ok(CliCommand::RunCancel(root.into())),
         _ => Err(INVALID_ARGUMENT),
     }
 }
