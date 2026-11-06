@@ -1,0 +1,82 @@
+{
+  "status": "passed",
+  "records": [
+    {
+      "name": "green-tests",
+      "command": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_verify_scan_formula.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "54939d130b2e3f567e781d4d9d7e167f9d0599377337da96dfedc94489a7591b",
+        "byte_length": 8238
+      }
+    },
+    {
+      "name": "green-fixture",
+      "command": [
+        "/tmp/noetome-b05-t03-python/bin/python",
+        "scripts/verify_scan_formula.py"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "sha256": "ee9caaa7a91f2205300137b86ddeb99c51b4d6fa46f853ee1df3faa2f5106732",
+        "byte_length": 96
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "green-diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    }
+  ],
+  "source_before": {
+    "scripts/verify_scan_formula.py": {
+      "sha256": "943678780a8212a4569b972eb83d75ff5e542d1347344981293bc791ce039ab6",
+      "byte_length": 89360
+    },
+    "tests/test_verify_scan_formula.py": {
+      "sha256": "b2b483a3b3a85010fd3cd2e928a1f06880fb45fd4fb7b4e0de60bb08a1cccc3a",
+      "byte_length": 41388
+    }
+  },
+  "source_after": {
+    "scripts/verify_scan_formula.py": {
+      "sha256": "943678780a8212a4569b972eb83d75ff5e542d1347344981293bc791ce039ab6",
+      "byte_length": 89360
+    },
+    "tests/test_verify_scan_formula.py": {
+      "sha256": "b2b483a3b3a85010fd3cd2e928a1f06880fb45fd4fb7b4e0de60bb08a1cccc3a",
+      "byte_length": 41388
+    }
+  },
+  "scope": "46 checker unit tests, four directory attack variants, original 33-file fixture check; no CLI/network/model"
+}

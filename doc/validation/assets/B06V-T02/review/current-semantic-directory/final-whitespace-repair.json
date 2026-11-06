@@ -1,0 +1,31 @@
+{
+  "prior_staged_diff": {
+    "exit_code": 2,
+    "diagnostic": "tests/test_verify_scan_formula.py:401: new blank line at EOF.",
+    "commit_created": false
+  },
+  "repair": "Remove only extra EOF blank line; previous source-final.json pins remain historical.",
+  "test": {
+    "command": "/tmp/noetome-b05-t03-python/bin/python -m unittest discover -s tests -p test_verify_scan_formula.py",
+    "exit_code": 0,
+    "result": "..............................................\n----------------------------------------------------------------------\nRan 46 tests in 1.965s\n\nOK\n",
+    "stdout": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    "stderr": {
+      "sha256": "0701c8d5fbf8ed08284675b87cf0d7ca563aac2449d466f35c36d26002b7c71b",
+      "byte_length": 145
+    }
+  },
+  "final_source": {
+    "scripts/verify_scan_formula.py": {
+      "sha256": "943678780a8212a4569b972eb83d75ff5e542d1347344981293bc791ce039ab6",
+      "byte_length": 89360
+    },
+    "tests/test_verify_scan_formula.py": {
+      "sha256": "7a3932b1b9ffb96ceaa938d59256deedb843c02a8120854a2274aa0e4d48fdda",
+      "byte_length": 41387
+    }
+  }
+}
