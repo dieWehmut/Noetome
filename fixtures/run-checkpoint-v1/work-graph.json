@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "workflow_id": "run-checkpoint-v1",
+  "case_id": "C7k",
+  "scope": "One deterministic author fixture; no provider/API/budget retry or existing Vault takeover",
+  "ordered_unit_ids": [
+    "source_contract",
+    "render",
+    "stage_verification",
+    "vault_readback",
+    "reports",
+    "publication"
+  ],
+  "units": [
+    {
+      "unit_id": "source_contract",
+      "label": "source/contract",
+      "depends_on": [],
+      "author_inputs": [
+        "fixture/case.json",
+        "fixture/ir.json",
+        "fixture/note-plan.json",
+        "fixture/expected.json",
+        "fixture/sources/材料甲.md",
+        "fixture/sources/材料乙.md"
+      ],
+      "independent_checks": [
+        "source identity and bytes",
+        "all 12 spans/coverage",
+        "all 5 author evidence",
+        "four required atoms and complete qualifiers",
+        "two canonical placements and independent expected"
+      ]
+    },
+    {
+      "unit_id": "render",
+      "label": "render",
+      "depends_on": [
+        "source_contract"
+      ],
+      "author_inputs": [
+        "fixture/ir.json",
+        "fixture/note-plan.json"
+      ],
+      "independent_checks": [
+        "two exact authored Markdown files",
+        "fixed note/section/node identity",
+        "nine scoped content mappings",
+        "two registered semantic links"
+      ]
+    },
+    {
+      "unit_id": "stage_verification",
+      "label": "stage verification",
+      "depends_on": [
+        "render"
+      ],
+      "author_inputs": [
+        "expected.json",
+        "expected-markdown/笔记/甲容器.md",
+        "expected-markdown/笔记/乙容器.md"
+      ],
+      "independent_checks": [
+        "staged bytes exactly match prior authored literals",
+        "all atoms retain unit/condition/exception in the declared scope",
+        "unique link target headings",
+        "no extra hidden/unregistered content or output files"
+      ]
+    },
+    {
+      "unit_id": "vault_readback",
+      "label": "vault/readback",
+      "depends_on": [
+        "stage_verification"
+      ],
+      "author_inputs": [],
+      "independent_checks": [
+        "new owned test Vault only",
+        "staging and Vault readback bytes equal",
+        "stable note IDs and two unique headings resolve",
+        "both real local links resolve to intended notes"
+      ]
+    },
+    {
+      "unit_id": "reports",
+      "label": "reports",
+      "depends_on": [
+        "vault_readback"
+      ],
+      "author_inputs": [],
+      "independent_checks": [
+        "independent stable denominators",
+        "all actual input/version/output hashes",
+        "scientific_quality remains not_run",
+        "JSON/Markdown report agreement",
+        "real Run/Release/attempt/time preserved"
+      ]
+    },
+    {
+      "unit_id": "publication",
+      "label": "publication",
+      "depends_on": [
+        "reports"
+      ],
+      "author_inputs": [],
+      "independent_checks": [
+        "one confirmed publication commit for the logical release",
+        "content/resource/link/index agreement before success",
+        "no duplicate stable entities or publication on resume",
+        "interrupted or unverified state never reports published"
+      ]
+    }
+  ],
+  "allowed_paths": "Only the selected copied fixture and a new explicitly owned test output root",
+  "version_rules": {
+    "changed_source_or_contract": "Invalidate source_contract and its descendants or explicitly refuse incompatible resume; never silently reuse them.",
+    "changed_renderer_or_plan_policy": "Source evidence may remain verified if its pins match; invalidate render and its descendants.",
+    "changed_verification_or_publication_policy": "Invalidate the affected unit and descendants; old confirmations remain as history.",
+    "unknown_version_or_untrusted_checkpoint": "Refuse and preserve the owned observed state; no silent adoption or migration."
+  },
+  "pause_rule": {
+    "stop_new_scheduling_max_seconds": 2,
+    "inflight_and_safe_flush": "May continue to the safe boundary, with explicit observed status."
+  },
+  "audit": "The unit labels are frozen author semantics, not a claim that a new Run API already exists."
+}

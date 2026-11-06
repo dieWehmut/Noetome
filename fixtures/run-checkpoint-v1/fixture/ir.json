@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "producer": "fixture",
+  "revision": 1,
+  "coverage_run_id": "R8s",
+  "sources": [
+    {
+      "source_id": "S4m",
+      "version_id": "V8r",
+      "content_sha256": "4f5c914504aaab35408dfcc88813b838b9b5ff99efd7023af60888e258425562",
+      "normalized_sha256": "4f5c914504aaab35408dfcc88813b838b9b5ff99efd7023af60888e258425562"
+    },
+    {
+      "source_id": "S9q",
+      "version_id": "V2t",
+      "content_sha256": "ed8491e5b6935d46ba4708da6d969593f1c79c06739294bde7376435bbfa6535",
+      "normalized_sha256": "ed8491e5b6935d46ba4708da6d969593f1c79c06739294bde7376435bbfa6535"
+    }
+  ],
+  "concepts": [
+    {
+      "concept_id": "C2f",
+      "revision": 1,
+      "canonical_name": "甲容器",
+      "aliases": [
+        "甲盒"
+      ],
+      "needs_full_explanation": true
+    },
+    {
+      "concept_id": "C6h",
+      "revision": 1,
+      "canonical_name": "乙容器",
+      "aliases": [
+        "乙盒"
+      ],
+      "needs_full_explanation": true
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "E3a",
+      "source_span_id": "P3a",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 40,
+      "excerpt_sha256": "1494edf3abcd6cc4b91d64c2974a22de422c00686be1be8c06af244d70934821"
+    },
+    {
+      "evidence_id": "E5a",
+      "source_span_id": "P5a",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 104,
+      "excerpt_sha256": "eb2a2eb1f537be777839c6f1bb8146c1bd7ab2db82e39a06744261f51c0dd782"
+    },
+    {
+      "evidence_id": "E3b",
+      "source_span_id": "P3b",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 40,
+      "excerpt_sha256": "da6274343ab5816281a39d505287bc814db7b6ac9573feb2535c94078e3e484d"
+    },
+    {
+      "evidence_id": "E5b",
+      "source_span_id": "P5b",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 101,
+      "excerpt_sha256": "a87c6fd67f5c4c1469d0bef308e17f1f1a121e2fa38f2489607cd62f9fdd3f8f"
+    },
+    {
+      "evidence_id": "E7b",
+      "source_span_id": "P7b",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 40,
+      "excerpt_sha256": "1494edf3abcd6cc4b91d64c2974a22de422c00686be1be8c06af244d70934821"
+    }
+  ],
+  "atoms": [
+    {
+      "atom_id": "A3d",
+      "revision": 1,
+      "kind": "definition",
+      "concept_ids": [
+        "C2f"
+      ],
+      "content": "甲容器是虚构的蓝砂收纳盒。",
+      "qualifiers": [],
+      "evidence_links": [
+        {
+          "evidence_id": "E3a",
+          "relation": "supports"
+        },
+        {
+          "evidence_id": "E7b",
+          "relation": "supports"
+        }
+      ],
+      "required": true,
+      "verification": "fixture_reviewed",
+      "value_status": "known"
+    },
+    {
+      "atom_id": "A7e",
+      "revision": 1,
+      "kind": "definition",
+      "concept_ids": [
+        "C6h"
+      ],
+      "content": "乙容器是虚构的红砂收纳盒。",
+      "qualifiers": [],
+      "evidence_links": [
+        {
+          "evidence_id": "E3b",
+          "relation": "supports"
+        }
+      ],
+      "required": true,
+      "verification": "fixture_reviewed",
+      "value_status": "known"
+    },
+    {
+      "atom_id": "A5p",
+      "revision": 1,
+      "kind": "comparison_value",
+      "concept_ids": [
+        "C2f"
+      ],
+      "content": "甲容器的虚构刻度为5 cm。",
+      "qualifiers": [
+        "仅用于室温演示",
+        "装满后停止读数",
+        "破损时不适用"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "E5a",
+          "relation": "supports"
+        }
+      ],
+      "required": true,
+      "verification": "fixture_reviewed",
+      "value_status": "known"
+    },
+    {
+      "atom_id": "A9w",
+      "revision": 1,
+      "kind": "comparison_value",
+      "concept_ids": [
+        "C6h"
+      ],
+      "content": "乙容器的虚构刻度为8 cm。",
+      "qualifiers": [
+        "仅用于室温演示",
+        "空盒时不读数",
+        "浸水后不适用"
+      ],
+      "evidence_links": [
+        {
+          "evidence_id": "E5b",
+          "relation": "supports"
+        }
+      ],
+      "required": true,
+      "verification": "fixture_reviewed",
+      "value_status": "known"
+    }
+  ],
+  "coverage": [
+    {
+      "run_id": "R8s",
+      "span_id": "P1a",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "自造材料标题，仅标识来源。",
+      "decision_source": "fixture_review",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P2a",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "纯空白分隔，无知识内容。",
+      "decision_source": "deterministic_format",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P3a",
+      "disposition": "included",
+      "atom_ids": [
+        "A3d"
+      ],
+      "required_atom_ids": [
+        "A3d"
+      ],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": null,
+      "decision_source": "fixture_review",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P4a",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "纯空白分隔，无知识内容。",
+      "decision_source": "deterministic_format",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P5a",
+      "disposition": "included",
+      "atom_ids": [
+        "A5p"
+      ],
+      "required_atom_ids": [
+        "A5p"
+      ],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": null,
+      "decision_source": "fixture_review",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P1b",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "自造材料标题，仅标识来源。",
+      "decision_source": "fixture_review",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P2b",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "纯空白分隔，无知识内容。",
+      "decision_source": "deterministic_format",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P3b",
+      "disposition": "included",
+      "atom_ids": [
+        "A7e"
+      ],
+      "required_atom_ids": [
+        "A7e"
+      ],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": null,
+      "decision_source": "fixture_review",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P4b",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "纯空白分隔，无知识内容。",
+      "decision_source": "deterministic_format",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P5b",
+      "disposition": "included",
+      "atom_ids": [
+        "A9w"
+      ],
+      "required_atom_ids": [
+        "A9w"
+      ],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": null,
+      "decision_source": "fixture_review",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P6b",
+      "disposition": "excluded",
+      "atom_ids": [],
+      "required_atom_ids": [],
+      "duplicate_of_span_id": null,
+      "exclusion_reason": "纯空白分隔，无知识内容。",
+      "decision_source": "deterministic_format",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    },
+    {
+      "run_id": "R8s",
+      "span_id": "P7b",
+      "disposition": "duplicate",
+      "atom_ids": [
+        "A3d"
+      ],
+      "required_atom_ids": [
+        "A3d"
+      ],
+      "duplicate_of_span_id": "P3a",
+      "exclusion_reason": null,
+      "decision_source": "fixture_review",
+      "policy_version": "fixture-policy-v1",
+      "stage": "mapped"
+    }
+  ]
+}

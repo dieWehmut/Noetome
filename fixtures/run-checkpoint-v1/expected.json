@@ -1,0 +1,363 @@
+{
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "workflow_id": "run-checkpoint-v1",
+  "case_id": "C7k",
+  "origin": "Existing author-fixed fixture expected and pre-renderer Rust Markdown literals; no output from a new implementation was used.",
+  "stable_ids": {
+    "case_id": "C7k",
+    "coverage_run_id": "R8s",
+    "source_ids": [
+      "S4m",
+      "S9q"
+    ],
+    "source_version_ids": [
+      "V8r",
+      "V2t"
+    ],
+    "span_ids": [
+      "P1a",
+      "P2a",
+      "P3a",
+      "P4a",
+      "P5a",
+      "P1b",
+      "P2b",
+      "P3b",
+      "P4b",
+      "P5b",
+      "P6b",
+      "P7b"
+    ],
+    "concept_ids": [
+      "C2f",
+      "C6h"
+    ],
+    "atom_ids": [
+      "A3d",
+      "A7e",
+      "A5p",
+      "A9w"
+    ],
+    "evidence_ids": [
+      "E3a",
+      "E5a",
+      "E3b",
+      "E5b",
+      "E7b"
+    ],
+    "note_ids": [
+      "N4u",
+      "N8v"
+    ],
+    "section_ids": [
+      "H2j",
+      "H6n"
+    ],
+    "node_ids": [
+      "Q2z",
+      "T5x",
+      "Q6z",
+      "L9x"
+    ],
+    "column_ids": [
+      "D2c",
+      "D4c",
+      "D6c"
+    ],
+    "row_ids": [
+      "W3g",
+      "W7g"
+    ],
+    "item_ids": [
+      "I4b"
+    ]
+  },
+  "counts": {
+    "sources": 2,
+    "spans": 12,
+    "concepts": 2,
+    "evidence": 5,
+    "atoms": 4,
+    "required_atoms": 4,
+    "notes": 2,
+    "sections": 2,
+    "nodes": 4,
+    "included": 4,
+    "excluded": 7,
+    "duplicates": 1,
+    "rendered_files": 2,
+    "mappings": 9,
+    "links": 2,
+    "tables": 1,
+    "table_columns": 3,
+    "table_rows": 2,
+    "table_cells": 6,
+    "ordered_list_items": 1
+  },
+  "normative_files": [
+    {
+      "relative_path": "笔记/甲容器.md",
+      "expected_file": "expected-markdown/笔记/甲容器.md",
+      "note_id": "N4u",
+      "plan_revision": 1,
+      "sha256": "33eedf491e2ab58e5ee7d2da80c701e91bb0c77700b0212672a1ddbed2bfa376",
+      "byte_length": 462
+    },
+    {
+      "relative_path": "笔记/乙容器.md",
+      "expected_file": "expected-markdown/笔记/乙容器.md",
+      "note_id": "N8v",
+      "plan_revision": 1,
+      "sha256": "349f06a40ea199f4d2fb2f6ebcecf61aa652a571ea18e1e81f665a11cf505b88",
+      "byte_length": 244
+    }
+  ],
+  "semantic_expected_file": {
+    "path": "fixture/expected.json",
+    "sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+    "byte_length": 7974
+  },
+  "required_atoms": [
+    {
+      "atom_id": "A3d",
+      "kind": "definition",
+      "concept_ids": [
+        "C2f"
+      ],
+      "content": "甲容器是虚构的蓝砂收纳盒。",
+      "qualifiers": [],
+      "evidence_span_ids": [
+        "P3a",
+        "P7b"
+      ]
+    },
+    {
+      "atom_id": "A7e",
+      "kind": "definition",
+      "concept_ids": [
+        "C6h"
+      ],
+      "content": "乙容器是虚构的红砂收纳盒。",
+      "qualifiers": [],
+      "evidence_span_ids": [
+        "P3b"
+      ]
+    },
+    {
+      "atom_id": "A5p",
+      "kind": "comparison_value",
+      "concept_ids": [
+        "C2f"
+      ],
+      "content": "甲容器的虚构刻度为5 cm。",
+      "qualifiers": [
+        "仅用于室温演示",
+        "装满后停止读数",
+        "破损时不适用"
+      ],
+      "evidence_span_ids": [
+        "P5a"
+      ]
+    },
+    {
+      "atom_id": "A9w",
+      "kind": "comparison_value",
+      "concept_ids": [
+        "C6h"
+      ],
+      "content": "乙容器的虚构刻度为8 cm。",
+      "qualifiers": [
+        "仅用于室温演示",
+        "空盒时不读数",
+        "浸水后不适用"
+      ],
+      "evidence_span_ids": [
+        "P5b"
+      ]
+    }
+  ],
+  "canonical_placements": [
+    {
+      "concept_id": "C2f",
+      "note_id": "N4u",
+      "section_id": "H2j",
+      "atom_ids": [
+        "A3d"
+      ]
+    },
+    {
+      "concept_id": "C6h",
+      "note_id": "N8v",
+      "section_id": "H6n",
+      "atom_ids": [
+        "A7e"
+      ]
+    }
+  ],
+  "semantic_links": [
+    {
+      "from_path": "笔记/甲容器.md",
+      "from_node_id": "Q2z",
+      "from_note_id": "N4u",
+      "from_section_id": "H2j",
+      "target_concept_id": "C6h",
+      "target_note_id": "N8v",
+      "target_section_id": "H6n",
+      "target_path": "笔记/乙容器.md",
+      "target_heading": "定义与条件",
+      "display_text": "乙容器",
+      "literal": "[[笔记/乙容器#定义与条件|乙容器]]",
+      "start_byte": 91,
+      "end_byte": 137
+    },
+    {
+      "from_path": "笔记/乙容器.md",
+      "from_node_id": "Q6z",
+      "from_note_id": "N8v",
+      "from_section_id": "H6n",
+      "target_concept_id": "C2f",
+      "target_note_id": "N4u",
+      "target_section_id": "H2j",
+      "target_path": "笔记/甲容器.md",
+      "target_heading": "定义与比较",
+      "display_text": "甲容器",
+      "literal": "[[笔记/甲容器#定义与比较|甲容器]]",
+      "start_byte": 91,
+      "end_byte": 137
+    }
+  ],
+  "content_mapping_scopes": [
+    {
+      "note_id": "N4u",
+      "section_id": "H2j",
+      "node_id": "Q2z",
+      "kind": "paragraph",
+      "atom_ids": [
+        "A3d"
+      ]
+    },
+    {
+      "note_id": "N4u",
+      "section_id": "H2j",
+      "node_id": "T5x",
+      "kind": "table_cell",
+      "row_id": "W3g",
+      "column_id": "D2c",
+      "cell_kind": "label",
+      "text": "虚构刻度",
+      "atom_ids": []
+    },
+    {
+      "note_id": "N4u",
+      "section_id": "H2j",
+      "node_id": "T5x",
+      "kind": "table_cell",
+      "row_id": "W3g",
+      "column_id": "D4c",
+      "cell_kind": "content",
+      "atom_ids": [
+        "A5p"
+      ]
+    },
+    {
+      "note_id": "N4u",
+      "section_id": "H2j",
+      "node_id": "T5x",
+      "kind": "table_cell",
+      "row_id": "W3g",
+      "column_id": "D6c",
+      "cell_kind": "content",
+      "atom_ids": [
+        "A9w"
+      ]
+    },
+    {
+      "note_id": "N4u",
+      "section_id": "H2j",
+      "node_id": "T5x",
+      "kind": "table_cell",
+      "row_id": "W7g",
+      "column_id": "D2c",
+      "cell_kind": "label",
+      "text": "单价",
+      "atom_ids": []
+    },
+    {
+      "note_id": "N4u",
+      "section_id": "H2j",
+      "node_id": "T5x",
+      "kind": "table_cell",
+      "row_id": "W7g",
+      "column_id": "D4c",
+      "cell_kind": "missing",
+      "text": "未给出",
+      "atom_ids": []
+    },
+    {
+      "note_id": "N4u",
+      "section_id": "H2j",
+      "node_id": "T5x",
+      "kind": "table_cell",
+      "row_id": "W7g",
+      "column_id": "D6c",
+      "cell_kind": "missing",
+      "text": "未给出",
+      "atom_ids": []
+    },
+    {
+      "note_id": "N8v",
+      "section_id": "H6n",
+      "node_id": "Q6z",
+      "kind": "paragraph",
+      "atom_ids": [
+        "A7e"
+      ]
+    },
+    {
+      "note_id": "N8v",
+      "section_id": "H6n",
+      "node_id": "L9x",
+      "kind": "list_item",
+      "item_id": "I4b",
+      "atom_ids": [
+        "A9w"
+      ]
+    }
+  ],
+  "expected_report_semantics": {
+    "producer": "fixture",
+    "case_id": "C7k",
+    "result": "validated",
+    "scientific_quality": "not_run",
+    "optional_research": "not_applicable",
+    "stable_counts": {
+      "sources": 2,
+      "spans": 12,
+      "atoms": 4,
+      "required_atoms": 4,
+      "notes": 2,
+      "nodes": 4,
+      "included": 4,
+      "excluded": 7,
+      "duplicates": 1,
+      "rendered_files": 2,
+      "mappings": 9,
+      "links": 2
+    }
+  },
+  "run_audit_rules": {
+    "run_id_and_release_id": "Valid persisted UUIDs, distinct from one another; same logical run/release identity preserved across recovery. A separate fresh baseline run may have different UUIDs.",
+    "times": "Actual parseable ordered timestamps retained; not byte-equal to a fresh independent run by assumption.",
+    "attempts": "Append all actual attempts/interruptions/resume/reuse/cancel observations, including failures. Never normalize, delete, or forge them to compare normative bytes.",
+    "report_and_database_hashes": "Record exact original bytes and bind to the logical run/release; audit hashes can differ across independent fresh runs.",
+    "publication_count": "Exactly one successful confirmation for one logical release; repeated status/readback/resume must not create another successful confirmation.",
+    "unknown_or_unverified": "Preserve explicit status and original observations; never count them as published."
+  },
+  "preservation_rules": [
+    "Original selected inputs and frozen expected never changed.",
+    "Testing mutations happen only in separately owned copies and remain separate attempts.",
+    "Unknown owner, foreign content, linked/replaced checkpoint or output collision is refused and observed state is retained.",
+    "No production Vault, credentials, HTTP, model or B07-T02/T03 action is authorized by this fixture."
+  ]
+}
