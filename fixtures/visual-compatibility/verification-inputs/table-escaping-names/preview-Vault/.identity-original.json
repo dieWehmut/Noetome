@@ -1,0 +1,82 @@
+{
+  "schema_version": 3,
+  "author": "self-authored-active-presentation-fixture-before-candidates",
+  "concepts": [
+    {
+      "canonical_id": "60000000-0000-4000-8000-000000000005",
+      "display_name": "甲容器 [α]"
+    },
+    {
+      "canonical_id": "60000000-0000-4000-8000-000000000006",
+      "display_name": "乙容器（β）"
+    },
+    {
+      "canonical_id": "60000000-0000-4000-8000-000000000007",
+      "display_name": "速率 | 测量"
+    }
+  ],
+  "concept_mappings": [
+    {
+      "input_id": "a",
+      "original_concept_id": "a-subject",
+      "canonical_id": "60000000-0000-4000-8000-000000000005"
+    },
+    {
+      "input_id": "a",
+      "original_concept_id": "a-property",
+      "canonical_id": "60000000-0000-4000-8000-000000000007"
+    },
+    {
+      "input_id": "b",
+      "original_concept_id": "b-subject",
+      "canonical_id": "60000000-0000-4000-8000-000000000006"
+    },
+    {
+      "input_id": "b",
+      "original_concept_id": "b-property",
+      "canonical_id": "60000000-0000-4000-8000-000000000007"
+    }
+  ],
+  "atom_mappings": [
+    {
+      "input_id": "a",
+      "original_atom_id": "a-speed",
+      "object_id": "60000000-0000-4000-8000-000000000005",
+      "property_id": "60000000-0000-4000-8000-000000000007"
+    },
+    {
+      "input_id": "b",
+      "original_atom_id": "b-speed",
+      "object_id": "60000000-0000-4000-8000-000000000006",
+      "property_id": "60000000-0000-4000-8000-000000000007"
+    }
+  ],
+  "atom_contexts": [
+    {
+      "input_id": "a",
+      "original_atom_id": "a-speed",
+      "applicability_status": "known",
+      "time": {
+        "status": "known",
+        "precision": "year",
+        "value": "2020"
+      },
+      "context_evidence_ids": [
+        "a-support"
+      ]
+    },
+    {
+      "input_id": "b",
+      "original_atom_id": "b-speed",
+      "applicability_status": "known",
+      "time": {
+        "status": "known",
+        "precision": "year",
+        "value": "2020"
+      },
+      "context_evidence_ids": [
+        "b-support"
+      ]
+    }
+  ]
+}

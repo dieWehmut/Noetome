@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_gold",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "process": {
+    "title": "特殊名称的卡片流程",
+    "entry": "s1",
+    "goals": [
+      "s3"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "steps": [
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "复核 #2 / x < 3",
+      "description": "保留复核名称中的符号，不解释为指令",
+      "criterion": null,
+      "inputs": [
+        "预检结果"
+      ],
+      "outputs": [
+        "复核结果"
+      ],
+      "conditions": [
+        "字段包含竖线 | 和双引号 \""
+      ],
+      "exceptions": [
+        "不得删除名称符号"
+      ]
+    },
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "预检 [α] | \"卡片\"",
+      "description": "先做预检；本步骤在文字中后声明，不改变明确关系顺序",
+      "criterion": null,
+      "inputs": [
+        "卡片 A\\B"
+      ],
+      "outputs": [
+        "预检结果"
+      ],
+      "conditions": [
+        "卡片可读"
+      ],
+      "exceptions": [
+        "卡片缺失时停止"
+      ]
+    },
+    {
+      "id": "s3",
+      "kind": "step",
+      "label": "归档入口 & 保留",
+      "description": "保留标签中的连接符",
+      "criterion": null,
+      "inputs": [
+        "复核结果"
+      ],
+      "outputs": [
+        "归档结果"
+      ],
+      "conditions": [
+        "复核完成"
+      ],
+      "exceptions": [
+        "存储不可用时暂停"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "r2",
+      "left": "s2",
+      "right": "s3",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [
+        "复核完成"
+      ],
+      "exceptions": [
+        "存储不可用时暂停"
+      ]
+    },
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [
+        "预检完成"
+      ],
+      "exceptions": [
+        "缺卡时停止"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "object_id": "process",
+      "start_byte": 0,
+      "end_byte": 147,
+      "quote": "过程：\"特殊名称的卡片流程\"。入口：s1。目标：[\"s3\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+    },
+    {
+      "object_id": "s2",
+      "start_byte": 148,
+      "end_byte": 395,
+      "quote": "步骤 s2：\"复核 #2 / x < 3\"。说明：\"保留复核名称中的符号，不解释为指令\"。输入：[\"预检结果\"]。输出：[\"复核结果\"]。条件：[\"字段包含竖线 | 和双引号 \\\"\"]。例外：[\"不得删除名称符号\"]。"
+    },
+    {
+      "object_id": "s1",
+      "start_byte": 396,
+      "end_byte": 646,
+      "quote": "步骤 s1：\"预检 [α] | \\\"卡片\\\"\"。说明：\"先做预检；本步骤在文字中后声明，不改变明确关系顺序\"。输入：[\"卡片 A\\\\B\"]。输出：[\"预检结果\"]。条件：[\"卡片可读\"]。例外：[\"卡片缺失时停止\"]。"
+    },
+    {
+      "object_id": "s3",
+      "start_byte": 647,
+      "end_byte": 850,
+      "quote": "步骤 s3：\"归档入口 & 保留\"。说明：\"保留标签中的连接符\"。输入：[\"复核结果\"]。输出：[\"归档结果\"]。条件：[\"复核完成\"]。例外：[\"存储不可用时暂停\"]。"
+    },
+    {
+      "object_id": "r2",
+      "start_byte": 851,
+      "end_byte": 955,
+      "quote": "关系 r2：s2 完成后执行 s3。条件：[\"复核完成\"]。例外：[\"存储不可用时暂停\"]。"
+    },
+    {
+      "object_id": "r1",
+      "start_byte": 956,
+      "end_byte": 1051,
+      "quote": "关系 r1：s1 完成后执行 s2。条件：[\"预检完成\"]。例外：[\"缺卡时停止\"]。"
+    }
+  ]
+}

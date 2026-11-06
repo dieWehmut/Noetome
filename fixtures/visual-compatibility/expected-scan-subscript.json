@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_format_and_output_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "scan-subscript",
+  "feature": "scan",
+  "author_case": "unreadable_subscript",
+  "representative_kind": "product_output",
+  "representation": null,
+  "semantic_source": {
+    "expression": null,
+    "tokens": null,
+    "symbols": [
+      {
+        "symbol": "x",
+        "definition": "Reported displacement.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "a",
+        "definition": "Input amount.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "b",
+        "definition": "Positive scale.",
+        "unit": "dimensionless"
+      },
+      {
+        "symbol": "i",
+        "definition": "Sample index.",
+        "unit": "dimensionless"
+      }
+    ],
+    "conditions": [
+      "a_i >= 0.",
+      "b_i > 0."
+    ],
+    "ranges": [
+      "i in {1, 2}.",
+      "x_i <= 0."
+    ],
+    "exceptions": [
+      "If b_i = 0, the expression is undefined."
+    ],
+    "legibility": "unreadable",
+    "unknown_positions": [
+      "denominator_subscript"
+    ],
+    "success_allowed": false
+  },
+  "collector": {
+    "notes": [
+      {
+        "file": "scan.md",
+        "math_trees": [],
+        "required_texts": [
+          "needs_review",
+          "blocked",
+          "SCAN_REGION_UNREADABLE",
+          "SCAN_SEMANTIC_UNKNOWN",
+          "SCAN_RECOGNITION_UNCERTAIN"
+        ]
+      }
+    ],
+    "require_no_success_preview": true,
+    "blocked_absent": [
+      "扫描公式预览.md",
+      "plan.json",
+      "compiled.tex"
+    ],
+    "unknown_cannot_be_filled_from_clear_counterpart": true,
+    "attachment_images": {
+      "original.png": {
+        "width": 560,
+        "height": 200
+      },
+      "page.png": {
+        "width": 800,
+        "height": 1000
+      }
+    },
+    "math_tree_provenance": "handwritten from frozen clear author; null expression for covered sign/subscript"
+  },
+  "coverage": [
+    "same one-author three scan states; not independent scientific denominator",
+    "unknown denominator subscript blocks success",
+    "original region 560x200/page 800x1000/PDF byte provenance"
+  ]
+}

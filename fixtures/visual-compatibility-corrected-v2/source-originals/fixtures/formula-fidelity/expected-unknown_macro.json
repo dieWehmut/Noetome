@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "producer": "formula_fidelity_expected",
+  "author": "independent_self_authored_engineering_fixture",
+  "case_name": "unknown_macro",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "scope": "selected_formula_only_not_ocr_or_science",
+  "source_pins": {
+    "semantics.json": {
+      "sha256": "e0445343e7fd841a1972d577e2c47cd6f31c424c65e85c21ffea24428f69cd9b",
+      "byte_length": 523
+    },
+    "original.tex": {
+      "sha256": "527bdcf53998080a0c3f88f8d06f1064d6c74bd1f74e974db57ee6aea47eb29e",
+      "byte_length": 16
+    },
+    "case.json": {
+      "sha256": "cd43b52477b750589495c8006e9e6186b12d300afb4c4aa6f5e95941835221c9",
+      "byte_length": 729
+    },
+    "region.png": {
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "byte_length": 6656
+    }
+  },
+  "case": {
+    "schema_version": 1,
+    "purpose": "formula_fidelity",
+    "selection_id": "unknown_macro",
+    "title": "公式保真样例 unknown_macro",
+    "source_kind": "tex",
+    "tex": {
+      "file": "original.tex",
+      "sha256": "527bdcf53998080a0c3f88f8d06f1064d6c74bd1f74e974db57ee6aea47eb29e"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "e0445343e7fd841a1972d577e2c47cd6f31c424c65e85c21ffea24428f69cd9b"
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "page": 1,
+      "canvas": [
+        1000,
+        600
+      ],
+      "bounds": [
+        100,
+        120,
+        800,
+        240
+      ],
+      "legibility": "clear"
+    },
+    "data_available": false
+  },
+  "semantics": {
+    "schema_version": 1,
+    "expression": "u = \\mystery{x}",
+    "symbols": [
+      {
+        "symbol": "u",
+        "definition": "unknown test quantity",
+        "unit": null
+      },
+      {
+        "symbol": "x",
+        "definition": "test coordinate",
+        "unit": "mm"
+      }
+    ],
+    "conditions": [
+      "a > 0 and b > 0",
+      "This is a fictional engineering example, not a scientific claim."
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "tokens": null,
+  "profile_name": "native",
+  "representation": null,
+  "issue_codes": [
+    "FORMULA_UNSUPPORTED_SYNTAX"
+  ],
+  "fallback_reasons": [],
+  "compatibility_rewrites": []
+}

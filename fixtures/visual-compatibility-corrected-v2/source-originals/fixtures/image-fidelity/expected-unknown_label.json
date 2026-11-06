@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "producer": "image_fidelity_expected",
+  "author": "independent_self_authored_engineering_fixture",
+  "case_name": "unknown_label",
+  "scope": "selected_image_only_manual_declaration_not_recognition_or_science",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case": {
+    "schema_version": 1,
+    "purpose": "image_fidelity",
+    "selection_id": "unknown_label",
+    "title": "图像保真样例 unknown_label",
+    "source_kind": "diagram",
+    "image": {
+      "file": "source.png",
+      "sha256": "70c4cfdfa85620a27d74acc237ad57d7cccfc80408aae77083a647bff9889e76"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "b15ad73885c56f94e1041ecfc47f42782fadd1323cd299e20917fc5bfa67a098"
+    },
+    "dimensions": [
+      960,
+      520
+    ],
+    "readability": "clear"
+  },
+  "semantics": {
+    "schema_version": 1,
+    "producer": "author_image_declaration",
+    "author": "independent_cc0_fixture_author",
+    "complete": true,
+    "data_available": false,
+    "caption": "Fictional engineering diagram; manual source declaration, no image recognition.",
+    "conditions": [
+      "Only the selected schematic relationships are asserted."
+    ],
+    "exceptions": [
+      "No scientific accuracy or measured data is claimed."
+    ],
+    "elements": [
+      {
+        "id": "feed",
+        "kind": "rect",
+        "bbox": [
+          40,
+          150,
+          220,
+          120
+        ],
+        "label": null,
+        "unit": "mmol/L",
+        "legend_id": null
+      },
+      {
+        "id": "response",
+        "kind": "circle",
+        "bbox": [
+          390,
+          120,
+          180,
+          180
+        ],
+        "label": "Response",
+        "unit": "a.u.",
+        "legend_id": null
+      },
+      {
+        "id": "output",
+        "kind": "rect",
+        "bbox": [
+          700,
+          150,
+          220,
+          120
+        ],
+        "label": "Outlet",
+        "unit": "mmol/L",
+        "legend_id": null
+      }
+    ],
+    "relations": [
+      {
+        "id": "gain",
+        "from": "feed",
+        "to": "response",
+        "start": [
+          260,
+          210
+        ],
+        "end": [
+          390,
+          210
+        ],
+        "direction": "forward",
+        "effect": "positive",
+        "label": "activates",
+        "unit": "s^-1",
+        "legend_id": "positive"
+      },
+      {
+        "id": "loss",
+        "from": "response",
+        "to": "output",
+        "start": [
+          570,
+          210
+        ],
+        "end": [
+          700,
+          210
+        ],
+        "direction": "forward",
+        "effect": "negative",
+        "label": "inhibits",
+        "unit": "s^-1",
+        "legend_id": "negative"
+      }
+    ],
+    "spatial_relations": [
+      {
+        "id": "feed-left",
+        "a": "feed",
+        "b": "response",
+        "relation": "left_of"
+      },
+      {
+        "id": "response-left",
+        "a": "response",
+        "b": "output",
+        "relation": "left_of"
+      }
+    ],
+    "legend": [
+      {
+        "id": "positive",
+        "label": "+",
+        "meaning": "positive activation",
+        "color": "#c5efcb",
+        "bbox": [
+          40,
+          360,
+          360,
+          45
+        ]
+      },
+      {
+        "id": "negative",
+        "label": "-",
+        "meaning": "negative inhibition",
+        "color": "#f5c1c1",
+        "bbox": [
+          500,
+          360,
+          400,
+          45
+        ]
+      }
+    ]
+  },
+  "source_pins": {
+    "case.json": {
+      "sha256": "7fc5d9a3f614543bd7ba906c2fadcf67b429c797ea308689526e6539bcfe496e",
+      "byte_length": 491
+    },
+    "semantics.json": {
+      "sha256": "b15ad73885c56f94e1041ecfc47f42782fadd1323cd299e20917fc5bfa67a098",
+      "byte_length": 2376
+    },
+    "source.png": {
+      "sha256": "70c4cfdfa85620a27d74acc237ad57d7cccfc80408aae77083a647bff9889e76",
+      "byte_length": 22077
+    }
+  },
+  "profile_name": "native",
+  "representation": null,
+  "issue_codes": [
+    "IMAGE_UNKNOWN_LABEL"
+  ],
+  "fallback_reasons": []
+}

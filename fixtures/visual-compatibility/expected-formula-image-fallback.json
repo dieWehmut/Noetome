@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_format_and_output_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "formula-image-fallback",
+  "feature": "formula",
+  "author_case": "image_fallback",
+  "representative_kind": "product_output",
+  "representation": "formula_image",
+  "semantic_source": {
+    "schema_version": 1,
+    "expression": "C_i(t) = -\\frac{a}{b} t^{2}",
+    "symbols": [
+      {
+        "symbol": "C",
+        "definition": "test concentration",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "t",
+        "definition": "elapsed time",
+        "unit": "s"
+      },
+      {
+        "symbol": "a",
+        "definition": "positive scaling constant",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "b",
+        "definition": "positive nonzero divisor",
+        "unit": "s^2"
+      }
+    ],
+    "conditions": [
+      "a > 0 and b > 0",
+      "This is a fictional engineering example, not a scientific claim."
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "collector": {
+    "notes": [
+      {
+        "file": "公式预览.md",
+        "math_trees": [],
+        "images": [
+          {
+            "file": "original.png",
+            "width": 800,
+            "height": 240
+          }
+        ],
+        "preformatted_exact": [
+          "公式保真样例 image_fallback",
+          "C",
+          "test concentration",
+          "mmol/L",
+          "i",
+          "selected integer sample index",
+          "来源未给出单位",
+          "t",
+          "elapsed time",
+          "s",
+          "a",
+          "positive scaling constant",
+          "mmol/L",
+          "b",
+          "positive nonzero divisor",
+          "s^2",
+          "a > 0 and b > 0",
+          "This is a fictional engineering example, not a scientific claim.",
+          "i = 1,2,3",
+          "0 <= t <= 10 s",
+          "Do not apply outside the selected time interval."
+        ],
+        "link_destinations": [
+          "original.png"
+        ],
+        "click_attachments": [
+          "original.png"
+        ]
+      }
+    ],
+    "attachment_images": {
+      "original.png": {
+        "width": 800,
+        "height": 240
+      }
+    },
+    "require_complete_context": true,
+    "expected_issue_codes": [],
+    "math_tree_provenance": "handwritten from original frozen TeX; never generated MathML/CHTML"
+  },
+  "coverage": [
+    "exact TeX and all symbols/units/conditions/ranges/exceptions",
+    "original region image fallback and real local attachment click"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_format_and_output_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "hand-authored-format-probe",
+  "feature": "reader_format_probe",
+  "author_case": "independent_hand_authored_format_probe",
+  "representative_kind": "hand_authored_format_probe",
+  "representation": null,
+  "semantic_source": {
+    "frontmatter": {
+      "title": "中文格式兼容探针",
+      "reviewed": false,
+      "aliases": [
+        "兼容别名",
+        "第二名称"
+      ]
+    },
+    "callout": {
+      "type": "note",
+      "title": "原格式提示",
+      "body": "这是独立手写格式探针，仅用于阅读器兼容性，不是 Noetome 产品生成输出。"
+    },
+    "headings": [
+      {
+        "level": 1,
+        "text": "中文格式兼容探针"
+      },
+      {
+        "level": 2,
+        "text": "中文定位标题"
+      }
+    ],
+    "block": {
+      "id": "compat-block",
+      "text": "这是一段用于定位的原始中文块，内容必须完整保留。"
+    }
+  },
+  "collector": {
+    "notes": [
+      "格式兼容探针.md"
+    ],
+    "require_frontmatter_cache_and_real_visible_properties": true,
+    "properties_types": {
+      "title": "text",
+      "reviewed": "checkbox",
+      "aliases": "list"
+    },
+    "callout": {
+      "selector": "[data-callout=\"note\"]",
+      "title": "原格式提示",
+      "body": "这是独立手写格式探针，仅用于阅读器兼容性，不是 Noetome 产品生成输出。"
+    },
+    "real_click_links": [
+      {
+        "target": "#中文定位标题",
+        "label": "跳转中文标题",
+        "destination": "格式兼容探针.md",
+        "target_heading": "中文定位标题"
+      },
+      {
+        "target": "#^compat-block",
+        "label": "跳转原始块",
+        "destination": "格式兼容探针.md",
+        "target_block_id": "compat-block",
+        "target_text": "这是一段用于定位的原始中文块，内容必须完整保留。"
+      }
+    ]
+  },
+  "coverage": [
+    "YAML string/bool/list cache and visible Properties",
+    "Callout note type/title/body",
+    "Chinese heading Wikilink and real click",
+    "legal block ^compat-block, block Wikilink and real click"
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_gold",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "process": {
+    "title": "演示计数共同变化观察",
+    "entry": "s1",
+    "goals": [
+      "s2"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "按钮点击计数",
+      "description": "记录同一时段的按钮点击次数",
+      "criterion": null,
+      "inputs": [
+        "按钮点击记录"
+      ],
+      "outputs": [
+        "点击计数"
+      ],
+      "conditions": [
+        "记录时段相同"
+      ],
+      "exceptions": [
+        "缺少记录时标为未知"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "指示灯闪烁计数",
+      "description": "记录同一时段的指示灯闪烁次数",
+      "criterion": null,
+      "inputs": [
+        "闪烁记录"
+      ],
+      "outputs": [
+        "闪烁计数"
+      ],
+      "conditions": [
+        "记录时段相同"
+      ],
+      "exceptions": [
+        "缺少记录时标为未知"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "correlates",
+      "branch_outcome": null,
+      "conditions": [
+        "仅限本次演示记录"
+      ],
+      "exceptions": [
+        "未建立因果方向"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "object_id": "process",
+      "start_byte": 0,
+      "end_byte": 150,
+      "quote": "过程：\"演示计数共同变化观察\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+    },
+    {
+      "object_id": "s1",
+      "start_byte": 151,
+      "end_byte": 378,
+      "quote": "步骤 s1：\"按钮点击计数\"。说明：\"记录同一时段的按钮点击次数\"。输入：[\"按钮点击记录\"]。输出：[\"点击计数\"]。条件：[\"记录时段相同\"]。例外：[\"缺少记录时标为未知\"]。"
+    },
+    {
+      "object_id": "s2",
+      "start_byte": 379,
+      "end_byte": 606,
+      "quote": "步骤 s2：\"指示灯闪烁计数\"。说明：\"记录同一时段的指示灯闪烁次数\"。输入：[\"闪烁记录\"]。输出：[\"闪烁计数\"]。条件：[\"记录时段相同\"]。例外：[\"缺少记录时标为未知\"]。"
+    },
+    {
+      "object_id": "r1",
+      "start_byte": 607,
+      "end_byte": 715,
+      "quote": "关系 r1：s1 与 s2 相关。条件：[\"仅限本次演示记录\"]。例外：[\"未建立因果方向\"]。"
+    }
+  ]
+}

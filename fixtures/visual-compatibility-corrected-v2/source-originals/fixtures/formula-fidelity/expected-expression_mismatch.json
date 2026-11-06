@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "producer": "formula_fidelity_expected",
+  "author": "independent_self_authored_engineering_fixture",
+  "case_name": "expression_mismatch",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "scope": "selected_formula_only_not_ocr_or_science",
+  "source_pins": {
+    "semantics.json": {
+      "sha256": "05a967a3db6a594feca2dacdf46d456bbc722b2c875808939b3ac98412b401ac",
+      "byte_length": 848
+    },
+    "original.tex": {
+      "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59",
+      "byte_length": 28
+    },
+    "case.json": {
+      "sha256": "2aa20f06a6a5ed6227bc2ba049eb5fc19f0e51fc2b72d8644fcc64abfc894439",
+      "byte_length": 741
+    },
+    "region.png": {
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "byte_length": 6656
+    }
+  },
+  "case": {
+    "schema_version": 1,
+    "purpose": "formula_fidelity",
+    "selection_id": "expression_mismatch",
+    "title": "公式保真样例 expression_mismatch",
+    "source_kind": "tex",
+    "tex": {
+      "file": "original.tex",
+      "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "05a967a3db6a594feca2dacdf46d456bbc722b2c875808939b3ac98412b401ac"
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "page": 1,
+      "canvas": [
+        1000,
+        600
+      ],
+      "bounds": [
+        100,
+        120,
+        800,
+        240
+      ],
+      "legibility": "clear"
+    },
+    "data_available": false
+  },
+  "semantics": {
+    "schema_version": 1,
+    "expression": "C_{i}(t) = -\\frac{a}{b} t^{2}",
+    "symbols": [
+      {
+        "symbol": "C",
+        "definition": "test concentration",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "t",
+        "definition": "elapsed time",
+        "unit": "s"
+      },
+      {
+        "symbol": "a",
+        "definition": "positive scaling constant",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "b",
+        "definition": "positive nonzero divisor",
+        "unit": "s^2"
+      }
+    ],
+    "conditions": [
+      "a > 0 and b > 0",
+      "This is a fictional engineering example, not a scientific claim."
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "tokens": [
+    "C",
+    "_",
+    "{",
+    "i",
+    "}",
+    "(",
+    "t",
+    ")",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "}",
+    "{",
+    "b",
+    "}",
+    "t",
+    "^",
+    "{",
+    "2",
+    "}"
+  ],
+  "profile_name": "native",
+  "representation": null,
+  "issue_codes": [
+    "FORMULA_TEX_SEMANTIC_MISMATCH"
+  ],
+  "fallback_reasons": [],
+  "compatibility_rewrites": []
+}

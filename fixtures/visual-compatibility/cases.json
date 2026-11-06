@@ -1,0 +1,1414 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_selected_cases",
+  "case_count": 13,
+  "product_case_count": 12,
+  "hand_authored_format_probe_count": 1,
+  "scientific_quality": "not_run",
+  "published": false,
+  "version_selection": "actual runtime/distribution pins kept separately; no application version inferred from author fixtures",
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "model_requests_in_this_task": 0,
+  "cases": [
+    {
+      "case_id": "table-escaping-names",
+      "feature": "table",
+      "author_case": "escaping_names",
+      "representative_kind": "product_output",
+      "expected_file": "expected-table-escaping-names.json",
+      "selected_source": {
+        "fixture": "fixtures/active-presentation-v1",
+        "expected": "fixtures/active-presentation-v1/expected-escaping_names.json",
+        "sources": [
+          "fixtures/active-presentation-v1/escaping_names-a.txt",
+          "fixtures/active-presentation-v1/escaping_names-b.txt"
+        ]
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06-T01/obsidian/originals.zip",
+        "archive_pin": {
+          "sha256": "1f05e3c7546d5947644e1c00f8fe298c3a0a698f48a9cba1ac4d94fc0b258631",
+          "byte_length": 4374060
+        },
+        "member_prefix": "cases/escaping_names/vault/",
+        "files": {
+          "对象-60000000-0000-4000-8000-000000000005.md": {
+            "archive_member": "cases/escaping_names/vault/对象-60000000-0000-4000-8000-000000000005.md",
+            "captured_file": "selected-output/table-escaping-names/对象-60000000-0000-4000-8000-000000000005.md",
+            "sha256": "c1d81677e3427713647012adadf77d97e2760151d89113f4339a6212f09674f5",
+            "byte_length": 375
+          },
+          "对象-60000000-0000-4000-8000-000000000006.md": {
+            "archive_member": "cases/escaping_names/vault/对象-60000000-0000-4000-8000-000000000006.md",
+            "captured_file": "selected-output/table-escaping-names/对象-60000000-0000-4000-8000-000000000006.md",
+            "sha256": "0cf17e09e21f541849ee41cc70f8d2f0012d38126cad2ca41dcf8b41f216d615",
+            "byte_length": 378
+          },
+          "知识比较.md": {
+            "archive_member": "cases/escaping_names/vault/知识比较.md",
+            "captured_file": "selected-output/table-escaping-names/知识比较.md",
+            "sha256": "4a4a6b90d1b1a40d8940f5a374c58770b541092feb21682a9bf080be167dd046",
+            "byte_length": 571
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "table",
+        "checker": "scripts/verify_knowledge_presentation.py",
+        "inputs": {
+          "project": "verification-inputs/table-escaping-names/project",
+          "coordination_case": "verification-inputs/table-escaping-names/case",
+          "coordination_output": "verification-inputs/table-escaping-names/coordination-output",
+          "preview_root": "verification-inputs/table-escaping-names/preview-Vault",
+          "expected": "verification-inputs/table-escaping-names/expected.json"
+        },
+        "compare_selected_display_notes": [
+          "知识比较.md",
+          "对象-60000000-0000-4000-8000-000000000005.md",
+          "对象-60000000-0000-4000-8000-000000000006.md"
+        ],
+        "input_provenance": "archived actual selected source imports/project/CLI; no synthetic SQL reconstruction",
+        "bridge_identity_note": "Original native collector bridge and independently checked archived SQL package came from distinct real imports of the same frozen author sources. Their complete visible Markdown bytes must be equal; request/project/occurrence IDs must not be rewritten or claimed equal."
+      },
+      "collector_input_file": "collector-bridges/table-escaping-names-visual-input.json"
+    },
+    {
+      "case_id": "flow-branch",
+      "feature": "flow",
+      "author_case": "branch",
+      "representative_kind": "product_output",
+      "expected_file": "expected-flow-branch.json",
+      "selected_source": {
+        "fixture": "fixtures/process-flow-v1",
+        "source": "fixtures/process-flow-v1/branch.txt",
+        "gold": "fixtures/process-flow-v1/gold-branch.json"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06-T02/obsidian/originals.zip",
+        "archive_pin": {
+          "sha256": "e6380e0beacbe3d896ec46be43c0b36322ae33a3d706534e3c492b92caa5a394",
+          "byte_length": 9593255
+        },
+        "member_prefix": "inputs/cases/branch/Vault/",
+        "files": {
+          ".case.json": {
+            "archive_member": "inputs/cases/branch/Vault/.case.json",
+            "captured_file": "selected-output/flow-branch/.case.json",
+            "sha256": "f95d0d22e1e6e2c588e89351512ac1d8001d9d2f120c2fbc5de0c0a551234019",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "archive_member": "inputs/cases/branch/Vault/.gold.json",
+            "captured_file": "selected-output/flow-branch/.gold.json",
+            "sha256": "3a89a171a1113973694d785813fe40f63f294154294cdee5dc049721c326bfaa",
+            "byte_length": 5149
+          },
+          ".owner.json": {
+            "archive_member": "inputs/cases/branch/Vault/.owner.json",
+            "captured_file": "selected-output/flow-branch/.owner.json",
+            "sha256": "ae09d0b16a4ba0e678553166ea3a051cf5f6394a1f85dc0e8385dc563d7bb64e",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "archive_member": "inputs/cases/branch/Vault/.profile.json",
+            "captured_file": "selected-output/flow-branch/.profile.json",
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "archive_member": "inputs/cases/branch/Vault/.review-.case.json",
+            "captured_file": "selected-output/flow-branch/.review-.case.json",
+            "sha256": "f95d0d22e1e6e2c588e89351512ac1d8001d9d2f120c2fbc5de0c0a551234019",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "archive_member": "inputs/cases/branch/Vault/.review-.gold.json",
+            "captured_file": "selected-output/flow-branch/.review-.gold.json",
+            "sha256": "3a89a171a1113973694d785813fe40f63f294154294cdee5dc049721c326bfaa",
+            "byte_length": 5149
+          },
+          ".review-.owner.json": {
+            "archive_member": "inputs/cases/branch/Vault/.review-.owner.json",
+            "captured_file": "selected-output/flow-branch/.review-.owner.json",
+            "sha256": "99d93da26e8b2759395a41430cdb4947e627284afbbd8ff757cbebaaee449014",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "archive_member": "inputs/cases/branch/Vault/.review-.source.json",
+            "captured_file": "selected-output/flow-branch/.review-.source.json",
+            "sha256": "db1283ef8ae4324a0a0be9acd00922e95460abd1a3cc9e9dabbe66b02274cad8",
+            "byte_length": 2372
+          },
+          ".review-process-ir.json": {
+            "archive_member": "inputs/cases/branch/Vault/.review-process-ir.json",
+            "captured_file": "selected-output/flow-branch/.review-process-ir.json",
+            "sha256": "ff61f02a9ea602cd4a06daf3dfc56cd2f6e842668d42ec1f531d4f9b6ad0eef6",
+            "byte_length": 9057
+          },
+          ".review-review.json": {
+            "archive_member": "inputs/cases/branch/Vault/.review-review.json",
+            "captured_file": "selected-output/flow-branch/.review-review.json",
+            "sha256": "ca21522a59e6af4c3d89c184d24d2228cb21217cb8fb595d1ad527c0a26c03aa",
+            "byte_length": 9035
+          },
+          ".review-review.md": {
+            "archive_member": "inputs/cases/branch/Vault/.review-review.md",
+            "captured_file": "selected-output/flow-branch/.review-review.md",
+            "sha256": "df8321ae5dc2c6c2036765c321fb540add034eae314c93dd83118b945fdb0134",
+            "byte_length": 9218
+          },
+          ".source.json": {
+            "archive_member": "inputs/cases/branch/Vault/.source.json",
+            "captured_file": "selected-output/flow-branch/.source.json",
+            "sha256": "db1283ef8ae4324a0a0be9acd00922e95460abd1a3cc9e9dabbe66b02274cad8",
+            "byte_length": 2372
+          },
+          "flow.json": {
+            "archive_member": "inputs/cases/branch/Vault/flow.json",
+            "captured_file": "selected-output/flow-branch/flow.json",
+            "sha256": "b18e19103f829d6f2ada44b026a4828f6cb5e797a9221c6056e007e452179b16",
+            "byte_length": 20348
+          },
+          "flow.md": {
+            "archive_member": "inputs/cases/branch/Vault/flow.md",
+            "captured_file": "selected-output/flow-branch/flow.md",
+            "sha256": "246beef5750480a27053d37cf65b5aeb1c122e9deee1250184f97002f3ff9fd5",
+            "byte_length": 20551
+          },
+          "plan.json": {
+            "archive_member": "inputs/cases/branch/Vault/plan.json",
+            "captured_file": "selected-output/flow-branch/plan.json",
+            "sha256": "6e1fb7f988226427fe7a45cf0b076e57c00dccb04d77b4a14ea83697e4446fc7",
+            "byte_length": 16891
+          },
+          "流程总览.md": {
+            "archive_member": "inputs/cases/branch/Vault/流程总览.md",
+            "captured_file": "selected-output/flow-branch/流程总览.md",
+            "sha256": "1da5353c7dad37e0861cd65bee38872a0e8f3eb1232168b319e3c80b06dd7d0f",
+            "byte_length": 981
+          },
+          "过程明细.md": {
+            "archive_member": "inputs/cases/branch/Vault/过程明细.md",
+            "captured_file": "selected-output/flow-branch/过程明细.md",
+            "sha256": "914613316b45141927bec71f4168e7dd38e7abd8cd65b16867224b749f8a54b9",
+            "byte_length": 2075
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "flow",
+        "checker": "scripts/verify_process_flow.py",
+        "inputs": {
+          "project": "verification-inputs/flow-branch/project",
+          "case": "verification-inputs/flow-branch/case",
+          "review": "verification-inputs/flow-branch/review",
+          "profile": "verification-inputs/flow-branch/profile.json",
+          "vault": "verification-inputs/flow-branch/Vault",
+          "expected": "source-originals/fixtures/process-flow-v1/expected-branch.json"
+        },
+        "compare_selected_output_bytes": true,
+        "input_provenance": "archived actual selected source import/project/CLI; no synthetic SQL reconstruction"
+      },
+      "collector_input_file": "collector-bridges/flow-branch-visual-input.json"
+    },
+    {
+      "case_id": "flow-multiline-labels",
+      "feature": "flow",
+      "author_case": "multiline_labels",
+      "representative_kind": "product_output",
+      "expected_file": "expected-flow-multiline-labels.json",
+      "selected_source": {
+        "fixture": "fixtures/process-flow-v1",
+        "source": "fixtures/process-flow-v1/multiline_labels.txt",
+        "gold": "fixtures/process-flow-v1/gold-multiline_labels.json"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06-T02/obsidian/originals.zip",
+        "archive_pin": {
+          "sha256": "e6380e0beacbe3d896ec46be43c0b36322ae33a3d706534e3c492b92caa5a394",
+          "byte_length": 9593255
+        },
+        "member_prefix": "inputs/cases/multiline_labels/Vault/",
+        "files": {
+          ".case.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.case.json",
+            "captured_file": "selected-output/flow-multiline-labels/.case.json",
+            "sha256": "6c7d6ac8240be7f390a0148304eee70e5657cfb8203e5c337e795dd612f60adb",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.gold.json",
+            "captured_file": "selected-output/flow-multiline-labels/.gold.json",
+            "sha256": "79999b21da68b9e80f4313cfce72821163a965540950acc631a9b9ba98d288c4",
+            "byte_length": 2412
+          },
+          ".owner.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.owner.json",
+            "captured_file": "selected-output/flow-multiline-labels/.owner.json",
+            "sha256": "0e8fa157a9d8e8c2bb151e238d00e3b4890dd005aadbd4f619217e1540da07fc",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.profile.json",
+            "captured_file": "selected-output/flow-multiline-labels/.profile.json",
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.review-.case.json",
+            "captured_file": "selected-output/flow-multiline-labels/.review-.case.json",
+            "sha256": "6c7d6ac8240be7f390a0148304eee70e5657cfb8203e5c337e795dd612f60adb",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.review-.gold.json",
+            "captured_file": "selected-output/flow-multiline-labels/.review-.gold.json",
+            "sha256": "79999b21da68b9e80f4313cfce72821163a965540950acc631a9b9ba98d288c4",
+            "byte_length": 2412
+          },
+          ".review-.owner.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.review-.owner.json",
+            "captured_file": "selected-output/flow-multiline-labels/.review-.owner.json",
+            "sha256": "80fee289fabd7b9d7efe4c87d62f07e670951691f8385ab90e49f895abea199e",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.review-.source.json",
+            "captured_file": "selected-output/flow-multiline-labels/.review-.source.json",
+            "sha256": "a55730a94b7674d64e1b6176ccce45dc584791214f08f0001154838f63f7db33",
+            "byte_length": 1532
+          },
+          ".review-process-ir.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.review-process-ir.json",
+            "captured_file": "selected-output/flow-multiline-labels/.review-process-ir.json",
+            "sha256": "8aa5f79722f6fe5d3ad35db0bbd005579429adc8ab8ca6ce9249a399408fdd37",
+            "byte_length": 4773
+          },
+          ".review-review.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.review-review.json",
+            "captured_file": "selected-output/flow-multiline-labels/.review-review.json",
+            "sha256": "7db25b743a1730369663c4b41e28e34c4dc6f4b879c383f816384a99844d6158",
+            "byte_length": 6104
+          },
+          ".review-review.md": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.review-review.md",
+            "captured_file": "selected-output/flow-multiline-labels/.review-review.md",
+            "sha256": "5ecc102854b02dd6de5f1a715a577e7de0167181f7927e671938205d32835bb5",
+            "byte_length": 6287
+          },
+          ".source.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/.source.json",
+            "captured_file": "selected-output/flow-multiline-labels/.source.json",
+            "sha256": "a55730a94b7674d64e1b6176ccce45dc584791214f08f0001154838f63f7db33",
+            "byte_length": 1532
+          },
+          "flow.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/flow.json",
+            "captured_file": "selected-output/flow-multiline-labels/flow.json",
+            "sha256": "ecf45d209ac00d027277cf3736c7ca7727e69a220c7db8c1f822a6e06122bb90",
+            "byte_length": 15345
+          },
+          "flow.md": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/flow.md",
+            "captured_file": "selected-output/flow-multiline-labels/flow.md",
+            "sha256": "3383fa64b81ae0321db9d2c58c30572421dfaf41569312bab508f23098fb06da",
+            "byte_length": 15548
+          },
+          "plan.json": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/plan.json",
+            "captured_file": "selected-output/flow-multiline-labels/plan.json",
+            "sha256": "dfb5585d5d695be4af1bf840fa5a5fa46fe586924a2bc108c33329260f4580a4",
+            "byte_length": 12440
+          },
+          "流程总览.md": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/流程总览.md",
+            "captured_file": "selected-output/flow-multiline-labels/流程总览.md",
+            "sha256": "bfb79aaeaea155c3c1e1c22390aca69c33a131fff600108f471bc41147c53861",
+            "byte_length": 1738
+          },
+          "过程明细.md": {
+            "archive_member": "inputs/cases/multiline_labels/Vault/过程明细.md",
+            "captured_file": "selected-output/flow-multiline-labels/过程明细.md",
+            "sha256": "d9f133b91f0db5c51fa403ec3a95bae2611e7a73da75878eefc5f5d77c72b2d1",
+            "byte_length": 1040
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "flow",
+        "checker": "scripts/verify_process_flow.py",
+        "inputs": {
+          "project": "verification-inputs/flow-multiline-labels/project",
+          "case": "verification-inputs/flow-multiline-labels/case",
+          "review": "verification-inputs/flow-multiline-labels/review",
+          "profile": "verification-inputs/flow-multiline-labels/profile.json",
+          "vault": "verification-inputs/flow-multiline-labels/Vault",
+          "expected": "source-originals/fixtures/process-flow-v1/expected-multiline_labels.json"
+        },
+        "compare_selected_output_bytes": true,
+        "input_provenance": "archived actual selected source import/project/CLI; no synthetic SQL reconstruction"
+      },
+      "collector_input_file": "collector-bridges/flow-multiline-labels-visual-input.json"
+    },
+    {
+      "case_id": "formula-native",
+      "feature": "formula",
+      "author_case": "native",
+      "representative_kind": "product_output",
+      "expected_file": "expected-formula-native.json",
+      "selected_source": {
+        "fixture_case": "fixtures/formula-fidelity/native",
+        "copied_case": "source-originals/fixtures/formula-fidelity/native",
+        "original_expected": "fixtures/formula-fidelity/expected-native.json"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06-T03/independent/final-audit-4-originals.zip",
+        "archive_pin": {
+          "sha256": "42cda1ed3c4300e280dd10e60c380270a647bd1c7a6e081a0f1d595c58631ce9",
+          "byte_length": 908482
+        },
+        "member_prefix": "vaults/native/",
+        "files": {
+          ".owner.json": {
+            "archive_member": "vaults/native/.owner.json",
+            "captured_file": "selected-output/formula-native/.owner.json",
+            "sha256": "8fdbef7bf3126484cbc86ca24ee46e964ddf37adfc13717550a585dae9aa290d",
+            "byte_length": 152
+          },
+          "compiled.tex": {
+            "archive_member": "vaults/native/compiled.tex",
+            "captured_file": "selected-output/formula-native/compiled.tex",
+            "sha256": "ba13467e89656ca236d818e075c4c09dd5dca26dd6398ea03a7ea67dbf618733",
+            "byte_length": 27
+          },
+          "formula.json": {
+            "archive_member": "vaults/native/formula.json",
+            "captured_file": "selected-output/formula-native/formula.json",
+            "sha256": "2a63b624aef292e1bcd573db01c98b4f19da9c5a6c28c6922c2b961b2028cc2e",
+            "byte_length": 9045
+          },
+          "formula.md": {
+            "archive_member": "vaults/native/formula.md",
+            "captured_file": "selected-output/formula-native/formula.md",
+            "sha256": "6d2abf17a8056e4efe8ee0a14c4103aca55870c6e49ddf5015d85524bce7bcba",
+            "byte_length": 9263
+          },
+          "original.png": {
+            "archive_member": "vaults/native/original.png",
+            "captured_file": "selected-output/formula-native/original.png",
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "original.tex": {
+            "archive_member": "vaults/native/original.tex",
+            "captured_file": "selected-output/formula-native/original.tex",
+            "sha256": "4fbab010e8618ed51cea0a2caac1aa469f2c06cbcbdc774f4f5f9bf12294cfdb",
+            "byte_length": 29
+          },
+          "plan.json": {
+            "archive_member": "vaults/native/plan.json",
+            "captured_file": "selected-output/formula-native/plan.json",
+            "sha256": "2ceaa22d5012329d6c7ea5d06d56ca213784959e79cacc6bad2f93341397cf05",
+            "byte_length": 2293
+          },
+          "profile.json": {
+            "archive_member": "vaults/native/profile.json",
+            "captured_file": "selected-output/formula-native/profile.json",
+            "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+            "byte_length": 201
+          },
+          "source-case.json": {
+            "archive_member": "vaults/native/source-case.json",
+            "captured_file": "selected-output/formula-native/source-case.json",
+            "sha256": "8590f88a83d7d09de05c1c0365656ec021f8e980edca9c57ad709aa7529e1c27",
+            "byte_length": 715
+          },
+          "source-semantics.json": {
+            "archive_member": "vaults/native/source-semantics.json",
+            "captured_file": "selected-output/formula-native/source-semantics.json",
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          },
+          "公式预览.md": {
+            "archive_member": "vaults/native/公式预览.md",
+            "captured_file": "selected-output/formula-native/公式预览.md",
+            "sha256": "a1734a214a7354e4a800832773379c641972a348bcf9baf4b977360a3d691712",
+            "byte_length": 1064
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "formula",
+        "checker": "scripts/verify_formula.py",
+        "inputs": {
+          "case": "source-originals/fixtures/formula-fidelity/native",
+          "profile": "selected-output/formula-native/profile.json",
+          "vault": "selected-output/formula-native",
+          "expected": "source-originals/fixtures/formula-fidelity/expected-native.json"
+        },
+        "compare_selected_output_bytes": true
+      }
+    },
+    {
+      "case_id": "formula-native-relational",
+      "feature": "formula",
+      "author_case": "native_relational",
+      "representative_kind": "product_output",
+      "expected_file": "expected-formula-native-relational.json",
+      "selected_source": {
+        "fixture_case": "fixtures/formula-fidelity/native_relational",
+        "copied_case": "source-originals/fixtures/formula-fidelity/native_relational",
+        "original_expected": "fixtures/formula-fidelity/expected-native_relational.json"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06-T03/independent/final-audit-4-originals.zip",
+        "archive_pin": {
+          "sha256": "42cda1ed3c4300e280dd10e60c380270a647bd1c7a6e081a0f1d595c58631ce9",
+          "byte_length": 908482
+        },
+        "member_prefix": "vaults/native_relational/",
+        "files": {
+          ".owner.json": {
+            "archive_member": "vaults/native_relational/.owner.json",
+            "captured_file": "selected-output/formula-native-relational/.owner.json",
+            "sha256": "0c80ddbfca419f4bfe30d9ce6f6bce9d25ead4172d84c8f77583992877f09316",
+            "byte_length": 152
+          },
+          "compiled.tex": {
+            "archive_member": "vaults/native_relational/compiled.tex",
+            "captured_file": "selected-output/formula-native-relational/compiled.tex",
+            "sha256": "f4e11d77de293cbf8106a47ee4b94d72d58cdd933c577024e67dff1b19439af1",
+            "byte_length": 25
+          },
+          "formula.json": {
+            "archive_member": "vaults/native_relational/formula.json",
+            "captured_file": "selected-output/formula-native-relational/formula.json",
+            "sha256": "8bc2f4a5024d81f7be5310585a9c759e46873662d307aac7d1593dc3410038d2",
+            "byte_length": 8444
+          },
+          "formula.md": {
+            "archive_member": "vaults/native_relational/formula.md",
+            "captured_file": "selected-output/formula-native-relational/formula.md",
+            "sha256": "2e11230985dfba3588cfe78f7e00072337bb399563230c657240e8a54639c210",
+            "byte_length": 8662
+          },
+          "original.png": {
+            "archive_member": "vaults/native_relational/original.png",
+            "captured_file": "selected-output/formula-native-relational/original.png",
+            "sha256": "d9661ee17a8985a627c1906093273ac4de8be5322d9c6df97889152c1aff0919",
+            "byte_length": 5274
+          },
+          "original.tex": {
+            "archive_member": "vaults/native_relational/original.tex",
+            "captured_file": "selected-output/formula-native-relational/original.tex",
+            "sha256": "55b84085a1bea5fee1a82ce64ea445a6e06c9a96e93c017d1318338924281823",
+            "byte_length": 26
+          },
+          "plan.json": {
+            "archive_member": "vaults/native_relational/plan.json",
+            "captured_file": "selected-output/formula-native-relational/plan.json",
+            "sha256": "242ef22c7e294ba122f130f14222fa6dee4ca7c4da2f142527f9af00bd80fa70",
+            "byte_length": 2184
+          },
+          "profile.json": {
+            "archive_member": "vaults/native_relational/profile.json",
+            "captured_file": "selected-output/formula-native-relational/profile.json",
+            "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+            "byte_length": 201
+          },
+          "source-case.json": {
+            "archive_member": "vaults/native_relational/source-case.json",
+            "captured_file": "selected-output/formula-native-relational/source-case.json",
+            "sha256": "43aaacdbb4545eb0c4a34f3037fc2ff3850f4555f1c97c9db94ecb722061b8ac",
+            "byte_length": 737
+          },
+          "source-semantics.json": {
+            "archive_member": "vaults/native_relational/source-semantics.json",
+            "captured_file": "selected-output/formula-native-relational/source-semantics.json",
+            "sha256": "433a352a60fb55564a99308a1626706723aaf5a81ecf0b8cf36fd2df9fa6b118",
+            "byte_length": 750
+          },
+          "公式预览.md": {
+            "archive_member": "vaults/native_relational/公式预览.md",
+            "captured_file": "selected-output/formula-native-relational/公式预览.md",
+            "sha256": "4f899d186f26629ac210d219d684414143208bd563ac167365a300e827747a87",
+            "byte_length": 963
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "formula",
+        "checker": "scripts/verify_formula.py",
+        "inputs": {
+          "case": "source-originals/fixtures/formula-fidelity/native_relational",
+          "profile": "selected-output/formula-native-relational/profile.json",
+          "vault": "selected-output/formula-native-relational",
+          "expected": "source-originals/fixtures/formula-fidelity/expected-native_relational.json"
+        },
+        "compare_selected_output_bytes": true
+      }
+    },
+    {
+      "case_id": "formula-image-fallback",
+      "feature": "formula",
+      "author_case": "image_fallback",
+      "representative_kind": "product_output",
+      "expected_file": "expected-formula-image-fallback.json",
+      "selected_source": {
+        "fixture_case": "fixtures/formula-fidelity/image_fallback",
+        "copied_case": "source-originals/fixtures/formula-fidelity/image_fallback",
+        "original_expected": "fixtures/formula-fidelity/expected-image_fallback.json"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06-T03/independent/final-audit-4-originals.zip",
+        "archive_pin": {
+          "sha256": "42cda1ed3c4300e280dd10e60c380270a647bd1c7a6e081a0f1d595c58631ce9",
+          "byte_length": 908482
+        },
+        "member_prefix": "vaults/image_fallback/",
+        "files": {
+          ".owner.json": {
+            "archive_member": "vaults/image_fallback/.owner.json",
+            "captured_file": "selected-output/formula-image-fallback/.owner.json",
+            "sha256": "9c8bba6d3eddfd46208aaae55261df2d71aa84e142298ef7b505aa8f606cae27",
+            "byte_length": 152
+          },
+          "formula.json": {
+            "archive_member": "vaults/image_fallback/formula.json",
+            "captured_file": "selected-output/formula-image-fallback/formula.json",
+            "sha256": "23f388f265596131eed6e435bb99f64c5fe3ad688f450ce48dfdd8d1ac6cf44a",
+            "byte_length": 8970
+          },
+          "formula.md": {
+            "archive_member": "vaults/image_fallback/formula.md",
+            "captured_file": "selected-output/formula-image-fallback/formula.md",
+            "sha256": "92f10aa96a4f1e40d758613ee43369327b0942a193abdb85c1221eafa51defa1",
+            "byte_length": 9188
+          },
+          "original.png": {
+            "archive_member": "vaults/image_fallback/original.png",
+            "captured_file": "selected-output/formula-image-fallback/original.png",
+            "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+            "byte_length": 6656
+          },
+          "original.tex": {
+            "archive_member": "vaults/image_fallback/original.tex",
+            "captured_file": "selected-output/formula-image-fallback/original.tex",
+            "sha256": "97c540cf4af7ab32e9791faa662ce3f4e0923b523f16976c516ff156583cbe59",
+            "byte_length": 28
+          },
+          "plan.json": {
+            "archive_member": "vaults/image_fallback/plan.json",
+            "captured_file": "selected-output/formula-image-fallback/plan.json",
+            "sha256": "6739fda93880ae45d71da7fcede831972a083b4cbee3b7631d144de207996cf4",
+            "byte_length": 2325
+          },
+          "profile.json": {
+            "archive_member": "vaults/image_fallback/profile.json",
+            "captured_file": "selected-output/formula-image-fallback/profile.json",
+            "sha256": "d989a8831fd8992e888c2e2744510fe8e69791946937cffaf07b7475dd988345",
+            "byte_length": 202
+          },
+          "source-case.json": {
+            "archive_member": "vaults/image_fallback/source-case.json",
+            "captured_file": "selected-output/formula-image-fallback/source-case.json",
+            "sha256": "d5735a8679ea9292c08e6d3844ae62e52a79ce2fc8ecde7ce49610d86b70bb3a",
+            "byte_length": 731
+          },
+          "source-semantics.json": {
+            "archive_member": "vaults/image_fallback/source-semantics.json",
+            "captured_file": "selected-output/formula-image-fallback/source-semantics.json",
+            "sha256": "31e8cfa93a4209e625717daf9aab98249f3b89c4f114101af10a68c946c0cacf",
+            "byte_length": 846
+          },
+          "公式预览.md": {
+            "archive_member": "vaults/image_fallback/公式预览.md",
+            "captured_file": "selected-output/formula-image-fallback/公式预览.md",
+            "sha256": "9e4cc624304f2ebcb3bba61af536201e5840ef1c4c6be98d7028671b7b8b134a",
+            "byte_length": 1056
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "formula",
+        "checker": "scripts/verify_formula.py",
+        "inputs": {
+          "case": "source-originals/fixtures/formula-fidelity/image_fallback",
+          "profile": "selected-output/formula-image-fallback/profile.json",
+          "vault": "selected-output/formula-image-fallback",
+          "expected": "source-originals/fixtures/formula-fidelity/expected-image_fallback.json"
+        },
+        "compare_selected_output_bytes": true
+      }
+    },
+    {
+      "case_id": "image-signed-arrows",
+      "feature": "image",
+      "author_case": "signed_arrows",
+      "representative_kind": "product_output",
+      "expected_file": "expected-image-signed-arrows.json",
+      "selected_source": {
+        "fixture_case": "fixtures/image-fidelity/signed_arrows",
+        "copied_case": "source-originals/fixtures/image-fidelity/signed_arrows",
+        "original_expected": "fixtures/image-fidelity/expected-signed_arrows.json"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06V-T01/native/final-originals.zip",
+        "archive_pin": {
+          "sha256": "26322c69ec4d47f9df2bcec2236848664826521901757d82619558350b747a3f",
+          "byte_length": 4934705
+        },
+        "member_prefix": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/",
+        "files": {
+          ".owner.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/.owner.json",
+            "captured_file": "selected-output/image-signed-arrows/.owner.json",
+            "sha256": "090f902b67c5088f738da0452701f54382daa32e5586b83337f2a4e84eb775cc",
+            "byte_length": 148
+          },
+          "image.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/image.json",
+            "captured_file": "selected-output/image-signed-arrows/image.json",
+            "sha256": "e08519d30e3afebbb1e423c05d4abf002088cb89ca14c296ea6b30b947e0be1f",
+            "byte_length": 21195
+          },
+          "image.md": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/image.md",
+            "captured_file": "selected-output/image-signed-arrows/image.md",
+            "sha256": "7f65e35d16a0a6528eefd726a6c792cf690165d0c09b7f9bbacc591e96f60fb6",
+            "byte_length": 21454
+          },
+          "original.png": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/original.png",
+            "captured_file": "selected-output/image-signed-arrows/original.png",
+            "sha256": "c010a5884ad8c0442a320bc57f61f17d6c01d828816426a4c3e28774c5dbd64f",
+            "byte_length": 22138
+          },
+          "plan.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/plan.json",
+            "captured_file": "selected-output/image-signed-arrows/plan.json",
+            "sha256": "85d7867ca09cb7f527b6bc42d6a5b7b508c79176b290fd082b259c3726865fc3",
+            "byte_length": 3460
+          },
+          "profile.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/profile.json",
+            "captured_file": "selected-output/image-signed-arrows/profile.json",
+            "sha256": "ca6ddf79660ab307434f7b6add58fcc8371b2127b057798b3b39034c408ee9ce",
+            "byte_length": 142
+          },
+          "redrawn.svg": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/redrawn.svg",
+            "captured_file": "selected-output/image-signed-arrows/redrawn.svg",
+            "sha256": "ceef72176b1fdfd46fbaa9be31e2edaf1dd4df6c4ae691cf2e22c00634ea9d4c",
+            "byte_length": 3577
+          },
+          "source-case.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/source-case.json",
+            "captured_file": "selected-output/image-signed-arrows/source-case.json",
+            "sha256": "0ecc345bec924324376006434ea615da492ec2e3931921b10560aa877e8027e6",
+            "byte_length": 491
+          },
+          "source-semantics.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/source-semantics.json",
+            "captured_file": "selected-output/image-signed-arrows/source-semantics.json",
+            "sha256": "842df03fe191041c24b099841c97ee7402eff40d3a350d907594153bb57abb51",
+            "byte_length": 2378
+          },
+          "图像预览.md": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/signed_arrows/generated-Vault/图像预览.md",
+            "captured_file": "selected-output/image-signed-arrows/图像预览.md",
+            "sha256": "99a0d7f3fe907bb0d0d4c4e903f2c5caae96762bfcfb4cbf5ea11e27acd5775c",
+            "byte_length": 2611
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "image",
+        "checker": "scripts/verify_image.py",
+        "inputs": {
+          "case": "source-originals/fixtures/image-fidelity/signed_arrows",
+          "profile": "selected-output/image-signed-arrows/profile.json",
+          "vault": "selected-output/image-signed-arrows",
+          "expected": "source-originals/fixtures/image-fidelity/expected-signed_arrows.json"
+        },
+        "compare_selected_output_bytes": true
+      }
+    },
+    {
+      "case_id": "image-curve-no-data",
+      "feature": "image",
+      "author_case": "curve_no_data",
+      "representative_kind": "product_output",
+      "expected_file": "expected-image-curve-no-data.json",
+      "selected_source": {
+        "fixture_case": "fixtures/image-fidelity/curve_no_data",
+        "copied_case": "source-originals/fixtures/image-fidelity/curve_no_data",
+        "original_expected": "fixtures/image-fidelity/expected-curve_no_data.json"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06V-T01/native/final-originals.zip",
+        "archive_pin": {
+          "sha256": "26322c69ec4d47f9df2bcec2236848664826521901757d82619558350b747a3f",
+          "byte_length": 4934705
+        },
+        "member_prefix": "inputs/final-windows-cli-twelve-authors/cases/curve_no_data/generated-Vault/",
+        "files": {
+          ".owner.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/curve_no_data/generated-Vault/.owner.json",
+            "captured_file": "selected-output/image-curve-no-data/.owner.json",
+            "sha256": "98262dd996494c481ea09d6a84aa734df97103e9420bc27578bb17c79dfb4176",
+            "byte_length": 148
+          },
+          "image.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/curve_no_data/generated-Vault/image.json",
+            "captured_file": "selected-output/image-curve-no-data/image.json",
+            "sha256": "00ce060b4461ef91c62f378e8cdc32f8e1951a7a877046952463a24391bebcb4",
+            "byte_length": 7493
+          },
+          "image.md": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/curve_no_data/generated-Vault/image.md",
+            "captured_file": "selected-output/image-curve-no-data/image.md",
+            "sha256": "f749b0f1cee67a133225ae1e5be0c598a3f983bad59a1cd7be475fb96cad34a6",
+            "byte_length": 7752
+          },
+          "original.png": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/curve_no_data/generated-Vault/original.png",
+            "captured_file": "selected-output/image-curve-no-data/original.png",
+            "sha256": "a5b038e2beb6d648c4fdeae7043bafa72ff81b9d35e638f624b03cfe809c413c",
+            "byte_length": 16698
+          },
+          "plan.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/curve_no_data/generated-Vault/plan.json",
+            "captured_file": "selected-output/image-curve-no-data/plan.json",
+            "sha256": "aa2bbf9f1f5b08bb070dbcd9ba4135f838bbae5086c3bd9846b33bc1796a4b6f",
+            "byte_length": 1858
+          },
+          "profile.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/curve_no_data/generated-Vault/profile.json",
+            "captured_file": "selected-output/image-curve-no-data/profile.json",
+            "sha256": "ca6ddf79660ab307434f7b6add58fcc8371b2127b057798b3b39034c408ee9ce",
+            "byte_length": 142
+          },
+          "source-case.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/curve_no_data/generated-Vault/source-case.json",
+            "captured_file": "selected-output/image-curve-no-data/source-case.json",
+            "sha256": "5aa91bdaed4a1149ace2a82bcd2199c4a639f8a23094a522a9a335a08db0b2b4",
+            "byte_length": 502
+          },
+          "source-semantics.json": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/curve_no_data/generated-Vault/source-semantics.json",
+            "captured_file": "selected-output/image-curve-no-data/source-semantics.json",
+            "sha256": "cd7cbc028393ee6332c37a4bb0ec4dd6c4091ec5473843c9dc56ef7da84fcfb6",
+            "byte_length": 904
+          },
+          "图像预览.md": {
+            "archive_member": "inputs/final-windows-cli-twelve-authors/cases/curve_no_data/generated-Vault/图像预览.md",
+            "captured_file": "selected-output/image-curve-no-data/图像预览.md",
+            "sha256": "c659718ad60c0e1bfa1e6ab3ab19460bcd9cbab4cc2be44f26522ebb6ac0c515",
+            "byte_length": 1007
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "image",
+        "checker": "scripts/verify_image.py",
+        "inputs": {
+          "case": "source-originals/fixtures/image-fidelity/curve_no_data",
+          "profile": "selected-output/image-curve-no-data/profile.json",
+          "vault": "selected-output/image-curve-no-data",
+          "expected": "source-originals/fixtures/image-fidelity/expected-curve_no_data.json"
+        },
+        "compare_selected_output_bytes": true
+      }
+    },
+    {
+      "case_id": "scan-clear",
+      "feature": "scan",
+      "author_case": "clear",
+      "representative_kind": "product_output",
+      "expected_file": "expected-scan-clear.json",
+      "selected_source": {
+        "fixture_case": "fixtures/scan-formula/cases/clear",
+        "copied_case": "source-originals/fixtures/scan-formula/cases/clear",
+        "original_expected": "fixtures/scan-formula/expected-clear.json",
+        "live_result_reuse": "historical actual B06V-T02 original bytes; this task requests no recognition"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06V-T02/recognition/vision-live-final/live-clear-originals.zip",
+        "archive_pin": {
+          "sha256": "d1816be58b8ec8cb80908dc16b1381c778d13aafba60f51913a6d70c6a4c3404",
+          "byte_length": 6962632
+        },
+        "member_prefix": "clear-live-Vault/",
+        "files": {
+          ".owner.json": {
+            "archive_member": "clear-live-Vault/.owner.json",
+            "captured_file": "selected-output/scan-clear/.owner.json",
+            "sha256": "d2a09400b9fe92ec4e720cfc41e433d3703c564d3cd76f65a179d8420c0424f1",
+            "byte_length": 162
+          },
+          "compiled.tex": {
+            "archive_member": "clear-live-Vault/compiled.tex",
+            "captured_file": "selected-output/scan-clear/compiled.tex",
+            "sha256": "10d4289783c1ae5b281008f169ccad7a8c961d7f178b47c38d09e4279bb2abf2",
+            "byte_length": 20
+          },
+          "original.pdf": {
+            "archive_member": "clear-live-Vault/original.pdf",
+            "captured_file": "selected-output/scan-clear/original.pdf",
+            "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+            "byte_length": 37603
+          },
+          "original.png": {
+            "archive_member": "clear-live-Vault/original.png",
+            "captured_file": "selected-output/scan-clear/original.png",
+            "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+            "byte_length": 4292
+          },
+          "page.png": {
+            "archive_member": "clear-live-Vault/page.png",
+            "captured_file": "selected-output/scan-clear/page.png",
+            "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+            "byte_length": 45594
+          },
+          "plan.json": {
+            "archive_member": "clear-live-Vault/plan.json",
+            "captured_file": "selected-output/scan-clear/plan.json",
+            "sha256": "e5b1bd52adac36b1c7529b3a6949e4fd0a3bea8ae7bade463a55a935f35c6dfb",
+            "byte_length": 2290
+          },
+          "profile.json": {
+            "archive_member": "clear-live-Vault/profile.json",
+            "captured_file": "selected-output/scan-clear/profile.json",
+            "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+            "byte_length": 201
+          },
+          "recognition.json": {
+            "archive_member": "clear-live-Vault/recognition.json",
+            "captured_file": "selected-output/scan-clear/recognition.json",
+            "sha256": "85e5843f23f0b34487898aeeef56390f6989c4b65950b7da574a3a42455f69ef",
+            "byte_length": 95
+          },
+          "recognized.tex": {
+            "archive_member": "clear-live-Vault/recognized.tex",
+            "captured_file": "selected-output/scan-clear/recognized.tex",
+            "sha256": "02184791e0b11cff2797c0772f014919fe392fe862b82c295cd77b3c451e537e",
+            "byte_length": 22
+          },
+          "request-body.json": {
+            "archive_member": "clear-live-Vault/request-body.json",
+            "captured_file": "selected-output/scan-clear/request-body.json",
+            "sha256": "43de160131c6b2a11416ee8c4446a442f859e27e673f489dc575998174856855",
+            "byte_length": 7154
+          },
+          "request.json": {
+            "archive_member": "clear-live-Vault/request.json",
+            "captured_file": "selected-output/scan-clear/request.json",
+            "sha256": "61c8fc0bd89452e19af6d62b8cf882887a158998670999a6b91a9f28a2b11d43",
+            "byte_length": 1425
+          },
+          "response.bin": {
+            "archive_member": "clear-live-Vault/response.bin",
+            "captured_file": "selected-output/scan-clear/response.bin",
+            "sha256": "a313a86a99ef3c7b797040c746e4c52a7256fdf4d48129304ffc2e88de2502f0",
+            "byte_length": 1063
+          },
+          "scan.json": {
+            "archive_member": "clear-live-Vault/scan.json",
+            "captured_file": "selected-output/scan-clear/scan.json",
+            "sha256": "eaa442b7296f80d3ed0f52b523e062e6d2dee3f686f9db3b37d1174b2e3e57a2",
+            "byte_length": 12439
+          },
+          "scan.md": {
+            "archive_member": "clear-live-Vault/scan.md",
+            "captured_file": "selected-output/scan-clear/scan.md",
+            "sha256": "675f97bbf4f6fc1961809c51d0d17c325397f9e5923db1e4b8fb5be116e265d9",
+            "byte_length": 12870
+          },
+          "source-api-config.json": {
+            "archive_member": "clear-live-Vault/source-api-config.json",
+            "captured_file": "selected-output/scan-clear/source-api-config.json",
+            "sha256": "ac225b10685fbd6afb80fe4298787b6c44a11078c874697473becc8f3c54ed3a",
+            "byte_length": 590
+          },
+          "source-case.json": {
+            "archive_member": "clear-live-Vault/source-case.json",
+            "captured_file": "selected-output/scan-clear/source-case.json",
+            "sha256": "0ca6d59df807c4b9811b2c17e69bc5b4be7a245b9df586c15a95c1299e3c9e83",
+            "byte_length": 821
+          },
+          "source-semantics.json": {
+            "archive_member": "clear-live-Vault/source-semantics.json",
+            "captured_file": "selected-output/scan-clear/source-semantics.json",
+            "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+            "byte_length": 725
+          },
+          "扫描公式预览.md": {
+            "archive_member": "clear-live-Vault/扫描公式预览.md",
+            "captured_file": "selected-output/scan-clear/扫描公式预览.md",
+            "sha256": "c341037053a1f88fe3678ea1bec78efd93e47917808de683b8174d84b5dd9b50",
+            "byte_length": 1095
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "scan",
+        "checker": "scripts/verify_scan_formula.py",
+        "inputs": {
+          "case": "source-originals/fixtures/scan-formula/cases/clear",
+          "api_config": "selected-output/scan-clear/source-api-config.json",
+          "profile": "selected-output/scan-clear/profile.json",
+          "vault": "selected-output/scan-clear",
+          "expected": "source-originals/fixtures/scan-formula/expected-clear.json"
+        },
+        "budget_validation_scope": "This readback omits cumulative budget; original B06V-T02 live/chain/anchor preserved separately and not reissued here",
+        "historical_live_receipt": "doc/validation/assets/B06V-T02/recognition/vision-live-final/live-receipt.json",
+        "new_model_requests": 0
+      }
+    },
+    {
+      "case_id": "scan-fallback",
+      "feature": "scan",
+      "author_case": "clear",
+      "representative_kind": "product_output",
+      "expected_file": "expected-scan-fallback.json",
+      "selected_source": {
+        "fixture_case": "fixtures/scan-formula/cases/clear",
+        "copied_case": "source-originals/fixtures/scan-formula/cases/clear",
+        "original_expected": "fixtures/scan-formula/expected-clear.json",
+        "live_result_reuse": "historical actual B06V-T02 original bytes; this task requests no recognition"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06V-T02/recognition/vision-live-final/live-fallback-originals.zip",
+        "archive_pin": {
+          "sha256": "a1e13fc6285a7737323f48d685e06883af7b48ded4380affe54f6468abb704f1",
+          "byte_length": 6964845
+        },
+        "member_prefix": "image-fallback-live-Vault/",
+        "files": {
+          ".owner.json": {
+            "archive_member": "image-fallback-live-Vault/.owner.json",
+            "captured_file": "selected-output/scan-fallback/.owner.json",
+            "sha256": "20f4bb08d271c76bcf57a405b49e8b46ce062629ba48a56d59ac93481dbc2a22",
+            "byte_length": 162
+          },
+          "original.pdf": {
+            "archive_member": "image-fallback-live-Vault/original.pdf",
+            "captured_file": "selected-output/scan-fallback/original.pdf",
+            "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+            "byte_length": 37603
+          },
+          "original.png": {
+            "archive_member": "image-fallback-live-Vault/original.png",
+            "captured_file": "selected-output/scan-fallback/original.png",
+            "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+            "byte_length": 4292
+          },
+          "page.png": {
+            "archive_member": "image-fallback-live-Vault/page.png",
+            "captured_file": "selected-output/scan-fallback/page.png",
+            "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+            "byte_length": 45594
+          },
+          "plan.json": {
+            "archive_member": "image-fallback-live-Vault/plan.json",
+            "captured_file": "selected-output/scan-fallback/plan.json",
+            "sha256": "80503af89cfd212ac9c7d6a22a5a8b336b9803ecfbe961d4fb82c1ad4bb19071",
+            "byte_length": 2310
+          },
+          "profile.json": {
+            "archive_member": "image-fallback-live-Vault/profile.json",
+            "captured_file": "selected-output/scan-fallback/profile.json",
+            "sha256": "ffa9d07fd8301f49edb43e6597b291c7d944d373ef0515057f5c85653f6c104c",
+            "byte_length": 204
+          },
+          "recognition.json": {
+            "archive_member": "image-fallback-live-Vault/recognition.json",
+            "captured_file": "selected-output/scan-fallback/recognition.json",
+            "sha256": "85e5843f23f0b34487898aeeef56390f6989c4b65950b7da574a3a42455f69ef",
+            "byte_length": 95
+          },
+          "recognized.tex": {
+            "archive_member": "image-fallback-live-Vault/recognized.tex",
+            "captured_file": "selected-output/scan-fallback/recognized.tex",
+            "sha256": "02184791e0b11cff2797c0772f014919fe392fe862b82c295cd77b3c451e537e",
+            "byte_length": 22
+          },
+          "request-body.json": {
+            "archive_member": "image-fallback-live-Vault/request-body.json",
+            "captured_file": "selected-output/scan-fallback/request-body.json",
+            "sha256": "43de160131c6b2a11416ee8c4446a442f859e27e673f489dc575998174856855",
+            "byte_length": 7154
+          },
+          "request.json": {
+            "archive_member": "image-fallback-live-Vault/request.json",
+            "captured_file": "selected-output/scan-fallback/request.json",
+            "sha256": "f50df5de05b75d51ac564f7fefaf2b3f67afeb35cc6c9af22aaf8cea7dae6528",
+            "byte_length": 1434
+          },
+          "response.bin": {
+            "archive_member": "image-fallback-live-Vault/response.bin",
+            "captured_file": "selected-output/scan-fallback/response.bin",
+            "sha256": "db02969fb52a1dde15000e6183fc66fd6d148e6b30f1f11414ec1649d1a96948",
+            "byte_length": 824
+          },
+          "scan.json": {
+            "archive_member": "image-fallback-live-Vault/scan.json",
+            "captured_file": "selected-output/scan-fallback/scan.json",
+            "sha256": "94ff948f1d3f142126340b7a3808a239d30d322f3774a19aaf3b70ed802da360",
+            "byte_length": 12331
+          },
+          "scan.md": {
+            "archive_member": "image-fallback-live-Vault/scan.md",
+            "captured_file": "selected-output/scan-fallback/scan.md",
+            "sha256": "062a56f0c3b0248dc29be4053aa1e2187557cefd8a8584721198c0f8ec9e9017",
+            "byte_length": 12762
+          },
+          "source-api-config.json": {
+            "archive_member": "image-fallback-live-Vault/source-api-config.json",
+            "captured_file": "selected-output/scan-fallback/source-api-config.json",
+            "sha256": "ac225b10685fbd6afb80fe4298787b6c44a11078c874697473becc8f3c54ed3a",
+            "byte_length": 590
+          },
+          "source-case.json": {
+            "archive_member": "image-fallback-live-Vault/source-case.json",
+            "captured_file": "selected-output/scan-fallback/source-case.json",
+            "sha256": "0ca6d59df807c4b9811b2c17e69bc5b4be7a245b9df586c15a95c1299e3c9e83",
+            "byte_length": 821
+          },
+          "source-semantics.json": {
+            "archive_member": "image-fallback-live-Vault/source-semantics.json",
+            "captured_file": "selected-output/scan-fallback/source-semantics.json",
+            "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+            "byte_length": 725
+          },
+          "扫描公式预览.md": {
+            "archive_member": "image-fallback-live-Vault/扫描公式预览.md",
+            "captured_file": "selected-output/scan-fallback/扫描公式预览.md",
+            "sha256": "28afd0db261f02df83db1bc98f6eab15d135dc31bee900604cbb351e39b69d7a",
+            "byte_length": 1086
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "scan",
+        "checker": "scripts/verify_scan_formula.py",
+        "inputs": {
+          "case": "source-originals/fixtures/scan-formula/cases/clear",
+          "api_config": "selected-output/scan-fallback/source-api-config.json",
+          "profile": "selected-output/scan-fallback/profile.json",
+          "vault": "selected-output/scan-fallback",
+          "expected": "source-originals/fixtures/scan-formula/expected-clear.json"
+        },
+        "budget_validation_scope": "This readback omits cumulative budget; original B06V-T02 live/chain/anchor preserved separately and not reissued here",
+        "historical_live_receipt": "doc/validation/assets/B06V-T02/recognition/vision-live-final/live-receipt.json",
+        "new_model_requests": 0
+      }
+    },
+    {
+      "case_id": "scan-sign",
+      "feature": "scan",
+      "author_case": "unreadable_sign",
+      "representative_kind": "product_output",
+      "expected_file": "expected-scan-sign.json",
+      "selected_source": {
+        "fixture_case": "fixtures/scan-formula/cases/unreadable_sign",
+        "copied_case": "source-originals/fixtures/scan-formula/cases/unreadable_sign",
+        "original_expected": "fixtures/scan-formula/expected-unreadable_sign.json",
+        "live_result_reuse": "historical actual B06V-T02 original bytes; this task requests no recognition"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06V-T02/recognition/vision-live-final/live-sign-originals.zip",
+        "archive_pin": {
+          "sha256": "7444c3dde436249abc13deea3e41c73fa6acf3944cf5c52a369781a6535ba795",
+          "byte_length": 6968430
+        },
+        "member_prefix": "unreadable-sign-live-Vault/",
+        "files": {
+          ".owner.json": {
+            "archive_member": "unreadable-sign-live-Vault/.owner.json",
+            "captured_file": "selected-output/scan-sign/.owner.json",
+            "sha256": "a62c1d12006a1433848ef38b3c3dfa2fc7751010892285e47d4c6055df7f6380",
+            "byte_length": 162
+          },
+          "original.pdf": {
+            "archive_member": "unreadable-sign-live-Vault/original.pdf",
+            "captured_file": "selected-output/scan-sign/original.pdf",
+            "sha256": "ee33b3e6bf16cb972ae438c4c310757de8a85aaba4bfa206964a98a056aa3c00",
+            "byte_length": 41073
+          },
+          "original.png": {
+            "archive_member": "unreadable-sign-live-Vault/original.png",
+            "captured_file": "selected-output/scan-sign/original.png",
+            "sha256": "7a22e31bb437a46687f26d5264d5e31befe837fee962b6198f73db2886a8d81f",
+            "byte_length": 4525
+          },
+          "page.png": {
+            "archive_member": "unreadable-sign-live-Vault/page.png",
+            "captured_file": "selected-output/scan-sign/page.png",
+            "sha256": "eb34efd27cfa1bc70bd9d274c0d9bf92eb91bf9e56997bfeb188041cddcb8097",
+            "byte_length": 49763
+          },
+          "profile.json": {
+            "archive_member": "unreadable-sign-live-Vault/profile.json",
+            "captured_file": "selected-output/scan-sign/profile.json",
+            "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+            "byte_length": 201
+          },
+          "recognition.json": {
+            "archive_member": "unreadable-sign-live-Vault/recognition.json",
+            "captured_file": "selected-output/scan-sign/recognition.json",
+            "sha256": "0ec4ecdc69b4b38b7b08712d2f390886c72defae984ffc2a6dec0157d0121ad6",
+            "byte_length": 242
+          },
+          "request-body.json": {
+            "archive_member": "unreadable-sign-live-Vault/request-body.json",
+            "captured_file": "selected-output/scan-sign/request-body.json",
+            "sha256": "7a36e53ad64e56068eb747d0d36303c0633be395101e3988dcbee1655fc77689",
+            "byte_length": 7466
+          },
+          "request.json": {
+            "archive_member": "unreadable-sign-live-Vault/request.json",
+            "captured_file": "selected-output/scan-sign/request.json",
+            "sha256": "7f9d43dc2fff9532f3d52326efbe74923364d290a52126f7e6e41cb0ced85d21",
+            "byte_length": 1445
+          },
+          "response.bin": {
+            "archive_member": "unreadable-sign-live-Vault/response.bin",
+            "captured_file": "selected-output/scan-sign/response.bin",
+            "sha256": "792519e0ff4fb82852d658c95ab9e84eb1931f95277e5be60397769051d3a31d",
+            "byte_length": 1775
+          },
+          "scan.json": {
+            "archive_member": "unreadable-sign-live-Vault/scan.json",
+            "captured_file": "selected-output/scan-sign/scan.json",
+            "sha256": "4fe6080bebec427d33f12c88828a8406f714b250d223db0f93ea1197457c219b",
+            "byte_length": 7925
+          },
+          "scan.md": {
+            "archive_member": "unreadable-sign-live-Vault/scan.md",
+            "captured_file": "selected-output/scan-sign/scan.md",
+            "sha256": "a511bf713217eb8b844f353e918f50c38a50c78e5404fe74134c5325ce692bfc",
+            "byte_length": 8357
+          },
+          "source-api-config.json": {
+            "archive_member": "unreadable-sign-live-Vault/source-api-config.json",
+            "captured_file": "selected-output/scan-sign/source-api-config.json",
+            "sha256": "ac225b10685fbd6afb80fe4298787b6c44a11078c874697473becc8f3c54ed3a",
+            "byte_length": 590
+          },
+          "source-case.json": {
+            "archive_member": "unreadable-sign-live-Vault/source-case.json",
+            "captured_file": "selected-output/scan-sign/source-case.json",
+            "sha256": "d4afeedc1da24fa292c204e9b40b8a0271a91f426e1389e5e890af11f2b908aa",
+            "byte_length": 842
+          },
+          "source-semantics.json": {
+            "archive_member": "unreadable-sign-live-Vault/source-semantics.json",
+            "captured_file": "selected-output/scan-sign/source-semantics.json",
+            "sha256": "3c9ec361aa7fb88a84d108483db2f503b394d137888b595b4eaf83a660196443",
+            "byte_length": 845
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "scan",
+        "checker": "scripts/verify_scan_formula.py",
+        "inputs": {
+          "case": "source-originals/fixtures/scan-formula/cases/unreadable_sign",
+          "api_config": "selected-output/scan-sign/source-api-config.json",
+          "profile": "selected-output/scan-sign/profile.json",
+          "vault": "selected-output/scan-sign",
+          "expected": "source-originals/fixtures/scan-formula/expected-unreadable_sign.json"
+        },
+        "budget_validation_scope": "This readback omits cumulative budget; original B06V-T02 live/chain/anchor preserved separately and not reissued here",
+        "historical_live_receipt": "doc/validation/assets/B06V-T02/recognition/vision-live-final/live-receipt.json",
+        "new_model_requests": 0
+      }
+    },
+    {
+      "case_id": "scan-subscript",
+      "feature": "scan",
+      "author_case": "unreadable_subscript",
+      "representative_kind": "product_output",
+      "expected_file": "expected-scan-subscript.json",
+      "selected_source": {
+        "fixture_case": "fixtures/scan-formula/cases/unreadable_subscript",
+        "copied_case": "source-originals/fixtures/scan-formula/cases/unreadable_subscript",
+        "original_expected": "fixtures/scan-formula/expected-unreadable_subscript.json",
+        "live_result_reuse": "historical actual B06V-T02 original bytes; this task requests no recognition"
+      },
+      "representative_output": {
+        "archive": "doc/validation/assets/B06V-T02/recognition/vision-live-final/live-subscript-originals.zip",
+        "archive_pin": {
+          "sha256": "a83d641a6ba371352d74bda0c649ae3cd4a4f6a0c2b06e00d7410e553f4e821e",
+          "byte_length": 6970049
+        },
+        "member_prefix": "unreadable-subscript-live-Vault/",
+        "files": {
+          ".owner.json": {
+            "archive_member": "unreadable-subscript-live-Vault/.owner.json",
+            "captured_file": "selected-output/scan-subscript/.owner.json",
+            "sha256": "969340e9a569f5e74da4f4af2c8de219c75a341d852c4d61532f53be748bf2ad",
+            "byte_length": 162
+          },
+          "original.pdf": {
+            "archive_member": "unreadable-subscript-live-Vault/original.pdf",
+            "captured_file": "selected-output/scan-subscript/original.pdf",
+            "sha256": "945d35792f24732ab90ad296eadf2596ac53ee847cc37133b6aa22447fe62970",
+            "byte_length": 41214
+          },
+          "original.png": {
+            "archive_member": "unreadable-subscript-live-Vault/original.png",
+            "captured_file": "selected-output/scan-subscript/original.png",
+            "sha256": "8a673a96084428fb3938219a2de990edc645b7e3c64b39b6044ac55363fb881e",
+            "byte_length": 4496
+          },
+          "page.png": {
+            "archive_member": "unreadable-subscript-live-Vault/page.png",
+            "captured_file": "selected-output/scan-subscript/page.png",
+            "sha256": "b08f28c60807a30d2777e092a1bf94359332e9ee3cb9bebe3a620ec8195f18de",
+            "byte_length": 49716
+          },
+          "profile.json": {
+            "archive_member": "unreadable-subscript-live-Vault/profile.json",
+            "captured_file": "selected-output/scan-subscript/profile.json",
+            "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+            "byte_length": 201
+          },
+          "recognition.json": {
+            "archive_member": "unreadable-subscript-live-Vault/recognition.json",
+            "captured_file": "selected-output/scan-subscript/recognition.json",
+            "sha256": "0d5f91dc3e64a87c09d23f749065b36e09149b69f5eda5a5b3a944a6fb63ddbf",
+            "byte_length": 249
+          },
+          "request-body.json": {
+            "archive_member": "unreadable-subscript-live-Vault/request-body.json",
+            "captured_file": "selected-output/scan-subscript/request-body.json",
+            "sha256": "60b1843c6ce63b25f9f78cdfbc39c2d9e0e2f1ffcb8eea1d276edd7226f97c87",
+            "byte_length": 7426
+          },
+          "request.json": {
+            "archive_member": "unreadable-subscript-live-Vault/request.json",
+            "captured_file": "selected-output/scan-subscript/request.json",
+            "sha256": "8a51641005e729ca219e6b2b7d73ef56be330a1bbf0077ea7c148512e3466609",
+            "byte_length": 1455
+          },
+          "response.bin": {
+            "archive_member": "unreadable-subscript-live-Vault/response.bin",
+            "captured_file": "selected-output/scan-subscript/response.bin",
+            "sha256": "2e3400d9d6c9c18b641517cbfa4addacb8689c93d8120220d18142bf8661cb7f",
+            "byte_length": 3269
+          },
+          "scan.json": {
+            "archive_member": "unreadable-subscript-live-Vault/scan.json",
+            "captured_file": "selected-output/scan-subscript/scan.json",
+            "sha256": "20b9226092fbc248d767164441cbb1dfa789a779914e0189428d0d66dd71636b",
+            "byte_length": 7946
+          },
+          "scan.md": {
+            "archive_member": "unreadable-subscript-live-Vault/scan.md",
+            "captured_file": "selected-output/scan-subscript/scan.md",
+            "sha256": "b62e0ec6d7734f578d1805505caa4f7a287296e0539de61275333d6f8ff18eef",
+            "byte_length": 8378
+          },
+          "source-api-config.json": {
+            "archive_member": "unreadable-subscript-live-Vault/source-api-config.json",
+            "captured_file": "selected-output/scan-subscript/source-api-config.json",
+            "sha256": "ac225b10685fbd6afb80fe4298787b6c44a11078c874697473becc8f3c54ed3a",
+            "byte_length": 590
+          },
+          "source-case.json": {
+            "archive_member": "unreadable-subscript-live-Vault/source-case.json",
+            "captured_file": "selected-output/scan-subscript/source-case.json",
+            "sha256": "eec48688ef0de35973bcf43ba8df7df6f67158233acf68a7726551f908237bec",
+            "byte_length": 847
+          },
+          "source-semantics.json": {
+            "archive_member": "unreadable-subscript-live-Vault/source-semantics.json",
+            "captured_file": "selected-output/scan-subscript/source-semantics.json",
+            "sha256": "da8f2665eb37c59b3fa044fb1dbace3e7df149bc99d0c1a6f5efae832c62c733",
+            "byte_length": 852
+          }
+        },
+        "preserved_original_bytes": true
+      },
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "scan",
+        "checker": "scripts/verify_scan_formula.py",
+        "inputs": {
+          "case": "source-originals/fixtures/scan-formula/cases/unreadable_subscript",
+          "api_config": "selected-output/scan-subscript/source-api-config.json",
+          "profile": "selected-output/scan-subscript/profile.json",
+          "vault": "selected-output/scan-subscript",
+          "expected": "source-originals/fixtures/scan-formula/expected-unreadable_subscript.json"
+        },
+        "budget_validation_scope": "This readback omits cumulative budget; original B06V-T02 live/chain/anchor preserved separately and not reissued here",
+        "historical_live_receipt": "doc/validation/assets/B06V-T02/recognition/vision-live-final/live-receipt.json",
+        "new_model_requests": 0
+      }
+    },
+    {
+      "case_id": "hand-authored-format-probe",
+      "feature": "reader_format_probe",
+      "author_case": "independent_hand_authored_format_probe",
+      "representative_kind": "hand_authored_format_probe",
+      "expected_file": "expected-hand-authored-format-probe.json",
+      "selected_source": {
+        "file": "probe/格式兼容探针.md",
+        "license": "CC0-1.0",
+        "created_before_this_task_first_runtime_capture": true,
+        "noetome_generation_status": "not_implemented_not_claimed"
+      },
+      "representative_output": null,
+      "new_requests_allowed": 0,
+      "capture_status": "not_run",
+      "verification": {
+        "kind": "format",
+        "inputs": {
+          "probe": "probe/格式兼容探针.md",
+          "expected": "expected-hand-authored-format-probe.json"
+        },
+        "scope": "author-byte/structural checks before native capture; not product generation"
+      }
+    }
+  ]
+}

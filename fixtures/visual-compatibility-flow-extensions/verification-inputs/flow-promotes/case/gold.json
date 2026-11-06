@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_gold",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "process": {
+    "title": "演示提示促进规则",
+    "entry": "s1",
+    "goals": [
+      "s2"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "启用演示优先控制",
+      "description": "把演示优先控制设为启用",
+      "criterion": null,
+      "inputs": [
+        "优先控制命令"
+      ],
+      "outputs": [
+        "已启用优先控制"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "控制器断开时不生效"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "提示被选择的倾向",
+      "description": "表示被促进的选择倾向，不提供比例或概率数值",
+      "criterion": null,
+      "inputs": [
+        "提示候选"
+      ],
+      "outputs": [
+        "选择倾向"
+      ],
+      "conditions": [
+        "演示筛选器可用"
+      ],
+      "exceptions": [
+        "筛选器不可用时未知"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "promotes",
+      "branch_outcome": null,
+      "conditions": [
+        "演示优先通道接通"
+      ],
+      "exceptions": [
+        "旁路开启时该促进不成立"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "object_id": "process",
+      "start_byte": 0,
+      "end_byte": 144,
+      "quote": "过程：\"演示提示促进规则\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+    },
+    {
+      "object_id": "s1",
+      "start_byte": 145,
+      "end_byte": 381,
+      "quote": "步骤 s1：\"启用演示优先控制\"。说明：\"把演示优先控制设为启用\"。输入：[\"优先控制命令\"]。输出：[\"已启用优先控制\"]。条件：[\"演示模式开启\"]。例外：[\"控制器断开时不生效\"]。"
+    },
+    {
+      "object_id": "s2",
+      "start_byte": 382,
+      "end_byte": 636,
+      "quote": "步骤 s2：\"提示被选择的倾向\"。说明：\"表示被促进的选择倾向，不提供比例或概率数值\"。输入：[\"提示候选\"]。输出：[\"选择倾向\"]。条件：[\"演示筛选器可用\"]。例外：[\"筛选器不可用时未知\"]。"
+    },
+    {
+      "object_id": "r1",
+      "start_byte": 637,
+      "end_byte": 753,
+      "quote": "关系 r1：s1 促进 s2。条件：[\"演示优先通道接通\"]。例外：[\"旁路开启时该促进不成立\"]。"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "author": "self-authored-active-presentation-fixture-before-candidates",
+  "scope": "active_presentation_semantics_v1",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case_name": "escaping_names",
+  "expected_status": "passed",
+  "expect_successful_preview": true,
+  "representation": "table",
+  "objects": [
+    {
+      "object_id": "60000000-0000-4000-8000-000000000005",
+      "label": "甲容器 [α]"
+    },
+    {
+      "object_id": "60000000-0000-4000-8000-000000000006",
+      "label": "乙容器（β）"
+    }
+  ],
+  "properties": [
+    {
+      "property_id": "60000000-0000-4000-8000-000000000007",
+      "label": "速率 | 测量"
+    }
+  ],
+  "cells": [
+    {
+      "object_id": "60000000-0000-4000-8000-000000000005",
+      "property_id": "60000000-0000-4000-8000-000000000007",
+      "state": "facts",
+      "missing_meaning": null,
+      "facts": [
+        {
+          "value_status": "known",
+          "value": "10",
+          "unit": "m/s",
+          "conditions": [
+            "x < 2",
+            "计数范围 [1,2]"
+          ],
+          "exceptions": [
+            "读数 * 异常时不适用"
+          ],
+          "applicability_status": "known",
+          "time": {
+            "status": "known",
+            "precision": "year",
+            "value": "2020"
+          },
+          "input_ids": [
+            "a"
+          ],
+          "original_atom_ids": [
+            "a-speed"
+          ]
+        }
+      ]
+    },
+    {
+      "object_id": "60000000-0000-4000-8000-000000000006",
+      "property_id": "60000000-0000-4000-8000-000000000007",
+      "state": "facts",
+      "missing_meaning": null,
+      "facts": [
+        {
+          "value_status": "known",
+          "value": "12",
+          "unit": "m/s",
+          "conditions": [
+            "x < 2",
+            "计数范围 [1,2]"
+          ],
+          "exceptions": [
+            "读数 * 异常时不适用"
+          ],
+          "applicability_status": "known",
+          "time": {
+            "status": "known",
+            "precision": "year",
+            "value": "2020"
+          },
+          "input_ids": [
+            "b"
+          ],
+          "original_atom_ids": [
+            "b-speed"
+          ]
+        }
+      ]
+    }
+  ],
+  "required_atom_refs": [
+    {
+      "input_id": "a",
+      "original_atom_id": "a-speed"
+    },
+    {
+      "input_id": "b",
+      "original_atom_id": "b-speed"
+    }
+  ],
+  "required_missing_text": null
+}

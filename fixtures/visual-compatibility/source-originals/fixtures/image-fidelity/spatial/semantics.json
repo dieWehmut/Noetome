@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "producer": "author_image_declaration",
+  "author": "independent_cc0_fixture_author",
+  "complete": true,
+  "data_available": false,
+  "caption": "Selected spatial layout with containment, left and upper relationships.",
+  "conditions": [
+    "Only the selected schematic relationships are asserted."
+  ],
+  "exceptions": [
+    "No scientific accuracy or measured data is claimed."
+  ],
+  "elements": [
+    {
+      "id": "outer",
+      "kind": "rect",
+      "bbox": [
+        360,
+        80,
+        500,
+        260
+      ],
+      "label": "Compartment",
+      "unit": null,
+      "legend_id": null
+    },
+    {
+      "id": "inner",
+      "kind": "circle",
+      "bbox": [
+        690,
+        160,
+        140,
+        140
+      ],
+      "label": "Inclusion",
+      "unit": null,
+      "legend_id": null
+    },
+    {
+      "id": "reference",
+      "kind": "rect",
+      "bbox": [
+        40,
+        170,
+        190,
+        100
+      ],
+      "label": "Reference",
+      "unit": null,
+      "legend_id": null
+    },
+    {
+      "id": "cover",
+      "kind": "rect",
+      "bbox": [
+        690,
+        20,
+        140,
+        50
+      ],
+      "label": "Cover",
+      "unit": null,
+      "legend_id": null
+    }
+  ],
+  "relations": [],
+  "spatial_relations": [
+    {
+      "id": "containment",
+      "a": "inner",
+      "b": "outer",
+      "relation": "inside"
+    },
+    {
+      "id": "left",
+      "a": "reference",
+      "b": "inner",
+      "relation": "left_of"
+    },
+    {
+      "id": "upper",
+      "a": "cover",
+      "b": "inner",
+      "relation": "above"
+    }
+  ],
+  "legend": []
+}

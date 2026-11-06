@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "expression": "C_i(t) = -\\dfrac{a}{b} t^{2}",
+  "symbols": [
+    {
+      "symbol": "C",
+      "definition": "test concentration",
+      "unit": "mmol/L"
+    },
+    {
+      "symbol": "i",
+      "definition": "selected integer sample index",
+      "unit": null
+    },
+    {
+      "symbol": "t",
+      "definition": "elapsed time",
+      "unit": "s"
+    },
+    {
+      "symbol": "a",
+      "definition": "positive scaling constant",
+      "unit": "mmol/L"
+    },
+    {
+      "symbol": "b",
+      "definition": "positive nonzero divisor",
+      "unit": "s^2"
+    }
+  ],
+  "conditions": [
+    "a > 0 and b > 0",
+    "This is a fictional engineering example, not a scientific claim."
+  ],
+  "ranges": [
+    "i = 1,2,3",
+    "0 <= t <= 10 s"
+  ],
+  "exceptions": [
+    "Do not apply outside the selected time interval."
+  ]
+}

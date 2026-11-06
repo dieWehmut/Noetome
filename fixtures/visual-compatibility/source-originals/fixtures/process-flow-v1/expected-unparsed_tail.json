@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "producer": "process_flow_expected",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case_name": "unparsed_tail",
+  "profile": "obsidian_1_6_7_flowchart",
+  "review_status": "needs_review",
+  "flow_status": "not_run",
+  "representation": null,
+  "issues": [
+    "PROCESS_UNPARSED_TEXT"
+  ],
+  "process": {
+    "title": "样例卡片归档",
+    "entry": "s1",
+    "goals": [
+      "s3"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "卡片破损时暂停流程"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "登记卡片",
+      "description": "接收样例卡并登记编号",
+      "criterion": null,
+      "inputs": [
+        "样例卡"
+      ],
+      "outputs": [
+        "已登记卡"
+      ],
+      "conditions": [
+        "卡片可读"
+      ],
+      "exceptions": [
+        "编号缺失时停止"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "校对编号",
+      "description": "将登记编号与卡片编号逐字比对",
+      "criterion": null,
+      "inputs": [
+        "已登记卡"
+      ],
+      "outputs": [
+        "已校对卡"
+      ],
+      "conditions": [
+        "登记编号存在"
+      ],
+      "exceptions": [
+        "编号不一致时停止"
+      ]
+    },
+    {
+      "id": "s3",
+      "kind": "step",
+      "label": "保存归档条目",
+      "description": "保存已校对卡的归档条目",
+      "criterion": null,
+      "inputs": [
+        "已校对卡"
+      ],
+      "outputs": [
+        "归档条目"
+      ],
+      "conditions": [
+        "校对已通过"
+      ],
+      "exceptions": [
+        "存储不可用时保留待归档卡"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [
+        "登记完成"
+      ],
+      "exceptions": [
+        "编号缺失时不进入校对"
+      ]
+    },
+    {
+      "id": "r2",
+      "left": "s2",
+      "right": "s3",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [
+        "编号一致"
+      ],
+      "exceptions": [
+        "存储不可用时不写入"
+      ]
+    }
+  ],
+  "required_precedence": [],
+  "totals": {
+    "source_statements": 7,
+    "parsed_statements": 6,
+    "unparsed_statements": 1,
+    "steps": 3,
+    "decision_steps": 0,
+    "relations": 2,
+    "sequence_relations": 2,
+    "branch_relations": 0,
+    "causes_relations": 0,
+    "promotes_relations": 0,
+    "inhibits_relations": 0,
+    "correlates_relations": 0,
+    "unknown_relations": 0,
+    "evidence_records": 6,
+    "node_inputs": 3,
+    "node_outputs": 3,
+    "process_conditions": 1,
+    "process_exceptions": 1,
+    "node_conditions": 3,
+    "node_exceptions": 3,
+    "relation_conditions": 2,
+    "relation_exceptions": 2,
+    "flow_nodes": 0,
+    "flow_edges": 0
+  },
+  "unparsed_lines": [
+    "补充：另有未描述的人工决定。"
+  ],
+  "empty_list_meaning": "not_listed_in_selected_source",
+  "scope": "bounded_self_authored_engineering_only"
+}

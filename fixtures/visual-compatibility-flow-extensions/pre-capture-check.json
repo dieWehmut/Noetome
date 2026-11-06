@@ -1,0 +1,3318 @@
+{
+  "schema_version": 1,
+  "producer": "actual_readonly_flow_extension_check",
+  "status": "passed",
+  "interpreter": "/tmp/noetome-b05-t03-python/bin/python",
+  "interpreter_version": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+  "source_before": {
+    "cases.json": {
+      "sha256": "5daebf51dbc619cb610b1fcc2330997c15646a0482e44b53d71689088b7735c4",
+      "byte_length": 22157
+    },
+    "collector-bridges/flow-complex-labels-visual-input.json": {
+      "sha256": "62cf3113fb5e1cae0c0122b68534286c580411a9028fced792a8baa302a090f9",
+      "byte_length": 42354
+    },
+    "collector-bridges/flow-inhibits-visual-input.json": {
+      "sha256": "d61cf76cc8d75368c8caae83d4d7df86ab3be5f1655341a9d86868a5ff1eac47",
+      "byte_length": 34716
+    },
+    "collector-bridges/flow-promotes-visual-input.json": {
+      "sha256": "14e577cfb232898c88d2567f560e9e331de3c53ad77ad75d24a3462bc8792198",
+      "byte_length": 34718
+    },
+    "expected-flow-complex-labels.json": {
+      "sha256": "274671a33866ebf97dd1fdfb2061fd497720a7f9fd37cac7e4bbb69cd438caa9",
+      "byte_length": 5403
+    },
+    "expected-flow-inhibits.json": {
+      "sha256": "e4ee681801cb0f98f71f0b780aea3871c1eac149f41b62a3cb3235e4d6916ad0",
+      "byte_length": 4074
+    },
+    "expected-flow-promotes.json": {
+      "sha256": "f091bd9fe358ff6e273c313884f0034b59e95bd7acc75f0dd5be2a7f2157afda",
+      "byte_length": 4050
+    },
+    "selected-output/flow-complex-labels/.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "selected-output/flow-complex-labels/.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "selected-output/flow-complex-labels/.owner.json": {
+      "sha256": "bda72f7de7600bad2f5acddf34cee690f8de69f1e2a0635ed53dc0c05d10ba72",
+      "byte_length": 146
+    },
+    "selected-output/flow-complex-labels/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "selected-output/flow-complex-labels/.review-.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "selected-output/flow-complex-labels/.review-.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "selected-output/flow-complex-labels/.review-.owner.json": {
+      "sha256": "b5ee9578b118ee1f5d30c63e6613c8ba12f8fcf01e600ba17098c966d9bd6133",
+      "byte_length": 170
+    },
+    "selected-output/flow-complex-labels/.review-.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "selected-output/flow-complex-labels/.review-process-ir.json": {
+      "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+      "byte_length": 7117
+    },
+    "selected-output/flow-complex-labels/.review-review.json": {
+      "sha256": "312b845e1c26299b7d87aa588007f884067839599208ae997a11ad935e2c86b4",
+      "byte_length": 7717
+    },
+    "selected-output/flow-complex-labels/.review-review.md": {
+      "sha256": "c56348916b5ee712e373b10f90ece4fa74cc4e895d5c38d44a868a5188e592f4",
+      "byte_length": 7900
+    },
+    "selected-output/flow-complex-labels/.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "selected-output/flow-complex-labels/flow.json": {
+      "sha256": "026784c84c9db05fe19d84896f116b2b8ef3d9d9e2b9be42d8734092ac513356",
+      "byte_length": 17156
+    },
+    "selected-output/flow-complex-labels/flow.md": {
+      "sha256": "3c9c18433ba2da76821525261486b1b40feee4c6e9c12268ad80151f470d8708",
+      "byte_length": 17359
+    },
+    "selected-output/flow-complex-labels/plan.json": {
+      "sha256": "487db7eaade8dfc32948f0fc8b766c7d9dbadefa279a9370217a3a522c2e1283",
+      "byte_length": 13395
+    },
+    "selected-output/flow-complex-labels/流程总览.md": {
+      "sha256": "bec715cfdcb6ff5475175c006d36cf7bbb06c843f24db0fc3e641ba9ff10f539",
+      "byte_length": 838
+    },
+    "selected-output/flow-complex-labels/过程明细.md": {
+      "sha256": "9c5878b69316f24ef442f7ffcb7fd1174049c1d468629ce51b9eb97511754359",
+      "byte_length": 1587
+    },
+    "selected-output/flow-inhibits/.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "selected-output/flow-inhibits/.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "selected-output/flow-inhibits/.owner.json": {
+      "sha256": "5037187a8cca62e176659c445682e6b27dc3016882d444f5f3bb01af3c46c051",
+      "byte_length": 146
+    },
+    "selected-output/flow-inhibits/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "selected-output/flow-inhibits/.review-.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "selected-output/flow-inhibits/.review-.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "selected-output/flow-inhibits/.review-.owner.json": {
+      "sha256": "261271023876d8e3e788380c3f3b6285f9c22dca39c8ba4e1924647d5fb5bd97",
+      "byte_length": 170
+    },
+    "selected-output/flow-inhibits/.review-.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "selected-output/flow-inhibits/.review-process-ir.json": {
+      "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+      "byte_length": 5303
+    },
+    "selected-output/flow-inhibits/.review-review.json": {
+      "sha256": "dbb0b70fa58cb113770ada269e6e9348baaa8e14753833ca594fb77718cc4c21",
+      "byte_length": 6483
+    },
+    "selected-output/flow-inhibits/.review-review.md": {
+      "sha256": "690047cf07ee1e8d9c158ad90bdf93cb0c956064567951e1c58f17ae45366870",
+      "byte_length": 6666
+    },
+    "selected-output/flow-inhibits/.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "selected-output/flow-inhibits/flow.json": {
+      "sha256": "993518abe9f96c5d9fcb5af2383d924cf55d9a7a2153701aef64d40253c3e5de",
+      "byte_length": 14083
+    },
+    "selected-output/flow-inhibits/flow.md": {
+      "sha256": "7d9947f8d870f7a717378ebbd7226e9ec33d5232008e08cefaa146ed1e3605bd",
+      "byte_length": 14286
+    },
+    "selected-output/flow-inhibits/plan.json": {
+      "sha256": "d1f4ad32aa8652ef87b11125cc0c14d85601eac89a3b4682e92b31cc21705aca",
+      "byte_length": 10040
+    },
+    "selected-output/flow-inhibits/流程总览.md": {
+      "sha256": "34f05a5ff316b31b5f26c9a2fa4b15adad4d233cb08cef1b81381b77aec5df6f",
+      "byte_length": 675
+    },
+    "selected-output/flow-inhibits/过程明细.md": {
+      "sha256": "2f71cda055f87a2f459e966d4b12bf4788e4ae0b21ec45efd4f48291df5c1144",
+      "byte_length": 1134
+    },
+    "selected-output/flow-promotes/.case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "selected-output/flow-promotes/.gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "selected-output/flow-promotes/.owner.json": {
+      "sha256": "a37413b500aa46c29af2e8c170079f1e14bd948c946576bdb1c29e7062c3afb7",
+      "byte_length": 146
+    },
+    "selected-output/flow-promotes/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "selected-output/flow-promotes/.review-.case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "selected-output/flow-promotes/.review-.gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "selected-output/flow-promotes/.review-.owner.json": {
+      "sha256": "730d9f3d541959b6e088fe6a7f8637c6b982f35720ad5350c6a332cf5d67e079",
+      "byte_length": 170
+    },
+    "selected-output/flow-promotes/.review-.source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "selected-output/flow-promotes/.review-process-ir.json": {
+      "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+      "byte_length": 5303
+    },
+    "selected-output/flow-promotes/.review-review.json": {
+      "sha256": "ba687c4231c1a1bfb148fbd1e7ef0fec08d8d0c8e1b55f56550d0fd642340d36",
+      "byte_length": 6483
+    },
+    "selected-output/flow-promotes/.review-review.md": {
+      "sha256": "5b492d5d7a4832794b68d856489bb6d64205a29e94bdfacf09bec484d9df87c3",
+      "byte_length": 6666
+    },
+    "selected-output/flow-promotes/.source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "selected-output/flow-promotes/flow.json": {
+      "sha256": "1093f9bc6ca086970ae4bf8bb5ba1fd626eecfd95e8be99eb5001c893130edbb",
+      "byte_length": 14083
+    },
+    "selected-output/flow-promotes/flow.md": {
+      "sha256": "284413ff4985f2791f630edfc623c4e1a939c26472d16d9c959c081643aaffa2",
+      "byte_length": 14286
+    },
+    "selected-output/flow-promotes/plan.json": {
+      "sha256": "a25adb4b732f4da49c85b7aeb0763eec549b1e5a73867475eb1f91bfb3886ec2",
+      "byte_length": 10042
+    },
+    "selected-output/flow-promotes/流程总览.md": {
+      "sha256": "6761d663e4ec906102056909b2ee3f10eab9814cb9962abfa1035c73d66bcda0",
+      "byte_length": 679
+    },
+    "selected-output/flow-promotes/过程明细.md": {
+      "sha256": "1c96e6b112a1135727673ca709b8627772293badce972a8e0c85d9a295e8cbbc",
+      "byte_length": 1135
+    },
+    "source-originals/fixtures/process-flow-v1/GRAMMAR.md": {
+      "sha256": "2757a2a552156d7b69b25ec3433d3882386106c7e5ba2a3c340ec5977158a4ef",
+      "byte_length": 4070
+    },
+    "source-originals/fixtures/process-flow-v1/README.md": {
+      "sha256": "b87d1fc76215c2dde9a7ad3650794496968a99fd5d44cdac1acc30295bcafcbb",
+      "byte_length": 3590
+    },
+    "source-originals/fixtures/process-flow-v1/authors.json": {
+      "sha256": "c9f847f742a23da2217662292b65cc537018fc0859ab4eeed5242da064276938",
+      "byte_length": 4311
+    },
+    "source-originals/fixtures/process-flow-v1/branch.txt": {
+      "sha256": "1a662ed525031a2b69b8c72db6e88965eea4c3b9c61bd1348dd8f87d654f9491",
+      "byte_length": 1403
+    },
+    "source-originals/fixtures/process-flow-v1/causes.txt": {
+      "sha256": "f6d0f41c4585e4e44e20c6743783b014d86fe0c38408e2fbf5e69646728dde8f",
+      "byte_length": 1081
+    },
+    "source-originals/fixtures/process-flow-v1/compatibility_fallback.txt": {
+      "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+      "byte_length": 991
+    },
+    "source-originals/fixtures/process-flow-v1/complex_labels.txt": {
+      "sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+      "byte_length": 1052
+    },
+    "source-originals/fixtures/process-flow-v1/correlation.txt": {
+      "sha256": "605b5e749cf18dfae20b4af47e75eb3b035ea10596b991cbc7ccb7c6424b9e42",
+      "byte_length": 716
+    },
+    "source-originals/fixtures/process-flow-v1/cycle.txt": {
+      "sha256": "324cc2986b7d4c734275e359517fa32f331d50d7fc7fcfaa33c17b92b515e286",
+      "byte_length": 1029
+    },
+    "source-originals/fixtures/process-flow-v1/direction_unknown.txt": {
+      "sha256": "757ed13a2c164a044c8794e8d6a9eadc0be5b4a1b9f93ce538d6802f322f1d1f",
+      "byte_length": 636
+    },
+    "source-originals/fixtures/process-flow-v1/expected-branch.json": {
+      "sha256": "00a44fe632deb046f6d9803f1fd2fa694543968572738b3a526459384d3d8d7f",
+      "byte_length": 3966
+    },
+    "source-originals/fixtures/process-flow-v1/expected-causes.json": {
+      "sha256": "9fee11e832cd69687f0f3eddfeec62cdb4de32ab97bde8eac7451be996793c67",
+      "byte_length": 3313
+    },
+    "source-originals/fixtures/process-flow-v1/expected-compatibility_fallback.json": {
+      "sha256": "0615fba5886a513917065200f250933f42b10b9045d118bf46e199f2c1027fb6",
+      "byte_length": 3263
+    },
+    "source-originals/fixtures/process-flow-v1/expected-complex_labels.json": {
+      "sha256": "cd18784f1caaa91e64976d36b847551fa2054be24fb7dbb00179a9caa754956c",
+      "byte_length": 3285
+    },
+    "source-originals/fixtures/process-flow-v1/expected-correlation.json": {
+      "sha256": "44f76fbf235cf8d469518cb5ba0c32eb8ce6f84a690e66b631d6a9f2644a9f5a",
+      "byte_length": 2582
+    },
+    "source-originals/fixtures/process-flow-v1/expected-cycle.json": {
+      "sha256": "bee081dd48beb7e4ccd15dee7681157a7d3a9cca1986884bdbafcc223e5cb60a",
+      "byte_length": 3315
+    },
+    "source-originals/fixtures/process-flow-v1/expected-direction_unknown.json": {
+      "sha256": "31044ac367ca59eaee1c5f655c5ae0bb7dc9395af7a3d7ea8a7aa35e9e86f10c",
+      "byte_length": 2488
+    },
+    "source-originals/fixtures/process-flow-v1/expected-inhibits.json": {
+      "sha256": "91fc56b65ec711374ef6fd871ef6f5f416eaede292b04ebfdd325ead87fc4b36",
+      "byte_length": 2626
+    },
+    "source-originals/fixtures/process-flow-v1/expected-linear.json": {
+      "sha256": "a382973a062fc9c569e2aeedc0c8b2deca2a3be617985281d766274871fb5820",
+      "byte_length": 3216
+    },
+    "source-originals/fixtures/process-flow-v1/expected-missing_branch.json": {
+      "sha256": "3b4c5134031a6123361d1f60c6b31a89a2ae87fa0cb21785ab746250909f64e7",
+      "byte_length": 2568
+    },
+    "source-originals/fixtures/process-flow-v1/expected-missing_connection.json": {
+      "sha256": "bb572605f68e395db6d956680b839c88e6c629542941e9f3cd240dfeae9930c0",
+      "byte_length": 2901
+    },
+    "source-originals/fixtures/process-flow-v1/expected-multiline_labels.json": {
+      "sha256": "af3e32e21193ae1a2fc0d129aeaa308bd5ffcce9fb8892e5462c2ac38b565c61",
+      "byte_length": 2464
+    },
+    "source-originals/fixtures/process-flow-v1/expected-negated_relation.json": {
+      "sha256": "cd7c4d9cb7c4b56b2ec16290dfe431fb80dd593def63894f47ba0945840e52c8",
+      "byte_length": 2271
+    },
+    "source-originals/fixtures/process-flow-v1/expected-promotes.json": {
+      "sha256": "2c029c86f334eb0bf580f3c3c030ceff8bbcece31180ab968ca92314f5a78483",
+      "byte_length": 2626
+    },
+    "source-originals/fixtures/process-flow-v1/expected-unknown_criterion.json": {
+      "sha256": "0d888ea0b76b0bef225d2be89d77e0535bedf68bf6f9b73dcb09c5225a06235f",
+      "byte_length": 2815
+    },
+    "source-originals/fixtures/process-flow-v1/expected-unparsed_tail.json": {
+      "sha256": "76ff944eb6ff63a086fc936c1bbcf1aa997da72367b825a8e9b90d08b3c4e994",
+      "byte_length": 3232
+    },
+    "source-originals/fixtures/process-flow-v1/frozen-sha256.json": {
+      "sha256": "adadba19effe8c7a3cffb688d04dd94a2632b38bb6d473a17aea0767f66bab11",
+      "byte_length": 7957
+    },
+    "source-originals/fixtures/process-flow-v1/gold-branch.json": {
+      "sha256": "3a89a171a1113973694d785813fe40f63f294154294cdee5dc049721c326bfaa",
+      "byte_length": 5149
+    },
+    "source-originals/fixtures/process-flow-v1/gold-causes.json": {
+      "sha256": "081ca1637cc0b58deed117392bfc51c96154c5d225609be6b145a18a5f41fe1d",
+      "byte_length": 3978
+    },
+    "source-originals/fixtures/process-flow-v1/gold-compatibility_fallback.json": {
+      "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+      "byte_length": 3790
+    },
+    "source-originals/fixtures/process-flow-v1/gold-complex_labels.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "source-originals/fixtures/process-flow-v1/gold-correlation.json": {
+      "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+      "byte_length": 2697
+    },
+    "source-originals/fixtures/process-flow-v1/gold-cycle.json": {
+      "sha256": "75c855c1ae1da4436333c1b43a74408131a74d6401e348221e11f4ae902fb630",
+      "byte_length": 4080
+    },
+    "source-originals/fixtures/process-flow-v1/gold-direction_unknown.json": {
+      "sha256": "f1884079d6ab220bf0a0b303cc84fcc330a0e8f290330205e5a6dd2da4ed252f",
+      "byte_length": 2522
+    },
+    "source-originals/fixtures/process-flow-v1/gold-inhibits.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "source-originals/fixtures/process-flow-v1/gold-linear.json": {
+      "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+      "byte_length": 3790
+    },
+    "source-originals/fixtures/process-flow-v1/gold-missing_branch.json": {
+      "sha256": "d2b35b82e10641fffe40190c72d8b91bcae2cc2341c38311379528d47c4c1f81",
+      "byte_length": 2701
+    },
+    "source-originals/fixtures/process-flow-v1/gold-missing_connection.json": {
+      "sha256": "1938924f3f9cf40936ebbd89932c021ec86e5db84b49338464b84c44d7a0ce2c",
+      "byte_length": 3277
+    },
+    "source-originals/fixtures/process-flow-v1/gold-multiline_labels.json": {
+      "sha256": "79999b21da68b9e80f4313cfce72821163a965540950acc631a9b9ba98d288c4",
+      "byte_length": 2412
+    },
+    "source-originals/fixtures/process-flow-v1/gold-negated_relation.json": {
+      "sha256": "825c28a4fd708e16f326b518eefc18906def70b982e30947563cde3683120d2c",
+      "byte_length": 1957
+    },
+    "source-originals/fixtures/process-flow-v1/gold-promotes.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "source-originals/fixtures/process-flow-v1/gold-unknown_criterion.json": {
+      "sha256": "a09214fe74630677143c32788eb135e2a9d7ca04bb41a78a8d69bcfb739aae65",
+      "byte_length": 3212
+    },
+    "source-originals/fixtures/process-flow-v1/gold-unparsed_tail.json": {
+      "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+      "byte_length": 3790
+    },
+    "source-originals/fixtures/process-flow-v1/inhibits.txt": {
+      "sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+      "byte_length": 754
+    },
+    "source-originals/fixtures/process-flow-v1/linear.txt": {
+      "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+      "byte_length": 991
+    },
+    "source-originals/fixtures/process-flow-v1/missing_branch.txt": {
+      "sha256": "b51472e1fd81189cd3c21bdd5328307c4a9d0b083658b806ac3fcd7908b9764f",
+      "byte_length": 732
+    },
+    "source-originals/fixtures/process-flow-v1/missing_connection.txt": {
+      "sha256": "23cffd99265d0c001c3a0edc181e66a67c6328c03cecbe3a23c5b1f3214609f6",
+      "byte_length": 859
+    },
+    "source-originals/fixtures/process-flow-v1/multiline_labels.txt": {
+      "sha256": "07ffaee58e8b3f349addf15fd2eb7df5a49357fa808c65fc5728bb2c1bd7d076",
+      "byte_length": 610
+    },
+    "source-originals/fixtures/process-flow-v1/negated_relation.txt": {
+      "sha256": "44aedea9105702e683ca7372af060b9df57921450ff29fbcb9ce3bf5593c60ff",
+      "byte_length": 572
+    },
+    "source-originals/fixtures/process-flow-v1/profile-obsidian_1_6_7_flowchart.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "source-originals/fixtures/process-flow-v1/profile-unverified_flowchart.json": {
+      "sha256": "6d2b9ff852a55dba7544f0e7727fdd1e4ea06d4c8362bd9cef2175202cc3c319",
+      "byte_length": 296
+    },
+    "source-originals/fixtures/process-flow-v1/promotes.txt": {
+      "sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+      "byte_length": 754
+    },
+    "source-originals/fixtures/process-flow-v1/unknown_criterion.txt": {
+      "sha256": "ed70d6507618841afffdedd6bd28a0ab0df4e8ce91f5a30006fbec45d09d41cd",
+      "byte_length": 793
+    },
+    "source-originals/fixtures/process-flow-v1/unparsed_tail.txt": {
+      "sha256": "e35f7250f900bf3da5f4af2118671ebe533fe58edd5493a0827fb599827a4978",
+      "byte_length": 1034
+    },
+    "source-pins.json": {
+      "sha256": "3639a45904a1cfa00350f6735c09efed98f274f42ba52256adc57919a467d0a2",
+      "byte_length": 67987
+    },
+    "verification-inputs/flow-complex-labels/Vault/.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-complex-labels/Vault/.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "verification-inputs/flow-complex-labels/Vault/.owner.json": {
+      "sha256": "bda72f7de7600bad2f5acddf34cee690f8de69f1e2a0635ed53dc0c05d10ba72",
+      "byte_length": 146
+    },
+    "verification-inputs/flow-complex-labels/Vault/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-.owner.json": {
+      "sha256": "b5ee9578b118ee1f5d30c63e6613c8ba12f8fcf01e600ba17098c966d9bd6133",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-process-ir.json": {
+      "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+      "byte_length": 7117
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-review.json": {
+      "sha256": "312b845e1c26299b7d87aa588007f884067839599208ae997a11ad935e2c86b4",
+      "byte_length": 7717
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-review.md": {
+      "sha256": "c56348916b5ee712e373b10f90ece4fa74cc4e895d5c38d44a868a5188e592f4",
+      "byte_length": 7900
+    },
+    "verification-inputs/flow-complex-labels/Vault/.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "verification-inputs/flow-complex-labels/Vault/flow.json": {
+      "sha256": "026784c84c9db05fe19d84896f116b2b8ef3d9d9e2b9be42d8734092ac513356",
+      "byte_length": 17156
+    },
+    "verification-inputs/flow-complex-labels/Vault/flow.md": {
+      "sha256": "3c9c18433ba2da76821525261486b1b40feee4c6e9c12268ad80151f470d8708",
+      "byte_length": 17359
+    },
+    "verification-inputs/flow-complex-labels/Vault/plan.json": {
+      "sha256": "487db7eaade8dfc32948f0fc8b766c7d9dbadefa279a9370217a3a522c2e1283",
+      "byte_length": 13395
+    },
+    "verification-inputs/flow-complex-labels/Vault/流程总览.md": {
+      "sha256": "bec715cfdcb6ff5475175c006d36cf7bbb06c843f24db0fc3e641ba9ff10f539",
+      "byte_length": 838
+    },
+    "verification-inputs/flow-complex-labels/Vault/过程明细.md": {
+      "sha256": "9c5878b69316f24ef442f7ffcb7fd1174049c1d468629ce51b9eb97511754359",
+      "byte_length": 1587
+    },
+    "verification-inputs/flow-complex-labels/case/gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "verification-inputs/flow-complex-labels/case/process-review.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-complex-labels/independent.json": {
+      "sha256": "7b935e33c75d7977f5080e307a775a5f01b3fc0d365e7fc91234c670b88dfc3c",
+      "byte_length": 185
+    },
+    "verification-inputs/flow-complex-labels/profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-complex-labels/project/.noetome-sources/.owner.json": {
+      "sha256": "3417eb93100cb3dc99717e76d58fc82b89e3db7ecb05ca3e4738952c26bdc88b",
+      "byte_length": 73
+    },
+    "verification-inputs/flow-complex-labels/project/.noetome-sources/1e05e4c9-2af7-42e4-a0af-a589abd97c62/normalized.txt": {
+      "sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+      "byte_length": 1052
+    },
+    "verification-inputs/flow-complex-labels/project/.noetome-sources/1e05e4c9-2af7-42e4-a0af-a589abd97c62/raw.bin": {
+      "sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+      "byte_length": 1052
+    },
+    "verification-inputs/flow-complex-labels/project/project.json": {
+      "sha256": "3ad09488ddbedeaa07ff14bf2a1ed717d76a545b4fced3a4005ee96823d9a144",
+      "byte_length": 169
+    },
+    "verification-inputs/flow-complex-labels/project/project.sqlite": {
+      "sha256": "7ba3dac8b77a259ba2e0b9ddb9abd21caf2bea3768a03de7c2d7377a45ed2729",
+      "byte_length": 69632
+    },
+    "verification-inputs/flow-complex-labels/review/.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-complex-labels/review/.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "verification-inputs/flow-complex-labels/review/.owner.json": {
+      "sha256": "b5ee9578b118ee1f5d30c63e6613c8ba12f8fcf01e600ba17098c966d9bd6133",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-complex-labels/review/.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "verification-inputs/flow-complex-labels/review/process-ir.json": {
+      "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+      "byte_length": 7117
+    },
+    "verification-inputs/flow-complex-labels/review/review.json": {
+      "sha256": "312b845e1c26299b7d87aa588007f884067839599208ae997a11ad935e2c86b4",
+      "byte_length": 7717
+    },
+    "verification-inputs/flow-complex-labels/review/review.md": {
+      "sha256": "c56348916b5ee712e373b10f90ece4fa74cc4e895d5c38d44a868a5188e592f4",
+      "byte_length": 7900
+    },
+    "verification-inputs/flow-complex-labels/source.txt": {
+      "sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+      "byte_length": 1052
+    },
+    "verification-inputs/flow-inhibits/Vault/.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-inhibits/Vault/.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-inhibits/Vault/.owner.json": {
+      "sha256": "5037187a8cca62e176659c445682e6b27dc3016882d444f5f3bb01af3c46c051",
+      "byte_length": 146
+    },
+    "verification-inputs/flow-inhibits/Vault/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-.owner.json": {
+      "sha256": "261271023876d8e3e788380c3f3b6285f9c22dca39c8ba4e1924647d5fb5bd97",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-process-ir.json": {
+      "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+      "byte_length": 5303
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-review.json": {
+      "sha256": "dbb0b70fa58cb113770ada269e6e9348baaa8e14753833ca594fb77718cc4c21",
+      "byte_length": 6483
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-review.md": {
+      "sha256": "690047cf07ee1e8d9c158ad90bdf93cb0c956064567951e1c58f17ae45366870",
+      "byte_length": 6666
+    },
+    "verification-inputs/flow-inhibits/Vault/.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-inhibits/Vault/flow.json": {
+      "sha256": "993518abe9f96c5d9fcb5af2383d924cf55d9a7a2153701aef64d40253c3e5de",
+      "byte_length": 14083
+    },
+    "verification-inputs/flow-inhibits/Vault/flow.md": {
+      "sha256": "7d9947f8d870f7a717378ebbd7226e9ec33d5232008e08cefaa146ed1e3605bd",
+      "byte_length": 14286
+    },
+    "verification-inputs/flow-inhibits/Vault/plan.json": {
+      "sha256": "d1f4ad32aa8652ef87b11125cc0c14d85601eac89a3b4682e92b31cc21705aca",
+      "byte_length": 10040
+    },
+    "verification-inputs/flow-inhibits/Vault/流程总览.md": {
+      "sha256": "34f05a5ff316b31b5f26c9a2fa4b15adad4d233cb08cef1b81381b77aec5df6f",
+      "byte_length": 675
+    },
+    "verification-inputs/flow-inhibits/Vault/过程明细.md": {
+      "sha256": "2f71cda055f87a2f459e966d4b12bf4788e4ae0b21ec45efd4f48291df5c1144",
+      "byte_length": 1134
+    },
+    "verification-inputs/flow-inhibits/case/gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-inhibits/case/process-review.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-inhibits/independent.json": {
+      "sha256": "c1bb5c4c924fe088ec8c4dc0136662c674a9d1de2de439b181f03e9979d591af",
+      "byte_length": 185
+    },
+    "verification-inputs/flow-inhibits/profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-inhibits/project/.noetome-sources/.owner.json": {
+      "sha256": "253153ab6bc6894f2e4dca0c39e009e5594f7e8eb621aa0e719e678d31d662fb",
+      "byte_length": 73
+    },
+    "verification-inputs/flow-inhibits/project/.noetome-sources/026cdb13-335a-48c7-8f8f-cb4e9927b193/normalized.txt": {
+      "sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+      "byte_length": 754
+    },
+    "verification-inputs/flow-inhibits/project/.noetome-sources/026cdb13-335a-48c7-8f8f-cb4e9927b193/raw.bin": {
+      "sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+      "byte_length": 754
+    },
+    "verification-inputs/flow-inhibits/project/project.json": {
+      "sha256": "5f4e171015da38f6be7ca092b27bada8dc694b661c8b900e3584a1985b647b90",
+      "byte_length": 169
+    },
+    "verification-inputs/flow-inhibits/project/project.sqlite": {
+      "sha256": "df077c6bb30eea0f80c29b49569d70046041741abb5c1df1e9d953b41150959d",
+      "byte_length": 69632
+    },
+    "verification-inputs/flow-inhibits/review/.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-inhibits/review/.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-inhibits/review/.owner.json": {
+      "sha256": "261271023876d8e3e788380c3f3b6285f9c22dca39c8ba4e1924647d5fb5bd97",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-inhibits/review/.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-inhibits/review/process-ir.json": {
+      "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+      "byte_length": 5303
+    },
+    "verification-inputs/flow-inhibits/review/review.json": {
+      "sha256": "dbb0b70fa58cb113770ada269e6e9348baaa8e14753833ca594fb77718cc4c21",
+      "byte_length": 6483
+    },
+    "verification-inputs/flow-inhibits/review/review.md": {
+      "sha256": "690047cf07ee1e8d9c158ad90bdf93cb0c956064567951e1c58f17ae45366870",
+      "byte_length": 6666
+    },
+    "verification-inputs/flow-inhibits/source.txt": {
+      "sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+      "byte_length": 754
+    },
+    "verification-inputs/flow-promotes/Vault/.case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-promotes/Vault/.gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-promotes/Vault/.owner.json": {
+      "sha256": "a37413b500aa46c29af2e8c170079f1e14bd948c946576bdb1c29e7062c3afb7",
+      "byte_length": 146
+    },
+    "verification-inputs/flow-promotes/Vault/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-promotes/Vault/.review-.case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-promotes/Vault/.review-.gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-promotes/Vault/.review-.owner.json": {
+      "sha256": "730d9f3d541959b6e088fe6a7f8637c6b982f35720ad5350c6a332cf5d67e079",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-promotes/Vault/.review-.source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-promotes/Vault/.review-process-ir.json": {
+      "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+      "byte_length": 5303
+    },
+    "verification-inputs/flow-promotes/Vault/.review-review.json": {
+      "sha256": "ba687c4231c1a1bfb148fbd1e7ef0fec08d8d0c8e1b55f56550d0fd642340d36",
+      "byte_length": 6483
+    },
+    "verification-inputs/flow-promotes/Vault/.review-review.md": {
+      "sha256": "5b492d5d7a4832794b68d856489bb6d64205a29e94bdfacf09bec484d9df87c3",
+      "byte_length": 6666
+    },
+    "verification-inputs/flow-promotes/Vault/.source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-promotes/Vault/flow.json": {
+      "sha256": "1093f9bc6ca086970ae4bf8bb5ba1fd626eecfd95e8be99eb5001c893130edbb",
+      "byte_length": 14083
+    },
+    "verification-inputs/flow-promotes/Vault/flow.md": {
+      "sha256": "284413ff4985f2791f630edfc623c4e1a939c26472d16d9c959c081643aaffa2",
+      "byte_length": 14286
+    },
+    "verification-inputs/flow-promotes/Vault/plan.json": {
+      "sha256": "a25adb4b732f4da49c85b7aeb0763eec549b1e5a73867475eb1f91bfb3886ec2",
+      "byte_length": 10042
+    },
+    "verification-inputs/flow-promotes/Vault/流程总览.md": {
+      "sha256": "6761d663e4ec906102056909b2ee3f10eab9814cb9962abfa1035c73d66bcda0",
+      "byte_length": 679
+    },
+    "verification-inputs/flow-promotes/Vault/过程明细.md": {
+      "sha256": "1c96e6b112a1135727673ca709b8627772293badce972a8e0c85d9a295e8cbbc",
+      "byte_length": 1135
+    },
+    "verification-inputs/flow-promotes/case/gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-promotes/case/process-review.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-promotes/independent.json": {
+      "sha256": "814ddb0b36d3304b6a9a6f8d98cfdb669fcfc914bc792f2e6cf7e99a0daddf2e",
+      "byte_length": 185
+    },
+    "verification-inputs/flow-promotes/profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-promotes/project/.noetome-sources/.owner.json": {
+      "sha256": "e54d6927612589fcc72e561c6e42fb593dac30f19140b8c9b4d9fa92b79f2ba2",
+      "byte_length": 73
+    },
+    "verification-inputs/flow-promotes/project/.noetome-sources/2b168b97-41c2-4230-8889-8250cccafd85/normalized.txt": {
+      "sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+      "byte_length": 754
+    },
+    "verification-inputs/flow-promotes/project/.noetome-sources/2b168b97-41c2-4230-8889-8250cccafd85/raw.bin": {
+      "sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+      "byte_length": 754
+    },
+    "verification-inputs/flow-promotes/project/project.json": {
+      "sha256": "870feecfaca193285ce54580d31f6b1475864f4de2d2f1c1b99a13fb8a9ef320",
+      "byte_length": 169
+    },
+    "verification-inputs/flow-promotes/project/project.sqlite": {
+      "sha256": "30c28a40510315f9cab4ea66d595b59483e8460a15f8bb4f92ae69f70bbda6bc",
+      "byte_length": 69632
+    },
+    "verification-inputs/flow-promotes/review/.case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-promotes/review/.gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-promotes/review/.owner.json": {
+      "sha256": "730d9f3d541959b6e088fe6a7f8637c6b982f35720ad5350c6a332cf5d67e079",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-promotes/review/.source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-promotes/review/process-ir.json": {
+      "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+      "byte_length": 5303
+    },
+    "verification-inputs/flow-promotes/review/review.json": {
+      "sha256": "ba687c4231c1a1bfb148fbd1e7ef0fec08d8d0c8e1b55f56550d0fd642340d36",
+      "byte_length": 6483
+    },
+    "verification-inputs/flow-promotes/review/review.md": {
+      "sha256": "5b492d5d7a4832794b68d856489bb6d64205a29e94bdfacf09bec484d9df87c3",
+      "byte_length": 6666
+    },
+    "verification-inputs/flow-promotes/source.txt": {
+      "sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+      "byte_length": 754
+    }
+  },
+  "source_after": {
+    "cases.json": {
+      "sha256": "5daebf51dbc619cb610b1fcc2330997c15646a0482e44b53d71689088b7735c4",
+      "byte_length": 22157
+    },
+    "collector-bridges/flow-complex-labels-visual-input.json": {
+      "sha256": "62cf3113fb5e1cae0c0122b68534286c580411a9028fced792a8baa302a090f9",
+      "byte_length": 42354
+    },
+    "collector-bridges/flow-inhibits-visual-input.json": {
+      "sha256": "d61cf76cc8d75368c8caae83d4d7df86ab3be5f1655341a9d86868a5ff1eac47",
+      "byte_length": 34716
+    },
+    "collector-bridges/flow-promotes-visual-input.json": {
+      "sha256": "14e577cfb232898c88d2567f560e9e331de3c53ad77ad75d24a3462bc8792198",
+      "byte_length": 34718
+    },
+    "expected-flow-complex-labels.json": {
+      "sha256": "274671a33866ebf97dd1fdfb2061fd497720a7f9fd37cac7e4bbb69cd438caa9",
+      "byte_length": 5403
+    },
+    "expected-flow-inhibits.json": {
+      "sha256": "e4ee681801cb0f98f71f0b780aea3871c1eac149f41b62a3cb3235e4d6916ad0",
+      "byte_length": 4074
+    },
+    "expected-flow-promotes.json": {
+      "sha256": "f091bd9fe358ff6e273c313884f0034b59e95bd7acc75f0dd5be2a7f2157afda",
+      "byte_length": 4050
+    },
+    "selected-output/flow-complex-labels/.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "selected-output/flow-complex-labels/.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "selected-output/flow-complex-labels/.owner.json": {
+      "sha256": "bda72f7de7600bad2f5acddf34cee690f8de69f1e2a0635ed53dc0c05d10ba72",
+      "byte_length": 146
+    },
+    "selected-output/flow-complex-labels/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "selected-output/flow-complex-labels/.review-.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "selected-output/flow-complex-labels/.review-.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "selected-output/flow-complex-labels/.review-.owner.json": {
+      "sha256": "b5ee9578b118ee1f5d30c63e6613c8ba12f8fcf01e600ba17098c966d9bd6133",
+      "byte_length": 170
+    },
+    "selected-output/flow-complex-labels/.review-.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "selected-output/flow-complex-labels/.review-process-ir.json": {
+      "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+      "byte_length": 7117
+    },
+    "selected-output/flow-complex-labels/.review-review.json": {
+      "sha256": "312b845e1c26299b7d87aa588007f884067839599208ae997a11ad935e2c86b4",
+      "byte_length": 7717
+    },
+    "selected-output/flow-complex-labels/.review-review.md": {
+      "sha256": "c56348916b5ee712e373b10f90ece4fa74cc4e895d5c38d44a868a5188e592f4",
+      "byte_length": 7900
+    },
+    "selected-output/flow-complex-labels/.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "selected-output/flow-complex-labels/flow.json": {
+      "sha256": "026784c84c9db05fe19d84896f116b2b8ef3d9d9e2b9be42d8734092ac513356",
+      "byte_length": 17156
+    },
+    "selected-output/flow-complex-labels/flow.md": {
+      "sha256": "3c9c18433ba2da76821525261486b1b40feee4c6e9c12268ad80151f470d8708",
+      "byte_length": 17359
+    },
+    "selected-output/flow-complex-labels/plan.json": {
+      "sha256": "487db7eaade8dfc32948f0fc8b766c7d9dbadefa279a9370217a3a522c2e1283",
+      "byte_length": 13395
+    },
+    "selected-output/flow-complex-labels/流程总览.md": {
+      "sha256": "bec715cfdcb6ff5475175c006d36cf7bbb06c843f24db0fc3e641ba9ff10f539",
+      "byte_length": 838
+    },
+    "selected-output/flow-complex-labels/过程明细.md": {
+      "sha256": "9c5878b69316f24ef442f7ffcb7fd1174049c1d468629ce51b9eb97511754359",
+      "byte_length": 1587
+    },
+    "selected-output/flow-inhibits/.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "selected-output/flow-inhibits/.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "selected-output/flow-inhibits/.owner.json": {
+      "sha256": "5037187a8cca62e176659c445682e6b27dc3016882d444f5f3bb01af3c46c051",
+      "byte_length": 146
+    },
+    "selected-output/flow-inhibits/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "selected-output/flow-inhibits/.review-.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "selected-output/flow-inhibits/.review-.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "selected-output/flow-inhibits/.review-.owner.json": {
+      "sha256": "261271023876d8e3e788380c3f3b6285f9c22dca39c8ba4e1924647d5fb5bd97",
+      "byte_length": 170
+    },
+    "selected-output/flow-inhibits/.review-.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "selected-output/flow-inhibits/.review-process-ir.json": {
+      "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+      "byte_length": 5303
+    },
+    "selected-output/flow-inhibits/.review-review.json": {
+      "sha256": "dbb0b70fa58cb113770ada269e6e9348baaa8e14753833ca594fb77718cc4c21",
+      "byte_length": 6483
+    },
+    "selected-output/flow-inhibits/.review-review.md": {
+      "sha256": "690047cf07ee1e8d9c158ad90bdf93cb0c956064567951e1c58f17ae45366870",
+      "byte_length": 6666
+    },
+    "selected-output/flow-inhibits/.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "selected-output/flow-inhibits/flow.json": {
+      "sha256": "993518abe9f96c5d9fcb5af2383d924cf55d9a7a2153701aef64d40253c3e5de",
+      "byte_length": 14083
+    },
+    "selected-output/flow-inhibits/flow.md": {
+      "sha256": "7d9947f8d870f7a717378ebbd7226e9ec33d5232008e08cefaa146ed1e3605bd",
+      "byte_length": 14286
+    },
+    "selected-output/flow-inhibits/plan.json": {
+      "sha256": "d1f4ad32aa8652ef87b11125cc0c14d85601eac89a3b4682e92b31cc21705aca",
+      "byte_length": 10040
+    },
+    "selected-output/flow-inhibits/流程总览.md": {
+      "sha256": "34f05a5ff316b31b5f26c9a2fa4b15adad4d233cb08cef1b81381b77aec5df6f",
+      "byte_length": 675
+    },
+    "selected-output/flow-inhibits/过程明细.md": {
+      "sha256": "2f71cda055f87a2f459e966d4b12bf4788e4ae0b21ec45efd4f48291df5c1144",
+      "byte_length": 1134
+    },
+    "selected-output/flow-promotes/.case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "selected-output/flow-promotes/.gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "selected-output/flow-promotes/.owner.json": {
+      "sha256": "a37413b500aa46c29af2e8c170079f1e14bd948c946576bdb1c29e7062c3afb7",
+      "byte_length": 146
+    },
+    "selected-output/flow-promotes/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "selected-output/flow-promotes/.review-.case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "selected-output/flow-promotes/.review-.gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "selected-output/flow-promotes/.review-.owner.json": {
+      "sha256": "730d9f3d541959b6e088fe6a7f8637c6b982f35720ad5350c6a332cf5d67e079",
+      "byte_length": 170
+    },
+    "selected-output/flow-promotes/.review-.source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "selected-output/flow-promotes/.review-process-ir.json": {
+      "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+      "byte_length": 5303
+    },
+    "selected-output/flow-promotes/.review-review.json": {
+      "sha256": "ba687c4231c1a1bfb148fbd1e7ef0fec08d8d0c8e1b55f56550d0fd642340d36",
+      "byte_length": 6483
+    },
+    "selected-output/flow-promotes/.review-review.md": {
+      "sha256": "5b492d5d7a4832794b68d856489bb6d64205a29e94bdfacf09bec484d9df87c3",
+      "byte_length": 6666
+    },
+    "selected-output/flow-promotes/.source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "selected-output/flow-promotes/flow.json": {
+      "sha256": "1093f9bc6ca086970ae4bf8bb5ba1fd626eecfd95e8be99eb5001c893130edbb",
+      "byte_length": 14083
+    },
+    "selected-output/flow-promotes/flow.md": {
+      "sha256": "284413ff4985f2791f630edfc623c4e1a939c26472d16d9c959c081643aaffa2",
+      "byte_length": 14286
+    },
+    "selected-output/flow-promotes/plan.json": {
+      "sha256": "a25adb4b732f4da49c85b7aeb0763eec549b1e5a73867475eb1f91bfb3886ec2",
+      "byte_length": 10042
+    },
+    "selected-output/flow-promotes/流程总览.md": {
+      "sha256": "6761d663e4ec906102056909b2ee3f10eab9814cb9962abfa1035c73d66bcda0",
+      "byte_length": 679
+    },
+    "selected-output/flow-promotes/过程明细.md": {
+      "sha256": "1c96e6b112a1135727673ca709b8627772293badce972a8e0c85d9a295e8cbbc",
+      "byte_length": 1135
+    },
+    "source-originals/fixtures/process-flow-v1/GRAMMAR.md": {
+      "sha256": "2757a2a552156d7b69b25ec3433d3882386106c7e5ba2a3c340ec5977158a4ef",
+      "byte_length": 4070
+    },
+    "source-originals/fixtures/process-flow-v1/README.md": {
+      "sha256": "b87d1fc76215c2dde9a7ad3650794496968a99fd5d44cdac1acc30295bcafcbb",
+      "byte_length": 3590
+    },
+    "source-originals/fixtures/process-flow-v1/authors.json": {
+      "sha256": "c9f847f742a23da2217662292b65cc537018fc0859ab4eeed5242da064276938",
+      "byte_length": 4311
+    },
+    "source-originals/fixtures/process-flow-v1/branch.txt": {
+      "sha256": "1a662ed525031a2b69b8c72db6e88965eea4c3b9c61bd1348dd8f87d654f9491",
+      "byte_length": 1403
+    },
+    "source-originals/fixtures/process-flow-v1/causes.txt": {
+      "sha256": "f6d0f41c4585e4e44e20c6743783b014d86fe0c38408e2fbf5e69646728dde8f",
+      "byte_length": 1081
+    },
+    "source-originals/fixtures/process-flow-v1/compatibility_fallback.txt": {
+      "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+      "byte_length": 991
+    },
+    "source-originals/fixtures/process-flow-v1/complex_labels.txt": {
+      "sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+      "byte_length": 1052
+    },
+    "source-originals/fixtures/process-flow-v1/correlation.txt": {
+      "sha256": "605b5e749cf18dfae20b4af47e75eb3b035ea10596b991cbc7ccb7c6424b9e42",
+      "byte_length": 716
+    },
+    "source-originals/fixtures/process-flow-v1/cycle.txt": {
+      "sha256": "324cc2986b7d4c734275e359517fa32f331d50d7fc7fcfaa33c17b92b515e286",
+      "byte_length": 1029
+    },
+    "source-originals/fixtures/process-flow-v1/direction_unknown.txt": {
+      "sha256": "757ed13a2c164a044c8794e8d6a9eadc0be5b4a1b9f93ce538d6802f322f1d1f",
+      "byte_length": 636
+    },
+    "source-originals/fixtures/process-flow-v1/expected-branch.json": {
+      "sha256": "00a44fe632deb046f6d9803f1fd2fa694543968572738b3a526459384d3d8d7f",
+      "byte_length": 3966
+    },
+    "source-originals/fixtures/process-flow-v1/expected-causes.json": {
+      "sha256": "9fee11e832cd69687f0f3eddfeec62cdb4de32ab97bde8eac7451be996793c67",
+      "byte_length": 3313
+    },
+    "source-originals/fixtures/process-flow-v1/expected-compatibility_fallback.json": {
+      "sha256": "0615fba5886a513917065200f250933f42b10b9045d118bf46e199f2c1027fb6",
+      "byte_length": 3263
+    },
+    "source-originals/fixtures/process-flow-v1/expected-complex_labels.json": {
+      "sha256": "cd18784f1caaa91e64976d36b847551fa2054be24fb7dbb00179a9caa754956c",
+      "byte_length": 3285
+    },
+    "source-originals/fixtures/process-flow-v1/expected-correlation.json": {
+      "sha256": "44f76fbf235cf8d469518cb5ba0c32eb8ce6f84a690e66b631d6a9f2644a9f5a",
+      "byte_length": 2582
+    },
+    "source-originals/fixtures/process-flow-v1/expected-cycle.json": {
+      "sha256": "bee081dd48beb7e4ccd15dee7681157a7d3a9cca1986884bdbafcc223e5cb60a",
+      "byte_length": 3315
+    },
+    "source-originals/fixtures/process-flow-v1/expected-direction_unknown.json": {
+      "sha256": "31044ac367ca59eaee1c5f655c5ae0bb7dc9395af7a3d7ea8a7aa35e9e86f10c",
+      "byte_length": 2488
+    },
+    "source-originals/fixtures/process-flow-v1/expected-inhibits.json": {
+      "sha256": "91fc56b65ec711374ef6fd871ef6f5f416eaede292b04ebfdd325ead87fc4b36",
+      "byte_length": 2626
+    },
+    "source-originals/fixtures/process-flow-v1/expected-linear.json": {
+      "sha256": "a382973a062fc9c569e2aeedc0c8b2deca2a3be617985281d766274871fb5820",
+      "byte_length": 3216
+    },
+    "source-originals/fixtures/process-flow-v1/expected-missing_branch.json": {
+      "sha256": "3b4c5134031a6123361d1f60c6b31a89a2ae87fa0cb21785ab746250909f64e7",
+      "byte_length": 2568
+    },
+    "source-originals/fixtures/process-flow-v1/expected-missing_connection.json": {
+      "sha256": "bb572605f68e395db6d956680b839c88e6c629542941e9f3cd240dfeae9930c0",
+      "byte_length": 2901
+    },
+    "source-originals/fixtures/process-flow-v1/expected-multiline_labels.json": {
+      "sha256": "af3e32e21193ae1a2fc0d129aeaa308bd5ffcce9fb8892e5462c2ac38b565c61",
+      "byte_length": 2464
+    },
+    "source-originals/fixtures/process-flow-v1/expected-negated_relation.json": {
+      "sha256": "cd7c4d9cb7c4b56b2ec16290dfe431fb80dd593def63894f47ba0945840e52c8",
+      "byte_length": 2271
+    },
+    "source-originals/fixtures/process-flow-v1/expected-promotes.json": {
+      "sha256": "2c029c86f334eb0bf580f3c3c030ceff8bbcece31180ab968ca92314f5a78483",
+      "byte_length": 2626
+    },
+    "source-originals/fixtures/process-flow-v1/expected-unknown_criterion.json": {
+      "sha256": "0d888ea0b76b0bef225d2be89d77e0535bedf68bf6f9b73dcb09c5225a06235f",
+      "byte_length": 2815
+    },
+    "source-originals/fixtures/process-flow-v1/expected-unparsed_tail.json": {
+      "sha256": "76ff944eb6ff63a086fc936c1bbcf1aa997da72367b825a8e9b90d08b3c4e994",
+      "byte_length": 3232
+    },
+    "source-originals/fixtures/process-flow-v1/frozen-sha256.json": {
+      "sha256": "adadba19effe8c7a3cffb688d04dd94a2632b38bb6d473a17aea0767f66bab11",
+      "byte_length": 7957
+    },
+    "source-originals/fixtures/process-flow-v1/gold-branch.json": {
+      "sha256": "3a89a171a1113973694d785813fe40f63f294154294cdee5dc049721c326bfaa",
+      "byte_length": 5149
+    },
+    "source-originals/fixtures/process-flow-v1/gold-causes.json": {
+      "sha256": "081ca1637cc0b58deed117392bfc51c96154c5d225609be6b145a18a5f41fe1d",
+      "byte_length": 3978
+    },
+    "source-originals/fixtures/process-flow-v1/gold-compatibility_fallback.json": {
+      "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+      "byte_length": 3790
+    },
+    "source-originals/fixtures/process-flow-v1/gold-complex_labels.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "source-originals/fixtures/process-flow-v1/gold-correlation.json": {
+      "sha256": "45805ea950c5a3363b65ad3cf79e6e5488710b255fa321f863701afa1018a3e9",
+      "byte_length": 2697
+    },
+    "source-originals/fixtures/process-flow-v1/gold-cycle.json": {
+      "sha256": "75c855c1ae1da4436333c1b43a74408131a74d6401e348221e11f4ae902fb630",
+      "byte_length": 4080
+    },
+    "source-originals/fixtures/process-flow-v1/gold-direction_unknown.json": {
+      "sha256": "f1884079d6ab220bf0a0b303cc84fcc330a0e8f290330205e5a6dd2da4ed252f",
+      "byte_length": 2522
+    },
+    "source-originals/fixtures/process-flow-v1/gold-inhibits.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "source-originals/fixtures/process-flow-v1/gold-linear.json": {
+      "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+      "byte_length": 3790
+    },
+    "source-originals/fixtures/process-flow-v1/gold-missing_branch.json": {
+      "sha256": "d2b35b82e10641fffe40190c72d8b91bcae2cc2341c38311379528d47c4c1f81",
+      "byte_length": 2701
+    },
+    "source-originals/fixtures/process-flow-v1/gold-missing_connection.json": {
+      "sha256": "1938924f3f9cf40936ebbd89932c021ec86e5db84b49338464b84c44d7a0ce2c",
+      "byte_length": 3277
+    },
+    "source-originals/fixtures/process-flow-v1/gold-multiline_labels.json": {
+      "sha256": "79999b21da68b9e80f4313cfce72821163a965540950acc631a9b9ba98d288c4",
+      "byte_length": 2412
+    },
+    "source-originals/fixtures/process-flow-v1/gold-negated_relation.json": {
+      "sha256": "825c28a4fd708e16f326b518eefc18906def70b982e30947563cde3683120d2c",
+      "byte_length": 1957
+    },
+    "source-originals/fixtures/process-flow-v1/gold-promotes.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "source-originals/fixtures/process-flow-v1/gold-unknown_criterion.json": {
+      "sha256": "a09214fe74630677143c32788eb135e2a9d7ca04bb41a78a8d69bcfb739aae65",
+      "byte_length": 3212
+    },
+    "source-originals/fixtures/process-flow-v1/gold-unparsed_tail.json": {
+      "sha256": "247a94cfac745c5947f9902c3ad3569b47eb3c8a0de16c5b0b9fe6607b834ceb",
+      "byte_length": 3790
+    },
+    "source-originals/fixtures/process-flow-v1/inhibits.txt": {
+      "sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+      "byte_length": 754
+    },
+    "source-originals/fixtures/process-flow-v1/linear.txt": {
+      "sha256": "f952adcc163a6ef12769dde6c9b6ab17262554229272005808cd27ba13f6f708",
+      "byte_length": 991
+    },
+    "source-originals/fixtures/process-flow-v1/missing_branch.txt": {
+      "sha256": "b51472e1fd81189cd3c21bdd5328307c4a9d0b083658b806ac3fcd7908b9764f",
+      "byte_length": 732
+    },
+    "source-originals/fixtures/process-flow-v1/missing_connection.txt": {
+      "sha256": "23cffd99265d0c001c3a0edc181e66a67c6328c03cecbe3a23c5b1f3214609f6",
+      "byte_length": 859
+    },
+    "source-originals/fixtures/process-flow-v1/multiline_labels.txt": {
+      "sha256": "07ffaee58e8b3f349addf15fd2eb7df5a49357fa808c65fc5728bb2c1bd7d076",
+      "byte_length": 610
+    },
+    "source-originals/fixtures/process-flow-v1/negated_relation.txt": {
+      "sha256": "44aedea9105702e683ca7372af060b9df57921450ff29fbcb9ce3bf5593c60ff",
+      "byte_length": 572
+    },
+    "source-originals/fixtures/process-flow-v1/profile-obsidian_1_6_7_flowchart.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "source-originals/fixtures/process-flow-v1/profile-unverified_flowchart.json": {
+      "sha256": "6d2b9ff852a55dba7544f0e7727fdd1e4ea06d4c8362bd9cef2175202cc3c319",
+      "byte_length": 296
+    },
+    "source-originals/fixtures/process-flow-v1/promotes.txt": {
+      "sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+      "byte_length": 754
+    },
+    "source-originals/fixtures/process-flow-v1/unknown_criterion.txt": {
+      "sha256": "ed70d6507618841afffdedd6bd28a0ab0df4e8ce91f5a30006fbec45d09d41cd",
+      "byte_length": 793
+    },
+    "source-originals/fixtures/process-flow-v1/unparsed_tail.txt": {
+      "sha256": "e35f7250f900bf3da5f4af2118671ebe533fe58edd5493a0827fb599827a4978",
+      "byte_length": 1034
+    },
+    "source-pins.json": {
+      "sha256": "3639a45904a1cfa00350f6735c09efed98f274f42ba52256adc57919a467d0a2",
+      "byte_length": 67987
+    },
+    "verification-inputs/flow-complex-labels/Vault/.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-complex-labels/Vault/.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "verification-inputs/flow-complex-labels/Vault/.owner.json": {
+      "sha256": "bda72f7de7600bad2f5acddf34cee690f8de69f1e2a0635ed53dc0c05d10ba72",
+      "byte_length": 146
+    },
+    "verification-inputs/flow-complex-labels/Vault/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-.owner.json": {
+      "sha256": "b5ee9578b118ee1f5d30c63e6613c8ba12f8fcf01e600ba17098c966d9bd6133",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-process-ir.json": {
+      "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+      "byte_length": 7117
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-review.json": {
+      "sha256": "312b845e1c26299b7d87aa588007f884067839599208ae997a11ad935e2c86b4",
+      "byte_length": 7717
+    },
+    "verification-inputs/flow-complex-labels/Vault/.review-review.md": {
+      "sha256": "c56348916b5ee712e373b10f90ece4fa74cc4e895d5c38d44a868a5188e592f4",
+      "byte_length": 7900
+    },
+    "verification-inputs/flow-complex-labels/Vault/.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "verification-inputs/flow-complex-labels/Vault/flow.json": {
+      "sha256": "026784c84c9db05fe19d84896f116b2b8ef3d9d9e2b9be42d8734092ac513356",
+      "byte_length": 17156
+    },
+    "verification-inputs/flow-complex-labels/Vault/flow.md": {
+      "sha256": "3c9c18433ba2da76821525261486b1b40feee4c6e9c12268ad80151f470d8708",
+      "byte_length": 17359
+    },
+    "verification-inputs/flow-complex-labels/Vault/plan.json": {
+      "sha256": "487db7eaade8dfc32948f0fc8b766c7d9dbadefa279a9370217a3a522c2e1283",
+      "byte_length": 13395
+    },
+    "verification-inputs/flow-complex-labels/Vault/流程总览.md": {
+      "sha256": "bec715cfdcb6ff5475175c006d36cf7bbb06c843f24db0fc3e641ba9ff10f539",
+      "byte_length": 838
+    },
+    "verification-inputs/flow-complex-labels/Vault/过程明细.md": {
+      "sha256": "9c5878b69316f24ef442f7ffcb7fd1174049c1d468629ce51b9eb97511754359",
+      "byte_length": 1587
+    },
+    "verification-inputs/flow-complex-labels/case/gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "verification-inputs/flow-complex-labels/case/process-review.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-complex-labels/independent.json": {
+      "sha256": "7b935e33c75d7977f5080e307a775a5f01b3fc0d365e7fc91234c670b88dfc3c",
+      "byte_length": 185
+    },
+    "verification-inputs/flow-complex-labels/profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-complex-labels/project/.noetome-sources/.owner.json": {
+      "sha256": "3417eb93100cb3dc99717e76d58fc82b89e3db7ecb05ca3e4738952c26bdc88b",
+      "byte_length": 73
+    },
+    "verification-inputs/flow-complex-labels/project/.noetome-sources/1e05e4c9-2af7-42e4-a0af-a589abd97c62/normalized.txt": {
+      "sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+      "byte_length": 1052
+    },
+    "verification-inputs/flow-complex-labels/project/.noetome-sources/1e05e4c9-2af7-42e4-a0af-a589abd97c62/raw.bin": {
+      "sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+      "byte_length": 1052
+    },
+    "verification-inputs/flow-complex-labels/project/project.json": {
+      "sha256": "3ad09488ddbedeaa07ff14bf2a1ed717d76a545b4fced3a4005ee96823d9a144",
+      "byte_length": 169
+    },
+    "verification-inputs/flow-complex-labels/project/project.sqlite": {
+      "sha256": "7ba3dac8b77a259ba2e0b9ddb9abd21caf2bea3768a03de7c2d7377a45ed2729",
+      "byte_length": 69632
+    },
+    "verification-inputs/flow-complex-labels/review/.case.json": {
+      "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-complex-labels/review/.gold.json": {
+      "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+      "byte_length": 3921
+    },
+    "verification-inputs/flow-complex-labels/review/.owner.json": {
+      "sha256": "b5ee9578b118ee1f5d30c63e6613c8ba12f8fcf01e600ba17098c966d9bd6133",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-complex-labels/review/.source.json": {
+      "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+      "byte_length": 2007
+    },
+    "verification-inputs/flow-complex-labels/review/process-ir.json": {
+      "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+      "byte_length": 7117
+    },
+    "verification-inputs/flow-complex-labels/review/review.json": {
+      "sha256": "312b845e1c26299b7d87aa588007f884067839599208ae997a11ad935e2c86b4",
+      "byte_length": 7717
+    },
+    "verification-inputs/flow-complex-labels/review/review.md": {
+      "sha256": "c56348916b5ee712e373b10f90ece4fa74cc4e895d5c38d44a868a5188e592f4",
+      "byte_length": 7900
+    },
+    "verification-inputs/flow-complex-labels/source.txt": {
+      "sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+      "byte_length": 1052
+    },
+    "verification-inputs/flow-inhibits/Vault/.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-inhibits/Vault/.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-inhibits/Vault/.owner.json": {
+      "sha256": "5037187a8cca62e176659c445682e6b27dc3016882d444f5f3bb01af3c46c051",
+      "byte_length": 146
+    },
+    "verification-inputs/flow-inhibits/Vault/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-.owner.json": {
+      "sha256": "261271023876d8e3e788380c3f3b6285f9c22dca39c8ba4e1924647d5fb5bd97",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-process-ir.json": {
+      "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+      "byte_length": 5303
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-review.json": {
+      "sha256": "dbb0b70fa58cb113770ada269e6e9348baaa8e14753833ca594fb77718cc4c21",
+      "byte_length": 6483
+    },
+    "verification-inputs/flow-inhibits/Vault/.review-review.md": {
+      "sha256": "690047cf07ee1e8d9c158ad90bdf93cb0c956064567951e1c58f17ae45366870",
+      "byte_length": 6666
+    },
+    "verification-inputs/flow-inhibits/Vault/.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-inhibits/Vault/flow.json": {
+      "sha256": "993518abe9f96c5d9fcb5af2383d924cf55d9a7a2153701aef64d40253c3e5de",
+      "byte_length": 14083
+    },
+    "verification-inputs/flow-inhibits/Vault/flow.md": {
+      "sha256": "7d9947f8d870f7a717378ebbd7226e9ec33d5232008e08cefaa146ed1e3605bd",
+      "byte_length": 14286
+    },
+    "verification-inputs/flow-inhibits/Vault/plan.json": {
+      "sha256": "d1f4ad32aa8652ef87b11125cc0c14d85601eac89a3b4682e92b31cc21705aca",
+      "byte_length": 10040
+    },
+    "verification-inputs/flow-inhibits/Vault/流程总览.md": {
+      "sha256": "34f05a5ff316b31b5f26c9a2fa4b15adad4d233cb08cef1b81381b77aec5df6f",
+      "byte_length": 675
+    },
+    "verification-inputs/flow-inhibits/Vault/过程明细.md": {
+      "sha256": "2f71cda055f87a2f459e966d4b12bf4788e4ae0b21ec45efd4f48291df5c1144",
+      "byte_length": 1134
+    },
+    "verification-inputs/flow-inhibits/case/gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-inhibits/case/process-review.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-inhibits/independent.json": {
+      "sha256": "c1bb5c4c924fe088ec8c4dc0136662c674a9d1de2de439b181f03e9979d591af",
+      "byte_length": 185
+    },
+    "verification-inputs/flow-inhibits/profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-inhibits/project/.noetome-sources/.owner.json": {
+      "sha256": "253153ab6bc6894f2e4dca0c39e009e5594f7e8eb621aa0e719e678d31d662fb",
+      "byte_length": 73
+    },
+    "verification-inputs/flow-inhibits/project/.noetome-sources/026cdb13-335a-48c7-8f8f-cb4e9927b193/normalized.txt": {
+      "sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+      "byte_length": 754
+    },
+    "verification-inputs/flow-inhibits/project/.noetome-sources/026cdb13-335a-48c7-8f8f-cb4e9927b193/raw.bin": {
+      "sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+      "byte_length": 754
+    },
+    "verification-inputs/flow-inhibits/project/project.json": {
+      "sha256": "5f4e171015da38f6be7ca092b27bada8dc694b661c8b900e3584a1985b647b90",
+      "byte_length": 169
+    },
+    "verification-inputs/flow-inhibits/project/project.sqlite": {
+      "sha256": "df077c6bb30eea0f80c29b49569d70046041741abb5c1df1e9d953b41150959d",
+      "byte_length": 69632
+    },
+    "verification-inputs/flow-inhibits/review/.case.json": {
+      "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-inhibits/review/.gold.json": {
+      "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-inhibits/review/.owner.json": {
+      "sha256": "261271023876d8e3e788380c3f3b6285f9c22dca39c8ba4e1924647d5fb5bd97",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-inhibits/review/.source.json": {
+      "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-inhibits/review/process-ir.json": {
+      "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+      "byte_length": 5303
+    },
+    "verification-inputs/flow-inhibits/review/review.json": {
+      "sha256": "dbb0b70fa58cb113770ada269e6e9348baaa8e14753833ca594fb77718cc4c21",
+      "byte_length": 6483
+    },
+    "verification-inputs/flow-inhibits/review/review.md": {
+      "sha256": "690047cf07ee1e8d9c158ad90bdf93cb0c956064567951e1c58f17ae45366870",
+      "byte_length": 6666
+    },
+    "verification-inputs/flow-inhibits/source.txt": {
+      "sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+      "byte_length": 754
+    },
+    "verification-inputs/flow-promotes/Vault/.case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-promotes/Vault/.gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-promotes/Vault/.owner.json": {
+      "sha256": "a37413b500aa46c29af2e8c170079f1e14bd948c946576bdb1c29e7062c3afb7",
+      "byte_length": 146
+    },
+    "verification-inputs/flow-promotes/Vault/.profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-promotes/Vault/.review-.case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-promotes/Vault/.review-.gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-promotes/Vault/.review-.owner.json": {
+      "sha256": "730d9f3d541959b6e088fe6a7f8637c6b982f35720ad5350c6a332cf5d67e079",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-promotes/Vault/.review-.source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-promotes/Vault/.review-process-ir.json": {
+      "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+      "byte_length": 5303
+    },
+    "verification-inputs/flow-promotes/Vault/.review-review.json": {
+      "sha256": "ba687c4231c1a1bfb148fbd1e7ef0fec08d8d0c8e1b55f56550d0fd642340d36",
+      "byte_length": 6483
+    },
+    "verification-inputs/flow-promotes/Vault/.review-review.md": {
+      "sha256": "5b492d5d7a4832794b68d856489bb6d64205a29e94bdfacf09bec484d9df87c3",
+      "byte_length": 6666
+    },
+    "verification-inputs/flow-promotes/Vault/.source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-promotes/Vault/flow.json": {
+      "sha256": "1093f9bc6ca086970ae4bf8bb5ba1fd626eecfd95e8be99eb5001c893130edbb",
+      "byte_length": 14083
+    },
+    "verification-inputs/flow-promotes/Vault/flow.md": {
+      "sha256": "284413ff4985f2791f630edfc623c4e1a939c26472d16d9c959c081643aaffa2",
+      "byte_length": 14286
+    },
+    "verification-inputs/flow-promotes/Vault/plan.json": {
+      "sha256": "a25adb4b732f4da49c85b7aeb0763eec549b1e5a73867475eb1f91bfb3886ec2",
+      "byte_length": 10042
+    },
+    "verification-inputs/flow-promotes/Vault/流程总览.md": {
+      "sha256": "6761d663e4ec906102056909b2ee3f10eab9814cb9962abfa1035c73d66bcda0",
+      "byte_length": 679
+    },
+    "verification-inputs/flow-promotes/Vault/过程明细.md": {
+      "sha256": "1c96e6b112a1135727673ca709b8627772293badce972a8e0c85d9a295e8cbbc",
+      "byte_length": 1135
+    },
+    "verification-inputs/flow-promotes/case/gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-promotes/case/process-review.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-promotes/independent.json": {
+      "sha256": "814ddb0b36d3304b6a9a6f8d98cfdb669fcfc914bc792f2e6cf7e99a0daddf2e",
+      "byte_length": 185
+    },
+    "verification-inputs/flow-promotes/profile.json": {
+      "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+      "byte_length": 296
+    },
+    "verification-inputs/flow-promotes/project/.noetome-sources/.owner.json": {
+      "sha256": "e54d6927612589fcc72e561c6e42fb593dac30f19140b8c9b4d9fa92b79f2ba2",
+      "byte_length": 73
+    },
+    "verification-inputs/flow-promotes/project/.noetome-sources/2b168b97-41c2-4230-8889-8250cccafd85/normalized.txt": {
+      "sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+      "byte_length": 754
+    },
+    "verification-inputs/flow-promotes/project/.noetome-sources/2b168b97-41c2-4230-8889-8250cccafd85/raw.bin": {
+      "sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+      "byte_length": 754
+    },
+    "verification-inputs/flow-promotes/project/project.json": {
+      "sha256": "870feecfaca193285ce54580d31f6b1475864f4de2d2f1c1b99a13fb8a9ef320",
+      "byte_length": 169
+    },
+    "verification-inputs/flow-promotes/project/project.sqlite": {
+      "sha256": "30c28a40510315f9cab4ea66d595b59483e8460a15f8bb4f92ae69f70bbda6bc",
+      "byte_length": 69632
+    },
+    "verification-inputs/flow-promotes/review/.case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    "verification-inputs/flow-promotes/review/.gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    "verification-inputs/flow-promotes/review/.owner.json": {
+      "sha256": "730d9f3d541959b6e088fe6a7f8637c6b982f35720ad5350c6a332cf5d67e079",
+      "byte_length": 170
+    },
+    "verification-inputs/flow-promotes/review/.source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "verification-inputs/flow-promotes/review/process-ir.json": {
+      "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+      "byte_length": 5303
+    },
+    "verification-inputs/flow-promotes/review/review.json": {
+      "sha256": "ba687c4231c1a1bfb148fbd1e7ef0fec08d8d0c8e1b55f56550d0fd642340d36",
+      "byte_length": 6483
+    },
+    "verification-inputs/flow-promotes/review/review.md": {
+      "sha256": "5b492d5d7a4832794b68d856489bb6d64205a29e94bdfacf09bec484d9df87c3",
+      "byte_length": 6666
+    },
+    "verification-inputs/flow-promotes/source.txt": {
+      "sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+      "byte_length": 754
+    }
+  },
+  "source_unchanged": true,
+  "rows": [
+    {
+      "case_id": "flow-complex-labels",
+      "status": "passed",
+      "checker_result": {
+        "schema_version": 1,
+        "producer": "knowledge_flow",
+        "scope": "active_flow_v1",
+        "request_id": "65192ec1-4890-45f8-92a2-2c62266ac523",
+        "binding": {
+          "project_id": "cf347274-d7f5-47a7-8e26-7ef86c900fbf",
+          "import_id": "bb22af70-b451-458f-b866-0eb8ecaf3229",
+          "source_id": "5dce65c6-cc76-41ee-a027-4ed97de3b40e",
+          "version_id": "1e05e4c9-2af7-42e4-a0af-a589abd97c62",
+          "content_sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+          "normalized_sha256": "177afc927146f332cf9db8159d0ca7032bfcd443c286a0cadb50b77884a77b4c",
+          "parse_id": null,
+          "manifest_sha256": null
+        },
+        "status": "passed",
+        "preview_status": "rendered",
+        "knowledge_status": "pending",
+        "scientific_quality": "not_run",
+        "research_status": "not_requested",
+        "published": false,
+        "network_calls": 0,
+        "paid_calls": 0,
+        "checks": {
+          "source_review": "passed",
+          "model_support": "passed",
+          "note_plan": "passed",
+          "rendering": "passed",
+          "saved_output": "passed"
+        },
+        "issue_codes": [],
+        "issues": [],
+        "process_document": {
+          "process": {
+            "title": "特殊名称的卡片流程",
+            "entry": "s1",
+            "goals": [
+              "s3"
+            ],
+            "conditions": [
+              "演示模式开启"
+            ],
+            "exceptions": [
+              "资料不可读时暂停"
+            ]
+          },
+          "steps": [
+            {
+              "id": "s1",
+              "kind": "step",
+              "label": "预检 [α] | \"卡片\"",
+              "description": "先做预检；本步骤在文字中后声明，不改变明确关系顺序",
+              "criterion": null,
+              "inputs": [
+                "卡片 A\\B"
+              ],
+              "outputs": [
+                "预检结果"
+              ],
+              "conditions": [
+                "卡片可读"
+              ],
+              "exceptions": [
+                "卡片缺失时停止"
+              ]
+            },
+            {
+              "id": "s2",
+              "kind": "step",
+              "label": "复核 #2 / x < 3",
+              "description": "保留复核名称中的符号，不解释为指令",
+              "criterion": null,
+              "inputs": [
+                "预检结果"
+              ],
+              "outputs": [
+                "复核结果"
+              ],
+              "conditions": [
+                "字段包含竖线 | 和双引号 \""
+              ],
+              "exceptions": [
+                "不得删除名称符号"
+              ]
+            },
+            {
+              "id": "s3",
+              "kind": "step",
+              "label": "归档入口 & 保留",
+              "description": "保留标签中的连接符",
+              "criterion": null,
+              "inputs": [
+                "复核结果"
+              ],
+              "outputs": [
+                "归档结果"
+              ],
+              "conditions": [
+                "复核完成"
+              ],
+              "exceptions": [
+                "存储不可用时暂停"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "id": "r1",
+              "left": "s1",
+              "right": "s2",
+              "kind": "sequence",
+              "branch_outcome": null,
+              "conditions": [
+                "预检完成"
+              ],
+              "exceptions": [
+                "缺卡时停止"
+              ]
+            },
+            {
+              "id": "r2",
+              "left": "s2",
+              "right": "s3",
+              "kind": "sequence",
+              "branch_outcome": null,
+              "conditions": [
+                "复核完成"
+              ],
+              "exceptions": [
+                "存储不可用时暂停"
+              ]
+            }
+          ],
+          "evidence": [
+            {
+              "object_id": "process",
+              "start_byte": 0,
+              "end_byte": 147,
+              "quote": "过程：\"特殊名称的卡片流程\"。入口：s1。目标：[\"s3\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+            },
+            {
+              "object_id": "r1",
+              "start_byte": 956,
+              "end_byte": 1051,
+              "quote": "关系 r1：s1 完成后执行 s2。条件：[\"预检完成\"]。例外：[\"缺卡时停止\"]。"
+            },
+            {
+              "object_id": "r2",
+              "start_byte": 851,
+              "end_byte": 955,
+              "quote": "关系 r2：s2 完成后执行 s3。条件：[\"复核完成\"]。例外：[\"存储不可用时暂停\"]。"
+            },
+            {
+              "object_id": "s1",
+              "start_byte": 396,
+              "end_byte": 646,
+              "quote": "步骤 s1：\"预检 [α] | \\\"卡片\\\"\"。说明：\"先做预检；本步骤在文字中后声明，不改变明确关系顺序\"。输入：[\"卡片 A\\\\B\"]。输出：[\"预检结果\"]。条件：[\"卡片可读\"]。例外：[\"卡片缺失时停止\"]。"
+            },
+            {
+              "object_id": "s2",
+              "start_byte": 148,
+              "end_byte": 395,
+              "quote": "步骤 s2：\"复核 #2 / x < 3\"。说明：\"保留复核名称中的符号，不解释为指令\"。输入：[\"预检结果\"]。输出：[\"复核结果\"]。条件：[\"字段包含竖线 | 和双引号 \\\"\"]。例外：[\"不得删除名称符号\"]。"
+            },
+            {
+              "object_id": "s3",
+              "start_byte": 647,
+              "end_byte": 850,
+              "quote": "步骤 s3：\"归档入口 & 保留\"。说明：\"保留标签中的连接符\"。输入：[\"复核结果\"]。输出：[\"归档结果\"]。条件：[\"复核完成\"]。例外：[\"存储不可用时暂停\"]。"
+            }
+          ]
+        },
+        "profile": {
+          "schema_version": 1,
+          "producer": "flow_render_profile",
+          "profile_id": "obsidian_1_6_7_flowchart",
+          "app": "Obsidian",
+          "app_version": "1.6.7",
+          "mermaid_version": "10.6.1",
+          "flowchart_support": "supported",
+          "label_encoding": "decimal_ascii_punctuation_v1",
+          "html_labels": true
+        },
+        "representation": "flowchart",
+        "decision": {
+          "rule_id": "verified_directed_acyclic_flow_v1",
+          "reason": "来源明确给出完整有向无环关系，且所选目标的当前图形及标签配置已有实测依据。",
+          "fallback_reasons": []
+        },
+        "review_ir_fingerprint": {
+          "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+          "byte_length": 7117
+        },
+        "plan_fingerprint": {
+          "sha256": "487db7eaade8dfc32948f0fc8b766c7d9dbadefa279a9370217a3a522c2e1283",
+          "byte_length": 13395
+        },
+        "totals": {
+          "branch_relations": 0,
+          "causes_relations": 0,
+          "content_mappings": 13,
+          "correlates_relations": 0,
+          "decision_steps": 0,
+          "evidence_records": 6,
+          "flow_edges": 2,
+          "flow_nodes": 3,
+          "inhibits_relations": 0,
+          "links": 7,
+          "node_conditions": 3,
+          "node_exceptions": 3,
+          "node_inputs": 3,
+          "node_outputs": 3,
+          "parsed_statements": 6,
+          "process_conditions": 1,
+          "process_exceptions": 1,
+          "promotes_relations": 0,
+          "relation_conditions": 2,
+          "relation_exceptions": 2,
+          "relations": 2,
+          "rendered_notes": 2,
+          "sequence_relations": 2,
+          "source_statements": 6,
+          "steps": 3,
+          "unknown_relations": 0,
+          "unparsed_statements": 0
+        },
+        "inputs": {
+          ".case.json": {
+            "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+            "byte_length": 3921
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+            "byte_length": 3921
+          },
+          ".review-.owner.json": {
+            "sha256": "b5ee9578b118ee1f5d30c63e6613c8ba12f8fcf01e600ba17098c966d9bd6133",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+            "byte_length": 2007
+          },
+          ".review-process-ir.json": {
+            "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+            "byte_length": 7117
+          },
+          ".review-review.json": {
+            "sha256": "312b845e1c26299b7d87aa588007f884067839599208ae997a11ad935e2c86b4",
+            "byte_length": 7717
+          },
+          ".review-review.md": {
+            "sha256": "c56348916b5ee712e373b10f90ece4fa74cc4e895d5c38d44a868a5188e592f4",
+            "byte_length": 7900
+          },
+          ".source.json": {
+            "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+            "byte_length": 2007
+          }
+        },
+        "files": [
+          {
+            "relative_path": "流程总览.md",
+            "note_id": "flow_overview",
+            "plan_revision": 1,
+            "content_sha256": "bec715cfdcb6ff5475175c006d36cf7bbb06c843f24db0fc3e641ba9ff10f539",
+            "byte_length": 838,
+            "content_mappings": [
+              {
+                "section_id": "flow",
+                "block_id": "process_title",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 41,
+                "end_byte": 83
+              },
+              {
+                "section_id": "flow",
+                "block_id": "reading_scope",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [],
+                "start_byte": 97,
+                "end_byte": 358
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_node",
+                "item_id": "n0",
+                "source_object_ids": [
+                  "s1"
+                ],
+                "start_byte": 388,
+                "end_byte": 434
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_node",
+                "item_id": "n1",
+                "source_object_ids": [
+                  "s2"
+                ],
+                "start_byte": 435,
+                "end_byte": 469
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_node",
+                "item_id": "n2",
+                "source_object_ids": [
+                  "s3"
+                ],
+                "start_byte": 470,
+                "end_byte": 502
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_edge",
+                "item_id": "e0",
+                "source_object_ids": [
+                  "r1"
+                ],
+                "start_byte": 503,
+                "end_byte": 524
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_edge",
+                "item_id": "e1",
+                "source_object_ids": [
+                  "r2"
+                ],
+                "start_byte": 525,
+                "end_byte": 546
+              }
+            ],
+            "links": [
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "过程说明",
+                "display_text": "查看完整过程说明",
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 552,
+                "end_byte": 606
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "步骤-s1",
+                "display_text": "查看步骤明细",
+                "source_object_ids": [
+                  "s1"
+                ],
+                "start_byte": 607,
+                "end_byte": 652
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "步骤-s2",
+                "display_text": "查看步骤明细",
+                "source_object_ids": [
+                  "s2"
+                ],
+                "start_byte": 653,
+                "end_byte": 698
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "步骤-s3",
+                "display_text": "查看步骤明细",
+                "source_object_ids": [
+                  "s3"
+                ],
+                "start_byte": 699,
+                "end_byte": 744
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "关系-r1",
+                "display_text": "查看关系明细",
+                "source_object_ids": [
+                  "r1"
+                ],
+                "start_byte": 745,
+                "end_byte": 790
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "关系-r2",
+                "display_text": "查看关系明细",
+                "source_object_ids": [
+                  "r2"
+                ],
+                "start_byte": 791,
+                "end_byte": 836
+              }
+            ]
+          },
+          {
+            "relative_path": "过程明细.md",
+            "note_id": "process_details",
+            "plan_revision": 1,
+            "content_sha256": "9c5878b69316f24ef442f7ffcb7fd1174049c1d468629ce51b9eb97511754359",
+            "byte_length": 1587,
+            "content_mappings": [
+              {
+                "section_id": "process_detail",
+                "block_id": "process",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 41,
+                "end_byte": 181
+              },
+              {
+                "section_id": "step_s1",
+                "block_id": "s1",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "s1"
+                ],
+                "start_byte": 209,
+                "end_byte": 501
+              },
+              {
+                "section_id": "step_s2",
+                "block_id": "s2",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "s2"
+                ],
+                "start_byte": 529,
+                "end_byte": 820
+              },
+              {
+                "section_id": "step_s3",
+                "block_id": "s3",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "s3"
+                ],
+                "start_byte": 848,
+                "end_byte": 1096
+              },
+              {
+                "section_id": "relation_r1",
+                "block_id": "r1",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "r1",
+                  "s1",
+                  "s2"
+                ],
+                "start_byte": 1124,
+                "end_byte": 1301
+              },
+              {
+                "section_id": "relation_r2",
+                "block_id": "r2",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "r2",
+                  "s2",
+                  "s3"
+                ],
+                "start_byte": 1329,
+                "end_byte": 1514
+              }
+            ],
+            "links": [
+              {
+                "section_id": "return",
+                "block_id": "return_link",
+                "item_id": null,
+                "target_path": "流程总览.md",
+                "target_heading": "流程表达",
+                "display_text": "返回流程总览",
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 1537,
+                "end_byte": 1585
+              }
+            ]
+          }
+        ],
+        "artifacts": {
+          ".case.json": {
+            "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+            "byte_length": 3921
+          },
+          ".owner.json": {
+            "sha256": "bda72f7de7600bad2f5acddf34cee690f8de69f1e2a0635ed53dc0c05d10ba72",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "2cc297464cf4f2fd76a1f506f348a4857b8c4cdb72ad9a2958a431daa7ae5dda",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "8d4b585b625dc3c6ae3434ceb7d0778893c56b35ee40026bd4901ec62e93a99a",
+            "byte_length": 3921
+          },
+          ".review-.owner.json": {
+            "sha256": "b5ee9578b118ee1f5d30c63e6613c8ba12f8fcf01e600ba17098c966d9bd6133",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+            "byte_length": 2007
+          },
+          ".review-process-ir.json": {
+            "sha256": "5fdfcb8d0897bd83882b491c83d7bd11648f57aa60f2749a7eefcf496e14c92b",
+            "byte_length": 7117
+          },
+          ".review-review.json": {
+            "sha256": "312b845e1c26299b7d87aa588007f884067839599208ae997a11ad935e2c86b4",
+            "byte_length": 7717
+          },
+          ".review-review.md": {
+            "sha256": "c56348916b5ee712e373b10f90ece4fa74cc4e895d5c38d44a868a5188e592f4",
+            "byte_length": 7900
+          },
+          ".source.json": {
+            "sha256": "717b25dd60a48811fcbfa5313360f6745e5c38b2b82c3142638e7ecc615cc0ca",
+            "byte_length": 2007
+          },
+          "plan.json": {
+            "sha256": "487db7eaade8dfc32948f0fc8b766c7d9dbadefa279a9370217a3a522c2e1283",
+            "byte_length": 13395
+          },
+          "流程总览.md": {
+            "sha256": "bec715cfdcb6ff5475175c006d36cf7bbb06c843f24db0fc3e641ba9ff10f539",
+            "byte_length": 838
+          },
+          "过程明细.md": {
+            "sha256": "9c5878b69316f24ef442f7ffcb7fd1174049c1d468629ce51b9eb97511754359",
+            "byte_length": 1587
+          }
+        }
+      },
+      "bridge_plan_and_author_semantics_equal": true,
+      "selected_output_equals_original_vault": true,
+      "elapsed_seconds": 0.05007911499706097
+    },
+    {
+      "case_id": "flow-promotes",
+      "status": "passed",
+      "checker_result": {
+        "schema_version": 1,
+        "producer": "knowledge_flow",
+        "scope": "active_flow_v1",
+        "request_id": "5bd11f2c-d77e-4b63-82e1-00d9a69669db",
+        "binding": {
+          "project_id": "656cad9e-cb1b-43d5-a565-63f5a402a686",
+          "import_id": "289967e4-095e-42b4-b8db-26ccc1857f48",
+          "source_id": "ac06fba6-8037-4fb5-aa74-6cefa974122b",
+          "version_id": "2b168b97-41c2-4230-8889-8250cccafd85",
+          "content_sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+          "normalized_sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+          "parse_id": null,
+          "manifest_sha256": null
+        },
+        "status": "passed",
+        "preview_status": "rendered",
+        "knowledge_status": "pending",
+        "scientific_quality": "not_run",
+        "research_status": "not_requested",
+        "published": false,
+        "network_calls": 0,
+        "paid_calls": 0,
+        "checks": {
+          "source_review": "passed",
+          "model_support": "passed",
+          "note_plan": "passed",
+          "rendering": "passed",
+          "saved_output": "passed"
+        },
+        "issue_codes": [],
+        "issues": [],
+        "process_document": {
+          "process": {
+            "title": "演示提示促进规则",
+            "entry": "s1",
+            "goals": [
+              "s2"
+            ],
+            "conditions": [
+              "演示模式开启"
+            ],
+            "exceptions": [
+              "资料不可读时暂停"
+            ]
+          },
+          "steps": [
+            {
+              "id": "s1",
+              "kind": "step",
+              "label": "启用演示优先控制",
+              "description": "把演示优先控制设为启用",
+              "criterion": null,
+              "inputs": [
+                "优先控制命令"
+              ],
+              "outputs": [
+                "已启用优先控制"
+              ],
+              "conditions": [
+                "演示模式开启"
+              ],
+              "exceptions": [
+                "控制器断开时不生效"
+              ]
+            },
+            {
+              "id": "s2",
+              "kind": "step",
+              "label": "提示被选择的倾向",
+              "description": "表示被促进的选择倾向，不提供比例或概率数值",
+              "criterion": null,
+              "inputs": [
+                "提示候选"
+              ],
+              "outputs": [
+                "选择倾向"
+              ],
+              "conditions": [
+                "演示筛选器可用"
+              ],
+              "exceptions": [
+                "筛选器不可用时未知"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "id": "r1",
+              "left": "s1",
+              "right": "s2",
+              "kind": "promotes",
+              "branch_outcome": null,
+              "conditions": [
+                "演示优先通道接通"
+              ],
+              "exceptions": [
+                "旁路开启时该促进不成立"
+              ]
+            }
+          ],
+          "evidence": [
+            {
+              "object_id": "process",
+              "start_byte": 0,
+              "end_byte": 144,
+              "quote": "过程：\"演示提示促进规则\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+            },
+            {
+              "object_id": "r1",
+              "start_byte": 637,
+              "end_byte": 753,
+              "quote": "关系 r1：s1 促进 s2。条件：[\"演示优先通道接通\"]。例外：[\"旁路开启时该促进不成立\"]。"
+            },
+            {
+              "object_id": "s1",
+              "start_byte": 145,
+              "end_byte": 381,
+              "quote": "步骤 s1：\"启用演示优先控制\"。说明：\"把演示优先控制设为启用\"。输入：[\"优先控制命令\"]。输出：[\"已启用优先控制\"]。条件：[\"演示模式开启\"]。例外：[\"控制器断开时不生效\"]。"
+            },
+            {
+              "object_id": "s2",
+              "start_byte": 382,
+              "end_byte": 636,
+              "quote": "步骤 s2：\"提示被选择的倾向\"。说明：\"表示被促进的选择倾向，不提供比例或概率数值\"。输入：[\"提示候选\"]。输出：[\"选择倾向\"]。条件：[\"演示筛选器可用\"]。例外：[\"筛选器不可用时未知\"]。"
+            }
+          ]
+        },
+        "profile": {
+          "schema_version": 1,
+          "producer": "flow_render_profile",
+          "profile_id": "obsidian_1_6_7_flowchart",
+          "app": "Obsidian",
+          "app_version": "1.6.7",
+          "mermaid_version": "10.6.1",
+          "flowchart_support": "supported",
+          "label_encoding": "decimal_ascii_punctuation_v1",
+          "html_labels": true
+        },
+        "representation": "flowchart",
+        "decision": {
+          "rule_id": "verified_directed_acyclic_flow_v1",
+          "reason": "来源明确给出完整有向无环关系，且所选目标的当前图形及标签配置已有实测依据。",
+          "fallback_reasons": []
+        },
+        "review_ir_fingerprint": {
+          "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+          "byte_length": 5303
+        },
+        "plan_fingerprint": {
+          "sha256": "a25adb4b732f4da49c85b7aeb0763eec549b1e5a73867475eb1f91bfb3886ec2",
+          "byte_length": 10042
+        },
+        "totals": {
+          "branch_relations": 0,
+          "causes_relations": 0,
+          "content_mappings": 9,
+          "correlates_relations": 0,
+          "decision_steps": 0,
+          "evidence_records": 4,
+          "flow_edges": 1,
+          "flow_nodes": 2,
+          "inhibits_relations": 0,
+          "links": 5,
+          "node_conditions": 2,
+          "node_exceptions": 2,
+          "node_inputs": 2,
+          "node_outputs": 2,
+          "parsed_statements": 4,
+          "process_conditions": 1,
+          "process_exceptions": 1,
+          "promotes_relations": 1,
+          "relation_conditions": 1,
+          "relation_exceptions": 1,
+          "relations": 1,
+          "rendered_notes": 2,
+          "sequence_relations": 0,
+          "source_statements": 4,
+          "steps": 2,
+          "unknown_relations": 0,
+          "unparsed_statements": 0
+        },
+        "inputs": {
+          ".case.json": {
+            "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+            "byte_length": 2775
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+            "byte_length": 2775
+          },
+          ".review-.owner.json": {
+            "sha256": "730d9f3d541959b6e088fe6a7f8637c6b982f35720ad5350c6a332cf5d67e079",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+            "byte_length": 1682
+          },
+          ".review-process-ir.json": {
+            "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+            "byte_length": 5303
+          },
+          ".review-review.json": {
+            "sha256": "ba687c4231c1a1bfb148fbd1e7ef0fec08d8d0c8e1b55f56550d0fd642340d36",
+            "byte_length": 6483
+          },
+          ".review-review.md": {
+            "sha256": "5b492d5d7a4832794b68d856489bb6d64205a29e94bdfacf09bec484d9df87c3",
+            "byte_length": 6666
+          },
+          ".source.json": {
+            "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+            "byte_length": 1682
+          }
+        },
+        "files": [
+          {
+            "relative_path": "流程总览.md",
+            "note_id": "flow_overview",
+            "plan_revision": 1,
+            "content_sha256": "6761d663e4ec906102056909b2ee3f10eab9814cb9962abfa1035c73d66bcda0",
+            "byte_length": 679,
+            "content_mappings": [
+              {
+                "section_id": "flow",
+                "block_id": "process_title",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 41,
+                "end_byte": 80
+              },
+              {
+                "section_id": "flow",
+                "block_id": "reading_scope",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [],
+                "start_byte": 94,
+                "end_byte": 355
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_node",
+                "item_id": "n0",
+                "source_object_ids": [
+                  "s1"
+                ],
+                "start_byte": 385,
+                "end_byte": 417
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_node",
+                "item_id": "n1",
+                "source_object_ids": [
+                  "s2"
+                ],
+                "start_byte": 418,
+                "end_byte": 450
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_edge",
+                "item_id": "e0",
+                "source_object_ids": [
+                  "r1"
+                ],
+                "start_byte": 451,
+                "end_byte": 479
+              }
+            ],
+            "links": [
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "过程说明",
+                "display_text": "查看完整过程说明",
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 485,
+                "end_byte": 539
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "步骤-s1",
+                "display_text": "查看步骤明细",
+                "source_object_ids": [
+                  "s1"
+                ],
+                "start_byte": 540,
+                "end_byte": 585
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "步骤-s2",
+                "display_text": "查看步骤明细",
+                "source_object_ids": [
+                  "s2"
+                ],
+                "start_byte": 586,
+                "end_byte": 631
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "关系-r1",
+                "display_text": "查看关系明细",
+                "source_object_ids": [
+                  "r1"
+                ],
+                "start_byte": 632,
+                "end_byte": 677
+              }
+            ]
+          },
+          {
+            "relative_path": "过程明细.md",
+            "note_id": "process_details",
+            "plan_revision": 1,
+            "content_sha256": "1c96e6b112a1135727673ca709b8627772293badce972a8e0c85d9a295e8cbbc",
+            "byte_length": 1135,
+            "content_mappings": [
+              {
+                "section_id": "process_detail",
+                "block_id": "process",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 41,
+                "end_byte": 178
+              },
+              {
+                "section_id": "step_s1",
+                "block_id": "s1",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "s1"
+                ],
+                "start_byte": 206,
+                "end_byte": 487
+              },
+              {
+                "section_id": "step_s2",
+                "block_id": "s2",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "s2"
+                ],
+                "start_byte": 515,
+                "end_byte": 814
+              },
+              {
+                "section_id": "relation_r1",
+                "block_id": "r1",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "r1",
+                  "s1",
+                  "s2"
+                ],
+                "start_byte": 842,
+                "end_byte": 1062
+              }
+            ],
+            "links": [
+              {
+                "section_id": "return",
+                "block_id": "return_link",
+                "item_id": null,
+                "target_path": "流程总览.md",
+                "target_heading": "流程表达",
+                "display_text": "返回流程总览",
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 1085,
+                "end_byte": 1133
+              }
+            ]
+          }
+        ],
+        "artifacts": {
+          ".case.json": {
+            "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+            "byte_length": 2775
+          },
+          ".owner.json": {
+            "sha256": "a37413b500aa46c29af2e8c170079f1e14bd948c946576bdb1c29e7062c3afb7",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+            "byte_length": 2775
+          },
+          ".review-.owner.json": {
+            "sha256": "730d9f3d541959b6e088fe6a7f8637c6b982f35720ad5350c6a332cf5d67e079",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+            "byte_length": 1682
+          },
+          ".review-process-ir.json": {
+            "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+            "byte_length": 5303
+          },
+          ".review-review.json": {
+            "sha256": "ba687c4231c1a1bfb148fbd1e7ef0fec08d8d0c8e1b55f56550d0fd642340d36",
+            "byte_length": 6483
+          },
+          ".review-review.md": {
+            "sha256": "5b492d5d7a4832794b68d856489bb6d64205a29e94bdfacf09bec484d9df87c3",
+            "byte_length": 6666
+          },
+          ".source.json": {
+            "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+            "byte_length": 1682
+          },
+          "plan.json": {
+            "sha256": "a25adb4b732f4da49c85b7aeb0763eec549b1e5a73867475eb1f91bfb3886ec2",
+            "byte_length": 10042
+          },
+          "流程总览.md": {
+            "sha256": "6761d663e4ec906102056909b2ee3f10eab9814cb9962abfa1035c73d66bcda0",
+            "byte_length": 679
+          },
+          "过程明细.md": {
+            "sha256": "1c96e6b112a1135727673ca709b8627772293badce972a8e0c85d9a295e8cbbc",
+            "byte_length": 1135
+          }
+        }
+      },
+      "bridge_plan_and_author_semantics_equal": true,
+      "selected_output_equals_original_vault": true,
+      "elapsed_seconds": 0.0543976949993521
+    },
+    {
+      "case_id": "flow-inhibits",
+      "status": "passed",
+      "checker_result": {
+        "schema_version": 1,
+        "producer": "knowledge_flow",
+        "scope": "active_flow_v1",
+        "request_id": "6fc8ea81-72f4-4637-a9ad-148bd427e6e2",
+        "binding": {
+          "project_id": "c8f0d542-1bb6-4c24-82b6-ad20fc189af4",
+          "import_id": "63f6f00c-2007-424a-9a1d-990aa0dc9726",
+          "source_id": "fcd1028d-31fd-453e-b2b7-21afa69b3214",
+          "version_id": "026cdb13-335a-48c7-8f8f-cb4e9927b193",
+          "content_sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+          "normalized_sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+          "parse_id": null,
+          "manifest_sha256": null
+        },
+        "status": "passed",
+        "preview_status": "rendered",
+        "knowledge_status": "pending",
+        "scientific_quality": "not_run",
+        "research_status": "not_requested",
+        "published": false,
+        "network_calls": 0,
+        "paid_calls": 0,
+        "checks": {
+          "source_review": "passed",
+          "model_support": "passed",
+          "note_plan": "passed",
+          "rendering": "passed",
+          "saved_output": "passed"
+        },
+        "issue_codes": [],
+        "issues": [],
+        "process_document": {
+          "process": {
+            "title": "演示鸣响抑制规则",
+            "entry": "s1",
+            "goals": [
+              "s2"
+            ],
+            "conditions": [
+              "演示模式开启"
+            ],
+            "exceptions": [
+              "资料不可读时暂停"
+            ]
+          },
+          "steps": [
+            {
+              "id": "s1",
+              "kind": "step",
+              "label": "启用演示静音控制",
+              "description": "把演示静音控制设为启用",
+              "criterion": null,
+              "inputs": [
+                "静音命令"
+              ],
+              "outputs": [
+                "已启用静音控制"
+              ],
+              "conditions": [
+                "演示模式开启"
+              ],
+              "exceptions": [
+                "控制器断开时不生效"
+              ]
+            },
+            {
+              "id": "s2",
+              "kind": "step",
+              "label": "蜂鸣器鸣响响应",
+              "description": "表示可能受到抑制的鸣响响应，不断言响应已发生",
+              "criterion": null,
+              "inputs": [
+                "鸣响请求"
+              ],
+              "outputs": [
+                "可能的鸣响响应"
+              ],
+              "conditions": [
+                "蜂鸣器可用"
+              ],
+              "exceptions": [
+                "蜂鸣器断开时不可观察"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "id": "r1",
+              "left": "s1",
+              "right": "s2",
+              "kind": "inhibits",
+              "branch_outcome": null,
+              "conditions": [
+                "演示静音通道接通"
+              ],
+              "exceptions": [
+                "旁路开启时该抑制不成立"
+              ]
+            }
+          ],
+          "evidence": [
+            {
+              "object_id": "process",
+              "start_byte": 0,
+              "end_byte": 144,
+              "quote": "过程：\"演示鸣响抑制规则\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+            },
+            {
+              "object_id": "r1",
+              "start_byte": 637,
+              "end_byte": 753,
+              "quote": "关系 r1：s1 抑制 s2。条件：[\"演示静音通道接通\"]。例外：[\"旁路开启时该抑制不成立\"]。"
+            },
+            {
+              "object_id": "s1",
+              "start_byte": 145,
+              "end_byte": 375,
+              "quote": "步骤 s1：\"启用演示静音控制\"。说明：\"把演示静音控制设为启用\"。输入：[\"静音命令\"]。输出：[\"已启用静音控制\"]。条件：[\"演示模式开启\"]。例外：[\"控制器断开时不生效\"]。"
+            },
+            {
+              "object_id": "s2",
+              "start_byte": 376,
+              "end_byte": 636,
+              "quote": "步骤 s2：\"蜂鸣器鸣响响应\"。说明：\"表示可能受到抑制的鸣响响应，不断言响应已发生\"。输入：[\"鸣响请求\"]。输出：[\"可能的鸣响响应\"]。条件：[\"蜂鸣器可用\"]。例外：[\"蜂鸣器断开时不可观察\"]。"
+            }
+          ]
+        },
+        "profile": {
+          "schema_version": 1,
+          "producer": "flow_render_profile",
+          "profile_id": "obsidian_1_6_7_flowchart",
+          "app": "Obsidian",
+          "app_version": "1.6.7",
+          "mermaid_version": "10.6.1",
+          "flowchart_support": "supported",
+          "label_encoding": "decimal_ascii_punctuation_v1",
+          "html_labels": true
+        },
+        "representation": "flowchart",
+        "decision": {
+          "rule_id": "verified_directed_acyclic_flow_v1",
+          "reason": "来源明确给出完整有向无环关系，且所选目标的当前图形及标签配置已有实测依据。",
+          "fallback_reasons": []
+        },
+        "review_ir_fingerprint": {
+          "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+          "byte_length": 5303
+        },
+        "plan_fingerprint": {
+          "sha256": "d1f4ad32aa8652ef87b11125cc0c14d85601eac89a3b4682e92b31cc21705aca",
+          "byte_length": 10040
+        },
+        "totals": {
+          "branch_relations": 0,
+          "causes_relations": 0,
+          "content_mappings": 9,
+          "correlates_relations": 0,
+          "decision_steps": 0,
+          "evidence_records": 4,
+          "flow_edges": 1,
+          "flow_nodes": 2,
+          "inhibits_relations": 1,
+          "links": 5,
+          "node_conditions": 2,
+          "node_exceptions": 2,
+          "node_inputs": 2,
+          "node_outputs": 2,
+          "parsed_statements": 4,
+          "process_conditions": 1,
+          "process_exceptions": 1,
+          "promotes_relations": 0,
+          "relation_conditions": 1,
+          "relation_exceptions": 1,
+          "relations": 1,
+          "rendered_notes": 2,
+          "sequence_relations": 0,
+          "source_statements": 4,
+          "steps": 2,
+          "unknown_relations": 0,
+          "unparsed_statements": 0
+        },
+        "inputs": {
+          ".case.json": {
+            "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+            "byte_length": 2775
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+            "byte_length": 2775
+          },
+          ".review-.owner.json": {
+            "sha256": "261271023876d8e3e788380c3f3b6285f9c22dca39c8ba4e1924647d5fb5bd97",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+            "byte_length": 1682
+          },
+          ".review-process-ir.json": {
+            "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+            "byte_length": 5303
+          },
+          ".review-review.json": {
+            "sha256": "dbb0b70fa58cb113770ada269e6e9348baaa8e14753833ca594fb77718cc4c21",
+            "byte_length": 6483
+          },
+          ".review-review.md": {
+            "sha256": "690047cf07ee1e8d9c158ad90bdf93cb0c956064567951e1c58f17ae45366870",
+            "byte_length": 6666
+          },
+          ".source.json": {
+            "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+            "byte_length": 1682
+          }
+        },
+        "files": [
+          {
+            "relative_path": "流程总览.md",
+            "note_id": "flow_overview",
+            "plan_revision": 1,
+            "content_sha256": "34f05a5ff316b31b5f26c9a2fa4b15adad4d233cb08cef1b81381b77aec5df6f",
+            "byte_length": 675,
+            "content_mappings": [
+              {
+                "section_id": "flow",
+                "block_id": "process_title",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 41,
+                "end_byte": 80
+              },
+              {
+                "section_id": "flow",
+                "block_id": "reading_scope",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [],
+                "start_byte": 94,
+                "end_byte": 355
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_node",
+                "item_id": "n0",
+                "source_object_ids": [
+                  "s1"
+                ],
+                "start_byte": 385,
+                "end_byte": 417
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_node",
+                "item_id": "n1",
+                "source_object_ids": [
+                  "s2"
+                ],
+                "start_byte": 418,
+                "end_byte": 447
+              },
+              {
+                "section_id": "flow",
+                "block_id": "process_diagram",
+                "kind": "diagram_edge",
+                "item_id": "e0",
+                "source_object_ids": [
+                  "r1"
+                ],
+                "start_byte": 448,
+                "end_byte": 475
+              }
+            ],
+            "links": [
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "过程说明",
+                "display_text": "查看完整过程说明",
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 481,
+                "end_byte": 535
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "步骤-s1",
+                "display_text": "查看步骤明细",
+                "source_object_ids": [
+                  "s1"
+                ],
+                "start_byte": 536,
+                "end_byte": 581
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "步骤-s2",
+                "display_text": "查看步骤明细",
+                "source_object_ids": [
+                  "s2"
+                ],
+                "start_byte": 582,
+                "end_byte": 627
+              },
+              {
+                "section_id": "flow",
+                "block_id": "detail_links",
+                "item_id": null,
+                "target_path": "过程明细.md",
+                "target_heading": "关系-r1",
+                "display_text": "查看关系明细",
+                "source_object_ids": [
+                  "r1"
+                ],
+                "start_byte": 628,
+                "end_byte": 673
+              }
+            ]
+          },
+          {
+            "relative_path": "过程明细.md",
+            "note_id": "process_details",
+            "plan_revision": 1,
+            "content_sha256": "2f71cda055f87a2f459e966d4b12bf4788e4ae0b21ec45efd4f48291df5c1144",
+            "byte_length": 1134,
+            "content_mappings": [
+              {
+                "section_id": "process_detail",
+                "block_id": "process",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 41,
+                "end_byte": 178
+              },
+              {
+                "section_id": "step_s1",
+                "block_id": "s1",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "s1"
+                ],
+                "start_byte": 206,
+                "end_byte": 481
+              },
+              {
+                "section_id": "step_s2",
+                "block_id": "s2",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "s2"
+                ],
+                "start_byte": 509,
+                "end_byte": 814
+              },
+              {
+                "section_id": "relation_r1",
+                "block_id": "r1",
+                "kind": "text",
+                "item_id": null,
+                "source_object_ids": [
+                  "r1",
+                  "s1",
+                  "s2"
+                ],
+                "start_byte": 842,
+                "end_byte": 1061
+              }
+            ],
+            "links": [
+              {
+                "section_id": "return",
+                "block_id": "return_link",
+                "item_id": null,
+                "target_path": "流程总览.md",
+                "target_heading": "流程表达",
+                "display_text": "返回流程总览",
+                "source_object_ids": [
+                  "process"
+                ],
+                "start_byte": 1084,
+                "end_byte": 1132
+              }
+            ]
+          }
+        ],
+        "artifacts": {
+          ".case.json": {
+            "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+            "byte_length": 363
+          },
+          ".gold.json": {
+            "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+            "byte_length": 2775
+          },
+          ".owner.json": {
+            "sha256": "5037187a8cca62e176659c445682e6b27dc3016882d444f5f3bb01af3c46c051",
+            "byte_length": 146
+          },
+          ".profile.json": {
+            "sha256": "8db17e503ee448a58114f175dc6d38aae00424422b0c11d88a4e26d210c23c04",
+            "byte_length": 296
+          },
+          ".review-.case.json": {
+            "sha256": "71bcea656ee244de909418a8638265908115672cca5906988f8b74194161ecee",
+            "byte_length": 363
+          },
+          ".review-.gold.json": {
+            "sha256": "4ec5170931a64c95d819cacc8b33151e940c134316a57937c01bbb79355a9548",
+            "byte_length": 2775
+          },
+          ".review-.owner.json": {
+            "sha256": "261271023876d8e3e788380c3f3b6285f9c22dca39c8ba4e1924647d5fb5bd97",
+            "byte_length": 170
+          },
+          ".review-.source.json": {
+            "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+            "byte_length": 1682
+          },
+          ".review-process-ir.json": {
+            "sha256": "0e860c0a3818de19d720ab05b74196928fa1f5329e77704a9564276b7a6cb53e",
+            "byte_length": 5303
+          },
+          ".review-review.json": {
+            "sha256": "dbb0b70fa58cb113770ada269e6e9348baaa8e14753833ca594fb77718cc4c21",
+            "byte_length": 6483
+          },
+          ".review-review.md": {
+            "sha256": "690047cf07ee1e8d9c158ad90bdf93cb0c956064567951e1c58f17ae45366870",
+            "byte_length": 6666
+          },
+          ".source.json": {
+            "sha256": "e5f1d128eb1f3f18b04039218b7248c2dd8bcf19ba1c0c5c0a4c9de6cbc786d2",
+            "byte_length": 1682
+          },
+          "plan.json": {
+            "sha256": "d1f4ad32aa8652ef87b11125cc0c14d85601eac89a3b4682e92b31cc21705aca",
+            "byte_length": 10040
+          },
+          "流程总览.md": {
+            "sha256": "34f05a5ff316b31b5f26c9a2fa4b15adad4d233cb08cef1b81381b77aec5df6f",
+            "byte_length": 675
+          },
+          "过程明细.md": {
+            "sha256": "2f71cda055f87a2f459e966d4b12bf4788e4ae0b21ec45efd4f48291df5c1144",
+            "byte_length": 1134
+          }
+        }
+      },
+      "bridge_plan_and_author_semantics_equal": true,
+      "selected_output_equals_original_vault": true,
+      "elapsed_seconds": 0.051770576974377036
+    }
+  ],
+  "model_requests": 0,
+  "native_captures": "not_run",
+  "scientific_quality": "not_run",
+  "base_13_case_fixture_unchanged": true,
+  "base_13_case_anchor": "9d65fc4ae8b3d4b70608c0453b894675aff0d61e2d317acf31b442c54c57915c",
+  "checker": {
+    "path": "scripts/verify_process_flow.py",
+    "sha256": "adfebcfabd6baf3e8fc86fa1473630958f863fc1f6e2eba163d635c95501b40f",
+    "byte_length": 73672
+  }
+}

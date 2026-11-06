@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_format_and_output_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "scan-fallback",
+  "feature": "scan",
+  "author_case": "clear",
+  "representative_kind": "product_output",
+  "representation": "formula_image",
+  "semantic_source": {
+    "expression": "x_i = -\\frac{a_i}{b_i}",
+    "tokens": [
+      "x",
+      "_",
+      "i",
+      "=",
+      "-",
+      "\\frac",
+      "{",
+      "a",
+      "_",
+      "i",
+      "}",
+      "{",
+      "b",
+      "_",
+      "i",
+      "}"
+    ],
+    "symbols": [
+      {
+        "symbol": "x",
+        "definition": "Reported displacement.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "a",
+        "definition": "Input amount.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "b",
+        "definition": "Positive scale.",
+        "unit": "dimensionless"
+      },
+      {
+        "symbol": "i",
+        "definition": "Sample index.",
+        "unit": "dimensionless"
+      }
+    ],
+    "conditions": [
+      "a_i >= 0.",
+      "b_i > 0."
+    ],
+    "ranges": [
+      "i in {1, 2}.",
+      "x_i <= 0."
+    ],
+    "exceptions": [
+      "If b_i = 0, the expression is undefined."
+    ],
+    "legibility": "clear",
+    "unknown_positions": [],
+    "success_allowed": true
+  },
+  "collector": {
+    "notes": [
+      {
+        "file": "扫描公式预览.md",
+        "math_trees": [],
+        "images": [
+          {
+            "file": "original.png",
+            "width": 560,
+            "height": 200
+          }
+        ],
+        "link_destinations": [
+          "original.png",
+          "page.png",
+          "response.bin",
+          "recognized.tex",
+          "original.pdf"
+        ],
+        "click_attachments": [
+          "original.png",
+          "page.png"
+        ]
+      }
+    ],
+    "require_complete_context": true,
+    "must_display_recognized_tex_exactly_as_saved": true,
+    "blocked_absent": [],
+    "attachment_images": {
+      "original.png": {
+        "width": 560,
+        "height": 200
+      },
+      "page.png": {
+        "width": 800,
+        "height": 1000
+      }
+    },
+    "math_tree_provenance": "handwritten from frozen clear author; null expression for covered sign/subscript"
+  },
+  "coverage": [
+    "same one-author three scan states; not independent scientific denominator",
+    "original region fallback",
+    "original region 560x200/page 800x1000/PDF byte provenance"
+  ]
+}

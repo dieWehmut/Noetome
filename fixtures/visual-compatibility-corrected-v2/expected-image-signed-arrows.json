@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_format_and_output_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "image-signed-arrows",
+  "feature": "image",
+  "author_case": "signed_arrows",
+  "representative_kind": "product_output",
+  "representation": "svg_redraw",
+  "semantic_source": {
+    "schema_version": 1,
+    "producer": "author_image_declaration",
+    "author": "independent_cc0_fixture_author",
+    "complete": true,
+    "data_available": false,
+    "caption": "Fictional engineering diagram; manual source declaration, no image recognition.",
+    "conditions": [
+      "Only the selected schematic relationships are asserted."
+    ],
+    "exceptions": [
+      "No scientific accuracy or measured data is claimed."
+    ],
+    "elements": [
+      {
+        "id": "feed",
+        "kind": "rect",
+        "bbox": [
+          40,
+          150,
+          220,
+          120
+        ],
+        "label": "Feed",
+        "unit": "mmol/L",
+        "legend_id": null
+      },
+      {
+        "id": "response",
+        "kind": "circle",
+        "bbox": [
+          390,
+          120,
+          180,
+          180
+        ],
+        "label": "Response",
+        "unit": "a.u.",
+        "legend_id": null
+      },
+      {
+        "id": "output",
+        "kind": "rect",
+        "bbox": [
+          700,
+          150,
+          220,
+          120
+        ],
+        "label": "Outlet",
+        "unit": "mmol/L",
+        "legend_id": null
+      }
+    ],
+    "relations": [
+      {
+        "id": "gain",
+        "from": "feed",
+        "to": "response",
+        "start": [
+          260,
+          210
+        ],
+        "end": [
+          390,
+          210
+        ],
+        "direction": "forward",
+        "effect": "positive",
+        "label": "activates",
+        "unit": "s^-1",
+        "legend_id": "positive"
+      },
+      {
+        "id": "loss",
+        "from": "response",
+        "to": "output",
+        "start": [
+          570,
+          210
+        ],
+        "end": [
+          700,
+          210
+        ],
+        "direction": "forward",
+        "effect": "negative",
+        "label": "inhibits",
+        "unit": "s^-1",
+        "legend_id": "negative"
+      }
+    ],
+    "spatial_relations": [
+      {
+        "id": "feed-left",
+        "a": "feed",
+        "b": "response",
+        "relation": "left_of"
+      },
+      {
+        "id": "response-left",
+        "a": "response",
+        "b": "output",
+        "relation": "left_of"
+      }
+    ],
+    "legend": [
+      {
+        "id": "positive",
+        "label": "+",
+        "meaning": "positive activation",
+        "color": "#c5efcb",
+        "bbox": [
+          40,
+          360,
+          360,
+          45
+        ]
+      },
+      {
+        "id": "negative",
+        "label": "-",
+        "meaning": "negative inhibition",
+        "color": "#f5c1c1",
+        "bbox": [
+          500,
+          360,
+          400,
+          45
+        ]
+      }
+    ]
+  },
+  "collector": {
+    "notes": [
+      {
+        "file": "图像预览.md",
+        "math_trees": [],
+        "required_texts": [
+          "图像保真样例 signed_arrows",
+          "Fictional engineering diagram; manual source declaration, no image recognition.",
+          "Only the selected schematic relationships are asserted.",
+          "No scientific accuracy or measured data is claimed.",
+          "Feed",
+          "Response",
+          "Outlet",
+          "mmol/L",
+          "a.u.",
+          "mmol/L",
+          "s^-1",
+          "s^-1",
+          "activates",
+          "inhibits",
+          "positive activation",
+          "negative inhibition"
+        ],
+        "images": [
+          {
+            "file": "redrawn.svg",
+            "width": 960,
+            "height": 520
+          }
+        ],
+        "link_destinations": [
+          "original.png"
+        ],
+        "click_attachments": [
+          "original.png"
+        ],
+        "svg_semantics": {
+          "file": "redrawn.svg",
+          "source": {
+            "schema_version": 1,
+            "producer": "author_image_declaration",
+            "author": "independent_cc0_fixture_author",
+            "complete": true,
+            "data_available": false,
+            "caption": "Fictional engineering diagram; manual source declaration, no image recognition.",
+            "conditions": [
+              "Only the selected schematic relationships are asserted."
+            ],
+            "exceptions": [
+              "No scientific accuracy or measured data is claimed."
+            ],
+            "elements": [
+              {
+                "id": "feed",
+                "kind": "rect",
+                "bbox": [
+                  40,
+                  150,
+                  220,
+                  120
+                ],
+                "label": "Feed",
+                "unit": "mmol/L",
+                "legend_id": null
+              },
+              {
+                "id": "response",
+                "kind": "circle",
+                "bbox": [
+                  390,
+                  120,
+                  180,
+                  180
+                ],
+                "label": "Response",
+                "unit": "a.u.",
+                "legend_id": null
+              },
+              {
+                "id": "output",
+                "kind": "rect",
+                "bbox": [
+                  700,
+                  150,
+                  220,
+                  120
+                ],
+                "label": "Outlet",
+                "unit": "mmol/L",
+                "legend_id": null
+              }
+            ],
+            "relations": [
+              {
+                "id": "gain",
+                "from": "feed",
+                "to": "response",
+                "start": [
+                  260,
+                  210
+                ],
+                "end": [
+                  390,
+                  210
+                ],
+                "direction": "forward",
+                "effect": "positive",
+                "label": "activates",
+                "unit": "s^-1",
+                "legend_id": "positive"
+              },
+              {
+                "id": "loss",
+                "from": "response",
+                "to": "output",
+                "start": [
+                  570,
+                  210
+                ],
+                "end": [
+                  700,
+                  210
+                ],
+                "direction": "forward",
+                "effect": "negative",
+                "label": "inhibits",
+                "unit": "s^-1",
+                "legend_id": "negative"
+              }
+            ],
+            "spatial_relations": [
+              {
+                "id": "feed-left",
+                "a": "feed",
+                "b": "response",
+                "relation": "left_of"
+              },
+              {
+                "id": "response-left",
+                "a": "response",
+                "b": "output",
+                "relation": "left_of"
+              }
+            ],
+            "legend": [
+              {
+                "id": "positive",
+                "label": "+",
+                "meaning": "positive activation",
+                "color": "#c5efcb",
+                "bbox": [
+                  40,
+                  360,
+                  360,
+                  45
+                ]
+              },
+              {
+                "id": "negative",
+                "label": "-",
+                "meaning": "negative inhibition",
+                "color": "#f5c1c1",
+                "bbox": [
+                  500,
+                  360,
+                  400,
+                  45
+                ]
+              }
+            ]
+          },
+          "dimensions": [
+            960,
+            520
+          ]
+        }
+      }
+    ],
+    "attachment_images": {
+      "original.png": {
+        "width": 960,
+        "height": 520
+      }
+    },
+    "expected_issue_codes": [],
+    "expected_fallback_reasons": [],
+    "require_actual_svg_geometry_and_local_png": true
+  },
+  "coverage": [
+    "original PNG 960x520 and real local attachment click",
+    "SVG label/unit/legend/polarity/direction/spatial structure"
+  ]
+}

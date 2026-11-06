@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_gold",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "process": {
+    "title": "只有真支的签名说明",
+    "entry": "d1",
+    "goals": [
+      "s1"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "steps": [
+    {
+      "id": "d1",
+      "kind": "decision",
+      "label": "检查签名",
+      "description": "只记录签名完整时的去向，未给出否支处理",
+      "criterion": "签名完整",
+      "inputs": [
+        "样例卡"
+      ],
+      "outputs": [
+        "签名判定结果"
+      ],
+      "conditions": [
+        "签名区域可读"
+      ],
+      "exceptions": [
+        "不可读时暂停"
+      ]
+    },
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "加入归档队列",
+      "description": "接收判据为真的卡片",
+      "criterion": null,
+      "inputs": [
+        "判据为真的卡片"
+      ],
+      "outputs": [
+        "待归档卡"
+      ],
+      "conditions": [
+        "签名完整"
+      ],
+      "exceptions": [
+        "队列不可用时暂停"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "left": "d1",
+      "right": "s1",
+      "kind": "branch",
+      "branch_outcome": true,
+      "conditions": [
+        "签名区域可读"
+      ],
+      "exceptions": [
+        "队列不可用时暂停"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "object_id": "process",
+      "start_byte": 0,
+      "end_byte": 147,
+      "quote": "过程：\"只有真支的签名说明\"。入口：d1。目标：[\"s1\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+    },
+    {
+      "object_id": "d1",
+      "start_byte": 148,
+      "end_byte": 401,
+      "quote": "判定 d1：\"检查签名\"。判据：\"签名完整\"。说明：\"只记录签名完整时的去向，未给出否支处理\"。输入：[\"样例卡\"]。输出：[\"签名判定结果\"]。条件：[\"签名区域可读\"]。例外：[\"不可读时暂停\"]。"
+    },
+    {
+      "object_id": "s1",
+      "start_byte": 402,
+      "end_byte": 611,
+      "quote": "步骤 s1：\"加入归档队列\"。说明：\"接收判据为真的卡片\"。输入：[\"判据为真的卡片\"]。输出：[\"待归档卡\"]。条件：[\"签名完整\"]。例外：[\"队列不可用时暂停\"]。"
+    },
+    {
+      "object_id": "r1",
+      "start_byte": 612,
+      "end_byte": 731,
+      "quote": "关系 r1：d1 的判据为真时执行 s1。条件：[\"签名区域可读\"]。例外：[\"队列不可用时暂停\"]。"
+    }
+  ]
+}

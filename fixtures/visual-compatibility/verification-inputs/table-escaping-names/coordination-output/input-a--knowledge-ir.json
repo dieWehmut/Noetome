@@ -1,0 +1,462 @@
+{
+  "schema_version": 1,
+  "producer": "source_review",
+  "revision": 1,
+  "request_id": "synthetic-coordination-a",
+  "binding": {
+    "project_id": "d10dd42e-e2b2-4d2a-9316-137464a42a87",
+    "import_id": "48d5d788-5689-4138-b490-5502c776b464",
+    "source_id": "a4b81a12-d696-4aa6-9efd-71012a8373b5",
+    "version_id": "8e3693f8-ecef-4d20-babe-e44f1af3e7c8",
+    "content_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+    "normalized_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+    "parse_id": null,
+    "manifest_sha256": null
+  },
+  "source_match": "passed",
+  "concepts": [
+    {
+      "concept_id": "a-subject",
+      "revision": 1,
+      "canonical_name": "甲容器 [α]",
+      "aliases": [],
+      "needs_full_explanation": true
+    },
+    {
+      "concept_id": "a-property",
+      "revision": 1,
+      "canonical_name": "速率 | 测量",
+      "aliases": [],
+      "needs_full_explanation": true
+    }
+  ],
+  "atoms": [
+    {
+      "atom": {
+        "atom_id": "a-speed",
+        "revision": 1,
+        "kind": "comparison_value",
+        "concept_ids": [
+          "a-subject",
+          "a-property"
+        ],
+        "content": "甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+        "qualifiers": [
+          "m/s",
+          "x < 2",
+          "计数范围 [1,2]",
+          "读数 * 异常时不适用"
+        ],
+        "evidence_links": [
+          {
+            "evidence_id": "a-support",
+            "relation": "supports"
+          }
+        ],
+        "required": false,
+        "verification": "unverified",
+        "value_status": "known"
+      },
+      "measurement": {
+        "value_status": "known",
+        "value": "10",
+        "unit": "m/s",
+        "conditions": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "a-support",
+      "unit_id": "unit-0",
+      "excerpt_start_byte": 0,
+      "excerpt_end_byte": 176,
+      "excerpt_sha256": "b67360ce6cd96e91121b8af407bbe2e5bdf099336d4946be5505166b168d7d42",
+      "quote": "适用条件：已列明；观点时间：2020年。\n甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。"
+    }
+  ],
+  "checks": [
+    {
+      "category": "schema",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "strict_schema_1",
+      "actual": null
+    },
+    {
+      "category": "source",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "parsed",
+      "actual": "parsed"
+    },
+    {
+      "category": "exclusion",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "included",
+      "actual": "included"
+    },
+    {
+      "category": "coverage",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "atom_count": 1,
+        "unit_id": "unit-0"
+      },
+      "actual": {
+        "candidate_ids": [
+          "a-speed"
+        ],
+        "decision": {
+          "atom_ids": [
+            "a-speed"
+          ],
+          "disposition": "included",
+          "exclusion_reason": null,
+          "schema_version": 1,
+          "unit_id": "unit-0"
+        }
+      }
+    },
+    {
+      "category": "binding",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "binding": {
+          "content_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+          "import_id": "48d5d788-5689-4138-b490-5502c776b464",
+          "manifest_sha256": null,
+          "normalized_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+          "parse_id": null,
+          "project_id": "d10dd42e-e2b2-4d2a-9316-137464a42a87",
+          "source_id": "a4b81a12-d696-4aa6-9efd-71012a8373b5",
+          "version_id": "8e3693f8-ecef-4d20-babe-e44f1af3e7c8"
+        },
+        "request_id": "synthetic-coordination-a"
+      },
+      "actual": {
+        "binding": {
+          "content_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+          "import_id": "48d5d788-5689-4138-b490-5502c776b464",
+          "manifest_sha256": null,
+          "normalized_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+          "parse_id": null,
+          "project_id": "d10dd42e-e2b2-4d2a-9316-137464a42a87",
+          "source_id": "a4b81a12-d696-4aa6-9efd-71012a8373b5",
+          "version_id": "8e3693f8-ecef-4d20-babe-e44f1af3e7c8"
+        },
+        "request_id": "synthetic-coordination-a"
+      }
+    },
+    {
+      "category": "duplicate",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "unique_semantic_atom",
+      "actual": "甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。"
+    },
+    {
+      "category": "evidence_identity",
+      "object_id": "a-support",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 176,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "end_byte": 177,
+        "start_byte": 0,
+        "unit_id": "unit-0"
+      },
+      "actual": {
+        "evidence_id": "a-support",
+        "excerpt_end_byte": 176,
+        "excerpt_sha256": "b67360ce6cd96e91121b8af407bbe2e5bdf099336d4946be5505166b168d7d42",
+        "excerpt_start_byte": 0,
+        "quote": "适用条件：已列明；观点时间：2020年。\n甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+        "unit_id": "unit-0"
+      }
+    },
+    {
+      "category": "evidence",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "end_byte": 176,
+        "quote": "甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+        "start_byte": 53
+      },
+      "actual": [
+        {
+          "evidence_id": "a-support",
+          "excerpt_end_byte": 176,
+          "excerpt_sha256": "b67360ce6cd96e91121b8af407bbe2e5bdf099336d4946be5505166b168d7d42",
+          "excerpt_start_byte": 0,
+          "quote": "适用条件：已列明；观点时间：2020年。\n甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+          "unit_id": "unit-0"
+        }
+      ]
+    },
+    {
+      "category": "concept",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "components": [
+          "甲容器 [α]",
+          "速率 | 测量"
+        ],
+        "compound": "甲容器 [α] 速率 | 测量"
+      },
+      "actual": {
+        "additional_source_concepts": 0,
+        "linked": [
+          {
+            "aliases": [],
+            "canonical_name": "甲容器 [α]",
+            "concept_id": "a-subject",
+            "needs_full_explanation": true,
+            "revision": 1
+          },
+          {
+            "aliases": [],
+            "canonical_name": "速率 | 测量",
+            "concept_id": "a-property",
+            "needs_full_explanation": true,
+            "revision": 1
+          }
+        ]
+      }
+    },
+    {
+      "category": "content",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+      "actual": "甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。"
+    },
+    {
+      "category": "fact",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "value": "10",
+        "value_status": "known"
+      },
+      "actual": {
+        "conditions": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ],
+        "unit": "m/s",
+        "value": "10",
+        "value_status": "known"
+      }
+    },
+    {
+      "category": "unit",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "m/s",
+      "actual": {
+        "measurement": "m/s",
+        "qualifiers": [
+          "m/s",
+          "x < 2",
+          "计数范围 [1,2]",
+          "读数 * 异常时不适用"
+        ]
+      }
+    },
+    {
+      "category": "condition",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "x < 2",
+      "actual": {
+        "body": [
+          "x<2",
+          "计数范围[1,2]"
+        ],
+        "measurement": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ],
+        "qualifiers": [
+          "m/s",
+          "x < 2",
+          "计数范围 [1,2]",
+          "读数 * 异常时不适用"
+        ]
+      }
+    },
+    {
+      "category": "condition",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "计数范围 [1,2]",
+      "actual": {
+        "body": [
+          "x<2",
+          "计数范围[1,2]"
+        ],
+        "measurement": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ],
+        "qualifiers": [
+          "m/s",
+          "x < 2",
+          "计数范围 [1,2]",
+          "读数 * 异常时不适用"
+        ]
+      }
+    },
+    {
+      "category": "condition_set",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "allowed_contexts": [],
+        "required": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ]
+      },
+      "actual": {
+        "body": [
+          "x<2",
+          "计数范围[1,2]"
+        ],
+        "measurement": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ]
+      }
+    },
+    {
+      "category": "exception",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "读数 * 异常时不适用",
+      "actual": {
+        "body": [
+          "读数*异常时不适用"
+        ],
+        "qualifiers": [
+          "m/s",
+          "x < 2",
+          "计数范围 [1,2]",
+          "读数 * 异常时不适用"
+        ]
+      }
+    },
+    {
+      "category": "exception_set",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": [
+        "读数 * 异常时不适用"
+      ],
+      "actual": [
+        "读数*异常时不适用"
+      ]
+    },
+    {
+      "category": "qualifiers",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "conditions": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ],
+        "contexts": [],
+        "exceptions": [
+          "读数 * 异常时不适用"
+        ],
+        "unit": "m/s"
+      },
+      "actual": [
+        "m/s",
+        "x < 2",
+        "计数范围 [1,2]",
+        "读数 * 异常时不适用"
+      ]
+    }
+  ]
+}

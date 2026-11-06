@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_format_and_output_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "flow-branch",
+  "feature": "flow",
+  "author_case": "branch",
+  "representative_kind": "product_output",
+  "representation": "flowchart",
+  "semantic_source": {
+    "process": {
+      "title": "样例签名分流",
+      "entry": "s1",
+      "goals": [
+        "s2",
+        "s3"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "资料不可读时暂停"
+      ]
+    },
+    "nodes": [
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "接收卡片",
+        "description": "接收待判断的样例卡",
+        "criterion": null,
+        "inputs": [
+          "待判断卡"
+        ],
+        "outputs": [
+          "已接收卡"
+        ],
+        "conditions": [
+          "卡片可读"
+        ],
+        "exceptions": [
+          "卡片破损时暂停"
+        ]
+      },
+      {
+        "id": "d1",
+        "kind": "decision",
+        "label": "检查签名",
+        "description": "只判断签名是否完整",
+        "criterion": "签名完整",
+        "inputs": [
+          "已接收卡"
+        ],
+        "outputs": [
+          "签名判定结果"
+        ],
+        "conditions": [
+          "卡片已接收"
+        ],
+        "exceptions": [
+          "签名区域不可读时暂停判定"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "进入归档队列",
+        "description": "将真分支卡片加入归档队列",
+        "criterion": null,
+        "inputs": [
+          "判据为真的卡片"
+        ],
+        "outputs": [
+          "待归档卡"
+        ],
+        "conditions": [
+          "签名完整"
+        ],
+        "exceptions": [
+          "队列不可用时保留卡片"
+        ]
+      },
+      {
+        "id": "s3",
+        "kind": "step",
+        "label": "进入补签队列",
+        "description": "将假分支卡片加入补签队列",
+        "criterion": null,
+        "inputs": [
+          "判据为假的卡片"
+        ],
+        "outputs": [
+          "待补签卡"
+        ],
+        "conditions": [
+          "签名完整这一判据为假"
+        ],
+        "exceptions": [
+          "队列不可用时保留卡片"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "d1",
+        "kind": "sequence",
+        "branch_outcome": null,
+        "conditions": [
+          "接收完成"
+        ],
+        "exceptions": [
+          "破损卡不进入判定"
+        ]
+      },
+      {
+        "id": "r2",
+        "left": "d1",
+        "right": "s2",
+        "kind": "branch",
+        "branch_outcome": true,
+        "conditions": [
+          "签名区域可读"
+        ],
+        "exceptions": [
+          "归档队列不可用时暂停"
+        ]
+      },
+      {
+        "id": "r3",
+        "left": "d1",
+        "right": "s3",
+        "kind": "branch",
+        "branch_outcome": false,
+        "conditions": [
+          "签名区域可读"
+        ],
+        "exceptions": [
+          "补签队列不可用时暂停"
+        ]
+      }
+    ],
+    "required_precedence": [
+      [
+        "s1",
+        "d1"
+      ],
+      [
+        "d1",
+        "s2"
+      ],
+      [
+        "d1",
+        "s3"
+      ]
+    ],
+    "empty_list_meaning": "not_listed_in_selected_source"
+  },
+  "collector": {
+    "notes": [
+      "流程总览.md",
+      "过程明细.md"
+    ],
+    "graph": {
+      "direction": "TD",
+      "nodes": [
+        {
+          "author_id": "d1",
+          "render_id": "n0",
+          "shape": "decision",
+          "label": "检查签名：签名完整"
+        },
+        {
+          "author_id": "s1",
+          "render_id": "n1",
+          "shape": "step",
+          "label": "接收卡片"
+        },
+        {
+          "author_id": "s2",
+          "render_id": "n2",
+          "shape": "step",
+          "label": "进入归档队列"
+        },
+        {
+          "author_id": "s3",
+          "render_id": "n3",
+          "shape": "step",
+          "label": "进入补签队列"
+        }
+      ],
+      "edges": [
+        {
+          "author_id": "r1",
+          "from": "s1",
+          "to": "d1",
+          "render_from": "n1",
+          "render_to": "n0",
+          "kind": "sequence",
+          "branch_outcome": null,
+          "label": "随后",
+          "terminal_arrow": true,
+          "end_y_greater_than_start_y": true
+        },
+        {
+          "author_id": "r2",
+          "from": "d1",
+          "to": "s2",
+          "render_from": "n0",
+          "render_to": "n2",
+          "kind": "branch",
+          "branch_outcome": true,
+          "label": "判据为真：签名完整",
+          "terminal_arrow": true,
+          "end_y_greater_than_start_y": true
+        },
+        {
+          "author_id": "r3",
+          "from": "d1",
+          "to": "s3",
+          "render_from": "n0",
+          "render_to": "n3",
+          "kind": "branch",
+          "branch_outcome": false,
+          "label": "判据为假：签名完整",
+          "terminal_arrow": true,
+          "end_y_greater_than_start_y": true
+        }
+      ],
+      "require_real_arrow_geometry": true
+    },
+    "require_complete_context": true,
+    "links": {
+      "destination": "过程明细.md",
+      "heading_by_object": {
+        "process": "过程说明",
+        "s1": "步骤-s1",
+        "d1": "步骤-d1",
+        "s2": "步骤-s2",
+        "s3": "步骤-s3",
+        "r1": "关系-r1",
+        "r2": "关系-r2",
+        "r3": "关系-r3"
+      },
+      "require_real_click": true
+    },
+    "ordered_list": null,
+    "expected_issue_codes": []
+  },
+  "coverage": [
+    "all nodes/relations/conditions/exceptions; empty lists retained",
+    "branch true/false direction and criterion"
+  ]
+}

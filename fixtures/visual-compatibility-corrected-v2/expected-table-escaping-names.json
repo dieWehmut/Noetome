@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_format_and_output_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "table-escaping-names",
+  "feature": "table",
+  "author_case": "escaping_names",
+  "representative_kind": "product_output",
+  "representation": "table",
+  "semantic_source": {
+    "objects": [
+      {
+        "object_id": "60000000-0000-4000-8000-000000000005",
+        "label": "甲容器 [α]"
+      },
+      {
+        "object_id": "60000000-0000-4000-8000-000000000006",
+        "label": "乙容器（β）"
+      }
+    ],
+    "properties": [
+      {
+        "property_id": "60000000-0000-4000-8000-000000000007",
+        "label": "速率 | 测量"
+      }
+    ],
+    "cells": [
+      {
+        "object_id": "60000000-0000-4000-8000-000000000005",
+        "property_id": "60000000-0000-4000-8000-000000000007",
+        "state": "facts",
+        "missing_meaning": null,
+        "facts": [
+          {
+            "value_status": "known",
+            "value": "10",
+            "unit": "m/s",
+            "conditions": [
+              "x < 2",
+              "计数范围 [1,2]"
+            ],
+            "exceptions": [
+              "读数 * 异常时不适用"
+            ],
+            "applicability_status": "known",
+            "time": {
+              "status": "known",
+              "precision": "year",
+              "value": "2020"
+            },
+            "input_ids": [
+              "a"
+            ],
+            "original_atom_ids": [
+              "a-speed"
+            ]
+          }
+        ]
+      },
+      {
+        "object_id": "60000000-0000-4000-8000-000000000006",
+        "property_id": "60000000-0000-4000-8000-000000000007",
+        "state": "facts",
+        "missing_meaning": null,
+        "facts": [
+          {
+            "value_status": "known",
+            "value": "12",
+            "unit": "m/s",
+            "conditions": [
+              "x < 2",
+              "计数范围 [1,2]"
+            ],
+            "exceptions": [
+              "读数 * 异常时不适用"
+            ],
+            "applicability_status": "known",
+            "time": {
+              "status": "known",
+              "precision": "year",
+              "value": "2020"
+            },
+            "input_ids": [
+              "b"
+            ],
+            "original_atom_ids": [
+              "b-speed"
+            ]
+          }
+        ]
+      }
+    ],
+    "required_atom_refs": [
+      {
+        "input_id": "a",
+        "original_atom_id": "a-speed"
+      },
+      {
+        "input_id": "b",
+        "original_atom_id": "b-speed"
+      }
+    ],
+    "required_missing_text": null
+  },
+  "collector": {
+    "notes": [
+      "知识比较.md",
+      "对象-60000000-0000-4000-8000-000000000005.md",
+      "对象-60000000-0000-4000-8000-000000000006.md"
+    ],
+    "table": {
+      "file": "知识比较.md",
+      "header": [
+        "对象",
+        "速率 | 测量"
+      ],
+      "row_count": 2,
+      "column_count": 2,
+      "semantic_cells": [
+        {
+          "object_id": "60000000-0000-4000-8000-000000000005",
+          "property_id": "60000000-0000-4000-8000-000000000007",
+          "state": "facts",
+          "missing_meaning": null,
+          "facts": [
+            {
+              "value_status": "known",
+              "value": "10",
+              "unit": "m/s",
+              "conditions": [
+                "x < 2",
+                "计数范围 [1,2]"
+              ],
+              "exceptions": [
+                "读数 * 异常时不适用"
+              ],
+              "applicability_status": "known",
+              "time": {
+                "status": "known",
+                "precision": "year",
+                "value": "2020"
+              },
+              "input_ids": [
+                "a"
+              ],
+              "original_atom_ids": [
+                "a-speed"
+              ]
+            }
+          ]
+        },
+        {
+          "object_id": "60000000-0000-4000-8000-000000000006",
+          "property_id": "60000000-0000-4000-8000-000000000007",
+          "state": "facts",
+          "missing_meaning": null,
+          "facts": [
+            {
+              "value_status": "known",
+              "value": "12",
+              "unit": "m/s",
+              "conditions": [
+                "x < 2",
+                "计数范围 [1,2]"
+              ],
+              "exceptions": [
+                "读数 * 异常时不适用"
+              ],
+              "applicability_status": "known",
+              "time": {
+                "status": "known",
+                "precision": "year",
+                "value": "2020"
+              },
+              "input_ids": [
+                "b"
+              ],
+              "original_atom_ids": [
+                "b-speed"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "links": [
+      {
+        "from": "知识比较.md",
+        "destination": "对象-60000000-0000-4000-8000-000000000005.md",
+        "label": "查看详情",
+        "target_heading": "知识明细",
+        "require_real_click": true,
+        "object_label": "甲容器 [α]"
+      },
+      {
+        "from": "知识比较.md",
+        "destination": "对象-60000000-0000-4000-8000-000000000006.md",
+        "label": "查看详情",
+        "target_heading": "知识明细",
+        "require_real_click": true,
+        "object_label": "乙容器（β）"
+      }
+    ],
+    "require_complete_context": true
+  },
+  "coverage": [
+    "table_rows_cells",
+    "Chinese object paths and real details clicks",
+    "literal brackets/Greek/pipe/star",
+    "10 and 12 m/s",
+    "known applicability; year 2020; all conditions/exceptions"
+  ]
+}

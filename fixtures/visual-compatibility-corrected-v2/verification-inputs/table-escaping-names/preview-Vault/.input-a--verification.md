@@ -1,0 +1,644 @@
+# 有界来源知识核对
+
+状态：passed；知识状态：pending；发布：false。
+
+科学质量：not_run；研究：not_requested；网络与付费调用：0。
+
+规则：controlled_measurement_zh_v1；复核主体：automated_source_review；解释时间："before_synthetic_response"。
+
+来源范围、对象、问题码、逐类别检查与分母见以下完整事实快照，与 verification.json 一致。
+
+```json
+{
+  "schema_version": 1,
+  "report_kind": "source_knowledge_verification",
+  "producer": "source_review",
+  "request_id": "synthetic-coordination-a",
+  "status": "passed",
+  "knowledge_status": "pending",
+  "published": false,
+  "scientific_quality": "not_run",
+  "research_status": "not_requested",
+  "network_calls": 0,
+  "paid_calls": 0,
+  "scope": {
+    "purpose": "single_measurement_source_review",
+    "selection": [
+      {
+        "kind": "text",
+        "ordinal": 0
+      }
+    ],
+    "binding": {
+      "project_id": "d10dd42e-e2b2-4d2a-9316-137464a42a87",
+      "import_id": "48d5d788-5689-4138-b490-5502c776b464",
+      "source_id": "a4b81a12-d696-4aa6-9efd-71012a8373b5",
+      "version_id": "8e3693f8-ecef-4d20-babe-e44f1af3e7c8",
+      "content_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+      "normalized_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+      "parse_id": null,
+      "manifest_sha256": null
+    },
+    "units": [
+      {
+        "unit_id": "unit-0",
+        "locator": {
+          "kind": "text",
+          "span_id": "be06d02b-ea5c-4221-8d7a-4274fb3c3d19",
+          "ordinal": 0,
+          "resource_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf"
+        },
+        "source_status": "parsed",
+        "start_byte": 0,
+        "end_byte": 177,
+        "text": "适用条件：已列明；观点时间：2020年。\n甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。\n"
+      }
+    ],
+    "expected_atoms": 1
+  },
+  "binding": {
+    "project_id": "d10dd42e-e2b2-4d2a-9316-137464a42a87",
+    "import_id": "48d5d788-5689-4138-b490-5502c776b464",
+    "source_id": "a4b81a12-d696-4aa6-9efd-71012a8373b5",
+    "version_id": "8e3693f8-ecef-4d20-babe-e44f1af3e7c8",
+    "content_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+    "normalized_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+    "parse_id": null,
+    "manifest_sha256": null
+  },
+  "origin": {
+    "producer": "api",
+    "transport_mode": "local_http_test",
+    "reviewer": "automated_source_review",
+    "interpretation_timing": "before_synthetic_response",
+    "input_fingerprints": {
+      "candidates.json": {
+        "sha256": "f5c2c99062fb727239e1941e447e94803d1b53a96981cd9164f2acd685fc3f95",
+        "byte_length": 3077
+      },
+      "decision.json": {
+        "sha256": "bc2eedda4d3f0964d31ece5ceb9cd2404922eca04beacf7eb48d15a573ec0582",
+        "byte_length": 141
+      },
+      "gold.json": {
+        "sha256": "8abe7f78f9a127f7aad6eb66d0305a948079972a565212a355459553aa5e3dce",
+        "byte_length": 780
+      },
+      "review.json": {
+        "sha256": "a2b8f337632d6bb1a12fa0991697fdd42dcbd8b2021b47ab4afba7906bc4c44c",
+        "byte_length": 525
+      }
+    },
+    "gold_sha256": "8abe7f78f9a127f7aad6eb66d0305a948079972a565212a355459553aa5e3dce"
+  },
+  "rules": {
+    "grammar": "controlled_measurement_zh_v1",
+    "subject": "甲容器 [α]",
+    "property": "速率 | 测量",
+    "allowed_contexts": [],
+    "reviewer": "automated_source_review",
+    "interpretation_timing": "before_synthetic_response"
+  },
+  "expected_results": [
+    {
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "issue_codes": []
+    }
+  ],
+  "candidate_results": [
+    {
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "issue_codes": []
+    }
+  ],
+  "checks": [
+    {
+      "category": "schema",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "strict_schema_1",
+      "actual": null
+    },
+    {
+      "category": "source",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "parsed",
+      "actual": "parsed"
+    },
+    {
+      "category": "exclusion",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "included",
+      "actual": "included"
+    },
+    {
+      "category": "coverage",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "atom_count": 1,
+        "unit_id": "unit-0"
+      },
+      "actual": {
+        "candidate_ids": [
+          "a-speed"
+        ],
+        "decision": {
+          "atom_ids": [
+            "a-speed"
+          ],
+          "disposition": "included",
+          "exclusion_reason": null,
+          "schema_version": 1,
+          "unit_id": "unit-0"
+        }
+      }
+    },
+    {
+      "category": "binding",
+      "object_id": "expected-0",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "binding": {
+          "content_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+          "import_id": "48d5d788-5689-4138-b490-5502c776b464",
+          "manifest_sha256": null,
+          "normalized_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+          "parse_id": null,
+          "project_id": "d10dd42e-e2b2-4d2a-9316-137464a42a87",
+          "source_id": "a4b81a12-d696-4aa6-9efd-71012a8373b5",
+          "version_id": "8e3693f8-ecef-4d20-babe-e44f1af3e7c8"
+        },
+        "request_id": "synthetic-coordination-a"
+      },
+      "actual": {
+        "binding": {
+          "content_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+          "import_id": "48d5d788-5689-4138-b490-5502c776b464",
+          "manifest_sha256": null,
+          "normalized_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+          "parse_id": null,
+          "project_id": "d10dd42e-e2b2-4d2a-9316-137464a42a87",
+          "source_id": "a4b81a12-d696-4aa6-9efd-71012a8373b5",
+          "version_id": "8e3693f8-ecef-4d20-babe-e44f1af3e7c8"
+        },
+        "request_id": "synthetic-coordination-a"
+      }
+    },
+    {
+      "category": "duplicate",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "unique_semantic_atom",
+      "actual": "甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。"
+    },
+    {
+      "category": "evidence_identity",
+      "object_id": "a-support",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 176,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "end_byte": 177,
+        "start_byte": 0,
+        "unit_id": "unit-0"
+      },
+      "actual": {
+        "evidence_id": "a-support",
+        "excerpt_end_byte": 176,
+        "excerpt_sha256": "b67360ce6cd96e91121b8af407bbe2e5bdf099336d4946be5505166b168d7d42",
+        "excerpt_start_byte": 0,
+        "quote": "适用条件：已列明；观点时间：2020年。\n甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+        "unit_id": "unit-0"
+      }
+    },
+    {
+      "category": "evidence",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "end_byte": 176,
+        "quote": "甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+        "start_byte": 53
+      },
+      "actual": [
+        {
+          "evidence_id": "a-support",
+          "excerpt_end_byte": 176,
+          "excerpt_sha256": "b67360ce6cd96e91121b8af407bbe2e5bdf099336d4946be5505166b168d7d42",
+          "excerpt_start_byte": 0,
+          "quote": "适用条件：已列明；观点时间：2020年。\n甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+          "unit_id": "unit-0"
+        }
+      ]
+    },
+    {
+      "category": "concept",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "components": [
+          "甲容器 [α]",
+          "速率 | 测量"
+        ],
+        "compound": "甲容器 [α] 速率 | 测量"
+      },
+      "actual": {
+        "additional_source_concepts": 0,
+        "linked": [
+          {
+            "aliases": [],
+            "canonical_name": "甲容器 [α]",
+            "concept_id": "a-subject",
+            "needs_full_explanation": true,
+            "revision": 1
+          },
+          {
+            "aliases": [],
+            "canonical_name": "速率 | 测量",
+            "concept_id": "a-property",
+            "needs_full_explanation": true,
+            "revision": 1
+          }
+        ]
+      }
+    },
+    {
+      "category": "content",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+      "actual": "甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。"
+    },
+    {
+      "category": "fact",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "value": "10",
+        "value_status": "known"
+      },
+      "actual": {
+        "conditions": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ],
+        "unit": "m/s",
+        "value": "10",
+        "value_status": "known"
+      }
+    },
+    {
+      "category": "unit",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "m/s",
+      "actual": {
+        "measurement": "m/s",
+        "qualifiers": [
+          "m/s",
+          "x < 2",
+          "计数范围 [1,2]",
+          "读数 * 异常时不适用"
+        ]
+      }
+    },
+    {
+      "category": "condition",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "x < 2",
+      "actual": {
+        "body": [
+          "x<2",
+          "计数范围[1,2]"
+        ],
+        "measurement": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ],
+        "qualifiers": [
+          "m/s",
+          "x < 2",
+          "计数范围 [1,2]",
+          "读数 * 异常时不适用"
+        ]
+      }
+    },
+    {
+      "category": "condition",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "计数范围 [1,2]",
+      "actual": {
+        "body": [
+          "x<2",
+          "计数范围[1,2]"
+        ],
+        "measurement": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ],
+        "qualifiers": [
+          "m/s",
+          "x < 2",
+          "计数范围 [1,2]",
+          "读数 * 异常时不适用"
+        ]
+      }
+    },
+    {
+      "category": "condition_set",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "allowed_contexts": [],
+        "required": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ]
+      },
+      "actual": {
+        "body": [
+          "x<2",
+          "计数范围[1,2]"
+        ],
+        "measurement": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ]
+      }
+    },
+    {
+      "category": "exception",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": "读数 * 异常时不适用",
+      "actual": {
+        "body": [
+          "读数*异常时不适用"
+        ],
+        "qualifiers": [
+          "m/s",
+          "x < 2",
+          "计数范围 [1,2]",
+          "读数 * 异常时不适用"
+        ]
+      }
+    },
+    {
+      "category": "exception_set",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": [
+        "读数 * 异常时不适用"
+      ],
+      "actual": [
+        "读数*异常时不适用"
+      ]
+    },
+    {
+      "category": "qualifiers",
+      "object_id": "a-speed",
+      "unit_id": "unit-0",
+      "start_byte": 0,
+      "end_byte": 177,
+      "status": "passed",
+      "code": null,
+      "expected": {
+        "conditions": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ],
+        "contexts": [],
+        "exceptions": [
+          "读数 * 异常时不适用"
+        ],
+        "unit": "m/s"
+      },
+      "actual": [
+        "m/s",
+        "x < 2",
+        "计数范围 [1,2]",
+        "读数 * 异常时不适用"
+      ]
+    }
+  ],
+  "totals": {
+    "expected_atoms": 1,
+    "passed": 1,
+    "failed": 0,
+    "needs_review": 0,
+    "unprocessed": 0,
+    "candidate_atoms": 1,
+    "unexpected_atoms": 0,
+    "duplicate_atoms": 0,
+    "required_concept_groups": 1,
+    "additional_source_concepts": 0
+  },
+  "quality": {
+    "binding": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "concept": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "condition": {
+      "expected": 2,
+      "passed": 2,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "content": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "coverage": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "evidence": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "exception": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "exclusion": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "fact": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "schema": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "source": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    },
+    "unit": {
+      "expected": 1,
+      "passed": 1,
+      "failed": 0,
+      "needs_review": 0,
+      "unprocessed": 0,
+      "status": "passed"
+    }
+  },
+  "artifacts": {
+    ".owner.json": {
+      "sha256": "10839dfc05b0d0b9c6717fb73b14a15fad767739c3fc5e994aaf6d7d8e21891f",
+      "byte_length": 142
+    },
+    "candidates-original.json": {
+      "sha256": "f5c2c99062fb727239e1941e447e94803d1b53a96981cd9164f2acd685fc3f95",
+      "byte_length": 3077
+    },
+    "decision-original.json": {
+      "sha256": "bc2eedda4d3f0964d31ece5ceb9cd2404922eca04beacf7eb48d15a573ec0582",
+      "byte_length": 141
+    },
+    "gold-original.json": {
+      "sha256": "8abe7f78f9a127f7aad6eb66d0305a948079972a565212a355459553aa5e3dce",
+      "byte_length": 780
+    },
+    "knowledge-ir.json": {
+      "sha256": "222717491f9b2960e9d053aaaeeb5a2e89c333f6867827ed17c069e282d66d5e",
+      "byte_length": 12416
+    },
+    "review-original.json": {
+      "sha256": "a2b8f337632d6bb1a12fa0991697fdd42dcbd8b2021b47ab4afba7906bc4c44c",
+      "byte_length": 525
+    },
+    "source-snapshot.json": {
+      "sha256": "2e27ffba28ba58dfc7876907f98c01585a7c60e7ce892c9079a0ec315e4a079a",
+      "byte_length": 1067
+    }
+  }
+}
+```

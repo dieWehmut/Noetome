@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "producer": "independent_author_expected",
+  "author_case": "clear",
+  "author_formula_count": 1,
+  "physical_page": 1,
+  "canvas": [
+    800,
+    1000
+  ],
+  "bounds": [
+    120,
+    175,
+    560,
+    200
+  ],
+  "originals": {
+    "page.pdf": {
+      "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+      "byte_length": 37603
+    },
+    "page.png": {
+      "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+      "byte_length": 45594
+    },
+    "region.png": {
+      "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+      "byte_length": 4292
+    }
+  },
+  "expression": "x_i = -\\frac{a_i}{b_i}",
+  "tokens": [
+    "x",
+    "_",
+    "i",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "_",
+    "i",
+    "}",
+    "{",
+    "b",
+    "_",
+    "i",
+    "}"
+  ],
+  "symbols": [
+    {
+      "symbol": "x",
+      "definition": "Reported displacement.",
+      "unit": "mg"
+    },
+    {
+      "symbol": "a",
+      "definition": "Input amount.",
+      "unit": "mg"
+    },
+    {
+      "symbol": "b",
+      "definition": "Positive scale.",
+      "unit": "dimensionless"
+    },
+    {
+      "symbol": "i",
+      "definition": "Sample index.",
+      "unit": "dimensionless"
+    }
+  ],
+  "conditions": [
+    "a_i >= 0.",
+    "b_i > 0."
+  ],
+  "ranges": [
+    "i in {1, 2}.",
+    "x_i <= 0."
+  ],
+  "exceptions": [
+    "If b_i = 0, the expression is undefined."
+  ],
+  "legibility": "clear",
+  "unknown_positions": [],
+  "native_representation": "native_math",
+  "no_native_representation": "formula_image",
+  "success_allowed": true,
+  "meaning": "One signed scalar expression plus required page context; unknown covered glyphs cannot be inferred from the clear counterpart."
+}

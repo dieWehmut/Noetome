@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "producer": "process_flow_expected",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case_name": "correlation",
+  "profile": "obsidian_1_6_7_flowchart",
+  "review_status": "passed",
+  "flow_status": "blocked",
+  "representation": null,
+  "issues": [
+    "FLOW_CORRELATION_UNDIRECTED"
+  ],
+  "process": {
+    "title": "演示计数共同变化观察",
+    "entry": "s1",
+    "goals": [
+      "s2"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "按钮点击计数",
+      "description": "记录同一时段的按钮点击次数",
+      "criterion": null,
+      "inputs": [
+        "按钮点击记录"
+      ],
+      "outputs": [
+        "点击计数"
+      ],
+      "conditions": [
+        "记录时段相同"
+      ],
+      "exceptions": [
+        "缺少记录时标为未知"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "指示灯闪烁计数",
+      "description": "记录同一时段的指示灯闪烁次数",
+      "criterion": null,
+      "inputs": [
+        "闪烁记录"
+      ],
+      "outputs": [
+        "闪烁计数"
+      ],
+      "conditions": [
+        "记录时段相同"
+      ],
+      "exceptions": [
+        "缺少记录时标为未知"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "correlates",
+      "branch_outcome": null,
+      "conditions": [
+        "仅限本次演示记录"
+      ],
+      "exceptions": [
+        "未建立因果方向"
+      ]
+    }
+  ],
+  "required_precedence": [],
+  "totals": {
+    "source_statements": 4,
+    "parsed_statements": 4,
+    "unparsed_statements": 0,
+    "steps": 2,
+    "decision_steps": 0,
+    "relations": 1,
+    "sequence_relations": 0,
+    "branch_relations": 0,
+    "causes_relations": 0,
+    "promotes_relations": 0,
+    "inhibits_relations": 0,
+    "correlates_relations": 1,
+    "unknown_relations": 0,
+    "evidence_records": 4,
+    "node_inputs": 2,
+    "node_outputs": 2,
+    "process_conditions": 1,
+    "process_exceptions": 1,
+    "node_conditions": 2,
+    "node_exceptions": 2,
+    "relation_conditions": 1,
+    "relation_exceptions": 1,
+    "flow_nodes": 0,
+    "flow_edges": 0
+  },
+  "unparsed_lines": [],
+  "empty_list_meaning": "not_listed_in_selected_source",
+  "scope": "bounded_self_authored_engineering_only"
+}

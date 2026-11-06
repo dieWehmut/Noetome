@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_format_and_output_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "flow-multiline-labels",
+  "feature": "flow",
+  "author_case": "multiline_labels",
+  "representative_kind": "product_output",
+  "representation": "ordered_list",
+  "semantic_source": {
+    "process": {
+      "title": "多行标签的保真流程",
+      "entry": "s1",
+      "goals": [
+        "s2"
+      ],
+      "conditions": [],
+      "exceptions": [
+        "不可读资料需复核"
+      ]
+    },
+    "nodes": [
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "检查\n卡片\t[α]",
+        "description": "完整保留来源标签中的换行和制表符",
+        "criterion": null,
+        "inputs": [
+          "样例卡"
+        ],
+        "outputs": [
+          "检查结果"
+        ],
+        "conditions": [],
+        "exceptions": [
+          "卡片缺失时停止"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "记录检查结果",
+        "description": "记录来源明示的检查结果",
+        "criterion": null,
+        "inputs": [
+          "检查结果"
+        ],
+        "outputs": [
+          "检查记录"
+        ],
+        "conditions": [
+          "检查完成"
+        ],
+        "exceptions": []
+      }
+    ],
+    "edges": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "s2",
+        "kind": "sequence",
+        "branch_outcome": null,
+        "conditions": [],
+        "exceptions": [
+          "检查未完成时不得登记"
+        ]
+      }
+    ],
+    "required_precedence": [
+      [
+        "s1",
+        "s2"
+      ]
+    ],
+    "empty_list_meaning": "not_listed_in_selected_source"
+  },
+  "collector": {
+    "notes": [
+      "流程总览.md",
+      "过程明细.md"
+    ],
+    "graph": null,
+    "require_complete_context": true,
+    "links": {
+      "destination": "过程明细.md",
+      "heading_by_object": {
+        "process": "过程说明",
+        "s1": "步骤-s1",
+        "s2": "步骤-s2",
+        "r1": "关系-r1"
+      },
+      "require_real_click": true
+    },
+    "ordered_list": {
+      "start": 1,
+      "marker_style": "decimal",
+      "labels": [
+        "检查\n卡片\t[α]",
+        "记录检查结果"
+      ],
+      "require_native_ol_li": true,
+      "raw_LF_Tab_preserved": true,
+      "LF_separates_visible_lines": true,
+      "Tab_has_positive_width": true
+    },
+    "expected_issue_codes": [
+      "FLOW_LABEL_WHITESPACE_FALLBACK"
+    ]
+  },
+  "coverage": [
+    "all nodes/relations/conditions/exceptions; empty lists retained",
+    "ordered text fallback preserves LF U+000A and Tab U+0009"
+  ]
+}

@@ -1,0 +1,1503 @@
+{
+  "case_name": "escaping_names",
+  "compiled_source": "/tmp/noetome-b06-independent-audit-a80148d2844f/matrix/escaping_names/preview-Vault",
+  "compiled_source_pins": {
+    "b-unique-seed.txt": {
+      "sha256": "f8b69a9a5a255c70acfb06ae19d16ee9398a286436007b9da7f72821844c9d65",
+      "byte_length": 59
+    },
+    "case/bundle-a/.owner.json": {
+      "sha256": "10839dfc05b0d0b9c6717fb73b14a15fad767739c3fc5e994aaf6d7d8e21891f",
+      "byte_length": 142
+    },
+    "case/bundle-a/candidates-original.json": {
+      "sha256": "ed2cbc74d6967ba8fcc5295f14d394b3cbb092e1ca4470bd08a9e3ee9c5b5826",
+      "byte_length": 3077
+    },
+    "case/bundle-a/decision-original.json": {
+      "sha256": "bc2eedda4d3f0964d31ece5ceb9cd2404922eca04beacf7eb48d15a573ec0582",
+      "byte_length": 141
+    },
+    "case/bundle-a/gold-original.json": {
+      "sha256": "8abe7f78f9a127f7aad6eb66d0305a948079972a565212a355459553aa5e3dce",
+      "byte_length": 780
+    },
+    "case/bundle-a/knowledge-ir.json": {
+      "sha256": "fcb0bb52f9ec696eb0b409b864786402dc682bc40abad20fbcf57b110df737fb",
+      "byte_length": 12416
+    },
+    "case/bundle-a/review-original.json": {
+      "sha256": "a2b8f337632d6bb1a12fa0991697fdd42dcbd8b2021b47ab4afba7906bc4c44c",
+      "byte_length": 525
+    },
+    "case/bundle-a/source-snapshot.json": {
+      "sha256": "fd8f93d016daf5a558a2689a4c33f9f8b3aa647ac07bf44ca28953267aa3e255",
+      "byte_length": 1067
+    },
+    "case/bundle-a/verification.json": {
+      "sha256": "de051b969a7c9d20b2d4df9f809b72cb10716bf8a2c57c3a768c95eb4c3e5524",
+      "byte_length": 16897
+    },
+    "case/bundle-a/verification.md": {
+      "sha256": "56fd70203710aeb9035daac65aeaf5a38807643990d8beca8d0af89d2d86b32d",
+      "byte_length": 17331
+    },
+    "case/bundle-b/.owner.json": {
+      "sha256": "88883829cc26da9d4966260b2ee12c11b389ff6eef4a6f2022c46eb65db1fd48",
+      "byte_length": 142
+    },
+    "case/bundle-b/candidates-original.json": {
+      "sha256": "e3e3a1c62ad7b152daa5e6331ec90a1661d75bdfef8806a73ccea2a518ac78dc",
+      "byte_length": 3086
+    },
+    "case/bundle-b/decision-original.json": {
+      "sha256": "5cff0a8cad3a2d60ea5905aff1f5f7184fd9c28f6f02215b4c159a8458e87239",
+      "byte_length": 141
+    },
+    "case/bundle-b/gold-original.json": {
+      "sha256": "e7f47d8049459854f8614f1381000ca6d2fe1612b5e924b7d642818ad8db7b96",
+      "byte_length": 789
+    },
+    "case/bundle-b/knowledge-ir.json": {
+      "sha256": "8058dbc6fe39b5add89db3b2580898168ee06b3c26662ed5f8677a99846cd797",
+      "byte_length": 12452
+    },
+    "case/bundle-b/review-original.json": {
+      "sha256": "f077301cc5939e58f506c4c633ae681690dd3ad48ae250006c1d2e2b3b3dc7e2",
+      "byte_length": 528
+    },
+    "case/bundle-b/source-snapshot.json": {
+      "sha256": "df7d3ef7ed9ed7e1b960b4483bc75992c9fcf6310ff63370fb9288292849cc02",
+      "byte_length": 1070
+    },
+    "case/bundle-b/verification.json": {
+      "sha256": "d793850bb65cb34314ab39807dd809025263042d7121ec5dc5d6e11bb28b9ed7",
+      "byte_length": 16930
+    },
+    "case/bundle-b/verification.md": {
+      "sha256": "99d60b376e105195a1f4936b3def057269d543e2a1bbdc3827964fbdc7c2d3f2",
+      "byte_length": 17364
+    },
+    "case/coordination.json": {
+      "sha256": "711230ee2036e63e278ab3e7f052755fd85feef4ade577e52053d17fe83b69b3",
+      "byte_length": 4330
+    },
+    "case/identity.json": {
+      "sha256": "42bdb92a5c15573e9898b72f8ccf30843d3cdc0af3123587843b821592070736",
+      "byte_length": 2041
+    },
+    "coordination-expected.json": {
+      "sha256": "4aba1e95aaf8065130853cc832db1f8c58114825eb3abb66f2b1acc31d41a4c6",
+      "byte_length": 4013
+    },
+    "coordination-output/.owner.json": {
+      "sha256": "d853c7cc6c4effe062fde108e2ead9f7273175bc892be83af2ca3e5ed7058c2b",
+      "byte_length": 162
+    },
+    "coordination-output/coordination-ir.json": {
+      "sha256": "58d316704ff7992a3ce8c27d499697473a47b42e286340dd022d16b0c6b73f44",
+      "byte_length": 41454
+    },
+    "coordination-output/coordination-original.json": {
+      "sha256": "711230ee2036e63e278ab3e7f052755fd85feef4ade577e52053d17fe83b69b3",
+      "byte_length": 4330
+    },
+    "coordination-output/coordination.json": {
+      "sha256": "52fe9066130dad0d5465420eccadfbe48d14cc0d8eddb9135739990d8b75b92b",
+      "byte_length": 44925
+    },
+    "coordination-output/coordination.md": {
+      "sha256": "67a7a303a956700eeb60d0e797fd593791c985259e56ce95a68412e26f4818bd",
+      "byte_length": 45400
+    },
+    "coordination-output/identity-original.json": {
+      "sha256": "42bdb92a5c15573e9898b72f8ccf30843d3cdc0af3123587843b821592070736",
+      "byte_length": 2041
+    },
+    "coordination-output/input-a--.owner.json": {
+      "sha256": "10839dfc05b0d0b9c6717fb73b14a15fad767739c3fc5e994aaf6d7d8e21891f",
+      "byte_length": 142
+    },
+    "coordination-output/input-a--candidates-original.json": {
+      "sha256": "ed2cbc74d6967ba8fcc5295f14d394b3cbb092e1ca4470bd08a9e3ee9c5b5826",
+      "byte_length": 3077
+    },
+    "coordination-output/input-a--decision-original.json": {
+      "sha256": "bc2eedda4d3f0964d31ece5ceb9cd2404922eca04beacf7eb48d15a573ec0582",
+      "byte_length": 141
+    },
+    "coordination-output/input-a--gold-original.json": {
+      "sha256": "8abe7f78f9a127f7aad6eb66d0305a948079972a565212a355459553aa5e3dce",
+      "byte_length": 780
+    },
+    "coordination-output/input-a--knowledge-ir.json": {
+      "sha256": "fcb0bb52f9ec696eb0b409b864786402dc682bc40abad20fbcf57b110df737fb",
+      "byte_length": 12416
+    },
+    "coordination-output/input-a--review-original.json": {
+      "sha256": "a2b8f337632d6bb1a12fa0991697fdd42dcbd8b2021b47ab4afba7906bc4c44c",
+      "byte_length": 525
+    },
+    "coordination-output/input-a--source-snapshot.json": {
+      "sha256": "fd8f93d016daf5a558a2689a4c33f9f8b3aa647ac07bf44ca28953267aa3e255",
+      "byte_length": 1067
+    },
+    "coordination-output/input-a--verification.json": {
+      "sha256": "de051b969a7c9d20b2d4df9f809b72cb10716bf8a2c57c3a768c95eb4c3e5524",
+      "byte_length": 16897
+    },
+    "coordination-output/input-a--verification.md": {
+      "sha256": "56fd70203710aeb9035daac65aeaf5a38807643990d8beca8d0af89d2d86b32d",
+      "byte_length": 17331
+    },
+    "coordination-output/input-b--.owner.json": {
+      "sha256": "88883829cc26da9d4966260b2ee12c11b389ff6eef4a6f2022c46eb65db1fd48",
+      "byte_length": 142
+    },
+    "coordination-output/input-b--candidates-original.json": {
+      "sha256": "e3e3a1c62ad7b152daa5e6331ec90a1661d75bdfef8806a73ccea2a518ac78dc",
+      "byte_length": 3086
+    },
+    "coordination-output/input-b--decision-original.json": {
+      "sha256": "5cff0a8cad3a2d60ea5905aff1f5f7184fd9c28f6f02215b4c159a8458e87239",
+      "byte_length": 141
+    },
+    "coordination-output/input-b--gold-original.json": {
+      "sha256": "e7f47d8049459854f8614f1381000ca6d2fe1612b5e924b7d642818ad8db7b96",
+      "byte_length": 789
+    },
+    "coordination-output/input-b--knowledge-ir.json": {
+      "sha256": "8058dbc6fe39b5add89db3b2580898168ee06b3c26662ed5f8677a99846cd797",
+      "byte_length": 12452
+    },
+    "coordination-output/input-b--review-original.json": {
+      "sha256": "f077301cc5939e58f506c4c633ae681690dd3ad48ae250006c1d2e2b3b3dc7e2",
+      "byte_length": 528
+    },
+    "coordination-output/input-b--source-snapshot.json": {
+      "sha256": "df7d3ef7ed9ed7e1b960b4483bc75992c9fcf6310ff63370fb9288292849cc02",
+      "byte_length": 1070
+    },
+    "coordination-output/input-b--verification.json": {
+      "sha256": "d793850bb65cb34314ab39807dd809025263042d7121ec5dc5d6e11bb28b9ed7",
+      "byte_length": 16930
+    },
+    "coordination-output/input-b--verification.md": {
+      "sha256": "99d60b376e105195a1f4936b3def057269d543e2a1bbdc3827964fbdc7c2d3f2",
+      "byte_length": 17364
+    },
+    "expected.json": {
+      "sha256": "71a5a42c0a9dcf80c5f9a88df3c1d3b88b67255d80f4b3106447caf90435ef6b",
+      "byte_length": 2513
+    },
+    "frozen-author.json": {
+      "sha256": "802922b502b3194216106c87fd76278b842d742ef258eebb38fac5524049c534",
+      "byte_length": 10111
+    },
+    "frozen-authors-original.json": {
+      "sha256": "6cb9aa6e908c73477dce5a625906bbd2d8d739817b618a237064c9dde3247b94",
+      "byte_length": 141081
+    },
+    "frozen-gold-a.json": {
+      "sha256": "8abe7f78f9a127f7aad6eb66d0305a948079972a565212a355459553aa5e3dce",
+      "byte_length": 780
+    },
+    "frozen-gold-b.json": {
+      "sha256": "e7f47d8049459854f8614f1381000ca6d2fe1612b5e924b7d642818ad8db7b96",
+      "byte_length": 789
+    },
+    "preview-Vault/.coordination-ir.json": {
+      "sha256": "58d316704ff7992a3ce8c27d499697473a47b42e286340dd022d16b0c6b73f44",
+      "byte_length": 41454
+    },
+    "preview-Vault/.coordination-owner.json": {
+      "sha256": "d853c7cc6c4effe062fde108e2ead9f7273175bc892be83af2ca3e5ed7058c2b",
+      "byte_length": 162
+    },
+    "preview-Vault/.coordination-report.json": {
+      "sha256": "52fe9066130dad0d5465420eccadfbe48d14cc0d8eddb9135739990d8b75b92b",
+      "byte_length": 44925
+    },
+    "preview-Vault/.coordination-report.md": {
+      "sha256": "67a7a303a956700eeb60d0e797fd593791c985259e56ce95a68412e26f4818bd",
+      "byte_length": 45400
+    },
+    "preview-Vault/.identity-original.json": {
+      "sha256": "42bdb92a5c15573e9898b72f8ccf30843d3cdc0af3123587843b821592070736",
+      "byte_length": 2041
+    },
+    "preview-Vault/.input-a--.owner.json": {
+      "sha256": "10839dfc05b0d0b9c6717fb73b14a15fad767739c3fc5e994aaf6d7d8e21891f",
+      "byte_length": 142
+    },
+    "preview-Vault/.input-a--candidates-original.json": {
+      "sha256": "ed2cbc74d6967ba8fcc5295f14d394b3cbb092e1ca4470bd08a9e3ee9c5b5826",
+      "byte_length": 3077
+    },
+    "preview-Vault/.input-a--decision-original.json": {
+      "sha256": "bc2eedda4d3f0964d31ece5ceb9cd2404922eca04beacf7eb48d15a573ec0582",
+      "byte_length": 141
+    },
+    "preview-Vault/.input-a--gold-original.json": {
+      "sha256": "8abe7f78f9a127f7aad6eb66d0305a948079972a565212a355459553aa5e3dce",
+      "byte_length": 780
+    },
+    "preview-Vault/.input-a--knowledge-ir.json": {
+      "sha256": "fcb0bb52f9ec696eb0b409b864786402dc682bc40abad20fbcf57b110df737fb",
+      "byte_length": 12416
+    },
+    "preview-Vault/.input-a--review-original.json": {
+      "sha256": "a2b8f337632d6bb1a12fa0991697fdd42dcbd8b2021b47ab4afba7906bc4c44c",
+      "byte_length": 525
+    },
+    "preview-Vault/.input-a--source-snapshot.json": {
+      "sha256": "fd8f93d016daf5a558a2689a4c33f9f8b3aa647ac07bf44ca28953267aa3e255",
+      "byte_length": 1067
+    },
+    "preview-Vault/.input-a--verification.json": {
+      "sha256": "de051b969a7c9d20b2d4df9f809b72cb10716bf8a2c57c3a768c95eb4c3e5524",
+      "byte_length": 16897
+    },
+    "preview-Vault/.input-a--verification.md": {
+      "sha256": "56fd70203710aeb9035daac65aeaf5a38807643990d8beca8d0af89d2d86b32d",
+      "byte_length": 17331
+    },
+    "preview-Vault/.input-b--.owner.json": {
+      "sha256": "88883829cc26da9d4966260b2ee12c11b389ff6eef4a6f2022c46eb65db1fd48",
+      "byte_length": 142
+    },
+    "preview-Vault/.input-b--candidates-original.json": {
+      "sha256": "e3e3a1c62ad7b152daa5e6331ec90a1661d75bdfef8806a73ccea2a518ac78dc",
+      "byte_length": 3086
+    },
+    "preview-Vault/.input-b--decision-original.json": {
+      "sha256": "5cff0a8cad3a2d60ea5905aff1f5f7184fd9c28f6f02215b4c159a8458e87239",
+      "byte_length": 141
+    },
+    "preview-Vault/.input-b--gold-original.json": {
+      "sha256": "e7f47d8049459854f8614f1381000ca6d2fe1612b5e924b7d642818ad8db7b96",
+      "byte_length": 789
+    },
+    "preview-Vault/.input-b--knowledge-ir.json": {
+      "sha256": "8058dbc6fe39b5add89db3b2580898168ee06b3c26662ed5f8677a99846cd797",
+      "byte_length": 12452
+    },
+    "preview-Vault/.input-b--review-original.json": {
+      "sha256": "f077301cc5939e58f506c4c633ae681690dd3ad48ae250006c1d2e2b3b3dc7e2",
+      "byte_length": 528
+    },
+    "preview-Vault/.input-b--source-snapshot.json": {
+      "sha256": "df7d3ef7ed9ed7e1b960b4483bc75992c9fcf6310ff63370fb9288292849cc02",
+      "byte_length": 1070
+    },
+    "preview-Vault/.input-b--verification.json": {
+      "sha256": "d793850bb65cb34314ab39807dd809025263042d7121ec5dc5d6e11bb28b9ed7",
+      "byte_length": 16930
+    },
+    "preview-Vault/.input-b--verification.md": {
+      "sha256": "99d60b376e105195a1f4936b3def057269d543e2a1bbdc3827964fbdc7c2d3f2",
+      "byte_length": 17364
+    },
+    "preview-Vault/.owner.json": {
+      "sha256": "82ca733af669de4813c8ea39da5ce9cafe467f5492b18edccb8f438935afc85e",
+      "byte_length": 162
+    },
+    "preview-Vault/.selection-original.json": {
+      "sha256": "711230ee2036e63e278ab3e7f052755fd85feef4ade577e52053d17fe83b69b3",
+      "byte_length": 4330
+    },
+    "preview-Vault/plan.json": {
+      "sha256": "6eb7be2768d05df4b6b5e08b5f7fdee73df9f2645496cb938fd02c82993a03ea",
+      "byte_length": 17326
+    },
+    "preview-Vault/presentation.json": {
+      "sha256": "94e02efd85796828a6d6a1ed227c851dd6fa3cdae7c5cf4bb2394ede114fdea7",
+      "byte_length": 16832
+    },
+    "preview-Vault/presentation.md": {
+      "sha256": "da2966995b8f3dac100a96b57095d5ec7828a0e8dcf09aef7d146ec5e374378b",
+      "byte_length": 17035
+    },
+    "preview-Vault/对象-60000000-0000-4000-8000-000000000005.md": {
+      "sha256": "c1d81677e3427713647012adadf77d97e2760151d89113f4339a6212f09674f5",
+      "byte_length": 375
+    },
+    "preview-Vault/对象-60000000-0000-4000-8000-000000000006.md": {
+      "sha256": "0cf17e09e21f541849ee41cc70f8d2f0012d38126cad2ca41dcf8b41f216d615",
+      "byte_length": 378
+    },
+    "preview-Vault/知识比较.md": {
+      "sha256": "4a4a6b90d1b1a40d8940f5a374c58770b541092feb21682a9bf080be167dd046",
+      "byte_length": 571
+    },
+    "project/.noetome-sources/.owner.json": {
+      "sha256": "9629583160a40abaa05509d04d2683b6f56456568c97c506fd640fc68eda1301",
+      "byte_length": 73
+    },
+    "project/.noetome-sources/586aa48b-fc46-42a9-acb2-b2ea9060abaf/normalized.txt": {
+      "sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+      "byte_length": 177
+    },
+    "project/.noetome-sources/586aa48b-fc46-42a9-acb2-b2ea9060abaf/raw.bin": {
+      "sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+      "byte_length": 177
+    },
+    "project/.noetome-sources/9f726791-f305-48be-b2c3-9d0894a2824b/normalized.txt": {
+      "sha256": "f8b69a9a5a255c70acfb06ae19d16ee9398a286436007b9da7f72821844c9d65",
+      "byte_length": 59
+    },
+    "project/.noetome-sources/9f726791-f305-48be-b2c3-9d0894a2824b/raw.bin": {
+      "sha256": "f8b69a9a5a255c70acfb06ae19d16ee9398a286436007b9da7f72821844c9d65",
+      "byte_length": 59
+    },
+    "project/.noetome-sources/a40fb9fc-11c0-4329-af69-27651f3645e1/normalized.txt": {
+      "sha256": "4f1961d4828189ea71b8fa887bb7ca12dde10e7ec3e43c87e8fe8df4ec10bc72",
+      "byte_length": 180
+    },
+    "project/.noetome-sources/a40fb9fc-11c0-4329-af69-27651f3645e1/raw.bin": {
+      "sha256": "4f1961d4828189ea71b8fa887bb7ca12dde10e7ec3e43c87e8fe8df4ec10bc72",
+      "byte_length": 180
+    },
+    "project/project.json": {
+      "sha256": "9bfa45f1abacb917c936cfd0cd37b689ac00773308a250e408cc8cd5c2fdb91d",
+      "byte_length": 167
+    },
+    "project/project.sqlite": {
+      "sha256": "8cd346e2a87f53fe58d940b52359aef62b6730bb004fbd65d86b39752ed66911",
+      "byte_length": 69632
+    },
+    "review-a/candidates.json": {
+      "sha256": "ed2cbc74d6967ba8fcc5295f14d394b3cbb092e1ca4470bd08a9e3ee9c5b5826",
+      "byte_length": 3077
+    },
+    "review-a/decision.json": {
+      "sha256": "bc2eedda4d3f0964d31ece5ceb9cd2404922eca04beacf7eb48d15a573ec0582",
+      "byte_length": 141
+    },
+    "review-a/gold.json": {
+      "sha256": "8abe7f78f9a127f7aad6eb66d0305a948079972a565212a355459553aa5e3dce",
+      "byte_length": 780
+    },
+    "review-a/review.json": {
+      "sha256": "a2b8f337632d6bb1a12fa0991697fdd42dcbd8b2021b47ab4afba7906bc4c44c",
+      "byte_length": 525
+    },
+    "review-b/candidates.json": {
+      "sha256": "e3e3a1c62ad7b152daa5e6331ec90a1661d75bdfef8806a73ccea2a518ac78dc",
+      "byte_length": 3086
+    },
+    "review-b/decision.json": {
+      "sha256": "5cff0a8cad3a2d60ea5905aff1f5f7184fd9c28f6f02215b4c159a8458e87239",
+      "byte_length": 141
+    },
+    "review-b/gold.json": {
+      "sha256": "e7f47d8049459854f8614f1381000ca6d2fe1612b5e924b7d642818ad8db7b96",
+      "byte_length": 789
+    },
+    "review-b/review.json": {
+      "sha256": "f077301cc5939e58f506c4c633ae681690dd3ad48ae250006c1d2e2b3b3dc7e2",
+      "byte_length": 528
+    },
+    "selected-a.txt": {
+      "sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+      "byte_length": 177
+    },
+    "selected-b.txt": {
+      "sha256": "4f1961d4828189ea71b8fa887bb7ca12dde10e7ec3e43c87e8fe8df4ec10bc72",
+      "byte_length": 180
+    }
+  },
+  "copied_note_pins": {
+    "知识比较.md": {
+      "sha256": "4a4a6b90d1b1a40d8940f5a374c58770b541092feb21682a9bf080be167dd046",
+      "byte_length": 571
+    },
+    "对象-60000000-0000-4000-8000-000000000005.md": {
+      "sha256": "c1d81677e3427713647012adadf77d97e2760151d89113f4339a6212f09674f5",
+      "byte_length": 375
+    },
+    "对象-60000000-0000-4000-8000-000000000006.md": {
+      "sha256": "0cf17e09e21f541849ee41cc70f8d2f0012d38126cad2ca41dcf8b41f216d615",
+      "byte_length": 378
+    }
+  },
+  "plan": {
+    "schema_version": 1,
+    "producer": "knowledge_presentation",
+    "scope": "active_presentation_v1",
+    "representation_origin": "deterministic_planner",
+    "revision": 1,
+    "request_id": "724f2f4d-48d8-41ed-b12f-3452ed67c3a9",
+    "project_id": "900277bb-2187-4ba8-b383-bfae6e27a716",
+    "coordination_schema_version": 3,
+    "coordination_ir_fingerprint": {
+      "sha256": "58d316704ff7992a3ce8c27d499697473a47b42e286340dd022d16b0c6b73f44",
+      "byte_length": 41454
+    },
+    "knowledge_status": "pending",
+    "published": false,
+    "scientific_quality": "not_run",
+    "research_status": "not_requested",
+    "representation": "table",
+    "decision": {
+      "rule_id": "PRESENT_SHARED_PROPERTY_TABLE",
+      "reason": "多个明确对象共享已核对属性，以比较表并列完整事实；单位与条件保留，不作数值裁决。",
+      "shared_property_ids": [
+        "60000000-0000-4000-8000-000000000007"
+      ]
+    },
+    "objects": [
+      {
+        "concept_id": "60000000-0000-4000-8000-000000000005",
+        "label": "甲容器 [α]",
+        "occurrence_ids": [
+          "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f"
+        ]
+      },
+      {
+        "concept_id": "60000000-0000-4000-8000-000000000006",
+        "label": "乙容器（β）",
+        "occurrence_ids": [
+          "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+        ]
+      }
+    ],
+    "properties": [
+      {
+        "concept_id": "60000000-0000-4000-8000-000000000007",
+        "label": "速率 | 测量",
+        "occurrence_ids": [
+          "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f",
+          "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+        ]
+      }
+    ],
+    "facts": [
+      {
+        "fact_id": "fact-v3-2885a04b0cfb7713bc1299548540a325eeaa21c2eb6f68f8e6ddc9123d0ed3f4",
+        "object_id": "60000000-0000-4000-8000-000000000006",
+        "property_id": "60000000-0000-4000-8000-000000000007",
+        "value_status": "known",
+        "value": "12",
+        "unit": "m/s",
+        "conditions": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ],
+        "exceptions": [
+          "读数 * 异常时不适用"
+        ],
+        "applicability_status": "known",
+        "time": {
+          "status": "known",
+          "precision": "year",
+          "value": "2020"
+        },
+        "occurrence_ids": [
+          "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+        ]
+      },
+      {
+        "fact_id": "fact-v3-e3524c039cc467895fbe79851774e4896cf06a621783045c08e94161a4b247a1",
+        "object_id": "60000000-0000-4000-8000-000000000005",
+        "property_id": "60000000-0000-4000-8000-000000000007",
+        "value_status": "known",
+        "value": "10",
+        "unit": "m/s",
+        "conditions": [
+          "x < 2",
+          "计数范围 [1,2]"
+        ],
+        "exceptions": [
+          "读数 * 异常时不适用"
+        ],
+        "applicability_status": "known",
+        "time": {
+          "status": "known",
+          "precision": "year",
+          "value": "2020"
+        },
+        "occurrence_ids": [
+          "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f"
+        ]
+      }
+    ],
+    "provenance": [
+      {
+        "occurrence_id": "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f",
+        "input_id": "a",
+        "original_atom_id": "a-speed",
+        "binding": {
+          "project_id": "900277bb-2187-4ba8-b383-bfae6e27a716",
+          "import_id": "9433870e-f577-423d-be4e-1fcfe355311c",
+          "source_id": "6282efed-a63f-43db-b977-96112281fccb",
+          "version_id": "586aa48b-fc46-42a9-acb2-b2ea9060abaf",
+          "content_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+          "normalized_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf",
+          "parse_id": null,
+          "manifest_sha256": null
+        },
+        "unit": {
+          "unit_id": "unit-0",
+          "locator": {
+            "kind": "text",
+            "span_id": "b207d017-2384-476e-ba0a-d650ab346f9d",
+            "ordinal": 0,
+            "resource_sha256": "c2a0447c053b2ccb076ee273568856828cc2d16fb713e2f324f9970d6bfdb0cf"
+          },
+          "source_status": "parsed",
+          "start_byte": 0,
+          "end_byte": 177,
+          "text": "适用条件：已列明；观点时间：2020年。\n甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。\n"
+        },
+        "original_concepts": [
+          {
+            "concept_id": "a-subject",
+            "revision": 1,
+            "canonical_name": "甲容器 [α]",
+            "aliases": [],
+            "needs_full_explanation": true
+          },
+          {
+            "concept_id": "a-property",
+            "revision": 1,
+            "canonical_name": "速率 | 测量",
+            "aliases": [],
+            "needs_full_explanation": true
+          }
+        ],
+        "original_atom": {
+          "atom": {
+            "atom_id": "a-speed",
+            "revision": 1,
+            "kind": "comparison_value",
+            "concept_ids": [
+              "a-subject",
+              "a-property"
+            ],
+            "content": "甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+            "qualifiers": [
+              "m/s",
+              "x < 2",
+              "计数范围 [1,2]",
+              "读数 * 异常时不适用"
+            ],
+            "evidence_links": [
+              {
+                "evidence_id": "a-support",
+                "relation": "supports"
+              }
+            ],
+            "required": false,
+            "verification": "unverified",
+            "value_status": "known"
+          },
+          "measurement": {
+            "value_status": "known",
+            "value": "10",
+            "unit": "m/s",
+            "conditions": [
+              "x < 2",
+              "计数范围 [1,2]"
+            ]
+          }
+        },
+        "evidence": [
+          {
+            "evidence_id": "a-support",
+            "unit_id": "unit-0",
+            "excerpt_start_byte": 0,
+            "excerpt_end_byte": 176,
+            "excerpt_sha256": "b67360ce6cd96e91121b8af407bbe2e5bdf099336d4946be5505166b168d7d42",
+            "quote": "适用条件：已列明；观点时间：2020年。\n甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。"
+          }
+        ],
+        "context": {
+          "input_id": "a",
+          "original_atom_id": "a-speed",
+          "applicability_status": "known",
+          "time": {
+            "status": "known",
+            "precision": "year",
+            "value": "2020"
+          },
+          "context_evidence_ids": [
+            "a-support"
+          ]
+        }
+      },
+      {
+        "occurrence_id": "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3",
+        "input_id": "b",
+        "original_atom_id": "b-speed",
+        "binding": {
+          "project_id": "900277bb-2187-4ba8-b383-bfae6e27a716",
+          "import_id": "6884db6a-fa95-4280-b35d-f32d2312188a",
+          "source_id": "ace1cf3c-9b6b-403e-9da0-b28866fe967a",
+          "version_id": "a40fb9fc-11c0-4329-af69-27651f3645e1",
+          "content_sha256": "4f1961d4828189ea71b8fa887bb7ca12dde10e7ec3e43c87e8fe8df4ec10bc72",
+          "normalized_sha256": "4f1961d4828189ea71b8fa887bb7ca12dde10e7ec3e43c87e8fe8df4ec10bc72",
+          "parse_id": null,
+          "manifest_sha256": null
+        },
+        "unit": {
+          "unit_id": "unit-0",
+          "locator": {
+            "kind": "text",
+            "span_id": "cc32033e-b405-465b-bdf1-8061ed67e0a2",
+            "ordinal": 0,
+            "resource_sha256": "4f1961d4828189ea71b8fa887bb7ca12dde10e7ec3e43c87e8fe8df4ec10bc72"
+          },
+          "source_status": "parsed",
+          "start_byte": 0,
+          "end_byte": 180,
+          "text": "适用条件：已列明；观点时间：2020年。\n乙容器（β） 的速率 | 测量为 12 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。\n"
+        },
+        "original_concepts": [
+          {
+            "concept_id": "b-subject",
+            "revision": 1,
+            "canonical_name": "乙容器（β）",
+            "aliases": [],
+            "needs_full_explanation": true
+          },
+          {
+            "concept_id": "b-property",
+            "revision": 1,
+            "canonical_name": "速率 | 测量",
+            "aliases": [],
+            "needs_full_explanation": true
+          }
+        ],
+        "original_atom": {
+          "atom": {
+            "atom_id": "b-speed",
+            "revision": 1,
+            "kind": "comparison_value",
+            "concept_ids": [
+              "b-subject",
+              "b-property"
+            ],
+            "content": "乙容器（β） 的速率 | 测量为 12 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+            "qualifiers": [
+              "m/s",
+              "x < 2",
+              "计数范围 [1,2]",
+              "读数 * 异常时不适用"
+            ],
+            "evidence_links": [
+              {
+                "evidence_id": "b-support",
+                "relation": "supports"
+              }
+            ],
+            "required": false,
+            "verification": "unverified",
+            "value_status": "known"
+          },
+          "measurement": {
+            "value_status": "known",
+            "value": "12",
+            "unit": "m/s",
+            "conditions": [
+              "x < 2",
+              "计数范围 [1,2]"
+            ]
+          }
+        },
+        "evidence": [
+          {
+            "evidence_id": "b-support",
+            "unit_id": "unit-0",
+            "excerpt_start_byte": 0,
+            "excerpt_end_byte": 179,
+            "excerpt_sha256": "b3b6dd354ea7c76f48b89b2d4e8ea5706ef9c146d12563edb8027ed961c356a8",
+            "quote": "适用条件：已列明；观点时间：2020年。\n乙容器（β） 的速率 | 测量为 12 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。"
+          }
+        ],
+        "context": {
+          "input_id": "b",
+          "original_atom_id": "b-speed",
+          "applicability_status": "known",
+          "time": {
+            "status": "known",
+            "precision": "year",
+            "value": "2020"
+          },
+          "context_evidence_ids": [
+            "b-support"
+          ]
+        }
+      }
+    ],
+    "notes": [
+      {
+        "note_id": "overview",
+        "title": "知识比较",
+        "output_path": "知识比较.md",
+        "section_id": "overview",
+        "heading": "比较概览",
+        "nodes": [
+          {
+            "kind": "table",
+            "node_id": "comparison",
+            "columns": [
+              {
+                "column_id": "object",
+                "property_id": null,
+                "label": "对象",
+                "concept_ids": [],
+                "occurrence_ids": []
+              },
+              {
+                "column_id": "60000000-0000-4000-8000-000000000007",
+                "property_id": "60000000-0000-4000-8000-000000000007",
+                "label": "速率 | 测量",
+                "concept_ids": [
+                  "60000000-0000-4000-8000-000000000007"
+                ],
+                "occurrence_ids": [
+                  "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f",
+                  "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+                ]
+              }
+            ],
+            "rows": [
+              {
+                "row_id": "60000000-0000-4000-8000-000000000005",
+                "object_id": "60000000-0000-4000-8000-000000000005",
+                "cells": [
+                  {
+                    "column_id": "object",
+                    "kind": "label",
+                    "text": "甲容器 [α]",
+                    "fact_ids": [],
+                    "occurrence_ids": [
+                      "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f"
+                    ],
+                    "concept_ids": [
+                      "60000000-0000-4000-8000-000000000005"
+                    ],
+                    "links": [
+                      {
+                        "target_concept_id": "60000000-0000-4000-8000-000000000005",
+                        "target_path": "对象-60000000-0000-4000-8000-000000000005.md",
+                        "target_heading": "知识明细",
+                        "display_text": "查看详情"
+                      }
+                    ]
+                  },
+                  {
+                    "column_id": "60000000-0000-4000-8000-000000000007",
+                    "kind": "facts",
+                    "text": "10 m/s；条件：x < 2；计数范围 [1,2]；例外：读数 * 异常时不适用；适用条件：已列明；观点时间：2020（年）",
+                    "fact_ids": [
+                      "fact-v3-e3524c039cc467895fbe79851774e4896cf06a621783045c08e94161a4b247a1"
+                    ],
+                    "occurrence_ids": [
+                      "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f"
+                    ],
+                    "concept_ids": [
+                      "60000000-0000-4000-8000-000000000005",
+                      "60000000-0000-4000-8000-000000000007"
+                    ],
+                    "links": []
+                  }
+                ]
+              },
+              {
+                "row_id": "60000000-0000-4000-8000-000000000006",
+                "object_id": "60000000-0000-4000-8000-000000000006",
+                "cells": [
+                  {
+                    "column_id": "object",
+                    "kind": "label",
+                    "text": "乙容器（β）",
+                    "fact_ids": [],
+                    "occurrence_ids": [
+                      "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+                    ],
+                    "concept_ids": [
+                      "60000000-0000-4000-8000-000000000006"
+                    ],
+                    "links": [
+                      {
+                        "target_concept_id": "60000000-0000-4000-8000-000000000006",
+                        "target_path": "对象-60000000-0000-4000-8000-000000000006.md",
+                        "target_heading": "知识明细",
+                        "display_text": "查看详情"
+                      }
+                    ]
+                  },
+                  {
+                    "column_id": "60000000-0000-4000-8000-000000000007",
+                    "kind": "facts",
+                    "text": "12 m/s；条件：x < 2；计数范围 [1,2]；例外：读数 * 异常时不适用；适用条件：已列明；观点时间：2020（年）",
+                    "fact_ids": [
+                      "fact-v3-2885a04b0cfb7713bc1299548540a325eeaa21c2eb6f68f8e6ddc9123d0ed3f4"
+                    ],
+                    "occurrence_ids": [
+                      "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+                    ],
+                    "concept_ids": [
+                      "60000000-0000-4000-8000-000000000006",
+                      "60000000-0000-4000-8000-000000000007"
+                    ],
+                    "links": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "note_id": "object-60000000-0000-4000-8000-000000000005",
+        "title": "甲容器 [α]",
+        "output_path": "对象-60000000-0000-4000-8000-000000000005.md",
+        "section_id": "details",
+        "heading": "知识明细",
+        "nodes": [
+          {
+            "kind": "paragraph",
+            "node_id": "detail-fact-v3-e3524c039cc467895fbe79851774e4896cf06a621783045c08e94161a4b247a1",
+            "text": "甲容器 [α]的速率 | 测量：10 m/s；条件：x < 2；计数范围 [1,2]；例外：读数 * 异常时不适用；适用条件：已列明；观点时间：2020（年）\n原始表述：甲容器 [α] 的速率 | 测量为 10 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+            "fact_ids": [
+              "fact-v3-e3524c039cc467895fbe79851774e4896cf06a621783045c08e94161a4b247a1"
+            ],
+            "occurrence_ids": [
+              "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f"
+            ],
+            "concept_ids": [
+              "60000000-0000-4000-8000-000000000005",
+              "60000000-0000-4000-8000-000000000007"
+            ],
+            "links": []
+          }
+        ]
+      },
+      {
+        "note_id": "object-60000000-0000-4000-8000-000000000006",
+        "title": "乙容器（β）",
+        "output_path": "对象-60000000-0000-4000-8000-000000000006.md",
+        "section_id": "details",
+        "heading": "知识明细",
+        "nodes": [
+          {
+            "kind": "paragraph",
+            "node_id": "detail-fact-v3-2885a04b0cfb7713bc1299548540a325eeaa21c2eb6f68f8e6ddc9123d0ed3f4",
+            "text": "乙容器（β）的速率 | 测量：12 m/s；条件：x < 2；计数范围 [1,2]；例外：读数 * 异常时不适用；适用条件：已列明；观点时间：2020（年）\n原始表述：乙容器（β） 的速率 | 测量为 12 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+            "fact_ids": [
+              "fact-v3-2885a04b0cfb7713bc1299548540a325eeaa21c2eb6f68f8e6ddc9123d0ed3f4"
+            ],
+            "occurrence_ids": [
+              "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+            ],
+            "concept_ids": [
+              "60000000-0000-4000-8000-000000000006",
+              "60000000-0000-4000-8000-000000000007"
+            ],
+            "links": []
+          }
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "schema_version": 1,
+    "author": "self-authored-active-presentation-fixture-before-candidates",
+    "scope": "active_presentation_semantics_v1",
+    "scientific_quality": "not_run",
+    "knowledge_status": "pending",
+    "published": false,
+    "case_name": "escaping_names",
+    "expected_status": "passed",
+    "expect_successful_preview": true,
+    "representation": "table",
+    "objects": [
+      {
+        "object_id": "60000000-0000-4000-8000-000000000005",
+        "label": "甲容器 [α]"
+      },
+      {
+        "object_id": "60000000-0000-4000-8000-000000000006",
+        "label": "乙容器（β）"
+      }
+    ],
+    "properties": [
+      {
+        "property_id": "60000000-0000-4000-8000-000000000007",
+        "label": "速率 | 测量"
+      }
+    ],
+    "cells": [
+      {
+        "object_id": "60000000-0000-4000-8000-000000000005",
+        "property_id": "60000000-0000-4000-8000-000000000007",
+        "state": "facts",
+        "missing_meaning": null,
+        "facts": [
+          {
+            "value_status": "known",
+            "value": "10",
+            "unit": "m/s",
+            "conditions": [
+              "x < 2",
+              "计数范围 [1,2]"
+            ],
+            "exceptions": [
+              "读数 * 异常时不适用"
+            ],
+            "applicability_status": "known",
+            "time": {
+              "status": "known",
+              "precision": "year",
+              "value": "2020"
+            },
+            "input_ids": [
+              "a"
+            ],
+            "original_atom_ids": [
+              "a-speed"
+            ]
+          }
+        ]
+      },
+      {
+        "object_id": "60000000-0000-4000-8000-000000000006",
+        "property_id": "60000000-0000-4000-8000-000000000007",
+        "state": "facts",
+        "missing_meaning": null,
+        "facts": [
+          {
+            "value_status": "known",
+            "value": "12",
+            "unit": "m/s",
+            "conditions": [
+              "x < 2",
+              "计数范围 [1,2]"
+            ],
+            "exceptions": [
+              "读数 * 异常时不适用"
+            ],
+            "applicability_status": "known",
+            "time": {
+              "status": "known",
+              "precision": "year",
+              "value": "2020"
+            },
+            "input_ids": [
+              "b"
+            ],
+            "original_atom_ids": [
+              "b-speed"
+            ]
+          }
+        ]
+      }
+    ],
+    "required_atom_refs": [
+      {
+        "input_id": "a",
+        "original_atom_id": "a-speed"
+      },
+      {
+        "input_id": "b",
+        "original_atom_id": "b-speed"
+      }
+    ],
+    "required_missing_text": null
+  },
+  "presentation_report": {
+    "schema_version": 1,
+    "producer": "knowledge_presentation",
+    "report_kind": "knowledge_presentation",
+    "scope": "active_presentation_v1",
+    "request_id": "724f2f4d-48d8-41ed-b12f-3452ed67c3a9",
+    "project_id": "900277bb-2187-4ba8-b383-bfae6e27a716",
+    "coordination_schema_version": 3,
+    "status": "passed",
+    "preview_status": "rendered",
+    "knowledge_status": "pending",
+    "published": false,
+    "scientific_quality": "not_run",
+    "research_status": "not_requested",
+    "network_calls": 0,
+    "paid_calls": 0,
+    "checks": {
+      "source_review": "passed",
+      "coordination": "passed",
+      "note_plan": "passed",
+      "rendering": "passed",
+      "saved_output": "passed"
+    },
+    "totals": {
+      "input_bundles": 2,
+      "facts": 2,
+      "source_occurrences": 2,
+      "objects": 2,
+      "properties": 1,
+      "table_cells": 4,
+      "missing_cells": 0,
+      "rendered_notes": 3,
+      "content_mappings": 8,
+      "links": 2
+    },
+    "issue_codes": [],
+    "decision": {
+      "rule_id": "PRESENT_SHARED_PROPERTY_TABLE",
+      "reason": "多个明确对象共享已核对属性，以比较表并列完整事实；单位与条件保留，不作数值裁决。",
+      "shared_property_ids": [
+        "60000000-0000-4000-8000-000000000007"
+      ]
+    },
+    "coordination_ir_fingerprint": {
+      "sha256": "58d316704ff7992a3ce8c27d499697473a47b42e286340dd022d16b0c6b73f44",
+      "byte_length": 41454
+    },
+    "plan_fingerprint": {
+      "sha256": "6eb7be2768d05df4b6b5e08b5f7fdee73df9f2645496cb938fd02c82993a03ea",
+      "byte_length": 17326
+    },
+    "inputs": {
+      ".coordination-ir.json": {
+        "sha256": "58d316704ff7992a3ce8c27d499697473a47b42e286340dd022d16b0c6b73f44",
+        "byte_length": 41454
+      },
+      ".coordination-owner.json": {
+        "sha256": "d853c7cc6c4effe062fde108e2ead9f7273175bc892be83af2ca3e5ed7058c2b",
+        "byte_length": 162
+      },
+      ".coordination-report.json": {
+        "sha256": "52fe9066130dad0d5465420eccadfbe48d14cc0d8eddb9135739990d8b75b92b",
+        "byte_length": 44925
+      },
+      ".coordination-report.md": {
+        "sha256": "67a7a303a956700eeb60d0e797fd593791c985259e56ce95a68412e26f4818bd",
+        "byte_length": 45400
+      },
+      ".identity-original.json": {
+        "sha256": "42bdb92a5c15573e9898b72f8ccf30843d3cdc0af3123587843b821592070736",
+        "byte_length": 2041
+      },
+      ".input-a--.owner.json": {
+        "sha256": "10839dfc05b0d0b9c6717fb73b14a15fad767739c3fc5e994aaf6d7d8e21891f",
+        "byte_length": 142
+      },
+      ".input-a--candidates-original.json": {
+        "sha256": "ed2cbc74d6967ba8fcc5295f14d394b3cbb092e1ca4470bd08a9e3ee9c5b5826",
+        "byte_length": 3077
+      },
+      ".input-a--decision-original.json": {
+        "sha256": "bc2eedda4d3f0964d31ece5ceb9cd2404922eca04beacf7eb48d15a573ec0582",
+        "byte_length": 141
+      },
+      ".input-a--gold-original.json": {
+        "sha256": "8abe7f78f9a127f7aad6eb66d0305a948079972a565212a355459553aa5e3dce",
+        "byte_length": 780
+      },
+      ".input-a--knowledge-ir.json": {
+        "sha256": "fcb0bb52f9ec696eb0b409b864786402dc682bc40abad20fbcf57b110df737fb",
+        "byte_length": 12416
+      },
+      ".input-a--review-original.json": {
+        "sha256": "a2b8f337632d6bb1a12fa0991697fdd42dcbd8b2021b47ab4afba7906bc4c44c",
+        "byte_length": 525
+      },
+      ".input-a--source-snapshot.json": {
+        "sha256": "fd8f93d016daf5a558a2689a4c33f9f8b3aa647ac07bf44ca28953267aa3e255",
+        "byte_length": 1067
+      },
+      ".input-a--verification.json": {
+        "sha256": "de051b969a7c9d20b2d4df9f809b72cb10716bf8a2c57c3a768c95eb4c3e5524",
+        "byte_length": 16897
+      },
+      ".input-a--verification.md": {
+        "sha256": "56fd70203710aeb9035daac65aeaf5a38807643990d8beca8d0af89d2d86b32d",
+        "byte_length": 17331
+      },
+      ".input-b--.owner.json": {
+        "sha256": "88883829cc26da9d4966260b2ee12c11b389ff6eef4a6f2022c46eb65db1fd48",
+        "byte_length": 142
+      },
+      ".input-b--candidates-original.json": {
+        "sha256": "e3e3a1c62ad7b152daa5e6331ec90a1661d75bdfef8806a73ccea2a518ac78dc",
+        "byte_length": 3086
+      },
+      ".input-b--decision-original.json": {
+        "sha256": "5cff0a8cad3a2d60ea5905aff1f5f7184fd9c28f6f02215b4c159a8458e87239",
+        "byte_length": 141
+      },
+      ".input-b--gold-original.json": {
+        "sha256": "e7f47d8049459854f8614f1381000ca6d2fe1612b5e924b7d642818ad8db7b96",
+        "byte_length": 789
+      },
+      ".input-b--knowledge-ir.json": {
+        "sha256": "8058dbc6fe39b5add89db3b2580898168ee06b3c26662ed5f8677a99846cd797",
+        "byte_length": 12452
+      },
+      ".input-b--review-original.json": {
+        "sha256": "f077301cc5939e58f506c4c633ae681690dd3ad48ae250006c1d2e2b3b3dc7e2",
+        "byte_length": 528
+      },
+      ".input-b--source-snapshot.json": {
+        "sha256": "df7d3ef7ed9ed7e1b960b4483bc75992c9fcf6310ff63370fb9288292849cc02",
+        "byte_length": 1070
+      },
+      ".input-b--verification.json": {
+        "sha256": "d793850bb65cb34314ab39807dd809025263042d7121ec5dc5d6e11bb28b9ed7",
+        "byte_length": 16930
+      },
+      ".input-b--verification.md": {
+        "sha256": "99d60b376e105195a1f4936b3def057269d543e2a1bbdc3827964fbdc7c2d3f2",
+        "byte_length": 17364
+      },
+      ".selection-original.json": {
+        "sha256": "711230ee2036e63e278ab3e7f052755fd85feef4ade577e52053d17fe83b69b3",
+        "byte_length": 4330
+      }
+    },
+    "files": [
+      {
+        "relative_path": "知识比较.md",
+        "note_id": "overview",
+        "plan_revision": 1,
+        "content_sha256": "4a4a6b90d1b1a40d8940f5a374c58770b541092feb21682a9bf080be167dd046",
+        "byte_length": 571,
+        "content_mappings": [
+          {
+            "scope": {
+              "section_id": "overview",
+              "node_id": "comparison",
+              "kind": "table_header",
+              "row_id": null,
+              "column_id": "object"
+            },
+            "fact_ids": [],
+            "occurrence_ids": [],
+            "concept_ids": [],
+            "start_byte": 35,
+            "end_byte": 41
+          },
+          {
+            "scope": {
+              "section_id": "overview",
+              "node_id": "comparison",
+              "kind": "table_header",
+              "row_id": null,
+              "column_id": "60000000-0000-4000-8000-000000000007"
+            },
+            "fact_ids": [],
+            "occurrence_ids": [
+              "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f",
+              "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+            ],
+            "concept_ids": [
+              "60000000-0000-4000-8000-000000000007"
+            ],
+            "start_byte": 44,
+            "end_byte": 60
+          },
+          {
+            "scope": {
+              "section_id": "overview",
+              "node_id": "comparison",
+              "kind": "label",
+              "row_id": "60000000-0000-4000-8000-000000000005",
+              "column_id": "object"
+            },
+            "fact_ids": [],
+            "occurrence_ids": [
+              "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f"
+            ],
+            "concept_ids": [
+              "60000000-0000-4000-8000-000000000005"
+            ],
+            "start_byte": 79,
+            "end_byte": 95
+          },
+          {
+            "scope": {
+              "section_id": "overview",
+              "node_id": "comparison",
+              "kind": "facts",
+              "row_id": "60000000-0000-4000-8000-000000000005",
+              "column_id": "60000000-0000-4000-8000-000000000007"
+            },
+            "fact_ids": [
+              "fact-v3-e3524c039cc467895fbe79851774e4896cf06a621783045c08e94161a4b247a1"
+            ],
+            "occurrence_ids": [
+              "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f"
+            ],
+            "concept_ids": [
+              "60000000-0000-4000-8000-000000000005",
+              "60000000-0000-4000-8000-000000000007"
+            ],
+            "start_byte": 173,
+            "end_byte": 320
+          },
+          {
+            "scope": {
+              "section_id": "overview",
+              "node_id": "comparison",
+              "kind": "label",
+              "row_id": "60000000-0000-4000-8000-000000000006",
+              "column_id": "object"
+            },
+            "fact_ids": [],
+            "occurrence_ids": [
+              "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+            ],
+            "concept_ids": [
+              "60000000-0000-4000-8000-000000000006"
+            ],
+            "start_byte": 325,
+            "end_byte": 342
+          },
+          {
+            "scope": {
+              "section_id": "overview",
+              "node_id": "comparison",
+              "kind": "facts",
+              "row_id": "60000000-0000-4000-8000-000000000006",
+              "column_id": "60000000-0000-4000-8000-000000000007"
+            },
+            "fact_ids": [
+              "fact-v3-2885a04b0cfb7713bc1299548540a325eeaa21c2eb6f68f8e6ddc9123d0ed3f4"
+            ],
+            "occurrence_ids": [
+              "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+            ],
+            "concept_ids": [
+              "60000000-0000-4000-8000-000000000006",
+              "60000000-0000-4000-8000-000000000007"
+            ],
+            "start_byte": 420,
+            "end_byte": 567
+          }
+        ],
+        "links": [
+          {
+            "scope": {
+              "section_id": "overview",
+              "node_id": "comparison",
+              "kind": "label",
+              "row_id": "60000000-0000-4000-8000-000000000005",
+              "column_id": "object"
+            },
+            "target_concept_id": "60000000-0000-4000-8000-000000000005",
+            "target_path": "对象-60000000-0000-4000-8000-000000000005.md",
+            "target_heading": "知识明细",
+            "display_text": "查看详情",
+            "start_byte": 96,
+            "end_byte": 170
+          },
+          {
+            "scope": {
+              "section_id": "overview",
+              "node_id": "comparison",
+              "kind": "label",
+              "row_id": "60000000-0000-4000-8000-000000000006",
+              "column_id": "object"
+            },
+            "target_concept_id": "60000000-0000-4000-8000-000000000006",
+            "target_path": "对象-60000000-0000-4000-8000-000000000006.md",
+            "target_heading": "知识明细",
+            "display_text": "查看详情",
+            "start_byte": 343,
+            "end_byte": 417
+          }
+        ]
+      },
+      {
+        "relative_path": "对象-60000000-0000-4000-8000-000000000005.md",
+        "note_id": "object-60000000-0000-4000-8000-000000000005",
+        "plan_revision": 1,
+        "content_sha256": "c1d81677e3427713647012adadf77d97e2760151d89113f4339a6212f09674f5",
+        "byte_length": 375,
+        "content_mappings": [
+          {
+            "scope": {
+              "section_id": "details",
+              "node_id": "detail-fact-v3-e3524c039cc467895fbe79851774e4896cf06a621783045c08e94161a4b247a1",
+              "kind": "paragraph",
+              "row_id": null,
+              "column_id": null
+            },
+            "fact_ids": [
+              "fact-v3-e3524c039cc467895fbe79851774e4896cf06a621783045c08e94161a4b247a1"
+            ],
+            "occurrence_ids": [
+              "occ-465ff0c8c5c21865fc66a07cb8491671dcd4a50367ecf87591c7a13f47c2882f"
+            ],
+            "concept_ids": [
+              "60000000-0000-4000-8000-000000000005",
+              "60000000-0000-4000-8000-000000000007"
+            ],
+            "start_byte": 37,
+            "end_byte": 373
+          }
+        ],
+        "links": []
+      },
+      {
+        "relative_path": "对象-60000000-0000-4000-8000-000000000006.md",
+        "note_id": "object-60000000-0000-4000-8000-000000000006",
+        "plan_revision": 1,
+        "content_sha256": "0cf17e09e21f541849ee41cc70f8d2f0012d38126cad2ca41dcf8b41f216d615",
+        "byte_length": 378,
+        "content_mappings": [
+          {
+            "scope": {
+              "section_id": "details",
+              "node_id": "detail-fact-v3-2885a04b0cfb7713bc1299548540a325eeaa21c2eb6f68f8e6ddc9123d0ed3f4",
+              "kind": "paragraph",
+              "row_id": null,
+              "column_id": null
+            },
+            "fact_ids": [
+              "fact-v3-2885a04b0cfb7713bc1299548540a325eeaa21c2eb6f68f8e6ddc9123d0ed3f4"
+            ],
+            "occurrence_ids": [
+              "occ-bdfb45161cb8eec9ae170e0ea3b1bf1771e9c558a2b396aca010476577cd64e3"
+            ],
+            "concept_ids": [
+              "60000000-0000-4000-8000-000000000006",
+              "60000000-0000-4000-8000-000000000007"
+            ],
+            "start_byte": 38,
+            "end_byte": 376
+          }
+        ],
+        "links": []
+      }
+    ],
+    "artifacts": {
+      ".coordination-ir.json": {
+        "sha256": "58d316704ff7992a3ce8c27d499697473a47b42e286340dd022d16b0c6b73f44",
+        "byte_length": 41454
+      },
+      ".coordination-owner.json": {
+        "sha256": "d853c7cc6c4effe062fde108e2ead9f7273175bc892be83af2ca3e5ed7058c2b",
+        "byte_length": 162
+      },
+      ".coordination-report.json": {
+        "sha256": "52fe9066130dad0d5465420eccadfbe48d14cc0d8eddb9135739990d8b75b92b",
+        "byte_length": 44925
+      },
+      ".coordination-report.md": {
+        "sha256": "67a7a303a956700eeb60d0e797fd593791c985259e56ce95a68412e26f4818bd",
+        "byte_length": 45400
+      },
+      ".identity-original.json": {
+        "sha256": "42bdb92a5c15573e9898b72f8ccf30843d3cdc0af3123587843b821592070736",
+        "byte_length": 2041
+      },
+      ".input-a--.owner.json": {
+        "sha256": "10839dfc05b0d0b9c6717fb73b14a15fad767739c3fc5e994aaf6d7d8e21891f",
+        "byte_length": 142
+      },
+      ".input-a--candidates-original.json": {
+        "sha256": "ed2cbc74d6967ba8fcc5295f14d394b3cbb092e1ca4470bd08a9e3ee9c5b5826",
+        "byte_length": 3077
+      },
+      ".input-a--decision-original.json": {
+        "sha256": "bc2eedda4d3f0964d31ece5ceb9cd2404922eca04beacf7eb48d15a573ec0582",
+        "byte_length": 141
+      },
+      ".input-a--gold-original.json": {
+        "sha256": "8abe7f78f9a127f7aad6eb66d0305a948079972a565212a355459553aa5e3dce",
+        "byte_length": 780
+      },
+      ".input-a--knowledge-ir.json": {
+        "sha256": "fcb0bb52f9ec696eb0b409b864786402dc682bc40abad20fbcf57b110df737fb",
+        "byte_length": 12416
+      },
+      ".input-a--review-original.json": {
+        "sha256": "a2b8f337632d6bb1a12fa0991697fdd42dcbd8b2021b47ab4afba7906bc4c44c",
+        "byte_length": 525
+      },
+      ".input-a--source-snapshot.json": {
+        "sha256": "fd8f93d016daf5a558a2689a4c33f9f8b3aa647ac07bf44ca28953267aa3e255",
+        "byte_length": 1067
+      },
+      ".input-a--verification.json": {
+        "sha256": "de051b969a7c9d20b2d4df9f809b72cb10716bf8a2c57c3a768c95eb4c3e5524",
+        "byte_length": 16897
+      },
+      ".input-a--verification.md": {
+        "sha256": "56fd70203710aeb9035daac65aeaf5a38807643990d8beca8d0af89d2d86b32d",
+        "byte_length": 17331
+      },
+      ".input-b--.owner.json": {
+        "sha256": "88883829cc26da9d4966260b2ee12c11b389ff6eef4a6f2022c46eb65db1fd48",
+        "byte_length": 142
+      },
+      ".input-b--candidates-original.json": {
+        "sha256": "e3e3a1c62ad7b152daa5e6331ec90a1661d75bdfef8806a73ccea2a518ac78dc",
+        "byte_length": 3086
+      },
+      ".input-b--decision-original.json": {
+        "sha256": "5cff0a8cad3a2d60ea5905aff1f5f7184fd9c28f6f02215b4c159a8458e87239",
+        "byte_length": 141
+      },
+      ".input-b--gold-original.json": {
+        "sha256": "e7f47d8049459854f8614f1381000ca6d2fe1612b5e924b7d642818ad8db7b96",
+        "byte_length": 789
+      },
+      ".input-b--knowledge-ir.json": {
+        "sha256": "8058dbc6fe39b5add89db3b2580898168ee06b3c26662ed5f8677a99846cd797",
+        "byte_length": 12452
+      },
+      ".input-b--review-original.json": {
+        "sha256": "f077301cc5939e58f506c4c633ae681690dd3ad48ae250006c1d2e2b3b3dc7e2",
+        "byte_length": 528
+      },
+      ".input-b--source-snapshot.json": {
+        "sha256": "df7d3ef7ed9ed7e1b960b4483bc75992c9fcf6310ff63370fb9288292849cc02",
+        "byte_length": 1070
+      },
+      ".input-b--verification.json": {
+        "sha256": "d793850bb65cb34314ab39807dd809025263042d7121ec5dc5d6e11bb28b9ed7",
+        "byte_length": 16930
+      },
+      ".input-b--verification.md": {
+        "sha256": "99d60b376e105195a1f4936b3def057269d543e2a1bbdc3827964fbdc7c2d3f2",
+        "byte_length": 17364
+      },
+      ".owner.json": {
+        "sha256": "82ca733af669de4813c8ea39da5ce9cafe467f5492b18edccb8f438935afc85e",
+        "byte_length": 162
+      },
+      ".selection-original.json": {
+        "sha256": "711230ee2036e63e278ab3e7f052755fd85feef4ade577e52053d17fe83b69b3",
+        "byte_length": 4330
+      },
+      "plan.json": {
+        "sha256": "6eb7be2768d05df4b6b5e08b5f7fdee73df9f2645496cb938fd02c82993a03ea",
+        "byte_length": 17326
+      },
+      "对象-60000000-0000-4000-8000-000000000005.md": {
+        "sha256": "c1d81677e3427713647012adadf77d97e2760151d89113f4339a6212f09674f5",
+        "byte_length": 375
+      },
+      "对象-60000000-0000-4000-8000-000000000006.md": {
+        "sha256": "0cf17e09e21f541849ee41cc70f8d2f0012d38126cad2ca41dcf8b41f216d615",
+        "byte_length": 378
+      },
+      "知识比较.md": {
+        "sha256": "4a4a6b90d1b1a40d8940f5a374c58770b541092feb21682a9bf080be167dd046",
+        "byte_length": 571
+      }
+    }
+  },
+  "profile": "D:\\Noetome\\target\\compiler-temp\\b06-obsidian-escaping-20261105-d\\profile",
+  "vault": "D:\\Noetome\\target\\compiler-temp\\b06-obsidian-escaping-20261105-d\\vault",
+  "port": 50864,
+  "launcher": {
+    "path": "/mnt/c/Program Files/Obsidian/Obsidian.exe",
+    "sha256": "2156f15d12da8cc292fe0cc1884f32410fa187fede67beb6102cfcdc6442fbe2",
+    "byte_length": 176761056
+  }
+}

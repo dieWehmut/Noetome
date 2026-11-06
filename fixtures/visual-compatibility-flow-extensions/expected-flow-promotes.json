@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_flow_extension_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "flow-promotes",
+  "feature": "flow",
+  "author_case": "promotes",
+  "representative_kind": "product_output",
+  "representation": "flowchart",
+  "semantic_source": {
+    "process": {
+      "title": "演示提示促进规则",
+      "entry": "s1",
+      "goals": [
+        "s2"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "资料不可读时暂停"
+      ]
+    },
+    "nodes": [
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "启用演示优先控制",
+        "description": "把演示优先控制设为启用",
+        "criterion": null,
+        "inputs": [
+          "优先控制命令"
+        ],
+        "outputs": [
+          "已启用优先控制"
+        ],
+        "conditions": [
+          "演示模式开启"
+        ],
+        "exceptions": [
+          "控制器断开时不生效"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "提示被选择的倾向",
+        "description": "表示被促进的选择倾向，不提供比例或概率数值",
+        "criterion": null,
+        "inputs": [
+          "提示候选"
+        ],
+        "outputs": [
+          "选择倾向"
+        ],
+        "conditions": [
+          "演示筛选器可用"
+        ],
+        "exceptions": [
+          "筛选器不可用时未知"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "s2",
+        "kind": "promotes",
+        "branch_outcome": null,
+        "conditions": [
+          "演示优先通道接通"
+        ],
+        "exceptions": [
+          "旁路开启时该促进不成立"
+        ]
+      }
+    ],
+    "required_precedence": [
+      [
+        "s1",
+        "s2"
+      ]
+    ],
+    "empty_list_meaning": "not_listed_in_selected_source"
+  },
+  "collector": {
+    "notes": [
+      "流程总览.md",
+      "过程明细.md"
+    ],
+    "graph": {
+      "direction": "TD",
+      "label_encoding": "decimal_ascii_punctuation_v1",
+      "nodes": [
+        {
+          "author_id": "s1",
+          "render_id": "n0",
+          "shape": "step",
+          "label": "启用演示优先控制"
+        },
+        {
+          "author_id": "s2",
+          "render_id": "n1",
+          "shape": "step",
+          "label": "提示被选择的倾向"
+        }
+      ],
+      "edges": [
+        {
+          "author_id": "r1",
+          "from": "s1",
+          "to": "s2",
+          "render_from": "n0",
+          "render_to": "n1",
+          "kind": "promotes",
+          "branch_outcome": null,
+          "label": "+：促进",
+          "terminal_arrow": true,
+          "end_y_greater_than_start_y": true
+        }
+      ],
+      "require_real_arrow_geometry": true,
+      "require_visible_labels_equal_source_codepoints": true,
+      "source_declaration_order_must_not_define_execution_order": true
+    },
+    "require_complete_context": true,
+    "links": {
+      "destination": "过程明细.md",
+      "heading_by_object": {
+        "process": "过程说明",
+        "s1": "步骤-s1",
+        "s2": "步骤-s2",
+        "r1": "关系-r1"
+      },
+      "require_real_click": true
+    },
+    "ordered_list": null,
+    "expected_issue_codes": []
+  },
+  "coverage": [
+    "all process/node/relation inputs/outputs/conditions/exceptions; empty and unknown meanings stay distinct",
+    "TD source/target and terminal arrow geometry",
+    "all real Chinese detail fragment clicks",
+    "promotes means positive facilitation; exact +：促进, no invented rate/probability"
+  ]
+}

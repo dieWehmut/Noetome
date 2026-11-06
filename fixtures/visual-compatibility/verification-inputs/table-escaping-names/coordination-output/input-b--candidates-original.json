@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "producer": "api",
+  "transport_mode": "local_http_test",
+  "request_id": "synthetic-coordination-b",
+  "binding": {
+    "project_id": "d10dd42e-e2b2-4d2a-9316-137464a42a87",
+    "import_id": "aa99adb4-720d-4988-825a-fe957dd0096e",
+    "source_id": "8aeea69f-044d-4126-bfa6-4ce3059fa0ca",
+    "version_id": "c95284c5-6816-4cf5-aa12-7c5be32f9b99",
+    "content_sha256": "4f1961d4828189ea71b8fa887bb7ca12dde10e7ec3e43c87e8fe8df4ec10bc72",
+    "normalized_sha256": "4f1961d4828189ea71b8fa887bb7ca12dde10e7ec3e43c87e8fe8df4ec10bc72",
+    "parse_id": null,
+    "manifest_sha256": null
+  },
+  "payload": {
+    "schema_version": 1,
+    "request_id": "synthetic-coordination-b",
+    "binding": {
+      "project_id": "d10dd42e-e2b2-4d2a-9316-137464a42a87",
+      "import_id": "aa99adb4-720d-4988-825a-fe957dd0096e",
+      "source_id": "8aeea69f-044d-4126-bfa6-4ce3059fa0ca",
+      "version_id": "c95284c5-6816-4cf5-aa12-7c5be32f9b99",
+      "content_sha256": "4f1961d4828189ea71b8fa887bb7ca12dde10e7ec3e43c87e8fe8df4ec10bc72",
+      "normalized_sha256": "4f1961d4828189ea71b8fa887bb7ca12dde10e7ec3e43c87e8fe8df4ec10bc72",
+      "parse_id": null,
+      "manifest_sha256": null
+    },
+    "concepts": [
+      {
+        "concept_id": "b-subject",
+        "revision": 1,
+        "canonical_name": "乙容器（β）",
+        "aliases": [],
+        "needs_full_explanation": true
+      },
+      {
+        "concept_id": "b-property",
+        "revision": 1,
+        "canonical_name": "速率 | 测量",
+        "aliases": [],
+        "needs_full_explanation": true
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "b-support",
+        "unit_id": "unit-0",
+        "excerpt_start_byte": 0,
+        "excerpt_end_byte": 179,
+        "excerpt_sha256": "b3b6dd354ea7c76f48b89b2d4e8ea5706ef9c146d12563edb8027ed961c356a8",
+        "quote": "适用条件：已列明；观点时间：2020年。\n乙容器（β） 的速率 | 测量为 12 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。"
+      }
+    ],
+    "atoms": [
+      {
+        "atom": {
+          "atom_id": "b-speed",
+          "revision": 1,
+          "kind": "comparison_value",
+          "concept_ids": [
+            "b-subject",
+            "b-property"
+          ],
+          "content": "乙容器（β） 的速率 | 测量为 12 m/s，条件为x < 2且计数范围 [1,2]；例外为读数 * 异常时不适用。",
+          "qualifiers": [
+            "m/s",
+            "x < 2",
+            "计数范围 [1,2]",
+            "读数 * 异常时不适用"
+          ],
+          "evidence_links": [
+            {
+              "evidence_id": "b-support",
+              "relation": "supports"
+            }
+          ],
+          "required": false,
+          "verification": "unverified",
+          "value_status": "known"
+        },
+        "measurement": {
+          "value_status": "known",
+          "value": "12",
+          "unit": "m/s",
+          "conditions": [
+            "x < 2",
+            "计数范围 [1,2]"
+          ]
+        }
+      }
+    ]
+  }
+}

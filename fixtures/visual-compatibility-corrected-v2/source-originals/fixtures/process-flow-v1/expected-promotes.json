@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "producer": "process_flow_expected",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case_name": "promotes",
+  "profile": "obsidian_1_6_7_flowchart",
+  "review_status": "passed",
+  "flow_status": "passed",
+  "representation": "flowchart",
+  "issues": [],
+  "process": {
+    "title": "演示提示促进规则",
+    "entry": "s1",
+    "goals": [
+      "s2"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "启用演示优先控制",
+      "description": "把演示优先控制设为启用",
+      "criterion": null,
+      "inputs": [
+        "优先控制命令"
+      ],
+      "outputs": [
+        "已启用优先控制"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "控制器断开时不生效"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "提示被选择的倾向",
+      "description": "表示被促进的选择倾向，不提供比例或概率数值",
+      "criterion": null,
+      "inputs": [
+        "提示候选"
+      ],
+      "outputs": [
+        "选择倾向"
+      ],
+      "conditions": [
+        "演示筛选器可用"
+      ],
+      "exceptions": [
+        "筛选器不可用时未知"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "promotes",
+      "branch_outcome": null,
+      "conditions": [
+        "演示优先通道接通"
+      ],
+      "exceptions": [
+        "旁路开启时该促进不成立"
+      ]
+    }
+  ],
+  "required_precedence": [
+    [
+      "s1",
+      "s2"
+    ]
+  ],
+  "totals": {
+    "source_statements": 4,
+    "parsed_statements": 4,
+    "unparsed_statements": 0,
+    "steps": 2,
+    "decision_steps": 0,
+    "relations": 1,
+    "sequence_relations": 0,
+    "branch_relations": 0,
+    "causes_relations": 0,
+    "promotes_relations": 1,
+    "inhibits_relations": 0,
+    "correlates_relations": 0,
+    "unknown_relations": 0,
+    "evidence_records": 4,
+    "node_inputs": 2,
+    "node_outputs": 2,
+    "process_conditions": 1,
+    "process_exceptions": 1,
+    "node_conditions": 2,
+    "node_exceptions": 2,
+    "relation_conditions": 1,
+    "relation_exceptions": 1,
+    "flow_nodes": 2,
+    "flow_edges": 1
+  },
+  "unparsed_lines": [],
+  "empty_list_meaning": "not_listed_in_selected_source",
+  "scope": "bounded_self_authored_engineering_only"
+}

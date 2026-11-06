@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_gold",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "process": {
+    "title": "演示指示器触发规则",
+    "entry": "s1",
+    "goals": [
+      "s3"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "施加演示触发信号",
+      "description": "把触发信号设为有效状态",
+      "criterion": null,
+      "inputs": [
+        "演示触发命令"
+      ],
+      "outputs": [
+        "有效触发信号"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "电源断开时不施加信号"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "指示器亮起",
+      "description": "表示演示规则规定的亮灯响应",
+      "criterion": null,
+      "inputs": [
+        "有效触发信号"
+      ],
+      "outputs": [
+        "亮灯响应"
+      ],
+      "conditions": [
+        "演示指示器可用"
+      ],
+      "exceptions": [
+        "指示器断开时无响应"
+      ]
+    },
+    {
+      "id": "s3",
+      "kind": "step",
+      "label": "登记观察结果",
+      "description": "登记实际观察到的指示器状态",
+      "criterion": null,
+      "inputs": [
+        "观察到的指示器状态"
+      ],
+      "outputs": [
+        "观察记录"
+      ],
+      "conditions": [
+        "观察已完成"
+      ],
+      "exceptions": [
+        "无法观察时登记待复核"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "causes",
+      "branch_outcome": null,
+      "conditions": [
+        "演示电路完整"
+      ],
+      "exceptions": [
+        "指示器断开时该作用不成立"
+      ]
+    },
+    {
+      "id": "r2",
+      "left": "s2",
+      "right": "s3",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [
+        "亮灯状态已观察"
+      ],
+      "exceptions": [
+        "观察中断时暂停登记"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "object_id": "process",
+      "start_byte": 0,
+      "end_byte": 147,
+      "quote": "过程：\"演示指示器触发规则\"。入口：s1。目标：[\"s3\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+    },
+    {
+      "object_id": "s1",
+      "start_byte": 148,
+      "end_byte": 384,
+      "quote": "步骤 s1：\"施加演示触发信号\"。说明：\"把触发信号设为有效状态\"。输入：[\"演示触发命令\"]。输出：[\"有效触发信号\"]。条件：[\"演示模式开启\"]。例外：[\"电源断开时不施加信号\"]。"
+    },
+    {
+      "object_id": "s2",
+      "start_byte": 385,
+      "end_byte": 612,
+      "quote": "步骤 s2：\"指示器亮起\"。说明：\"表示演示规则规定的亮灯响应\"。输入：[\"有效触发信号\"]。输出：[\"亮灯响应\"]。条件：[\"演示指示器可用\"]。例外：[\"指示器断开时无响应\"]。"
+    },
+    {
+      "object_id": "s3",
+      "start_byte": 613,
+      "end_byte": 849,
+      "quote": "步骤 s3：\"登记观察结果\"。说明：\"登记实际观察到的指示器状态\"。输入：[\"观察到的指示器状态\"]。输出：[\"观察记录\"]。条件：[\"观察已完成\"]。例外：[\"无法观察时登记待复核\"]。"
+    },
+    {
+      "object_id": "r1",
+      "start_byte": 850,
+      "end_byte": 963,
+      "quote": "关系 r1：s1 导致 s2。条件：[\"演示电路完整\"]。例外：[\"指示器断开时该作用不成立\"]。"
+    },
+    {
+      "object_id": "r2",
+      "start_byte": 964,
+      "end_byte": 1080,
+      "quote": "关系 r2：s2 完成后执行 s3。条件：[\"亮灯状态已观察\"]。例外：[\"观察中断时暂停登记\"]。"
+    }
+  ]
+}

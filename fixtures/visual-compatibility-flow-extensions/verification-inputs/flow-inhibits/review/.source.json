@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "binding": {
+    "project_id": "c8f0d542-1bb6-4c24-82b6-ad20fc189af4",
+    "import_id": "63f6f00c-2007-424a-9a1d-990aa0dc9726",
+    "source_id": "fcd1028d-31fd-453e-b2b7-21afa69b3214",
+    "version_id": "026cdb13-335a-48c7-8f8f-cb4e9927b193",
+    "content_sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+    "normalized_sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242",
+    "parse_id": null,
+    "manifest_sha256": null
+  },
+  "units": [
+    {
+      "unit_id": "unit-0",
+      "locator": {
+        "kind": "text",
+        "span_id": "212d97ae-b671-4db0-a280-de209653167b",
+        "ordinal": 0,
+        "resource_sha256": "fc79a71511c61385a98ffad4788a68a74f5edeee088f35a6dfdc770c71f0b242"
+      },
+      "source_status": "parsed",
+      "start_byte": 0,
+      "end_byte": 754,
+      "text": "过程：\"演示鸣响抑制规则\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。\n步骤 s1：\"启用演示静音控制\"。说明：\"把演示静音控制设为启用\"。输入：[\"静音命令\"]。输出：[\"已启用静音控制\"]。条件：[\"演示模式开启\"]。例外：[\"控制器断开时不生效\"]。\n步骤 s2：\"蜂鸣器鸣响响应\"。说明：\"表示可能受到抑制的鸣响响应，不断言响应已发生\"。输入：[\"鸣响请求\"]。输出：[\"可能的鸣响响应\"]。条件：[\"蜂鸣器可用\"]。例外：[\"蜂鸣器断开时不可观察\"]。\n关系 r1：s1 抑制 s2。条件：[\"演示静音通道接通\"]。例外：[\"旁路开启时该抑制不成立\"]。\n"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "producer": "formula_fidelity_expected",
+  "author": "independent_self_authored_engineering_fixture",
+  "case_name": "native_exp",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "scope": "selected_formula_only_not_ocr_or_science",
+  "source_pins": {
+    "semantics.json": {
+      "sha256": "5b29469f27149119c9e67cb8b892fe5a6cc4722e8b91fe7972be3a2d0f58347b",
+      "byte_length": 656
+    },
+    "original.tex": {
+      "sha256": "8dcd01f607af975e2b0fbb6c98e345c8ecdfd3306cb1e9b6293c9911d55d6c99",
+      "byte_length": 24
+    },
+    "case.json": {
+      "sha256": "a906e7cef9ea5f2937fd29651f174ea86c786f20013deeaa4c61525f62d882a8",
+      "byte_length": 723
+    },
+    "region.png": {
+      "sha256": "a30de55f74c6dccda0e3dabcc064236002d11a772429cf77e69d0da0c67a6a47",
+      "byte_length": 7885
+    }
+  },
+  "case": {
+    "schema_version": 1,
+    "purpose": "formula_fidelity",
+    "selection_id": "native_exp",
+    "title": "公式保真样例 native_exp",
+    "source_kind": "tex",
+    "tex": {
+      "file": "original.tex",
+      "sha256": "8dcd01f607af975e2b0fbb6c98e345c8ecdfd3306cb1e9b6293c9911d55d6c99"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "5b29469f27149119c9e67cb8b892fe5a6cc4722e8b91fe7972be3a2d0f58347b"
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "a30de55f74c6dccda0e3dabcc064236002d11a772429cf77e69d0da0c67a6a47",
+      "page": 1,
+      "canvas": [
+        1000,
+        600
+      ],
+      "bounds": [
+        100,
+        120,
+        800,
+        240
+      ],
+      "legibility": "clear"
+    },
+    "data_available": false
+  },
+  "semantics": {
+    "schema_version": 1,
+    "expression": "C_i(t) = C_0 \\exp(-k t)",
+    "symbols": [
+      {
+        "symbol": "C",
+        "definition": "test concentration",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "t",
+        "definition": "elapsed time",
+        "unit": "s"
+      },
+      {
+        "symbol": "k",
+        "definition": "positive decay coefficient",
+        "unit": "1/s"
+      }
+    ],
+    "conditions": [
+      "k > 0"
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "tokens": [
+    "C",
+    "_",
+    "i",
+    "(",
+    "t",
+    ")",
+    "=",
+    "C",
+    "_",
+    "0",
+    "\\exp",
+    "(",
+    "-",
+    "k",
+    "t",
+    ")"
+  ],
+  "profile_name": "native",
+  "representation": "native_math",
+  "issue_codes": [],
+  "fallback_reasons": [],
+  "compatibility_rewrites": []
+}

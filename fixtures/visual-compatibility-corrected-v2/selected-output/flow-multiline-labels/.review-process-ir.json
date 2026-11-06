@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_review",
+  "scope": "bounded_process_text_v1",
+  "request_id": "a4eaab1a-fa21-41c2-ba66-a5a219cb8303",
+  "binding": {
+    "project_id": "1b6729da-2c47-40ab-bd5e-9803b51fde04",
+    "import_id": "63c9c26c-2ddb-4aca-9dbb-b158576daace",
+    "source_id": "9e2e7268-fec1-4705-aa22-98baccaf13f3",
+    "version_id": "650b31ab-0de4-4cc8-89e8-9c45f4aec8c3",
+    "content_sha256": "07ffaee58e8b3f349addf15fd2eb7df5a49357fa808c65fc5728bb2c1bd7d076",
+    "normalized_sha256": "07ffaee58e8b3f349addf15fd2eb7df5a49357fa808c65fc5728bb2c1bd7d076",
+    "parse_id": null,
+    "manifest_sha256": null
+  },
+  "unit": {
+    "unit_id": "unit-0",
+    "locator": {
+      "kind": "text",
+      "span_id": "8ff12588-d89c-4065-802b-895d3d3a72af",
+      "ordinal": 0,
+      "resource_sha256": "07ffaee58e8b3f349addf15fd2eb7df5a49357fa808c65fc5728bb2c1bd7d076"
+    },
+    "source_status": "parsed",
+    "start_byte": 0,
+    "end_byte": 610,
+    "text": "过程：\"多行标签的保真流程\"。入口：s1。目标：[\"s2\"]。条件：[]。例外：[\"不可读资料需复核\"]。\n步骤 s1：\"检查\\n卡片\\t[α]\"。说明：\"完整保留来源标签中的换行和制表符\"。输入：[\"样例卡\"]。输出：[\"检查结果\"]。条件：[]。例外：[\"卡片缺失时停止\"]。\n步骤 s2：\"记录检查结果\"。说明：\"记录来源明示的检查结果\"。输入：[\"检查结果\"]。输出：[\"检查记录\"]。条件：[\"检查完成\"]。例外：[]。\n关系 r1：s1 完成后执行 s2。条件：[]。例外：[\"检查未完成时不得登记\"]。\n"
+  },
+  "source_match": "passed",
+  "gold_match": "passed",
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "published": false,
+  "document": {
+    "process": {
+      "title": "多行标签的保真流程",
+      "entry": "s1",
+      "goals": [
+        "s2"
+      ],
+      "conditions": [],
+      "exceptions": [
+        "不可读资料需复核"
+      ]
+    },
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "检查\n卡片\t[α]",
+        "description": "完整保留来源标签中的换行和制表符",
+        "criterion": null,
+        "inputs": [
+          "样例卡"
+        ],
+        "outputs": [
+          "检查结果"
+        ],
+        "conditions": [],
+        "exceptions": [
+          "卡片缺失时停止"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "记录检查结果",
+        "description": "记录来源明示的检查结果",
+        "criterion": null,
+        "inputs": [
+          "检查结果"
+        ],
+        "outputs": [
+          "检查记录"
+        ],
+        "conditions": [
+          "检查完成"
+        ],
+        "exceptions": []
+      }
+    ],
+    "relations": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "s2",
+        "kind": "sequence",
+        "branch_outcome": null,
+        "conditions": [],
+        "exceptions": [
+          "检查未完成时不得登记"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "object_id": "process",
+        "start_byte": 0,
+        "end_byte": 127,
+        "quote": "过程：\"多行标签的保真流程\"。入口：s1。目标：[\"s2\"]。条件：[]。例外：[\"不可读资料需复核\"]。"
+      },
+      {
+        "object_id": "r1",
+        "start_byte": 513,
+        "end_byte": 609,
+        "quote": "关系 r1：s1 完成后执行 s2。条件：[]。例外：[\"检查未完成时不得登记\"]。"
+      },
+      {
+        "object_id": "s1",
+        "start_byte": 128,
+        "end_byte": 331,
+        "quote": "步骤 s1：\"检查\\n卡片\\t[α]\"。说明：\"完整保留来源标签中的换行和制表符\"。输入：[\"样例卡\"]。输出：[\"检查结果\"]。条件：[]。例外：[\"卡片缺失时停止\"]。"
+      },
+      {
+        "object_id": "s2",
+        "start_byte": 332,
+        "end_byte": 512,
+        "quote": "步骤 s2：\"记录检查结果\"。说明：\"记录来源明示的检查结果\"。输入：[\"检查结果\"]。输出：[\"检查记录\"]。条件：[\"检查完成\"]。例外：[]。"
+      }
+    ]
+  },
+  "evidence_fingerprints": {
+    "process": {
+      "sha256": "8fec06188c80cce8634b17c7c8eb69abe9962d15ee6d074f0f072aec5ba39ca9",
+      "byte_length": 127
+    },
+    "r1": {
+      "sha256": "72d8c5c06f97302b854e4e4df7b038f9ae6014c2c59c15fba60c91456c3c1b9a",
+      "byte_length": 96
+    },
+    "s1": {
+      "sha256": "ddbe7ee8149098fc6deee1b5b4264c0ff0925223d5dcad528f7d83a568a10d4a",
+      "byte_length": 203
+    },
+    "s2": {
+      "sha256": "2d6d986b6531b70031176f2c9a5d2fae7837c719d15e1a27e205d26b9509026a",
+      "byte_length": 180
+    }
+  }
+}

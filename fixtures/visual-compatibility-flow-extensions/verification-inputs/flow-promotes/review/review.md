@@ -1,0 +1,229 @@
+# 有界过程来源核对
+
+状态：passed；知识状态：pending；发布：false。
+
+科学质量：not_run；研究：not_requested；网络与付费调用：0。
+
+```json
+{
+  "schema_version": 1,
+  "producer": "process_source_review",
+  "scope": "bounded_process_text_v1",
+  "request_id": "7e591804-f30e-41ee-a6e6-e3d30b7e7031",
+  "binding": {
+    "project_id": "656cad9e-cb1b-43d5-a565-63f5a402a686",
+    "import_id": "289967e4-095e-42b4-b8db-26ccc1857f48",
+    "source_id": "ac06fba6-8037-4fb5-aa74-6cefa974122b",
+    "version_id": "2b168b97-41c2-4230-8889-8250cccafd85",
+    "content_sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+    "normalized_sha256": "7d126802e02e30cfcdd11139a963a3006d9643940b70b5fdc103ec6991b6352b",
+    "parse_id": null,
+    "manifest_sha256": null
+  },
+  "selection": [
+    {
+      "kind": "text",
+      "ordinal": 0
+    }
+  ],
+  "status": "passed",
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "research_status": "not_requested",
+  "published": false,
+  "network_calls": 0,
+  "paid_calls": 0,
+  "checks": {
+    "source_parsing": "passed",
+    "gold_match": "passed",
+    "saved_output": "passed"
+  },
+  "issue_codes": [],
+  "unparsed_statements": 0,
+  "parsed_document": {
+    "process": {
+      "title": "演示提示促进规则",
+      "entry": "s1",
+      "goals": [
+        "s2"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "资料不可读时暂停"
+      ]
+    },
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "启用演示优先控制",
+        "description": "把演示优先控制设为启用",
+        "criterion": null,
+        "inputs": [
+          "优先控制命令"
+        ],
+        "outputs": [
+          "已启用优先控制"
+        ],
+        "conditions": [
+          "演示模式开启"
+        ],
+        "exceptions": [
+          "控制器断开时不生效"
+        ]
+      },
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "提示被选择的倾向",
+        "description": "表示被促进的选择倾向，不提供比例或概率数值",
+        "criterion": null,
+        "inputs": [
+          "提示候选"
+        ],
+        "outputs": [
+          "选择倾向"
+        ],
+        "conditions": [
+          "演示筛选器可用"
+        ],
+        "exceptions": [
+          "筛选器不可用时未知"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "s2",
+        "kind": "promotes",
+        "branch_outcome": null,
+        "conditions": [
+          "演示优先通道接通"
+        ],
+        "exceptions": [
+          "旁路开启时该促进不成立"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "object_id": "process",
+        "start_byte": 0,
+        "end_byte": 144,
+        "quote": "过程：\"演示提示促进规则\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+      },
+      {
+        "object_id": "r1",
+        "start_byte": 637,
+        "end_byte": 753,
+        "quote": "关系 r1：s1 促进 s2。条件：[\"演示优先通道接通\"]。例外：[\"旁路开启时该促进不成立\"]。"
+      },
+      {
+        "object_id": "s1",
+        "start_byte": 145,
+        "end_byte": 381,
+        "quote": "步骤 s1：\"启用演示优先控制\"。说明：\"把演示优先控制设为启用\"。输入：[\"优先控制命令\"]。输出：[\"已启用优先控制\"]。条件：[\"演示模式开启\"]。例外：[\"控制器断开时不生效\"]。"
+      },
+      {
+        "object_id": "s2",
+        "start_byte": 382,
+        "end_byte": 636,
+        "quote": "步骤 s2：\"提示被选择的倾向\"。说明：\"表示被促进的选择倾向，不提供比例或概率数值\"。输入：[\"提示候选\"]。输出：[\"选择倾向\"]。条件：[\"演示筛选器可用\"]。例外：[\"筛选器不可用时未知\"]。"
+      }
+    ]
+  },
+  "totals": {
+    "branch_relations": 0,
+    "causes_relations": 0,
+    "correlates_relations": 0,
+    "decision_steps": 0,
+    "evidence_records": 4,
+    "inhibits_relations": 0,
+    "node_conditions": 2,
+    "node_exceptions": 2,
+    "node_inputs": 2,
+    "node_outputs": 2,
+    "parsed_statements": 4,
+    "process_conditions": 1,
+    "process_exceptions": 1,
+    "promotes_relations": 1,
+    "relation_conditions": 1,
+    "relation_exceptions": 1,
+    "relations": 1,
+    "sequence_relations": 0,
+    "source_statements": 4,
+    "steps": 2,
+    "unknown_relations": 0,
+    "unparsed_statements": 0
+  },
+  "expected_totals": {
+    "branch_relations": 0,
+    "causes_relations": 0,
+    "correlates_relations": 0,
+    "decision_steps": 0,
+    "evidence_records": 4,
+    "inhibits_relations": 0,
+    "node_conditions": 2,
+    "node_exceptions": 2,
+    "node_inputs": 2,
+    "node_outputs": 2,
+    "parsed_statements": 4,
+    "process_conditions": 1,
+    "process_exceptions": 1,
+    "promotes_relations": 1,
+    "relation_conditions": 1,
+    "relation_exceptions": 1,
+    "relations": 1,
+    "sequence_relations": 0,
+    "source_statements": 4,
+    "steps": 2,
+    "unknown_relations": 0,
+    "unparsed_statements": 0
+  },
+  "gold_sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+  "ir_fingerprint": {
+    "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+    "byte_length": 5303
+  },
+  "inputs": {
+    ".case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    ".gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    ".source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    }
+  },
+  "artifacts": {
+    ".case.json": {
+      "sha256": "b278082970933d3c42f13bb6c0771ecd26bad8faa51ee78d5a867d8617cefe70",
+      "byte_length": 363
+    },
+    ".gold.json": {
+      "sha256": "6b75b0c978a95e14814eaaf5d4f6a5a7b19883a033139641914f2c9e4abf3967",
+      "byte_length": 2775
+    },
+    ".owner.json": {
+      "sha256": "730d9f3d541959b6e088fe6a7f8637c6b982f35720ad5350c6a332cf5d67e079",
+      "byte_length": 170
+    },
+    ".source.json": {
+      "sha256": "ec23fdfe6f28f560dc110bbabef5d31ad17eecac0842333480cd8b0e366f7d0c",
+      "byte_length": 1682
+    },
+    "process-ir.json": {
+      "sha256": "c955bcb6c02d47f24cf9023ecc00b2ee168d3b4b52890d57a42d01ef95e72830",
+      "byte_length": 5303
+    }
+  }
+}
+```

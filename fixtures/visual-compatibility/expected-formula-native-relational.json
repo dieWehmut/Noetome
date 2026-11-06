@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_format_and_output_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "formula-native-relational",
+  "feature": "formula",
+  "author_case": "native_relational",
+  "representative_kind": "product_output",
+  "representation": "native_math",
+  "semantic_source": {
+    "schema_version": 1,
+    "expression": "x_{i}^{2} \\le \\frac{a}{b}",
+    "symbols": [
+      {
+        "symbol": "x",
+        "definition": "test coordinate",
+        "unit": "mm"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "a",
+        "definition": "positive scaling constant",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "b",
+        "definition": "positive nonzero divisor",
+        "unit": "s^2"
+      }
+    ],
+    "conditions": [
+      "a > 0 and b > 0",
+      "This is a fictional engineering example, not a scientific claim."
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "collector": {
+    "notes": [
+      {
+        "file": "公式预览.md",
+        "math_trees": [
+          [
+            "row",
+            [
+              [
+                "msubsup",
+                [
+                  [
+                    "mi",
+                    "x"
+                  ],
+                  [
+                    "mi",
+                    "i"
+                  ],
+                  [
+                    "mn",
+                    "2"
+                  ]
+                ]
+              ],
+              [
+                "mo",
+                "≤"
+              ],
+              [
+                "mfrac",
+                [
+                  [
+                    "mi",
+                    "a"
+                  ],
+                  [
+                    "mi",
+                    "b"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        "images": [],
+        "preformatted_exact": [
+          "公式保真样例 native_relational",
+          "x",
+          "test coordinate",
+          "mm",
+          "i",
+          "selected integer sample index",
+          "来源未给出单位",
+          "a",
+          "positive scaling constant",
+          "mmol/L",
+          "b",
+          "positive nonzero divisor",
+          "s^2",
+          "a > 0 and b > 0",
+          "This is a fictional engineering example, not a scientific claim.",
+          "i = 1,2,3",
+          "0 <= t <= 10 s",
+          "Do not apply outside the selected time interval."
+        ],
+        "link_destinations": [
+          "original.png"
+        ],
+        "click_attachments": [
+          "original.png"
+        ]
+      }
+    ],
+    "attachment_images": {
+      "original.png": {
+        "width": 800,
+        "height": 240
+      }
+    },
+    "require_complete_context": true,
+    "expected_issue_codes": [],
+    "math_tree_provenance": "handwritten from original frozen TeX; never generated MathML/CHTML"
+  },
+  "coverage": [
+    "exact TeX and all symbols/units/conditions/ranges/exceptions",
+    "combined scripts and less-than-or-equal direction"
+  ]
+}

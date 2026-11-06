@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "producer": "image_fidelity_expected",
+  "author": "independent_self_authored_engineering_fixture",
+  "case_name": "spatial",
+  "scope": "selected_image_only_manual_declaration_not_recognition_or_science",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "case": {
+    "schema_version": 1,
+    "purpose": "image_fidelity",
+    "selection_id": "spatial",
+    "title": "图像保真样例 spatial",
+    "source_kind": "spatial",
+    "image": {
+      "file": "source.png",
+      "sha256": "a1902fb8fa1f4d16dce59ed2644fe915b304ad6b19b5bc52b2b6d22d8afc80da"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "81299e484d86d606e0cc9aab66dfceea8eb0fdf76056b15c45ca594411f85754"
+    },
+    "dimensions": [
+      960,
+      520
+    ],
+    "readability": "clear"
+  },
+  "semantics": {
+    "schema_version": 1,
+    "producer": "author_image_declaration",
+    "author": "independent_cc0_fixture_author",
+    "complete": true,
+    "data_available": false,
+    "caption": "Selected spatial layout with containment, left and upper relationships.",
+    "conditions": [
+      "Only the selected schematic relationships are asserted."
+    ],
+    "exceptions": [
+      "No scientific accuracy or measured data is claimed."
+    ],
+    "elements": [
+      {
+        "id": "outer",
+        "kind": "rect",
+        "bbox": [
+          360,
+          80,
+          500,
+          260
+        ],
+        "label": "Compartment",
+        "unit": null,
+        "legend_id": null
+      },
+      {
+        "id": "inner",
+        "kind": "circle",
+        "bbox": [
+          690,
+          160,
+          140,
+          140
+        ],
+        "label": "Inclusion",
+        "unit": null,
+        "legend_id": null
+      },
+      {
+        "id": "reference",
+        "kind": "rect",
+        "bbox": [
+          40,
+          170,
+          190,
+          100
+        ],
+        "label": "Reference",
+        "unit": null,
+        "legend_id": null
+      },
+      {
+        "id": "cover",
+        "kind": "rect",
+        "bbox": [
+          690,
+          20,
+          140,
+          50
+        ],
+        "label": "Cover",
+        "unit": null,
+        "legend_id": null
+      }
+    ],
+    "relations": [],
+    "spatial_relations": [
+      {
+        "id": "containment",
+        "a": "inner",
+        "b": "outer",
+        "relation": "inside"
+      },
+      {
+        "id": "left",
+        "a": "reference",
+        "b": "inner",
+        "relation": "left_of"
+      },
+      {
+        "id": "upper",
+        "a": "cover",
+        "b": "inner",
+        "relation": "above"
+      }
+    ],
+    "legend": []
+  },
+  "source_pins": {
+    "case.json": {
+      "sha256": "9e6f602ef4fbe57529068b51f1f81a1bab3820745624596888fc0f80503c55bf",
+      "byte_length": 479
+    },
+    "semantics.json": {
+      "sha256": "81299e484d86d606e0cc9aab66dfceea8eb0fdf76056b15c45ca594411f85754",
+      "byte_length": 1627
+    },
+    "source.png": {
+      "sha256": "a1902fb8fa1f4d16dce59ed2644fe915b304ad6b19b5bc52b2b6d22d8afc80da",
+      "byte_length": 17535
+    }
+  },
+  "profile_name": "native",
+  "representation": "svg_redraw",
+  "issue_codes": [],
+  "fallback_reasons": []
+}

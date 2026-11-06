@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_gold",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "process": {
+    "title": "循环复核演示",
+    "entry": "s1",
+    "goals": [
+      "s3"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "登记待复核项",
+      "description": "登记本轮待复核项",
+      "criterion": null,
+      "inputs": [
+        "待复核项"
+      ],
+      "outputs": [
+        "登记项"
+      ],
+      "conditions": [
+        "条目可读"
+      ],
+      "exceptions": [
+        "条目缺失时暂停"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "复核登记项",
+      "description": "按演示规则复核登记项",
+      "criterion": null,
+      "inputs": [
+        "登记项"
+      ],
+      "outputs": [
+        "复核结果"
+      ],
+      "conditions": [
+        "登记完成"
+      ],
+      "exceptions": [
+        "依据不足时暂停"
+      ]
+    },
+    {
+      "id": "s3",
+      "kind": "step",
+      "label": "重置为待复核",
+      "description": "将结果重新置为待复核并进入下一轮",
+      "criterion": null,
+      "inputs": [
+        "复核结果"
+      ],
+      "outputs": [
+        "待复核项"
+      ],
+      "conditions": [
+        "演示循环开启"
+      ],
+      "exceptions": [
+        "循环开关关闭时停止"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [
+        "登记完成"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "r2",
+      "left": "s2",
+      "right": "s3",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [
+        "复核完成"
+      ],
+      "exceptions": []
+    },
+    {
+      "id": "r3",
+      "left": "s3",
+      "right": "s1",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [
+        "演示循环开启"
+      ],
+      "exceptions": [
+        "循环开关关闭时停止"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "object_id": "process",
+      "start_byte": 0,
+      "end_byte": 138,
+      "quote": "过程：\"循环复核演示\"。入口：s1。目标：[\"s3\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+    },
+    {
+      "object_id": "s1",
+      "start_byte": 139,
+      "end_byte": 330,
+      "quote": "步骤 s1：\"登记待复核项\"。说明：\"登记本轮待复核项\"。输入：[\"待复核项\"]。输出：[\"登记项\"]。条件：[\"条目可读\"]。例外：[\"条目缺失时暂停\"]。"
+    },
+    {
+      "object_id": "s2",
+      "start_byte": 331,
+      "end_byte": 525,
+      "quote": "步骤 s2：\"复核登记项\"。说明：\"按演示规则复核登记项\"。输入：[\"登记项\"]。输出：[\"复核结果\"]。条件：[\"登记完成\"]。例外：[\"依据不足时暂停\"]。"
+    },
+    {
+      "object_id": "s3",
+      "start_byte": 526,
+      "end_byte": 756,
+      "quote": "步骤 s3：\"重置为待复核\"。说明：\"将结果重新置为待复核并进入下一轮\"。输入：[\"复核结果\"]。输出：[\"待复核项\"]。条件：[\"演示循环开启\"]。例外：[\"循环开关关闭时停止\"]。"
+    },
+    {
+      "object_id": "r1",
+      "start_byte": 757,
+      "end_byte": 835,
+      "quote": "关系 r1：s1 完成后执行 s2。条件：[\"登记完成\"]。例外：[]。"
+    },
+    {
+      "object_id": "r2",
+      "start_byte": 836,
+      "end_byte": 914,
+      "quote": "关系 r2：s2 完成后执行 s3。条件：[\"复核完成\"]。例外：[]。"
+    },
+    {
+      "object_id": "r3",
+      "start_byte": 915,
+      "end_byte": 1028,
+      "quote": "关系 r3：s3 完成后执行 s1。条件：[\"演示循环开启\"]。例外：[\"循环开关关闭时停止\"]。"
+    }
+  ]
+}

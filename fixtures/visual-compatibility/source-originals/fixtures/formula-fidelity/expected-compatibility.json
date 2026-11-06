@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "producer": "formula_fidelity_expected",
+  "author": "independent_self_authored_engineering_fixture",
+  "case_name": "compatibility",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "scope": "selected_formula_only_not_ocr_or_science",
+  "source_pins": {
+    "semantics.json": {
+      "sha256": "6d7db5420b925bd8a0e5ed7940aa5bad33b6680ccd0a64105cb5c6c2e27b3f6c",
+      "byte_length": 847
+    },
+    "original.tex": {
+      "sha256": "9a6901f2473b4009b50a8ca6bad09d8f5c4e401dfe9352f8c9245784a76fec74",
+      "byte_length": 29
+    },
+    "case.json": {
+      "sha256": "4ce8f5d0c33d023c8c8a2150ffe7e96bf1eed481fb6be1ccfd4d19a17e9fb04c",
+      "byte_length": 729
+    },
+    "region.png": {
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "byte_length": 6656
+    }
+  },
+  "case": {
+    "schema_version": 1,
+    "purpose": "formula_fidelity",
+    "selection_id": "compatibility",
+    "title": "公式保真样例 compatibility",
+    "source_kind": "tex",
+    "tex": {
+      "file": "original.tex",
+      "sha256": "9a6901f2473b4009b50a8ca6bad09d8f5c4e401dfe9352f8c9245784a76fec74"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "6d7db5420b925bd8a0e5ed7940aa5bad33b6680ccd0a64105cb5c6c2e27b3f6c"
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "ee03e4bb36f52dc0c4eb604b31b751c282fc84539a805562bbc0e4c542ad2e59",
+      "page": 1,
+      "canvas": [
+        1000,
+        600
+      ],
+      "bounds": [
+        100,
+        120,
+        800,
+        240
+      ],
+      "legibility": "clear"
+    },
+    "data_available": false
+  },
+  "semantics": {
+    "schema_version": 1,
+    "expression": "C_i(t) = -\\dfrac{a}{b} t^{2}",
+    "symbols": [
+      {
+        "symbol": "C",
+        "definition": "test concentration",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "i",
+        "definition": "selected integer sample index",
+        "unit": null
+      },
+      {
+        "symbol": "t",
+        "definition": "elapsed time",
+        "unit": "s"
+      },
+      {
+        "symbol": "a",
+        "definition": "positive scaling constant",
+        "unit": "mmol/L"
+      },
+      {
+        "symbol": "b",
+        "definition": "positive nonzero divisor",
+        "unit": "s^2"
+      }
+    ],
+    "conditions": [
+      "a > 0 and b > 0",
+      "This is a fictional engineering example, not a scientific claim."
+    ],
+    "ranges": [
+      "i = 1,2,3",
+      "0 <= t <= 10 s"
+    ],
+    "exceptions": [
+      "Do not apply outside the selected time interval."
+    ]
+  },
+  "tokens": [
+    "C",
+    "_",
+    "i",
+    "(",
+    "t",
+    ")",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "}",
+    "{",
+    "b",
+    "}",
+    "t",
+    "^",
+    "{",
+    "2",
+    "}"
+  ],
+  "profile_name": "native",
+  "representation": "native_math",
+  "issue_codes": [],
+  "fallback_reasons": [],
+  "compatibility_rewrites": [
+    "FORMULA_DFRAC_COMPATIBILITY"
+  ]
+}

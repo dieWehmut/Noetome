@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_gold",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "process": {
+    "title": "多行标签的保真流程",
+    "entry": "s1",
+    "goals": [
+      "s2"
+    ],
+    "conditions": [],
+    "exceptions": [
+      "不可读资料需复核"
+    ]
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "检查\n卡片\t[α]",
+      "description": "完整保留来源标签中的换行和制表符",
+      "criterion": null,
+      "inputs": [
+        "样例卡"
+      ],
+      "outputs": [
+        "检查结果"
+      ],
+      "conditions": [],
+      "exceptions": [
+        "卡片缺失时停止"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "记录检查结果",
+      "description": "记录来源明示的检查结果",
+      "criterion": null,
+      "inputs": [
+        "检查结果"
+      ],
+      "outputs": [
+        "检查记录"
+      ],
+      "conditions": [
+        "检查完成"
+      ],
+      "exceptions": []
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "sequence",
+      "branch_outcome": null,
+      "conditions": [],
+      "exceptions": [
+        "检查未完成时不得登记"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "object_id": "process",
+      "start_byte": 0,
+      "end_byte": 127,
+      "quote": "过程：\"多行标签的保真流程\"。入口：s1。目标：[\"s2\"]。条件：[]。例外：[\"不可读资料需复核\"]。"
+    },
+    {
+      "object_id": "s1",
+      "start_byte": 128,
+      "end_byte": 331,
+      "quote": "步骤 s1：\"检查\\n卡片\\t[α]\"。说明：\"完整保留来源标签中的换行和制表符\"。输入：[\"样例卡\"]。输出：[\"检查结果\"]。条件：[]。例外：[\"卡片缺失时停止\"]。"
+    },
+    {
+      "object_id": "s2",
+      "start_byte": 332,
+      "end_byte": 512,
+      "quote": "步骤 s2：\"记录检查结果\"。说明：\"记录来源明示的检查结果\"。输入：[\"检查结果\"]。输出：[\"检查记录\"]。条件：[\"检查完成\"]。例外：[]。"
+    },
+    {
+      "object_id": "r1",
+      "start_byte": 513,
+      "end_byte": 609,
+      "quote": "关系 r1：s1 完成后执行 s2。条件：[]。例外：[\"检查未完成时不得登记\"]。"
+    }
+  ]
+}

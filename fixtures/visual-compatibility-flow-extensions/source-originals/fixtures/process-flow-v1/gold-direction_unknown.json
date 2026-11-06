@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "producer": "process_source_gold",
+  "author": "self-authored-process-flow-before-parser",
+  "scientific_quality": "not_run",
+  "process": {
+    "title": "演示信号关系待核对",
+    "entry": "s1",
+    "goals": [
+      "s2"
+    ],
+    "conditions": [
+      "演示模式开启"
+    ],
+    "exceptions": [
+      "资料不可读时暂停"
+    ]
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "kind": "step",
+      "label": "信号 A",
+      "description": "表示演示信号 A",
+      "criterion": null,
+      "inputs": [
+        "A 的记录"
+      ],
+      "outputs": [
+        "A 的状态"
+      ],
+      "conditions": [
+        "记录可读"
+      ],
+      "exceptions": [
+        "记录缺失时未知"
+      ]
+    },
+    {
+      "id": "s2",
+      "kind": "step",
+      "label": "信号 B",
+      "description": "表示演示信号 B",
+      "criterion": null,
+      "inputs": [
+        "B 的记录"
+      ],
+      "outputs": [
+        "B 的状态"
+      ],
+      "conditions": [
+        "记录可读"
+      ],
+      "exceptions": [
+        "记录缺失时未知"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "r1",
+      "left": "s1",
+      "right": "s2",
+      "kind": "unknown",
+      "branch_outcome": null,
+      "conditions": [
+        "仅知两者存在关系"
+      ],
+      "exceptions": [
+        "不能据名称顺序补方向"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "object_id": "process",
+      "start_byte": 0,
+      "end_byte": 147,
+      "quote": "过程：\"演示信号关系待核对\"。入口：s1。目标：[\"s2\"]。条件：[\"演示模式开启\"]。例外：[\"资料不可读时暂停\"]。"
+    },
+    {
+      "object_id": "s1",
+      "start_byte": 148,
+      "end_byte": 326,
+      "quote": "步骤 s1：\"信号 A\"。说明：\"表示演示信号 A\"。输入：[\"A 的记录\"]。输出：[\"A 的状态\"]。条件：[\"记录可读\"]。例外：[\"记录缺失时未知\"]。"
+    },
+    {
+      "object_id": "s2",
+      "start_byte": 327,
+      "end_byte": 505,
+      "quote": "步骤 s2：\"信号 B\"。说明：\"表示演示信号 B\"。输入：[\"B 的记录\"]。输出：[\"B 的状态\"]。条件：[\"记录可读\"]。例外：[\"记录缺失时未知\"]。"
+    },
+    {
+      "object_id": "r1",
+      "start_byte": 506,
+      "end_byte": 635,
+      "quote": "关系 r1：s1 与 s2 的方向未说明。条件：[\"仅知两者存在关系\"]。例外：[\"不能据名称顺序补方向\"]。"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "producer": "independent_bounded_diagnostic_spelling_erratum",
+  "original_pack": "fixtures/visual-compatibility",
+  "original_freeze_pin": {
+    "sha256": "9d65fc4ae8b3d4b70608c0453b894675aff0d61e2d317acf31b442c54c57915c",
+    "byte_length": 99162
+  },
+  "original_freeze_sha256": "9d65fc4ae8b3d4b70608c0453b894675aff0d61e2d317acf31b442c54c57915c",
+  "changes": [
+    {
+      "case_id": "scan-sign",
+      "file": "expected-scan-sign.json",
+      "json_pointer": "/collector/notes/0/required_texts/3",
+      "old": "SCAN_SEMANTIC_UNKNOWN",
+      "new": "SCAN_SEMANTICS_UNKNOWN",
+      "old_pin": {
+        "sha256": "2e3f4ad71e2091c496dc18de8fcf594d8e1ad59c944c282059c47dc2f41cbdfc",
+        "byte_length": 2495
+      },
+      "new_pin": {
+        "sha256": "f525a80c490d536d3a893cf81e748b819b4a09673ed9f14c1b1f4b37d57a0859",
+        "byte_length": 2496
+      },
+      "other_fields_equal": true
+    },
+    {
+      "case_id": "scan-subscript",
+      "file": "expected-scan-subscript.json",
+      "json_pointer": "/collector/notes/0/required_texts/3",
+      "old": "SCAN_SEMANTIC_UNKNOWN",
+      "new": "SCAN_SEMANTICS_UNKNOWN",
+      "old_pin": {
+        "sha256": "54b7c921307adbf2ccd4d6701c20a2d5c0304e8a11c68ca73f50e876d9037567",
+        "byte_length": 2521
+      },
+      "new_pin": {
+        "sha256": "2d7ec2266ebf5d638f192ff32317f0606fb87d593df78aa14a6898f5ebaa3c06",
+        "byte_length": 2522
+      },
+      "other_fields_equal": true
+    }
+  ],
+  "authority_sources": [
+    {
+      "kind": "preexisting_T02_committed_source",
+      "commit": "2011f24f988a8e1b36cf1b333762dbd52c65b16d",
+      "path": "scripts/verify_scan_formula.py",
+      "captured_file": "correction/authority-originals/verify_scan_formula.py",
+      "sha256": "b2982784a5cc87b16a610395f34f974fa6b5e9939d751e2201669b11629caa2c",
+      "byte_length": 89503
+    },
+    {
+      "kind": "preexisting_T02_committed_source",
+      "commit": "2011f24f988a8e1b36cf1b333762dbd52c65b16d",
+      "path": "crates/noetome-cli/src/scan_formula.rs",
+      "captured_file": "correction/authority-originals/scan_formula.rs",
+      "sha256": "670d1a63c402868876a27e09feee9634559e17a118f80cef28cd16bb1df1c820",
+      "byte_length": 21153
+    },
+    {
+      "kind": "preexisting_T02_committed_source",
+      "commit": "2011f24f988a8e1b36cf1b333762dbd52c65b16d",
+      "path": "doc/technical/SCAN_FORMULA_CONTRACT.md",
+      "captured_file": "correction/authority-originals/SCAN_FORMULA_CONTRACT.md",
+      "sha256": "aaf47a5dcf8a3c353af5b4409f83b9c86c2b749efe6c451130bfa1afe2e308f1",
+      "byte_length": 12872
+    },
+    {
+      "kind": "preexisting_T02_independent_audit",
+      "path": "doc/validation/assets/B06V-T02/independent/api-cli-first-run/unknown-sign/receipt.json",
+      "captured_file": "correction/authority-originals/unknown-sign-receipt.json",
+      "sha256": "a8739033ea83ca04d970d354c87522dfba9324223f3926c6e682d6d1bc9f339e",
+      "byte_length": 7158
+    },
+    {
+      "kind": "preexisting_T02_independent_audit",
+      "path": "doc/validation/assets/B06V-T02/independent/api-cli-first-run/unknown-subscript/receipt.json",
+      "captured_file": "correction/authority-originals/unknown-subscript-receipt.json",
+      "sha256": "030be231471fb18274c151ebb0b4a179a528aa63f6612d89bbce58c092aac609",
+      "byte_length": 7193
+    }
+  ],
+  "failure_original_path": "/mnt/d/Noetome/.artifacts/b06v-t03-minimum-20261106-c/captures/scan-sign-light/result.json",
+  "failure_originals": [
+    {
+      "archive": "doc/validation/assets/B06V-T03/minimum/early-failures-originals.zip",
+      "archive_pin": {
+        "sha256": "e38493f1dadd505142e946c775baaaa64fcb33dd0b9e3a78da54834096c36ec6",
+        "byte_length": 879221
+      },
+      "member": "c/captures/scan-sign-light/result.json",
+      "sha256": "26c5f70921daf4851d23fbed4c179bbde112f92d6e9b3ea1af1b8525ba146580",
+      "byte_length": 840800
+    },
+    {
+      "archive": "doc/validation/assets/B06V-T03/minimum/early-failures-originals.zip",
+      "archive_pin": {
+        "sha256": "e38493f1dadd505142e946c775baaaa64fcb33dd0b9e3a78da54834096c36ec6",
+        "byte_length": 879221
+      },
+      "member": "c/captures/scan-sign-light/capture-receipt.json",
+      "sha256": "230cdfcf351d7a5d7bdcc413c54adef76283caed8dbce44ca89d8f6c38ee0e7c",
+      "byte_length": 343,
+      "captured_file": "correction/minimum-scan-sign-light-capture-receipt.json"
+    },
+    {
+      "archive": "doc/validation/assets/B06V-T03/minimum/early-failures-originals.zip",
+      "archive_pin": {
+        "sha256": "e38493f1dadd505142e946c775baaaa64fcb33dd0b9e3a78da54834096c36ec6",
+        "byte_length": 879221
+      },
+      "member": "c/captures/scan-sign-light/capture.stdout.bin",
+      "sha256": "25a93ed68b88039843d05ee324ffd1d06ddc3f77a69c6128bc85777fc3bd66a4",
+      "byte_length": 406,
+      "captured_file": "correction/minimum-scan-sign-light-capture.stdout.bin"
+    },
+    {
+      "archive": "doc/validation/assets/B06V-T03/minimum/early-failures-originals.zip",
+      "archive_pin": {
+        "sha256": "e38493f1dadd505142e946c775baaaa64fcb33dd0b9e3a78da54834096c36ec6",
+        "byte_length": 879221
+      },
+      "member": "c/captures/scan-sign-light/capture.stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0,
+      "captured_file": "correction/minimum-scan-sign-light-capture.stderr.bin"
+    },
+    {
+      "archive": "doc/validation/assets/B06V-T03/minimum/early-failures-originals.zip",
+      "archive_pin": {
+        "sha256": "e38493f1dadd505142e946c775baaaa64fcb33dd0b9e3a78da54834096c36ec6",
+        "byte_length": 879221
+      },
+      "member": "c/captures/scan-sign-light/cleanup-result.json",
+      "sha256": "813a372a326dde753a8dccfcb04021d0aa8f8373bddb5385a6a7745fe57e7505",
+      "byte_length": 208,
+      "captured_file": "correction/minimum-scan-sign-light-cleanup-result.json"
+    }
+  ],
+  "source_unknown_blocking_semantics_changed": false,
+  "diagnostic_definition_changed": false,
+  "retry_scope": "only scan-sign and scan-subscript, light and dark; other passed cases remain reusable from original pack"
+}

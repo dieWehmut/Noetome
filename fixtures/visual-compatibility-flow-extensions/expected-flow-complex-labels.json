@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "producer": "independent_visual_compatibility_author_expected",
+  "scope": "selected_self_authored_flow_extension_compatibility_only",
+  "scientific_quality": "not_run",
+  "knowledge_status": "pending",
+  "published": false,
+  "application_versions": "bound_separately_from_actual_installations",
+  "compatibility_status": "not_run",
+  "semantic_authority": "original frozen author source/expected; never generated report, plan, DOM or screenshot",
+  "case_id": "flow-complex-labels",
+  "feature": "flow",
+  "author_case": "complex_labels",
+  "representative_kind": "product_output",
+  "representation": "flowchart",
+  "semantic_source": {
+    "process": {
+      "title": "特殊名称的卡片流程",
+      "entry": "s1",
+      "goals": [
+        "s3"
+      ],
+      "conditions": [
+        "演示模式开启"
+      ],
+      "exceptions": [
+        "资料不可读时暂停"
+      ]
+    },
+    "nodes": [
+      {
+        "id": "s2",
+        "kind": "step",
+        "label": "复核 #2 / x < 3",
+        "description": "保留复核名称中的符号，不解释为指令",
+        "criterion": null,
+        "inputs": [
+          "预检结果"
+        ],
+        "outputs": [
+          "复核结果"
+        ],
+        "conditions": [
+          "字段包含竖线 | 和双引号 \""
+        ],
+        "exceptions": [
+          "不得删除名称符号"
+        ]
+      },
+      {
+        "id": "s1",
+        "kind": "step",
+        "label": "预检 [α] | \"卡片\"",
+        "description": "先做预检；本步骤在文字中后声明，不改变明确关系顺序",
+        "criterion": null,
+        "inputs": [
+          "卡片 A\\B"
+        ],
+        "outputs": [
+          "预检结果"
+        ],
+        "conditions": [
+          "卡片可读"
+        ],
+        "exceptions": [
+          "卡片缺失时停止"
+        ]
+      },
+      {
+        "id": "s3",
+        "kind": "step",
+        "label": "归档入口 & 保留",
+        "description": "保留标签中的连接符",
+        "criterion": null,
+        "inputs": [
+          "复核结果"
+        ],
+        "outputs": [
+          "归档结果"
+        ],
+        "conditions": [
+          "复核完成"
+        ],
+        "exceptions": [
+          "存储不可用时暂停"
+        ]
+      }
+    ],
+    "edges": [
+      {
+        "id": "r2",
+        "left": "s2",
+        "right": "s3",
+        "kind": "sequence",
+        "branch_outcome": null,
+        "conditions": [
+          "复核完成"
+        ],
+        "exceptions": [
+          "存储不可用时暂停"
+        ]
+      },
+      {
+        "id": "r1",
+        "left": "s1",
+        "right": "s2",
+        "kind": "sequence",
+        "branch_outcome": null,
+        "conditions": [
+          "预检完成"
+        ],
+        "exceptions": [
+          "缺卡时停止"
+        ]
+      }
+    ],
+    "required_precedence": [
+      [
+        "s1",
+        "s2"
+      ],
+      [
+        "s2",
+        "s3"
+      ]
+    ],
+    "empty_list_meaning": "not_listed_in_selected_source"
+  },
+  "collector": {
+    "notes": [
+      "流程总览.md",
+      "过程明细.md"
+    ],
+    "graph": {
+      "direction": "TD",
+      "label_encoding": "decimal_ascii_punctuation_v1",
+      "nodes": [
+        {
+          "author_id": "s1",
+          "render_id": "n0",
+          "shape": "step",
+          "label": "预检 [α] | \"卡片\""
+        },
+        {
+          "author_id": "s2",
+          "render_id": "n1",
+          "shape": "step",
+          "label": "复核 #2 / x < 3"
+        },
+        {
+          "author_id": "s3",
+          "render_id": "n2",
+          "shape": "step",
+          "label": "归档入口 & 保留"
+        }
+      ],
+      "edges": [
+        {
+          "author_id": "r1",
+          "from": "s1",
+          "to": "s2",
+          "render_from": "n0",
+          "render_to": "n1",
+          "kind": "sequence",
+          "branch_outcome": null,
+          "label": "随后",
+          "terminal_arrow": true,
+          "end_y_greater_than_start_y": true
+        },
+        {
+          "author_id": "r2",
+          "from": "s2",
+          "to": "s3",
+          "render_from": "n1",
+          "render_to": "n2",
+          "kind": "sequence",
+          "branch_outcome": null,
+          "label": "随后",
+          "terminal_arrow": true,
+          "end_y_greater_than_start_y": true
+        }
+      ],
+      "require_real_arrow_geometry": true,
+      "require_visible_labels_equal_source_codepoints": true,
+      "source_declaration_order_must_not_define_execution_order": true
+    },
+    "require_complete_context": true,
+    "links": {
+      "destination": "过程明细.md",
+      "heading_by_object": {
+        "process": "过程说明",
+        "s2": "步骤-s2",
+        "s1": "步骤-s1",
+        "s3": "步骤-s3",
+        "r2": "关系-r2",
+        "r1": "关系-r1"
+      },
+      "require_real_click": true
+    },
+    "ordered_list": null,
+    "expected_issue_codes": []
+  },
+  "coverage": [
+    "all process/node/relation inputs/outputs/conditions/exceptions; empty and unknown meanings stay distinct",
+    "TD source/target and terminal arrow geometry",
+    "all real Chinese detail fragment clicks",
+    "decimal_ascii_punctuation_v1 labels: brackets/Greek/quotes/pipe/#/slash/less-than/ampersand; literal visible codepoints; out-of-declaration-order nodes retain explicit source edges"
+  ]
+}
