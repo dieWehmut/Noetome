@@ -2410,7 +2410,7 @@
       "id": "B06V-T03",
       "title": "视觉输出最低与当前稳定版兼容矩阵",
       "batch": "B06V",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B06V-T01",
         "B06V-T02"
@@ -2426,7 +2426,75 @@
         "仅真实验收组合写入能力矩阵，未知版本保留未经验证或有据回退；同步伪造兼容声明不得放宽语义门槛。",
         "完整Rust/Python和全部既有视觉回归、独立审查通过后保存可重复矩阵/原件/未运行项，complete提交推送，再依据剩余需求判断B07进入条件。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-06T11:30:19Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "按连续开发授权推进最低支持与执行时官方稳定Obsidian兼容矩阵；先冻结代表性输出/独立语义预期和版本来源，再在隔离安装及新Vault实测。仅当前任务内分工，不覆盖日常安装或生产Vault、不自动调用模型。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-06T14:26:32Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "最低1.6.7与执行时稳定1.15.0原生64组合、精确MathJax/Pele/SVG能力、严格Schema2与独立语义校验已验收；原始失败、勘误、原件及未运行项完整保存。当前强WindowsC编译源补证通过，B07仅进入评估，尚未切批次。",
+          "validation": [
+            "Windows完整fmt/check/test/build与真实namespace退出0；Rust726 passed/0failed/0ignored。最终Windows Python441=434passed+7权限skip/0error，Linux第四快照380=361passed+19平台skip/0error，输入和PE/ELF前后字节一致；文档唯一检查顺序措辞更正经独立作用域复核。",
+            "两版16案明暗64唯一原生组合(60产品/4手写探针)全部通过；真实安装/CDP脚本/MathJax树/流程几何/PNG附件与当前SVG native-aux完整RGBA、16墨迹差分及恢复相等独立核对。五视觉317CLI通过；强WindowsC30目标+15本机来源setup/27场景、4syntheticPOST、7实质同步篡改拒绝通过，16MD+24资源和4原响应逐字等原生原件，C1915源码/1825依赖与e42 PE实际build锚绑定。",
+            "独立源码、17869追加ZIP成员CRC/SHA、完整原生原件/源、135本地链接、最终原字节与文档审查通过；Git2308任务原件/冻结文件raw blob等staged，diff/devlog check通过。所有失败保留，真实模型/付费调用0、真实账本及生产Vault未读写，科学not_run/published=false；完整Linux Rust、未测平台及规模/人工保护不从工程样例推定。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B06V-T03.md",
+              "sha256": "7d21cd65fd571b6a6ba0094bbdd538246c0c1d6065c62a9be3e2795181cc7d61"
+            },
+            {
+              "path": "doc/technical/VISUAL_COMPATIBILITY.md",
+              "sha256": "da770a6a40ac26dc70a36b2d62b80db4fba7d2083a5379ba1c694eecec80b2c5"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T03/matrix.json",
+              "sha256": "8934eeef639665d0dc7c2e652dc1590d38fe452a21d4c1e0bae59d0c03bc294d"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T03/verification-summary.json",
+              "sha256": "1fdfc574784d54ce897f52fcf6798a1b7138e72017a967e4d15da7bdee13c66c"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T03/windows-rust/audit-result.json",
+              "sha256": "9787fd720e6eede9f3c265cfc17686364dc00be53faafc4cf9f6354b3eb44f79"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T03/windows-python/final/result.json",
+              "sha256": "f7e35e13209a3b915223d079c00df431e1c0d0aa39fcba8d371b3a3baad2d37f"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T03/linux-final-after-portable-test/full-python-receipt.json",
+              "sha256": "6b8348504f331d8f487d27b051cc88d6aa3bbae7447c0a357bf9150157ca6bc0"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T03/review/current-final-pe/actual-checks.json",
+              "sha256": "b2ae2b65dd682bf05ea5c957eefbde0913fef6132bb0784b858495f74ef0dc85"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T03/review/final-capability-regression-readback.json",
+              "sha256": "cccb8607a4772f3beb6b90c04b294af711b20e267bc387e840acfaf2a5ff5a23"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T03/review/final-document-closeout-audit.json",
+              "sha256": "e9453d7ab8c284504d9b58c6a0c7e45e92c7706c41c09bccd04daad273339ed3"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T03/review/git-index-originals-readback.json",
+              "sha256": "fc26ca4adec2a871260e453016daba9285cce97a9d3c5f82fcf4b292739ae3a6"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -10,8 +10,8 @@
 
 ## 2 B06V-T02 单个明确扫描页公式重建与语义复核
 
-依赖B06V-T01，实施范围见[扫描方案](B06V-T02_SCAN_PLAN.md)与[契约](../technical/SCAN_FORMULA_CONTRACT.md)。识别前冻结一个自造作者公式的三扫描状态及33文件，初始和最终四路径RED均保存；本地失败六轮完整封存，不改expected或删除额外符号。最终唯一活动方案为同一已授权视觉Chat，实际四次单请求通过清晰重建、负号/下标未知阻断及原区回退，新增3,088 Token、累计33,185/pending0；恢复期间未知量按用户指示零假设，见[服务记录](../requirements/MODEL_SERVICE.md)。[最终证据](../validation/B06V-T02.md)包含当前源绑定Windows Rust720、Windows Python394/6skip、Linux Python333/19skip、五视觉308CLI，干净Obsidian1.6.7浅深四窗口八附件点击及三项独立审查。内部权重、作者原始TeX、通用OCR、科学质量和跨版本支持保持未核实；下一任务仍待开始。
+依赖B06V-T01，实施范围见[扫描方案](B06V-T02_SCAN_PLAN.md)与[契约](../technical/SCAN_FORMULA_CONTRACT.md)。识别前冻结一个自造作者公式的三扫描状态及33文件，初始和最终四路径RED均保存；本地失败六轮完整封存，不改expected或删除额外符号。最终唯一活动方案为同一已授权视觉Chat，实际四次单请求通过清晰重建、负号/下标未知阻断及原区回退，新增3,088 Token、累计33,185/pending0；恢复期间未知量按用户指示零假设，见[服务记录](../requirements/MODEL_SERVICE.md)。[最终证据](../validation/B06V-T02.md)包含当时源码绑定Windows Rust720、Windows Python394/6skip、Linux Python333/19skip、五视觉308CLI，干净Obsidian1.6.7浅深四窗口八附件点击及三项独立审查。内部权重、作者原始TeX、通用OCR和科学质量保持未核实；后续跨版本另按下一项实际验收。
 
 ## 3 B06V-T03 视觉输出最低与当前稳定版兼容矩阵
 
-依赖B06V-T01和B06V-T02。执行时从官方核验当前稳定版和明确最低支持版，实际记录MathJax/Mermaid运行时。各自干净配置实测已实现表格/链接、流程、公式、图像/附件与扫描回退/阻断；只有真正验收组合进入能力记录，未知组合保留未经验证或有据回退。最终依据剩余需求与真实结果判断B07进入条件，不以兼容矩阵代替科学质量或生产Vault人工保护。
+依赖B06V-T01和B06V-T02。实际[兼容验收](../validation/B06V-T03.md)覆盖最低1.6.7与执行时官方稳定1.15.0、15产品案和1手写探针、明暗64唯一组合；MathJax分别3.2.2/4.1.3，当前流程实际Pele1.8.0/严格Schema2。完整Windows Rust726、Windows Python441(434通过/7skip)、Linux最终380(361通过/19skip)、五视觉317CLI和有编译源锚Windows30目标+15来源setup均通过，原件/源码/7实质篡改与独立终审完整保存；本项无新增付费模型或生产Vault写入。精确允许表及未知回退见[视觉契约](../technical/VISUAL_COMPATIBILITY.md)。日志完成、提交和远端核对后按[进入评估](../validation/assets/B06V-T03/review/b07-entry-assessment.md)滚动细化B07，当前执行入口仍以账本为准。

@@ -6,6 +6,8 @@
 
 Rust CLI提供空项目初始化、单份MD/TXT/PDF来源登记与只读重查、文本PDF解析/重解析、fixture IR与NotePlan校验及新测试Vault编译，以及单请求文本API候选、有界来源知识核对和明确身份的多来源重复/互补协调。来源版本、PDF解析尝试、真实位置与原始资源独立保留，来源知识仍pending；fixture明确标作者输入，API候选工程通过与来源核对、科学质量和发布分别表达。现有pdfplumber sidecar用于有界文本PDF，扫描和复杂版面保守需复核。桌面提供帮助、版本、本地连接检查、单行菜单及托盘/关闭设置；项目、资料和知识业务仍通过CLI。能力验收以[任务日志](dev-log/STATUS.md)和实际验证记录为准。
 
+比较表、流程、公式、选定PNG图像及单个明确扫描公式的有界预览已保留来源和独立语义核对。Windows原生兼容实测涵盖最低Obsidian1.6.7与2026-11-06核验的稳定1.15.0、明暗主题共64个组合；公式分别使用MathJax3.2.2/4.1.3，当前流程使用实际Pele1.8.0。未知组合仍有据回退或阻断，精确策略见[视觉能力契约](doc/technical/VISUAL_COMPATIBILITY.md)及[实际矩阵](doc/validation/assets/B06V-T03/matrix.json)。这些工程预览不代表科学质量、通用OCR或生产Vault维护已验收。
+
 ## 开始开发
 
 - [开发指引](AGENTS.md)：每轮工作规则及标准路径。

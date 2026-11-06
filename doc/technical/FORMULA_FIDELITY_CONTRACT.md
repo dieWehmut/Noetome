@@ -42,7 +42,7 @@ noetome knowledge formula <formula-case目录> <profile.json> <尚不存在的�
 
 profile 全部字段必填：`schema_version=1, app, app_version, mathjax_version, native_math, compatibility_dfrac, local_images, verified`。能力声明不等于实测记录；原生公式只使用实际验收的 Obsidian/MathJax 组合。其他目标须按未经验证处理，不能仅凭 `verified=true` 接受未知版本。
 
-当前组合为 Obsidian 1.6.7 / 运行时 MathJax 3.2.2。辅助模块中的旧 3.2.1 字符串不能作为实际引擎版本证据。实机同时确认 `\dfrac` 可渲染；`compatibility_dfrac` 表示是否启用本编译器已核对的 `\dfrac` 到 `\frac` 规范化规则，关闭时采取原图回退，是编译器策略，不主张该引擎缺少命令支持。
+已验收精确组合为 Obsidian 1.6.7 / 运行时 MathJax 3.2.2，以及 Obsidian 1.15.0 / 运行时 MathJax 4.1.3；实际安装、执行脚本与数学树证据见[能力契约](VISUAL_COMPATIBILITY.md)和[B06V-T03矩阵](../validation/assets/B06V-T03/matrix.json)。辅助模块中的版本字符串不能作为实际引擎版本证据。实机确认 `\dfrac` 可渲染；`compatibility_dfrac` 表示是否启用本编译器已核对的 `\dfrac` 到 `\frac` 规范化规则，关闭时采取原图回退，是编译器策略，不主张引擎缺少命令支持。
 
 只有语义可核对时才选择表示：原生 MathJax；明确等价改写后 MathJax；或保留原区域的本地图片回退。目标原生能力不足可以回退图片，原因需记录；仅原区域来源使用图片，不将手工转写输出为作者源码。图片也不可用时阻断。
 

@@ -23,7 +23,7 @@ PNG 限制为每轴不超过 2048 像素，原文件最多 8 MiB，解码最多 
 
 label、unit、legend_id 以及图例 meaning 为 nullable 必填。`unit=null` 表示来源未给出，`legend_id=null` 表示未声明图例归属，不能推造；关键 label/meaning 为 null 则未知。关系 `label=""` 可以表示明确没有名称；方向和作用仍分别保存，不把无箭头相关关系改为因果。各项身份唯一，引用必须存在，几何必须在整图内。
 
-profile 必有 `schema_version=1`、`app`、`app_version`、`svg_supported`、`local_images`、`verified`。当前 SVG 能力仅限定实际记录的 Obsidian 1.6.7；profile 自报不是实测证据，也不能开启未测目标。
+profile 必有 `schema_version=1`、`app`、`app_version`、`svg_supported`、`local_images`、`verified`。SVG能力限定已实际验收的 Obsidian 1.6.7 与 1.15.0，明暗、本地附件及原生/同实例辅助渲染证据见[能力契约](VISUAL_COMPATIBILITY.md)和[B06V-T03矩阵](../validation/assets/B06V-T03/matrix.json)。profile自报不是实测证据，版本和flags须同时符合精确允许表，也不能开启未测目标或放宽源几何/语义。
 
 ## 决策与有限重绘
 
