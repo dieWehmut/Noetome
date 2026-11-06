@@ -66,6 +66,10 @@ live 只允许已授权的精确 `https://ai.1343263.xyz/v1/chat/completions`、
 
 窄入口另外以 CreateNew 保存 before、reserved、launch、settled 四阶段公开收据和账本原字节快照，绑定本次身份、选定 config/二进制指纹、实际进程、stdout/stderr 指纹和退出码。严格 UTF-8 的中文输出保持原字节，不经 PowerShell 控制台默认编码转码；凭据回显只保存原指纹和明确脱敏副本。独立校验读取这些原件与独立捕获的清单 SHA，重算历史、预留和结算，不能只信任手写的累计余额或同步更新的普通指纹。
 
+[capture_scan_budget_originals.py](../../scripts/capture_scan_budget_originals.py)只读显式选定的settled原收据，以尚不存在的捕获根保存四阶段和引用原件，打印应另行保存的manifest SHA锚；WSL读取Windows记录须明确`--path-map`，不搜索凭据或目录。读取/复制按先验固定长度限制，文件变长须在处理或写入超长内容前拒绝，原件身份、SHA和最终状态仍重验。原manifest的本机绝对捕获路径随原字节保存，迁移不得默默改写原锚。
+
+[prepare_scan_obsidian.py](../../scripts/prepare_scan_obsidian.py)在实际五路径输出、调用收据和预算锚独立核对通过后，才能准备新的显示输入；它不调用模型，也不因复制成功宣称显示通过。实际显示另启动拥有明确新profile的安装版Obsidian，核对选定浅/深主题、独立作者数学结构、原区域和整页附件点击后的本地image view及尺寸。未经验证profile触发原图回退时，显示证据记录真实安装版本，不能把profile自报版本当成实际运行版本。
+
 超时覆盖选定进程退出及 stdout/stderr 两条管道读完；读取超限也立即失败。选定进程启动后归入本次 Windows Job，失败终止已归入的后代并核对根退出和 Job 活动进程归零。启动到 Job 分配存在时间窗口，此封装不构成操作系统沙盒，也不承诺捕获窗口中已脱离的进程。预留后的异常另存 `failed` 阶段及账本快照，保留未知用量预留；仅该阶段增加 `failure`，记录诊断、读取完成状态及实际终止确认，不能写成有效结算或成功预览。
 
 ## 等价核对与目标表达

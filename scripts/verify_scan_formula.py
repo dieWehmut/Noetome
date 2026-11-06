@@ -861,7 +861,9 @@ def file_pin(path):
     digest, count = hashlib.sha256(), 0
     with path.open("rb") as handle:
         exact(state(os.fstat(handle.fileno())), state(before), "runtime file unchanged before reading")
-        while chunk := handle.read(1024 * 1024): digest.update(chunk); count += len(chunk)
+        while chunk := handle.read(min(1024 * 1024, before.st_size - count + 1)):
+            assert count + len(chunk) <= before.st_size, "runtime file exceeds fixed byte length"
+            digest.update(chunk); count += len(chunk)
         exact(state(os.fstat(handle.fileno())), state(before), "runtime file unchanged while reading")
     guard_path(path, directory=False)
     exact(state(path.stat()), state(before), "runtime file unchanged after reading")
