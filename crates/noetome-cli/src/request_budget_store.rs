@@ -187,10 +187,48 @@ fn pin(pin: &FilePin) -> Result<(), ProjectError> {
 fn stamp(path: &Path) -> Result<(FileStamp, Vec<u8>), ProjectError> {
     stamp_mode(path, true)
 }
+fn read_identity(
+    path: &Path,
+    _file: &File,
+    metadata: &fs::Metadata,
+) -> Result<Identity, ProjectError> {
+    if project::is_link(metadata) || !metadata.is_file() {
+        return Err(ProjectError::unsafe_path(path));
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::MetadataExt;
+        if metadata.nlink() != 1 {
+            return Err(invalid("原件必须是普通单硬链接文件。"));
+        }
+        Ok(Identity::Unix {
+            device: metadata.dev(),
+            inode: metadata.ino(),
+        })
+    }
+    #[cfg(windows)]
+    {
+        let information =
+            winapi_util::file::information(_file).map_err(|e| ProjectError::io(path, e))?;
+        if information.file_attributes() & 0x400 != 0 || information.number_of_links() != 1 {
+            return Err(invalid("原件拒绝reparse或多硬链接文件。"));
+        }
+        Ok(Identity::Windows {
+            volume: information.volume_serial_number(),
+            index: information.file_index(),
+        })
+    }
+    #[cfg(not(any(unix, windows)))]
+    Err(error(
+        "COMPILE_IDENTITY_UNSUPPORTED",
+        "当前平台没有已确认的持久文件身份实现。",
+    ))
+}
 fn stamp_mode(path: &Path, owned: bool) -> Result<(FileStamp, Vec<u8>), ProjectError> {
-    let id = identity(path)?;
+    project::check_components(path)?;
     project::checked_file(path)?;
-    let mut file = if owned {
+    let initial = same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))?;
+    let file = if owned {
         let mut options = OpenOptions::new();
         options.read(true);
         #[cfg(windows)]
@@ -202,16 +240,29 @@ fn stamp_mode(path: &Path, owned: bool) -> Result<(FileStamp, Vec<u8>), ProjectE
     } else {
         project::read_guard(path)?
     };
+    stamp_opened(path, file, initial, || Ok(()))
+}
+fn stamp_opened(
+    path: &Path,
+    mut file: File,
+    initial: same_file::Handle,
+    after_snapshot: impl FnOnce() -> Result<(), ProjectError>,
+) -> Result<(FileStamp, Vec<u8>), ProjectError> {
+    // The identity and bytes come from this same read handle. Keep all three
+    // pathname/read handles alive until the final comparison, including NTFS.
     let opened =
         same_file::Handle::from_file(file.try_clone().map_err(|e| ProjectError::io(path, e))?)
             .map_err(|e| ProjectError::io(path, e))?;
-    if same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))? != opened {
+    if initial != opened {
         return Err(invalid("打开原件期间身份变化。"));
     }
     let before = file.metadata().map_err(|e| ProjectError::io(path, e))?;
+    let id = read_identity(path, &file, &before)?;
+    let modified = before.modified().map_err(|e| ProjectError::io(path, e))?;
     if before.len() > BYTE_LIMIT {
         return Err(invalid("原件超过64MiB。"));
     }
+    after_snapshot()?;
     let mut bytes = Vec::new();
     Read::by_ref(&mut file)
         .take(BYTE_LIMIT + 1)
@@ -219,15 +270,31 @@ fn stamp_mode(path: &Path, owned: bool) -> Result<(FileStamp, Vec<u8>), ProjectE
         .map_err(|e| ProjectError::io(path, e))?;
     let after = file.metadata().map_err(|e| ProjectError::io(path, e))?;
     if before.len() != bytes.len() as u64
-        || before.modified().ok() != after.modified().ok()
-        || identity(path)? != id
-        || same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))? != opened
+        || after.len() != before.len()
+        || bytes.len() as u64 > BYTE_LIMIT
+        || after.modified().map_err(|e| ProjectError::io(path, e))? != modified
+        || read_identity(path, &file, &after)? != id
     {
         return Err(invalid("读取期间原件变化。"));
     }
-    let modified = before
-        .modified()
-        .map_err(|e| ProjectError::io(path, e))?
+    let current = same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))?;
+    let current_metadata = current
+        .as_file()
+        .metadata()
+        .map_err(|e| ProjectError::io(path, e))?;
+    if current != opened
+        || read_identity(path, current.as_file(), &current_metadata)? != id
+        || current_metadata.len() != before.len()
+        || current_metadata
+            .modified()
+            .map_err(|e| ProjectError::io(path, e))?
+            != modified
+    {
+        return Err(invalid("读取期间原件路径身份变化。"));
+    }
+    project::check_components(path)?;
+    project::checked_file(path)?;
+    let modified = modified
         .duration_since(UNIX_EPOCH)
         .map_err(|_| invalid("原件时间早于epoch。"))?
         .as_nanos()
@@ -2482,6 +2549,143 @@ mod tests {
             output_tokens: 100,
             total_tokens: 700,
         }
+    }
+
+    #[test]
+    fn budget_stamp_rejects_another_same_byte_read_handle() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("stamp-original");
+        let other = f.base.join("stamp-replacement");
+        fs::write(&path, b"same literal bytes").unwrap();
+        fs::write(&other, b"same literal bytes").unwrap();
+        let modified = fs::metadata(&path).unwrap().modified().unwrap();
+        OpenOptions::new()
+            .write(true)
+            .open(&other)
+            .unwrap()
+            .set_times(fs::FileTimes::new().set_modified(modified))
+            .unwrap();
+        assert_eq!(fs::read(&path).unwrap(), fs::read(&other).unwrap());
+        assert_eq!(fs::metadata(&other).unwrap().modified().unwrap(), modified);
+        let initial = same_file::Handle::from_path(&path).unwrap();
+        assert!(stamp_opened(&path, File::open(&other).unwrap(), initial, || Ok(())).is_err());
+    }
+    #[test]
+    fn budget_stamp_rejects_a_hardlink_added_after_snapshot() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("stamp-original");
+        fs::write(&path, b"literal bytes remain unchanged").unwrap();
+        let initial = same_file::Handle::from_path(&path).unwrap();
+        let file = File::open(&path).unwrap();
+        let result = stamp_opened(&path, file, initial, || {
+            fs::hard_link(&path, f.base.join("new-link")).map_err(|e| ProjectError::io(&path, e))
+        });
+        assert!(result.is_err());
+        assert_eq!(fs::read(&path).unwrap(), b"literal bytes remain unchanged");
+    }
+    #[test]
+    fn budget_stamp_rejects_growth_or_truncation_with_restored_mtime() {
+        let f = Fixture::new(100_000);
+        for replacement in [b"longer literal replacement".as_slice(), b"x".as_slice()] {
+            let path = f.base.join("stamp-original");
+            fs::write(&path, b"literal original").unwrap();
+            let modified = fs::metadata(&path).unwrap().modified().unwrap();
+            let initial = same_file::Handle::from_path(&path).unwrap();
+            let file = File::open(&path).unwrap();
+            let result = stamp_opened(&path, file, initial, || {
+                fs::write(&path, replacement).map_err(|e| ProjectError::io(&path, e))?;
+                OpenOptions::new()
+                    .write(true)
+                    .open(&path)
+                    .map_err(|e| ProjectError::io(&path, e))?
+                    .set_times(fs::FileTimes::new().set_modified(modified))
+                    .map_err(|e| ProjectError::io(&path, e))
+            });
+            assert!(result.is_err());
+            assert_eq!(fs::metadata(&path).unwrap().modified().unwrap(), modified);
+        }
+    }
+    #[test]
+    fn budget_stamp_binds_full_raw_bytes_and_rejects_over_limit() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("stamp-original");
+        for bytes in [Vec::new(), (0..4096).map(|n| (n % 251) as u8).collect()] {
+            fs::write(&path, &bytes).unwrap();
+            let (pin, actual) = stamp(&path).unwrap();
+            assert_eq!(actual, bytes);
+            assert_eq!(pin.identity, identity(&path).unwrap());
+            assert_eq!(pin.byte_length, bytes.len() as u64);
+            assert_eq!(pin.sha256, sha256(&bytes));
+        }
+        OpenOptions::new()
+            .write(true)
+            .open(&path)
+            .unwrap()
+            .set_len(BYTE_LIMIT + 1)
+            .unwrap();
+        assert!(stamp(&path).is_err());
+    }
+    #[cfg(unix)]
+    #[test]
+    fn budget_stamp_rejects_same_bytes_mtime_leaf_replacement_during_read() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("stamp-original");
+        fs::write(&path, b"same literal bytes").unwrap();
+        let modified = fs::metadata(&path).unwrap().modified().unwrap();
+        let initial = same_file::Handle::from_path(&path).unwrap();
+        let file = File::open(&path).unwrap();
+        let result = stamp_opened(&path, file, initial, || {
+            fs::rename(&path, f.base.join("old-original"))
+                .map_err(|e| ProjectError::io(&path, e))?;
+            fs::write(&path, b"same literal bytes").map_err(|e| ProjectError::io(&path, e))?;
+            OpenOptions::new()
+                .write(true)
+                .open(&path)
+                .map_err(|e| ProjectError::io(&path, e))?
+                .set_times(fs::FileTimes::new().set_modified(modified))
+                .map_err(|e| ProjectError::io(&path, e))
+        });
+        assert!(result.is_err());
+        assert_eq!(fs::read(&path).unwrap(), b"same literal bytes");
+        assert_eq!(fs::metadata(&path).unwrap().modified().unwrap(), modified);
+    }
+    #[cfg(unix)]
+    #[test]
+    fn budget_stamp_rejects_leaf_and_ancestor_symlinks() {
+        use std::os::unix::fs::symlink;
+        let f = Fixture::new(100_000);
+        let parent = f.base.join("stamp-parent");
+        fs::create_dir(&parent).unwrap();
+        let path = parent.join("original");
+        fs::write(&path, b"literal bytes").unwrap();
+        let leaf = f.base.join("leaf-link");
+        symlink(&path, &leaf).unwrap();
+        assert!(stamp(&leaf).is_err());
+        let initial = same_file::Handle::from_path(&path).unwrap();
+        let file = File::open(&path).unwrap();
+        let result = stamp_opened(&path, file, initial, || {
+            let saved = f.base.join("original-parent");
+            fs::rename(&parent, &saved).map_err(|e| ProjectError::io(&parent, e))?;
+            symlink(&saved, &parent).map_err(|e| ProjectError::io(&parent, e))
+        });
+        assert!(result.is_err());
+        assert_eq!(fs::read(&path).unwrap(), b"literal bytes");
+    }
+    #[cfg(windows)]
+    #[test]
+    fn budget_stamp_keeps_owned_and_external_share_modes() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("stamp-original");
+        fs::write(&path, b"literal bytes").unwrap();
+        let writer = OpenOptions::new()
+            .read(true)
+            .write(true)
+            .open(&path)
+            .unwrap();
+        assert_eq!(stamp_mode(&path, true).unwrap().1, b"literal bytes");
+        assert!(stamp_mode(&path, false).is_err());
+        drop(writer);
+        assert_eq!(stamp_mode(&path, false).unwrap().1, b"literal bytes");
     }
 
     #[test]
