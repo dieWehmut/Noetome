@@ -337,6 +337,51 @@ fn an_arrowhead_corner_cannot_cover_a_third_shape_when_its_center_line_is_clear(
     );
     assert!(!c.output.join("redrawn.svg").exists());
 }
+
+#[test]
+fn known_dark_fill_colors_use_original_without_changing_labels_units_or_palette() {
+    for color in ["#000000", "#bfffff", "#ffbfff", "#ffffbf", "#c0c0c0"] {
+        let c = Case::new();
+        c.edit_semantics(|s| {
+            s["legend"][0]["color"] = serde_json::json!(color);
+            s["elements"][0]["legend_id"] = serde_json::json!("positive");
+        });
+        let result = c.execute(|_| {}).unwrap();
+        assert!(!result.failed);
+        let report: serde_json::Value = serde_json::from_str(&result.json).unwrap();
+        assert_eq!(report["semantics"]["legend"][0]["color"], color);
+        assert_eq!(report["semantics"]["elements"][0]["label"], "Feed");
+        assert_eq!(report["semantics"]["elements"][0]["unit"], "mmol/L");
+        assert_eq!(report["checks"]["author_declaration"], "passed");
+        assert_eq!(report["decision"]["issue_codes"], serde_json::json!([]));
+        let note = fs::read_to_string(c.output.join("图像预览.md")).unwrap();
+        assert!(note.contains(color) && note.contains("Feed") && note.contains("mmol/L"));
+        if color == "#c0c0c0" {
+            assert_eq!(report["decision"]["representation"], "svg_redraw");
+            assert_eq!(
+                report["decision"]["fallback_reasons"],
+                serde_json::json!([])
+            );
+            assert!(
+                fs::read_to_string(c.output.join("redrawn.svg"))
+                    .unwrap()
+                    .contains("fill=\"#c0c0c0\"")
+            );
+        } else {
+            assert_eq!(report["decision"]["representation"], "original_image");
+            assert_eq!(
+                report["decision"]["fallback_reasons"],
+                serde_json::json!(["IMAGE_COLOR_CONTRAST"])
+            );
+            assert!(note.contains("来源颜色与固定黑字不能在有限重绘中保证可读，保留原图。"));
+            assert!(!c.output.join("redrawn.svg").exists());
+        }
+        assert_eq!(
+            fs::read(c.output.join("original.png")).unwrap(),
+            fs::read(c.case.join("source.png")).unwrap()
+        );
+    }
+}
 #[cfg(unix)]
 #[test]
 fn output_ancestor_replacement_before_create_and_after_save_never_follows_external_symlink() {

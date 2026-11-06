@@ -265,6 +265,17 @@ fn head_overlaps_bounds(points: [[f64; 2]; 3], bounds: [u32; 4]) -> bool {
     true
 }
 fn layout(semantics: &Semantics, dimensions: [u32; 2]) -> Option<&'static str> {
+    // This finite renderer uses fixed black text. Keep the source palette
+    // unchanged and admit only a conservative bright-fill range for SVG.
+    if semantics.legend.iter().any(|legend| {
+        [1, 3, 5].iter().any(|offset| {
+            u8::from_str_radix(&legend.color[*offset..*offset + 2], 16)
+                .expect("validated literal RGB color")
+                < 192
+        })
+    }) {
+        return Some("IMAGE_COLOR_CONTRAST");
+    }
     let mut boxes: Vec<([f64; 4], Option<&str>)> = vec![];
     for element in &semantics.elements {
         let [x, y, w, h] = element.bbox;

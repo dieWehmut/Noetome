@@ -315,6 +315,7 @@ pub(crate) fn fallback_text(reason: &str) -> &'static str {
         "IMAGE_SVG_UNAVAILABLE" => "目标未启用SVG，使用本地原图。",
         "IMAGE_TEXT_LAYOUT" => "标签的空白、长度或位置不能在有限重绘中完整保留，使用原图。",
         "IMAGE_GEOMETRY_LAYOUT" => "有限重绘可能遮蔽图形、标签或箭头，使用原图。",
+        "IMAGE_COLOR_CONTRAST" => "来源颜色与固定黑字不能在有限重绘中保证可读，保留原图。",
         _ => unreachable!("known fallback decision"),
     }
 }
