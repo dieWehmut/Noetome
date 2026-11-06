@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-06T10:22:47.118323+00:00",
+  "actual_native_helper_exit_code": 3,
+  "expected_budget_stop": true,
+  "credential_decryption_succeeded": true,
+  "network_calls": 0,
+  "paid_calls": 0,
+  "ledger_sha256_unchanged": "e0615776e6ede2a6b1f3a357d20e88de76dcc758aca020c8bb1d217817a78f46",
+  "scan_report_sha256": "fe8ec167526410b49b0cc2343bf804dabbaaa607f2b71ce5193be061dd79c72c",
+  "api": {
+    "actual_model": null,
+    "confidence": null,
+    "configured_model": "deepseek-flash",
+    "endpoint": "https://ai.1343263.xyz/v1/chat/completions",
+    "errors": [
+      {
+        "code": "SCAN_BUDGET_STOP",
+        "message": "SCAN_BUDGET_STOP：single-request or total reservation exceeds the selected remaining budget; no request"
+      }
+    ],
+    "finish_reason": null,
+    "http_request_id": null,
+    "http_status": null,
+    "provider": "openai_chat_completions",
+    "request_strategy": "tangmao-vision-scan-v1",
+    "response_complete": false,
+    "response_id": null,
+    "response_receipt": null,
+    "service_tier": null,
+    "transport_mode": "live",
+    "usage": {
+      "input_reserved_tokens": 8178,
+      "model_tokenizer": null,
+      "model_usage": null,
+      "model_usage_status": "not_validated",
+      "network_attempts": 0,
+      "paid_calls": 0,
+      "price_usd": null,
+      "raw_model_usage": null,
+      "real_model_calls": 0,
+      "request_utf8_bytes": 7154,
+      "reservation_policy": "request_utf8_bytes_plus_1024_v1",
+      "reserved_tokens": 16370
+    }
+  },
+  "decision": {
+    "representation": null,
+    "fallback_reasons": [],
+    "compatibility_rewrites": [],
+    "issue_codes": [
+      "SCAN_BUDGET_STOP"
+    ]
+  },
+  "source_inputs_unchanged": true
+}

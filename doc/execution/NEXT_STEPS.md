@@ -10,7 +10,7 @@
 
 ## 2 B06V-T02 单个明确扫描页公式重建与语义复核
 
-依赖B06V-T01，实施范围见[扫描方案](B06V-T02_SCAN_PLAN.md)与[契约](../technical/SCAN_FORMULA_CONTRACT.md)。识别前已冻结一个自造作者公式的清晰/负号缺损/下标缺损三状态及33文件，旧普通CLI及最终四路径RED已保存。固定本地识别六轮仍错误，原响应保持历史，不改expected、不删额外符号；最终唯一活动方案替换为同一已授权视觉Chat。[最终工程证据](../validation/B06V-T02.md)包含 Windows720项Rust、364项Python、Linux303项Python、五项视觉308次CLI审计及新鲜审查，平台跳过单列。当前原设置/账本/凭据仍缺失，下一步须核实明确迁移或恢复范围和实际累计使用，再完成清晰识别、两处关键未知、原响应/结算及干净Obsidian对照；不能凭历史余额请求或以离线成功complete，不承诺作者原始TeX、通用OCR或私人扫描。
+依赖B06V-T01，实施范围见[扫描方案](B06V-T02_SCAN_PLAN.md)与[契约](../technical/SCAN_FORMULA_CONTRACT.md)。识别前冻结一个自造作者公式的三扫描状态及33文件，初始和最终四路径RED均保存；本地失败六轮完整封存，不改expected或删除额外符号。最终唯一活动方案为同一已授权视觉Chat，实际四次单请求通过清晰重建、负号/下标未知阻断及原区回退，新增3,088 Token、累计33,185/pending0；恢复期间未知量按用户指示零假设，见[服务记录](../requirements/MODEL_SERVICE.md)。[最终证据](../validation/B06V-T02.md)包含当前源绑定Windows Rust720、Windows Python394/6skip、Linux Python333/19skip、五视觉308CLI，干净Obsidian1.6.7浅深四窗口八附件点击及三项独立审查。内部权重、作者原始TeX、通用OCR、科学质量和跨版本支持保持未核实；下一任务仍待开始。
 
 ## 3 B06V-T03 视觉输出最低与当前稳定版兼容矩阵
 

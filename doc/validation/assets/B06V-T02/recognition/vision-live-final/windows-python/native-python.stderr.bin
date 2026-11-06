@@ -1,0 +1,221 @@
+.........................s................................................s.............................................................................................EE.FE.FEEEEEEEE................................................s...................s.s..................................................ss..................................
+======================================================================
+ERROR: test_changed_selected_runtime_rejected_before_creating_new_root (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_changed_selected_runtime_rejected_before_creating_new_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 194, in test_changed_selected_runtime_rejected_before_creating_new_root
+    args, pins = self.sample()
+                 ^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 75, in sample
+    fake_pins = {name: P.file_pin(getattr(args, name)) for name in P.RUNTIME_PINS}
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+ERROR: test_dark_theme_uses_existing_theme_aware_launcher_with_exact_scanning_collector (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_dark_theme_uses_existing_theme_aware_launcher_with_exact_scanning_collector)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 158, in test_dark_theme_uses_existing_theme_aware_launcher_with_exact_scanning_collector
+    args, pins = self.sample(launch=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 75, in sample
+    fake_pins = {name: P.file_pin(getattr(args, name)) for name in P.RUNTIME_PINS}
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+ERROR: test_explicit_blocked_capture_only_reads_report_and_requires_absent_success_artifacts (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_explicit_blocked_capture_only_reads_report_and_requires_absent_success_artifacts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 168, in test_explicit_blocked_capture_only_reads_report_and_requires_absent_success_artifacts
+    receipt = self.prepare(args, pins)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 84, in prepare
+    return P.prepare(args)
+           ^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 219, in prepare
+    checker_pin = file_pin(REPO / "scripts/verify_scan_formula.py", maximum=8 * 1024 * 1024)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+ERROR: test_source_changed_after_independent_check_is_not_copied_as_verified (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_source_changed_after_independent_check_is_not_copied_as_verified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 237, in test_source_changed_after_independent_check_is_not_copied_as_verified
+    args, pins = self.sample()
+                 ^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 75, in sample
+    fake_pins = {name: P.file_pin(getattr(args, name)) for name in P.RUNTIME_PINS}
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+ERROR: test_source_symlink_refused_without_reading_the_target (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_source_symlink_refused_without_reading_the_target)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 225, in test_source_symlink_refused_without_reading_the_target
+    args, pins = self.sample()
+                 ^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 75, in sample
+    fake_pins = {name: P.file_pin(getattr(args, name)) for name in P.RUNTIME_PINS}
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+ERROR: test_synchronized_display_minus_forgery_rejected_before_new_root (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_synchronized_display_minus_forgery_rejected_before_new_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 183, in test_synchronized_display_minus_forgery_rejected_before_new_root
+    self.prepare(args, pins)
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 84, in prepare
+    return P.prepare(args)
+           ^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 219, in prepare
+    checker_pin = file_pin(REPO / "scripts/verify_scan_formula.py", maximum=8 * 1024 * 1024)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+ERROR: test_system_powershell_metadata_may_keep_existing_hardlinks_but_source_cannot (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_system_powershell_metadata_may_keep_existing_hardlinks_but_source_cannot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 130, in test_system_powershell_metadata_may_keep_existing_hardlinks_but_source_cannot
+    receipt = self.prepare(args, pins)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 84, in prepare
+    return P.prepare(args)
+           ^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 219, in prepare
+    checker_pin = file_pin(REPO / "scripts/verify_scan_formula.py", maximum=8 * 1024 * 1024)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+ERROR: test_unanchored_or_forged_verification_report_cannot_bypass_current_readback (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_unanchored_or_forged_verification_report_cannot_bypass_current_readback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 187, in test_unanchored_or_forged_verification_report_cannot_bypass_current_readback
+    args, pins = self.sample()
+                 ^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 75, in sample
+    fake_pins = {name: P.file_pin(getattr(args, name)) for name in P.RUNTIME_PINS}
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+ERROR: test_unknown_source_cannot_be_prepared_as_success_even_if_recognition_guesses_clear (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_unknown_source_cannot_be_prepared_as_success_even_if_recognition_guesses_clear)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 122, in test_unknown_source_cannot_be_prepared_as_success_even_if_recognition_guesses_clear
+    args, pins = self.sample(state="unreadable_subscript")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 75, in sample
+    fake_pins = {name: P.file_pin(getattr(args, name)) for name in P.RUNTIME_PINS}
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+ERROR: test_verified_native_preserves_bytes_three_scripts_and_raw_tex_links_without_calls (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_verified_native_preserves_bytes_three_scripts_and_raw_tex_links_without_calls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 88, in test_verified_native_preserves_bytes_three_scripts_and_raw_tex_links_without_calls
+    original = P.inventory(args.vault)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 148, in inventory
+    files = {entry.name: read(entry, maximum=12 * 1024 * 1024) for entry in entries}
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 128, in read
+    before = file_pin(path, maximum=maximum)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+ERROR: test_verified_unverified_profile_retains_actual_image_note_without_native_math (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_verified_unverified_profile_retains_actual_image_note_without_native_math)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 111, in test_verified_unverified_profile_retains_actual_image_note_without_native_math
+    original = P.inventory(args.vault)
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 148, in inventory
+    files = {entry.name: read(entry, maximum=12 * 1024 * 1024) for entry in entries}
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 128, in read
+    before = file_pin(path, maximum=maximum)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 110, in file_pin
+    require(identity(os.fstat(stream.fileno())) == before, "selected file identity changed before reading")
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\scripts\prepare_scan_obsidian.py", line 78, in require
+    raise ValueError(message)
+ValueError: selected file identity changed before reading
+
+======================================================================
+FAIL: test_existing_output_and_unknown_source_directory_do_not_get_overwritten_or_traversed (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_existing_output_and_unknown_source_directory_do_not_get_overwritten_or_traversed)
+----------------------------------------------------------------------
+ValueError: selected file identity changed before reading
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 215, in test_existing_output_and_unknown_source_directory_do_not_get_overwritten_or_traversed
+    with self.assertRaisesRegex(ValueError, "already exists"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "already exists" does not match "selected file identity changed before reading"
+
+======================================================================
+FAIL: test_runtime_copy_cannot_mask_different_binary_in_original_launch_receipts (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_runtime_copy_cannot_mask_different_binary_in_original_launch_receipts)
+----------------------------------------------------------------------
+ValueError: selected file identity changed before reading
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-python-live-final-20261106\repo\tests\test_prepare_scan_obsidian.py", line 206, in test_runtime_copy_cannot_mask_different_binary_in_original_launch_receipts
+    with self.assertRaisesRegex(ValueError, "invocation used a different CLI"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "invocation used a different CLI" does not match "selected file identity changed before reading"
+
+----------------------------------------------------------------------
+Ran 338 tests in 207.449s
+
+FAILED (failures=2, errors=11, skipped=7)

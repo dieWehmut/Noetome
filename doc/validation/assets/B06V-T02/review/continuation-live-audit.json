@@ -1,0 +1,303 @@
+{
+  "recorded_at": "2026-11-06T11:13:09.341794+00:00",
+  "status": "passed",
+  "command": [
+    "/tmp/noetome-b05-t03-python/bin/python",
+    "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T02/review/continuation-live-audit.py"
+  ],
+  "fixture": {
+    "status": "passed",
+    "author_formula_count": 1,
+    "scan_states": 3,
+    "frozen_files": 33
+  },
+  "live": {
+    "calls": [
+      {
+        "name": "clear",
+        "independent_output": {
+          "status": "passed",
+          "author_formula_count": 1,
+          "author_state": "clear",
+          "representation": "native_math",
+          "issue_codes": [],
+          "original_bytes_unchanged": true,
+          "transport_binding": "not_run",
+          "ordinary_cli_binding": "passed",
+          "cumulative_budget_binding": "passed",
+          "real_model_calls": 1,
+          "scientific_quality": "not_run"
+        },
+        "actual_original_recognition": {
+          "schema_version": 1,
+          "recognized_tex": "x_i = -\\frac{a_i}{b_i}",
+          "uncertainties": []
+        },
+        "raw_usage": {
+          "completion_tokens": 210,
+          "prompt_tokens": 444,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 654
+        },
+        "actual_model": "deepseek-flash",
+        "http_status": 200,
+        "ordinary_cli_exit": 0,
+        "budget_anchor": "7b8a6273ea1d31eed58be79c4008c0acaaba1a602765b1e6b260d4795c4d0adf",
+        "four_phase_originals": "passed",
+        "confirmed_cumulative_tokens": 30751,
+        "pending_reserved_tokens": 0
+      },
+      {
+        "name": "sign",
+        "independent_output": {
+          "status": "passed",
+          "author_formula_count": 1,
+          "author_state": "unreadable_sign",
+          "representation": null,
+          "issue_codes": [
+            "SCAN_REGION_UNREADABLE",
+            "SCAN_CRITICAL_SYMBOL_UNKNOWN",
+            "SCAN_SEMANTICS_UNKNOWN",
+            "SCAN_RECOGNITION_UNCERTAIN",
+            "SCAN_RECOGNITION_FAILED"
+          ],
+          "original_bytes_unchanged": true,
+          "transport_binding": "not_run",
+          "ordinary_cli_binding": "passed",
+          "cumulative_budget_binding": "passed",
+          "real_model_calls": 1,
+          "scientific_quality": "not_run"
+        },
+        "actual_original_recognition": {
+          "schema_version": 1,
+          "recognized_tex": null,
+          "uncertainties": [
+            {
+              "kind": "symbol",
+              "description": "The symbol or coefficient between the equals sign and the fraction is obscured by a gray crossed-out box."
+            }
+          ]
+        },
+        "raw_usage": {
+          "completion_tokens": 332,
+          "prompt_tokens": 444,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 776
+        },
+        "actual_model": "deepseek-flash",
+        "http_status": 200,
+        "ordinary_cli_exit": 3,
+        "budget_anchor": "f0217530814cacb9737296eeb5af6eba66d0260f1fdf2ce7ffeb6a71bce85a3b",
+        "four_phase_originals": "passed",
+        "confirmed_cumulative_tokens": 31527,
+        "pending_reserved_tokens": 0
+      },
+      {
+        "name": "subscript",
+        "independent_output": {
+          "status": "passed",
+          "author_formula_count": 1,
+          "author_state": "unreadable_subscript",
+          "representation": null,
+          "issue_codes": [
+            "SCAN_REGION_UNREADABLE",
+            "SCAN_CRITICAL_SYMBOL_UNKNOWN",
+            "SCAN_SEMANTICS_UNKNOWN",
+            "SCAN_RECOGNITION_UNCERTAIN",
+            "SCAN_RECOGNITION_FAILED"
+          ],
+          "original_bytes_unchanged": true,
+          "transport_binding": "not_run",
+          "ordinary_cli_binding": "passed",
+          "cumulative_budget_binding": "passed",
+          "real_model_calls": 1,
+          "scientific_quality": "not_run"
+        },
+        "actual_original_recognition": {
+          "schema_version": 1,
+          "recognized_tex": null,
+          "uncertainties": [
+            {
+              "kind": "subscript",
+              "description": "The subscript on the denominator b is obscured by a gray mark, so its presence or value cannot be determined."
+            }
+          ]
+        },
+        "raw_usage": {
+          "completion_tokens": 626,
+          "prompt_tokens": 444,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 1070
+        },
+        "actual_model": "deepseek-flash",
+        "http_status": 200,
+        "ordinary_cli_exit": 3,
+        "budget_anchor": "3126caaf75becaf868ccc7713be12ca8c12d6cf6030d771e63b278441f0375ac",
+        "four_phase_originals": "passed",
+        "confirmed_cumulative_tokens": 32597,
+        "pending_reserved_tokens": 0
+      },
+      {
+        "name": "fallback",
+        "independent_output": {
+          "status": "passed",
+          "author_formula_count": 1,
+          "author_state": "clear",
+          "representation": "formula_image",
+          "issue_codes": [],
+          "original_bytes_unchanged": true,
+          "transport_binding": "not_run",
+          "ordinary_cli_binding": "passed",
+          "cumulative_budget_binding": "passed",
+          "real_model_calls": 1,
+          "scientific_quality": "not_run"
+        },
+        "actual_original_recognition": {
+          "schema_version": 1,
+          "recognized_tex": "x_i = -\\frac{a_i}{b_i}",
+          "uncertainties": []
+        },
+        "raw_usage": {
+          "completion_tokens": 144,
+          "prompt_tokens": 444,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "total_tokens": 588
+        },
+        "actual_model": "deepseek-flash",
+        "http_status": 200,
+        "ordinary_cli_exit": 0,
+        "budget_anchor": "58498ef6a45b90b9edfd42fc784b665d3a5d4c43250abc6635673b299f886578",
+        "four_phase_originals": "passed",
+        "confirmed_cumulative_tokens": 33185,
+        "pending_reserved_tokens": 0
+      }
+    ],
+    "archive_members_checked": 139,
+    "new_confirmed_tokens": 3088,
+    "final_accounted_tokens": 33185,
+    "pending_reserved_tokens": 0,
+    "remaining_tokens": 9966815,
+    "missing_interval_basis": "user_directed_assumption_zero",
+    "service_balance_independently_verified": false
+  },
+  "native": {
+    "cases": [
+      {
+        "name": "native-light",
+        "representation": "native_math",
+        "runtime_app_version": "1.6.7",
+        "theme": "light",
+        "mathjax": "3.2.2",
+        "source_pin_count": 18,
+        "actual_attachment_clicks": 2,
+        "launch_pid": 28176,
+        "launcher_pin": {
+          "path": "/mnt/c/Program Files/Obsidian/Obsidian.exe",
+          "sha256": "2156f15d12da8cc292fe0cc1884f32410fa187fede67beb6102cfcdc6442fbe2",
+          "byte_length": 176761056
+        },
+        "cleanup": {
+          "profileProcessCount": 0,
+          "checkedUtc": "2026-11-06T10:33:38.6779884Z",
+          "ownedListenerAbsent": true,
+          "emergencyTerminated": [],
+          "ownedPort": 65505,
+          "ownedPidAbsent": true,
+          "ownedPid": 28176
+        },
+        "status": "passed"
+      },
+      {
+        "name": "native-dark",
+        "representation": "native_math",
+        "runtime_app_version": "1.6.7",
+        "theme": "dark",
+        "mathjax": "3.2.2",
+        "source_pin_count": 18,
+        "actual_attachment_clicks": 2,
+        "launch_pid": 35688,
+        "launcher_pin": {
+          "path": "/mnt/c/Program Files/Obsidian/Obsidian.exe",
+          "sha256": "2156f15d12da8cc292fe0cc1884f32410fa187fede67beb6102cfcdc6442fbe2",
+          "byte_length": 176761056
+        },
+        "cleanup": {
+          "profileProcessCount": 0,
+          "checkedUtc": "2026-11-06T10:36:06.2086450Z",
+          "ownedListenerAbsent": true,
+          "emergencyTerminated": [],
+          "ownedPort": 63151,
+          "ownedPidAbsent": true,
+          "ownedPid": 35688
+        },
+        "status": "passed"
+      },
+      {
+        "name": "fallback-light",
+        "representation": "formula_image",
+        "runtime_app_version": "1.6.7",
+        "theme": "light",
+        "mathjax": null,
+        "source_pin_count": 17,
+        "actual_attachment_clicks": 2,
+        "launch_pid": 68652,
+        "launcher_pin": {
+          "path": "/mnt/c/Program Files/Obsidian/Obsidian.exe",
+          "sha256": "2156f15d12da8cc292fe0cc1884f32410fa187fede67beb6102cfcdc6442fbe2",
+          "byte_length": 176761056
+        },
+        "cleanup": {
+          "profileProcessCount": 0,
+          "checkedUtc": "2026-11-06T10:38:17.6006267Z",
+          "ownedListenerAbsent": true,
+          "emergencyTerminated": [],
+          "ownedPort": 51637,
+          "ownedPidAbsent": true,
+          "ownedPid": 68652
+        },
+        "status": "passed"
+      },
+      {
+        "name": "fallback-dark",
+        "representation": "formula_image",
+        "runtime_app_version": "1.6.7",
+        "theme": "dark",
+        "mathjax": null,
+        "source_pin_count": 17,
+        "actual_attachment_clicks": 2,
+        "launch_pid": 64340,
+        "launcher_pin": {
+          "path": "/mnt/c/Program Files/Obsidian/Obsidian.exe",
+          "sha256": "2156f15d12da8cc292fe0cc1884f32410fa187fede67beb6102cfcdc6442fbe2",
+          "byte_length": 176761056
+        },
+        "cleanup": {
+          "profileProcessCount": 0,
+          "checkedUtc": "2026-11-06T10:39:26.0051810Z",
+          "ownedListenerAbsent": true,
+          "emergencyTerminated": [],
+          "ownedPort": 63958,
+          "ownedPidAbsent": true,
+          "ownedPid": 64340
+        },
+        "status": "passed"
+      }
+    ],
+    "original_native_members_checked": 126,
+    "actual_attachment_clicks": 8
+  },
+  "model_calls_from_audit": 0,
+  "credential_reads": 0,
+  "ledger_writes": 0,
+  "native_launches_from_audit": 0,
+  "scientific_quality": "not_run",
+  "published": false
+}

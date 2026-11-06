@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "command": "NOETOME_TEST_BINARY=<selected Linux CLI> /tmp/noetome-b05-t03-python/bin/python -m unittest discover -s tests -p test_*.py",
+  "tests_run": 329,
+  "failures": 0,
+  "errors": 0,
+  "skipped": [
+    {
+      "test": "test_child_gets_explicit_environment_arguments_redaction_and_exit_code (test_api_credential_scripts.TestCredentialsUnavailable.test_child_gets_explicit_environment_arguments_redaction_and_exit_code)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_encrypts_and_roundtrips_without_plaintext (test_api_credential_scripts.TestCredentialsUnavailable.test_encrypts_and_roundtrips_without_plaintext)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_existing_file_never_overwritten (test_api_credential_scripts.TestCredentialsUnavailable.test_existing_file_never_overwritten)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_hardlinked_credential_rejected_before_child (test_api_credential_scripts.TestCredentialsUnavailable.test_hardlinked_credential_rejected_before_child)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_invalid_environment_and_corrupt_credential_stop_before_child (test_api_credential_scripts.TestCredentialsUnavailable.test_invalid_environment_and_corrupt_credential_stop_before_child)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_invalid_keys_never_create_file (test_api_credential_scripts.TestCredentialsUnavailable.test_invalid_keys_never_create_file)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_invoker_rejects_repository_credential_and_directory (test_api_credential_scripts.TestCredentialsUnavailable.test_invoker_rejects_repository_credential_and_directory)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_junction_ancestor_rejected_by_both_scripts (test_api_credential_scripts.TestCredentialsUnavailable.test_junction_ancestor_rejected_by_both_scripts)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_maximum_ascii_key_is_accepted (test_api_credential_scripts.TestCredentialsUnavailable.test_maximum_ascii_key_is_accepted)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_native_arguments_preserve_embedded_quotes_and_backslashes (test_api_credential_scripts.TestCredentialsUnavailable.test_native_arguments_preserve_embedded_quotes_and_backslashes)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_parent_environment_preserved_after_launch_failure (test_api_credential_scripts.TestCredentialsUnavailable.test_parent_environment_preserved_after_launch_failure)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_parent_environment_preserved_when_present_or_absent (test_api_credential_scripts.TestCredentialsUnavailable.test_parent_environment_preserved_when_present_or_absent)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_real_wpf_controls_load_without_showing_operator_dialog (test_api_credential_scripts.TestCredentialsUnavailable.test_real_wpf_controls_load_without_showing_operator_dialog)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_real_wpf_save_handler_rejects_empty_and_whitespace_without_showing (test_api_credential_scripts.TestCredentialsUnavailable.test_real_wpf_save_handler_rejects_empty_and_whitespace_without_showing)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_repository_relative_ads_and_missing_parent_paths_stop (test_api_credential_scripts.TestCredentialsUnavailable.test_repository_relative_ads_and_missing_parent_paths_stop)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_setter_rejects_non_origin_and_conflicting_inputs (test_api_credential_scripts.TestCredentialsUnavailable.test_setter_rejects_non_origin_and_conflicting_inputs)",
+      "reason": "Windows PowerShell and CurrentUser DPAPI are required"
+    },
+    {
+      "test": "test_sql_snapshot_releases_database_without_waiting_for_gc (test_extraction_audit.ExtractionAuditTests.test_sql_snapshot_releases_database_without_waiting_for_gc)",
+      "reason": "Windows file sharing boundary"
+    },
+    {
+      "test": "test_actual_windows_required (test_scan_api_credential.ScanCredentialsUnavailable.test_actual_windows_required)",
+      "reason": "Actual Windows DPAPI and file sharing are tested on the selected Windows runtime"
+    }
+  ],
+  "wall_seconds": 127.69239042000845,
+  "selected_binary": {
+    "path": "/home/lyinn/project/Noetome/.artifacts/b06v-t02-scan-api-echo-fixed-final/noetome-linux",
+    "sha256": "0791ee1546010a1b8a3254251267dec1fc6bf2c9359419d6f3831697f3b0b641"
+  },
+  "status": "passed",
+  "earlier_unselected_cli_run": {
+    "tests_run": 316,
+    "skipped": 20,
+    "status": "passed_with_two_unselected_CLI_groups_skipped",
+    "wall_seconds": 138.276
+  }
+}

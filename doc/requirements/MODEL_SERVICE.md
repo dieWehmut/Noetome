@@ -60,3 +60,13 @@ B06V-T02 对同一明确路径实测：服务设置、累计账本和 DPAPI 凭�
 封装的进程和管道共用有界等待，失败时终止本次 Job 内进程并保存 `failed` 收据及未知用量预留。Job 在选定进程启动后分配，保留该窗口局限；进程管理不是文件或网络沙盒。成功四阶段原协议保持，失败阶段单独记录诊断和终止证据。
 
 新脚本已在两个 Windows PowerShell 版本上用人工凭据、人工账本和无 HTTP 的替身子进程验证；见[辅助脚本记录](../validation/assets/B06V-T02/recognition/credential-helper/validation-receipt.json)。这不证明当前真实文件恢复、真实凭据解密或模型调用成功。`set_api_credential.ps1` 只保存缺失 DPAPI 凭据，不创建服务设置或重置累计账本；恢复路径与额度范围仍需依据实际当前记录。
+
+## 2026年11月6日用户授权恢复
+
+用户明确说明：“新增用量我不知道，当没有吧。凭据我也不知道在哪，我重新输APIkey吧”。按这项指示将缺失期间的未知新增用量假设为0，完整恢复最后有效结算的六条记录：累计30,097、pending0、余额9,969,903、原累计上限10,000,000。该值是用户指示下的恢复基线，缺失期间用量和服务端余额没有独立核实；不是用户确认从未新增调用，也不是新一轮10M额度。
+
+恢复来源、原字节指纹、六笔快照与用户假设保存在[独立恢复收据](../validation/assets/B06V-T02/recognition/credential-restoration/recovery-receipt.json)。外部账本、同服务视觉单请求配置与恢复旁证只新建缺失文件，原记录的全部字段和时间保持。恢复说明单独保存，不加入严格账本顶层。
+
+用户已在本机遮蔽窗口重新保存 CurrentUser DPAPI 凭据；[保存结果](../validation/assets/B06V-T02/recognition/credential-restoration/native-key-save-result.json)不含密钥值。随后实际选定扫描CLI的[零请求预检](../validation/assets/B06V-T02/recognition/credential-restoration/zero-request-preflight.json)通过凭据解密并按预期返回SCAN_BUDGET_STOP，network/paid均0，恢复账本SHA未变化。真实识别仍需逐次预留、保存原响应及有效usage结算后验收，零请求预检不代表模型识别成功。
+
+本轮已分别执行清晰、负号缺损、分母下标缺损及清晰的未经验证目标原图回退四次单请求，实际usage为654、776、1,070、588，共新增3,088。完整六笔历史不变，十条记录全部结算后累计 **33,185**、pending **0**、余额 **9,966,815**；[四次原响应与结算](../validation/assets/B06V-T02/recognition/vision-live-final/live-receipt.json)保存原字节和独立锚。清晰重建及原区回退通过，两个缺损均返回明确不确定并由来源未知状态阻断；实际返回别名仍不证明底层模型版本，价格保持未知。外部`tangmao-deepseek.json`本次恢复为严格扫描单请求配置，既有文本profile和历史另行保留；以后按具体入口选择对应配置，复用同一凭据和累计账本。

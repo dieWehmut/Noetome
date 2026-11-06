@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "scope": "Actual current Linux format and workspace type checks; exec_command-returned combined output is preserved here, not mislabelled as separately captured raw stdout/stderr. No Linux full workspace test was run.",
+  "working_directory": "/home/lyinn/project/Noetome",
+  "commands": [
+    {
+      "cmd": "cargo fmt --all --check",
+      "chunk_id": "7485e0",
+      "exit_code": 0,
+      "wall_time_seconds": 0.828524356,
+      "output": ""
+    },
+    {
+      "cmd": "cargo check --workspace --locked --offline",
+      "chunk_id": "1eaa72",
+      "exit_code": 0,
+      "wall_time_seconds": 0.490737427,
+      "output": "warning: unused import: `process_wrap::std::*`\n --> crates/noetome-cli/src/sidecar_process.rs:6:5\n  |\n6 | use process_wrap::std::*;\n  |     ^^^^^^^^^^^^^^^^^^^^\n  |\n  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\nwarning: unused imports: `Write`, `process::Stdio`, and `thread`\n  --> crates/noetome-cli/src/sidecar_process.rs:10:16\n   |\n10 |     io::{Read, Write},\n   |                ^^^^^\n11 |     path::Path,\n12 |     process::Stdio,\n   |     ^^^^^^^^^^^^^^\n...\n17 |     thread,\n   |     ^^^^^^\n\nwarning: unused import: `OpenOptions`\n --> crates/noetome-cli/src/sidecar_workspace.rs:6:22\n  |\n6 |     fs::{self, File, OpenOptions},\n  |                      ^^^^^^^^^^^\n\nwarning: function `read_bounded` is never used\n   --> crates/noetome-cli/src/sidecar_process.rs:299:4\n    |\n299 | fn read_bounded(\n    |    ^^^^^^^^^^^^\n    |\n    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\nwarning: `noetome-cli` (lib) generated 4 warnings (run `cargo fix --lib -p noetome-cli` to apply 3 suggestions)\nwarning: unused variable: `title`\n   --> crates/noetome-desktop/src/main.rs:109:25\n    |\n109 | fn report_desktop_error(title: &str, message: &str, log_dir: Option<PathBuf>) {\n    |                         ^^^^^ help: if this is intentional, prefix it with an underscore: `_title`\n    |\n    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default\n\nwarning: `noetome-desktop` (bin \"noetome-desktop\") generated 1 warning (run `cargo fix --bin \"noetome-desktop\" -p noetome-desktop` to apply 1 suggestion)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.59s\n"
+    }
+  ],
+  "toolchain_probe": {
+    "chunk_id": "f0f1a0",
+    "wall_time_seconds": 0.000018329,
+    "exit_code": 0,
+    "original_token_count": 43,
+    "output": "cargo 1.98.1 (797e8a9bc 2026-08-05)\nrustc 1.98.1 (48a229cea 2026-09-01)\n1.98.1-x86_64-unknown-linux-gnu (overridden by '/home/lyinn/project/Noetome/rust-toolchain.toml')\n"
+  },
+  "source_mutations": 0,
+  "tests_run": 0,
+  "compiler_warnings": {
+    "noetome_cli": 4,
+    "noetome_desktop": 1
+  },
+  "status": "passed"
+}

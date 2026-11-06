@@ -2280,7 +2280,7 @@
       "id": "B06V-T02",
       "title": "单个明确扫描页公式重建与语义复核",
       "batch": "B06V",
-      "status": "blocked",
+      "status": "done",
       "depends_on": [
         "B06V-T01"
       ],
@@ -2315,6 +2315,94 @@
           "note": "当前工程实现、Windows720项Rust、364项Python(4skip)、Linux303项Python(18skip)、五项视觉308 CLI及独立审查通过，证据见doc/validation/B06V-T02.md。明确三份本机服务设置/累计账本/DPAPI凭据与指定env再次实测缺失，真实当前余额未知；待用户提供迁移位置或确认恢复范围后，核对当前使用与未结清记录并恢复外部凭据，再完成同一冻结作者清晰/缺损真实视觉识别及干净Obsidian。不以历史30097或人工HTTP验收真实模型，不启动依赖T03。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-06T10:20:30Z",
+          "action": "reopen",
+          "from_status": "blocked",
+          "to_status": "todo",
+          "note": "用户授权未知新增用量按0处理并重新输入API key；恢复最后30097累计账本及同一服务，保留假设来源和全部历史。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-06T10:20:31Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "本轮恢复外部完整6笔账本和缺失凭据，执行同一冻结扫描样例的单请求真实识别、结算与独立验收；未知新增量按用户指示0计但不称独立核实。",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-06T11:24:45Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "四次真实视觉请求已完成结算，清晰公式等价重建、负号/下标未知阻断及原区回退通过；干净Obsidian浅深四窗口八附件点击与最终源码回归和独立审查验收。工具提交83d79f6；历史失败、恢复假设、原件和未运行范围保留，不启动B06V-T03。",
+          "validation": [
+            "Windows固定611源码完整Python实际394项：388通过、6符号链接环境跳过、0失败；Windows原生ctime测试通过。Linux最终333项：314通过、19平台跳过、0失败，前两次隔离运行缺别名/临时目录错误完整保留；源码和明确CLI前后相等。",
+            "当前139份Cargo/Rust/sidecar逐文件等于实际Windows720项Rust/23suite及fmt/check/test/build源码，原stdout/stderr、PE、哨兵和进程独立核对；Linux新fmt和workspace check通过，五条既有warnings保留。四项未变化视觉277CLI与本轮扫描31CLI/21人工HTTP/20篡改拒绝通过，不算真实模型请求。",
+            "四次真实视觉usage为654/776/1070/588，共3088；当前外部23989字节账本等于第四settled，累计33185/pending0/余额9966815，六笔历史完整保留。四个原预算锚、139归档成员和126显示原件重查通过；Obsidian1.6.7/MathJax3.2.2浅深原生/回退四窗口八点击通过，三项独立审查无未处置问题。未知期间零用量仍为用户假设，科学not_run/published=false。"
+          ],
+          "artifacts": [
+            {
+              "path": "scripts/capture_scan_budget_originals.py",
+              "sha256": "cd189a9c26763bb6c257e5dfcdef16b8c11f406dbc1bb18fc5bfc7e449e6a5ea"
+            },
+            {
+              "path": "scripts/prepare_scan_obsidian.py",
+              "sha256": "7fc2f31b676ca6946e343256aa45975a525e935ac63fbd615953a5c711a6b22e"
+            },
+            {
+              "path": "scripts/verify_scan_formula.py",
+              "sha256": "b2982784a5cc87b16a610395f34f974fa6b5e9939d751e2201669b11629caa2c"
+            },
+            {
+              "path": "tests/test_capture_scan_budget_originals.py",
+              "sha256": "c3745be1997aee77d0cc0fe78785c7c72807bd48b4193bdcea0f380d5cd85fe6"
+            },
+            {
+              "path": "tests/test_prepare_scan_obsidian.py",
+              "sha256": "35160e5b928ab1283dc6c1025d1bf516b02fae82c788f908e4536001ed159a1e"
+            },
+            {
+              "path": "doc/validation/B06V-T02.md",
+              "sha256": "679c7b071aba2807284ab2c5e3ab75681cd3916e10ae377dfeb4560d844c0964"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T02/recognition/vision-live-final/live-receipt.json",
+              "sha256": "90f2f3ba776fc41917ac61d189566b4e235ce0b9aeae820681d82ebae5a5267b"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T02/native-live-final/receipt.json",
+              "sha256": "d921b664185f541dd5994e3fd9ec42a6842001696b2f850bb165564af70bf093"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T02/recognition/vision-live-final/continuation-windows/result.json",
+              "sha256": "b0f4825c1ad93ca9ab57bc2b745ad837ff723f637df2b4d365a02880145c2c77"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T02/recognition/vision-live-final/continuation-linux-final/result.json",
+              "sha256": "55c8c185ff28fe5f72707b34cf1bc4c1defb5f1354e321139642bfa73b1f5f85"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T02/review/continuation-final-gates.json",
+              "sha256": "0c4d43e0482002dca62c8fd8d915a2b80e4aea9070a6847c70fc01da385595c3"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T02/review/continuation-live-audit.json",
+              "sha256": "8ab7c4daf3e73aa549e3189a173a245159b344df1b85accc7f7d4acc6de62c78"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T02/review/continuation-rust-regression-audit.json",
+              "sha256": "7edc87b95f8c10793604893753a9c4ea3b1f7ed86876c52ed4cc83be077f3721"
+            },
+            {
+              "path": "doc/validation/assets/B06V-T02/review/continuation-tools-review.md",
+              "sha256": "7e3fce3366e511f58f6a8deee0ad780a9a97045c78462af31c690b33f0da697a"
+            }
+          ]
         }
       ]
     },

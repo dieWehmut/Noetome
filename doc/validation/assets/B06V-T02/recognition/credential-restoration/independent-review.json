@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "kind": "independent_public_state_restoration_review",
+  "recorded_at": "2026-11-06T10:26:55.559831+00:00",
+  "task_id": "B06V-T02",
+  "status": "passed",
+  "scope": "Six-record restored public baseline, verified before the parent started its first clear scan request.",
+  "verification_timing": {
+    "baseline_phase": "after restoration and before seventh model invocation reservation",
+    "historical_baseline_updated_at": "2026-11-03T10:45:24.851848+00:00",
+    "recovery_recorded_at": "2026-11-06T10:20:31.470102+00:00",
+    "exact_native_observation_timestamp_captured": false,
+    "receipt_recorded_after_first_clear_request_started": true,
+    "live_ledger_may_normally_advance_after_verified_baseline": true,
+    "receipt_does_not_assert_latest_live_ledger_still_has_six_records": true
+  },
+  "checks": {
+    "external_ledger_sha256_at_native_guard_equals_repository_snapshot": true,
+    "restored_ledger_equals_complete_historical_object": true,
+    "all_six_records_preserved_verbatim": true,
+    "unique_invocation_ids": true,
+    "individual_usage_arithmetic": true,
+    "confirmed_and_pending_aggregate_arithmetic": true,
+    "network_attempt_count_arithmetic": true,
+    "historical_timestamp_strings_preserved": true,
+    "external_config_equals_repository_snapshot_bytes": true,
+    "same_authorized_service_and_model": true,
+    "single_request_total_cap": 65536,
+    "external_recovery_receipt_equals_repository_snapshot_bytes": true,
+    "explicit_user_directed_unknown_usage_zero_assumption": true
+  },
+  "ledger_values_at_verified_baseline": {
+    "approved_total_tokens": 10000000,
+    "accounted_tokens": 30097,
+    "pending_reserved_tokens": 0,
+    "remaining_tokens": 9969903,
+    "model_attempts": 6,
+    "record_totals": [
+      936,
+      9683,
+      4912,
+      4783,
+      3479,
+      6304
+    ]
+  },
+  "assumption_provenance": {
+    "basis": "user_directed_assumption",
+    "user_instruction": "新增用量我不知道，当没有吧。凭据我也不知道在哪，我重新输APIkey吧",
+    "additional_usage_known": false,
+    "assumed_additional_tokens": 0,
+    "live_balance_verified": false
+  },
+  "native_guard_validation": {
+    "exit_code": 0,
+    "result": {
+      "status": "passed",
+      "powershell_version": "5.1.26100.7920",
+      "actual_native_path_guards": "passed_read_only",
+      "actual_unique_json_keys": "passed",
+      "actual_parse_json_text": "passed_preserved_strings",
+      "actual_check_ledger": "passed",
+      "actual_live_config_guard": "passed",
+      "actual_request_budget_guard": "passed",
+      "ledger_access": "read_only",
+      "request_reservation": 65536,
+      "ledger_sha256": "e0615776e6ede2a6b1f3a357d20e88de76dcc758aca020c8bb1d217817a78f46",
+      "config_sha256": "ac225b10685fbd6afb80fe4298787b6c44a11078c874697473becc8f3c54ed3a",
+      "model_calls": 0,
+      "credential_read": false,
+      "main_program_executed": false
+    },
+    "method": "Parse current helper AST with original source filename; evaluate only native type definition and selected original read/parse/ledger function AST nodes, plus source-extracted public config and budget guards. Ledger opened with read access only; helper main program never executed.",
+    "guard_source": "scripts/invoke_scan_api_credential.ps1",
+    "guard_source_sha256": "b63714af62b005f7a5e7c19482c47f39c8048d55289b61dadd7c0dd0972f4b3b",
+    "harness_retry_history": [
+      {
+        "attempt": 1,
+        "result": "Diagnostic decoding failed while capturing Windows stderr as UTF-8; no successful guard result claimed."
+      },
+      {
+        "attempt": 2,
+        "result": "Function definitions evaluated without source filename lost automatic PSScriptRoot; selected path check rejected empty repository context. No external state changed."
+      },
+      {
+        "attempt": 3,
+        "result": "Original source filename retained in parsed function AST nodes; all selected guards passed."
+      },
+      {
+        "attempt": 4,
+        "result": "Receipt preparation re-read the live ledger after parent had started the authorized seventh invocation; six-record equality no longer held. Used the previously successful baseline guard digest, without treating later reservation as restoration failure."
+      }
+    ]
+  },
+  "inputs": {
+    "historical_source": {
+      "path": "doc/validation/assets/B04-T02-live-sixth-settlement.json",
+      "sha256": "7883dfcaf3b8dca25f3f3144f15ac8f3a3177003648abd67fd47f4d0254d0760",
+      "byte_length": 11638
+    },
+    "restored_ledger": {
+      "path": "doc/validation/assets/B06V-T02/recognition/credential-restoration/restored-ledger.json",
+      "sha256": "e0615776e6ede2a6b1f3a357d20e88de76dcc758aca020c8bb1d217817a78f46",
+      "byte_length": 11047
+    },
+    "restored_config": {
+      "path": "doc/validation/assets/B06V-T02/recognition/credential-restoration/restored-config.json",
+      "sha256": "ac225b10685fbd6afb80fe4298787b6c44a11078c874697473becc8f3c54ed3a",
+      "byte_length": 590
+    },
+    "external_config": {
+      "path": "/mnt/c/Users/Lyinn/AppData/Local/Noetome/model-services/tangmao-deepseek.json",
+      "sha256": "ac225b10685fbd6afb80fe4298787b6c44a11078c874697473becc8f3c54ed3a",
+      "byte_length": 590
+    },
+    "recovery_receipt": {
+      "path": "doc/validation/assets/B06V-T02/recognition/credential-restoration/recovery-receipt.json",
+      "sha256": "65bfaa8f4cf1a41ee8fe77a1f9bdbc9601c8925210fb43b31ab35caeabd8818c",
+      "byte_length": 1714
+    },
+    "external_recovery_receipt": {
+      "path": "/mnt/c/Users/Lyinn/AppData/Local/Noetome/model-services/tangmao-deepseek.recovery-20261106.json",
+      "sha256": "65bfaa8f4cf1a41ee8fe77a1f9bdbc9601c8925210fb43b31ab35caeabd8818c",
+      "byte_length": 1714
+    },
+    "guard_script": {
+      "path": "scripts/invoke_scan_api_credential.ps1",
+      "sha256": "b63714af62b005f7a5e7c19482c47f39c8048d55289b61dadd7c0dd0972f4b3b",
+      "byte_length": 31332
+    }
+  },
+  "external_ledger_at_verified_baseline": {
+    "path": "/mnt/c/Users/Lyinn/AppData/Local/Noetome/model-services/tangmao-deepseek.usage.json",
+    "sha256": "e0615776e6ede2a6b1f3a357d20e88de76dcc758aca020c8bb1d217817a78f46",
+    "byte_length": 11047,
+    "evidence": "Actual native guarded read before first clear invocation; matching frozen restored-ledger.json bytes."
+  },
+  "boundaries": {
+    "credential_file_read": false,
+    "credential_value_read": false,
+    "http_requests": 0,
+    "ledger_modified": false,
+    "config_modified": false,
+    "external_receipt_modified": false,
+    "real_service_balance_verified": false,
+    "credential_authentication_verified": false,
+    "model_recognition_verified": false
+  }
+}
