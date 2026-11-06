@@ -62,6 +62,11 @@ mod process_model;
 mod process_parser;
 pub mod process_review;
 pub mod project;
+mod scan_api;
+pub mod scan_formula;
+mod scan_input;
+mod scan_model;
+mod scan_render;
 pub mod sidecar_model;
 pub mod sidecar_process;
 mod sidecar_workspace;
@@ -89,6 +94,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome knowledge present <项目路径> <coordination-case> <协调输出根> <尚不存在的测试Vault>
       noetome knowledge formula <formula-case> <profile.json> <尚不存在的测试Vault>
       noetome knowledge image <image-case> <profile.json> <尚不存在的测试Vault>
+      noetome knowledge scan-formula <scan-case> <api-config.json> <profile.json> <尚不存在的测试Vault>
       noetome case verify <fixture目录>
       noetome case compile <fixture目录> <尚不存在的测试输出根>
 
@@ -107,6 +113,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   knowledge coordinate    按明确身份、来源背景及证据保留多来源事实和未决关系
   knowledge present       重验协调来源并主动选择有据比较表或正文，保存未发布预览
   knowledge formula       保留明确选取TeX/公式原区域并核对语义，回退或阻断未确认表达
+  knowledge scan-formula  对明确扫描区域执行一次有预算视觉请求，保留原响应并核对语义
   case verify             只读校验明确fixture的来源、IR、计划与独立预期
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
 
@@ -193,6 +200,12 @@ fake以UTF8字节计量，价格及真实模型用量未知，网络和付费调
 pub enum CliCommand {
     Help,
     KnowledgeHelp,
+    ScanFormula {
+        case: PathBuf,
+        api_config: PathBuf,
+        profile: PathBuf,
+        output: PathBuf,
+    },
     Image {
         case: PathBuf,
         profile: PathBuf,
@@ -551,6 +564,7 @@ pub const KNOWLEDGE_HELP:&str="Noetome 有界多来源知识协调与表达
       noetome knowledge flow <项目路径> <process-case> <review根> <profile.json> <尚不存在的测试Vault>
       noetome knowledge formula <formula-case> <profile.json> <尚不存在的测试Vault>
       noetome knowledge image <image-case> <profile.json> <尚不存在的测试Vault>
+      noetome knowledge scan-formula <scan-case> <api-config.json> <profile.json> <尚不存在的测试Vault>
 
 只重新核对同项目2至3份成功的单原子来源依据，通过显式组件身份映射保留重复／互补事实和全部出处；严格协调Schema2还保留有来源背景的条件与历史变体。
 未知语义差异保持needs_review；不调用模型或研究服务。知识pending，published=false，scientific_quality=not_run。
@@ -561,13 +575,14 @@ flow：从实际来源重建保存的过程核对结果，明确方向、分支�
 formula：只核对明确选取的原始TeX/公式区域与来源作者语义说明，逐字保存原件，严格核对负号/上下标/符号定义/单位/前提；不能保真时回退原图，关键语义未知时阻断。无OCR/PDF作者源码恢复或科学正确率宣称。
 dfrac的有据规范化由profile明确启用；未启用时回退原图，不表示MathJax本身缺少该宏。
 image：只读取明确选定的PNG及作者手工结构声明；保留标签、方向、正负、单位、图例与空间关系，有限SVG不能保真时使用原图，关键语义未知或原图不可辨时阻断。无数据实验曲线只保留原图，不执行OCR或自动图像理解。
+scan-formula：只对明确扫描页内的选定PNG区域执行一次有预算视觉Chat识别，原区域、请求正文、原响应和已核实用量分别保存；核对关键负号/下标/符号/单位/前提，未知阻断，不恢复作者TeX。只使用已授权网关deepseek-flash或明确数字环回人工测试，max_requests=0时不读取凭据或联网；不自动重试、跳转或扫描其他资料。
 未决冲突或证据不足返回3，保存无成功计划或笔记的失败双报告；成功仅表示未发布的工程预览。
 输出必须为已有父目录下的新测试根；以连字符开头的路径在动词后加 --，中文和空格路径作为单独参数。
 ";
 fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     if args.is_empty()
         || matches!(args,[h] if h=="--help"||h=="-h")
-        || matches!(args,[v,h] if (v=="coordinate"||v=="present"||v=="process-review"||v=="flow"||v=="formula"||v=="image")&&(h=="--help"||h=="-h"))
+        || matches!(args,[v,h] if (v=="coordinate"||v=="present"||v=="process-review"||v=="flow"||v=="formula"||v=="image"||v=="scan-formula")&&(h=="--help"||h=="-h"))
     {
         return Ok(CliCommand::KnowledgeHelp);
     }
@@ -578,6 +593,7 @@ fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         && v != "flow"
         && v != "formula"
         && v != "image"
+        && v != "scan-formula"
     {
         return Err(INVALID_ARGUMENT);
     }
@@ -587,6 +603,20 @@ fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         (tail, false)
     };
     match tail {
+        [c, a, p, o]
+            if v == "scan-formula"
+                && [c, a, p, o].iter().all(|s| {
+                    s.to_str()
+                        .is_some_and(|s| !s.is_empty() && (sep || !s.starts_with('-')))
+                }) =>
+        {
+            Ok(CliCommand::ScanFormula {
+                case: c.into(),
+                api_config: a.into(),
+                profile: p.into(),
+                output: o.into(),
+            })
+        }
         [c, p, o]
             if v == "image"
                 && [c, p, o].iter().all(|s| {

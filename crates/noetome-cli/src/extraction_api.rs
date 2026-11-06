@@ -63,7 +63,7 @@ fn error(code: &'static str, message: &str) -> ProjectError {
 /// Decode escape tokens repeatedly, including within nested serialized JSON and
 /// malformed outer JSON. Decoding always shrinks the buffer. Bound total work
 /// and fail closed for adversarial depths; no unsafe original bytes are saved.
-fn credential_echo(bytes: &[u8], key: &str) -> bool {
+pub(crate) fn credential_echo(bytes: &[u8], key: &str) -> bool {
     let mut current = bytes.to_vec();
     let mut work = 0usize;
     loop {
@@ -120,7 +120,7 @@ fn echo_error() -> ProjectError {
         "检测到所选外部凭据回显；未保存泄密原文或候选。",
     )
 }
-fn usage_within_budget(
+pub(crate) fn usage_within_budget(
     usage: &Value,
     input_limit: u64,
     output_limit: u64,
