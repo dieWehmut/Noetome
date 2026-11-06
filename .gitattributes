@@ -15,6 +15,10 @@
 tests/fixtures/** -text
 # Fixture SHA contracts sign original bytes; Windows checkouts keep them stable.
 fixtures/text-compare-v1/** text eol=lf
+# Recovery authors are byte-signed originals; renderer golden Markdown includes
+# its exact final blank line. Keep both original bytes and that specific EOF.
+fixtures/run-checkpoint-v1/** -text
+fixtures/run-checkpoint-v1/expected-markdown/** whitespace=-blank-at-eof
 # PDF evidence must retain its exact binary bytes on every checkout.
 *.pdf binary
 *.zlib binary
