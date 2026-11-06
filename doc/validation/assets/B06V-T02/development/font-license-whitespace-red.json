@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "at_utc": "2026-11-06T01:26:52.720329+00:00",
+  "producer": "root_git_check_failure_capture",
+  "commit": "72f8cec84a4ae7a76de7c8e6a6423b09eccfbea0",
+  "command": [
+    "git",
+    "show",
+    "--format=",
+    "--check",
+    "HEAD"
+  ],
+  "exit_code": 2,
+  "stdout": "fixtures/scan-formula/author-font-license.txt:8: trailing whitespace.\n+Copyright: Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved. \nfixtures/scan-formula/author-font-license.txt:54: trailing whitespace.\n+Copyright: (C) 2005-2006 Peter Cernak <pce@users.sourceforge.net> \n",
+  "stderr": "",
+  "source_font_license": {
+    "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9",
+    "byte_length": 3859
+  },
+  "cause": "Original third-party license has trailing spaces on two copyright lines. The previous orchestrated staged-check returned nonzero but the following commit was not gated on that exit code. No push was performed.",
+  "resolution_planned": "Preserve exact frozen third-party license bytes; scope whitespace exemption to that raw license file; recheck and append corrective commit."
+}

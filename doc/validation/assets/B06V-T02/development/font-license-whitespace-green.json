@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "producer": "root_corrective_whitespace_readback",
+  "at_utc": "2026-11-06T01:27:12.632733+00:00",
+  "checks": [
+    {
+      "command": [
+        "git",
+        "show",
+        "--format=",
+        "--check",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "frozen_files_verified": 33,
+  "license_bytes_unchanged": true,
+  "attribute_scope": "fixtures/scan-formula/author-font-license.txt only",
+  "resolution": "Raw upstream license whitespace preserved; source/expected not modified; following commits now gated on successful checks."
+}
