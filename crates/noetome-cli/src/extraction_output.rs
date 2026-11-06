@@ -3,7 +3,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fs::{self, File, OpenOptions};
 use std::io::{Read, Seek, SeekFrom, Write};
 use std::path::{Path, PathBuf};
-use std::time::SystemTime;
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use crate::project::{self, ProjectError};
 use crate::sidecar_model::Fingerprint;
@@ -20,6 +20,27 @@ fn changed() -> ProjectError {
     )
 }
 
+fn capture_ancestors(
+    expected: &BTreeMap<PathBuf, crate::compile_identity::Identity>,
+) -> Result<Vec<Directory>, ProjectError> {
+    let mut held = Vec::new();
+    for (path, identity) in expected {
+        if crate::compile_identity::identity(path)? != *identity {
+            return Err(changed());
+        }
+        let directory =
+            Directory::capture(path, "EXTRACT_OUTPUT_CHANGED").map_err(|_| changed())?;
+        if crate::compile_identity::identity(path)? != *identity {
+            return Err(changed());
+        }
+        directory
+            .verify("EXTRACT_OUTPUT_CHANGED")
+            .map_err(|_| changed())?;
+        held.push(directory);
+    }
+    Ok(held)
+}
+
 struct Artifact {
     path: PathBuf,
     file: File,
@@ -29,6 +50,57 @@ struct Artifact {
 }
 
 impl Artifact {
+    fn capture(path: &Path, expected: &crate::run_model::FileStamp) -> Result<Self, ProjectError> {
+        project::check_components(path).map_err(|_| changed())?;
+        project::checked_file(path).map_err(|_| changed())?;
+        if crate::compile_identity::identity(path)? != expected.identity {
+            return Err(changed());
+        }
+        let mut options = OpenOptions::new();
+        options.read(true).write(true);
+        #[cfg(windows)]
+        {
+            use std::os::windows::fs::OpenOptionsExt;
+            options.share_mode(1).custom_flags(0x00200000);
+        }
+        let mut file = options.open(path).map_err(|e| ProjectError::io(path, e))?;
+        check_links(&file, "EXTRACT_OUTPUT_CHANGED").map_err(|_| changed())?;
+        let identity = same_file::Handle::from_file(file.try_clone().map_err(|_| changed())?)
+            .map_err(|_| changed())?;
+        let mut bytes = Vec::new();
+        (&mut file)
+            .take(FILE_LIMIT as u64 + 1)
+            .read_to_end(&mut bytes)
+            .map_err(|_| changed())?;
+        let modified = file
+            .metadata()
+            .and_then(|m| m.modified())
+            .map_err(|_| changed())?;
+        if bytes.len() as u64 != expected.byte_length
+            || sha256(&bytes) != expected.sha256
+            || modified
+                .duration_since(UNIX_EPOCH)
+                .map_err(|_| changed())?
+                .as_nanos()
+                .to_string()
+                != expected.modified
+            || crate::compile_identity::identity(path)? != expected.identity
+        {
+            return Err(changed());
+        }
+        let value = Self {
+            path: path.to_path_buf(),
+            file,
+            identity,
+            modified,
+            fingerprint: Fingerprint {
+                sha256: expected.sha256.clone(),
+                byte_length: expected.byte_length,
+            },
+        };
+        value.verify()?;
+        Ok(value)
+    }
     fn create(path: &Path, bytes: &[u8]) -> Result<Self, ProjectError> {
         if bytes.len() > FILE_LIMIT {
             return Err(ProjectError::new(
@@ -138,10 +210,109 @@ pub(crate) struct OutputRoot {
     root: PathBuf,
     parent: Directory,
     directory: Directory,
+    ancestors: Vec<Directory>,
     files: BTreeMap<String, Artifact>,
 }
 
 impl OutputRoot {
+    /// Only a budget-sealed, never-dispatched request may reopen its three
+    /// original files. This is not a general existing-output adoption path.
+    pub(crate) fn resume_prepared_api(
+        path: &Path,
+        mode: &str,
+        attempt: &crate::request_budget_model::AttemptView,
+        run: &crate::request_budget_model::RunView,
+    ) -> Result<Self, ProjectError> {
+        let expected_names = BTreeSet::from([
+            ".owner.json".to_string(),
+            "request.json".to_string(),
+            "request-body.json".to_string(),
+        ]);
+        let sealed = &attempt.sealed_files;
+        if !matches!(
+            attempt.state,
+            crate::request_budget_model::AttemptState::Prepared
+                | crate::request_budget_model::AttemptState::Reserved
+        ) || attempt.transport_sealed
+            || attempt.receipt.is_some()
+            || attempt.plan.key.run_id != run.spec.run_id
+            || sealed.keys().cloned().collect::<BTreeSet<_>>() != expected_names
+        {
+            return Err(changed());
+        }
+        let root = project::check_components(path)?;
+        let run_root = project::check_components(Path::new(&run.spec.run_root))?;
+        let relative = Path::new(&attempt.plan.attempt_root);
+        if relative.is_absolute()
+            || relative
+                .components()
+                .any(|c| !matches!(c, std::path::Component::Normal(_)))
+            || root != run_root.join(relative)
+        {
+            return Err(changed());
+        }
+        let mut expected_ancestors = BTreeMap::from([
+            (run_root.clone(), run.identity.root.clone()),
+            (
+                run_root.parent().ok_or_else(changed)?.to_path_buf(),
+                run.identity.parent.clone(),
+            ),
+            (root.clone(), attempt.identity.root.clone()),
+            (
+                root.parent().ok_or_else(changed)?.to_path_buf(),
+                attempt.identity.parent.clone(),
+            ),
+        ]);
+        let mut prefix = PathBuf::new();
+        let mut expected_prefixes = BTreeSet::new();
+        for component in relative.components() {
+            prefix.push(component);
+            let key = prefix.to_str().ok_or_else(changed)?.replace('\\', "/");
+            expected_prefixes.insert(key.clone());
+            let id = attempt.identity.directories.get(&key).ok_or_else(changed)?;
+            let absolute = run_root.join(&prefix);
+            if let Some(prior) = expected_ancestors.insert(absolute, id.clone()) {
+                if prior != *id {
+                    return Err(changed());
+                }
+            }
+        }
+        if attempt
+            .identity
+            .directories
+            .keys()
+            .cloned()
+            .collect::<BTreeSet<_>>()
+            != expected_prefixes
+        {
+            return Err(changed());
+        }
+        let ancestors = capture_ancestors(&expected_ancestors)?;
+        let parent =
+            Directory::capture(root.parent().ok_or_else(changed)?, "EXTRACT_OUTPUT_CHANGED")
+                .map_err(|_| changed())?;
+        let directory =
+            Directory::capture(&root, "EXTRACT_OUTPUT_CHANGED").map_err(|_| changed())?;
+        let mut files = BTreeMap::new();
+        for (name, pin) in sealed {
+            files.insert(name.clone(), Artifact::capture(&root.join(name), pin)?);
+        }
+        let value = Self {
+            root,
+            parent,
+            directory,
+            ancestors,
+            files,
+        };
+        value.verify()?;
+        let expected_owner = serde_json::json!({"schema_version":1,"producer":"api","request_id":attempt.plan.key.request_id,"purpose":"unpublished_extraction_test","transport_mode":mode});
+        let owner: serde_json::Value =
+            serde_json::from_slice(&value.read(".owner.json")?).map_err(|_| changed())?;
+        if owner != expected_owner {
+            return Err(changed());
+        }
+        Ok(value)
+    }
     pub(crate) fn create(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
         Self::create_owned(path, request_id, None)
     }
@@ -152,6 +323,15 @@ impl OutputRoot {
         transport_mode: &str,
     ) -> Result<Self, ProjectError> {
         Self::create_owned(path, request_id, Some(transport_mode))
+    }
+
+    pub(crate) fn create_api_guarded(
+        path: &Path,
+        request_id: &str,
+        transport_mode: &str,
+        expected: &BTreeMap<PathBuf, crate::compile_identity::Identity>,
+    ) -> Result<Self, ProjectError> {
+        Self::create_owned_guarded(path, request_id, Some(transport_mode), expected)
     }
 
     pub(crate) fn create_review(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
@@ -316,6 +496,15 @@ impl OutputRoot {
         request_id: &str,
         mode: Option<&str>,
     ) -> Result<Self, ProjectError> {
+        Self::create_owned_guarded(path, request_id, mode, &BTreeMap::new())
+    }
+    fn create_owned_guarded(
+        path: &Path,
+        request_id: &str,
+        mode: Option<&str>,
+        expected: &BTreeMap<PathBuf, crate::compile_identity::Identity>,
+    ) -> Result<Self, ProjectError> {
+        let ancestors = capture_ancestors(expected)?;
         let root = project::check_components(path)?;
         if project::exists(&root)? {
             return Err(ProjectError::new(
@@ -335,6 +524,7 @@ impl OutputRoot {
             root,
             parent,
             directory,
+            ancestors,
             files: BTreeMap::new(),
         };
         let coordination = mode == Some("knowledge_coordination");
@@ -381,6 +571,11 @@ impl OutputRoot {
     }
 
     pub(crate) fn verify(&self) -> Result<(), ProjectError> {
+        for directory in &self.ancestors {
+            directory
+                .verify("EXTRACT_OUTPUT_CHANGED")
+                .map_err(|_| changed())?;
+        }
         self.parent
             .verify("EXTRACT_OUTPUT_CHANGED")
             .map_err(|_| changed())?;
@@ -406,6 +601,11 @@ impl OutputRoot {
         self.directory
             .verify("EXTRACT_OUTPUT_CHANGED")
             .map_err(|_| changed())?;
+        for directory in &self.ancestors {
+            directory
+                .verify("EXTRACT_OUTPUT_CHANGED")
+                .map_err(|_| changed())?;
+        }
         Ok(())
     }
 
@@ -519,5 +719,104 @@ mod presentation_cleanup_tests {
         );
         drop(output);
         fs::remove_dir_all(root).unwrap();
+    }
+}
+
+#[cfg(test)]
+mod budget_output_tests {
+    use super::*;
+
+    #[test]
+    fn guarded_api_rejects_replaced_parent_before_creating_any_output() {
+        let base =
+            std::env::temp_dir().join(format!("noetome-budget-parent-{}", uuid::Uuid::new_v4()));
+        fs::create_dir(&base).unwrap();
+        let parent = base.join("selected parent");
+        fs::create_dir(&parent).unwrap();
+        let expected = BTreeMap::from([(
+            parent.clone(),
+            crate::compile_identity::identity(&parent).unwrap(),
+        )]);
+        fs::rename(&parent, base.join("preserved original parent")).unwrap();
+        fs::create_dir(&parent).unwrap();
+        let human = parent.join("human.txt");
+        fs::write(&human, b"replacement belongs to another owner").unwrap();
+        let output = parent.join("new attempt");
+        assert_eq!(
+            OutputRoot::create_api_guarded(
+                &output,
+                &uuid::Uuid::new_v4().to_string(),
+                "local_http_test",
+                &expected
+            )
+            .err()
+            .unwrap()
+            .code(),
+            "EXTRACT_OUTPUT_CHANGED"
+        );
+        assert!(!output.exists());
+        assert_eq!(
+            fs::read(&human).unwrap(),
+            b"replacement belongs to another owner"
+        );
+        fs::remove_dir_all(base).unwrap();
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn held_api_ancestor_rejects_same_leaf_and_parent_moved_into_replacement() {
+        let base =
+            std::env::temp_dir().join(format!("noetome-budget-ancestor-{}", uuid::Uuid::new_v4()));
+        fs::create_dir(&base).unwrap();
+        let ancestor = base.join("attempts");
+        fs::create_dir(&ancestor).unwrap();
+        let parent = ancestor.join("unit-a");
+        fs::create_dir(&parent).unwrap();
+        let expected = BTreeMap::from([
+            (
+                ancestor.clone(),
+                crate::compile_identity::identity(&ancestor).unwrap(),
+            ),
+            (
+                parent.clone(),
+                crate::compile_identity::identity(&parent).unwrap(),
+            ),
+        ]);
+        let root = parent.join("1");
+        let mut output = OutputRoot::create_api_guarded(
+            &root,
+            &uuid::Uuid::new_v4().to_string(),
+            "local_http_test",
+            &expected,
+        )
+        .unwrap();
+        output
+            .add("request-body.json", b"unchanged original request")
+            .unwrap();
+        let leaf_id = crate::compile_identity::identity(&root).unwrap();
+        let parent_id = crate::compile_identity::identity(&parent).unwrap();
+        let preserved = base.join("preserved attempts");
+        fs::rename(&ancestor, &preserved).unwrap();
+        fs::create_dir(&ancestor).unwrap();
+        fs::rename(preserved.join("unit-a"), &parent).unwrap();
+        assert_eq!(crate::compile_identity::identity(&root).unwrap(), leaf_id);
+        assert_eq!(
+            crate::compile_identity::identity(&parent).unwrap(),
+            parent_id
+        );
+        assert_eq!(
+            output
+                .add("validation.json", b"must not be saved")
+                .unwrap_err()
+                .code(),
+            "EXTRACT_OUTPUT_CHANGED"
+        );
+        assert!(!root.join("validation.json").exists());
+        assert_eq!(
+            fs::read(root.join("request-body.json")).unwrap(),
+            b"unchanged original request"
+        );
+        drop(output);
+        fs::remove_dir_all(base).unwrap();
     }
 }

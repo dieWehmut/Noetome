@@ -4,7 +4,7 @@
 
 ## 范围与接口
 
-只复用既有 `extraction_api` 的一次 Responses 请求、严格来源/候选校验和原件保存。新入口仅接 `local_http_test`、`openai_responses`、数字环回地址和 `noetome-test-` 人工模型/凭据。既有普通 API/Chat/live 路径、外部 DPAPI 封装及真实累计10000000额度不变。本项不读取或迁移真实额度账本，不接真实模型、GUI、生产Vault或新的模型SDK。
+只复用既有 `extraction_api` 的一次 Responses 请求、严格来源/候选校验和原件保存。新入口仅接 `local_http_test`、`openai_responses`、数字环回地址和 `noetome-test-` 人工模型/凭据；凭据引用必须先符合`NOETOME_TEST_`前缀，再读取对应环境值。既有普通 API/Chat/live 路径、外部 DPAPI 封装及真实累计10000000额度不变。本项不读取或迁移真实额度账本，不接真实模型、GUI、生产Vault或新的模型SDK。
 
 ```text
 noetome run api init <authority-config.json> <尚不存在的预算根>
@@ -23,6 +23,8 @@ Run配置严格字段为 schema_version=1、producer=synthetic_api_run、run_bud
 
 新预算根采用独立Schema1/application_id `0x4e425544`，`control/budget.sqlite`只有固定metadata与追加events。metadata固定authority、opening、上限、owner、编译来源；events保存原始JSON、序号和前一SHA。投影余额和状态均从完整有界事件链重建，不接受调用者或数据库汇总counter。未知表/字段/schema、错序或非法迁移、碰撞/替换/sidecar现场保留拒绝，不使用新账本清零绕过。
 
+预算control仅有`budget.sqlite`、`owner.json`、`authority.lock`和原始`policy.json`四个普通文件。首次授权策略的原始字节SHA、文件身份/mtime/长度以及严格解析后的opening与上限共同固定；每次读取或更新与owner和metadata相互核对。修改数据库汇总及owner不能跳过原policy原件。独立检查器另与调用前作者配置核对；这些本地文件门槛不表示能识别外部攻击者同时重写所有独立初始证据。
+
 所有预留和发送许可在`BEGIN IMMEDIATE`取得后重新读取完整当前链，核对Run、单元、终态、期限、输入和余额，再提交。每个工作线程独立打开同一authority；HTTP、候选验证和退避均在事务外。Run可共享authority，旧Run的用量和承诺始终进入全局计算。
 
 每次实际请求正文继续采用旧算法：`R = body_utf8_bytes + 1024 + max_output_tokens`。它是工程预留，tokenizer和价格未知，不是服务商账单上限保证。所有加减与用量加总检查溢出。各scope的已占用量为已确认实际用量加未决承诺；请求数分别保留已派发和待派发预留。Run/global的Token与次数均满足时才允许新的请求，attempt_no>=2还受单元独立retry Token上限约束。
@@ -35,12 +37,12 @@ attempt身份为原Run/WorkUnit/attempt_no/原API生成的request_id四元组。
 
 | 状态 | Token/请求承诺 | 恢复条件 |
 | --- | --- | --- |
-| Prepared | 无 | 原worker失去能力后可明确NotSent；不收养未知目录 |
-| Reserved | 完整R和一个slot | 尚无MaySend可按持久协议明确NotSent释放 |
+| Prepared | 无 | 原worker失去能力后，在原期限内重验同一请求原件并继续；到期明确NotSent，不收养未知目录 |
+| Reserved | 完整R和一个slot | 尚无MaySend时可在原期限内继续同一请求；到期按持久协议NotSent释放 |
 | MaySend | 完整R，视为可能已发送 | 发送许可只能取得一次，不能幂等再次发HTTP |
 | Unknown | 原R及已派发请求保留 | 无可信用量；只接受同一身份后续确证，不自动退款 |
 | Known | 真实Token及已派发次数 | 同一完整receipt重复交付只结算一次 |
-| NotSent | 无网络用量和slot | 只接受协议证明或安全最终report的network_attempts=0 |
+| NotSent | 无网络用量和slot | 从未取得MaySend的持久协议证明；MaySend/Unknown则必须另有已封存传输原件证明network_attempts=0 |
 
 MaySend提交在实际发送前。之后即使进程在真正HTTP前退出，也保守保留未知；不靠退出状态、超时或非200推定未计费。相同key重复结算要求全部核算字段及原件一致；不同key即使响应相同仍分别计量。合法200用量与候选成功分开，坏候选也结算已验证用量。缺/错用量、非200或partial保持null/Unknown。实际用量超过预留也原样入账并停止相关Run/全局的新请求，不截断数字来维持表面上限。
 
@@ -48,13 +50,17 @@ MaySend提交在实际发送前。之后即使进程在真正HTTP前退出，也
 
 仅新run-hooks路径在旧OutputRoot中增加transport-receipt.json；普通旧API Noop维持原库存。该严格记录绑定request_id、http_status/http_request_id、response_complete、network_attempts、response SHA/长度、response_file、error_code、omission_reason与网络elapsed_ms，schema_version=1、producer=synthetic_api_transport_receipt。nullable字段必须出现；凭据回显保持省略原文，不保存认证头。
 
-safe response.bin与transport记录共同sync后才提供`response_original_sync`边界。不因正文能解析JSON就推定HTTP framing已完成。最终validation.json回调位于原API全部source/config/output复验之后；若提前终止，只有原transport明确完整HTTP200且原件、策略和身份通过复核，才能复用旧wire/Core校验生成明确的recovery-validation.json。原request/response不修改，也不再次发送同一attempt。原response单独存在而缺framing证明则继续Unknown。
+safe response.bin与transport记录共同sync并由预算事件封存提交后才提供`response_original_sync`边界。不因正文能解析JSON就推定HTTP framing已完成。最终validation.json回调位于原API全部source/config/output复验之后；若提前终止，只有原transport明确完整HTTP200且原件、策略和身份通过复核，才能复用旧wire/Core校验生成明确的recovery-validation.json。原request/response不修改，也不再次发送同一attempt。原response单独存在而缺framing证明则继续Unknown。
 
 Run根、来源与配置原FileStamp以及实际编译指纹均首次固定。输入/配置/版本失配或未知现场停止新调度，原Known和Unknown全局历史仍保留，不为新Run释放。当前不做跨平台搬移、authority迁移或任意断电修复；严格sidecar拒绝与可恢复边界各自实测。
 
+预算事件在Run之外保存原Run根/父/control/attempts/单元目录身份、worker文件和owner文件的完整FileStamp。恢复先与调用者指定的authority核对这份绑定，之后才遍历owner声明的单元路径。Prepared/Reserved恢复重验原输出目录及所有中间目录身份、三个原文件的身份/mtime/SHA/长度，并从原来源重建相同UUID正文；不能把同名目录的新身份当原owner。输入变更时，可信已封存传输原件可只做核算恢复并使Run失效，不能通过读取变更凭据或再次HTTP完成候选。
+
 ## 重试、期限和隔离
 
-实际HTTP白名单只有RATE_LIMIT、SERVER、TIMEOUT、API_TRANSPORT、TRUNCATED。退避为`min(base * 2^(attempt_no-1), max)`，固定规则不宣称遵从未保存的Retry-After。retry_at_utc先持久保存，恢复不提前发新请求。Run和单元绝对期限第一次登记，不通过重启重置；取得发送许可时再次检查，网络时间也受旧适配器边界约束。
+实际HTTP白名单只有RATE_LIMIT、SERVER、TIMEOUT、API_TRANSPORT、TRUNCATED，普通重试还要求用量未知且不是已完整接收的HTTP200。完整200的本地候选核验超时不能借同名TIMEOUT进入网络重试。退避为`min(base * 2^(attempt_no-1), max)`，固定规则不宣称遵从未保存的Retry-After。retry_at_utc先持久保存，恢复不提前发新请求。Run和单元绝对期限第一次登记，不通过重启重置；取得发送许可时再次检查。
+
+新运行器的持久准入等待与响应后的候选核验均受原Unit/Run剩余期限约束。通过MaySend发送门槛后，HTTP计时才开始，取旧单请求timeout与原剩余期限的较小值；HTTP结束后核验继续使用原剩余期限，不能重新获得完整单元时限。旧Noop单请求路径保留原计时行为。
 
 REQUEST_INTERRUPTED另为显式resume恢复分类：仅旧worker已失去发送能力、没有可信final receipt、MaySend已保守Unknown、当前身份/来源通过复核时允许新attempt，旧R保留。这不把有最终report的非法wire、候选或输出错误泛化成retry。
 

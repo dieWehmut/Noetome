@@ -294,3 +294,11 @@ publication已提交、确认前的迟到pause/cancel/cancel后pause分别测试
 真实SQLite spill/SIGKILL或平台等效终止须生成可验证热journal；直接Store拒绝、CLI只读影像门禁、SQLite正常回滚及回滚后原件重验分别核对。未知/super-journal、冷零header、截断/checksum错误、foreign Run、无旧base snapshot的compile bootstrap、原DB身份/整影像SHA失配、硬链接/reparse/替换及输入变更须拒绝并保留现场。仅检测同名文件或相信checksum不算原所有权证明。
 
 同步更改checkpoint payload/前链SHA、正文、manifest、报告和文件指纹后的假确认、取消ack跳过、删单位/条件/例外或错链接仍须被来源/作者语义和状态迁移拒绝。输入freeze、owner文件、原DB/报告、终止PID/退出、外部哨兵及失败历史原件完整归档。完整Rust/Python、受影响旧fixture行为和独立Core/checker/原件审查通过后才能完成；平台跳过、未运行和旧源诊断另列，不推成24小时、任意断电或生产Vault恢复。
+
+### B07-T02 持久预算与重试
+
+先冻结作者原件、故障响应、策略和预算expected，再保存旧普通CLI的真实RED。独立检查器核对实际请求正文、HTTP framing、原响应、完整SQLite事件链和原身份，重建Known/Unknown/承诺/请求slot、并发准入、退避及原期限。至少两个实际并发单元及跨Run近限额分别测试；同key重复结算、不同key相同响应、已知用量坏候选与未知完成各自验收。
+
+每个选定持久边界及服务端实际接收后，实际终止所选PID并wait退出，再用普通CLI恢复和再次恢复；测试hook、静态事件重建或自然超时不代替OS终止。Prepared/Reserved未MaySend的到期释放与MaySend后未知保留分别检查，HTTP时限不混入本地落盘时间，也不因恢复重置单元期限。保留全部失败及修复后的同作者验证，不修改expected适配实现。
+
+最终CLI/driver保存实际完整程序与编译来源锚，完整Windows Rust/Python、Linux Python及本项实际行为与独立审查通过后收束。两个PowerShell引擎须实际发现并通过既有各39项synthetic凭据检查。新增样例与检查器单元测试不证明真实模型、账单上限、生产Vault、24小时或未运行平台恢复。

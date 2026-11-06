@@ -88,10 +88,88 @@ use crate::{
 };
 use serde_json::{Value, json};
 use std::{
+    cell::RefCell,
     path::Path,
     sync::{Arc, atomic::AtomicBool},
-    time::Duration,
+    time::{Duration, Instant},
 };
+
+/// Scheduler gates around the existing single-request adapter. The ordinary
+/// adapter keeps the no-op path and its original artifact contract.
+pub(crate) trait ApiHooks {
+    fn enabled(&self) -> bool {
+        false
+    }
+    fn timeout_ms(&self, default_timeout_ms: u64) -> u64 {
+        default_timeout_ms
+    }
+    fn output_directories(
+        &self,
+    ) -> std::collections::BTreeMap<std::path::PathBuf, crate::compile_identity::Identity> {
+        std::collections::BTreeMap::new()
+    }
+    fn selected_config(
+        &self,
+        _path: &Path,
+        _fingerprint: &crate::sidecar_model::Fingerprint,
+    ) -> Result<(), ProjectError> {
+        Ok(())
+    }
+    fn prepared(&mut self, _output: &Path, _request: &Value) -> Result<(), ProjectError> {
+        Ok(())
+    }
+    fn before_send(&mut self, _output: &Path, _request: &Value) -> Result<(), ProjectError> {
+        Ok(())
+    }
+    fn transport_saved(
+        &mut self,
+        _output: &Path,
+        _receipt: &crate::request_budget_model::TransportReceipt,
+    ) -> Result<(), ProjectError> {
+        Ok(())
+    }
+    fn finished(&mut self, _output: &Path, _report: &Value) -> Result<(), ProjectError> {
+        Ok(())
+    }
+}
+struct NoopHooks;
+impl ApiHooks for NoopHooks {}
+
+fn selected_credential(
+    selected: &SelectedConfig,
+    hooks: &dyn ApiHooks,
+) -> Result<String, ProjectError> {
+    if hooks.enabled() {
+        let cfg = &selected.config;
+        if cfg.transport_mode != "local_http_test"
+            || cfg.provider != "openai_responses"
+            || !cfg.model.starts_with("noetome-test-")
+            || !cfg.credential_env.starts_with("NOETOME_TEST_")
+        {
+            return Err(ProjectError::new(
+                "REQUEST_RUN_CONFIG",
+                2,
+                "有界运行器仅使用人工环回配置与NOETOME_TEST_凭据引用。",
+            ));
+        }
+        hooks.selected_config(&selected.path, &selected.fingerprint())?;
+        selected.verify()?;
+    }
+    selected.credential()
+}
+
+fn save_transport(
+    output: &mut OutputRoot,
+    receipt: &crate::request_budget_model::TransportReceipt,
+) -> Result<(), ProjectError> {
+    let bytes = serde_json::to_vec_pretty(receipt)
+        .map_err(|_| error("EXTRACT_ENCODING", "传输原件编码失败。"))?;
+    output.add("transport-receipt.json", &bytes)?;
+    if output.read("transport-receipt.json")? != bytes {
+        return Err(error("EXTRACT_REPORT", "传输原件持久化验证失败。"));
+    }
+    output.verify()
+}
 
 fn error(code: &'static str, message: &str) -> ProjectError {
     ProjectError::new(code, 3, message)
@@ -236,8 +314,25 @@ pub fn run(
     output_path: &Path,
     cancel_path: Option<&Path>,
 ) -> Result<crate::source::CommandOutput, ProjectError> {
+    run_with_hooks(
+        project_path,
+        import_id,
+        config_path,
+        output_path,
+        cancel_path,
+        &mut NoopHooks,
+    )
+}
+pub(crate) fn run_with_hooks(
+    project_path: &Path,
+    import_id: &str,
+    config_path: &Path,
+    output_path: &Path,
+    cancel_path: Option<&Path>,
+    hooks: &mut dyn ApiHooks,
+) -> Result<crate::source::CommandOutput, ProjectError> {
     let selected = SelectedConfig::open(config_path)?;
-    let bearer = selected.credential()?;
+    let bearer = selected_credential(&selected, hooks)?;
     run_selected(
         project_path,
         import_id,
@@ -245,6 +340,32 @@ pub fn run(
         output_path,
         cancel_path,
         &bearer,
+        hooks,
+        None,
+    )
+    .map_err(|e| safe_error(e, &bearer))
+}
+pub(crate) fn resume_prepared_with_hooks(
+    project_path: &Path,
+    import_id: &str,
+    config_path: &Path,
+    output_path: &Path,
+    cancel_path: Option<&Path>,
+    attempt: &crate::request_budget_model::AttemptView,
+    run: &crate::request_budget_model::RunView,
+    hooks: &mut dyn ApiHooks,
+) -> Result<crate::source::CommandOutput, ProjectError> {
+    let selected = SelectedConfig::open(config_path)?;
+    let bearer = selected_credential(&selected, hooks)?;
+    run_selected(
+        project_path,
+        import_id,
+        &selected,
+        output_path,
+        cancel_path,
+        &bearer,
+        hooks,
+        Some((attempt, run)),
     )
     .map_err(|e| safe_error(e, &bearer))
 }
@@ -255,6 +376,11 @@ fn run_selected(
     output_path: &Path,
     cancel_path: Option<&Path>,
     bearer: &str,
+    hooks: &mut dyn ApiHooks,
+    resume: Option<(
+        &crate::request_budget_model::AttemptView,
+        &crate::request_budget_model::RunView,
+    )>,
 ) -> Result<crate::source::CommandOutput, ProjectError> {
     let cfg = &selected.config;
     let source = SourceSession::open(project_path, import_id, &cfg.selection, &cfg.limits)?;
@@ -300,7 +426,18 @@ fn run_selected(
             })?;
         }
     }
-    let request_id = uuid::Uuid::new_v4().to_string();
+    let request_id = match resume {
+        Some((attempt, _)) => {
+            let id = attempt.plan.key.request_id.as_str();
+            let parsed = uuid::Uuid::parse_str(id)
+                .map_err(|_| error("EXTRACT_SOURCE_BINDING", "原请求ID无效。"))?;
+            if parsed.to_string() != id {
+                return Err(error("EXTRACT_SOURCE_BINDING", "原请求ID非规范UUID。"));
+            }
+            parsed.to_string()
+        }
+        None => uuid::Uuid::new_v4().to_string(),
+    };
     let strategy = cfg.request_strategy();
     let body = extraction_api_schema::request_body(
         strategy,
@@ -329,12 +466,43 @@ fn run_selected(
     }
     source.verify()?;
     selected.verify()?;
-    let mut output = OutputRoot::create_api(&destination, &request_id, &cfg.transport_mode)?;
-    output.add("request.json", &request_bytes)?;
-    output.add("request-body.json", &body)?;
+    let mut output = if let Some((attempt, run)) = resume {
+        let output =
+            OutputRoot::resume_prepared_api(&destination, &cfg.transport_mode, attempt, run)?;
+        if output.read("request.json")? != request_bytes
+            || output.read("request-body.json")? != body
+        {
+            return Err(error(
+                "EXTRACT_SOURCE_BINDING",
+                "来源、配置或原请求正文发生变化；不发送。",
+            ));
+        }
+        output
+    } else {
+        let mut output = if hooks.enabled() {
+            OutputRoot::create_api_guarded(
+                &destination,
+                &request_id,
+                &cfg.transport_mode,
+                &hooks.output_directories(),
+            )?
+        } else {
+            OutputRoot::create_api(&destination, &request_id, &cfg.transport_mode)?
+        };
+        output.add("request.json", &request_bytes)?;
+        output.add("request-body.json", &body)?;
+        output
+    };
     let cancelled = Arc::new(AtomicBool::new(false));
-    let control = Control::new(cfg.limits.timeout_ms, cancelled.clone());
-    let check = || extraction_fake::check(&control, &cancelled, signal.as_deref());
+    // Durable admission and candidate validation consume the original Unit/Run
+    // deadline. Only the HTTP operation consumes the adapter's request timeout.
+    let preflight_timeout_ms = if hooks.enabled() {
+        hooks.timeout_ms(u64::MAX)
+    } else {
+        cfg.limits.timeout_ms
+    };
+    let control = RefCell::new(Control::new(preflight_timeout_ms, cancelled.clone()));
+    let check = || extraction_fake::check(&control.borrow(), &cancelled, signal.as_deref());
     let mut report = json!({"schema_version":1,"report_kind":"text_api_extraction","producer":"api","provider":cfg.provider,
         "transport_mode":cfg.transport_mode,"request_id":request_id,"binding":source.binding,
         "endpoint":cfg.endpoint,"request_strategy":strategy.version(),
@@ -347,6 +515,7 @@ fn run_selected(
             "reservation_policy":"request_utf8_bytes_plus_1024_v1","request_utf8_bytes":body.len()},"response_receipt":null,
         "errors":[],"artifacts":{}});
     let execution = (|| {
+        hooks.prepared(&destination, &request)?;
         check()?;
         if cfg.required_input == "vision"
             || !cfg.capabilities.text
@@ -372,14 +541,62 @@ fn run_selected(
         source.verify()?;
         selected.verify()?;
         output.verify()?;
-        let receipt = extraction_api_transport::send(
+        hooks.before_send(&destination, &request)?;
+        let http_timeout_ms = if hooks.enabled() {
+            let remaining = hooks
+                .timeout_ms(cfg.limits.timeout_ms)
+                .min(cfg.limits.timeout_ms);
+            control.replace(Control::new(remaining, cancelled.clone()));
+            remaining
+        } else {
+            cfg.limits.timeout_ms
+        };
+        let transport_start = Instant::now();
+        let sent = extraction_api_transport::send(
             &cfg.endpoint,
             &bearer,
             &body,
-            Duration::from_millis(cfg.limits.timeout_ms),
+            Duration::from_millis(http_timeout_ms),
             cfg.limits.max_response_bytes as usize,
             &check,
-        )?;
+        );
+        let elapsed_ms = u64::try_from(transport_start.elapsed().as_millis()).unwrap_or(u64::MAX);
+        if hooks.enabled() {
+            control.replace(Control::new(hooks.timeout_ms(u64::MAX), cancelled.clone()));
+        }
+        let receipt = match sent {
+            Ok(receipt) => receipt,
+            Err(e) => {
+                // An outer transport error happens before its network counter
+                // can become one. Persist that evidence before exposing a
+                // final zero-attempt report to the scheduler.
+                if hooks.enabled() {
+                    report["response_receipt"] =
+                        json!({"sha256":sha256(&[]),"byte_length":0,"omission_reason":null});
+                    let receipt = crate::request_budget_model::TransportReceipt {
+                        schema_version: 1,
+                        producer: "synthetic_api_transport_receipt".into(),
+                        request_id: request_id.clone(),
+                        http_status: None,
+                        http_request_id: None,
+                        response_complete: false,
+                        network_attempts: 0,
+                        response: crate::request_budget_model::FilePin {
+                            sha256: sha256(&[]),
+                            byte_length: 0,
+                        },
+                        response_file: None,
+                        error_code: Some(e.code().into()),
+                        omission_reason: None,
+                        elapsed_ms,
+                    };
+                    save_transport(&mut output, &receipt)?;
+                    output.verify()?;
+                    hooks.transport_saved(&destination, &receipt)?;
+                }
+                return Err(e);
+            }
+        };
         report["usage"]["network_attempts"] = json!(receipt.attempts);
         if cfg.transport_mode == "live" && receipt.attempts > 0 {
             report["usage"]["real_model_calls"] = Value::Null;
@@ -394,12 +611,52 @@ fn run_selected(
         let unsafe_body = credential_echo(&receipt.body, &bearer);
         report["response_receipt"] = json!({"sha256":sha256(&receipt.body),"byte_length":receipt.body.len(),
             "omission_reason":if unsafe_header || unsafe_body {Some("omitted_credential_echo")} else {None}});
+        if !unsafe_header && !unsafe_body {
+            report["http_request_id"] = json!(receipt.request_id);
+        }
+        if !unsafe_header && !unsafe_body && receipt.attempts > 0 {
+            output.add("response.bin", &receipt.body)?;
+        }
+        if hooks.enabled() {
+            let transport = crate::request_budget_model::TransportReceipt {
+                schema_version: 1,
+                producer: "synthetic_api_transport_receipt".into(),
+                request_id: request_id.clone(),
+                http_status: receipt.status,
+                http_request_id: if unsafe_header || unsafe_body {
+                    None
+                } else {
+                    receipt.request_id.clone()
+                },
+                response_complete: receipt.complete,
+                network_attempts: receipt.attempts,
+                response: crate::request_budget_model::FilePin {
+                    sha256: sha256(&receipt.body),
+                    byte_length: receipt.body.len() as u64,
+                },
+                response_file: if !unsafe_header && !unsafe_body && receipt.attempts > 0 {
+                    Some("response.bin".into())
+                } else {
+                    None
+                },
+                error_code: if unsafe_header || unsafe_body {
+                    Some("EXTRACT_API_CREDENTIAL_ECHO".into())
+                } else {
+                    receipt.failure.as_ref().map(|e| e.code().into())
+                },
+                omission_reason: if unsafe_header || unsafe_body {
+                    Some("omitted_credential_echo".into())
+                } else {
+                    None
+                },
+                elapsed_ms,
+            };
+            save_transport(&mut output, &transport)?;
+            output.verify()?;
+            hooks.transport_saved(&destination, &transport)?;
+        }
         if unsafe_header || unsafe_body {
             return Err(echo_error());
-        }
-        report["http_request_id"] = json!(receipt.request_id);
-        if receipt.attempts > 0 {
-            output.add("response.bin", &receipt.body)?;
         }
         if let Some(fail) = receipt.failure {
             return Err(fail);
@@ -456,7 +713,7 @@ fn run_selected(
             &candidate.concepts,
             &candidate.evidence,
             &candidate.atoms,
-            &control,
+            &control.borrow(),
             &cancelled,
             signal.as_deref(),
         )?;
@@ -493,6 +750,7 @@ fn run_selected(
         })();
         match publish {
             Ok(json) => {
+                hooks.finished(&destination, &report)?;
                 return Ok(crate::source::CommandOutput {
                     json,
                     failure: None,
@@ -515,6 +773,7 @@ fn run_selected(
             return Err(e);
         }
     }
+    hooks.finished(&destination, &report)?;
     let first = &report["errors"][0];
     Ok(crate::source::CommandOutput {
         json,

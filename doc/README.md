@@ -34,6 +34,7 @@
 | [明确扫描公式重建](technical/SCAN_FORMULA_CONTRACT.md) | 原扫描页/区域、单请求视觉识别、原响应及等价表达核对 | scan-formula、识别策略、原件映射与关键未知阻断 |
 | [视觉目标兼容](technical/VISUAL_COMPATIBILITY.md) | 精确能力组合、独立运行时证据和严格流程引擎版本 | 跨版本矩阵、目标能力或渲染引擎身份变化 |
 | [有限运行检查点](technical/RUN_CHECKPOINT_CONTRACT.md) | 固定六单元、独立运行日志、严格 snapshot/intent、控制与发布恢复边界 | Run字段、恢复门禁、版本失效或调度控制变化 |
+| [持久请求预算](technical/REQUEST_BUDGET_CONTRACT.md) | 人工环回请求、原子预留、未知承诺、attempt结算及有限重试 | run api、预算策略/事件、传输原件或恢复门槛变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
 | [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |

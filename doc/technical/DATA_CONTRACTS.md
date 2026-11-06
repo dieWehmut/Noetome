@@ -413,3 +413,9 @@ RenderedFile将正文与链接分开定位，保存文件指纹、note_id、sect
 [扫描公式 v1](SCAN_FORMULA_CONTRACT.md)保存独立 selection、整页 PNG、实际矩形 crop、可辨性与 `author_scan_declaration`。区域必须逐像素匹配选定页；可选归档 PDF 保留原字节，不冒充通用 PDF 页面验证。声明的 expression 与 uncertainties 保留已知/未知区别，独立 expected 不进入普通 CLI 或识别输入。
 
 单请求识别绑定实际 crop 字节和严格 api config，模型输入只含固定任务与内联原图，不包含手工来源表达。实际 Chat 原响应、HTTP/finish/model 元数据、有效 usage 和规范识别对象分开保存；Core 在返回后才检查有限等价数学结构，来源未知、额外符号或错下标不能由模型猜测升级成功。累计账本按实际当前余额预留结算，缺失或未知不能填零。识别文本、等价编译表达、原件和计划分开保存；报告记录实际字段/正文 UTF-8 映射、网络/模型调用及未知费用，始终知识 pending、科学 not_run、发布 false。
+
+## 有界请求预算交换 v1
+
+[请求预算 v1](REQUEST_BUDGET_CONTRACT.md)与旧fixture检查点、科学候选和真实累计授权分别保存。Authority固定Schema1、原policy文件及opening；Run固定原配置/输入/编译指纹、根与owner/worker身份、绝对期限和至多四个WorkUnit。attempt以Run/单元/attempt_no/request_id为唯一身份，Prepared/Reserved/MaySend/Unknown/Known/NotSent通过完整有界事件链重建；两个不同attempt即使响应SHA相同也分别结算。
+
+原单请求的request、正文和候选契约保留；只有新hooks路径增加严格`synthetic_api_transport_receipt`，绑定原请求、HTTP framing、网络次数、响应原件、失败及elapsed。Known的TokenUsage与候选结果分开，Unknown的用量和价格均为未知并保留原R。已封存network_attempts=0与从未取得MaySend的持久证明分别支撑NotSent，最终报告自报0不代替传输证明。恢复生成的recovery-validation另存，不改原request/response，不把候选成功提升为知识或科学通过。

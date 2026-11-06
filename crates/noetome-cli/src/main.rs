@@ -21,6 +21,31 @@ fn main() -> ExitCode {
     let mut result_code = 0;
     let output = match command {
         CliCommand::RunHelp => noetome_cli::RUN_HELP.to_owned(),
+        CliCommand::ApiRunInit { config, budget } => api_run_result(
+            noetome_cli::request_run::init(&config, &budget),
+            &mut result_code,
+        ),
+        CliCommand::ApiRunStart {
+            config,
+            budget,
+            output,
+            paused,
+        } => api_run_result(
+            noetome_cli::request_run::start(&config, &budget, &output, paused),
+            &mut result_code,
+        ),
+        CliCommand::ApiRunResume {
+            config,
+            budget,
+            output,
+        } => api_run_result(
+            noetome_cli::request_run::resume(&config, &budget, &output),
+            &mut result_code,
+        ),
+        CliCommand::ApiRunStatus { budget, output } => api_run_result(
+            noetome_cli::request_run::status(&budget, &output),
+            &mut result_code,
+        ),
         CliCommand::RunStart {
             case,
             output,
@@ -404,6 +429,27 @@ fn main() -> ExitCode {
         return ExitCode::from(1);
     }
     ExitCode::from(result_code)
+}
+
+fn api_run_result(
+    result: Result<source::CommandOutput, project::ProjectError>,
+    result_code: &mut u8,
+) -> String {
+    match result {
+        Ok(output) => {
+            if let Some((code, message)) = output.failure {
+                let _ = writeln!(io::stderr().lock(), "{code}：{message}");
+                *result_code = 3;
+            }
+            output.json
+        }
+        Err(error) => {
+            let _ = writeln!(io::stderr().lock(), "{error}");
+            // main retains the single common stdout/exit path.
+            *result_code = error.exit_code();
+            String::new()
+        }
+    }
 }
 
 fn project_summary(result: &str, path: &std::path::Path, info: &project::ProjectInfo) -> String {

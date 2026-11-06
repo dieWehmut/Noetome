@@ -64,6 +64,9 @@ mod process_model;
 mod process_parser;
 pub mod process_review;
 pub mod project;
+mod request_budget_model;
+mod request_budget_store;
+pub mod request_run;
 mod run_model;
 mod run_recovery;
 mod run_store;
@@ -106,6 +109,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome run start <fixture目录> <尚不存在的运行根> [--paused]
       noetome run resume <原fixture目录> <运行根>
       noetome run <status|pause|cancel> <运行根>
+      noetome run api init <authority-config.json> <尚不存在的预算根>
+      noetome run api start <run-spec.json> <预算根> <尚不存在的运行根> [--paused]
+      noetome run api resume <同一run-spec.json> <预算根> <运行根>
+      noetome run api status <预算根> <运行根>
 
 当前支持：
   -h, --help       显示帮助
@@ -125,7 +132,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   knowledge scan-formula  对明确扫描区域执行一次有预算视觉请求，保留原响应并核对语义
   case verify             只读校验明确fixture的来源、IR、计划与独立预期
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
-  run                     执行一个六单元fixture流程，持久保存检查点与暂停/取消请求
+  run                     执行有界fixture或人工环回API流程，持久保存检查点和预算
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
@@ -210,6 +217,25 @@ fake以UTF8字节计量，价格及真实模型用量未知，网络和付费调
 pub enum CliCommand {
     Help,
     RunHelp,
+    ApiRunInit {
+        config: PathBuf,
+        budget: PathBuf,
+    },
+    ApiRunStart {
+        config: PathBuf,
+        budget: PathBuf,
+        output: PathBuf,
+        paused: bool,
+    },
+    ApiRunResume {
+        config: PathBuf,
+        budget: PathBuf,
+        output: PathBuf,
+    },
+    ApiRunStatus {
+        budget: PathBuf,
+        output: PathBuf,
+    },
     RunStart {
         case: PathBuf,
         output: PathBuf,
@@ -355,13 +381,16 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
 }
 
-pub const RUN_HELP: &str = "Noetome 有限fixture任务\n\n用法：noetome run start <fixture目录> <尚不存在的运行根> [--paused]\n      noetome run resume <同一fixture目录> <明确拥有的运行根>\n      noetome run status|pause|cancel <运行根>\n\nstart：校验明确fixture后建立六单元持久任务；--paused仅建立并暂停。\nresume：核对同一输入、版本和检查点，复用确认结果，不重复发布。\nstatus只读核对；pause停止后续调度，cancel保留确认结果且不可继续。\n输入/策略失效或未知现场不会被接管；仅新测试根，不修改生产Vault。\n动词后可加 -- 分隔以 - 开头的路径；中文和空格路径作为单独参数。\n自造fixture不代表真实模型抽取或科学质量已通过。\n";
+pub const RUN_HELP: &str = "Noetome 有限任务与人工环回预算\n\n用法：noetome run start <fixture目录> <尚不存在的运行根> [--paused]\n      noetome run resume <同一fixture目录> <明确拥有的运行根>\n      noetome run status|pause|cancel <运行根>\n      noetome run api init <authority-config.json> <尚不存在的预算根>\n      noetome run api start <run-spec.json> <预算根> <尚不存在的运行根> [--paused]\n      noetome run api resume <同一run-spec.json> <预算根> <运行根>\n      noetome run api status <预算根> <运行根>\n\nfixture start校验明确fixture后建立六单元持久任务；--paused仅建立并暂停。\nfixture resume核对同一输入、版本和检查点，复用确认结果，不重复发布。\nstatus只读核对；fixture pause停止后续调度，cancel保留确认结果且不可继续。\napi仅支持人工数字环回Responses；最多两并发，发送前同时预留Run/共享预算；只重试固定HTTP故障。\napi init拒绝已有根；新Run不重置全局额度。未知远端完成保留完整预留，价格未知为null。\napi resume复用确认原件，原绝对期限与尝试次数不重置；api status不发送或结算。\n输入/策略失效或未知现场不会被接管；仅新测试根，不修改生产Vault。\n动词后可加 -- 分隔以 - 开头的路径；中文和空格路径作为单独参数。\n自造fixture和人工HTTP服务不代表真实模型、账单或科学质量已通过。\n";
 
 fn run_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
     if args.is_empty() || matches!(args,[help] if help=="--help" || help=="-h") {
         return Ok(CliCommand::RunHelp);
     }
     let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if verb == "api" {
+        return api_run_command(tail);
+    }
     if matches!(tail,[help] if help=="--help" || help=="-h")
         && ["start", "resume", "status", "pause", "cancel"]
             .iter()
@@ -402,6 +431,75 @@ fn run_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         [root] if verb == "status" && valid(root) => Ok(CliCommand::RunStatus(root.into())),
         [root] if verb == "pause" && valid(root) => Ok(CliCommand::RunPause(root.into())),
         [root] if verb == "cancel" && valid(root) => Ok(CliCommand::RunCancel(root.into())),
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+fn api_run_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.is_empty() || matches!(args, [help] if help == "--help" || help == "-h") {
+        return Ok(CliCommand::RunHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail, [help] if help == "--help" || help == "-h")
+        && ["init", "start", "resume", "status"]
+            .iter()
+            .any(|v| verb == v)
+    {
+        return Ok(CliCommand::RunHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|p| p == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid =
+        |p: &OsString| !p.is_empty() && (separated || p.as_encoded_bytes().first() != Some(&b'-'));
+    match tail {
+        [config, budget] if verb == "init" && valid(config) && valid(budget) => {
+            Ok(CliCommand::ApiRunInit {
+                config: config.into(),
+                budget: budget.into(),
+            })
+        }
+        [config, budget, output]
+            if verb == "start" && valid(config) && valid(budget) && valid(output) =>
+        {
+            Ok(CliCommand::ApiRunStart {
+                config: config.into(),
+                budget: budget.into(),
+                output: output.into(),
+                paused: false,
+            })
+        }
+        [config, budget, output, flag]
+            if verb == "start"
+                && flag == "--paused"
+                && valid(config)
+                && valid(budget)
+                && valid(output) =>
+        {
+            Ok(CliCommand::ApiRunStart {
+                config: config.into(),
+                budget: budget.into(),
+                output: output.into(),
+                paused: true,
+            })
+        }
+        [config, budget, output]
+            if verb == "resume" && valid(config) && valid(budget) && valid(output) =>
+        {
+            Ok(CliCommand::ApiRunResume {
+                config: config.into(),
+                budget: budget.into(),
+                output: output.into(),
+            })
+        }
+        [budget, output] if verb == "status" && valid(budget) && valid(output) => {
+            Ok(CliCommand::ApiRunStatus {
+                budget: budget.into(),
+                output: output.into(),
+            })
+        }
         _ => Err(INVALID_ARGUMENT),
     }
 }
