@@ -1,0 +1,712 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author_cases",
+  "workflow_id": "run-api-budget-v1",
+  "case_count": 14,
+  "reservation_tokens": 8310,
+  "known_usage_per_complete_valid_wire": {
+    "input_tokens": 100,
+    "output_tokens": 600,
+    "total_tokens": 700
+  },
+  "cases": [
+    {
+      "case_id": "baseline-two-independent",
+      "units": {
+        "unit-a": [
+          "success"
+        ],
+        "unit-b": [
+          "success"
+        ]
+      },
+      "policy_overrides": {},
+      "expected": {
+        "observed_HTTP_requests": 2,
+        "known_tokens": 1400,
+        "unknown_commitment_tokens": 0,
+        "total_committed_tokens": 1400,
+        "unknown_commitment_attempts": 0,
+        "candidate_validated_units": [
+          "unit-a",
+          "unit-b"
+        ],
+        "isolated_failed_units": [],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run"
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "transient-429-503-success",
+      "units": {
+        "unit-a": [
+          "http-429",
+          "http-503",
+          "success"
+        ],
+        "unit-b": [
+          "success"
+        ]
+      },
+      "policy_overrides": {},
+      "expected": {
+        "observed_HTTP_requests": 4,
+        "known_tokens": 1400,
+        "unknown_commitment_tokens": 16620,
+        "total_committed_tokens": 18020,
+        "unknown_commitment_attempts": 2,
+        "candidate_validated_units": [
+          "unit-a",
+          "unit-b"
+        ],
+        "isolated_failed_units": [],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run"
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "retry-exhaustion-isolates",
+      "units": {
+        "unit-a": [
+          "http-429",
+          "http-429",
+          "http-429"
+        ],
+        "unit-b": [
+          "success"
+        ]
+      },
+      "policy_overrides": {},
+      "expected": {
+        "observed_HTTP_requests": 4,
+        "known_tokens": 700,
+        "unknown_commitment_tokens": 24930,
+        "total_committed_tokens": 25630,
+        "unknown_commitment_attempts": 3,
+        "candidate_validated_units": [
+          "unit-b"
+        ],
+        "isolated_failed_units": [
+          "unit-a"
+        ],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run"
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "invalid-candidate-isolates-with-usage",
+      "units": {
+        "unit-a": [
+          "fixed-invalid-candidate"
+        ],
+        "unit-b": [
+          "success"
+        ]
+      },
+      "policy_overrides": {},
+      "expected": {
+        "observed_HTTP_requests": 2,
+        "known_tokens": 1400,
+        "unknown_commitment_tokens": 0,
+        "total_committed_tokens": 1400,
+        "unknown_commitment_attempts": 0,
+        "candidate_validated_units": [
+          "unit-b"
+        ],
+        "isolated_failed_units": [
+          "unit-a"
+        ],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run"
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "same-response-sha-different-attempts",
+      "units": {
+        "unit-a": [
+          "fixed-invalid-candidate"
+        ],
+        "unit-b": [
+          "fixed-invalid-candidate"
+        ]
+      },
+      "policy_overrides": {},
+      "expected": {
+        "observed_HTTP_requests": 2,
+        "known_tokens": 1400,
+        "unknown_commitment_tokens": 0,
+        "total_committed_tokens": 1400,
+        "unknown_commitment_attempts": 0,
+        "candidate_validated_units": [],
+        "isolated_failed_units": [
+          "unit-a",
+          "unit-b"
+        ],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run",
+        "different_attempt_request_ids": true,
+        "identical_complete_response_bytes": true,
+        "same_response_sha256": "68b708a0de39b3d9645b39bf12732d14fe6d2fa403592cf91c864034ac07c25c",
+        "known_tokens_per_distinct_attempt": 700
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "run-request-near-limit",
+      "units": {
+        "unit-a": [
+          "success-held"
+        ],
+        "unit-b": [
+          "success-held"
+        ]
+      },
+      "policy_overrides": {
+        "run": {
+          "max_requests": 1
+        }
+      },
+      "expected": {
+        "observed_HTTP_requests": 1,
+        "known_tokens": 700,
+        "unknown_commitment_tokens": 0,
+        "total_committed_tokens": 700,
+        "unknown_commitment_attempts": 0,
+        "isolated_failed_units": [],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run",
+        "simultaneous_real_workers": 2,
+        "while_first_response_held_admitted": 1,
+        "loser_observed_HTTP_requests": 0,
+        "budget_stopped_unfinished_units": 1,
+        "winner_identity_not_predetermined": true,
+        "layer": "run",
+        "candidate_validated_unit_count": 1,
+        "candidate_validated_unit_subset": [
+          "unit-a",
+          "unit-b"
+        ]
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "run-token-near-limit",
+      "units": {
+        "unit-a": [
+          "success-held"
+        ],
+        "unit-b": [
+          "success-held"
+        ]
+      },
+      "policy_overrides": {
+        "run": {
+          "max_total_tokens": 9009
+        }
+      },
+      "expected": {
+        "observed_HTTP_requests": 1,
+        "known_tokens": 700,
+        "unknown_commitment_tokens": 0,
+        "total_committed_tokens": 700,
+        "unknown_commitment_attempts": 0,
+        "isolated_failed_units": [],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run",
+        "simultaneous_real_workers": 2,
+        "while_first_response_held_admitted": 1,
+        "loser_observed_HTTP_requests": 0,
+        "budget_stopped_unfinished_units": 1,
+        "winner_identity_not_predetermined": true,
+        "layer": "run",
+        "fixed_cap": 9009,
+        "remaining_after_known700": 8309,
+        "next_reservation": 8310,
+        "cannot_admit_after_refund": true,
+        "candidate_validated_unit_count": 1,
+        "candidate_validated_unit_subset": [
+          "unit-a",
+          "unit-b"
+        ]
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "global-request-near-limit",
+      "units": {
+        "unit-a": [
+          "success-held"
+        ],
+        "unit-b": [
+          "success-held"
+        ]
+      },
+      "policy_overrides": {
+        "global": {
+          "max_requests": 1
+        }
+      },
+      "expected": {
+        "observed_HTTP_requests": 1,
+        "known_tokens": 700,
+        "unknown_commitment_tokens": 0,
+        "total_committed_tokens": 700,
+        "unknown_commitment_attempts": 0,
+        "isolated_failed_units": [],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run",
+        "simultaneous_real_workers": 2,
+        "while_first_response_held_admitted": 1,
+        "loser_observed_HTTP_requests": 0,
+        "budget_stopped_unfinished_units": 1,
+        "winner_identity_not_predetermined": true,
+        "layer": "global",
+        "candidate_validated_unit_count": 1,
+        "candidate_validated_unit_subset": [
+          "unit-a",
+          "unit-b"
+        ]
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "two-concurrent-runs-one-unit-each",
+        "unit_to_run": {
+          "unit-a": "run-a",
+          "unit-b": "run-b"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "global-token-near-limit",
+      "units": {
+        "unit-a": [
+          "success-held"
+        ],
+        "unit-b": [
+          "success-held"
+        ]
+      },
+      "policy_overrides": {
+        "global": {
+          "max_total_tokens": 9009
+        }
+      },
+      "expected": {
+        "observed_HTTP_requests": 1,
+        "known_tokens": 700,
+        "unknown_commitment_tokens": 0,
+        "total_committed_tokens": 700,
+        "unknown_commitment_attempts": 0,
+        "isolated_failed_units": [],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run",
+        "simultaneous_real_workers": 2,
+        "while_first_response_held_admitted": 1,
+        "loser_observed_HTTP_requests": 0,
+        "budget_stopped_unfinished_units": 1,
+        "winner_identity_not_predetermined": true,
+        "layer": "global",
+        "fixed_cap": 9009,
+        "remaining_after_known700": 8309,
+        "next_reservation": 8310,
+        "cannot_admit_after_refund": true,
+        "candidate_validated_unit_count": 1,
+        "candidate_validated_unit_subset": [
+          "unit-a",
+          "unit-b"
+        ]
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "two-concurrent-runs-one-unit-each",
+        "unit_to_run": {
+          "unit-a": "run-a",
+          "unit-b": "run-b"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "prior-global-spend-not-reset",
+      "units": {
+        "unit-a": [
+          "preceding-success"
+        ],
+        "unit-b": [
+          "subsequent-budget-denied"
+        ]
+      },
+      "policy_overrides": {
+        "global": {
+          "max_total_tokens": 9009
+        }
+      },
+      "expected": {
+        "observed_HTTP_requests": 1,
+        "known_tokens": 700,
+        "unknown_commitment_tokens": 0,
+        "total_committed_tokens": 700,
+        "unknown_commitment_attempts": 0,
+        "candidate_validated_units": [
+          "unit-a"
+        ],
+        "isolated_failed_units": [],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run",
+        "subsequent_new_Run_observed_HTTP_requests": 0,
+        "prior_settlement_unchanged": true,
+        "remaining_tokens": 8309,
+        "quota_not_reset_by_new_Run": true
+      },
+      "variants": [
+        {
+          "name": "explicit-synthetic-opening",
+          "authority_template": "policies/authority-opening-template.json",
+          "execution": "new Run only; do not dispatch preceding Run",
+          "expected": {
+            "observed_HTTP_requests": 0,
+            "known_tokens": 700,
+            "unknown_commitment_tokens": 0,
+            "total_committed_tokens": 700,
+            "opening_dispatched_requests": 1,
+            "opening_prefix_unchanged": true,
+            "candidate_validated_unit_count": 0,
+            "remaining_tokens": 8309,
+            "new_Run_HTTP_requests": 0
+          }
+        }
+      ],
+      "execution_layout": {
+        "kind": "two-sequential-runs-one-unit-each",
+        "unit_to_run": {
+          "unit-a": "run-before",
+          "unit-b": "run-after"
+        },
+        "shared_global": "budget-main",
+        "order": [
+          "run-before settled known700",
+          "run-after denied new request"
+        ]
+      }
+    },
+    {
+      "case_id": "unknown-remote-completion-retained",
+      "units": {
+        "unit-a": [
+          "unknown-after-accept",
+          "success"
+        ],
+        "unit-b": [
+          "success"
+        ]
+      },
+      "policy_overrides": {
+        "unit-a": {
+          "max_attempts": 2,
+          "max_retry_tokens": 8310
+        }
+      },
+      "expected": {
+        "observed_HTTP_requests": 3,
+        "known_tokens": 1400,
+        "unknown_commitment_tokens": 8310,
+        "total_committed_tokens": 9710,
+        "unknown_commitment_attempts": 1,
+        "candidate_validated_units": [
+          "unit-a",
+          "unit-b"
+        ],
+        "isolated_failed_units": [],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run",
+        "unknown_original_attempt_preserved": true,
+        "retry_only_distinct_new_attempt_with_new_R": true,
+        "same_original_attempt_never_resent": true,
+        "no_unknown_attempt_settlement_or_reservation_release_without_valid_original_usage": true
+      },
+      "variants": [
+        {
+          "name": "timeout",
+          "delay_headers_ms": 500,
+          "api_timeout_ms": 200
+        },
+        {
+          "name": "disconnect",
+          "close_socket_after_complete_request_before_response": true
+        },
+        {
+          "name": "truncated",
+          "advertise_extra_body_bytes": 17
+        },
+        {
+          "name": "OS-kill-after-accepted",
+          "actual_OS_termination": true,
+          "accepted_receipt_saved_before_kill": true,
+          "same_unknown_attempt_is_not_resent": true,
+          "recovery_classification": "REQUEST_INTERRUPTED",
+          "explicit_ordinary_resume_only": true,
+          "old_worker_verified_exited_before_resume": true,
+          "old_MaySend_remains_Unknown_full_R": true,
+          "final_receipt_must_be_absent_before_resume": true
+        }
+      ],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "retry-backoff-persists-through-kill",
+      "units": {
+        "unit-a": [
+          "http-429",
+          "success"
+        ],
+        "unit-b": [
+          "success"
+        ]
+      },
+      "policy_overrides": {
+        "retry": {
+          "base_delay_ms": 1000,
+          "max_delay_ms": 2000
+        }
+      },
+      "expected": {
+        "observed_HTTP_requests": 3,
+        "known_tokens": 1400,
+        "unknown_commitment_tokens": 8310,
+        "total_committed_tokens": 9710,
+        "unknown_commitment_attempts": 1,
+        "candidate_validated_units": [
+          "unit-a",
+          "unit-b"
+        ],
+        "isolated_failed_units": [],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run",
+        "real_OS_kill_after_retry_schedule_commit": true,
+        "ordinary_resume_same_Run": true,
+        "retry_not_before_preserved": true,
+        "first_attempt_never_resent": true,
+        "minimum_retry_delay_ms": 1000,
+        "measurement": "server response_before_write timestamp to next request_received is a lower bound; persisted retry_not_before must independently remain unchanged after restart"
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "elapsed-limit-persists-through-kill",
+      "units": {
+        "unit-a": [
+          "http-429",
+          "must-not-be-requested-success"
+        ],
+        "unit-b": [
+          "success"
+        ]
+      },
+      "policy_overrides": {
+        "unit-a": {
+          "max_elapsed_ms": 1500
+        },
+        "retry": {
+          "base_delay_ms": 1000,
+          "max_delay_ms": 2000
+        }
+      },
+      "expected": {
+        "observed_HTTP_requests": 2,
+        "known_tokens": 700,
+        "unknown_commitment_tokens": 8310,
+        "total_committed_tokens": 9010,
+        "unknown_commitment_attempts": 1,
+        "candidate_validated_units": [
+          "unit-b"
+        ],
+        "isolated_failed_units": [
+          "unit-a"
+        ],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run",
+        "unit_a_requests": 1,
+        "real_OS_kill_after_retry_schedule_commit": true,
+        "wait_real_ms": 1700,
+        "unit_a_elapsed_cap_ms": 1500,
+        "no_A_request_after_expired_deadline": true,
+        "Run_elapsed_cap_ms": 10000
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    },
+    {
+      "case_id": "retry-token-ceiling-isolates",
+      "units": {
+        "unit-a": [
+          "http-429",
+          "http-429",
+          "must-not-be-requested-success"
+        ],
+        "unit-b": [
+          "success"
+        ]
+      },
+      "policy_overrides": {
+        "unit-a": {
+          "max_retry_tokens": 8310
+        }
+      },
+      "expected": {
+        "observed_HTTP_requests": 3,
+        "known_tokens": 700,
+        "unknown_commitment_tokens": 16620,
+        "total_committed_tokens": 17320,
+        "unknown_commitment_attempts": 2,
+        "candidate_validated_units": [
+          "unit-b"
+        ],
+        "isolated_failed_units": [
+          "unit-a"
+        ],
+        "real_model_calls": 0,
+        "paid_calls": 0,
+        "price_usd": null,
+        "published": false,
+        "scientific_quality": "not_run",
+        "unit_a_retry_token_cap": 8310,
+        "third_A_request_refused_without_HTTP": true,
+        "global_budget_still_allows_B": true,
+        "unit_a_dispatched_or_may_send_attempts": 2,
+        "unit_a_logical_attempt_high_water_at_most": 3,
+        "attempt_numbers_unique_never_reused": true
+      },
+      "variants": [],
+      "execution_layout": {
+        "kind": "one-run-two-units",
+        "unit_to_run": {
+          "unit-a": "run-main",
+          "unit-b": "run-main"
+        },
+        "shared_global": "budget-main"
+      }
+    }
+  ]
+}

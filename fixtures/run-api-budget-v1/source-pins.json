@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "producer": "independent_source_original_pins",
+  "original_sources": {
+    "source/source.txt": {
+      "source_path": "fixtures/extraction-gateway-v1/source.txt",
+      "sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+      "byte_length": 140,
+      "copy_exact": true
+    },
+    "source/gold.json": {
+      "source_path": "fixtures/extraction-gateway-v1/expected.json",
+      "sha256": "7e6decaf0a137f089be668d251ace83fb7ea0f65019f5544cca26d6b1f4c489d",
+      "byte_length": 566,
+      "copy_exact": true
+    },
+    "source/candidate-template.json": {
+      "source_path": "fixtures/extraction-gateway-v1/response.json",
+      "sha256": "db5b69ed13640889fa84149c3c541fe266cbd56e43b621f17d25ceba2b787b09",
+      "byte_length": 1462,
+      "copy_exact": true
+    }
+  },
+  "old_cli": {
+    "path": ".artifacts/b07-t01-linux-build-05-20261107/noetome",
+    "sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512",
+    "byte_length": 159246752,
+    "build_receipt_sha256": "bc18bb13e5a57751131d672e7abc75559034557c390f91a959bada4608779634",
+    "build_receipt_original": "originals/core05-build-actual.json",
+    "source_archive": {
+      "original_path": ".artifacts/b07-t01-linux-build-05-20261107/source-originals.zip",
+      "sha256": "6c79f7b7bbdab160135ae2e46bc7f932cde59b902d36ad3ca4981b820ce9df4c",
+      "byte_length": 662441,
+      "scope": "125 exact old CLI/test build inputs, before the new run API feature; not newly rebuilt here"
+    }
+  },
+  "zero_HTTP_preflight": "originals/preflight-actual.json",
+  "new_feature_expected_not_derived_from_new_product_reports": true,
+  "synthetic_only": true,
+  "preflight_capture_limit": "source_author_files_unchanged in the original preflight receipt was a literal assignment; it is not accepted as historical before/after inventory. Current three exact raw copies are independently checked against original old author pins; new freeze records actual before/after file identity/hash checks."
+}

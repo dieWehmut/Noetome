@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "producer": "independent_author_runtime_binding_windows",
+  "templates_are_not_runtime_configs": true,
+  "run_template": "policies/run-template.json",
+  "unit_runtime_rebindings": {
+    "project": "actual selected freshly created ordinary CLI source project absolute canonical path",
+    "import_id": "actual import UUID read from the source project; no placeholder ID accepted at execution",
+    "api_config": "actual selected local_http_test API config absolute canonical path"
+  },
+  "authority_overrides": "case global limits/opening only; never adopt any production ledger",
+  "run_overrides": "case run/unit/retry literal overrides only; no output-derived policy",
+  "request_body_binding": "request-binding-windows.json",
+  "invalid_or_unknown_runtime_binding": "reject and preserve; no output write or HTTP"
+}

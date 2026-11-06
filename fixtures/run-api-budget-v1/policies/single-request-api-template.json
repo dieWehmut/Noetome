@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "provider": "openai_responses",
+  "transport_mode": "local_http_test",
+  "endpoint": "http://127.0.0.1:1/v1/responses",
+  "model": "noetome-test-model",
+  "credential_env": "NOETOME_TEST_CREDENTIAL",
+  "required_input": "text",
+  "capabilities": {
+    "text": true,
+    "structured_output": true,
+    "vision": false
+  },
+  "selection": [
+    {
+      "kind": "text",
+      "ordinal": 0
+    }
+  ],
+  "limits": {
+    "max_units": 1,
+    "max_input_bytes": 4096,
+    "max_response_bytes": 65536,
+    "max_output_tokens": 2048,
+    "timeout_ms": 200
+  },
+  "budget": {
+    "max_requests": 1,
+    "max_total_tokens": 1048576,
+    "max_cost_usd": null
+  }
+}

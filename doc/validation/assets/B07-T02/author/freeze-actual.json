@@ -1,0 +1,698 @@
+{
+  "status": "passed",
+  "producer": "independent_author_integrity_and_freeze_check",
+  "checks": [
+    {
+      "check": "raw author source/source.txt",
+      "passed": true
+    },
+    {
+      "check": "before-after inventory source/source.txt",
+      "passed": true
+    },
+    {
+      "check": "raw author source/gold.json",
+      "passed": true
+    },
+    {
+      "check": "before-after inventory source/gold.json",
+      "passed": true
+    },
+    {
+      "check": "raw author source/candidate-template.json",
+      "passed": true
+    },
+    {
+      "check": "before-after inventory source/candidate-template.json",
+      "passed": true
+    },
+    {
+      "check": "original author before-after inventory",
+      "passed": true
+    },
+    {
+      "check": "actual selected old ELF",
+      "passed": true
+    },
+    {
+      "check": "copied original old build receipt",
+      "passed": true
+    },
+    {
+      "check": "actual old source archive SHA",
+      "passed": true
+    },
+    {
+      "check": "two actual old body lengths",
+      "passed": true
+    },
+    {
+      "check": "36-byte UUID binding /request_id",
+      "passed": true
+    },
+    {
+      "check": "36-byte UUID binding /binding/project_id",
+      "passed": true
+    },
+    {
+      "check": "36-byte UUID binding /binding/import_id",
+      "passed": true
+    },
+    {
+      "check": "36-byte UUID binding /binding/source_id",
+      "passed": true
+    },
+    {
+      "check": "36-byte UUID binding /binding/version_id",
+      "passed": true
+    },
+    {
+      "check": "36-byte UUID binding /units/0/locator/span_id",
+      "passed": true
+    },
+    {
+      "check": "all decoded input immutable outside windows",
+      "passed": true
+    },
+    {
+      "check": "all other outer fields identical",
+      "passed": true
+    },
+    {
+      "check": "independent reservation arithmetic",
+      "passed": true
+    },
+    {
+      "check": "old preflight actual four commands",
+      "passed": true
+    },
+    {
+      "check": "preflight raw receipt 1",
+      "passed": true
+    },
+    {
+      "check": "preflight raw receipt 2",
+      "passed": true
+    },
+    {
+      "check": "preflight raw receipt 3",
+      "passed": true
+    },
+    {
+      "check": "preflight raw receipt 4",
+      "passed": true
+    },
+    {
+      "check": "actual zero HTTP report a",
+      "passed": true
+    },
+    {
+      "check": "actual zero HTTP report b",
+      "passed": true
+    },
+    {
+      "check": "zero request config",
+      "passed": true
+    },
+    {
+      "check": "single-request config only permitted changes",
+      "passed": true
+    },
+    {
+      "check": "authority exact top keys zero",
+      "passed": true
+    },
+    {
+      "check": "authority exact limit keys zero",
+      "passed": true
+    },
+    {
+      "check": "authority exact opening keys zero",
+      "passed": true
+    },
+    {
+      "check": "authority exact top keys opening",
+      "passed": true
+    },
+    {
+      "check": "authority exact limit keys opening",
+      "passed": true
+    },
+    {
+      "check": "authority exact opening keys opening",
+      "passed": true
+    },
+    {
+      "check": "opening reserves legal literal near cap",
+      "passed": true
+    },
+    {
+      "check": "Run exact top keys",
+      "passed": true
+    },
+    {
+      "check": "Run ranges",
+      "passed": true
+    },
+    {
+      "check": "unit exact keys unit-a",
+      "passed": true
+    },
+    {
+      "check": "unit exact keys unit-b",
+      "passed": true
+    },
+    {
+      "check": "fixed valid wire known700 invalid candidate",
+      "passed": true
+    },
+    {
+      "check": "exact14 unique core cases",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic baseline-two-independent",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries baseline-two-independent",
+      "passed": true
+    },
+    {
+      "check": "actual unit references baseline-two-independent/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references baseline-two-independent/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names baseline-two-independent/unit-a",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names baseline-two-independent/unit-b",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic transient-429-503-success",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries transient-429-503-success",
+      "passed": true
+    },
+    {
+      "check": "actual unit references transient-429-503-success/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references transient-429-503-success/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names transient-429-503-success/unit-a",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names transient-429-503-success/unit-b",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic retry-exhaustion-isolates",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries retry-exhaustion-isolates",
+      "passed": true
+    },
+    {
+      "check": "actual unit references retry-exhaustion-isolates/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references retry-exhaustion-isolates/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names retry-exhaustion-isolates/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names retry-exhaustion-isolates/unit-a",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic invalid-candidate-isolates-with-usage",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries invalid-candidate-isolates-with-usage",
+      "passed": true
+    },
+    {
+      "check": "actual unit references invalid-candidate-isolates-with-usage/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references invalid-candidate-isolates-with-usage/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names invalid-candidate-isolates-with-usage/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names invalid-candidate-isolates-with-usage/unit-a",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic same-response-sha-different-attempts",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries same-response-sha-different-attempts",
+      "passed": true
+    },
+    {
+      "check": "actual unit references same-response-sha-different-attempts/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references same-response-sha-different-attempts/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names same-response-sha-different-attempts/unit-a",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names same-response-sha-different-attempts/unit-b",
+      "passed": true
+    },
+    {
+      "check": "fixed sameSHA binds raw original",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic run-request-near-limit",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries run-request-near-limit",
+      "passed": true
+    },
+    {
+      "check": "actual unit references run-request-near-limit/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references run-request-near-limit/unit-b",
+      "passed": true
+    },
+    {
+      "check": "Run same real Run layout run-request-near-limit",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic run-token-near-limit",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries run-token-near-limit",
+      "passed": true
+    },
+    {
+      "check": "actual unit references run-token-near-limit/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references run-token-near-limit/unit-b",
+      "passed": true
+    },
+    {
+      "check": "Run same real Run layout run-token-near-limit",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic global-request-near-limit",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries global-request-near-limit",
+      "passed": true
+    },
+    {
+      "check": "actual unit references global-request-near-limit/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references global-request-near-limit/unit-b",
+      "passed": true
+    },
+    {
+      "check": "global distinct real Run layout global-request-near-limit",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic global-token-near-limit",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries global-token-near-limit",
+      "passed": true
+    },
+    {
+      "check": "actual unit references global-token-near-limit/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references global-token-near-limit/unit-b",
+      "passed": true
+    },
+    {
+      "check": "global distinct real Run layout global-token-near-limit",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic prior-global-spend-not-reset",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries prior-global-spend-not-reset",
+      "passed": true
+    },
+    {
+      "check": "actual unit references prior-global-spend-not-reset/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references prior-global-spend-not-reset/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names prior-global-spend-not-reset/unit-a",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic unknown-remote-completion-retained",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries unknown-remote-completion-retained",
+      "passed": true
+    },
+    {
+      "check": "actual unit references unknown-remote-completion-retained/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references unknown-remote-completion-retained/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names unknown-remote-completion-retained/unit-a",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names unknown-remote-completion-retained/unit-b",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic retry-backoff-persists-through-kill",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries retry-backoff-persists-through-kill",
+      "passed": true
+    },
+    {
+      "check": "actual unit references retry-backoff-persists-through-kill/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references retry-backoff-persists-through-kill/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names retry-backoff-persists-through-kill/unit-a",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names retry-backoff-persists-through-kill/unit-b",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic elapsed-limit-persists-through-kill",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries elapsed-limit-persists-through-kill",
+      "passed": true
+    },
+    {
+      "check": "actual unit references elapsed-limit-persists-through-kill/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references elapsed-limit-persists-through-kill/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names elapsed-limit-persists-through-kill/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names elapsed-limit-persists-through-kill/unit-a",
+      "passed": true
+    },
+    {
+      "check": "author arithmetic retry-token-ceiling-isolates",
+      "passed": true
+    },
+    {
+      "check": "synthetic boundaries retry-token-ceiling-isolates",
+      "passed": true
+    },
+    {
+      "check": "actual unit references retry-token-ceiling-isolates/unit-a",
+      "passed": true
+    },
+    {
+      "check": "actual unit references retry-token-ceiling-isolates/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names retry-token-ceiling-isolates/unit-b",
+      "passed": true
+    },
+    {
+      "check": "expected unit actual names retry-token-ceiling-isolates/unit-a",
+      "passed": true
+    },
+    {
+      "check": "five unchanged retryable classes",
+      "passed": true
+    },
+    {
+      "check": "explicit interruption separate class",
+      "passed": true
+    },
+    {
+      "check": "all package JSON decodes",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback .gitattributes",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback README.md",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback cases.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback expected.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/core05-build-actual.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/core05-request-body-a.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/core05-request-body-b.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-actual.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-api-a/request.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-api-a/validation.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-api-a/validation.md",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-api-b/request.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-api-b/validation.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-api-b/validation.md",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/001/receipt.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/001/stderr.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/001/stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/002/receipt.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/002/stderr.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/002/stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/003/receipt.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/003/stderr.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/003/stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/004/receipt.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/004/stderr.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/preflight-commands/004/stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback originals/zero-budget-api-config.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback policies/author-policy.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback policies/authority-opening-template.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback policies/authority-template.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback policies/run-template.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback policies/single-request-api-template.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback request-binding-windows.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback runtime-binding.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback source/candidate-template.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback source/gold.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback source/source.txt",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback source-pins.json",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback wire/fixed-200-invalid-candidate.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback wire/http-401.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback wire/http-429.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback wire/http-503.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback wire/invalid-json-200.bin",
+      "passed": true
+    },
+    {
+      "check": "frozen member readback wire/success-envelope-template.json",
+      "passed": true
+    }
+  ],
+  "check_count": 169,
+  "freeze_manifest": "fixtures/run-api-budget-v1/frozen-sha256.json",
+  "freeze_sha256": "ef04e12745d16f7e10e98f53b348475bdbfaa71d60c9302c297fbf2af0e32272",
+  "frozen_member_count": 44,
+  "core_case_count": 14,
+  "parameter_variant_count": 5,
+  "old_cli_preflight_commands": 4,
+  "old_cli_preflight_HTTP": 0,
+  "first_wrapper_failed_after_init_commands": 1,
+  "new_feature_behavior_tests": "not_run",
+  "real_model_calls": 0,
+  "paid_calls": 0,
+  "historical_old_author_preflight_guard_claimed": false,
+  "new_original_author_before_after_equal": true,
+  "new_source_copies_before_after_equal": true,
+  "created_ns": 1793990914053133434
+}

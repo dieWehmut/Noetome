@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "producer": "fixture_author_budget_retry_policy",
+  "scope": "local_http_test/openai_responses only; two synthetic independent WorkUnits select the same original text span0, no claimed distinct scientific pages",
+  "concurrency": 2,
+  "unit_defaults": {
+    "max_attempts": 3,
+    "max_retry_tokens": 16620,
+    "max_elapsed_ms": 5000
+  },
+  "run_defaults": {
+    "max_requests": 6,
+    "max_total_tokens": 65536,
+    "max_cost_usd": null,
+    "max_elapsed_ms": 10000
+  },
+  "global_defaults": {
+    "max_requests": 32,
+    "max_total_tokens": 1048576,
+    "max_cost_usd": null,
+    "opening": {
+      "accounted_tokens": 0,
+      "held_tokens": 0,
+      "dispatched_requests": 0,
+      "held_requests": 0
+    }
+  },
+  "retry": {
+    "base_delay_ms": 100,
+    "max_delay_ms": 400,
+    "expected_delays_ms": [
+      100,
+      200
+    ],
+    "retryable": [
+      "EXTRACT_API_HTTP_RATE_LIMIT",
+      "EXTRACT_API_HTTP_SERVER",
+      "EXTRACT_TIMEOUT",
+      "EXTRACT_API_TRANSPORT",
+      "EXTRACT_API_TRUNCATED"
+    ],
+    "unknown_usage_reservation_retained": true,
+    "retry_allocates_distinct_attempt_request_id": true,
+    "same_unknown_attempt_not_resent": true,
+    "not_claimed": [
+      "Retry-After interpretation",
+      "provider idempotency",
+      "real billing",
+      "live retries"
+    ],
+    "classification": "The five retryable HTTP/transport classes allocate new attempts within all limits; malformed wire/candidate/output, authorization, context/source/capability failures are nonretry isolation"
+  },
+  "accounting": {
+    "identity": [
+      "RunID",
+      "WorkUnitID",
+      "attempt_number",
+      "request_id"
+    ],
+    "response_sha_is_not_identity": true,
+    "token_commitment": "known usage total + each outstanding/unknown entire reservation R",
+    "request_commitment": "each dispatched or possibly dispatched attempt consumes one request; known never-sent reservations may only release after authoritative proof and retained audit",
+    "settlement": "valid usage is charged even when candidates fail; same attempt applied once; different attempts with same responseSHA charged separately",
+    "unknown_price": null,
+    "usage_above_limit": "record actual known amount; do not clamp; stop affected new dispatch and retain original response",
+    "no_existing_authority_reset": true,
+    "attempt_numbers": "Prepared logical attempt numbers remain monotone and are never reused, including NotSent; dispatched/may-send attempts and logical prepared high water are checked separately"
+  },
+  "source_binding_and_output": "preserve full existing strict Responses source/candidate checks; failed structure publishes nothing; successful candidates remain unverified/pending/unpublished/scientificnot_run",
+  "interrupted_process_recovery": {
+    "classification": "REQUEST_INTERRUPTED",
+    "entry": "explicit ordinary resume only",
+    "preconditions": [
+      "no trustworthy final receipt",
+      "old worker has actually exited or lost all sending ability",
+      "original Source/Owner/compiler fingerprint and artifacts fully rechecked"
+    ],
+    "old_attempt": "original MaySend remains Unknown with the full R; never resend its request_id or lower its commitment",
+    "continuation": "a distinct new attempt may proceed only within unchanged attempt, retry Token, Run/global Token/request and durable deadline limits",
+    "not_ordinary_retryable_report_class": true
+  }
+}

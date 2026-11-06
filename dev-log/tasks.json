@@ -2625,7 +2625,7 @@
       "id": "B07-T02",
       "title": "持久预算预留下的有界重试与隔离",
       "batch": "B07",
-      "status": "todo",
+      "status": "in_progress",
       "depends_on": [
         "B07-T01"
       ],
@@ -2639,7 +2639,17 @@
         "重试分类、退避、次数、Token和耗时上限实际核对；以Run/WorkUnit/request-attempt身份结算一次，不按相同响应SHA合并不同请求；单元失败隔离仅在全局预算仍允许时让独立单元继续。",
         "真实中断/恢复、重复结算、预算与输入/哨兵保护、独立预算重建和完整Rust/Python通过后complete提交推送；离线结果不推为实际网关恢复或账单绝对保证。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-06T18:26:00Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "当前仅一个既有单请求适配器的synthetic环回持久预算重试；先冻结作者策略/响应/expected，验证并发预留、未知保留、attempt幂等结算、有界退避与失败隔离，真实模型/付费0且原累计授权不重置。",
+          "validation": [],
+          "artifacts": []
+        }
+      ]
     },
     {
       "id": "B07-T03",

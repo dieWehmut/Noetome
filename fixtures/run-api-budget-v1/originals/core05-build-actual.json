@@ -1,0 +1,136 @@
+{
+  "status": "passed",
+  "scope": "candidate exact clean Linux CLI/lib-test compilation; full Linux Rust not_run; final behavioral gates pending",
+  "source_files": 125,
+  "source_unchanged": true,
+  "source_archive": {
+    "sha256": "6c79f7b7bbdab160135ae2e46bc7f932cde59b902d36ad3ca4981b820ce9df4c",
+    "byte_length": 662441
+  },
+  "cli": {
+    "sha256": "e7194fa4f3bd530996c657f24f5870773a08ab25a1873d5b1fa4f4b5f55c8512",
+    "byte_length": 159246752
+  },
+  "driver": {
+    "sha256": "77c7043d38dfefc18227fae33646ad2fb676816b83dd9b6060e6af90eaa5a45e",
+    "byte_length": 188081528
+  },
+  "original_driver": "/home/lyinn/project/Noetome/target/debug/deps/noetome_cli-84053fdd05e26c65",
+  "runs": [
+    {
+      "argv": [
+        "rustc",
+        "--version",
+        "--verbose"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.14294981956481934,
+      "stdout": {
+        "sha256": "778fbc643a806f0dd123c056e66201d7e8a56a61928ec0a33171be8d6c2d5a37",
+        "byte_length": 196
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "argv": [
+        "cargo",
+        "--version"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.04559326171875,
+      "stdout": {
+        "sha256": "9950bbb2d5c3417b1a068f0e81f6d3cac991a363193bdf2a22d447f5acf8b503",
+        "byte_length": 36
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "argv": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.8454866409301758,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "argv": [
+        "cargo",
+        "clean",
+        "-p",
+        "noetome-cli"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.28860902786254883,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "9ba2db2f03334a676abd1a6e1f0701735ed36b6e97c8c8841c47720604b221e3",
+        "byte_length": 37
+      }
+    },
+    {
+      "argv": [
+        "cargo",
+        "build",
+        "-p",
+        "noetome-cli",
+        "--bin",
+        "noetome",
+        "--offline",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 29.027857780456543,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "7d1a9f4d0fcd86679893812dd7bfe3ce77e5454f52a3885468658194bfe0f42c",
+        "byte_length": 10164
+      }
+    },
+    {
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "noetome-cli",
+        "--lib",
+        "--no-run",
+        "--offline",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 35.046725034713745,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "b97258a0f866f90dd06ff91ffadd3661695086656993485b2aecc80645e0e67d",
+        "byte_length": 7925
+      }
+    }
+  ],
+  "real_model_calls": 0,
+  "paid_calls": 0
+}

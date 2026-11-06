@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "producer": "synthetic_api_run",
+  "run_budget": {
+    "max_requests": 6,
+    "max_total_tokens": 65536,
+    "max_cost_usd": null
+  },
+  "concurrency": 2,
+  "max_elapsed_ms": 10000,
+  "retry": {
+    "base_delay_ms": 100,
+    "max_delay_ms": 400
+  },
+  "units": [
+    {
+      "unit_id": "unit-a",
+      "project": "/AUTHOR_SELECTED_SOURCE_PROJECT",
+      "import_id": "00000000-0000-4000-8000-000000000001",
+      "api_config": "/AUTHOR_SELECTED_API_CONFIG",
+      "max_attempts": 3,
+      "max_retry_tokens": 16620,
+      "max_elapsed_ms": 5000
+    },
+    {
+      "unit_id": "unit-b",
+      "project": "/AUTHOR_SELECTED_SOURCE_PROJECT",
+      "import_id": "00000000-0000-4000-8000-000000000001",
+      "api_config": "/AUTHOR_SELECTED_API_CONFIG",
+      "max_attempts": 3,
+      "max_retry_tokens": 16620,
+      "max_elapsed_ms": 5000
+    }
+  ]
+}

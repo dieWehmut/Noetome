@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "producer": "independent_author_request_template",
+  "request_original": "originals/core05-request-body-a.json",
+  "same_length_original": "originals/core05-request-body-b.json",
+  "body_bytes": 5238,
+  "input_reserved_tokens": 6262,
+  "output_limit_tokens": 2048,
+  "reservation_policy": "request_utf8_bytes_plus_1024_v1",
+  "reservation_tokens": 8310,
+  "allowed_decoded_input_uuid_paths": [
+    "/request_id",
+    "/binding/project_id",
+    "/binding/import_id",
+    "/binding/source_id",
+    "/binding/version_id",
+    "/units/0/locator/span_id"
+  ],
+  "uuid_rule": "each replacement must be an actual selected request/source UUID, ASCII lowercase RFC4122 text of36bytes; all other decoded fields and outer body fields immutable; same serialization byte length required",
+  "allowed_api_template_rebindings": {
+    "endpoint": "only independently bound localhost numerical127.0.0.1 selected port, exact /v1/responses; endpoint is not in HTTP body",
+    "timeout_ms": "explicit case timeout only; not in HTTP body",
+    "max_requests": "preflight0 to ordinary single-request1 only; not in HTTP body"
+  },
+  "gold_is_not_derived_from_requests_or_responses": true
+}
