@@ -1,0 +1,16 @@
+.....................E....................
+======================================================================
+ERROR: test_windows_casefold_collisions_rejected_before_attachment_lookup (test_verify_scan_formula.ScanAuthorTests.test_windows_casefold_collisions_rejected_before_attachment_lookup) (field='region')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_verify_scan_formula.py", line 125, in test_windows_casefold_collisions_rejected_before_attachment_lookup
+    V.selected_source(root)
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 182, in selected_source
+    raw = actual[name]
+          ~~~~~~^^^^^^
+KeyError: 'ς.png'
+
+----------------------------------------------------------------------
+Ran 42 tests in 1.329s
+
+FAILED (errors=1)

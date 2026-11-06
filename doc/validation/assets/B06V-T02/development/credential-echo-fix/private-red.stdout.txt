@@ -1,0 +1,18 @@
+
+running 1 test
+test extraction_api::tests::credential_scan_catches_literal_escape_keys_with_mixed_encoding_depths ... FAILED
+
+failures:
+
+---- extraction_api::tests::credential_scan_catches_literal_escape_keys_with_mixed_encoding_depths stdout ----
+
+thread 'extraction_api::tests::credential_scan_catches_literal_escape_keys_with_mixed_encoding_depths' (465330) panicked at crates/noetome-cli/src/extraction_api.rs:30:13:
+assertion failed: super::credential_echo(&nested, &key)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    extraction_api::tests::credential_scan_catches_literal_escape_keys_with_mixed_encoding_depths
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 430 filtered out; finished in 0.00s
+

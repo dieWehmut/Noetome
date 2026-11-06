@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "helper_before_after": {
+    "sha256": "5f31a7bf071bebb2f362c96b8538519f9d5acaef2e231d24e7dc68e7d7ca5e21",
+    "byte_length": 25474
+  },
+  "probe": {
+    "sha256": "13d5c230dd39da528ce5316adb949612383b6f239886c846e090f729130a4fd4",
+    "byte_length": 2102
+  },
+  "public_cases": {
+    "sha256": "2a38a06b1fef17418e308d468fe0c6c8e460e42f7ffe91548a85920c8bb5ffe9",
+    "byte_length": 29580
+  },
+  "per_runtime_cases": 14,
+  "actual_case_checks": 28,
+  "records": [
+    {
+      "runtime": "ps5",
+      "argv": [
+        "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\probe_helper_echo_green.ps1",
+        "-Helper",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\helper-echo-green\\helper-original.ps1",
+        "-Cases",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\helper-echo-green\\public-cases.json"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "sha256": "b1cade8ea1d42394d6482a5298b7d0cdb827a03e5ef7b5896e545b5f252d0158",
+        "byte_length": 5131
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "result": {
+        "scope": "Only Add-Type and Hide-Credential definitions from selected source; public literal fake keys; no CLI/HTTP/DPAPI/ledger",
+        "powershell": "5.1.26100.7920",
+        "console_before": 936,
+        "console_after": 936,
+        "console_unchanged": true,
+        "records": [
+          {
+            "name": "plain",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "single-unicode",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "original-nested-json-266-bytes",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "ordinary-utf8-exact",
+            "passed": true,
+            "expected_redaction": false,
+            "actual_utf8_base64": "5Lit5paH5oql5ZGKIM6xIM6yIM68Cuato+W4uOWOn+S7tiBVbmljb2RlIOS/neeVmeOAgg==",
+            "expected_utf8_base64": "5Lit5paH5oql5ZGKIM6xIM6yIM68Cuato+W4uOWOn+S7tiBVbmljb2RlIOS/neeVmeOAgg=="
+          },
+          {
+            "name": "depth-31",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "depth-32",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "depth-33",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "depth-40",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "literal-n-mixed-depth",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "literal-unicode-mixed-depth",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "literal-quote-mixed-depth",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "literal-backslashes-mixed-depth",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "literal-tab-mixed-depth",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "tiny-normalized-key-fails-closed",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          }
+        ]
+      }
+    },
+    {
+      "runtime": "ps7",
+      "argv": [
+        "/mnt/c/Users/Lyinn/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\probe_helper_echo_green.ps1",
+        "-Helper",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\helper-echo-green\\helper-original.ps1",
+        "-Cases",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\helper-echo-green\\public-cases.json"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "sha256": "fa22952234b81579869a5fd8566aff1f5112bd3908c6735abf549751244e3ffd",
+        "byte_length": 3312
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "result": {
+        "scope": "Only Add-Type and Hide-Credential definitions from selected source; public literal fake keys; no CLI/HTTP/DPAPI/ledger",
+        "powershell": "7.6.5",
+        "console_before": 936,
+        "console_after": 936,
+        "console_unchanged": true,
+        "records": [
+          {
+            "name": "plain",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "single-unicode",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "original-nested-json-266-bytes",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "ordinary-utf8-exact",
+            "passed": true,
+            "expected_redaction": false,
+            "actual_utf8_base64": "5Lit5paH5oql5ZGKIM6xIM6yIM68Cuato+W4uOWOn+S7tiBVbmljb2RlIOS/neeVmeOAgg==",
+            "expected_utf8_base64": "5Lit5paH5oql5ZGKIM6xIM6yIM68Cuato+W4uOWOn+S7tiBVbmljb2RlIOS/neeVmeOAgg=="
+          },
+          {
+            "name": "depth-31",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "depth-32",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "depth-33",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "depth-40",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "literal-n-mixed-depth",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "literal-unicode-mixed-depth",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "literal-quote-mixed-depth",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "literal-backslashes-mixed-depth",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "literal-tab-mixed-depth",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          },
+          {
+            "name": "tiny-normalized-key-fails-closed",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          }
+        ]
+      }
+    }
+  ],
+  "live_http_calls": 0,
+  "new_cli_invocations": 0,
+  "current_key_read": false,
+  "current_ledger_read": false,
+  "global_execution_policy_changed": false,
+  "scope": "read only actual selected detector/Hide definitions; global encoding unchanged; no helper invocation"
+}

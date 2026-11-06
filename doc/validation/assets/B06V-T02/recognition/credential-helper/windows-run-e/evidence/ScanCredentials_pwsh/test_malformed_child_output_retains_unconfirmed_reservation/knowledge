@@ -1,0 +1,14 @@
+import json, os, sys, time
+from pathlib import Path
+Path('child-started.json').write_text(json.dumps({'pid':os.getpid(),'parent_pid':os.getppid()}))
+while os.environ.get('NOETOME_SCAN_TEST_WAIT')=='1' and not Path('release').exists(): time.sleep(.01)
+key=os.environ.get('NOETOME_TANGMAO_API_KEY','')
+mode=os.environ.get('NOETOME_SCAN_TEST_MODE','valid')
+usage={'network_attempts':1,'model_usage_status':'validated','model_usage':{'input_tokens':10,'output_tokens':5,'total_tokens':15}}
+if mode=='unknown': usage.update(model_usage_status='not_validated',model_usage=None)
+if mode=='zero': usage.update(network_attempts=0,model_usage_status='not_validated',model_usage=None)
+print(json.dumps({'args':sys.argv[1:],'key_matches':key==os.environ['NOETOME_SCAN_PUBLIC_TEST_INPUT'],'api':{'usage':usage,'actual_model':'noetome-test-observed-model','response_receipt':{'sha256':'a'*64}}}))
+if mode=='leak':
+ print(key);print(''.join('\\u%04x'%ord(c) for c in key),file=sys.stderr)
+if mode=='malformed': print('public non-JSON tail')
+sys.exit(int(os.environ.get('NOETOME_SCAN_TEST_EXIT','0')))

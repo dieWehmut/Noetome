@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "purpose": "actual_new_casefold_checker_regression_before_fix",
+  "argv": [
+    "/tmp/noetome-b05-t03-python/bin/python",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-p",
+    "test_verify_scan_formula.py"
+  ],
+  "exit_code": 1,
+  "returned_final_output": ".......\n======================================================================\nERROR: test_windows_casefold_collisions_rejected_before_attachment_lookup (test_verify_scan_formula.ScanAuthorTests.test_windows_casefold_collisions_rejected_before_attachment_lookup) (field='region')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/lyinn/project/Noetome/tests/test_verify_scan_formula.py\", line 122, in test_windows_casefold_collisions_rejected_before_attachment_lookup\n    V.selected_source(root)\n  File \"/home/lyinn/project/Noetome/scripts/verify_scan_formula.py\", line 180, in selected_source\n    raw = actual[name]\n          ~~~~~~^^^^^^\nKeyError: 'PAGE.PNG'\n\n======================================================================\nERROR: test_windows_casefold_collisions_rejected_before_attachment_lookup (test_verify_scan_formula.ScanAuthorTests.test_windows_casefold_collisions_rejected_before_attachment_lookup) (field='semantics')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/lyinn/project/Noetome/tests/test_verify_scan_formula.py\", line 122, in test_windows_casefold_collisions_rejected_before_attachment_lookup\n    V.selected_source(root)\n  File \"/home/lyinn/project/Noetome/scripts/verify_scan_formula.py\", line 180, in selected_source\n    raw = actual[name]\n          ~~~~~~^^^^^^\nKeyError: 'CASE.JSON'\n\n----------------------------------------------------------------------\nRan 42 tests in 1.383s\n\nFAILED (errors=2)\n",
+  "tests_run": 42,
+  "errors": 2,
+  "source": "original ec0374a52ba5c895c07864160217731f845ab1860153f3ff6236425dc065e71b checker with newly added meaningful casefold test",
+  "real_model_calls": 0
+}

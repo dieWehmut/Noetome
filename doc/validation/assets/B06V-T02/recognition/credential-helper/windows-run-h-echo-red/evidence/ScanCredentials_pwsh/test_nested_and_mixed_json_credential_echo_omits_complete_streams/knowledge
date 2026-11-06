@@ -1,0 +1,24 @@
+import json, os, sys, time
+from pathlib import Path
+sys.stdout.reconfigure(encoding='utf-8',newline='\n');sys.stderr.reconfigure(encoding='utf-8',newline='\n')
+Path('child-started.json').write_text(json.dumps({'pid':os.getpid(),'parent_pid':os.getppid()}))
+while os.environ.get('NOETOME_SCAN_TEST_WAIT')=='1' and not Path('release').exists(): time.sleep(.01)
+key=os.environ.get('NOETOME_TANGMAO_API_KEY','')
+mode=os.environ.get('NOETOME_SCAN_TEST_MODE','valid')
+usage={'network_attempts':1,'model_usage_status':'validated','model_usage':{'input_tokens':10,'output_tokens':5,'total_tokens':15}}
+if mode=='unknown': usage.update(model_usage_status='not_validated',model_usage=None)
+if mode=='zero': usage.update(network_attempts=0,model_usage_status='not_validated',model_usage=None)
+print(json.dumps({'args':sys.argv[1:],'unicode_probe':'公式 xᵢ = −aᵢ/bᵢ','key_matches':key==os.environ['NOETOME_SCAN_PUBLIC_TEST_INPUT'],'api':{'usage':usage,'actual_model':'noetome-test-observed-model','response_receipt':{'sha256':'a'*64}}},ensure_ascii=False))
+print('诊断：原始UTF-8字节 ✓',file=sys.stderr)
+if mode=='leak':
+ print(key);print(''.join('\\u%04x'%ord(c) for c in key),file=sys.stderr)
+if mode in ('nested_leak','mixed_leak','deep_leak'):
+ encoded=''.join('\\u%04x'%ord(c) for c in key)
+ if mode=='nested_leak': encoded=json.dumps(encoded)
+ if mode=='mixed_leak': encoded=json.dumps(json.dumps(''.join(c if i%3==0 else '\\u%04x'%ord(c) for i,c in enumerate(key))))
+ if mode=='deep_leak':
+  encoded='\\u%04x'%ord(key[0])+key[1:]
+  for _ in range(40): encoded='\\u005c'+encoded[1:]
+ print('回显：'+encoded+' ✓');print('诊断：'+encoded+' xᵢ',file=sys.stderr)
+if mode=='malformed': print('public non-JSON tail')
+sys.exit(int(os.environ.get('NOETOME_SCAN_TEST_EXIT','0')))

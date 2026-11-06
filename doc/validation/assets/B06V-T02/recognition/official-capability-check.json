@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "selected_scheme": "same authorized tangmao deepseek-flash Vision Chat API",
+  "official_deepseek_flash_vision_supported": true,
+  "official_declared_model_version": "DeepSeek-V4.1-Flash-1017",
+  "gateway_visual_support": "not_run",
+  "credential_read": false,
+  "gateway_calls": 0,
+  "budget_changes": 0,
+  "reason": "Twelve actual local inferences across six reasoned fixed policies did not reconstruct the frozen clear formula. Parent approved replacing the active recognizer with the already authorized gateway Vision Chat; source, expected and all failure originals remain unchanged.",
+  "primary_sources": [
+    {
+      "source_url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "retrieved_date_utc": "2026-11-06T01:30:00.340569+00:00",
+      "original_sha256": "af6679690eb9a7838c47727bfc5ffdc4ac91c4445a0c1219741ffe00c076ece5",
+      "original_byte_length": 27549,
+      "snapshot_reference": "doc/validation/assets/B06V-T02/recognition/vision-api-preflight/primary-sources/pricing.html"
+    },
+    {
+      "source_url": "https://api-docs.deepseek.com/guides/vision",
+      "retrieved_date_utc": "2026-11-06T01:30:00.341047+00:00",
+      "original_sha256": "8329164ba8ec78b640ffeb2f6554db32f929e518a6e56900c570a420cdf4c155",
+      "original_byte_length": 83653,
+      "snapshot_reference": "doc/validation/assets/B06V-T02/recognition/vision-api-preflight/primary-sources/vision.html"
+    },
+    {
+      "source_url": "https://api-docs.deepseek.com/api/create-chat-completion",
+      "retrieved_date_utc": "2026-11-06T01:30:00.341551+00:00",
+      "original_sha256": "b43ca950bd04ae7f6f537b42e6cb729f543d942dcd848ec43ad4e9bfe059fe1f",
+      "original_byte_length": 129498,
+      "snapshot_reference": "doc/validation/assets/B06V-T02/recognition/vision-api-preflight/primary-sources/chat.html"
+    }
+  ],
+  "pix2tex": {
+    "version": "0.1.4",
+    "wheel_sha256": "a024309508fc3e8a4ce5241e095276626d098df53e609410013f2ec35a4b7612",
+    "wheel_byte_length": 427031,
+    "license": "MIT",
+    "metadata_url": "https://pypi.org/pypi/pix2tex/0.1.4/json",
+    "project_url": "https://github.com/lukas-blecher/LaTeX-OCR",
+    "weights_url": "https://github.com/lukas-blecher/LaTeX-OCR/releases/download/v0.0.1/weights.pth",
+    "resizer_url": "https://github.com/lukas-blecher/LaTeX-OCR/releases/download/v0.0.1/image_resizer.pth"
+  },
+  "local_pix2tex_status": "retired_after_12_actual_clear_failure_probes",
+  "local_experiment_history": "doc/validation/assets/B06V-T02/recognition/local-pix2tex-experiment/",
+  "initial_capability_record": "doc/validation/assets/B06V-T02/recognition/local-pix2tex-experiment/official-capability-initial.json",
+  "active_route": {
+    "endpoint": "https://ai.1343263.xyz/v1/chat/completions",
+    "configured_model": "deepseek-flash",
+    "credential_env": "NOETOME_TANGMAO_API_KEY",
+    "protocol": "OpenAI Chat Completions v1",
+    "request_strategy": "tangmao-vision-scan-v1",
+    "provider_weight_revision_verified": false,
+    "gateway_prices_verified": false,
+    "automatic_retries": 0,
+    "automatic_fallback": false
+  },
+  "current_state_reference": "doc/validation/assets/B06V-T02/recognition/vision-api-preflight/missing-current-state.json"
+}

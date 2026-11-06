@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_scan_formula",
+  "scope": "selected_scan_formula_v1",
+  "request_id": "31180789-99ce-4b1d-a138-ac2586b57d73",
+  "case": {
+    "schema_version": 1,
+    "purpose": "scan_formula",
+    "selection_id": "scan_scalar_unreadable_subscript",
+    "title": "单页扫描公式下标缺损",
+    "source_kind": "scanned_page",
+    "pdf": {
+      "file": "page.pdf",
+      "sha256": "945d35792f24732ab90ad296eadf2596ac53ee847cc37133b6aa22447fe62970"
+    },
+    "page": {
+      "file": "page.png",
+      "sha256": "b08f28c60807a30d2777e092a1bf94359332e9ee3cb9bebe3a620ec8195f18de",
+      "page": 1,
+      "canvas": [
+        800,
+        1000
+      ]
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "8a673a96084428fb3938219a2de990edc645b7e3c64b39b6044ac55363fb881e",
+      "bounds": [
+        120,
+        175,
+        560,
+        200
+      ],
+      "legibility": "unreadable"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "da8f2665eb37c59b3fa044fb1dbace3e7df149bc99d0c1a6f5efae832c62c733"
+    }
+  },
+  "semantics": {
+    "schema_version": 1,
+    "producer": "author_scan_declaration",
+    "expression": null,
+    "symbols": [
+      {
+        "symbol": "x",
+        "definition": "Reported displacement.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "a",
+        "definition": "Input amount.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "b",
+        "definition": "Positive scale.",
+        "unit": "dimensionless"
+      },
+      {
+        "symbol": "i",
+        "definition": "Sample index.",
+        "unit": "dimensionless"
+      }
+    ],
+    "conditions": [
+      "a_i >= 0.",
+      "b_i > 0."
+    ],
+    "ranges": [
+      "i in {1, 2}.",
+      "x_i <= 0."
+    ],
+    "exceptions": [
+      "If b_i = 0, the expression is undefined."
+    ],
+    "uncertainties": [
+      {
+        "kind": "subscript",
+        "description": "Missing scan material covers the denominator subscript; that subscript is unknown."
+      }
+    ]
+  },
+  "decision": {
+    "representation": "native_math",
+    "fallback_reasons": [],
+    "compatibility_rewrites": [
+      "SCAN_SINGLE_SCRIPT_GROUP_COMPATIBILITY"
+    ],
+    "issue_codes": []
+  },
+  "tokens": [
+    "x",
+    "_",
+    "i",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "_",
+    "i",
+    "}",
+    "{",
+    "b",
+    "_",
+    "i",
+    "}"
+  ],
+  "recognized_expression": "x_{i} = -\\frac{a_{i}}{b_{i}}",
+  "compiled_expression": "x_i=-\\frac{a_i}{b_i}"
+}

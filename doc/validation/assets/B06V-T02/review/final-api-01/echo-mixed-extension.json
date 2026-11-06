@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "finding_id": "SCAN-HELPER-NESTED-ECHO",
+  "expanded_scope": [
+    "scripts/invoke_scan_api_credential.ps1",
+    "crates/noetome-cli/src/extraction_api.rs"
+  ],
+  "status": "requires_core_and_helper_repair",
+  "evidence_files": {
+    "mixed-key-core-red/receipt.json": {
+      "sha256": "29be565639b20d1ea9ff18d15fe8c851f95455a098bbf7a08ca748dcc4b81921",
+      "byte_length": 1737
+    },
+    "mixed-key-core-red/server-original-response.bin": {
+      "sha256": "829c6410fc1bebc8326b4c536dfa65a3a505b7cfdf6296c8d3bfc386bcf3b52b",
+      "byte_length": 610
+    },
+    "mixed-key-core-red/server-original-request-body.bin": {
+      "sha256": "dbcec9851bc5ee7fd248b95c2438d04175b959db6a0e1d83f2710dde4682f9db",
+      "byte_length": 7162
+    },
+    "probe_mixed_key_core.py": {
+      "sha256": "bde90d7748c1e5701c38939f6d42a56e70b377dc7f8e784751e50ce7e49b233e",
+      "byte_length": 4400
+    },
+    "casefold-red/selected-case-originals-manifest.json": {
+      "sha256": "e466b6a505013307d7e5293a74131e53a24c0751ab46e2fd698a97a3c1084a45",
+      "byte_length": 1281
+    },
+    "casefold-red/selected-case-originals.zip": {
+      "sha256": "3c952f247b2a4f6fb9562dd01504eeca7f31f198fdfd372c9f6b199c9312649a",
+      "byte_length": 76053
+    }
+  },
+  "extra_cli_since_initial_receipt": 1,
+  "extra_synthetic_http_posts_since_initial_receipt": 1,
+  "total_new_review_cli_commands": 2,
+  "total_new_review_http_posts": 1,
+  "real_model_calls": 0,
+  "paid_calls": 0,
+  "current_key_read": false,
+  "source_or_tests_modified_by_review": false,
+  "original_author_files_changed": false,
+  "prior_artifacts_preserved": true
+}

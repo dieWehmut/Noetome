@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "scope": "internal_synthetic_wire_and_ordinary_input_guards_only",
+  "real_model_calls": 0,
+  "checks": [
+    {
+      "name": "fmt",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exit_code": 0,
+      "wall_ms": 688,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    },
+    {
+      "name": "private",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "test",
+        "-p",
+        "noetome-cli",
+        "--lib",
+        "scan_formula",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "wall_ms": 8257,
+      "stdout": {
+        "sha256": "3d3bea2e304a06ad55ba3b9343f475ff0ca20dbb355527a557cedc17dc476fe2",
+        "byte_length": 1639
+      },
+      "stderr": {
+        "sha256": "b1821828f207382a5e307607da83f00c9aa96dc20f848185e935da826fcf518f",
+        "byte_length": 1981
+      }
+    },
+    {
+      "name": "ordinary",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "test",
+        "-p",
+        "noetome-cli",
+        "--test",
+        "scan_formula",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "wall_ms": 3907,
+      "stdout": {
+        "sha256": "c0ef81aeda38de7a5158ad23a43a2938da057683d510d400fa9a8db4333602c8",
+        "byte_length": 486
+      },
+      "stderr": {
+        "sha256": "65cee359a6f623a23a788a761f61e1b89ec089ac474c999574a247f18911550a",
+        "byte_length": 1289
+      }
+    },
+    {
+      "name": "diff",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "wall_ms": 7,
+      "stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      }
+    }
+  ],
+  "source_before": {
+    "crates/noetome-cli/src/scan_formula.rs": {
+      "sha256": "31bbd310669b06e68ea791610c4cc1cf4e0d4a3efa5d78a563c03fd02a3e5a65",
+      "byte_length": 20193
+    },
+    "crates/noetome-cli/src/scan_input.rs": {
+      "sha256": "fd828bc23f82e27174a1c84172f4ab30119c30bc7442a1d47c77c25e0f4344e0",
+      "byte_length": 9911
+    },
+    "crates/noetome-cli/src/scan_model.rs": {
+      "sha256": "63441a306fc639498344ca0bd3ee345ec6908fca311110618e8b62d8cf69e76a",
+      "byte_length": 6352
+    },
+    "crates/noetome-cli/src/scan_recognition.rs": {
+      "sha256": "45609cc5f972b5c432659fa0a9fd4d93cb1e990df35a47d5701f7852b088c829",
+      "byte_length": 10308
+    },
+    "crates/noetome-cli/src/scan_render.rs": {
+      "sha256": "d8cf5654ec82935114a344a443b15aca65a114fdf90139b5a7f903a425a83677",
+      "byte_length": 5059
+    },
+    "crates/noetome-cli/tests/support/scan_guard_tests.rs": {
+      "sha256": "449e092a6e009957c6bf774c265f019d2ec87871aafc5491a30f772219879de1",
+      "byte_length": 15456
+    },
+    "crates/noetome-cli/tests/scan_formula.rs": {
+      "sha256": "627fc1468aceac3e8e1443c245c9a77ae695d6b582c5d078e5d1795ba20329bf",
+      "byte_length": 6631
+    }
+  },
+  "source_after": {
+    "crates/noetome-cli/src/scan_formula.rs": {
+      "sha256": "31bbd310669b06e68ea791610c4cc1cf4e0d4a3efa5d78a563c03fd02a3e5a65",
+      "byte_length": 20193
+    },
+    "crates/noetome-cli/src/scan_input.rs": {
+      "sha256": "fd828bc23f82e27174a1c84172f4ab30119c30bc7442a1d47c77c25e0f4344e0",
+      "byte_length": 9911
+    },
+    "crates/noetome-cli/src/scan_model.rs": {
+      "sha256": "63441a306fc639498344ca0bd3ee345ec6908fca311110618e8b62d8cf69e76a",
+      "byte_length": 6352
+    },
+    "crates/noetome-cli/src/scan_recognition.rs": {
+      "sha256": "45609cc5f972b5c432659fa0a9fd4d93cb1e990df35a47d5701f7852b088c829",
+      "byte_length": 10308
+    },
+    "crates/noetome-cli/src/scan_render.rs": {
+      "sha256": "d8cf5654ec82935114a344a443b15aca65a114fdf90139b5a7f903a425a83677",
+      "byte_length": 5059
+    },
+    "crates/noetome-cli/tests/support/scan_guard_tests.rs": {
+      "sha256": "449e092a6e009957c6bf774c265f019d2ec87871aafc5491a30f772219879de1",
+      "byte_length": 15456
+    },
+    "crates/noetome-cli/tests/scan_formula.rs": {
+      "sha256": "627fc1468aceac3e8e1443c245c9a77ae695d6b582c5d078e5d1795ba20329bf",
+      "byte_length": 6631
+    }
+  }
+}

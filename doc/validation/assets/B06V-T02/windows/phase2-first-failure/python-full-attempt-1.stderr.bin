@@ -1,0 +1,43 @@
+...............................................................s................................................E..........................................................................................................s..................................................s.E............................
+======================================================================
+ERROR: setUpClass (test_knowledge_variants_verifier.VariantsVerifierTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\target\b06v-t02-api-regression-20261106a-phase2\repo\tests\test_knowledge_variants_verifier.py", line 22, in setUpClass
+    cls.audit = VariantsAudit(ROOT / "target/debug/noetome.exe", cls.root)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\target\b06v-t02-api-regression-20261106a-phase2\repo\scripts\knowledge_variants_audit.py", line 74, in __init__
+    self.cli_fp = fingerprint(self.cli.read_bytes())
+                              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1019, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'D:\\Noetome\\target\\b06v-t02-api-regression-20261106a-phase2\\repo\\target\\debug\\noetome.exe'
+
+======================================================================
+ERROR: test_historical_real_overbar_response_remains_blocked_for_native_and_fallback (test_verify_scan_formula.ScanAuthorTests.test_historical_real_overbar_response_remains_blocked_for_native_and_fallback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\target\b06v-t02-api-regression-20261106a-phase2\repo\tests\test_verify_scan_formula.py", line 84, in test_historical_real_overbar_response_remains_blocked_for_native_and_fallback
+    raw=V.read(ROOT/"doc/validation/assets/B06V-T02/recognition/linux-direct-01/clear/response.json")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\target\b06v-t02-api-regression-20261106a-phase2\repo\scripts\verify_scan_formula.py", line 60, in read
+    guard_path(path, directory=False)
+  File "D:\Noetome\target\b06v-t02-api-regression-20261106a-phase2\repo\scripts\verify_knowledge_conflicts.py", line 35, in guard_path
+    info = prefix.lstat()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 847, in lstat
+    return self.stat(follow_symlinks=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lyinn\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 840, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] 系统找不到指定的文件。: 'D:\\Noetome\\target\\b06v-t02-api-regression-20261106a-phase2\\repo\\doc\\validation\\assets\\B06V-T02'
+
+----------------------------------------------------------------------
+Ran 300 tests in 112.789s
+
+FAILED (errors=2, skipped=3)

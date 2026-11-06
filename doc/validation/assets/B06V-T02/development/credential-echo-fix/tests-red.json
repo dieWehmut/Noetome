@@ -1,0 +1,34 @@
+{
+  "results": [
+    {
+      "name": "private",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "test",
+        "-p",
+        "noetome-cli",
+        "--lib",
+        "credential_scan_catches_literal_escape_keys_with_mixed_encoding_depths",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 101
+    },
+    {
+      "name": "ordinary",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "test",
+        "-p",
+        "noetome-cli",
+        "--test",
+        "scan_formula",
+        "literal_escape_test_keys_and_mixed_unicode_tails_are_omitted_before_persistence",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 101
+    }
+  ],
+  "scope": "public synthetic literal-escape keys actual old shared Core failure; ordinary HTTP loopback only, real calls0"
+}

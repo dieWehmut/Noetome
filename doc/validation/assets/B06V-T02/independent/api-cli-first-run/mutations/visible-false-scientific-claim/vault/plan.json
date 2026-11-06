@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_scan_formula",
+  "scope": "selected_scan_formula_v1",
+  "request_id": "31180789-99ce-4b1d-a138-ac2586b57d73",
+  "case": {
+    "schema_version": 1,
+    "purpose": "scan_formula",
+    "selection_id": "scan_scalar_clear",
+    "title": "单页扫描公式清晰",
+    "source_kind": "scanned_page",
+    "pdf": {
+      "file": "page.pdf",
+      "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803"
+    },
+    "page": {
+      "file": "page.png",
+      "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+      "page": 1,
+      "canvas": [
+        800,
+        1000
+      ]
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+      "bounds": [
+        120,
+        175,
+        560,
+        200
+      ],
+      "legibility": "clear"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547"
+    }
+  },
+  "semantics": {
+    "schema_version": 1,
+    "producer": "author_scan_declaration",
+    "expression": "x_i = -\\frac{a_i}{b_i}",
+    "symbols": [
+      {
+        "symbol": "x",
+        "definition": "Reported displacement.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "a",
+        "definition": "Input amount.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "b",
+        "definition": "Positive scale.",
+        "unit": "dimensionless"
+      },
+      {
+        "symbol": "i",
+        "definition": "Sample index.",
+        "unit": "dimensionless"
+      }
+    ],
+    "conditions": [
+      "a_i >= 0.",
+      "b_i > 0."
+    ],
+    "ranges": [
+      "i in {1, 2}.",
+      "x_i <= 0."
+    ],
+    "exceptions": [
+      "If b_i = 0, the expression is undefined."
+    ],
+    "uncertainties": []
+  },
+  "decision": {
+    "representation": "native_math",
+    "fallback_reasons": [],
+    "compatibility_rewrites": [
+      "SCAN_SINGLE_SCRIPT_GROUP_COMPATIBILITY"
+    ],
+    "issue_codes": []
+  },
+  "tokens": [
+    "x",
+    "_",
+    "i",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "_",
+    "i",
+    "}",
+    "{",
+    "b",
+    "_",
+    "i",
+    "}"
+  ],
+  "recognized_expression": "x_{i} = -\\frac{a_{i}}{b_{i}}",
+  "compiled_expression": "x_i=-\\frac{a_i}{b_i}"
+}

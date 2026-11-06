@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "status": "credential_echo_boundary_reproduced",
+  "captured_utc": "2026-11-06T02:26:58.027016+00:00",
+  "source": {
+    "file": "scripts/invoke_scan_api_credential.ps1",
+    "sha256": "0e7f6126a6c9773ac906eb571eab35e54ece5f2a6a66394335a58c6157ae9c8e",
+    "byte_length": 22021
+  },
+  "function_lines": [
+    194,
+    201
+  ],
+  "persistence_lines": [
+    156,
+    161,
+    300
+  ],
+  "records": [
+    {
+      "edition": "powershell5",
+      "exit_code": 1,
+      "result": {
+        "runtime": "5.1.26100.7920",
+        "results": [
+          {
+            "name": "plain",
+            "input_length": 38,
+            "output_length": 10,
+            "removed": true,
+            "unchanged": false
+          },
+          {
+            "name": "single_unicode",
+            "input_length": 228,
+            "output_length": 10,
+            "removed": true,
+            "unchanged": false
+          },
+          {
+            "name": "nested_json_unicode",
+            "input_length": 266,
+            "output_length": 266,
+            "removed": false,
+            "unchanged": true
+          }
+        ]
+      },
+      "source_function": "exact extracted bytes from frozen current helper; only fake key used",
+      "ordinary_cli_calls": 0,
+      "http_calls": 0
+    },
+    {
+      "edition": "powershell7",
+      "exit_code": 1,
+      "result": {
+        "runtime": "7.6.5",
+        "results": [
+          {
+            "name": "plain",
+            "input_length": 38,
+            "output_length": 10,
+            "removed": true,
+            "unchanged": false
+          },
+          {
+            "name": "single_unicode",
+            "input_length": 228,
+            "output_length": 10,
+            "removed": true,
+            "unchanged": false
+          },
+          {
+            "name": "nested_json_unicode",
+            "input_length": 266,
+            "output_length": 266,
+            "removed": false,
+            "unchanged": true
+          }
+        ]
+      },
+      "source_function": "exact extracted bytes from frozen current helper; only fake key used",
+      "ordinary_cli_calls": 0,
+      "http_calls": 0
+    }
+  ],
+  "first_attempt": {
+    "exit_code": 1,
+    "code": "Python SyntaxError: ordinary triple literal with Unicode escape; no PowerShell executed",
+    "corrected_by": "Use raw Python literal for the controlled probe"
+  },
+  "real_credentials_read": 0,
+  "real_model_calls": 0,
+  "user_ledger_mutations": 0,
+  "full_suites_run": 0
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "purpose": "actual_windows_ordinal_ignorecase_non_ascii_boundary",
+  "tool": "selected native PowerShell 7",
+  "script": "[String]::Equals(([char]0x03A3)+'.png',([char]0x03C2)+'.png',[StringComparison]::OrdinalIgnoreCase)",
+  "actual_exit_code": 0,
+  "actual_output": "{\"sigma\":true,\"ascii\":true}\r\n",
+  "filesystem_unicode_table": "not_verified",
+  "http_calls": 0,
+  "real_model_calls": 0
+}

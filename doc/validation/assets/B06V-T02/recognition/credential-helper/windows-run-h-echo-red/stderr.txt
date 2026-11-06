@@ -1,0 +1,83 @@
+test_nested_and_mixed_json_credential_echo_omits_complete_streams (__main__.ScanCredentials_powershell.test_nested_and_mixed_json_credential_echo_omits_complete_streams) ... 
+  test_nested_and_mixed_json_credential_echo_omits_complete_streams (__main__.ScanCredentials_powershell.test_nested_and_mixed_json_credential_echo_omits_complete_streams) (mode='nested_leak') ... FAIL
+  test_nested_and_mixed_json_credential_echo_omits_complete_streams (__main__.ScanCredentials_powershell.test_nested_and_mixed_json_credential_echo_omits_complete_streams) (mode='mixed_leak') ... FAIL
+test_nested_and_mixed_json_credential_echo_omits_complete_streams (__main__.ScanCredentials_pwsh.test_nested_and_mixed_json_credential_echo_omits_complete_streams) ... 
+  test_nested_and_mixed_json_credential_echo_omits_complete_streams (__main__.ScanCredentials_pwsh.test_nested_and_mixed_json_credential_echo_omits_complete_streams) (mode='nested_leak') ... FAIL
+  test_nested_and_mixed_json_credential_echo_omits_complete_streams (__main__.ScanCredentials_pwsh.test_nested_and_mixed_json_credential_echo_omits_complete_streams) (mode='mixed_leak') ... FAIL
+test_deep_recursive_credential_escape_fails_closed (__main__.ScanCredentials_powershell.test_deep_recursive_credential_escape_fails_closed) ... FAIL
+test_deep_recursive_credential_escape_fails_closed (__main__.ScanCredentials_pwsh.test_deep_recursive_credential_escape_fails_closed) ... FAIL
+
+======================================================================
+FAIL: test_nested_and_mixed_json_credential_echo_omits_complete_streams (__main__.ScanCredentials_powershell.test_nested_and_mixed_json_credential_echo_omits_complete_streams) (mode='nested_leak')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 376, in test_nested_and_mixed_json_credential_echo_omits_complete_streams
+    with self.subTest(mode=mode): self.check_nested_echo_omitted(mode)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 359, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[1105 chars] ✓\n' != '[redacted]'
+Diff is 1037 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+======================================================================
+FAIL: test_nested_and_mixed_json_credential_echo_omits_complete_streams (__main__.ScanCredentials_powershell.test_nested_and_mixed_json_credential_echo_omits_complete_streams) (mode='mixed_leak')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 376, in test_nested_and_mixed_json_credential_echo_omits_complete_streams
+    with self.subTest(mode=mode): self.check_nested_echo_omitted(mode)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 359, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[1107 chars] ✓\n' != '[redacted]'
+Diff is 1013 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+======================================================================
+FAIL: test_nested_and_mixed_json_credential_echo_omits_complete_streams (__main__.ScanCredentials_pwsh.test_nested_and_mixed_json_credential_echo_omits_complete_streams) (mode='nested_leak')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 376, in test_nested_and_mixed_json_credential_echo_omits_complete_streams
+    with self.subTest(mode=mode): self.check_nested_echo_omitted(mode)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 359, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[1105 chars] ✓\n' != '[redacted]'
+Diff is 1037 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+======================================================================
+FAIL: test_nested_and_mixed_json_credential_echo_omits_complete_streams (__main__.ScanCredentials_pwsh.test_nested_and_mixed_json_credential_echo_omits_complete_streams) (mode='mixed_leak')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 376, in test_nested_and_mixed_json_credential_echo_omits_complete_streams
+    with self.subTest(mode=mode): self.check_nested_echo_omitted(mode)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 359, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[1107 chars] ✓\n' != '[redacted]'
+Diff is 1013 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+======================================================================
+FAIL: test_deep_recursive_credential_escape_fails_closed (__main__.ScanCredentials_powershell.test_deep_recursive_credential_escape_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 380, in test_deep_recursive_credential_escape_fails_closed
+    self.check_nested_echo_omitted("deep_leak")
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 359, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[1005 chars] ✓\n' != '[redacted]'
+Diff is 1012 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+======================================================================
+FAIL: test_deep_recursive_credential_escape_fails_closed (__main__.ScanCredentials_pwsh.test_deep_recursive_credential_escape_fails_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 380, in test_deep_recursive_credential_escape_fails_closed
+    self.check_nested_echo_omitted("deep_leak")
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106h-echo-red\repo\tests\test_scan_api_credential.py", line 359, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[1005 chars] ✓\n' != '[redacted]'
+Diff is 1012 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+----------------------------------------------------------------------
+Ran 4 tests in 7.819s
+
+FAILED (failures=6)

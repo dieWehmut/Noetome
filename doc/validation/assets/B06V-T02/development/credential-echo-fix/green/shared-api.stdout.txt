@@ -1,0 +1,62 @@
+
+running 43 tests
+test extraction_api::tests::actual_usage_rejects_each_limit_and_overflow_without_zero_defaults ... ok
+test extraction_api::tests::credential_scan_catches_nested_escaped_and_malformed_strings ... ok
+test extraction_api_config::tests::endpoint_allows_only_explicit_numeric_loopback_or_official_live ... ok
+test extraction_api_config::tests::revision_fix_updates_only_selected_chat_strategy_version ... ok
+test extraction_api::tests::credential_scan_catches_literal_escape_keys_with_mixed_encoding_depths ... ok
+test extraction_api_config::tests::chat_fix_exact_selected_and_numeric_test_provider_endpoints_validate ... ok
+test extraction_api_config::tests::selected_gateway_accepts_only_exact_live_endpoint_and_selected_model ... ok
+test extraction_api_transport::tests::pre_cancel_sends_nothing ... ok
+test extraction_api_config::tests::strict_config_rejects_duplicates_extra_missing_and_nullable_omissions ... ok
+test extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor ... ok
+test extraction_api_wire::chat::tests::mapped_metadata_keeps_raw_usage_and_survives_length_candidate_failures ... ok
+test extraction_api_wire::chat::tests::cache_pair_requires_checked_prompt_sum_without_inventing_absent_counters ... ok
+test extraction_api_wire::chat::tests::revision_fix_original_fifth_decodes_with_usage_but_has_four_revision_issues ... ok
+test extraction_api_config::tests::selected_guard_does_not_consume_siblings_and_rejects_hardlinks_and_size ... ok
+test extraction_api_wire::chat::tests::shape_fix_original_third_flattened_candidate_stays_rejected_with_usage ... ok
+test extraction_api_wire::chat::tests::duplicates_fences_trailing_unknown_candidates_and_bad_usage_fail ... ok
+test extraction_api_wire::tests::actual_metadata_fields_reject_null_or_wrong_types ... ok
+test extraction_api_schema::tests::inline_fix_selected_input_contains_task_schema_and_original_absolute_request ... ok
+test extraction_api_wire::chat::tests::qualifier_fix_original_fourth_structure_passes_but_unit_stays_missing ... ok
+test extraction_api_wire::tests::chat_fix_valid_single_chat_candidate_requires_chat_decoder ... ok
+test extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata ... ok
+test extraction_api_schema::tests::revision_fix_chat_task_demands_positive_revision_and_keeps_v5_prefix ... ok
+test extraction_api_wire::tests::inline_fix_first_actual_plaintext_is_candidate_failure_with_real_usage_preserved ... ok
+test extraction_api_wire::chat::tests::only_one_stopped_assistant_plain_json_and_typed_metadata_is_accepted ... ok
+test extraction_api_wire::tests::metadata_preserves_real_usage_independent_of_candidate_approval ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_completed_accepts_candidates_but_default_stays_strict ... ok
+test extraction_api_schema::tests::revision_fix_chat_schema_has_only_two_positive_integer_boundaries ... ok
+test extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail ... ok
+test extraction_api_wire::tests::rejects_duplicate_keys_at_unknown_nesting_and_trailing_json ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_duplicates_tools_extra_text_and_fences_stay_rejected ... ok
+test extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status ... ok
+test extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected ... ok
+test extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail ... ok
+test extraction_api_wire::tests::valid_metadata_survives_invalid_output_fields_and_decode_rejects_them ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_status_errors_types_and_usage_remain_strict ... ok
+test extraction_api_transport::tests::one_http1_post_preserves_complete_receipt ... ok
+test extraction_api_transport::tests::zero_deadline_counts_no_unstarted_attempt ... ok
+test extraction_api_transport::tests::truncated_chunked_and_oversize_receipts_fail ... ok
+test extraction_api_transport::tests::framed_empty_receipts_are_complete_and_keep_http_classification ... ok
+test extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work ... ok
+test extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried ... ok
+test extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body ... FAILED
+test extraction_api::tests::credential_scan_fails_closed_when_the_total_work_limit_is_exceeded ... ok
+
+failures:
+
+---- extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body stdout ----
+
+thread 'extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body' (466590) panicked at crates/noetome-cli/src/extraction_api_transport.rs:235:9:
+assertion `left == right` failed
+  left: []
+ right: [97, 98, 99]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body
+
+test result: FAILED. 42 passed; 1 failed; 0 ignored; 0 measured; 389 filtered out; finished in 1.63s
+

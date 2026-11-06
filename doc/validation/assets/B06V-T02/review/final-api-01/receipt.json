@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "status": "important_findings_require_repair_and_delta_verification",
+  "captured_utc": "2026-11-06T02:34:35.018211+00:00",
+  "task_id": "B06V-T02",
+  "scope": "fresh review of active selected scan API source, shared guards and public preserved evidence",
+  "captured_current_source_pins": {
+    "crates/noetome-cli/src/scan_api.rs": {
+      "sha256": "09a3b2ab74179a8c1b0d7d851e33cdc4d9e599c5b17d1fa1aae80031ba76a60f",
+      "byte_length": 17251
+    },
+    "crates/noetome-cli/src/scan_input.rs": {
+      "sha256": "26b5b959c961d81c62214fd48c1cbc52b8df9309901a617e7eb9f65b2d8315a9",
+      "byte_length": 10259
+    },
+    "crates/noetome-cli/src/scan_formula.rs": {
+      "sha256": "670d1a63c402868876a27e09feee9634559e17a118f80cef28cd16bb1df1c820",
+      "byte_length": 21153
+    },
+    "crates/noetome-cli/src/scan_model.rs": {
+      "sha256": "676e9f8054c682b57ca3918bc4b64bf6d5c642a377cf43cbd92ae71b1ad069b5",
+      "byte_length": 5838
+    },
+    "crates/noetome-cli/src/scan_render.rs": {
+      "sha256": "8219c543d5d76e42efcfac55604a41e6989983638916a3619ac1835af9643714",
+      "byte_length": 5054
+    },
+    "crates/noetome-cli/src/extraction_api.rs": {
+      "sha256": "450fee15a0527b2d9ae1f538136c9867c9708a59c8967950447ef389c9c63649",
+      "byte_length": 19328
+    },
+    "crates/noetome-cli/src/extraction_output.rs": {
+      "sha256": "c9ce51781fcdd14badc98ffa56764dd14722ed4141414d44d3479028866c6f07",
+      "byte_length": 19341
+    },
+    "crates/noetome-cli/src/extraction_api_transport.rs": {
+      "sha256": "01ef199a3214b6419813fa68b3a5ac902fb5ba7830572e5d1bef75fd08815054",
+      "byte_length": 14630
+    },
+    "scripts/invoke_scan_api_credential.ps1": {
+      "sha256": "0e7f6126a6c9773ac906eb571eab35e54ece5f2a6a66394335a58c6157ae9c8e",
+      "byte_length": 22021
+    },
+    "scripts/verify_scan_formula.py": {
+      "sha256": "1b7bd5cc0b9791abb1b84de5359a22bbd191f069eac0bc624df57cdd432beac8",
+      "byte_length": 88993
+    },
+    "tests/test_scan_api_credential.py": {
+      "sha256": "0fb4ad6a7e3f14eb50e4d8198aa18e8ea40882a5616bf1d43abbf5bef270719e",
+      "byte_length": 24498
+    },
+    "tests/test_verify_scan_formula.py": {
+      "sha256": "c2299df3e1ef8a8cdaf46471859be780898870195329130f9c0526df6de78b78",
+      "byte_length": 39006
+    }
+  },
+  "evidence_files": {
+    "casefold-red/receipt.json": {
+      "sha256": "70b62e55c5fecff8e2ad643b91d46c6041033a3237513e732d0dc0f6ac957446",
+      "byte_length": 1463
+    },
+    "budget-subreview.receipt.json": {
+      "sha256": "63afa66bf436ed0b0f4dec2526de11e1e70c31a2540f962cd96839c99a33a115",
+      "byte_length": 3235
+    },
+    "budget-subreview.echo-red.json": {
+      "sha256": "051bd2f11ce4a9b64f4ad3d3318ba42aaa59e1be64da4c5b4122b1b7ed15e275",
+      "byte_length": 2497
+    },
+    "budget-subreview.originals-readback.json": {
+      "sha256": "22dc9e997110f307a503f4d5e14ebe00d760b5e78f3392544ac1c98e36c0b2c8",
+      "byte_length": 79634
+    },
+    "saved-output-readback.json": {
+      "sha256": "9c7498da3a72653620bbd621ad67e2cb5ae0359e8dfba8c56643c816021cdce0",
+      "byte_length": 33831
+    }
+  },
+  "findings": [
+    {
+      "id": "SCAN-CASEFOLD-COLLISION",
+      "source": "crates/noetome-cli/src/scan_input.rs",
+      "line": 101,
+      "independent_source": "scripts/verify_scan_formula.py",
+      "original_core_sha256": "fd828bc23f82e27174a1c84172f4ab30119c30bc7442a1d47c77c25e0f4344e0",
+      "original_checker_sha256": "ec0374a52ba5c895c07864160217731f845ab1860153f3ff6236425dc065e71b",
+      "counterexample": "casefold-red/receipt.json",
+      "actual_cli_exit": 3,
+      "required_source_rejection_exit": 2,
+      "closed": false
+    },
+    {
+      "id": "SCAN-HELPER-NESTED-ECHO",
+      "source": "scripts/invoke_scan_api_credential.ps1",
+      "line": 194,
+      "original_sha256": "0e7f6126a6c9773ac906eb571eab35e54ece5f2a6a66394335a58c6157ae9c8e",
+      "counterexample": "budget-subreview.echo-red.json",
+      "actual_dual_powershell_failure": true,
+      "closed": false
+    }
+  ],
+  "executed_validation": {
+    "extra_zero_request_cli": 1,
+    "extra_cli_network_attempts": 0,
+    "saved_scan_outputs_read_back": 6,
+    "original_frozen_files_read_back": 33,
+    "visual_source_images_inspected": 3,
+    "helper_powershell_probes": 2,
+    "existing_helper_invocations_read_back": 20,
+    "existing_phase_receipts_read_back": 80,
+    "existing_ledger_snapshots_read_back": 80,
+    "existing_helper_files_fingerprints": 200
+  },
+  "not_executed": [
+    "Rust full suite",
+    "Python full suite",
+    "paid/live model HTTP",
+    "current credential decryption",
+    "current ledger accounting",
+    "clean Obsidian acceptance",
+    "new compatibility matrix"
+  ],
+  "real_model_calls": 0,
+  "paid_calls": 0,
+  "user_production_vault_written": false,
+  "source_or_test_code_modified": false,
+  "live_recognition": "not_run",
+  "current_cumulative_balance": null,
+  "scientific_quality": "not_run",
+  "model_weight_version": "unverified_gateway",
+  "original_author_freeze": {
+    "sha256": "99789373318a9e2f93c5b8449e471567e58f448754e59f757164b7ad18ab4b54",
+    "byte_length": 5396
+  }
+}

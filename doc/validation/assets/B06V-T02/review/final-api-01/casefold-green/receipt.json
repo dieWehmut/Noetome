@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "original_casefold_finding_green": true,
+  "unicode_casefold_green": true,
+  "uppercase_distinct_not_overrejected": true,
+  "binary_sha256": "0791ee1546010a1b8a3254251267dec1fc6bf2c9359419d6f3831697f3b0b641",
+  "actual_cli_commands": 3,
+  "records": [
+    {
+      "case": "same-ascii",
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b06v-t02-scan-api-echo-fixed-final/noetome-linux",
+        "knowledge",
+        "scan-formula",
+        "/tmp/noetome-review-casefold-same-ascii-5nixw39t/case",
+        "/home/lyinn/project/Noetome/fixtures/scan-formula/api-profiles/authorized-stop.json",
+        "/home/lyinn/project/Noetome/fixtures/scan-formula/profiles/native.json",
+        "/tmp/noetome-review-casefold-same-ascii-5nixw39t/new-vault"
+      ],
+      "actual_exit_code": 2,
+      "required_exit_code": 2,
+      "output_created": false,
+      "network_attempts": 0,
+      "source_before_after": {
+        "semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        },
+        "case.json": {
+          "sha256": "16b45c7e859a7af1eb3e8a5f5318e0c29470c2e8df67fc7c8fe1b93ff749e614",
+          "byte_length": 819
+        },
+        "page.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "page.png": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        },
+        "page.PNG": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        }
+      }
+    },
+    {
+      "case": "greek-equivalent",
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b06v-t02-scan-api-echo-fixed-final/noetome-linux",
+        "knowledge",
+        "scan-formula",
+        "/tmp/noetome-review-casefold-greek-equivalent-rq1gz_wu/case",
+        "/home/lyinn/project/Noetome/fixtures/scan-formula/api-profiles/authorized-stop.json",
+        "/home/lyinn/project/Noetome/fixtures/scan-formula/profiles/native.json",
+        "/tmp/noetome-review-casefold-greek-equivalent-rq1gz_wu/new-vault"
+      ],
+      "actual_exit_code": 2,
+      "required_exit_code": 2,
+      "output_created": false,
+      "network_attempts": 0,
+      "source_before_after": {
+        "semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        },
+        "case.json": {
+          "sha256": "0a9571f4f2db77d184af05d9034f855d4c641c7aaf58f3da285e3ab532cd11d3",
+          "byte_length": 815
+        },
+        "page.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "Σ.png": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        },
+        "ς.png": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        }
+      }
+    },
+    {
+      "case": "uppercase-distinct",
+      "argv": [
+        "/home/lyinn/project/Noetome/.artifacts/b06v-t02-scan-api-echo-fixed-final/noetome-linux",
+        "knowledge",
+        "scan-formula",
+        "/tmp/noetome-review-casefold-uppercase-distinct-hwlaaox9/case",
+        "/home/lyinn/project/Noetome/fixtures/scan-formula/api-profiles/authorized-stop.json",
+        "/home/lyinn/project/Noetome/fixtures/scan-formula/profiles/native.json",
+        "/tmp/noetome-review-casefold-uppercase-distinct-hwlaaox9/new-vault"
+      ],
+      "actual_exit_code": 3,
+      "required_exit_code": 3,
+      "output_created": true,
+      "network_attempts": 0,
+      "source_before_after": {
+        "semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        },
+        "case.json": {
+          "sha256": "101577791c0889d98271740f6b6d2ff9e169559ce2a06a2c91209fbec12d47ed",
+          "byte_length": 821
+        },
+        "page.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "Region.PNG": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        },
+        "Page.PNG": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        }
+      }
+    }
+  ],
+  "real_model_calls": 0,
+  "paid_calls": 0,
+  "source_archive_sha256": "3c952f247b2a4f6fb9562dd01504eeca7f31f198fdfd372c9f6b199c9312649a"
+}

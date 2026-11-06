@@ -1,0 +1,29 @@
+test_prior_history_and_unconfirmed_reservation_are_preserved (__main__.ScanCredentials_powershell.test_prior_history_and_unconfirmed_reservation_are_preserved) ... ok
+test_prior_history_and_unconfirmed_reservation_are_preserved (__main__.ScanCredentials_pwsh.test_prior_history_and_unconfirmed_reservation_are_preserved) ... FAIL
+
+======================================================================
+FAIL: test_prior_history_and_unconfirmed_reservation_are_preserved (__main__.ScanCredentials_pwsh.test_prior_history_and_unconfirmed_reservation_are_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106l-timestamp-red\repo\tests\test_scan_api_credential.py", line 224, in test_prior_history_and_unconfirmed_reservation_are_preserved
+    self.assertEqual(unknown["records"][0], prior)
+AssertionError: {'inv[237 chars]:42:11.050071Z', 'settled_at': '2026-11-06T02:42:11Z'} != {'inv[237 chars]:42:11.0500710Z', 'settled_at': '2026-11-06T02:42:11.0000000Z'}
+  {'confirmed_total_tokens': 936,
+   'invocation_id': 'public-prior-failure',
+   'network_attempts': 1,
+   'reason': 'public historical failure',
+   'reservation_tokens': 65536,
+-  'reserved_at': '2026-11-06T02:42:11.050071Z',
++  'reserved_at': '2026-11-06T02:42:11.0500710Z',
+?                                            +
+
+-  'settled_at': '2026-11-06T02:42:11Z',
++  'settled_at': '2026-11-06T02:42:11.0000000Z',
+?                                    ++++++++
+
+   'status': 'settled_valid_usage_response_failed'}
+
+----------------------------------------------------------------------
+Ran 2 tests in 3.776s
+
+FAILED (failures=1)

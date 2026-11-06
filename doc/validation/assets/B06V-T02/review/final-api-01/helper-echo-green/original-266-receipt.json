@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "scope": "same exact 266-byte raw nested-Unicode counterexample as original dualPS RED",
+  "payload_bytes": 266,
+  "actual_checks": 2,
+  "records": [
+    {
+      "runtime": "ps5",
+      "argv": [
+        "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\probe_helper_echo_green.ps1",
+        "-Helper",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\helper-echo-green\\helper-original.ps1",
+        "-Cases",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\helper-echo-green\\original-266-public-case.json"
+      ],
+      "exit_code": 0,
+      "result": {
+        "scope": "Only Add-Type and Hide-Credential definitions from selected source; public literal fake keys; no CLI/HTTP/DPAPI/ledger",
+        "powershell": "5.1.26100.7920",
+        "console_before": 936,
+        "console_after": 936,
+        "console_unchanged": true,
+        "records": [
+          {
+            "name": "exact-original-unquoted-266-double-unicode",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          }
+        ]
+      }
+    },
+    {
+      "runtime": "ps7",
+      "argv": [
+        "/mnt/c/Users/Lyinn/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\probe_helper_echo_green.ps1",
+        "-Helper",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\helper-echo-green\\helper-original.ps1",
+        "-Cases",
+        "\\\\wsl.localhost\\Ubuntu-22.04\\home\\lyinn\\project\\Noetome\\doc\\validation\\assets\\B06V-T02\\review\\final-api-01\\helper-echo-green\\original-266-public-case.json"
+      ],
+      "exit_code": 0,
+      "result": {
+        "scope": "Only Add-Type and Hide-Credential definitions from selected source; public literal fake keys; no CLI/HTTP/DPAPI/ledger",
+        "powershell": "7.6.5",
+        "console_before": 936,
+        "console_after": 936,
+        "console_unchanged": true,
+        "records": [
+          {
+            "name": "exact-original-unquoted-266-double-unicode",
+            "passed": true,
+            "expected_redaction": true,
+            "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+            "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+          }
+        ]
+      }
+    }
+  ],
+  "helper_sha256": "5f31a7bf071bebb2f362c96b8538519f9d5acaef2e231d24e7dc68e7d7ca5e21",
+  "new_cli_calls": 0,
+  "new_http_requests": 0,
+  "current_key_read": false,
+  "current_ledger_read": false
+}

@@ -1,0 +1,22 @@
+Noetome 有界多来源知识协调与表达
+
+用法：noetome knowledge coordinate <项目路径> <coordination-case> <尚不存在的测试输出根>
+      noetome knowledge present <项目路径> <coordination-case> <协调输出根> <尚不存在的测试Vault>
+      noetome knowledge process-review <项目路径> <process-case> <尚不存在的review根>
+      noetome knowledge flow <项目路径> <process-case> <review根> <profile.json> <尚不存在的测试Vault>
+      noetome knowledge formula <formula-case> <profile.json> <尚不存在的测试Vault>
+      noetome knowledge image <image-case> <profile.json> <尚不存在的测试Vault>
+      noetome knowledge scan-formula <scan-case> <api-config.json> <profile.json> <尚不存在的测试Vault>
+
+只重新核对同项目2至3份成功的单原子来源依据，通过显式组件身份映射保留重复／互补事实和全部出处；严格协调Schema2还保留有来源背景的条件与历史变体。
+未知语义差异保持needs_review；不调用模型或研究服务。知识pending，published=false，scientific_quality=not_run。
+present：重验严格v1/v2/v3协调输出及完整原始来源，再主动选择比较表或正文，保留原值、单位、条件、例外、版本及来源映射。
+process-review：从明确选取的实际文字完整解析有界步骤/关系语法，与独立gold核对；未解析语句无成功过程IR。
+flow：从实际来源重建保存的过程核对结果，明确方向、分支、正负作用并保留全部条件与例外；相关性、歧义、循环和缺关系阻断。
+已测目标能力支持时生成Mermaid，能力未核验或标签换行不能保真时使用完整有据文字回退；成功仍仅为未发布工程预览。
+formula：只核对明确选取的原始TeX/公式区域与来源作者语义说明，逐字保存原件，严格核对负号/上下标/符号定义/单位/前提；不能保真时回退原图，关键语义未知时阻断。无OCR/PDF作者源码恢复或科学正确率宣称。
+dfrac的有据规范化由profile明确启用；未启用时回退原图，不表示MathJax本身缺少该宏。
+image：只读取明确选定的PNG及作者手工结构声明；保留标签、方向、正负、单位、图例与空间关系，有限SVG不能保真时使用原图，关键语义未知或原图不可辨时阻断。无数据实验曲线只保留原图，不执行OCR或自动图像理解。
+scan-formula：只对明确扫描页内的选定PNG区域执行一次有预算视觉Chat识别，原区域、请求正文、原响应和已核实用量分别保存；核对关键负号/下标/符号/单位/前提，未知阻断，不恢复作者TeX。只使用已授权网关deepseek-flash或明确数字环回人工测试，max_requests=0时不读取凭据或联网；不自动重试、跳转或扫描其他资料。
+未决冲突或证据不足返回3，保存无成功计划或笔记的失败双报告；成功仅表示未发布的工程预览。
+输出必须为已有父目录下的新测试根；以连字符开头的路径在动词后加 --，中文和空格路径作为单独参数。

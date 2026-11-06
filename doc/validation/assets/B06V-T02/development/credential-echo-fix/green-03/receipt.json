@@ -1,0 +1,195 @@
+{
+  "source_before": {
+    "crates/noetome-cli/src/scan_api.rs": {
+      "sha256": "09a3b2ab74179a8c1b0d7d851e33cdc4d9e599c5b17d1fa1aae80031ba76a60f",
+      "byte_length": 17251
+    },
+    "crates/noetome-cli/src/scan_formula.rs": {
+      "sha256": "670d1a63c402868876a27e09feee9634559e17a118f80cef28cd16bb1df1c820",
+      "byte_length": 21153
+    },
+    "crates/noetome-cli/src/scan_input.rs": {
+      "sha256": "26b5b959c961d81c62214fd48c1cbc52b8df9309901a617e7eb9f65b2d8315a9",
+      "byte_length": 10259
+    },
+    "crates/noetome-cli/src/scan_model.rs": {
+      "sha256": "676e9f8054c682b57ca3918bc4b64bf6d5c642a377cf43cbd92ae71b1ad069b5",
+      "byte_length": 5838
+    },
+    "crates/noetome-cli/src/scan_render.rs": {
+      "sha256": "8219c543d5d76e42efcfac55604a41e6989983638916a3619ac1835af9643714",
+      "byte_length": 5054
+    },
+    "crates/noetome-cli/src/extraction_api.rs": {
+      "sha256": "3bf0417533891456f5ca89ff9022125faf85183402dc5fe25b99f3ca1630d415",
+      "byte_length": 21429
+    },
+    "crates/noetome-cli/tests/scan_formula.rs": {
+      "sha256": "47673397edf06fd204e9ce6b6c55325d08a513a7a684418a3edc65e618269e00",
+      "byte_length": 18636
+    },
+    "crates/noetome-cli/tests/support/scan_guard_tests.rs": {
+      "sha256": "9a4b4608acd7f6b979dc284378861281f2d072503cd754b2dd906f76d2278a9b",
+      "byte_length": 11301
+    },
+    "crates/noetome-cli/tests/support/scan_api_support.rs": {
+      "sha256": "4b1682b91b0e67f20878d9d037376fc4217225d69300f3e93651d841d79ce340",
+      "byte_length": 8882
+    }
+  },
+  "source_after": {
+    "crates/noetome-cli/src/scan_api.rs": {
+      "sha256": "09a3b2ab74179a8c1b0d7d851e33cdc4d9e599c5b17d1fa1aae80031ba76a60f",
+      "byte_length": 17251
+    },
+    "crates/noetome-cli/src/scan_formula.rs": {
+      "sha256": "670d1a63c402868876a27e09feee9634559e17a118f80cef28cd16bb1df1c820",
+      "byte_length": 21153
+    },
+    "crates/noetome-cli/src/scan_input.rs": {
+      "sha256": "26b5b959c961d81c62214fd48c1cbc52b8df9309901a617e7eb9f65b2d8315a9",
+      "byte_length": 10259
+    },
+    "crates/noetome-cli/src/scan_model.rs": {
+      "sha256": "676e9f8054c682b57ca3918bc4b64bf6d5c642a377cf43cbd92ae71b1ad069b5",
+      "byte_length": 5838
+    },
+    "crates/noetome-cli/src/scan_render.rs": {
+      "sha256": "8219c543d5d76e42efcfac55604a41e6989983638916a3619ac1835af9643714",
+      "byte_length": 5054
+    },
+    "crates/noetome-cli/src/extraction_api.rs": {
+      "sha256": "3bf0417533891456f5ca89ff9022125faf85183402dc5fe25b99f3ca1630d415",
+      "byte_length": 21429
+    },
+    "crates/noetome-cli/tests/scan_formula.rs": {
+      "sha256": "47673397edf06fd204e9ce6b6c55325d08a513a7a684418a3edc65e618269e00",
+      "byte_length": 18636
+    },
+    "crates/noetome-cli/tests/support/scan_guard_tests.rs": {
+      "sha256": "9a4b4608acd7f6b979dc284378861281f2d072503cd754b2dd906f76d2278a9b",
+      "byte_length": 11301
+    },
+    "crates/noetome-cli/tests/support/scan_api_support.rs": {
+      "sha256": "4b1682b91b0e67f20878d9d037376fc4217225d69300f3e93651d841d79ce340",
+      "byte_length": 8882
+    }
+  },
+  "source_stable": true,
+  "steps": [
+    {
+      "name": "fmt",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "exit_code": 0,
+      "test_results": []
+    },
+    {
+      "name": "check",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "check",
+        "--workspace",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "test_results": []
+    },
+    {
+      "name": "shared-api",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "test",
+        "-p",
+        "noetome-cli",
+        "--lib",
+        "extraction_api",
+        "--locked",
+        "--offline",
+        "--",
+        "--test-threads=1"
+      ],
+      "exit_code": 0,
+      "test_results": [
+        "test result: ok. 43 passed; 0 failed; 0 ignored; 0 measured; 389 filtered out; finished in 1.79s"
+      ]
+    },
+    {
+      "name": "private",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "test",
+        "-p",
+        "noetome-cli",
+        "--lib",
+        "scan_formula",
+        "--locked",
+        "--offline",
+        "--",
+        "--test-threads=4"
+      ],
+      "exit_code": 0,
+      "test_results": [
+        "test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 418 filtered out; finished in 1.34s"
+      ]
+    },
+    {
+      "name": "ordinary",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "test",
+        "-p",
+        "noetome-cli",
+        "--test",
+        "scan_formula",
+        "--locked",
+        "--offline",
+        "--",
+        "--test-threads=4"
+      ],
+      "exit_code": 0,
+      "test_results": [
+        "test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.83s"
+      ]
+    },
+    {
+      "name": "build",
+      "argv": [
+        "/home/lyinn/.local/bin/cargo",
+        "build",
+        "-p",
+        "noetome-cli",
+        "--bin",
+        "noetome",
+        "--locked",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "test_results": []
+    },
+    {
+      "name": "diff",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "test_results": []
+    }
+  ],
+  "real_model_calls": 0,
+  "paid_calls": 0,
+  "scope": "shared credential echo normalization; prior Linux parallel100ms fixture failures retained; full shared API suite serial, scan tests4threads; Windows full4threads is separate",
+  "binary": {
+    "path": "/home/lyinn/project/Noetome/.artifacts/b06v-t02-scan-api-echo-fixed-final/noetome-linux",
+    "sha256": "0791ee1546010a1b8a3254251267dec1fc6bf2c9359419d6f3831697f3b0b641",
+    "byte_length": 150749080,
+    "nlink": 1
+  }
+}

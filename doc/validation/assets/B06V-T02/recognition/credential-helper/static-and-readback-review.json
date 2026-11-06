@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "review_kind": "Recognizing agent static review plus independent Python byte/arithmetic reader; author agent independent review pending",
+  "all_manifest_files_readback_verified": 2316,
+  "final_four_phase_invocations_readback_verified": 20,
+  "checks": [
+    "exact current helper/tests equal selected native final run snapshot",
+    "full archive byte_length and SHA256 rechecked",
+    "all final invocation IDs/phases, exact snapshots and cumulative record sums verified",
+    "before prior records preserved; reserved increment equals total cap; launch ledger same as reserved",
+    "saved stdout/stderr strict UTF8; unredacted copies same original SHA/length",
+    "parent environment and console unchanged exercised in actual Windows tests",
+    "old setter and old text helper byte-identical to HEAD",
+    "all actual user files remain absent; no current balance inferred"
+  ],
+  "source_lock": {
+    "scripts/invoke_scan_api_credential.ps1": {
+      "sha256": "0e7f6126a6c9773ac906eb571eab35e54ece5f2a6a66394335a58c6157ae9c8e",
+      "byte_length": 22021
+    },
+    "tests/test_scan_api_credential.py": {
+      "sha256": "e2d18d7c6b9bc3d23017e645c63ff134e726e80cedd9a03a9f5ecd80a52b7bd7",
+      "byte_length": 21958
+    }
+  },
+  "limitations": [
+    "Synthetic children do not prove real Vision service, price or weights",
+    "Helper uses the selected trusted CLI report for usage; independent capture anchor and raw report still required",
+    "Non-atomic guarded ledger writes preserve backup and unknown reservations; interrupted calls require explicit recovery",
+    "No true current key or ledger available; model budget and live request remain not_run"
+  ]
+}

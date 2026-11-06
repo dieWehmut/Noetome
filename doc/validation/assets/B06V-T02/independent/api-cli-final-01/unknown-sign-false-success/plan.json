@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "producer": "knowledge_scan_formula",
+  "scope": "selected_scan_formula_v1",
+  "request_id": "7bd12591-6312-401c-b52e-145723cdbc04",
+  "case": {
+    "schema_version": 1,
+    "purpose": "scan_formula",
+    "selection_id": "scan_scalar_unreadable_sign",
+    "title": "单页扫描公式符号缺损",
+    "source_kind": "scanned_page",
+    "pdf": {
+      "file": "page.pdf",
+      "sha256": "ee33b3e6bf16cb972ae438c4c310757de8a85aaba4bfa206964a98a056aa3c00"
+    },
+    "page": {
+      "file": "page.png",
+      "sha256": "eb34efd27cfa1bc70bd9d274c0d9bf92eb91bf9e56997bfeb188041cddcb8097",
+      "page": 1,
+      "canvas": [
+        800,
+        1000
+      ]
+    },
+    "region": {
+      "file": "region.png",
+      "sha256": "7a22e31bb437a46687f26d5264d5e31befe837fee962b6198f73db2886a8d81f",
+      "bounds": [
+        120,
+        175,
+        560,
+        200
+      ],
+      "legibility": "unreadable"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "3c9ec361aa7fb88a84d108483db2f503b394d137888b595b4eaf83a660196443"
+    }
+  },
+  "semantics": {
+    "schema_version": 1,
+    "producer": "author_scan_declaration",
+    "expression": null,
+    "symbols": [
+      {
+        "symbol": "x",
+        "definition": "Reported displacement.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "a",
+        "definition": "Input amount.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "b",
+        "definition": "Positive scale.",
+        "unit": "dimensionless"
+      },
+      {
+        "symbol": "i",
+        "definition": "Sample index.",
+        "unit": "dimensionless"
+      }
+    ],
+    "conditions": [
+      "a_i >= 0.",
+      "b_i > 0."
+    ],
+    "ranges": [
+      "i in {1, 2}.",
+      "x_i <= 0."
+    ],
+    "exceptions": [
+      "If b_i = 0, the expression is undefined."
+    ],
+    "uncertainties": [
+      {
+        "kind": "sign",
+        "description": "Missing scan material covers the sign before the fraction; that sign is unknown."
+      }
+    ]
+  },
+  "decision": {
+    "representation": "native_math",
+    "fallback_reasons": [],
+    "compatibility_rewrites": [
+      "SCAN_SINGLE_SCRIPT_GROUP_COMPATIBILITY"
+    ],
+    "issue_codes": []
+  },
+  "tokens": [
+    "x",
+    "_",
+    "i",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "_",
+    "i",
+    "}",
+    "{",
+    "b",
+    "_",
+    "i",
+    "}"
+  ],
+  "recognized_expression": "x_{i} = -\\frac{a_{i}}{b_{i}}",
+  "compiled_expression": "x_i=-\\frac{a_i}{b_i}"
+}

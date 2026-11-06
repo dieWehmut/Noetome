@@ -1,0 +1,107 @@
+{
+  "scope": "Only Add-Type and Hide-Credential definitions from selected source; public literal fake keys; no CLI/HTTP/DPAPI/ledger",
+  "powershell": "7.6.5",
+  "console_before": 936,
+  "console_after": 936,
+  "console_unchanged": true,
+  "records": [
+    {
+      "name": "plain",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "single-unicode",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "original-nested-json-266-bytes",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "ordinary-utf8-exact",
+      "passed": true,
+      "expected_redaction": false,
+      "actual_utf8_base64": "5Lit5paH5oql5ZGKIM6xIM6yIM68Cuato+W4uOWOn+S7tiBVbmljb2RlIOS/neeVmeOAgg==",
+      "expected_utf8_base64": "5Lit5paH5oql5ZGKIM6xIM6yIM68Cuato+W4uOWOn+S7tiBVbmljb2RlIOS/neeVmeOAgg=="
+    },
+    {
+      "name": "depth-31",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "depth-32",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "depth-33",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "depth-40",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "literal-n-mixed-depth",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "literal-unicode-mixed-depth",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "literal-quote-mixed-depth",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "literal-backslashes-mixed-depth",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "literal-tab-mixed-depth",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    },
+    {
+      "name": "tiny-normalized-key-fails-closed",
+      "passed": true,
+      "expected_redaction": true,
+      "actual_utf8_base64": "W3JlZGFjdGVkXQ==",
+      "expected_utf8_base64": "W3JlZGFjdGVkXQ=="
+    }
+  ]
+}

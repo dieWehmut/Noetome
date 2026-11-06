@@ -1,0 +1,79 @@
+test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_powershell.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) ... 
+  test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_powershell.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=0) ... FAIL
+  test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_powershell.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=1) ... FAIL
+  test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_powershell.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=2) ... FAIL
+test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_pwsh.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) ... 
+  test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_pwsh.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=0) ... FAIL
+  test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_pwsh.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=1) ... FAIL
+  test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_pwsh.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=2) ... FAIL
+
+======================================================================
+FAIL: test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_powershell.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 397, in test_literal_key_escapes_and_nested_suffix_cannot_hide_echo
+    self.check_nested_echo_omitted("special_mixed_leak",key=key)
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 363, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[803 chars] ✓\n' != '[redacted]'
+Diff is 807 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+======================================================================
+FAIL: test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_powershell.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 397, in test_literal_key_escapes_and_nested_suffix_cannot_hide_echo
+    self.check_nested_echo_omitted("special_mixed_leak",key=key)
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 363, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[805 chars] ✓\n' != '[redacted]'
+Diff is 808 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+======================================================================
+FAIL: test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_powershell.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 397, in test_literal_key_escapes_and_nested_suffix_cannot_hide_echo
+    self.check_nested_echo_omitted("special_mixed_leak",key=key)
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 363, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[807 chars] ✓\n' != '[redacted]'
+Diff is 811 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+======================================================================
+FAIL: test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_pwsh.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 397, in test_literal_key_escapes_and_nested_suffix_cannot_hide_echo
+    self.check_nested_echo_omitted("special_mixed_leak",key=key)
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 363, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[803 chars] ✓\n' != '[redacted]'
+Diff is 807 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+======================================================================
+FAIL: test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_pwsh.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 397, in test_literal_key_escapes_and_nested_suffix_cannot_hide_echo
+    self.check_nested_echo_omitted("special_mixed_leak",key=key)
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 363, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[805 chars] ✓\n' != '[redacted]'
+Diff is 808 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+======================================================================
+FAIL: test_literal_key_escapes_and_nested_suffix_cannot_hide_echo (__main__.ScanCredentials_pwsh.test_literal_key_escapes_and_nested_suffix_cannot_hide_echo) (key_kind=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 397, in test_literal_key_escapes_and_nested_suffix_cannot_hide_echo
+    self.check_nested_echo_omitted("special_mixed_leak",key=key)
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106j-special-red\repo\tests\test_scan_api_credential.py", line 363, in check_nested_echo_omitted
+    self.assertEqual(result.stdout,"[redacted]","Whole nested-echo stdout must be omitted")
+AssertionError: '{"args": ["scan-formula", "C:\\\\Users\\\[807 chars] ✓\n' != '[redacted]'
+Diff is 811 characters long. Set self.maxDiff to None to see it. : Whole nested-echo stdout must be omitted
+
+----------------------------------------------------------------------
+Ran 2 tests in 12.269s
+
+FAILED (failures=6)

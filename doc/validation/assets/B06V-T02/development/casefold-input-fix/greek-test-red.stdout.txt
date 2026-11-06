@@ -1,0 +1,270 @@
+
+running 1 test
+test greek_casefold_aliases_reject_before_output ... FAILED
+
+failures:
+
+---- greek_casefold_aliases_reject_before_output stdout ----
+
+thread 'greek_casefold_aliases_reject_before_output' (462646) panicked at crates/noetome-cli/tests/scan_formula.rs:410:5:
+assertion `left == right` failed: {
+  "schema_version": 1,
+  "producer": "knowledge_scan_formula",
+  "scope": "selected_scan_formula_v1",
+  "request_id": "dd5706d5-4926-456b-9ade-f9528d708763",
+  "status": "needs_review",
+  "preview_status": "blocked",
+  "knowledge_status": "pending",
+  "scientific_quality": "not_run",
+  "published": false,
+  "network_calls": 0,
+  "paid_calls": 0,
+  "case": {
+    "schema_version": 1,
+    "purpose": "scan_formula",
+    "selection_id": "scan_scalar_clear",
+    "title": "单页扫描公式清晰",
+    "source_kind": "scanned_page",
+    "pdf": {
+      "file": "page.pdf",
+      "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803"
+    },
+    "page": {
+      "file": "Σ.png",
+      "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+      "page": 1,
+      "canvas": [
+        800,
+        1000
+      ]
+    },
+    "region": {
+      "file": "ς.png",
+      "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+      "bounds": [
+        120,
+        175,
+        560,
+        200
+      ],
+      "legibility": "clear"
+    },
+    "semantics": {
+      "file": "semantics.json",
+      "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547"
+    }
+  },
+  "semantics": {
+    "schema_version": 1,
+    "producer": "author_scan_declaration",
+    "expression": "x_i = -\\frac{a_i}{b_i}",
+    "symbols": [
+      {
+        "symbol": "x",
+        "definition": "Reported displacement.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "a",
+        "definition": "Input amount.",
+        "unit": "mg"
+      },
+      {
+        "symbol": "b",
+        "definition": "Positive scale.",
+        "unit": "dimensionless"
+      },
+      {
+        "symbol": "i",
+        "definition": "Sample index.",
+        "unit": "dimensionless"
+      }
+    ],
+    "conditions": [
+      "a_i >= 0.",
+      "b_i > 0."
+    ],
+    "ranges": [
+      "i in {1, 2}.",
+      "x_i <= 0."
+    ],
+    "exceptions": [
+      "If b_i = 0, the expression is undefined."
+    ],
+    "uncertainties": []
+  },
+  "profile": {
+    "schema_version": 1,
+    "app": "Obsidian",
+    "app_version": "1.6.7",
+    "mathjax_version": "3.2.2",
+    "native_math": true,
+    "compatibility_dfrac": true,
+    "local_images": true,
+    "verified": true
+  },
+  "checks": {
+    "source_preservation": "passed",
+    "region_match": "passed",
+    "recognition": "needs_review",
+    "expression_match": "needs_review",
+    "symbol_definitions": "passed",
+    "semantic_review": "needs_review",
+    "note_plan": "not_run",
+    "rendering": "not_run",
+    "saved_output": "passed"
+  },
+  "decision": {
+    "representation": null,
+    "fallback_reasons": [],
+    "compatibility_rewrites": [],
+    "issue_codes": [
+      "SCAN_BUDGET_STOP"
+    ]
+  },
+  "recognition": null,
+  "api": {
+    "actual_model": null,
+    "confidence": null,
+    "configured_model": "noetome-test-scan",
+    "endpoint": "http://127.0.0.1:1/v1/chat/completions",
+    "errors": [
+      {
+        "code": "SCAN_BUDGET_STOP",
+        "message": "SCAN_BUDGET_STOP：single-request or total reservation exceeds the selected remaining budget; no request"
+      }
+    ],
+    "finish_reason": null,
+    "http_request_id": null,
+    "http_status": null,
+    "provider": "openai_chat_completions",
+    "request_strategy": "tangmao-vision-scan-v1",
+    "response_complete": false,
+    "response_id": null,
+    "response_receipt": null,
+    "service_tier": null,
+    "transport_mode": "local_http_test",
+    "usage": {
+      "input_reserved_tokens": 8181,
+      "model_tokenizer": null,
+      "model_usage": null,
+      "model_usage_status": "not_validated",
+      "network_attempts": 0,
+      "paid_calls": 0,
+      "price_usd": null,
+      "raw_model_usage": null,
+      "real_model_calls": 0,
+      "request_utf8_bytes": 7157,
+      "reservation_policy": "request_utf8_bytes_plus_1024_v1",
+      "reserved_tokens": 10229
+    }
+  },
+  "recognition_request_fingerprint": {
+    "sha256": "e30d2877d50fc0ba47af3be275f79e99421f4bd692b49675ddeb3baf5eafa99b",
+    "byte_length": 7157
+  },
+  "recognition_response_fingerprint": null,
+  "tokens": [
+    "x",
+    "_",
+    "i",
+    "=",
+    "-",
+    "\\frac",
+    "{",
+    "a",
+    "_",
+    "i",
+    "}",
+    "{",
+    "b",
+    "_",
+    "i",
+    "}"
+  ],
+  "plan_fingerprint": null,
+  "inputs": {
+    "original.pdf": {
+      "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+      "byte_length": 37603
+    },
+    "original.png": {
+      "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+      "byte_length": 4292
+    },
+    "page.png": {
+      "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+      "byte_length": 45594
+    },
+    "profile.json": {
+      "sha256": "96fd479ab075e38f1deb7a35c6b6fce69db7a1cbb825a2707b96cabd99fd24e9",
+      "byte_length": 200
+    },
+    "source-api-config.json": {
+      "sha256": "38fd214b5c4b958b4c23515cc3764e6c997aa2b4b2febcdebebc4da4b03203b1",
+      "byte_length": 606
+    },
+    "source-case.json": {
+      "sha256": "9164d0c80355283d96b88806dbb600258b812a6f775ce92e97c9b722d51de563",
+      "byte_length": 814
+    },
+    "source-semantics.json": {
+      "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+      "byte_length": 725
+    }
+  },
+  "files": [],
+  "artifacts": {
+    ".owner.json": {
+      "sha256": "2df95fdae0a93c26de4aa71d93a2cfc34e7cbbc5ff5a9c5d62df8bc6f2784410",
+      "byte_length": 162
+    },
+    "original.pdf": {
+      "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+      "byte_length": 37603
+    },
+    "original.png": {
+      "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+      "byte_length": 4292
+    },
+    "page.png": {
+      "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+      "byte_length": 45594
+    },
+    "profile.json": {
+      "sha256": "96fd479ab075e38f1deb7a35c6b6fce69db7a1cbb825a2707b96cabd99fd24e9",
+      "byte_length": 200
+    },
+    "request-body.json": {
+      "sha256": "e30d2877d50fc0ba47af3be275f79e99421f4bd692b49675ddeb3baf5eafa99b",
+      "byte_length": 7157
+    },
+    "request.json": {
+      "sha256": "8f065c0379ad12f52b7b7082539e1cb290e4eacb6a597702cc5a07cb9a411acf",
+      "byte_length": 1491
+    },
+    "source-api-config.json": {
+      "sha256": "38fd214b5c4b958b4c23515cc3764e6c997aa2b4b2febcdebebc4da4b03203b1",
+      "byte_length": 606
+    },
+    "source-case.json": {
+      "sha256": "9164d0c80355283d96b88806dbb600258b812a6f775ce92e97c9b722d51de563",
+      "byte_length": 814
+    },
+    "source-semantics.json": {
+      "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+      "byte_length": 725
+    }
+  }
+}
+
+  left: Some(3)
+ right: Some(2)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    greek_casefold_aliases_reject_before_output
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 14 filtered out; finished in 0.15s
+

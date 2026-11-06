@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 959, in <module>
+    if __name__=='__main__': main()
+                             ^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 954, in main
+    assert args.cli and args.output,'explicit CLI and new output required'; result=audit(args.cli,args.output)
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 866, in audit
+    fixture=verify_fixture(); cli=Path(cli).absolute(); cli_pin=file_pin(cli); root=Path(new_root).absolute(); guard_path(root.parent,directory=True); assert not root.exists(),'brand-new audit root'; root.mkdir()
+                                                                ^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 759, in file_pin
+    path = Path(path); guard_path(path, directory=False); before = path.stat()
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/scripts/verify_knowledge_conflicts.py", line 43, in guard_path
+    assert stat.S_ISREG(info.st_mode) and info.st_nlink == 1, "ordinary single-link file required"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ordinary single-link file required

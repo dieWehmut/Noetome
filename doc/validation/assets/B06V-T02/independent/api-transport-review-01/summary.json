@@ -1,0 +1,357 @@
+{
+  "status": "passed",
+  "ordinary_cli_calls": 2,
+  "actual_client_network_attempts": 2,
+  "actual_server_posts": 1,
+  "real_model_calls": 0,
+  "paid_calls": 0,
+  "records": [
+    {
+      "name": "timeout",
+      "command": [
+        "/home/lyinn/project/Noetome/.artifacts/b06v-t02-scan-api-final-01/noetome-linux",
+        "knowledge",
+        "scan-formula",
+        "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T02/independent/api-transport-review-01/timeout/case",
+        "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T02/independent/api-transport-review-01/timeout/api.json",
+        "/home/lyinn/project/Noetome/fixtures/scan-formula/profiles/native.json",
+        "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T02/independent/api-transport-review-01/timeout/vault"
+      ],
+      "exit_code": 3,
+      "actual_server_posts": 1,
+      "real_model_calls": 0,
+      "paid_calls": 0,
+      "source_before": {
+        "case.json": {
+          "sha256": "0ca6d59df807c4b9811b2c17e69bc5b4be7a245b9df586c15a95c1299e3c9e83",
+          "byte_length": 821
+        },
+        "page.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "page.png": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        },
+        "region.png": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        },
+        "semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        }
+      },
+      "source_after": {
+        "case.json": {
+          "sha256": "0ca6d59df807c4b9811b2c17e69bc5b4be7a245b9df586c15a95c1299e3c9e83",
+          "byte_length": 821
+        },
+        "page.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "page.png": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        },
+        "region.png": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        },
+        "semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        }
+      },
+      "sentinel_before": {
+        "sha256": "2a81d09a6fbd8ebfdbce5955e7b595a26e91431e6aba6c82c10187d6e4f32243",
+        "byte_length": 20
+      },
+      "sentinel_after": {
+        "sha256": "2a81d09a6fbd8ebfdbce5955e7b595a26e91431e6aba6c82c10187d6e4f32243",
+        "byte_length": 20
+      },
+      "independent": {
+        "status": "passed",
+        "author_formula_count": 1,
+        "author_state": "clear",
+        "representation": null,
+        "issue_codes": [
+          "EXTRACT_TIMEOUT"
+        ],
+        "original_bytes_unchanged": true,
+        "transport_binding": "not_run",
+        "ordinary_cli_binding": "passed",
+        "cumulative_budget_binding": "not_run",
+        "real_model_calls": 0,
+        "scientific_quality": "not_run"
+      },
+      "files": {
+        "api.json": {
+          "sha256": "ab2899342d15c406a57922d9f8b1a96954e0809a23b40bc0ff997155931fde90",
+          "byte_length": 623
+        },
+        "case/case.json": {
+          "sha256": "0ca6d59df807c4b9811b2c17e69bc5b4be7a245b9df586c15a95c1299e3c9e83",
+          "byte_length": 821
+        },
+        "case/page.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "case/page.png": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        },
+        "case/region.png": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        },
+        "case/semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        },
+        "human-sentinel.bin": {
+          "sha256": "2a81d09a6fbd8ebfdbce5955e7b595a26e91431e6aba6c82c10187d6e4f32243",
+          "byte_length": 20
+        },
+        "stderr.bin": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "stdout.bin": {
+          "sha256": "f56b457a563d7f05175b63a46160d9484b5b619137653adcad20b4f30fafb36b",
+          "byte_length": 7152
+        },
+        "vault/.owner.json": {
+          "sha256": "7cbfb02b12d02e99630ac8be9d399b44551845e337a69c6ff558fcd61a212e5b",
+          "byte_length": 162
+        },
+        "vault/original.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "vault/original.png": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        },
+        "vault/page.png": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        },
+        "vault/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        },
+        "vault/request-body.json": {
+          "sha256": "8d1abc470bcd4973b087073958b005beeb07ec0a585c6f50b1af99af6b4454a6",
+          "byte_length": 7169
+        },
+        "vault/request.json": {
+          "sha256": "48be82029dbf49c29acab64eb852bc4723ab5b9900338a9975cd8cc5642a4be1",
+          "byte_length": 1517
+        },
+        "vault/response.bin": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "vault/scan.json": {
+          "sha256": "0c6168a2cd6c1fd8dec7cfa25e72c792587b92f85b436882e2f90c9a2c349c5e",
+          "byte_length": 7151
+        },
+        "vault/scan.md": {
+          "sha256": "56e70c0f127d96f846eee62ac644b96b2ed5d9f37c0788b99bb77e0c98277274",
+          "byte_length": 7594
+        },
+        "vault/source-api-config.json": {
+          "sha256": "ab2899342d15c406a57922d9f8b1a96954e0809a23b40bc0ff997155931fde90",
+          "byte_length": 623
+        },
+        "vault/source-case.json": {
+          "sha256": "0ca6d59df807c4b9811b2c17e69bc5b4be7a245b9df586c15a95c1299e3c9e83",
+          "byte_length": 821
+        },
+        "vault/source-semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        }
+      }
+    },
+    {
+      "name": "connection-refused",
+      "command": [
+        "/home/lyinn/project/Noetome/.artifacts/b06v-t02-scan-api-final-01/noetome-linux",
+        "knowledge",
+        "scan-formula",
+        "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T02/independent/api-transport-review-01/connection-refused/case",
+        "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T02/independent/api-transport-review-01/connection-refused/api.json",
+        "/home/lyinn/project/Noetome/fixtures/scan-formula/profiles/native.json",
+        "/home/lyinn/project/Noetome/doc/validation/assets/B06V-T02/independent/api-transport-review-01/connection-refused/vault"
+      ],
+      "exit_code": 3,
+      "actual_server_posts": 0,
+      "real_model_calls": 0,
+      "paid_calls": 0,
+      "source_before": {
+        "case.json": {
+          "sha256": "0ca6d59df807c4b9811b2c17e69bc5b4be7a245b9df586c15a95c1299e3c9e83",
+          "byte_length": 821
+        },
+        "page.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "page.png": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        },
+        "region.png": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        },
+        "semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        }
+      },
+      "source_after": {
+        "case.json": {
+          "sha256": "0ca6d59df807c4b9811b2c17e69bc5b4be7a245b9df586c15a95c1299e3c9e83",
+          "byte_length": 821
+        },
+        "page.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "page.png": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        },
+        "region.png": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        },
+        "semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        }
+      },
+      "sentinel_before": {
+        "sha256": "2a81d09a6fbd8ebfdbce5955e7b595a26e91431e6aba6c82c10187d6e4f32243",
+        "byte_length": 20
+      },
+      "sentinel_after": {
+        "sha256": "2a81d09a6fbd8ebfdbce5955e7b595a26e91431e6aba6c82c10187d6e4f32243",
+        "byte_length": 20
+      },
+      "independent": {
+        "status": "passed",
+        "author_formula_count": 1,
+        "author_state": "clear",
+        "representation": null,
+        "issue_codes": [
+          "EXTRACT_API_TRANSPORT"
+        ],
+        "original_bytes_unchanged": true,
+        "transport_binding": "not_run",
+        "ordinary_cli_binding": "passed",
+        "cumulative_budget_binding": "not_run",
+        "real_model_calls": 0,
+        "scientific_quality": "not_run"
+      },
+      "files": {
+        "api.json": {
+          "sha256": "13a2bfcaeb701a49d22bbe147e3516340bcf05f7c7871603544014b1dd89d023",
+          "byte_length": 623
+        },
+        "case/case.json": {
+          "sha256": "0ca6d59df807c4b9811b2c17e69bc5b4be7a245b9df586c15a95c1299e3c9e83",
+          "byte_length": 821
+        },
+        "case/page.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "case/page.png": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        },
+        "case/region.png": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        },
+        "case/semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        },
+        "human-sentinel.bin": {
+          "sha256": "2a81d09a6fbd8ebfdbce5955e7b595a26e91431e6aba6c82c10187d6e4f32243",
+          "byte_length": 20
+        },
+        "stderr.bin": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "stdout.bin": {
+          "sha256": "cdf4d18d77df6739efc087688ecd4b72d3805ed0a8b0bbbd460ce65df7eca52e",
+          "byte_length": 7170
+        },
+        "vault/.owner.json": {
+          "sha256": "cfde27e92c64fd6307a74e8c12a18eb8bae342b95d3dfeff873dc4ee887de64e",
+          "byte_length": 162
+        },
+        "vault/original.pdf": {
+          "sha256": "147a454d1814793df52120417cca2172daa8dd81bfb6e242cbb64935ad911803",
+          "byte_length": 37603
+        },
+        "vault/original.png": {
+          "sha256": "8b84103383f6d4a6fc4054f2221c3ff0e41bf355b4db09a3b085e0af0ec2d4bc",
+          "byte_length": 4292
+        },
+        "vault/page.png": {
+          "sha256": "b416f4d3aea278bb3a1d05682183b7ad56a4c9bfb6bbb7bde61b9185343028c5",
+          "byte_length": 45594
+        },
+        "vault/profile.json": {
+          "sha256": "2025dadc2bd5d6a3ab508ff3b3d10e62330d3f1ad0e5571841ae29e86c00b553",
+          "byte_length": 201
+        },
+        "vault/request-body.json": {
+          "sha256": "8d1abc470bcd4973b087073958b005beeb07ec0a585c6f50b1af99af6b4454a6",
+          "byte_length": 7169
+        },
+        "vault/request.json": {
+          "sha256": "3216bfd7e9f67ef196200728a32fd220154de5f6e29685129eec3d8e2b54d3ae",
+          "byte_length": 1539
+        },
+        "vault/response.bin": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "vault/scan.json": {
+          "sha256": "cc777a3c743f1054d6be38893a2f0a5c9b36c22eb1993c54b3a50b8c6f98921a",
+          "byte_length": 7169
+        },
+        "vault/scan.md": {
+          "sha256": "f733b213231e50c5981565a388eb3d32bf21e3abfc76a353d9d844437ac1870c",
+          "byte_length": 7612
+        },
+        "vault/source-api-config.json": {
+          "sha256": "13a2bfcaeb701a49d22bbe147e3516340bcf05f7c7871603544014b1dd89d023",
+          "byte_length": 623
+        },
+        "vault/source-case.json": {
+          "sha256": "0ca6d59df807c4b9811b2c17e69bc5b4be7a245b9df586c15a95c1299e3c9e83",
+          "byte_length": 821
+        },
+        "vault/source-semantics.json": {
+          "sha256": "83be529ba9430eb748ae185553718607e0c61e0d417519b3c66697c8d44e8547",
+          "byte_length": 725
+        }
+      }
+    }
+  ],
+  "mode": "supplemental ordinary CLI artificial transport failures; not additional author or live model cases"
+}

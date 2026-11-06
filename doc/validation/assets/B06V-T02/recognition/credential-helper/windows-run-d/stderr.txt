@@ -1,0 +1,55 @@
+test_actual_four_phase_receipts_bind_selected_bytes_and_usage (__main__.ScanCredentials_powershell.test_actual_four_phase_receipts_bind_selected_bytes_and_usage) ... FAIL
+test_concurrent_second_invocation_cannot_reserve_same_ledger (__main__.ScanCredentials_powershell.test_concurrent_second_invocation_cannot_reserve_same_ledger) ... ok
+test_corrupt_ledger_arithmetic_and_fake_quota_rejected_before_launch (__main__.ScanCredentials_powershell.test_corrupt_ledger_arithmetic_and_fake_quota_rejected_before_launch) ... ok
+test_duplicate_and_unicode_escaped_ledger_keys_rejected (__main__.ScanCredentials_powershell.test_duplicate_and_unicode_escaped_ledger_keys_rejected) ... ok
+test_duplicate_configuration_key_rejected_before_credential_use (__main__.ScanCredentials_powershell.test_duplicate_configuration_key_rejected_before_credential_use) ... ok
+test_hardlinked_credential_or_ledger_rejected (__main__.ScanCredentials_powershell.test_hardlinked_credential_or_ledger_rejected) ... ok
+test_malformed_child_output_retains_unconfirmed_reservation (__main__.ScanCredentials_powershell.test_malformed_child_output_retains_unconfirmed_reservation) ... ok
+test_missing_current_ledger_never_creates_zero_account (__main__.ScanCredentials_powershell.test_missing_current_ledger_never_creates_zero_account) ... ok
+test_missing_key_never_launches_or_mutates_ledger (__main__.ScanCredentials_powershell.test_missing_key_never_launches_or_mutates_ledger) ... ok
+test_parent_environment_unchanged_and_existing_env_reference_reused (__main__.ScanCredentials_powershell.test_parent_environment_unchanged_and_existing_env_reference_reused) ... ok
+test_plain_and_unicode_escaped_echo_redacted (__main__.ScanCredentials_powershell.test_plain_and_unicode_escaped_echo_redacted) ... ok
+test_prior_history_and_unconfirmed_reservation_are_preserved (__main__.ScanCredentials_powershell.test_prior_history_and_unconfirmed_reservation_are_preserved) ... ok
+test_record_totals_cannot_hide_prior_usage (__main__.ScanCredentials_powershell.test_record_totals_cannot_hide_prior_usage) ... ok
+test_unknown_usage_keeps_reservation (__main__.ScanCredentials_powershell.test_unknown_usage_keeps_reservation) ... ok
+test_valid_usage_settles_even_when_scan_cli_returns_semantic_failure (__main__.ScanCredentials_powershell.test_valid_usage_settles_even_when_scan_cli_returns_semantic_failure) ... ok
+test_verified_zero_request_refunds_without_spend (__main__.ScanCredentials_powershell.test_verified_zero_request_refunds_without_spend) ... ok
+test_zero_budget_and_invalid_route_never_touch_ledger (__main__.ScanCredentials_powershell.test_zero_budget_and_invalid_route_never_touch_ledger) ... ok
+test_actual_four_phase_receipts_bind_selected_bytes_and_usage (__main__.ScanCredentials_pwsh.test_actual_four_phase_receipts_bind_selected_bytes_and_usage) ... FAIL
+test_concurrent_second_invocation_cannot_reserve_same_ledger (__main__.ScanCredentials_pwsh.test_concurrent_second_invocation_cannot_reserve_same_ledger) ... ok
+test_corrupt_ledger_arithmetic_and_fake_quota_rejected_before_launch (__main__.ScanCredentials_pwsh.test_corrupt_ledger_arithmetic_and_fake_quota_rejected_before_launch) ... ok
+test_duplicate_and_unicode_escaped_ledger_keys_rejected (__main__.ScanCredentials_pwsh.test_duplicate_and_unicode_escaped_ledger_keys_rejected) ... ok
+test_duplicate_configuration_key_rejected_before_credential_use (__main__.ScanCredentials_pwsh.test_duplicate_configuration_key_rejected_before_credential_use) ... ok
+test_hardlinked_credential_or_ledger_rejected (__main__.ScanCredentials_pwsh.test_hardlinked_credential_or_ledger_rejected) ... ok
+test_malformed_child_output_retains_unconfirmed_reservation (__main__.ScanCredentials_pwsh.test_malformed_child_output_retains_unconfirmed_reservation) ... ok
+test_missing_current_ledger_never_creates_zero_account (__main__.ScanCredentials_pwsh.test_missing_current_ledger_never_creates_zero_account) ... ok
+test_missing_key_never_launches_or_mutates_ledger (__main__.ScanCredentials_pwsh.test_missing_key_never_launches_or_mutates_ledger) ... ok
+test_parent_environment_unchanged_and_existing_env_reference_reused (__main__.ScanCredentials_pwsh.test_parent_environment_unchanged_and_existing_env_reference_reused) ... ok
+test_plain_and_unicode_escaped_echo_redacted (__main__.ScanCredentials_pwsh.test_plain_and_unicode_escaped_echo_redacted) ... ok
+test_prior_history_and_unconfirmed_reservation_are_preserved (__main__.ScanCredentials_pwsh.test_prior_history_and_unconfirmed_reservation_are_preserved) ... ok
+test_record_totals_cannot_hide_prior_usage (__main__.ScanCredentials_pwsh.test_record_totals_cannot_hide_prior_usage) ... ok
+test_unknown_usage_keeps_reservation (__main__.ScanCredentials_pwsh.test_unknown_usage_keeps_reservation) ... ok
+test_valid_usage_settles_even_when_scan_cli_returns_semantic_failure (__main__.ScanCredentials_pwsh.test_valid_usage_settles_even_when_scan_cli_returns_semantic_failure) ... ok
+test_verified_zero_request_refunds_without_spend (__main__.ScanCredentials_pwsh.test_verified_zero_request_refunds_without_spend) ... ok
+test_zero_budget_and_invalid_route_never_touch_ledger (__main__.ScanCredentials_pwsh.test_zero_budget_and_invalid_route_never_touch_ledger) ... ok
+
+======================================================================
+FAIL: test_actual_four_phase_receipts_bind_selected_bytes_and_usage (__main__.ScanCredentials_powershell.test_actual_four_phase_receipts_bind_selected_bytes_and_usage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106d\repo\tests\test_scan_api_credential.py", line 174, in test_actual_four_phase_receipts_bind_selected_bytes_and_usage
+    self.assertEqual(receipts["launch"]["launch"]["pid"], json.loads((self.work/"child-started.json").read_bytes())["pid"])
+AssertionError: 60584 != 49704
+
+======================================================================
+FAIL: test_actual_four_phase_receipts_bind_selected_bytes_and_usage (__main__.ScanCredentials_pwsh.test_actual_four_phase_receipts_bind_selected_bytes_and_usage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Noetome\.artifacts\b06v-t02-scan-helper-tests-20261106d\repo\tests\test_scan_api_credential.py", line 174, in test_actual_four_phase_receipts_bind_selected_bytes_and_usage
+    self.assertEqual(receipts["launch"]["launch"]["pid"], json.loads((self.work/"child-started.json").read_bytes())["pid"])
+AssertionError: 19396 != 72008
+
+----------------------------------------------------------------------
+Ran 34 tests in 62.886s
+
+FAILED (failures=2)

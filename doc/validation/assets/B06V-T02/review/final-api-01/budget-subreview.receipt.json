@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "status": "important_finding_requires_repair",
+  "findings": [
+    {
+      "id": "SCAN-HELPER-NESTED-ECHO",
+      "source": "scripts/invoke_scan_api_credential.ps1",
+      "line": 194,
+      "reviewed_sha256": "0e7f6126a6c9773ac906eb571eab35e54ece5f2a6a66394335a58c6157ae9c8e",
+      "actual_dual_powershell_red": true,
+      "fix_or_green_retest_by_subreview": false
+    }
+  ],
+  "current_source_pins": {
+    "scripts/invoke_scan_api_credential.ps1": {
+      "sha256": "0e7f6126a6c9773ac906eb571eab35e54ece5f2a6a66394335a58c6157ae9c8e",
+      "byte_length": 22021
+    },
+    "scripts/verify_scan_formula.py": {
+      "sha256": "36270f826c33b3fc8e65ffcec30b0557f3a3274085523ef6f299dae522a15c50",
+      "byte_length": 88952
+    },
+    "tests/test_scan_api_credential.py": {
+      "sha256": "e2d18d7c6b9bc3d23017e645c63ff134e726e80cedd9a03a9f5ecd80a52b7bd7",
+      "byte_length": 21958
+    },
+    "tests/test_verify_scan_formula.py": {
+      "sha256": "f786eb4cb2505f88f4f9742b5e0d4fd16ae4c41d09df31128070285a6f721e57",
+      "byte_length": 38826
+    },
+    "doc/technical/SCAN_FORMULA_CONTRACT.md": {
+      "sha256": "1605e21042358ea00847e6613acebf324c2cb224ce5becca345a125665bc5c0d",
+      "byte_length": 10704
+    },
+    "doc/requirements/MODEL_SERVICE.md": {
+      "sha256": "84e41ac761f5529720da172e8cbf6958e0ed84ab181083580e858c53ad36086a",
+      "byte_length": 8707
+    }
+  },
+  "artifacts": {
+    "budget-subreview.md": {
+      "sha256": "23092997d78dc38d6063ae32eb228f7cc558a09ac392386e4021113dd91c406d",
+      "byte_length": 4263
+    },
+    "budget-subreview.echo-probe.ps1": {
+      "sha256": "d3db0fe2a4f3a8e28824ea07ec8774386a18aaac7944b8a56632d9da8ac2627f",
+      "byte_length": 1205
+    },
+    "budget-subreview.powershell5.stdout.txt": {
+      "sha256": "87dd1ebd405c4da992b13f102a6a0f7752b79726f92b57b2b0c1843b2a2c851e",
+      "byte_length": 329
+    },
+    "budget-subreview.powershell7.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    "budget-subreview.powershell7.stdout.txt": {
+      "sha256": "a1ecc1420bad9c8015a4e2e182dd3875ab035c2b41b9fd2421686cd7de88dc51",
+      "byte_length": 320
+    },
+    "budget-subreview.helper-original.ps1": {
+      "sha256": "0e7f6126a6c9773ac906eb571eab35e54ece5f2a6a66394335a58c6157ae9c8e",
+      "byte_length": 22021
+    },
+    "budget-subreview.echo-red.json": {
+      "sha256": "051bd2f11ce4a9b64f4ad3d3318ba42aaa59e1be64da4c5b4122b1b7ed15e275",
+      "byte_length": 2497
+    },
+    "budget-subreview.originals-readback.json": {
+      "sha256": "22dc9e997110f307a503f4d5e14ebe00d760b5e78f3392544ac1c98e36c0b2c8",
+      "byte_length": 79634
+    },
+    "budget-subreview.powershell5.stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    }
+  },
+  "originals_readback": {
+    "existing_synthetic_invocations": 20,
+    "phase_receipts": 80,
+    "ledger_snapshots": 80,
+    "files": 200,
+    "status": "passed"
+  },
+  "real_credentials_read": 0,
+  "user_ledger_mutations": 0,
+  "http_calls": 0,
+  "ordinary_cli_calls": 0,
+  "full_suites": 0,
+  "live_budget": "not_run",
+  "live_recognition": "not_run"
+}
