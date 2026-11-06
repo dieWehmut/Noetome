@@ -9,13 +9,16 @@ use std::{
 };
 use support::{Case, KEY, Server, read, repo, response, write};
 fn run(c: &Case) -> Output {
+    run_with_key(c, KEY)
+}
+fn run_with_key(c: &Case, key: &str) -> Output {
     Command::new(env!("CARGO_BIN_EXE_noetome"))
         .args(["knowledge", "scan-formula"])
         .arg(&c.case)
         .arg(&c.api)
         .arg(&c.profile)
         .arg(&c.output)
-        .env("NOETOME_TEST_SCAN_CREDENTIAL", KEY)
+        .env("NOETOME_TEST_SCAN_CREDENTIAL", key)
         .env_remove("NOETOME_TANGMAO_API_KEY")
         .output()
         .unwrap()
@@ -316,6 +319,45 @@ fn credential_echo_nested_or_malformed_is_omitted_before_persistence() {
     }
 }
 #[test]
+fn literal_escape_test_keys_and_mixed_unicode_tails_are_omitted_before_persistence() {
+    for prefix in [
+        r"noetome-test-\n-",
+        r"noetome-test-\u0065-",
+        r#"noetome-test-\"-"#,
+        r#"noetome-test-\n-\u0065-\"-"#,
+    ] {
+        let c = Case::new("clear");
+        let key = format!("{prefix}abcdef");
+        let mut tail = "abcdef"
+            .chars()
+            .map(|ch| format!("\\u{:04x}", ch as u32))
+            .collect::<String>();
+        for _ in 0..4 {
+            tail = tail.replace('\\', "\\\\");
+        }
+        let mut v = response(Some("x_i=-\\frac{a_i}{b_i}"));
+        v["model"] = json!(format!("{prefix}{tail}"));
+        let s = Server::new(v);
+        c.activate(&s);
+        let o = run_with_key(&c, &key);
+        s.finish();
+        assert_eq!(o.status.code(), Some(3));
+        let r = read(c.output.join("scan.json"));
+        assert_eq!(r["network_calls"], 1);
+        assert_eq!(r["paid_calls"], 0);
+        assert_eq!(
+            r["api"]["response_receipt"]["omission_reason"],
+            "omitted_credential_echo"
+        );
+        assert!(r["api"]["actual_model"].is_null());
+        assert!(!c.output.join("response.bin").exists());
+        assert!(!c.output.join("recognition.json").exists());
+        no_success(&c);
+        assert!(!String::from_utf8_lossy(&o.stdout).contains(&key));
+        assert!(!String::from_utf8_lossy(&o.stderr).contains(&key));
+    }
+}
+#[test]
 fn resource_config_inventory_collision_and_hardlink_protections_precede_network() {
     for mode in 0..6 {
         let c = Case::new("clear");
@@ -383,6 +425,38 @@ fn capability_byte_and_money_limits_stop_before_any_post() {
         assert_eq!(read(c.output.join("scan.json"))["network_calls"], 0);
         no_success(&c);
     }
+}
+#[test]
+fn casefold_colliding_source_references_reject_before_output() {
+    let c = Case::new("clear");
+    c.casefold_collision();
+    let o = run(&c);
+    assert_eq!(
+        o.status.code(),
+        Some(2),
+        "{}",
+        String::from_utf8_lossy(&o.stdout)
+    );
+    assert!(String::from_utf8_lossy(&o.stderr).contains("SCAN_SCHEMA"));
+    assert!(!c.output.exists());
+    assert_eq!(
+        fs::read(c.root.join("outside-sentinel.txt")).unwrap(),
+        b"human boundary bytes"
+    );
+}
+#[test]
+fn greek_casefold_aliases_reject_before_output() {
+    let c = Case::new("clear");
+    c.casefold_collision_names("Σ.png", "ς.png");
+    let o = run(&c);
+    assert_eq!(
+        o.status.code(),
+        Some(2),
+        "{}",
+        String::from_utf8_lossy(&o.stdout)
+    );
+    assert!(String::from_utf8_lossy(&o.stderr).contains("SCAN_SCHEMA"));
+    assert!(!c.output.exists());
 }
 #[test]
 fn strict_transcription_and_envelope_reject_missing_duplicate_and_invalid_fields() {

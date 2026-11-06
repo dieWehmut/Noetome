@@ -210,6 +210,27 @@ fn original_crop_pixel_mismatch_and_png_trailing_data_reject_before_http() {
     }
 }
 #[test]
+fn casefold_colliding_source_references_fail_at_the_schema_gate() {
+    let c = Case::new("clear");
+    c.casefold_collision();
+    let e = c.run().err().expect("casefold aliases must be rejected");
+    assert_eq!(e.code(), "SCAN_SCHEMA");
+    assert_eq!(e.exit_code(), 2);
+    assert!(!c.output.exists());
+}
+#[test]
+fn greek_casefold_aliases_fail_at_the_schema_gate() {
+    let c = Case::new("clear");
+    c.casefold_collision_names("Σ.png", "ς.png");
+    let e = c
+        .run()
+        .err()
+        .expect("Greek casefold aliases must be rejected");
+    assert_eq!(e.code(), "SCAN_SCHEMA");
+    assert_eq!(e.exit_code(), 2);
+    assert!(!c.output.exists());
+}
+#[test]
 fn source_inventory_changes_before_or_after_response_are_detected_and_preserved() {
     for phase in ["inputs_held", "recognition_saved", "results_saved"] {
         let c = Case::new("clear");

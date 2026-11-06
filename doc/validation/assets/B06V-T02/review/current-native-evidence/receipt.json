@@ -1,0 +1,884 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-11-06T08:56:45.099604+00:00",
+  "task": "B06V-T02",
+  "scope": "Read-only revalidation of existing exact-source Windows Rust regression and previous Linux/Windows Python receipts. No new tests, model calls, budget mutations, or original modifications. Only this new review directory is written.",
+  "current_repo": "/home/lyinn/project/Noetome",
+  "native_rust": {
+    "root": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a",
+    "input_pins": {
+      "snapshot.json": {
+        "sha256": "f0435102ae3b3c12d3e00f5d66c1084a5195b62c5aaf9493b4c8554b862464a3",
+        "byte_length": 104519
+      },
+      "root.json": {
+        "sha256": "5042c8423fb6ee7ab67fc800a34f76505a4e08d4ac66eaf56ba239a8447663d9",
+        "byte_length": 764
+      },
+      "native-runtime.json": {
+        "sha256": "b110ac589b895cefec26a4e9d218101923299eda718a68de473d71643f6ba3ad",
+        "byte_length": 1245
+      },
+      "native-commands.json": {
+        "sha256": "d2924c6b5de116d6ce7f767b261223835e8df9344235185765ee4ffb31d3edae",
+        "byte_length": 10572
+      },
+      "native-running.json": {
+        "sha256": "e4b8e4a243cd8f7f3b13ab16bf800d9736ee29e8d16b9252585e67bba8406355",
+        "byte_length": 107
+      },
+      "native-rust-final.json": {
+        "sha256": "4ae851ccd45ce16e3c2182ba01b4ef7ad61d0e32df8cf7a1b3f03f5bcd23dcef",
+        "byte_length": 108861
+      }
+    },
+    "source_file_count": 602,
+    "current_source_differences": [],
+    "final_source_matches_snapshot": true,
+    "actual_command_output_validation": [
+      {
+        "command": "cli-cache-invalidate",
+        "attempt": 1,
+        "pid": 17416,
+        "exit_code": 0,
+        "timed_out": false,
+        "source_before_after_equal": true,
+        "external_sentinel_before_after_equal": true,
+        "elapsed_seconds": 0.9060000000172295,
+        "snapshot_pin_matches": true,
+        "individual_receipt_pin": {
+          "sha256": "5b0399a08519db679bf104b1b0f3c9d12e8beeb1e7e39a2b8130ab9292f4163f",
+          "byte_length": 1426
+        },
+        "individual_receipt_equals_log": true,
+        "stdout": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/cli-cache-invalidate-attempt-1.stdout.bin",
+          "fingerprint": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_length": 0
+          },
+          "matches_receipt": true
+        },
+        "stderr": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/cli-cache-invalidate-attempt-1.stderr.bin",
+          "fingerprint": {
+            "sha256": "f2fdb219d3ac8a5a0a2f11c4045157ef6ec61b375c46350c5cd318770d8b43fb",
+            "byte_length": 38
+          },
+          "matches_receipt": true
+        }
+      },
+      {
+        "command": "fmt",
+        "attempt": 1,
+        "pid": 64500,
+        "exit_code": 0,
+        "timed_out": false,
+        "source_before_after_equal": true,
+        "external_sentinel_before_after_equal": true,
+        "elapsed_seconds": 1.3899999999557622,
+        "snapshot_pin_matches": true,
+        "individual_receipt_pin": {
+          "sha256": "c4995011aff8c795d6dce7ea4948c8b01a9a377b850c53972ce13a7dd86a6084",
+          "byte_length": 1257
+        },
+        "individual_receipt_equals_log": true,
+        "stdout": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/fmt-attempt-1.stdout.bin",
+          "fingerprint": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_length": 0
+          },
+          "matches_receipt": true
+        },
+        "stderr": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/fmt-attempt-1.stderr.bin",
+          "fingerprint": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_length": 0
+          },
+          "matches_receipt": true
+        }
+      },
+      {
+        "command": "workspace-check",
+        "attempt": 1,
+        "pid": 10484,
+        "exit_code": 0,
+        "timed_out": false,
+        "source_before_after_equal": true,
+        "external_sentinel_before_after_equal": true,
+        "elapsed_seconds": 12.78100000001723,
+        "snapshot_pin_matches": true,
+        "individual_receipt_pin": {
+          "sha256": "0eac8118a169029370e8786a6d8ababc20df49acd31b1900702507b5fc727946",
+          "byte_length": 1321
+        },
+        "individual_receipt_equals_log": true,
+        "stdout": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/workspace-check-attempt-1.stdout.bin",
+          "fingerprint": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_length": 0
+          },
+          "matches_receipt": true
+        },
+        "stderr": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/workspace-check-attempt-1.stderr.bin",
+          "fingerprint": {
+            "sha256": "6ddf15cdda7ec6a17169ff6d921c7d591140f075811c1db0ff229779b948809b",
+            "byte_length": 323
+          },
+          "matches_receipt": true
+        }
+      },
+      {
+        "command": "cli-prebuild",
+        "attempt": 1,
+        "pid": 51208,
+        "exit_code": 0,
+        "timed_out": false,
+        "source_before_after_equal": true,
+        "external_sentinel_before_after_equal": true,
+        "elapsed_seconds": 27.54700000002049,
+        "snapshot_pin_matches": true,
+        "individual_receipt_pin": {
+          "sha256": "ab018dda9c5e5b5557da9a4ed33afbd5d084089e9951c4e82e2551831bba5a58",
+          "byte_length": 1437
+        },
+        "individual_receipt_equals_log": true,
+        "stdout": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/cli-prebuild-attempt-1.stdout.bin",
+          "fingerprint": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_length": 0
+          },
+          "matches_receipt": true
+        },
+        "stderr": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/cli-prebuild-attempt-1.stderr.bin",
+          "fingerprint": {
+            "sha256": "ee6d41429afef40a5ea94fb4878fe055e80af1c5b1cd04cb06926da71ff02356",
+            "byte_length": 194
+          },
+          "matches_receipt": true
+        }
+      },
+      {
+        "command": "cli-scan-namespace",
+        "attempt": 1,
+        "pid": 59560,
+        "exit_code": 0,
+        "timed_out": false,
+        "source_before_after_equal": true,
+        "external_sentinel_before_after_equal": true,
+        "elapsed_seconds": 0.0779999999795109,
+        "snapshot_pin_matches": true,
+        "individual_receipt_pin": {
+          "sha256": "389e7bebef864e3860e9da9944d553ec746924b20557b24d51d163cec42632bf",
+          "byte_length": 1367
+        },
+        "individual_receipt_equals_log": true,
+        "stdout": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/cli-scan-namespace-attempt-1.stdout.bin",
+          "fingerprint": {
+            "sha256": "1e67d58234cf18213d43ebcf3710d328e10a30d3bb75f5f7316248c14154ed18",
+            "byte_length": 3144
+          },
+          "matches_receipt": true
+        },
+        "stderr": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/cli-scan-namespace-attempt-1.stderr.bin",
+          "fingerprint": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_length": 0
+          },
+          "matches_receipt": true
+        }
+      },
+      {
+        "command": "workspace-tests",
+        "attempt": 1,
+        "pid": 62692,
+        "exit_code": 0,
+        "timed_out": false,
+        "source_before_after_equal": true,
+        "external_sentinel_before_after_equal": true,
+        "elapsed_seconds": 237.01500000001397,
+        "snapshot_pin_matches": true,
+        "individual_receipt_pin": {
+          "sha256": "378b1d854c57877cb0b5ab5eed68dbd41154c0d64e7a63c170c5a91cd5ca4540",
+          "byte_length": 1611
+        },
+        "individual_receipt_equals_log": true,
+        "stdout": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/workspace-tests-attempt-1.stdout.bin",
+          "fingerprint": {
+            "sha256": "4c6829995518363d672a0b46dc1484ccb2b8e1ed2e341912ecd18a112db85193",
+            "byte_length": 110092
+          },
+          "matches_receipt": true
+        },
+        "stderr": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/workspace-tests-attempt-1.stderr.bin",
+          "fingerprint": {
+            "sha256": "96abc9c6c1bc6bd5c899b96a158c38fd79a74d209394ecee1057a4a1027543ee",
+            "byte_length": 6011
+          },
+          "matches_receipt": true
+        }
+      },
+      {
+        "command": "cli-build",
+        "attempt": 1,
+        "pid": 20452,
+        "exit_code": 0,
+        "timed_out": false,
+        "source_before_after_equal": true,
+        "external_sentinel_before_after_equal": true,
+        "elapsed_seconds": 2.01500000001397,
+        "snapshot_pin_matches": true,
+        "individual_receipt_pin": {
+          "sha256": "e54e8b89dc05eb5ffe6e82baa932f0a3ca3e776c96d44869acbb539753a745c4",
+          "byte_length": 1541
+        },
+        "individual_receipt_equals_log": true,
+        "stdout": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/cli-build-attempt-1.stdout.bin",
+          "fingerprint": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "byte_length": 0
+          },
+          "matches_receipt": true
+        },
+        "stderr": {
+          "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/cli-build-attempt-1.stderr.bin",
+          "fingerprint": {
+            "sha256": "f3850f3547cbceba3b86a8985cef1d760c4965c27996b6b109a096050c4ee709",
+            "byte_length": 193
+          },
+          "matches_receipt": true
+        }
+      }
+    ],
+    "parsed_rust_suite_summaries": [
+      [
+        462,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        0,
+        0
+      ],
+      [
+        12,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0
+      ],
+      [
+        7,
+        0,
+        0
+      ],
+      [
+        24,
+        0,
+        0
+      ],
+      [
+        20,
+        0,
+        0
+      ],
+      [
+        7,
+        0,
+        0
+      ],
+      [
+        7,
+        0,
+        0
+      ],
+      [
+        16,
+        0,
+        0
+      ],
+      [
+        25,
+        0,
+        0
+      ],
+      [
+        8,
+        0,
+        0
+      ],
+      [
+        27,
+        0,
+        0
+      ],
+      [
+        7,
+        0,
+        0
+      ],
+      [
+        19,
+        0,
+        0
+      ],
+      [
+        6,
+        0,
+        0
+      ],
+      [
+        13,
+        0,
+        0
+      ],
+      [
+        16,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0
+      ],
+      [
+        19,
+        0,
+        0
+      ],
+      [
+        15,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "parsed_suite_count": 23,
+    "parsed_totals": {
+      "passed": 720,
+      "failed": 0,
+      "ignored": 0
+    },
+    "parsed_summaries_equal_final": true,
+    "selected_cli": {
+      "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a/noetome-selected.exe",
+      "sha256": "91fe246b522f8261da8ad678f465021bf76660ee402ad35e3a6bb4c4c2762be7",
+      "byte_length": 25876480,
+      "matches_final": true
+    },
+    "scan_namespace_help_has_four_path_entry": true,
+    "process_probe": {
+      "argv": [
+        "powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-Command",
+        "$ErrorActionPreference=\"Stop\"; $ids=@(10484,17416,20452,51208,59560,62692,64500); $rows=@(); foreach ($id in $ids) { $p=Get-CimInstance Win32_Process -Filter (\"ProcessId=\"+$id); $rows+=@{pid=$id;present=($null -ne $p);name=$p.Name;creation_date=([string]$p.CreationDate)} }; @{observed_at=[DateTime]::UtcNow.ToString(\"o\");observed_pids=$rows}|ConvertTo-Json -Depth 5"
+      ],
+      "exit_code": 0,
+      "stdout": {
+        "sha256": "a2eea38f3890f351e4a659d5629884731fc734dcc3b4094a08d024ca061dd575",
+        "byte_length": 1879
+      },
+      "stderr": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "observed_pids": [
+        {
+          "creation_date": "",
+          "pid": 10484,
+          "name": null,
+          "present": false
+        },
+        {
+          "creation_date": "",
+          "pid": 17416,
+          "name": null,
+          "present": false
+        },
+        {
+          "creation_date": "",
+          "pid": 20452,
+          "name": null,
+          "present": false
+        },
+        {
+          "creation_date": "",
+          "pid": 51208,
+          "name": null,
+          "present": false
+        },
+        {
+          "creation_date": "",
+          "pid": 59560,
+          "name": null,
+          "present": false
+        },
+        {
+          "creation_date": "",
+          "pid": 62692,
+          "name": null,
+          "present": false
+        },
+        {
+          "creation_date": "",
+          "pid": 64500,
+          "name": null,
+          "present": false
+        }
+      ],
+      "observed_at": "2026-11-06T08:56:44.9402207Z"
+    },
+    "all_recorded_pids_confirmed_absent_now": true,
+    "reusable_for_current_source": true
+  },
+  "previous_linux_python": {
+    "receipt": {
+      "path": "doc/validation/assets/B06V-T02/linux/python-full-final-02/receipt.json",
+      "sha256": "133c836e6c3c3f6241d1af0c2f3ed4a4dd1025f2d389eb08c9aa6e5c09de28fb",
+      "byte_length": 198031
+    },
+    "stdout": {
+      "sha256": "f8312941eccac5694112690a158abd8e785a22f3075e174779cd6758c8cece21",
+      "byte_length": 372
+    },
+    "stderr": {
+      "sha256": "c7903fe5558d418121f37998c31e10a687130c7d1051172bb701e7a715b633c5",
+      "byte_length": 413
+    },
+    "historical_argv": [
+      "/tmp/noetome-b05-t03-python/bin/python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_*.py"
+    ],
+    "historical_exit_code": 0,
+    "historical_source_before_after_equal": true,
+    "historical_run": 298,
+    "historical_skipped": 18,
+    "historical_passed": 280,
+    "source_file_count": 566,
+    "current_source_differences": [
+      {
+        "path": "scripts/verify_scan_formula.py",
+        "tested": {
+          "sha256": "ec0374a52ba5c895c07864160217731f845ab1860153f3ff6236425dc065e71b",
+          "byte_length": 88854
+        },
+        "current": {
+          "sha256": "1b7bd5cc0b9791abb1b84de5359a22bbd191f069eac0bc624df57cdd432beac8",
+          "byte_length": 88993
+        }
+      },
+      {
+        "path": "scripts/invoke_scan_api_credential.ps1",
+        "tested": {
+          "sha256": "0e7f6126a6c9773ac906eb571eab35e54ece5f2a6a66394335a58c6157ae9c8e",
+          "byte_length": 22021
+        },
+        "current": {
+          "sha256": "2a5ee68be14d8af6c3124d075f042c19c577778b8bb836fa18c37d0f6d6aba7e",
+          "byte_length": 25974
+        }
+      },
+      {
+        "path": "tests/test_scan_api_credential.py",
+        "tested": {
+          "sha256": "e2d18d7c6b9bc3d23017e645c63ff134e726e80cedd9a03a9f5ecd80a52b7bd7",
+          "byte_length": 21958
+        },
+        "current": {
+          "sha256": "2b743a0378b20596fb468ef68a7015d1c7f034415993e0626bdec700fe353127",
+          "byte_length": 25888
+        }
+      },
+      {
+        "path": "tests/test_verify_scan_formula.py",
+        "tested": {
+          "sha256": "52e3cc8f3fc8cfd8162314fa07e666e0d849a729047d4b6e270baced1b81e986",
+          "byte_length": 37999
+        },
+        "current": {
+          "sha256": "c2299df3e1ef8a8cdaf46471859be780898870195329130f9c0526df6de78b78",
+          "byte_length": 39006
+        }
+      },
+      {
+        "path": "crates/noetome-cli/src/extraction_api.rs",
+        "tested": {
+          "sha256": "450fee15a0527b2d9ae1f538136c9867c9708a59c8967950447ef389c9c63649",
+          "byte_length": 19328
+        },
+        "current": {
+          "sha256": "3bf0417533891456f5ca89ff9022125faf85183402dc5fe25b99f3ca1630d415",
+          "byte_length": 21429
+        }
+      },
+      {
+        "path": "crates/noetome-cli/src/scan_input.rs",
+        "tested": {
+          "sha256": "fd828bc23f82e27174a1c84172f4ab30119c30bc7442a1d47c77c25e0f4344e0",
+          "byte_length": 9911
+        },
+        "current": {
+          "sha256": "26b5b959c961d81c62214fd48c1cbc52b8df9309901a617e7eb9f65b2d8315a9",
+          "byte_length": 10259
+        }
+      },
+      {
+        "path": "crates/noetome-cli/tests/scan_formula.rs",
+        "tested": {
+          "sha256": "665f7ed6b3a84dd00f7269ab6a9eb8015a65ee460a81edb3b12d57409fe7aae0",
+          "byte_length": 16218
+        },
+        "current": {
+          "sha256": "47673397edf06fd204e9ce6b6c55325d08a513a7a684418a3edc65e618269e00",
+          "byte_length": 18636
+        }
+      },
+      {
+        "path": "crates/noetome-cli/tests/support/scan_api_support.rs",
+        "tested": {
+          "sha256": "9e4b9da2cea51f7e4bb4c8c91b5729b09969a3837cfc36d3d2a58979c87f45ee",
+          "byte_length": 8123
+        },
+        "current": {
+          "sha256": "4b1682b91b0e67f20878d9d037376fc4217225d69300f3e93651d841d79ce340",
+          "byte_length": 8882
+        }
+      },
+      {
+        "path": "crates/noetome-cli/tests/support/scan_guard_tests.rs",
+        "tested": {
+          "sha256": "2ea013c0a8c2ea4d8b02d4b2cbef7a8640f9400d6e6bfbb4dacc4d3c573c897b",
+          "byte_length": 10624
+        },
+        "current": {
+          "sha256": "9a4b4608acd7f6b979dc284378861281f2d072503cd754b2dd906f76d2278a9b",
+          "byte_length": 11301
+        }
+      }
+    ],
+    "selected_cli_exists_matches_historical": true,
+    "reusable_as_current_final_source_regression": false,
+    "reason": "Nine relevant Rust/Python sources changed after the successful historical run; its selected CLI is the pre-echo/pre-casefold build."
+  },
+  "previous_windows_python": [
+    {
+      "root": "/mnt/d/Noetome/target/b06v-t02-api-regression-20261106a-phase2",
+      "snapshot": {
+        "sha256": "e2c81d7043a24cf7cd76818d50c424f078126196d387d8e62adc7f848b74a1c8",
+        "byte_length": 104518
+      },
+      "current_source_differences": [
+        {
+          "path": "crates/noetome-cli/src/extraction_api.rs",
+          "tested": {
+            "sha256": "450fee15a0527b2d9ae1f538136c9867c9708a59c8967950447ef389c9c63649",
+            "byte_length": 19328
+          },
+          "current": {
+            "sha256": "3bf0417533891456f5ca89ff9022125faf85183402dc5fe25b99f3ca1630d415",
+            "byte_length": 21429
+          }
+        },
+        {
+          "path": "crates/noetome-cli/src/scan_input.rs",
+          "tested": {
+            "sha256": "fd828bc23f82e27174a1c84172f4ab30119c30bc7442a1d47c77c25e0f4344e0",
+            "byte_length": 9911
+          },
+          "current": {
+            "sha256": "26b5b959c961d81c62214fd48c1cbc52b8df9309901a617e7eb9f65b2d8315a9",
+            "byte_length": 10259
+          }
+        },
+        {
+          "path": "crates/noetome-cli/tests/scan_formula.rs",
+          "tested": {
+            "sha256": "665f7ed6b3a84dd00f7269ab6a9eb8015a65ee460a81edb3b12d57409fe7aae0",
+            "byte_length": 16218
+          },
+          "current": {
+            "sha256": "47673397edf06fd204e9ce6b6c55325d08a513a7a684418a3edc65e618269e00",
+            "byte_length": 18636
+          }
+        },
+        {
+          "path": "crates/noetome-cli/tests/support/scan_api_support.rs",
+          "tested": {
+            "sha256": "9e4b9da2cea51f7e4bb4c8c91b5729b09969a3837cfc36d3d2a58979c87f45ee",
+            "byte_length": 8123
+          },
+          "current": {
+            "sha256": "4b1682b91b0e67f20878d9d037376fc4217225d69300f3e93651d841d79ce340",
+            "byte_length": 8882
+          }
+        },
+        {
+          "path": "crates/noetome-cli/tests/support/scan_guard_tests.rs",
+          "tested": {
+            "sha256": "2ea013c0a8c2ea4d8b02d4b2cbef7a8640f9400d6e6bfbb4dacc4d3c573c897b",
+            "byte_length": 10624
+          },
+          "current": {
+            "sha256": "9a4b4608acd7f6b979dc284378861281f2d072503cd754b2dd906f76d2278a9b",
+            "byte_length": 11301
+          }
+        },
+        {
+          "path": "doc/technical/SCAN_FORMULA_CONTRACT.md",
+          "tested": {
+            "sha256": "1605e21042358ea00847e6613acebf324c2cb224ce5becca345a125665bc5c0d",
+            "byte_length": 10704
+          },
+          "current": {
+            "sha256": "b74a4464694ef1dcf9c418500355634838506e8f4c1be9b26e59b89caf72f3dc",
+            "byte_length": 10889
+          }
+        },
+        {
+          "path": "scripts/invoke_scan_api_credential.ps1",
+          "tested": {
+            "sha256": "0e7f6126a6c9773ac906eb571eab35e54ece5f2a6a66394335a58c6157ae9c8e",
+            "byte_length": 22021
+          },
+          "current": {
+            "sha256": "2a5ee68be14d8af6c3124d075f042c19c577778b8bb836fa18c37d0f6d6aba7e",
+            "byte_length": 25974
+          }
+        },
+        {
+          "path": "scripts/verify_scan_formula.py",
+          "tested": {
+            "sha256": "ec0374a52ba5c895c07864160217731f845ab1860153f3ff6236425dc065e71b",
+            "byte_length": 88854
+          },
+          "current": {
+            "sha256": "1b7bd5cc0b9791abb1b84de5359a22bbd191f069eac0bc624df57cdd432beac8",
+            "byte_length": 88993
+          }
+        },
+        {
+          "path": "tests/test_scan_api_credential.py",
+          "tested": {
+            "sha256": "e2d18d7c6b9bc3d23017e645c63ff134e726e80cedd9a03a9f5ecd80a52b7bd7",
+            "byte_length": 21958
+          },
+          "current": {
+            "sha256": "2b743a0378b20596fb468ef68a7015d1c7f034415993e0626bdec700fe353127",
+            "byte_length": 25888
+          }
+        },
+        {
+          "path": "tests/test_verify_scan_formula.py",
+          "tested": {
+            "sha256": "52e3cc8f3fc8cfd8162314fa07e666e0d849a729047d4b6e270baced1b81e986",
+            "byte_length": 37999
+          },
+          "current": {
+            "sha256": "c2299df3e1ef8a8cdaf46471859be780898870195329130f9c0526df6de78b78",
+            "byte_length": 39006
+          }
+        }
+      ],
+      "observed_receipt_presence": {
+        "native-running.json": true,
+        "native-commands.json": true,
+        "native-python-final.json": false
+      },
+      "commands": [
+        {
+          "name": "python-full",
+          "attempt": 1,
+          "pid": 17416,
+          "exit_code": 1,
+          "timed_out": false,
+          "source_before_after_equal": true
+        }
+      ],
+      "stderr": {
+        "path": "/mnt/d/Noetome/target/b06v-t02-api-regression-20261106a-phase2/python-full-attempt-1.stderr.bin",
+        "sha256": "11555b108a9e304fd82721456d954cbddf44ddfe656d3b5fe75ff52834e3b5bd",
+        "byte_length": 3614
+      },
+      "observed_failure_summary": "Ran 300 tests in 112.789s\n\nFAILED (errors=2, skipped=3)",
+      "observed_errors": [
+        "legacy repo/target/debug/noetome.exe missing",
+        "historical linux-direct-01/clear/response.json absent from selected snapshot"
+      ]
+    },
+    {
+      "root": "/mnt/d/Noetome/target/b06v-t02-api-regression-20261106a-phase2-2",
+      "snapshot": {
+        "sha256": "3da60fc077cbb0d5f5cc4e28d9d1bb728bfcd971b4c972c3de465e1e8f79f40d",
+        "byte_length": 104723
+      },
+      "current_source_differences": [
+        {
+          "path": "crates/noetome-cli/src/extraction_api.rs",
+          "tested": {
+            "sha256": "450fee15a0527b2d9ae1f538136c9867c9708a59c8967950447ef389c9c63649",
+            "byte_length": 19328
+          },
+          "current": {
+            "sha256": "3bf0417533891456f5ca89ff9022125faf85183402dc5fe25b99f3ca1630d415",
+            "byte_length": 21429
+          }
+        },
+        {
+          "path": "crates/noetome-cli/src/scan_input.rs",
+          "tested": {
+            "sha256": "fd828bc23f82e27174a1c84172f4ab30119c30bc7442a1d47c77c25e0f4344e0",
+            "byte_length": 9911
+          },
+          "current": {
+            "sha256": "26b5b959c961d81c62214fd48c1cbc52b8df9309901a617e7eb9f65b2d8315a9",
+            "byte_length": 10259
+          }
+        },
+        {
+          "path": "crates/noetome-cli/tests/scan_formula.rs",
+          "tested": {
+            "sha256": "665f7ed6b3a84dd00f7269ab6a9eb8015a65ee460a81edb3b12d57409fe7aae0",
+            "byte_length": 16218
+          },
+          "current": {
+            "sha256": "47673397edf06fd204e9ce6b6c55325d08a513a7a684418a3edc65e618269e00",
+            "byte_length": 18636
+          }
+        },
+        {
+          "path": "crates/noetome-cli/tests/support/scan_api_support.rs",
+          "tested": {
+            "sha256": "9e4b9da2cea51f7e4bb4c8c91b5729b09969a3837cfc36d3d2a58979c87f45ee",
+            "byte_length": 8123
+          },
+          "current": {
+            "sha256": "4b1682b91b0e67f20878d9d037376fc4217225d69300f3e93651d841d79ce340",
+            "byte_length": 8882
+          }
+        },
+        {
+          "path": "crates/noetome-cli/tests/support/scan_guard_tests.rs",
+          "tested": {
+            "sha256": "2ea013c0a8c2ea4d8b02d4b2cbef7a8640f9400d6e6bfbb4dacc4d3c573c897b",
+            "byte_length": 10624
+          },
+          "current": {
+            "sha256": "9a4b4608acd7f6b979dc284378861281f2d072503cd754b2dd906f76d2278a9b",
+            "byte_length": 11301
+          }
+        },
+        {
+          "path": "doc/technical/SCAN_FORMULA_CONTRACT.md",
+          "tested": {
+            "sha256": "1605e21042358ea00847e6613acebf324c2cb224ce5becca345a125665bc5c0d",
+            "byte_length": 10704
+          },
+          "current": {
+            "sha256": "b74a4464694ef1dcf9c418500355634838506e8f4c1be9b26e59b89caf72f3dc",
+            "byte_length": 10889
+          }
+        },
+        {
+          "path": "scripts/invoke_scan_api_credential.ps1",
+          "tested": {
+            "sha256": "0e7f6126a6c9773ac906eb571eab35e54ece5f2a6a66394335a58c6157ae9c8e",
+            "byte_length": 22021
+          },
+          "current": {
+            "sha256": "2a5ee68be14d8af6c3124d075f042c19c577778b8bb836fa18c37d0f6d6aba7e",
+            "byte_length": 25974
+          }
+        },
+        {
+          "path": "scripts/verify_scan_formula.py",
+          "tested": {
+            "sha256": "ec0374a52ba5c895c07864160217731f845ab1860153f3ff6236425dc065e71b",
+            "byte_length": 88854
+          },
+          "current": {
+            "sha256": "1b7bd5cc0b9791abb1b84de5359a22bbd191f069eac0bc624df57cdd432beac8",
+            "byte_length": 88993
+          }
+        },
+        {
+          "path": "tests/test_scan_api_credential.py",
+          "tested": {
+            "sha256": "e2d18d7c6b9bc3d23017e645c63ff134e726e80cedd9a03a9f5ecd80a52b7bd7",
+            "byte_length": 21958
+          },
+          "current": {
+            "sha256": "2b743a0378b20596fb468ef68a7015d1c7f034415993e0626bdec700fe353127",
+            "byte_length": 25888
+          }
+        },
+        {
+          "path": "tests/test_verify_scan_formula.py",
+          "tested": {
+            "sha256": "52e3cc8f3fc8cfd8162314fa07e666e0d849a729047d4b6e270baced1b81e986",
+            "byte_length": 37999
+          },
+          "current": {
+            "sha256": "c2299df3e1ef8a8cdaf46471859be780898870195329130f9c0526df6de78b78",
+            "byte_length": 39006
+          }
+        }
+      ],
+      "observed_receipt_presence": {
+        "native-running.json": false,
+        "native-commands.json": false,
+        "native-python-final.json": false
+      }
+    }
+  ],
+  "archive_advice": {
+    "script": "doc/validation/assets/B06V-T02/windows/archive_results.py",
+    "script_fingerprint": {
+      "sha256": "23fdf586a95f228c8410ebf4287486a0afd7c727f7d3b86f0c81327adadc285e",
+      "byte_length": 5989
+    },
+    "direct_argument_use_supported": true,
+    "root_argument": "/mnt/d/Noetome/target/b06v-t02-api-regression-echo-final-20261106a",
+    "new_output_directory_example": "doc/validation/assets/B06V-T02/windows/echo-final-rust",
+    "readback_behavior": "Checks all selected snapshot source SHA/length, ZIP CRC, exact inventory and every member fingerprint. Skips test reparse targets, excludes executable/compiler bytes and preserves fingerprints.",
+    "limitations": "Does not assert gates passed, PID termination or current-worktree equivalence by itself; those are checked above. It archives old root source, not mutable current source. Summary files remain inside regression ZIP unless copied explicitly with matching bytes.",
+    "executed": false
+  },
+  "real_model_calls": 0,
+  "live_http_requests": 0,
+  "budget_mutations": 0,
+  "new_tests_run": 0,
+  "existing_originals_modified": false
+}

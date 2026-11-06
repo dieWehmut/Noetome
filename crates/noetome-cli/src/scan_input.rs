@@ -92,12 +92,18 @@ impl Inputs {
             selected.push((&pdf.file, &pdf.sha256, 8 * 1024 * 1024));
         }
         let mut names = vec!["case.json".to_owned()];
+        let mut folded_names = BTreeSet::from(["case.json".to_owned()]);
         for (file, sha, _) in &selected {
-            if !filename(file) || !pin(sha) || names.contains(file) {
+            // Conservative Unicode folding also merges final sigma with sigma;
+            // it is not a claim to reproduce every filesystem's Unicode table.
+            if !filename(file)
+                || !pin(sha)
+                || !folded_names.insert(file.to_uppercase().to_lowercase())
+            {
                 return Err(error(
                     "SCAN_SCHEMA",
                     2,
-                    "distinct pinned direct attachments required",
+                    "pinned direct attachment names must remain distinct when compared without case",
                 ));
             }
             names.push((*file).clone());

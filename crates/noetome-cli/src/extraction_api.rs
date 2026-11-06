@@ -20,6 +20,43 @@ mod tests {
         assert!(!super::credential_echo(b"{\"text\":\"ordinary\"}", key));
     }
     #[test]
+    fn credential_scan_catches_literal_escape_keys_with_mixed_encoding_depths() {
+        for prefix in [
+            r"noetome-test-\n-",
+            r"noetome-test-\u0065-",
+            r#"noetome-test-\"-"#,
+            r#"noetome-test-\n-\u0065-\"-"#,
+        ] {
+            let key = format!("{prefix}abcdef");
+            let mut tail = "abcdef"
+                .chars()
+                .map(|c| format!("\\u{:04x}", c as u32))
+                .collect::<String>();
+            for _ in 0..4 {
+                tail = tail.replace('\\', "\\\\");
+            }
+            let mixed = format!("{prefix}{tail}");
+            let nested = serde_json::to_vec(&serde_json::json!({"model":mixed})).unwrap();
+            assert!(super::credential_echo(&nested, &key));
+            assert!(super::credential_echo(
+                format!("{{\"model\":\"{mixed}\" ]").as_bytes(),
+                &key
+            ));
+            assert!(super::credential_echo(key.as_bytes(), &key));
+            assert!(!super::credential_echo(
+                b"{\"model\":\"ordinary-returned-model\"}",
+                &key
+            ));
+        }
+    }
+    #[test]
+    fn credential_scan_fails_closed_when_the_total_work_limit_is_exceeded() {
+        assert!(super::credential_echo(
+            &vec![b'x'; 64 * 1024 * 1024 + 1],
+            "noetome-test-secret"
+        ));
+    }
+    #[test]
     fn actual_usage_rejects_each_limit_and_overflow_without_zero_defaults() {
         let valid = serde_json::json!({"input_tokens":100,"output_tokens":600,"total_tokens":700});
         assert!(super::usage_within_budget(&valid, 200, 600, 700));
@@ -64,41 +101,66 @@ fn error(code: &'static str, message: &str) -> ProjectError {
 /// malformed outer JSON. Decoding always shrinks the buffer. Bound total work
 /// and fail closed for adversarial depths; no unsafe original bytes are saved.
 pub(crate) fn credential_echo(bytes: &[u8], key: &str) -> bool {
-    let mut current = bytes.to_vec();
+    if key.is_empty() {
+        return true;
+    }
     let mut work = 0usize;
+    // A literal escape within the credential may decode before a differently
+    // escaped suffix does. Match both forms at every bounded response layer.
+    let mut normalized_key = key.as_bytes().to_vec();
     loop {
-        if current.windows(key.len()).any(|w| w == key.as_bytes()) {
+        work = work.saturating_add(normalized_key.len());
+        if work > 64 * 1024 * 1024 {
             return true;
         }
+        let next = decode_escape_tokens(&normalized_key);
+        if next == normalized_key {
+            break;
+        }
+        normalized_key = next;
+    }
+    let mut current = bytes.to_vec();
+    loop {
         work = work.saturating_add(current.len());
         if work > 64 * 1024 * 1024 {
             return true;
         }
-        let mut next = Vec::with_capacity(current.len());
-        let mut i = 0;
-        while i < current.len() {
-            if current[i] == b'\\' && i + 1 < current.len() {
-                let width = if current[i + 1] == b'u' { 6 } else { 2 };
-                if i + width <= current.len() {
-                    let mut token = Vec::with_capacity(width + 2);
-                    token.push(b'"');
-                    token.extend_from_slice(&current[i..i + width]);
-                    token.push(b'"');
-                    if let Ok(decoded) = serde_json::from_slice::<String>(&token) {
-                        next.extend_from_slice(decoded.as_bytes());
-                        i += width;
-                        continue;
-                    }
-                }
-            }
-            next.push(current[i]);
-            i += 1;
+        if current.windows(key.len()).any(|w| w == key.as_bytes())
+            || current
+                .windows(normalized_key.len())
+                .any(|w| w == normalized_key)
+        {
+            return true;
         }
+        let next = decode_escape_tokens(&current);
         if next == current {
             return false;
         }
         current = next;
     }
+}
+fn decode_escape_tokens(current: &[u8]) -> Vec<u8> {
+    let mut next = Vec::with_capacity(current.len());
+    let mut i = 0;
+    while i < current.len() {
+        if current[i] == b'\\' && i + 1 < current.len() {
+            let width = if current[i + 1] == b'u' { 6 } else { 2 };
+            if i + width <= current.len() {
+                let mut token = Vec::with_capacity(width + 2);
+                token.push(b'"');
+                token.extend_from_slice(&current[i..i + width]);
+                token.push(b'"');
+                if let Ok(decoded) = serde_json::from_slice::<String>(&token) {
+                    next.extend_from_slice(decoded.as_bytes());
+                    i += width;
+                    continue;
+                }
+            }
+        }
+        next.push(current[i]);
+        i += 1;
+    }
+    next
 }
 fn encoded(value: &Value) -> Result<Vec<u8>, ProjectError> {
     serde_json::to_vec_pretty(value).map_err(|_| error("EXTRACT_ENCODING", "API审计编码失败。"))

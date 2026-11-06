@@ -88,6 +88,20 @@ impl Case {
         }
         write(self.case.join("case.json"), &v);
     }
+    pub fn casefold_collision(&self) {
+        self.casefold_collision_names("page.PNG", "page.png");
+    }
+    pub fn casefold_collision_names(&self, page_name: &str, region_name: &str) {
+        let mut v = read(self.case.join("case.json"));
+        fs::rename(self.case.join("page.png"), self.case.join(page_name)).unwrap();
+        // A case-sensitive host can hold both distinct PNGs. Windows exposes
+        // the two references as aliases, which must fail the same early schema gate.
+        #[cfg(not(windows))]
+        fs::rename(self.case.join("region.png"), self.case.join(region_name)).unwrap();
+        v["page"]["file"] = json!(page_name);
+        v["region"]["file"] = json!(region_name);
+        write(self.case.join("case.json"), &v);
+    }
 }
 impl Drop for Case {
     fn drop(&mut self) {
