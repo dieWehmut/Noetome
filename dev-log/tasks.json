@@ -2675,7 +2675,7 @@
       "id": "B07-T03",
       "title": "明确托管测试集合的人工审批与可恢复发布",
       "batch": "B07",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B07-T01",
         "B07-T02"
@@ -2697,7 +2697,49 @@
         "发布先暂存核对内容/资源/链接/索引，再以日志逐项落盘；每个边界真实终止、文件占用/外部写入后恢复一致版本或待恢复，回滚也识别后续人工改动并需针对性批准。",
         "独立三方/原件/安全发布审计、完整Rust/Python及受影响表达回归通过后complete提交推送；不接管生产Vault，不宣称完整桌面审批、规模/科学质量或任意断电原子性已完成。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T07:48:39Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结作者包与真实RED，定义托管测试集合的审批与可恢复发布合同并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-07T09:31:44Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现 vault 六动词：adopt/plan/approve/publish/status/rollback；托管根 control+baseline+vault+releases，sqlite Schema1；approve 绑定计划正文/受影响路径现场指纹/影响清单/owner-metadata 指纹；publish 分 stage-verify-commit，pending 落账后逐项写盘并追加 commit.log，中断可 needs_recovery 续跑；rollback 生成反向计划并对后续人工改动报 rollback-conflict",
+          "validation": [
+            "cargo fmt --all --check exit 0；cargo check --workspace exit 0；cargo test -p noetome-cli --lib vault 27 passed/0 failed/1 ignored；cargo test -p noetome-cli --test vault 8 passed/0 failed；cargo test -p noetome-cli --lib 456 passed/99 failed/1 ignored（失败全为既有 Windows-only 宿主边界，--test compile 一条已用 git stash 在 HEAD 基线复现）；cargo test --workspace --no-fail-fast 累计 687 passed/122 failed/1 ignored；完整 Python Ran 466 OK(skipped=22) exit0；scripts/b07_t03_matrix.sh 41 项通过/0 失败（含陌生 Vault 只读、八类候选、approval-stale、replay 幂等、rollback 往返与冲突、真 SIGKILL needs_recovery 续跑、foreign 字节未变）；scripts/verify_managed_vault.py 126 项检查失败 0 exit0"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B07-T03.md",
+              "sha256": "c2498991f18c1bff99b02191ca08105104c7e93fec3fba2ec8d52b1c24a31120"
+            },
+            {
+              "path": "doc/validation/assets/B07-T03/dsh-20261107/matrix.log",
+              "sha256": "4428f2db6220b8ca1efffc8ea11a23bedc213a14d43fb3836e67f18525d4908c"
+            },
+            {
+              "path": "doc/validation/assets/B07-T03/dsh-20261107/audit.log",
+              "sha256": "590e76af371bc8b4acb4460cfd52016eaa7982a2a92a29ac9843a92c754a70d5"
+            },
+            {
+              "path": "doc/validation/assets/B07-T03/dsh-20261107/audit.json",
+              "sha256": "5d928cb420a1c5f26a98def39133b07d5d39c9f93bded26cc3dd6c3102707539"
+            },
+            {
+              "path": "doc/validation/assets/B07-T03/red-vault-absent.txt",
+              "sha256": "7d0781d90e03034604e2be0b2b8f81927d96b86b79d4fadfb848edbf9dd107c5"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
