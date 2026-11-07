@@ -39,6 +39,7 @@
 | [有界检索](technical/RETRIEVAL_BUDGET_CONTRACT.md) | 检索计划、预留即计入的持久预算、结果分类、七类终止理由的证据判据 | retrieve 动词、预算口径、终止理由或控制目录布局变化 |
 | [章节粗对齐](technical/OUTLINE_ALIGNMENT_CONTRACT.md) | 作者包与冻结根、章节身份与概念身份、七类对齐警告判据、输出根的字节确定性 | outline 动词、警告规则、冻结根或输出根布局变化 |
 | [水平与相关性筛选](technical/RELEVANCE_FILTER_CONTRACT.md) | 用户水平必要性判据、排除理由登记与正文落点、必要前提拒绝、双密度原子不减少、输出根字节确定性 | relevance 动词、理由白名单、必要性判据或输出根布局变化 |
+| [同类结构一致性与导航复习](technical/STRUCTURE_NAVIGATION_CONTRACT.md) | 章节骨架与四类偏离判据、概念唯一解释位置、链接解析与转义、导航确定性生成、输出根字节确定性 | structure 动词、骨架/链接规则或输出根布局变化 |
 | [写作反馈修订](technical/REVISION_FEEDBACK_CONTRACT.md) | 缺口问题与候选分离、新 IR 版本与依赖重编译、无新证据不推翻、超限升级 | revision 动词、原子/表示字段、修订闸门或控制目录布局变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |

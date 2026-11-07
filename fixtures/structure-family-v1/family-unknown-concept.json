@@ -1,0 +1,90 @@
+{
+  "policy": "structure-family-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "str-glycolysis-v1",
+  "description": "同一主题族的三份糖代谢笔记，覆盖章节骨架缺失、错位、多余、空节与四类链接缺陷。",
+  "family": "糖代谢",
+  "skeleton": [
+    {
+      "key": "definition",
+      "title": "定义",
+      "requirement": "required"
+    },
+    {
+      "key": "mechanism",
+      "title": "核心机制",
+      "requirement": "required"
+    },
+    {
+      "key": "conditions",
+      "title": "条件与例外",
+      "requirement": "required"
+    },
+    {
+      "key": "contrast",
+      "title": "易混对照",
+      "requirement": "optional"
+    },
+    {
+      "key": "memory",
+      "title": "记忆提示",
+      "requirement": "optional"
+    }
+  ],
+  "concepts": "concepts.json",
+  "notes": [
+    {
+      "note_id": "note-glycolysis",
+      "path": "笔记/糖酵解.md",
+      "title": "糖酵解",
+      "explains": [
+        "concept-glycolysis-net",
+        "concept-g6p"
+      ],
+      "references": [],
+      "reviews": [
+        "不看原文说出糖酵解的净能量账",
+        "指出限速步骤和参与磷酸基转移的离子"
+      ]
+    },
+    {
+      "note_id": "note-gluconeogenesis",
+      "path": "笔记/糖异生.md",
+      "title": "糖异生",
+      "explains": [
+        "concept-bypass"
+      ],
+      "references": [
+        "concept-g6p"
+      ],
+      "reviews": [
+        "复述四步绕行分别绕过哪三个不可逆反应",
+        "说明长时间饥饿时糖异生器官比重的变化"
+      ]
+    },
+    {
+      "note_id": "note-ppp",
+      "path": "笔记/磷酸戊糖途径.md",
+      "title": "磷酸戊糖途径",
+      "explains": [
+        "concept-nadph"
+      ],
+      "references": [
+        "concept-g6p",
+        "concept-bypass",
+        "concept-unknown"
+      ],
+      "reviews": [
+        "区分氧化相与非氧化相的产物",
+        "说出 NADPH 与 NADH 的两处用途差异"
+      ]
+    }
+  ],
+  "limits": {
+    "max_notes": 6,
+    "max_sections": 12,
+    "max_concepts": 32,
+    "max_links": 64
+  }
+}

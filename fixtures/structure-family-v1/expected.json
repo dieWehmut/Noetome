@@ -1,0 +1,268 @@
+{
+  "policy": "structure-navigation-v1",
+  "case_id": "str-glycolysis-v1",
+  "family": "糖代谢",
+  "notes": [
+    {
+      "note_id": "note-glycolysis",
+      "path": "笔记/糖酵解.md",
+      "title": "糖酵解",
+      "sections": [
+        "定义",
+        "核心机制",
+        "条件与例外",
+        "易混对照",
+        "记忆提示"
+      ],
+      "matched": 5,
+      "misordered": 0,
+      "extra": 0,
+      "missing_required": 0,
+      "omitted_optional": 0,
+      "empty": 0,
+      "consistent": true,
+      "heading_count": 7
+    },
+    {
+      "note_id": "note-gluconeogenesis",
+      "path": "笔记/糖异生.md",
+      "title": "糖异生",
+      "sections": [
+        "定义",
+        "条件与例外",
+        "核心机制",
+        "易混对照"
+      ],
+      "matched": 3,
+      "misordered": 1,
+      "extra": 0,
+      "missing_required": 0,
+      "omitted_optional": 1,
+      "empty": 0,
+      "consistent": false,
+      "heading_count": 6
+    },
+    {
+      "note_id": "note-ppp",
+      "path": "笔记/磷酸戊糖途径.md",
+      "title": "磷酸戊糖途径",
+      "sections": [
+        "定义",
+        "核心机制",
+        "记忆提示",
+        "延伸阅读"
+      ],
+      "matched": 2,
+      "misordered": 0,
+      "extra": 1,
+      "missing_required": 1,
+      "omitted_optional": 1,
+      "empty": 1,
+      "consistent": false,
+      "heading_count": 6
+    }
+  ],
+  "misordered_titles": {
+    "note-gluconeogenesis": [
+      "条件与例外"
+    ]
+  },
+  "missing_required_titles": {
+    "note-ppp": [
+      "条件与例外"
+    ]
+  },
+  "extra_titles": {
+    "note-ppp": [
+      "延伸阅读"
+    ]
+  },
+  "empty_titles": {
+    "note-ppp": [
+      "记忆提示"
+    ]
+  },
+  "counts": {
+    "sections": {
+      "notes": 3,
+      "skeleton": 5,
+      "sections": 13,
+      "matched": 10,
+      "misordered": 1,
+      "extra": 1,
+      "missing_required": 1,
+      "omitted_optional": 2,
+      "empty": 1,
+      "consistent_notes": 1
+    },
+    "links": {
+      "source_links": 6,
+      "source_resolved": 4,
+      "source_target_missing": 2,
+      "source_heading_missing": 0,
+      "source_ambiguous": 0,
+      "generated_links": 9,
+      "generated_broken": 0,
+      "external_references": 1
+    }
+  },
+  "source_links": [
+    {
+      "note_id": "note-glycolysis",
+      "line": 20,
+      "target": "笔记/磷酸戊糖途径.md",
+      "heading": "核心机制",
+      "alias": null,
+      "in_table": false,
+      "status": "resolved"
+    },
+    {
+      "note_id": "note-gluconeogenesis",
+      "line": 16,
+      "target": "笔记/糖酵解.md",
+      "heading": "定义",
+      "alias": null,
+      "in_table": false,
+      "status": "resolved"
+    },
+    {
+      "note_id": "note-gluconeogenesis",
+      "line": 16,
+      "target": "补充说明",
+      "heading": null,
+      "alias": null,
+      "in_table": false,
+      "status": "target_missing"
+    },
+    {
+      "note_id": "note-ppp",
+      "line": 11,
+      "target": "笔记/糖酵解.md",
+      "heading": "核心机制",
+      "alias": "糖酵解核心机制",
+      "in_table": true,
+      "status": "resolved"
+    },
+    {
+      "note_id": "note-ppp",
+      "line": 16,
+      "target": "笔记/不存在",
+      "heading": null,
+      "alias": "某笔记",
+      "in_table": false,
+      "status": "target_missing"
+    },
+    {
+      "note_id": "note-ppp",
+      "line": 19,
+      "target": "笔记/糖异生.md",
+      "heading": "四步绕行",
+      "alias": null,
+      "in_table": false,
+      "status": "resolved"
+    }
+  ],
+  "concepts": [
+    {
+      "concept_id": "concept-glycolysis-net",
+      "canonical": "note-glycolysis",
+      "referenced_by": []
+    },
+    {
+      "concept_id": "concept-g6p",
+      "canonical": "note-glycolysis",
+      "referenced_by": [
+        "note-gluconeogenesis",
+        "note-ppp"
+      ]
+    },
+    {
+      "concept_id": "concept-bypass",
+      "canonical": "note-gluconeogenesis",
+      "referenced_by": [
+        "note-ppp"
+      ]
+    },
+    {
+      "concept_id": "concept-nadph",
+      "canonical": "note-ppp",
+      "referenced_by": []
+    },
+    {
+      "concept_id": "concept-pfk",
+      "canonical": null,
+      "referenced_by": [
+        "note-ppp"
+      ]
+    }
+  ],
+  "generated": {
+    "navigation": 6,
+    "concept": 3,
+    "broken": 0
+  },
+  "navigation_links": [
+    [
+      "note-glycolysis",
+      "笔记/糖异生.md"
+    ],
+    [
+      "note-glycolysis",
+      "笔记/磷酸戊糖途径.md"
+    ],
+    [
+      "note-gluconeogenesis",
+      "笔记/糖酵解.md"
+    ],
+    [
+      "note-gluconeogenesis",
+      "笔记/磷酸戊糖途径.md"
+    ],
+    [
+      "note-ppp",
+      "笔记/糖酵解.md"
+    ],
+    [
+      "note-ppp",
+      "笔记/糖异生.md"
+    ]
+  ],
+  "rejections": [
+    {
+      "case": "unescaped-alias-in-table",
+      "family": "family-unescaped.json",
+      "code": "STRUCT_LINK_UNESCAPED_ALIAS",
+      "exit": 3
+    },
+    {
+      "case": "duplicate-explanation",
+      "family": "family-duplicate.json",
+      "code": "STRUCT_DUPLICATE_EXPLANATION",
+      "exit": 3
+    },
+    {
+      "case": "unknown-concept",
+      "family": "family-unknown-concept.json",
+      "code": "STRUCT_UNKNOWN_CONCEPT",
+      "exit": 3
+    }
+  ],
+  "model_calls": 0,
+  "network_requests": 0,
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "作者包与期望判据均为自造内容，只证明结构一致性、唯一解释位置与链接确定性，不证明真实笔记的结构正确性或内容质量。"
+  },
+  "derivation": [
+    "章节数按 H2 计：糖酵解 5、糖异生 4、磷酸戊糖途径 4，合计 13。",
+    "糖异生的 条件与例外 出现在 定义 之后、核心机制 之前，正文顺序里位置回退，记 1 条错位；不自动重排。",
+    "磷酸戊糖途径 多出 延伸阅读（骨架未声明）记 1 条多余；缺 条件与例外（required）记 1 条缺必填；缺 易混对照（optional）记 1 条省可选；记忆提示 标题在但正文为空记 1 条空节。",
+    "正文链接 6 条：可解析 4（糖酵解→磷酸戊糖途径核心机制、糖异生→糖酵解定义、磷酸戊糖途径→糖酵解核心机制带转义别名、磷酸戊糖途径→糖异生四步绕行），目标缺失 2（[[补充说明]]、[[笔记/不存在|某笔记]]）。",
+    "生成链接 9 条 = 同族导航 3×2 条 + 概念链接 3 条（g6p 两处、bypass 一处）；concept-pfk 无人解释，只记外部引用 1 个，不生成链接。",
+    "heading_count 数的是全部标题行（含 H1 与更深小节）：糖酵解 7、糖异生 6、磷酸戊糖途径 6；骨架比对只用 H2。"
+  ]
+}

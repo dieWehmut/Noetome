@@ -3658,7 +3658,7 @@
       "id": "B10-T03",
       "title": "同类结构一致性与导航复习组织",
       "batch": "B10",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B10-T02"
       ],
@@ -3676,7 +3676,91 @@
         "导航与复习区块由确定性规则生成；同一概念全库只有一处完整解释，其余为引用式链接且目标存在、中文路径与重名标题转义正确、断链为零。",
         "报告单列结构一致性计数与链接完整性计数（含断链零与别名解析结果）；通过独立只读审计与完整回归后 complete。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T20:54:29Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结同一主题族多笔记作者包与实现前手写的结构契约期望，定义同类笔记章节骨架与小节顺序一致性检查、导航与复习区块确定性生成、全库仅一处完整解释其余引用式链接并保证断链为零的合同并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-07T21:40:30Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "冻结 str-glycolysis-v1 作者包（3 份自造笔记 + 5 节骨架 + 5 概念 + 3 个各改一处的拒绝变体）与实现验证前手写的 expected.json，实现 structure adopt/build/list/status：章节骨架只用 H2 比对并分五类状态（就位/位置偏离/多余/缺失/空节）、空节优先于错位、乱序按正文出现顺序判断；同一概念只能有一处完整解释、其余为引用或外部引用，概念链接 target_heading 恒为 null 以避免猜标题造成假链接；生成同族导航 6 条 + 概念链接 3 条、断链非 0 时整包拒绝写报告；输出根五文件无时间戳，同一冻结根两次构建逐字节相同。",
+          "validation": [
+            "cargo fmt --all --check exit=0",
+            "cargo test --lib structure_model → 8 passed / 0 failed",
+            "cargo test --test structure → 17 passed / 0 failed",
+            "cargo test -p noetome-cli --lib -- --test-threads=2 → 480 passed / 98 failed / 1 ignored，失败集合与上轮基线逐条 diff 无新增（仅少一条计时抖动用例）",
+            "cargo test --workspace --no-fail-fast → lib 478 passed / 100 failed / 1 ignored；structure 17/17、outline 13/13、relevance 17/17、research 14/14、retrieval 14/14、vault 8/8、noetome-desktop 28/28",
+            "PYTHONUTF8=1 python3 -m unittest discover -s tests -p 'test_*.py' → Ran 620 / failures=41, errors=12, skipped=24（与基线 Ran 573 / 41 / 12 / 24 同组失败，新增 47 项全过）",
+            "python3 -m unittest tests.test_verify_structure_navigation → Ran 47 / OK",
+            "python3 scripts/verify_structure_navigation.py --package fixtures/structure-family-v1 → 30 项 0 失败",
+            "python3 scripts/verify_structure_navigation.py /tmp/str-ev2/root --output /tmp/str-ev2/out --package fixtures/structure-family-v1 → 86 项 0 失败",
+            "两次 structure build 的 structure.json/links.json/report.json/navigation.md/report.md 全部 SAME",
+            "三条拒绝实测：表格裸竖线 STRUCT_LINK_UNESCAPED_ALIAS exit=3、重复解释 STRUCT_DUPLICATE_EXPLANATION exit=3、未登记概念 STRUCT_UNKNOWN_CONCEPT exit=3，均 left=0 不留半根"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/structure_model.rs",
+              "sha256": "300ad63753105e29a9ad02a27302f36ea600bb904888af9060d69e13c014284b"
+            },
+            {
+              "path": "crates/noetome-cli/src/structure_store.rs",
+              "sha256": "91fa977c71f909f8b32468ab8bc0c65ee07272750c808fa79d6769fd34b9eec0"
+            },
+            {
+              "path": "crates/noetome-cli/tests/structure.rs",
+              "sha256": "b0e32f3bc2f4961ed1b9674fe241300ff83d36a72a8d7bc7cc886e38dfc68814"
+            },
+            {
+              "path": "fixtures/structure-family-v1/family.json",
+              "sha256": "398f3121efd68dc417892ea135d4dd4683c4eda9a77faa7199a99f2e0bb57bf5"
+            },
+            {
+              "path": "fixtures/structure-family-v1/expected.json",
+              "sha256": "5538a69243f293de9ec16f80f03b9f876d96c16f38047ac20e90a16459ba7966"
+            },
+            {
+              "path": "fixtures/structure-family-v1/frozen-sha256.json",
+              "sha256": "b3cd4f439fac066c4fd5d71de6c1c5b4cd234eba2d03e127cc8e9810cd9132f4"
+            },
+            {
+              "path": "fixtures/structure-family-v1/README.md",
+              "sha256": "8328853b4911f3f5046d4aaeb93412dfdbbe131b73db75c9ee7e7b1b2074b8eb"
+            },
+            {
+              "path": "scripts/verify_structure_navigation.py",
+              "sha256": "2e5aa757f968799559b74d3f1ac12d1ec61f60253d1bfafff2b0f9d2e86918de"
+            },
+            {
+              "path": "tests/test_verify_structure_navigation.py",
+              "sha256": "990c34559de223ad794963909a89b1ff36439f563a6384804e89a2faae2e69a8"
+            },
+            {
+              "path": "doc/technical/STRUCTURE_NAVIGATION_CONTRACT.md",
+              "sha256": "c0f2d84a0c0e5b7c1c5b48f7c988bc9dffb64ce5ac82ca2cf511c0638f02385e"
+            },
+            {
+              "path": "doc/validation/B10-T03.md",
+              "sha256": "c1adc919ec7e5803851be6f36e6c2a03b644850f2b5e62fb11e78cb6f744bb85"
+            },
+            {
+              "path": "doc/validation/assets/B10-T03/cli-20261108/audit.txt",
+              "sha256": "a039e7b48543bba7865ab36d02d52fce8938749148948cdaed4c788b572efdd9"
+            },
+            {
+              "path": "doc/validation/assets/B10-T03/cli-20261108/determinism.txt",
+              "sha256": "b75831861dbd8cf34cc804d87256c5f09166431e70080a918fb00bbcaf4460b5"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

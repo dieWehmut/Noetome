@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "str-glycolysis-v1",
+  "policy": "structure-navigation-v1",
+  "family": "family.json",
+  "sequence": [
+    {
+      "step": "adopt",
+      "family": "family.json",
+      "root": "new"
+    },
+    {
+      "step": "build",
+      "root": "adopted",
+      "output": "new",
+      "compare": "expected.json"
+    },
+    {
+      "step": "build",
+      "root": "adopted",
+      "output": "new-second",
+      "compare": "byte-identical"
+    },
+    {
+      "step": "list",
+      "root": "adopted"
+    },
+    {
+      "step": "status",
+      "root": "adopted"
+    },
+    {
+      "step": "adopt",
+      "family": "family-unescaped.json",
+      "root": "new",
+      "expect": "STRUCT_LINK_UNESCAPED_ALIAS"
+    },
+    {
+      "step": "adopt",
+      "family": "family-duplicate.json",
+      "root": "new",
+      "expect": "STRUCT_DUPLICATE_EXPLANATION"
+    },
+    {
+      "step": "adopt",
+      "family": "family-unknown-concept.json",
+      "root": "new",
+      "expect": "STRUCT_UNKNOWN_CONCEPT"
+    }
+  ],
+  "expected": "expected.json",
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "结构一致性与链接规则都只对本作者包成立；三个拒绝变体各只改动一处，用来证明单条规则会整包拒绝。"
+  }
+}
