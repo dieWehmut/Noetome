@@ -67,6 +67,8 @@ pub mod project;
 mod request_budget_model;
 mod request_budget_store;
 pub mod request_run;
+mod research_model;
+pub mod research_store;
 mod run_model;
 mod run_recovery;
 mod run_store;
@@ -122,6 +124,11 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome vault publish <托管根> <批准文件>
       noetome vault status <托管根>
       noetome vault rollback <托管根> <回滚计划文件>
+      noetome research adopt <author.json> <尚不存在的队列根>
+      noetome research observe <队列根> <观测文件>
+      noetome research decide <队列根> <决定文件>
+      noetome research list <队列根>
+      noetome research status <队列根>
 
 当前支持：
   -h, --help       显示帮助
@@ -143,10 +150,12 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
   run                     执行有界fixture或人工环回API流程，持久保存检查点和预算
   vault                   托管测试集合的人工审批与可恢复发布（adopt/plan/approve/publish/status/rollback）
+  research                研究候选队列、授权边界与拒绝记忆（adopt/observe/decide/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
 完整知识编译与生产Vault增量发布尚未实现。
+研究候选只是待批准线索：队列从不联网、不调用模型，也不把候选当成已完成知识。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -375,6 +384,25 @@ pub enum CliCommand {
         root: PathBuf,
         plan: PathBuf,
     },
+    ResearchHelp,
+    ResearchAdopt {
+        author: PathBuf,
+        root: PathBuf,
+    },
+    ResearchObserve {
+        root: PathBuf,
+        file: PathBuf,
+    },
+    ResearchDecide {
+        root: PathBuf,
+        file: PathBuf,
+    },
+    ResearchList {
+        root: PathBuf,
+    },
+    ResearchStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -396,6 +424,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "vault") {
         return vault_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "research") {
+        return research_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -496,6 +527,72 @@ fn vault_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
                 root: root.into(),
                 plan: plan.into(),
             })
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const RESEARCH_HELP: &str = "Noetome 研究候选队列、授权边界与拒绝记忆
+
+用法：noetome research adopt <author.json> <尚不存在的队列根>
+      noetome research observe <队列根> <观测文件>
+      noetome research decide <队列根> <决定文件>
+      noetome research list <队列根>
+      noetome research status <队列根>
+
+adopt：只接受明确作者包与全新目录；冻结本轮目标、必做集合与上限，之后不接受增删。
+observe：登记一条发现的候选主题（主题/发现原因/关系/收益/来源线索/代价/依赖/状态）。
+decide：接受、拒绝、延后、合并或修改范围；每条决定留痕，拒绝结果会被记住。
+list：只读输出候选与计数的完整JSON。
+status：只读核对队列布局、拒绝记忆与必做集合。
+越界主题只进候选队列，不改变本轮必做集合；相关性只用于排序，不代替授权。
+队列从不联网、不调用模型：候选只是待批准线索，不是已完成知识。
+仅操作新的测试根；不接管生产项目或生产Vault。
+";
+
+fn research_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 5] = ["adopt", "observe", "decide", "list", "status"];
+    if args.is_empty() || matches!(args, [help] if help == "--help" || help == "-h") {
+        return Ok(CliCommand::ResearchHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail, [help] if help == "--help" || help == "-h")
+        && VERBS.iter().any(|candidate| verb == candidate)
+    {
+        return Ok(CliCommand::ResearchHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |path: &OsString| {
+        !path.is_empty() && (separated || path.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [author, root] if verb == "adopt" && valid(author) && valid(root) => {
+            Ok(CliCommand::ResearchAdopt {
+                author: author.into(),
+                root: root.into(),
+            })
+        }
+        [root, file] if verb == "observe" && valid(root) && valid(file) => {
+            Ok(CliCommand::ResearchObserve {
+                root: root.into(),
+                file: file.into(),
+            })
+        }
+        [root, file] if verb == "decide" && valid(root) && valid(file) => {
+            Ok(CliCommand::ResearchDecide {
+                root: root.into(),
+                file: file.into(),
+            })
+        }
+        [root] if verb == "list" && valid(root) => {
+            Ok(CliCommand::ResearchList { root: root.into() })
+        }
+        [root] if verb == "status" && valid(root) => {
+            Ok(CliCommand::ResearchStatus { root: root.into() })
         }
         _ => Err(INVALID_ARGUMENT),
     }

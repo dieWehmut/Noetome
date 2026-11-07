@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "rq-energy-v1",
+  "policy": "research-queue-v1",
+  "description": "研究候选队列的授权边界、拒绝记忆与归并样例。全部资料为自造虚构教材样例。",
+  "sequence": [
+    { "step": "adopt", "input": "author.json" },
+    { "step": "observe", "input": "round-01-observations.json" },
+    { "step": "decide", "input": "round-02-decisions.json" },
+    { "step": "observe", "input": "round-03-observations.json" },
+    { "step": "observe", "input": "round-04-observations.json" },
+    { "step": "decide", "input": "round-05-decisions.json" }
+  ],
+  "expected": {
+    "must_do": [
+      "丙酮酸脱氢酶复合体",
+      "糖异生绕行反应",
+      "糖酵解净能量收支"
+    ],
+    "queue_only": [
+      "乳酸穿梭与科里循环",
+      "糖原合成能量代价",
+      "脂肪酸β氧化能量账"
+    ],
+    "counters": {
+      "observations": 10,
+      "blocked_repeats": 1,
+      "reopenings": 1,
+      "merges": 1,
+      "decisions": 7
+    },
+    "states": {
+      "accepted": [
+        "糖异生绕行反应",
+        "糖酵解净能量收支"
+      ],
+      "proposed": [
+        "丙酮酸脱氢酶复合体",
+        "乳酸穿梭与科里循环"
+      ],
+      "deferred": [
+        "脂肪酸β氧化能量账"
+      ],
+      "rejected": [
+        "糖原合成能量代价"
+      ],
+      "merged": [
+        "磷酸戊糖途径产物去向"
+      ]
+    },
+    "scope_classes": {
+      "authorized_target": [
+        "糖异生绕行反应",
+        "糖酵解净能量收支"
+      ],
+      "required_prerequisite": [
+        "丙酮酸脱氢酶复合体"
+      ],
+      "out_of_scope": [
+        "乳酸穿梭与科里循环",
+        "磷酸戊糖途径产物去向",
+        "糖原合成能量代价",
+        "脂肪酸β氧化能量账"
+      ]
+    },
+    "evidence": {
+      "糖酵解净能量收支": 2,
+      "糖异生绕行反应": 1,
+      "乳酸穿梭与科里循环": 2,
+      "脂肪酸β氧化能量账": 2,
+      "丙酮酸脱氢酶复合体": 1,
+      "磷酸戊糖途径产物去向": 1,
+      "糖原合成能量代价": 1
+    },
+    "merged_into": {
+      "磷酸戊糖途径产物去向": "脂肪酸β氧化能量账"
+    },
+    "rejections": {
+      "乳酸穿梭与科里循环": 1,
+      "糖原合成能量代价": 1
+    },
+    "scope_revisions": {
+      "乳酸穿梭与科里循环": 1
+    },
+    "retrieval_calls": 0,
+    "model_calls": 0
+  },
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_production_vault": false,
+    "note": "本包只验证工程契约：授权边界、候选持久化、拒绝记忆与归并。它不证明科学正确率、真实资料抽取或正式基准通过。"
+  }
+}

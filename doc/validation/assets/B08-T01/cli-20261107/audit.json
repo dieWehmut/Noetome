@@ -1,0 +1,666 @@
+{
+  "failures": 0,
+  "warnings": 0,
+  "checks": [
+    {
+      "check": "frozen-file-set",
+      "status": "ok",
+      "detail": "冻结清单 16 个 / 实际 16 个"
+    },
+    {
+      "check": "frozen-bytes:README.md",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:author.json",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:cases.json",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:originals/README.md",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:originals/chapter-gluconeogenesis.md",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:originals/chapter-glycogen.md",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:originals/chapter-glycolysis.md",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:originals/chapter-lipids.md",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:originals/chapter-pdc.md",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:originals/chapter-ppp.md",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:originals/notes-organ-integration.md",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:round-01-observations.json",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:round-02-decisions.json",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:round-03-observations.json",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:round-04-observations.json",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "frozen-bytes:round-05-decisions.json",
+      "status": "ok",
+      "detail": "字节与冻结记录一致"
+    },
+    {
+      "check": "layout-root",
+      "status": "ok",
+      "detail": "根目录条目 ['control']（只允许 control/）"
+    },
+    {
+      "check": "layout-control",
+      "status": "ok",
+      "detail": "control/ 条目 ['owner.json', 'queue.lock', 'research.sqlite']（只允许 owner.json、research.sqlite、queue.lock）"
+    },
+    {
+      "check": "layout-file-owner.json",
+      "status": "ok",
+      "detail": "owner.json 必须是普通文件"
+    },
+    {
+      "check": "layout-file-research.sqlite",
+      "status": "ok",
+      "detail": "research.sqlite 必须是普通文件"
+    },
+    {
+      "check": "layout-file-queue.lock",
+      "status": "ok",
+      "detail": "queue.lock 必须是普通文件"
+    },
+    {
+      "check": "owner-strict",
+      "status": "ok",
+      "detail": "字段集、编码与规范化均符合要求"
+    },
+    {
+      "check": "owner-policy",
+      "status": "ok",
+      "detail": "policy=research-queue-v1"
+    },
+    {
+      "check": "owner-producer",
+      "status": "ok",
+      "detail": "producer=noetome-research-queue"
+    },
+    {
+      "check": "owner-schema-version",
+      "status": "ok",
+      "detail": "schema_version=1"
+    },
+    {
+      "check": "owner-root",
+      "status": "ok",
+      "detail": "owner.root=/tmp/rq-final-a/queue"
+    },
+    {
+      "check": "owner-author-sha256",
+      "status": "ok",
+      "detail": "author_manifest_sha256=06175f4642a7b8056771cc4ee81053a7146b7e6ebb0652f171e6978aaa71d54e"
+    },
+    {
+      "check": "owner-author-bytes",
+      "status": "ok",
+      "detail": "冻结作者包 SHA256=06175f4642a7b8056771cc4ee81053a7146b7e6ebb0652f171e6978aaa71d54e"
+    },
+    {
+      "check": "db-application-id",
+      "status": "ok",
+      "detail": "application_id=0x4e525148"
+    },
+    {
+      "check": "db-user-version",
+      "status": "ok",
+      "detail": "user_version=1"
+    },
+    {
+      "check": "db-journal-mode",
+      "status": "ok",
+      "detail": "journal_mode=delete"
+    },
+    {
+      "check": "db-tables",
+      "status": "ok",
+      "detail": "表集合 ['candidates', 'events', 'metadata']"
+    },
+    {
+      "check": "db-table-metadata",
+      "status": "ok",
+      "detail": "定义逐字一致"
+    },
+    {
+      "check": "db-table-candidates",
+      "status": "ok",
+      "detail": "定义逐字一致"
+    },
+    {
+      "check": "db-table-events",
+      "status": "ok",
+      "detail": "定义逐字一致"
+    },
+    {
+      "check": "db-metadata-rows",
+      "status": "ok",
+      "detail": "metadata 行数=1"
+    },
+    {
+      "check": "db-metadata-strict",
+      "status": "ok",
+      "detail": "metadata_json 严格合规"
+    },
+    {
+      "check": "db-candidate-key:丙酮酸脱氢酶复合体",
+      "status": "ok",
+      "detail": "键与状态一致（position=0）"
+    },
+    {
+      "check": "db-candidate-key:乳酸穿梭与科里循环",
+      "status": "ok",
+      "detail": "键与状态一致（position=1）"
+    },
+    {
+      "check": "db-candidate-key:磷酸戊糖途径产物去向",
+      "status": "ok",
+      "detail": "键与状态一致（position=2）"
+    },
+    {
+      "check": "db-candidate-key:糖原合成能量代价",
+      "status": "ok",
+      "detail": "键与状态一致（position=3）"
+    },
+    {
+      "check": "db-candidate-key:糖异生绕行反应",
+      "status": "ok",
+      "detail": "键与状态一致（position=4）"
+    },
+    {
+      "check": "db-candidate-key:糖酵解净能量收支",
+      "status": "ok",
+      "detail": "键与状态一致（position=5）"
+    },
+    {
+      "check": "db-candidate-key:脂肪酸β氧化能量账",
+      "status": "ok",
+      "detail": "键与状态一致（position=6）"
+    },
+    {
+      "check": "db-candidate-positions",
+      "status": "ok",
+      "detail": "候选序号必须从 0 连续（7 项，实际 [0, 1, 2, 3, 4, 5, 6]）"
+    },
+    {
+      "check": "db-events-ordered",
+      "status": "ok",
+      "detail": "事件数=6"
+    },
+    {
+      "check": "owner-metadata-case",
+      "status": "ok",
+      "detail": "case_id=rq-energy-v1"
+    },
+    {
+      "check": "owner-metadata-objective",
+      "status": "ok",
+      "detail": "本轮目标一致"
+    },
+    {
+      "check": "owner-metadata-limits",
+      "status": "ok",
+      "detail": "限额一致"
+    },
+    {
+      "check": "owner-metadata-created-at",
+      "status": "ok",
+      "detail": "created_at=2026-11-07T13:12:43.675630131Z"
+    },
+    {
+      "check": "owner-metadata-author",
+      "status": "ok",
+      "detail": "作者包指纹一致"
+    },
+    {
+      "check": "queue-must-do",
+      "status": "ok",
+      "detail": "必做集合=['丙酮酸脱氢酶复合体', '糖异生绕行反应', '糖酵解净能量收支']"
+    },
+    {
+      "check": "queue-queue-only",
+      "status": "ok",
+      "detail": "越界且未合并=['乳酸穿梭与科里循环', '糖原合成能量代价', '脂肪酸β氧化能量账']"
+    },
+    {
+      "check": "state-accepted",
+      "status": "ok",
+      "detail": "accepted 候选=['糖异生绕行反应', '糖酵解净能量收支']"
+    },
+    {
+      "check": "state-proposed",
+      "status": "ok",
+      "detail": "proposed 候选=['丙酮酸脱氢酶复合体', '乳酸穿梭与科里循环']"
+    },
+    {
+      "check": "state-deferred",
+      "status": "ok",
+      "detail": "deferred 候选=['脂肪酸β氧化能量账']"
+    },
+    {
+      "check": "state-rejected",
+      "status": "ok",
+      "detail": "rejected 候选=['糖原合成能量代价']"
+    },
+    {
+      "check": "state-merged",
+      "status": "ok",
+      "detail": "merged 候选=['磷酸戊糖途径产物去向']"
+    },
+    {
+      "check": "scope-authorized_target",
+      "status": "ok",
+      "detail": "authorized_target 候选=['糖异生绕行反应', '糖酵解净能量收支']"
+    },
+    {
+      "check": "scope-required_prerequisite",
+      "status": "ok",
+      "detail": "required_prerequisite 候选=['丙酮酸脱氢酶复合体']"
+    },
+    {
+      "check": "scope-out_of_scope",
+      "status": "ok",
+      "detail": "out_of_scope 候选=['乳酸穿梭与科里循环', '磷酸戊糖途径产物去向', '糖原合成能量代价', '脂肪酸β氧化能量账']"
+    },
+    {
+      "check": "evidence-糖酵解净能量收支",
+      "status": "ok",
+      "detail": "证据数 2（预期 2）"
+    },
+    {
+      "check": "evidence-糖异生绕行反应",
+      "status": "ok",
+      "detail": "证据数 1（预期 1）"
+    },
+    {
+      "check": "evidence-乳酸穿梭与科里循环",
+      "status": "ok",
+      "detail": "证据数 2（预期 2）"
+    },
+    {
+      "check": "evidence-脂肪酸β氧化能量账",
+      "status": "ok",
+      "detail": "证据数 2（预期 2）"
+    },
+    {
+      "check": "evidence-丙酮酸脱氢酶复合体",
+      "status": "ok",
+      "detail": "证据数 1（预期 1）"
+    },
+    {
+      "check": "evidence-磷酸戊糖途径产物去向",
+      "status": "ok",
+      "detail": "证据数 1（预期 1）"
+    },
+    {
+      "check": "evidence-糖原合成能量代价",
+      "status": "ok",
+      "detail": "证据数 1（预期 1）"
+    },
+    {
+      "check": "rejections-乳酸穿梭与科里循环",
+      "status": "ok",
+      "detail": "拒绝记忆 1 条（预期 1）"
+    },
+    {
+      "check": "rejections-糖原合成能量代价",
+      "status": "ok",
+      "detail": "拒绝记忆 1 条（预期 1）"
+    },
+    {
+      "check": "revisions-乳酸穿梭与科里循环",
+      "status": "ok",
+      "detail": "范围修订 1 条（预期 1）"
+    },
+    {
+      "check": "merged-into-磷酸戊糖途径产物去向",
+      "status": "ok",
+      "detail": "merged_into=脂肪酸β氧化能量账（预期 脂肪酸β氧化能量账）"
+    },
+    {
+      "check": "counter-observations",
+      "status": "ok",
+      "detail": "observations=10（预期 10）"
+    },
+    {
+      "check": "counter-blocked_repeats",
+      "status": "ok",
+      "detail": "blocked_repeats=1（预期 1）"
+    },
+    {
+      "check": "counter-reopenings",
+      "status": "ok",
+      "detail": "reopenings=1（预期 1）"
+    },
+    {
+      "check": "counter-merges",
+      "status": "ok",
+      "detail": "merges=1（预期 1）"
+    },
+    {
+      "check": "counter-decisions",
+      "status": "ok",
+      "detail": "decisions=7（预期 7）"
+    },
+    {
+      "check": "counter-event-count",
+      "status": "ok",
+      "detail": "事件数=6（预期 6：adopt 1 + 观测 3 + 决定 2）"
+    },
+    {
+      "check": "no-network-no-model",
+      "status": "ok",
+      "detail": "全部事件检索调用与模型调用均为 0"
+    },
+    {
+      "check": "replay",
+      "status": "ok",
+      "detail": "按 FR-13 语义独立重放全部输入成功"
+    },
+    {
+      "check": "replay-candidate-count",
+      "status": "ok",
+      "detail": "磁盘 7 项 / 重放 7 项"
+    },
+    {
+      "check": "replay-scope_class:糖酵解净能量收支",
+      "status": "ok",
+      "detail": "scope_class=authorized_target（重放 authorized_target）"
+    },
+    {
+      "check": "replay-state:糖酵解净能量收支",
+      "status": "ok",
+      "detail": "state=accepted（重放 accepted）"
+    },
+    {
+      "check": "replay-merged_into:糖酵解净能量收支",
+      "status": "ok",
+      "detail": "merged_into=None（重放 None）"
+    },
+    {
+      "check": "replay-evidence:糖酵解净能量收支",
+      "status": "ok",
+      "detail": "证据数 2（重放 2）"
+    },
+    {
+      "check": "replay-rejections:糖酵解净能量收支",
+      "status": "ok",
+      "detail": "拒绝 0（重放 0）"
+    },
+    {
+      "check": "replay-revisions:糖酵解净能量收支",
+      "status": "ok",
+      "detail": "修订 0（重放 0）"
+    },
+    {
+      "check": "replay-scope_class:糖异生绕行反应",
+      "status": "ok",
+      "detail": "scope_class=authorized_target（重放 authorized_target）"
+    },
+    {
+      "check": "replay-state:糖异生绕行反应",
+      "status": "ok",
+      "detail": "state=accepted（重放 accepted）"
+    },
+    {
+      "check": "replay-merged_into:糖异生绕行反应",
+      "status": "ok",
+      "detail": "merged_into=None（重放 None）"
+    },
+    {
+      "check": "replay-evidence:糖异生绕行反应",
+      "status": "ok",
+      "detail": "证据数 1（重放 1）"
+    },
+    {
+      "check": "replay-rejections:糖异生绕行反应",
+      "status": "ok",
+      "detail": "拒绝 0（重放 0）"
+    },
+    {
+      "check": "replay-revisions:糖异生绕行反应",
+      "status": "ok",
+      "detail": "修订 0（重放 0）"
+    },
+    {
+      "check": "replay-scope_class:乳酸穿梭与科里循环",
+      "status": "ok",
+      "detail": "scope_class=out_of_scope（重放 out_of_scope）"
+    },
+    {
+      "check": "replay-state:乳酸穿梭与科里循环",
+      "status": "ok",
+      "detail": "state=proposed（重放 proposed）"
+    },
+    {
+      "check": "replay-merged_into:乳酸穿梭与科里循环",
+      "status": "ok",
+      "detail": "merged_into=None（重放 None）"
+    },
+    {
+      "check": "replay-evidence:乳酸穿梭与科里循环",
+      "status": "ok",
+      "detail": "证据数 2（重放 2）"
+    },
+    {
+      "check": "replay-rejections:乳酸穿梭与科里循环",
+      "status": "ok",
+      "detail": "拒绝 1（重放 1）"
+    },
+    {
+      "check": "replay-revisions:乳酸穿梭与科里循环",
+      "status": "ok",
+      "detail": "修订 1（重放 1）"
+    },
+    {
+      "check": "replay-scope_class:脂肪酸β氧化能量账",
+      "status": "ok",
+      "detail": "scope_class=out_of_scope（重放 out_of_scope）"
+    },
+    {
+      "check": "replay-state:脂肪酸β氧化能量账",
+      "status": "ok",
+      "detail": "state=deferred（重放 deferred）"
+    },
+    {
+      "check": "replay-merged_into:脂肪酸β氧化能量账",
+      "status": "ok",
+      "detail": "merged_into=None（重放 None）"
+    },
+    {
+      "check": "replay-evidence:脂肪酸β氧化能量账",
+      "status": "ok",
+      "detail": "证据数 2（重放 2）"
+    },
+    {
+      "check": "replay-rejections:脂肪酸β氧化能量账",
+      "status": "ok",
+      "detail": "拒绝 0（重放 0）"
+    },
+    {
+      "check": "replay-revisions:脂肪酸β氧化能量账",
+      "status": "ok",
+      "detail": "修订 0（重放 0）"
+    },
+    {
+      "check": "replay-scope_class:丙酮酸脱氢酶复合体",
+      "status": "ok",
+      "detail": "scope_class=required_prerequisite（重放 required_prerequisite）"
+    },
+    {
+      "check": "replay-state:丙酮酸脱氢酶复合体",
+      "status": "ok",
+      "detail": "state=proposed（重放 proposed）"
+    },
+    {
+      "check": "replay-merged_into:丙酮酸脱氢酶复合体",
+      "status": "ok",
+      "detail": "merged_into=None（重放 None）"
+    },
+    {
+      "check": "replay-evidence:丙酮酸脱氢酶复合体",
+      "status": "ok",
+      "detail": "证据数 1（重放 1）"
+    },
+    {
+      "check": "replay-rejections:丙酮酸脱氢酶复合体",
+      "status": "ok",
+      "detail": "拒绝 0（重放 0）"
+    },
+    {
+      "check": "replay-revisions:丙酮酸脱氢酶复合体",
+      "status": "ok",
+      "detail": "修订 0（重放 0）"
+    },
+    {
+      "check": "replay-scope_class:磷酸戊糖途径产物去向",
+      "status": "ok",
+      "detail": "scope_class=out_of_scope（重放 out_of_scope）"
+    },
+    {
+      "check": "replay-state:磷酸戊糖途径产物去向",
+      "status": "ok",
+      "detail": "state=merged（重放 merged）"
+    },
+    {
+      "check": "replay-merged_into:磷酸戊糖途径产物去向",
+      "status": "ok",
+      "detail": "merged_into=脂肪酸β氧化能量账（重放 脂肪酸β氧化能量账）"
+    },
+    {
+      "check": "replay-evidence:磷酸戊糖途径产物去向",
+      "status": "ok",
+      "detail": "证据数 1（重放 1）"
+    },
+    {
+      "check": "replay-rejections:磷酸戊糖途径产物去向",
+      "status": "ok",
+      "detail": "拒绝 0（重放 0）"
+    },
+    {
+      "check": "replay-revisions:磷酸戊糖途径产物去向",
+      "status": "ok",
+      "detail": "修订 0（重放 0）"
+    },
+    {
+      "check": "replay-scope_class:糖原合成能量代价",
+      "status": "ok",
+      "detail": "scope_class=out_of_scope（重放 out_of_scope）"
+    },
+    {
+      "check": "replay-state:糖原合成能量代价",
+      "status": "ok",
+      "detail": "state=rejected（重放 rejected）"
+    },
+    {
+      "check": "replay-merged_into:糖原合成能量代价",
+      "status": "ok",
+      "detail": "merged_into=None（重放 None）"
+    },
+    {
+      "check": "replay-evidence:糖原合成能量代价",
+      "status": "ok",
+      "detail": "证据数 1（重放 1）"
+    },
+    {
+      "check": "replay-rejections:糖原合成能量代价",
+      "status": "ok",
+      "detail": "拒绝 1（重放 1）"
+    },
+    {
+      "check": "replay-revisions:糖原合成能量代价",
+      "status": "ok",
+      "detail": "修订 0（重放 0）"
+    },
+    {
+      "check": "replay-must-do",
+      "status": "ok",
+      "detail": "重放必做集合=['丙酮酸脱氢酶复合体', '糖异生绕行反应', '糖酵解净能量收支']"
+    },
+    {
+      "check": "replay-queue-only",
+      "status": "ok",
+      "detail": "重放越界集合=['乳酸穿梭与科里循环', '糖原合成能量代价', '脂肪酸β氧化能量账']"
+    },
+    {
+      "check": "replay-counter-observations",
+      "status": "ok",
+      "detail": "磁盘 observations=10（重放 10）"
+    },
+    {
+      "check": "replay-counter-blocked_repeats",
+      "status": "ok",
+      "detail": "磁盘 blocked_repeats=1（重放 1）"
+    },
+    {
+      "check": "replay-counter-reopenings",
+      "status": "ok",
+      "detail": "磁盘 reopenings=1（重放 1）"
+    },
+    {
+      "check": "replay-counter-merges",
+      "status": "ok",
+      "detail": "磁盘 merges=1（重放 1）"
+    },
+    {
+      "check": "replay-counter-decisions",
+      "status": "ok",
+      "detail": "磁盘 decisions=7（重放 7）"
+    },
+    {
+      "check": "frozen-anchor",
+      "status": "ok",
+      "detail": "冻结清单存在并逐字节核对"
+    }
+  ]
+}

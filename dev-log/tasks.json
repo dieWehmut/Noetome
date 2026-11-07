@@ -2752,7 +2752,7 @@
       "id": "B08-T01",
       "title": "研究候选队列、授权边界与拒绝记忆",
       "batch": "B08",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B07-T03"
       ],
@@ -2770,7 +2770,87 @@
         "候选与授权状态写入后可跨进程重读；未知、损坏或外来根被拒绝并保留现场；状态只由本轮显式动词改变，队列操作不触发任何检索或模型调用。",
         "四维状态与报告能单列研究候选且不把它们算作本轮完成或失败；通过独立队列审计和完整Rust/Python回归后complete、提交并推送。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T12:02:47Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结公开研究候选fixture与真实RED，定义候选队列/授权边界/拒绝记忆合同并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-07T13:16:16Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现 research 五动词：adopt/observe/decide/list/status；队列根只允许 control/{owner.json,research.sqlite,queue.lock}，sqlite application_id=0x4E525148、user_version=1、三表定义逐字校验；必做集合只由 adopt 冻结，越界主题只能以 out_of_scope 进队列；拒绝记忆用只追加事件区分 blocked_repeat 与 reopened，带新理由才重开；merge 转移证据并按 round+note 去重；记录必须是规范 JSON，加一个空格即判 RESEARCH_INTEGRITY；队列零检索零模型，不改 CompileReport.dimensions 而走独立报告",
+          "validation": [
+            "cargo fmt --all --check：exit 0",
+            "cargo test --test research：14 passed / 0 failed",
+            "PYTHONUTF8=1 python3 -m unittest tests.test_verify_research_queue：Ran 30 / OK",
+            "PYTHONUTF8=1 python3 scripts/verify_research_queue.py /tmp/rq-final-a/queue --package fixtures/research-queue-v1：合计 132 项检查，失败 0、提示 0",
+            "端到端六步序列（adopt+2 observe+2 decide+1 observe）全部 exit 0；status 输出 must_do 3 项、候选 7 项（proposed 2/accepted 2/rejected 1/deferred 1/merged 1）、counters observations=10 blocked_repeats=1 reopenings=1 merges=1 decisions=7",
+            "真实 RED：暂存 lib.rs/main.rs 改动后重建，noetome research --help 为 CLI_INVALID_ARGUMENT exit=2 且不建根",
+            "cargo test --workspace --no-fail-fast：research 14/14 通过；lib 456 passed/99 failed 与 tests/compile 1 项等失败在改动前 a11cf86 基线同样复现（已用 git stash 复核），属环境既有失败，未计入通过"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/research_model.rs",
+              "sha256": "308ae74125d076f21240d7a3085080a92023c8089aed9b2b7330051f4397bd7d"
+            },
+            {
+              "path": "crates/noetome-cli/src/research_store.rs",
+              "sha256": "d4b63ae527c6f06adb49c878e687465fe83009e12f4757f01cb1845b9d829265"
+            },
+            {
+              "path": "crates/noetome-cli/src/lib.rs",
+              "sha256": "7fdea80f3b814056b56818c3e107143c0e24940c70a79bc1b43bb04e64b4de32"
+            },
+            {
+              "path": "crates/noetome-cli/src/main.rs",
+              "sha256": "7dc17970bd58403853f4469c3c836b0fce1a1df6c3ae8cc55dee63a95d9aef21"
+            },
+            {
+              "path": "crates/noetome-cli/tests/research.rs",
+              "sha256": "96258c0c1ec881b2ccc9992b75ee9ce875aa799c3b46f880898380464bb28212"
+            },
+            {
+              "path": "scripts/verify_research_queue.py",
+              "sha256": "5fbfa698a15a1e769312b518f94d0e4a17a32c497b6ae70ffd0762239c22a61e"
+            },
+            {
+              "path": "tests/test_verify_research_queue.py",
+              "sha256": "71cd9ab2828ab99001b4b6bc198b91fe0ba3f5159257abdb8d1828331bd9dd71"
+            },
+            {
+              "path": "doc/technical/RESEARCH_QUEUE_CONTRACT.md",
+              "sha256": "b1a6454f7fb5f10d1cec85e03486f698460864c5eb9652292550b0520f4e429c"
+            },
+            {
+              "path": "doc/validation/B08-T01.md",
+              "sha256": "fe53f08d0b8a48fc3812a8c87518869c667bcd161a273ec7b3062f7a6ff88e8a"
+            },
+            {
+              "path": "fixtures/research-queue-v1/author.json",
+              "sha256": "06175f4642a7b8056771cc4ee81053a7146b7e6ebb0652f171e6978aaa71d54e"
+            },
+            {
+              "path": "fixtures/research-queue-v1/cases.json",
+              "sha256": "6cdfbeca59324239114c5a383476f93afc65d0c1674c72295ab5e3782ab3d000"
+            },
+            {
+              "path": "fixtures/research-queue-v1/frozen-sha256.json",
+              "sha256": "f240e019e150c0ec076b878235a47559d8c8a9c0f59211cc4a78d549e99f8f64"
+            },
+            {
+              "path": "doc/validation/assets/B08-T01/cli-20261107/audit.json",
+              "sha256": "4883fd4fe15d9a85777490b53c1bdafe7b1b186ae217639bf9a5c1d62800da07"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B08-T02",

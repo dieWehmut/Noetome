@@ -1,0 +1,62 @@
+{
+  "policy": "research-queue-v1",
+  "schema_version": 1,
+  "round": "round-01",
+  "observations": [
+    {
+      "subject": "糖酵解净能量收支",
+      "scope_class": "authorized_target",
+      "reason": "写作时发现正文只逐反应列了产物，没有汇总净账，读者算不出2 ATP与2 NADH从哪来。",
+      "relation": "本轮第一授权目标的直接证据缺口。",
+      "benefit": "补上净账后底物水平磷酸化与己糖激酶/磷酸果糖激酶耗能对照才成立。",
+      "source_leads": ["originals/chapter-glycolysis.md#net-energy"],
+      "estimated_cost": "无需检索，只在既有教材样例内补齐算式。",
+      "depends_on": [],
+      "revisit_reason": null
+    },
+    {
+      "subject": "糖异生绕行反应",
+      "scope_class": "authorized_target",
+      "reason": "对照章节时发现糖异生只写了起止物，没有指出四个不可逆步骤如何绕开。",
+      "relation": "本轮第二授权目标。",
+      "benefit": "补全后可与糖酵解三个不可逆反应对照成表。",
+      "source_leads": ["originals/chapter-gluconeogenesis.md#bypass"],
+      "estimated_cost": "无外部检索；需与该章既有表格对齐。",
+      "depends_on": [],
+      "revisit_reason": null
+    },
+    {
+      "subject": "乳酸穿梭与科里循环",
+      "scope_class": "out_of_scope",
+      "reason": "糖酵解净账写完后引出乳酸去向问题：肌组织产生的乳酸如何回到肝再糖异生。",
+      "relation": "与两个授权目标都相邻，但属于器官间代谢整合，不在本轮批准范围内。",
+      "benefit": "能补上组织定位的连贯性，但会引入循环系统与器官分工的新分支。",
+      "source_leads": ["originals/chapter-glycolysis.md#lactate", "originals/notes-organ-integration.md"],
+      "estimated_cost": "至少需要一轮新的资料准备与跨章节改写。",
+      "depends_on": [],
+      "revisit_reason": null
+    },
+    {
+      "subject": "脂肪酸β氧化能量账",
+      "scope_class": "out_of_scope",
+      "reason": "做能量收支对照时想到脂代谢也需要一张净账；这是教材未展开的另一分支。",
+      "relation": "与本轮糖代谢目标无直接依赖，只是方法上同构。",
+      "benefit": "若用户确认要扩展到脂代谢，可复用同一套记账模板。",
+      "source_leads": ["originals/chapter-lipids.md#beta-oxidation"],
+      "estimated_cost": "需要一整章新资料与本轮之外的新目标授权。",
+      "depends_on": [],
+      "revisit_reason": null
+    },
+    {
+      "subject": "丙酮酸脱氢酶复合体",
+      "scope_class": "required_prerequisite",
+      "reason": "糖酵解终产物丙酮酸的去向必须先说明该复合体的辅因子与调控，否则绕行反应讲不通。",
+      "relation": "已批准的必要前提。",
+      "benefit": "补足后糖异生前体来源才自洽。",
+      "source_leads": ["originals/chapter-pdc.md"],
+      "estimated_cost": "只补必要部分，不展开结构生物学。",
+      "depends_on": [],
+      "revisit_reason": null
+    }
+  ]
+}

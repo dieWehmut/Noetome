@@ -1,0 +1,16 @@
+Noetome 研究候选队列、授权边界与拒绝记忆
+
+用法：noetome research adopt <author.json> <尚不存在的队列根>
+      noetome research observe <队列根> <观测文件>
+      noetome research decide <队列根> <决定文件>
+      noetome research list <队列根>
+      noetome research status <队列根>
+
+adopt：只接受明确作者包与全新目录；冻结本轮目标、必做集合与上限，之后不接受增删。
+observe：登记一条发现的候选主题（主题/发现原因/关系/收益/来源线索/代价/依赖/状态）。
+decide：接受、拒绝、延后、合并或修改范围；每条决定留痕，拒绝结果会被记住。
+list：只读输出候选与计数的完整JSON。
+status：只读核对队列布局、拒绝记忆与必做集合。
+越界主题只进候选队列，不改变本轮必做集合；相关性只用于排序，不代替授权。
+队列从不联网、不调用模型：候选只是待批准线索，不是已完成知识。
+仅操作新的测试根；不接管生产项目或生产Vault。

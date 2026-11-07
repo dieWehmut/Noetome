@@ -1,0 +1,33 @@
+{
+  "policy": "research-queue-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "rq-energy-v1",
+  "objective": {
+    "summary": "把自造教材样例的糖代谢章节补到能解释能量收支与绕行反应的程度；本轮不扩充到脂代谢。",
+    "authorized_targets": [
+      {
+        "subject": "糖酵解净能量收支",
+        "goal": "说明每一步的ATP/NADH产出与消耗，并给出净账与底物水平磷酸化位置。"
+      },
+      {
+        "subject": "糖异生绕行反应",
+        "goal": "说明四个绕行步骤、各自能量代价与组织定位差异。"
+      }
+    ],
+    "required_prerequisites": [
+      {
+        "subject": "丙酮酸脱氢酶复合体",
+        "goal": "只补到理解丙酮酸去向所必需的辅因子与调控点，不展开完整结构生物学。"
+      }
+    ]
+  },
+  "limits": {
+    "max_candidates": 12,
+    "max_evidence": 6,
+    "max_leads": 4,
+    "max_revisions": 2
+  },
+  "observations": [],
+  "decisions": []
+}
