@@ -6,7 +6,7 @@ use crate::{
     extraction_source::SourceSession,
     project::{self, ProjectError},
     request_budget_model::*,
-    request_budget_store::BudgetStore,
+    request_budget_store::{BudgetStore, registered_identity_matches},
     run_model::FileStamp,
     source::CommandOutput,
     text::sha256,
@@ -404,20 +404,21 @@ impl RunGuard {
     }
     fn verify(&self) -> Result<(), ProjectError> {
         let o = &self.owner;
-        if identity(&self.root)? != o.root_identity
-            || identity(
+        if !registered_identity_matches(&self.root, &o.root_identity)?
+            || !registered_identity_matches(
                 self.root
                     .parent()
                     .ok_or_else(|| invalid("Run父目录缺失。"))?,
-            )? != o.parent_identity
-            || identity(&self.root.join("control"))? != o.control_identity
-            || identity(&self.root.join("attempts"))? != o.attempts_identity
-            || identity(&self.root.join(LOCK))? != o.lock_identity
+                &o.parent_identity,
+            )?
+            || !registered_identity_matches(&self.root.join("control"), &o.control_identity)?
+            || !registered_identity_matches(&self.root.join("attempts"), &o.attempts_identity)?
+            || !registered_identity_matches(&self.root.join(LOCK), &o.lock_identity)?
             || fs::metadata(self.root.join(LOCK))
                 .map_err(|e| ProjectError::io(&self.root, e))?
                 .len()
                 != 0
-            || identity(Path::new(&o.budget_root))? != o.budget_identity
+            || !registered_identity_matches(Path::new(&o.budget_root), &o.budget_identity)?
         {
             return Err(invalid("Run/authority/原owner身份或字节变化。"));
         }

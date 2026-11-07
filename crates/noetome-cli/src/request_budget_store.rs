@@ -312,6 +312,121 @@ fn stamp_opened(
 fn matches_pin(stamp: &FileStamp, pin: &FilePin) -> bool {
     stamp.sha256 == pin.sha256 && stamp.byte_length == pin.byte_length
 }
+fn registered_handle_identity(
+    path: &Path,
+    _file: &File,
+    metadata: &fs::Metadata,
+) -> Result<Identity, ProjectError> {
+    if project::is_link(metadata) || !(metadata.is_file() || metadata.is_dir()) {
+        return Err(ProjectError::unsafe_path(path));
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::MetadataExt;
+        if metadata.is_file() && metadata.nlink() != 1 {
+            return Err(ProjectError::new(
+                "COMPILE_INTEGRITY",
+                3,
+                "拥有的普通文件必须只有一个硬链接；已保留现场。",
+            ));
+        }
+        Ok(Identity::Unix {
+            device: metadata.dev(),
+            inode: metadata.ino(),
+        })
+    }
+    #[cfg(windows)]
+    {
+        let information =
+            winapi_util::file::information(_file).map_err(|e| ProjectError::io(path, e))?;
+        if information.file_attributes() & 0x400 != 0
+            || (metadata.is_file() && information.number_of_links() != 1)
+        {
+            return Err(ProjectError::new(
+                "COMPILE_INTEGRITY",
+                3,
+                "持久身份拒绝reparse或多硬链接文件；已保留现场。",
+            ));
+        }
+        Ok(Identity::Windows {
+            volume: information.volume_serial_number(),
+            index: information.file_index(),
+        })
+    }
+    #[cfg(not(any(unix, windows)))]
+    Err(ProjectError::new(
+        "COMPILE_IDENTITY_UNSUPPORTED",
+        3,
+        "当前平台没有已确认的持久文件身份实现。",
+    ))
+}
+pub(super) fn registered_identity_matches(
+    path: &Path,
+    expected: &Identity,
+) -> Result<bool, ProjectError> {
+    project::check_components(path)?;
+    let before = fs::symlink_metadata(path).map_err(|e| ProjectError::io(path, e))?;
+    if project::is_link(&before) || !(before.is_file() || before.is_dir()) {
+        return Err(ProjectError::unsafe_path(path));
+    }
+    let mut options = OpenOptions::new();
+    options.read(true);
+    #[cfg(windows)]
+    {
+        use std::os::windows::fs::OpenOptionsExt;
+        options.share_mode(3).custom_flags(0x02200000);
+    }
+    let file = options.open(path).map_err(|e| ProjectError::io(path, e))?;
+    registered_identity_opened(path, expected, file, before, || Ok(()))
+}
+fn registered_identity_opened(
+    path: &Path,
+    expected: &Identity,
+    file: File,
+    before: fs::Metadata,
+    after_snapshot: impl FnOnce() -> Result<(), ProjectError>,
+) -> Result<bool, ProjectError> {
+    // Revalidation uses an already trusted ID, not a new pathname observation.
+    // Keep the protected actual handle and independent final pathname handle
+    // alive together. This function never reads file data or binds mtime.
+    let opened_metadata = file.metadata().map_err(|e| ProjectError::io(path, e))?;
+    if registered_handle_identity(path, &file, &opened_metadata)? != *expected
+        || opened_metadata.is_dir() != before.is_dir()
+        || opened_metadata.is_file() != before.is_file()
+    {
+        return Ok(false);
+    }
+    let opened =
+        same_file::Handle::from_file(file.try_clone().map_err(|e| ProjectError::io(path, e))?)
+            .map_err(|e| ProjectError::io(path, e))?;
+    after_snapshot()?;
+    let after = file.metadata().map_err(|e| ProjectError::io(path, e))?;
+    if registered_handle_identity(path, &file, &after)? != *expected
+        || after.is_dir() != before.is_dir()
+        || after.is_file() != before.is_file()
+    {
+        return Ok(false);
+    }
+    let current = same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))?;
+    project::check_components(path)?;
+    let current_metadata = current
+        .as_file()
+        .metadata()
+        .map_err(|e| ProjectError::io(path, e))?;
+    let current_id = registered_handle_identity(path, current.as_file(), &current_metadata)?;
+    let final_leaf = fs::symlink_metadata(path).map_err(|e| ProjectError::io(path, e))?;
+    if project::is_link(&final_leaf) || !(final_leaf.is_file() || final_leaf.is_dir()) {
+        return Err(ProjectError::unsafe_path(path));
+    }
+    let matched = current == opened
+        && current_id == *expected
+        && current_metadata.is_dir() == before.is_dir()
+        && current_metadata.is_file() == before.is_file()
+        && final_leaf.is_dir() == before.is_dir()
+        && final_leaf.is_file() == before.is_file();
+    project::check_components(path)?;
+    Ok(matched)
+}
 fn empty_stamp(path: &Path) -> Result<FileStamp, ProjectError> {
     // NTFS can reject ReadFile on a locked zero-byte worker file. Its emptiness
     // is witnessed by unchanged ordinary-file metadata and real handle IDs.
@@ -393,13 +508,14 @@ fn layout(root: &Path, owner: &Owner, bytes: &[u8]) -> Result<(), ProjectError> 
             .map_err(|e| ProjectError::io(root, e))?
             .to_string_lossy()
             != owner.root
-        || identity(root)? != owner.root_identity
-        || identity(
+        || !registered_identity_matches(root, &owner.root_identity)?
+        || !registered_identity_matches(
             root.parent()
                 .ok_or_else(|| invalid("authority无父目录。"))?,
-        )? != owner.parent_identity
-        || identity(&root.join("control"))? != owner.control_identity
-        || identity(&root.join(LOCK))? != owner.lock_identity
+            &owner.parent_identity,
+        )?
+        || !registered_identity_matches(&root.join("control"), &owner.control_identity)?
+        || !registered_identity_matches(&root.join(LOCK), &owner.lock_identity)?
         || names(root)? != BTreeSet::from(["control".into()])
         || names(&root.join("control"))?
             != BTreeSet::from([
@@ -1964,11 +2080,13 @@ fn apply(v: &mut BudgetView, r: &EventRecord) -> Result<(), ProjectError> {
 fn witnesses(v: &BudgetView) -> Result<(), ProjectError> {
     for run in &v.runs {
         let root = Path::new(&run.spec.run_root);
-        if identity(root)? != run.identity.root
-            || identity(root.parent().ok_or_else(|| invalid("Run无父目录。"))?)?
-                != run.identity.parent
-            || identity(&root.join("control"))? != run.identity.control
-            || identity(&root.join("attempts"))? != run.identity.attempts
+        if !registered_identity_matches(root, &run.identity.root)?
+            || !registered_identity_matches(
+                root.parent().ok_or_else(|| invalid("Run无父目录。"))?,
+                &run.identity.parent,
+            )?
+            || !registered_identity_matches(&root.join("control"), &run.identity.control)?
+            || !registered_identity_matches(&root.join("attempts"), &run.identity.attempts)?
             || stamp(&root.join("control/owner.json"))?.0 != run.identity.owner
             || empty_stamp(&root.join("control/worker.lock"))? != run.identity.worker
             || names(root)? != BTreeSet::from(["control".into(), "attempts".into()])
@@ -1980,17 +2098,22 @@ fn witnesses(v: &BudgetView) -> Result<(), ProjectError> {
             return Err(invalid("已登记Run根身份改变。"));
         }
         for (name, expected) in &run.identity.units {
-            if identity(&root.join("attempts").join(name))? != *expected {
+            if !registered_identity_matches(&root.join("attempts").join(name), expected)? {
                 return Err(invalid("Run已登记unit目录被替换。"));
             }
         }
         for a in run.units.iter().flat_map(|u| &u.attempts) {
             let root = root.join(relative(&a.plan.attempt_root)?);
-            if identity(&root)? != a.identity.root
-                || identity(root.parent().ok_or_else(|| invalid("attempt无父目录。"))?)?
-                    != a.identity.parent
-                || directory_chain(Path::new(&run.spec.run_root), &a.plan.attempt_root)?
-                    != a.identity.directories
+            if !registered_identity_matches(&root, &a.identity.root)?
+                || !registered_identity_matches(
+                    root.parent().ok_or_else(|| invalid("attempt无父目录。"))?,
+                    &a.identity.parent,
+                )?
+                || !known_expected_chain(
+                    Path::new(&run.spec.run_root),
+                    &a.plan.attempt_root,
+                    &a.identity.directories,
+                )?
             {
                 return Err(invalid("attempt或已确认祖先目录身份被替换。"));
             }
@@ -2058,6 +2181,29 @@ fn directory_chain(root: &Path, value: &str) -> Result<BTreeMap<String, Identity
         out.insert(p, identity(&path)?);
     }
     Ok(out)
+}
+fn known_expected_chain(
+    root: &Path,
+    value: &str,
+    expected: &BTreeMap<String, Identity>,
+) -> Result<bool, ProjectError> {
+    let prefixes = directory_prefixes(value)?;
+    if prefixes != expected.keys().cloned().collect::<BTreeSet<_>>() {
+        return Ok(false);
+    }
+    for prefix in prefixes {
+        let path = root.join(&prefix);
+        if !fs::symlink_metadata(&path)
+            .map_err(|e| ProjectError::io(&path, e))?
+            .is_dir()
+        {
+            return Err(invalid("attempt祖先必须为普通目录。"));
+        }
+        if !registered_identity_matches(&path, &expected[&prefix])? {
+            return Ok(false);
+        }
+    }
+    Ok(true)
 }
 fn json(path: &Path) -> Result<serde_json::Value, ProjectError> {
     serde_json::from_slice(&stamp(path)?.1).map_err(|_| invalid("原API JSON不可解析。"))
@@ -2731,6 +2877,209 @@ mod tests {
         assert!(stamp_mode(&path, false).is_err());
         drop(writer);
         assert_eq!(stamp_mode(&path, false).unwrap().1, b"literal bytes");
+    }
+
+    #[test]
+    fn budget_registered_identity_checks_known_file_directory_without_byte_binding() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("known-identity-file");
+        fs::write(&path, b"original bytes").unwrap();
+        let file_id = identity(&path).unwrap();
+        let dir_id = identity(&f.base).unwrap();
+        assert!(registered_identity_matches(&path, &file_id).unwrap());
+        assert!(registered_identity_matches(&f.base, &dir_id).unwrap());
+        fs::write(&path, b"different length and truthful mutable bytes").unwrap();
+        assert!(registered_identity_matches(&path, &file_id).unwrap());
+        assert!(!registered_identity_matches(&path, &dir_id).unwrap());
+        assert!(!registered_identity_matches(&f.base, &file_id).unwrap());
+    }
+
+    #[test]
+    fn budget_registered_identity_rejects_foreign_opened_handle_before_callback() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("expected-identity-file");
+        let foreign = f.base.join("foreign-identity-file");
+        fs::write(&path, b"same bytes").unwrap();
+        fs::write(&foreign, b"same bytes").unwrap();
+        let expected = identity(&path).unwrap();
+        let wrong = identity(&foreign).unwrap();
+        assert!(!registered_identity_matches(&path, &wrong).unwrap());
+        let called = std::cell::Cell::new(false);
+        let result = registered_identity_opened(
+            &path,
+            &expected,
+            File::open(&foreign).unwrap(),
+            fs::symlink_metadata(&path).unwrap(),
+            || {
+                called.set(true);
+                Ok(())
+            },
+        );
+        assert!(!result.unwrap());
+        assert!(!called.get());
+        assert_eq!(fs::read(&path).unwrap(), b"same bytes");
+        assert_eq!(fs::read(&foreign).unwrap(), b"same bytes");
+    }
+
+    #[test]
+    fn budget_registered_identity_rejects_same_bytes_mtime_path_replacement() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("registered-original");
+        fs::write(&path, b"same registered bytes").unwrap();
+        let expected = identity(&path).unwrap();
+        let modified = fs::metadata(&path).unwrap().modified().unwrap();
+        let before = fs::symlink_metadata(&path).unwrap();
+        let mut options = OpenOptions::new();
+        options.read(true);
+        #[cfg(windows)]
+        {
+            use std::os::windows::fs::OpenOptionsExt;
+            // Test-only deletion sharing exposes a real replacement window;
+            // the production registered revalidator always keeps share3.
+            options.share_mode(7);
+        }
+        let result = registered_identity_opened(
+            &path,
+            &expected,
+            options.open(&path).unwrap(),
+            before,
+            || {
+                fs::rename(&path, f.base.join("retained-registered-original"))
+                    .map_err(|e| ProjectError::io(&path, e))?;
+                fs::write(&path, b"same registered bytes")
+                    .map_err(|e| ProjectError::io(&path, e))?;
+                OpenOptions::new()
+                    .write(true)
+                    .open(&path)
+                    .map_err(|e| ProjectError::io(&path, e))?
+                    .set_times(fs::FileTimes::new().set_modified(modified))
+                    .map_err(|e| ProjectError::io(&path, e))
+            },
+        );
+        assert!(!result.unwrap());
+        assert_eq!(fs::read(&path).unwrap(), b"same registered bytes");
+        assert_eq!(fs::metadata(&path).unwrap().modified().unwrap(), modified);
+        assert_ne!(identity(&path).unwrap(), expected);
+    }
+
+    #[test]
+    fn budget_registered_identity_rejects_links_and_changed_ancestor() {
+        let f = Fixture::new(100_000);
+        let parent = f.base.join("registered-parent");
+        fs::create_dir(&parent).unwrap();
+        let path = parent.join("original");
+        fs::write(&path, b"registered literal bytes").unwrap();
+        let expected = identity(&path).unwrap();
+        let result = registered_identity_opened(
+            &path,
+            &expected,
+            File::open(&path).unwrap(),
+            fs::symlink_metadata(&path).unwrap(),
+            || {
+                fs::hard_link(&path, f.base.join("unexpected-second-link"))
+                    .map_err(|e| ProjectError::io(&path, e))
+            },
+        );
+        assert_eq!(result.unwrap_err().code(), "COMPILE_INTEGRITY");
+        assert_eq!(
+            registered_identity_matches(&path, &expected)
+                .unwrap_err()
+                .code(),
+            "COMPILE_INTEGRITY"
+        );
+        fs::remove_file(f.base.join("unexpected-second-link")).unwrap();
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::symlink;
+            let leaf = f.base.join("registered-leaf-link");
+            symlink(&path, &leaf).unwrap();
+            assert_eq!(
+                registered_identity_matches(&leaf, &expected)
+                    .unwrap_err()
+                    .code(),
+                "PROJECT_UNSAFE_PATH"
+            );
+            let result = registered_identity_opened(
+                &path,
+                &expected,
+                File::open(&path).unwrap(),
+                fs::symlink_metadata(&path).unwrap(),
+                || {
+                    let saved = f.base.join("retained-original-parent");
+                    fs::rename(&parent, &saved).map_err(|e| ProjectError::io(&parent, e))?;
+                    symlink(&saved, &parent).map_err(|e| ProjectError::io(&parent, e))
+                },
+            );
+            assert_eq!(result.unwrap_err().code(), "PROJECT_UNSAFE_PATH");
+        }
+        #[cfg(windows)]
+        {
+            let junction = f.base.join("registered-junction");
+            let junction_text = junction.to_str().unwrap();
+            let parent_text = parent.to_str().unwrap();
+            let output = std::process::Command::new("cmd.exe")
+                .args(["/D", "/C", "mklink", "/J"])
+                // canonicalize gives a verbatim path; cmd's builtin receives
+                // the equivalent ordinary local path only for this setup.
+                .arg(junction_text.strip_prefix(r"\\?\").unwrap_or(junction_text))
+                .arg(parent_text.strip_prefix(r"\\?\").unwrap_or(parent_text))
+                .output()
+                .unwrap();
+            assert!(
+                output.status.success(),
+                "synthetic junction setup: {} {}",
+                String::from_utf8_lossy(&output.stdout),
+                String::from_utf8_lossy(&output.stderr)
+            );
+            assert_eq!(
+                registered_identity_matches(&junction.join("original"), &expected)
+                    .unwrap_err()
+                    .code(),
+                "PROJECT_UNSAFE_PATH"
+            );
+            fs::remove_dir(&junction).unwrap();
+        }
+    }
+
+    #[test]
+    fn budget_registered_identity_requires_complete_chain_and_keeps_windows_sharing() {
+        let f = Fixture::new(100_000);
+        let plan = f.plan("first", 1);
+        let root = Path::new(&f.run.run_root);
+        let expected = directory_chain(root, &plan.attempt_root).unwrap();
+        assert!(known_expected_chain(root, &plan.attempt_root, &expected).unwrap());
+        let mut missing = expected.clone();
+        missing.remove("attempts");
+        assert!(!known_expected_chain(root, &plan.attempt_root, &missing).unwrap());
+        let mut extra = expected.clone();
+        extra.insert("unexpected-prefix".into(), identity(root).unwrap());
+        assert!(!known_expected_chain(root, &plan.attempt_root, &extra).unwrap());
+        let mut wrong = expected.clone();
+        wrong.insert("attempts".into(), identity(root).unwrap());
+        assert!(!known_expected_chain(root, &plan.attempt_root, &wrong).unwrap());
+        #[cfg(windows)]
+        {
+            use std::os::windows::fs::OpenOptionsExt;
+            for bytes in [b"".as_slice(), b"x".as_slice()] {
+                let path = f.base.join("registered-held-lock");
+                fs::write(&path, bytes).unwrap();
+                let expected = identity(&path).unwrap();
+                let held = OpenOptions::new()
+                    .read(true)
+                    .write(true)
+                    .share_mode(1)
+                    .open(&path)
+                    .unwrap();
+                fs2::FileExt::try_lock_exclusive(&held).unwrap();
+                // Prove a real denied nonempty data read, and also exercise
+                // zero-byte locks without assuming a library's EOF shortcut.
+                if !bytes.is_empty() {
+                    assert!(fs::read(&path).is_err());
+                }
+                assert!(registered_identity_matches(&path, &expected).unwrap());
+                fs2::FileExt::unlock(&held).unwrap();
+            }
+        }
     }
 
     fn literal_database_header() -> [u8; 100] {
