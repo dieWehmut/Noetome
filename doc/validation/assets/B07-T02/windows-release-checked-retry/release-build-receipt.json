@@ -1,0 +1,702 @@
+{
+  "status": "passed_release_build_and_probes_only",
+  "platform": "windows",
+  "profile": "release",
+  "source_count": 2056,
+  "source_before_after_equal": true,
+  "source_snapshot": {
+    "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+    "byte_length": 629322
+  },
+  "source_archive": {
+    "sha256": "28e44ee58d3580e8528d82ba9d79d5bcf14cd7575f766589ff3e6c241f26f6af",
+    "byte_length": 8241928
+  },
+  "precise_source_scopes": {
+    "sha256": "ea75dd6e52ef5d93428b965fa96262f82a724df063a001810c18ad48ef0da1ff",
+    "byte_length": 459583
+  },
+  "executor": {
+    "sha256": "c574120ec94b7d90e87687004a2c3be872fdd3dfcb69cd633c9a99b69549a9cb",
+    "byte_length": 27263
+  },
+  "selected_executables": {
+    "noetome.exe": {
+      "sha256": "c9ad64ed70a9489b785c7ec0df43b678adff43184c41df5c3b30a90c05eace70",
+      "byte_length": 16127488
+    },
+    "noetome-cli-testdriver.exe": {
+      "sha256": "a9683e1217449f3ec0672e7fd71cb1ffbb31e02f377f3b9625451b8a7f50158e",
+      "byte_length": 22985216
+    }
+  },
+  "actual_cli_and_driver_compiler_fingerprint": "74ad054e5013f9551af941813f84d3703cb28012e5fddaa14ef1ea10cfbb0a85",
+  "actual_cli_cargo_fingerprints": [
+    "74ad054e5013f9551af941813f84d3703cb28012e5fddaa14ef1ea10cfbb0a85"
+  ],
+  "actual_driver_cargo_fingerprints": [
+    "74ad054e5013f9551af941813f84d3703cb28012e5fddaa14ef1ea10cfbb0a85"
+  ],
+  "actual_cargo_artifacts": {
+    "cli": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///D:/Noetome/.artifacts/b07-t02-windows-release-pair-09-20261107/repo/crates/noetome-cli#0.1.0",
+      "manifest_path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo\\crates\\noetome-cli\\Cargo.toml",
+      "target": {
+        "kind": [
+          "bin"
+        ],
+        "crate_types": [
+          "bin"
+        ],
+        "name": "noetome",
+        "src_path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo\\crates\\noetome-cli\\src\\main.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": false,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "3",
+        "debuginfo": 0,
+        "debug_assertions": false,
+        "overflow_checks": false,
+        "test": false
+      },
+      "features": [],
+      "filenames": [
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-01-20261107\\build-target\\release\\noetome.exe",
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-01-20261107\\build-target\\release\\noetome.pdb"
+      ],
+      "executable": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-01-20261107\\build-target\\release\\noetome.exe",
+      "fresh": false
+    },
+    "driver": {
+      "reason": "compiler-artifact",
+      "package_id": "path+file:///D:/Noetome/.artifacts/b07-t02-windows-release-pair-09-20261107/repo/crates/noetome-cli#0.1.0",
+      "manifest_path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo\\crates\\noetome-cli\\Cargo.toml",
+      "target": {
+        "kind": [
+          "lib"
+        ],
+        "crate_types": [
+          "lib"
+        ],
+        "name": "noetome_cli",
+        "src_path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo\\crates\\noetome-cli\\src\\lib.rs",
+        "edition": "2024",
+        "doc": true,
+        "doctest": true,
+        "test": true
+      },
+      "profile": {
+        "opt_level": "3",
+        "debuginfo": 0,
+        "debug_assertions": false,
+        "overflow_checks": false,
+        "test": true
+      },
+      "features": [],
+      "filenames": [
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-01-20261107\\build-target\\release\\deps\\noetome_cli-b43f151260fc0eac.exe",
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-01-20261107\\build-target\\release\\deps\\noetome_cli-b43f151260fc0eac.pdb"
+      ],
+      "executable": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-01-20261107\\build-target\\release\\deps\\noetome_cli-b43f151260fc0eac.exe",
+      "fresh": false
+    }
+  },
+  "runtime_probes": {
+    "cli": {
+      "checkpoint_sequence": 1,
+      "compiler_fingerprint": "74ad054e5013f9551af941813f84d3703cb28012e5fddaa14ef1ea10cfbb0a85",
+      "confirmed_units": 0,
+      "controls": {
+        "acknowledged_sequence": 0,
+        "action": null,
+        "latest_sequence": 0,
+        "request_sequence": null
+      },
+      "diagnostic": null,
+      "input_hashes": {
+        "case_sha256": "a4790b5bb67ec8b4fea71ced53cd44a853a226ffecf74d3599daebb08bbc4437",
+        "expected_sha256": "0477e6dc10ee3e5be654a3bbce4c22cb214972bf658a58e9f8a0cf16db39eadd",
+        "ir_sha256": "3dd1e99ef340d1f603c9514be9e5a3b2b2b2225135f0397d20bcffbe7577fc50",
+        "plan_sha256": "2944b5d0ec3868947c0880650eaaa3c444c6b030f3b5dc77f876e91f4394e1fb"
+      },
+      "operation": "run_start",
+      "paid_calls": 0,
+      "paths": {
+        "journal": "control/run.sqlite",
+        "output": "output",
+        "publication_database": "output/state/compile.sqlite",
+        "root": "\\\\?\\D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\cli-runtime-probe",
+        "vault": "output/vault"
+      },
+      "policy_version": "fixture-six-unit-v1",
+      "producer": "fixture_run",
+      "real_model_calls": 0,
+      "release_id": "32202c60-4cec-40a4-98bd-1bae00de15ad",
+      "release_status": "not_started",
+      "run_id": "074f4f5e-715a-4780-8271-abe05d837a30",
+      "run_status": "paused",
+      "schema_version": 1,
+      "scientific_quality": "not_run",
+      "validation_report": null,
+      "work_units": [
+        {
+          "attempts": 0,
+          "dependencies": [],
+          "output_paths": [],
+          "state": "pending",
+          "unit_id": "source_contract"
+        },
+        {
+          "attempts": 0,
+          "dependencies": [
+            "source_contract"
+          ],
+          "output_paths": [],
+          "state": "pending",
+          "unit_id": "render"
+        },
+        {
+          "attempts": 0,
+          "dependencies": [
+            "render"
+          ],
+          "output_paths": [],
+          "state": "pending",
+          "unit_id": "stage_verification"
+        },
+        {
+          "attempts": 0,
+          "dependencies": [
+            "stage_verification"
+          ],
+          "output_paths": [],
+          "state": "pending",
+          "unit_id": "vault_readback"
+        },
+        {
+          "attempts": 0,
+          "dependencies": [
+            "vault_readback"
+          ],
+          "output_paths": [],
+          "state": "pending",
+          "unit_id": "reports"
+        },
+        {
+          "attempts": 0,
+          "dependencies": [
+            "reports"
+          ],
+          "output_paths": [],
+          "state": "pending",
+          "unit_id": "publication"
+        }
+      ]
+    },
+    "driver_handshake": {
+      "compiler_fingerprint": "74ad054e5013f9551af941813f84d3703cb28012e5fddaa14ef1ea10cfbb0a85",
+      "event": "created",
+      "occurrence": 1,
+      "pid": 66184,
+      "producer": "run_checkpoint_test_handshake",
+      "run_id": "736be011-1ecc-4acb-978b-6bdfe2553206",
+      "sequence": 1,
+      "unit": ""
+    }
+  },
+  "compiler_tools": {
+    "cargo": {
+      "path": "C:\\Users\\Lyinn\\.rustup\\toolchains\\1.98.1-x86_64-pc-windows-msvc\\bin\\cargo.exe",
+      "sha256": "c37545ec61d48d31bdefce53280ecab61c4ea54eaace372fac6a0316c6e165d9",
+      "byte_length": 31435776
+    },
+    "rustc": {
+      "path": "C:\\Users\\Lyinn\\.rustup\\toolchains\\1.98.1-x86_64-pc-windows-msvc\\bin\\rustc.exe",
+      "sha256": "ca9988af88b1463f6857fdfe909299fee50a63260b3e5f7dbcb5b4d3318b27bc",
+      "byte_length": 110592
+    },
+    "rustfmt": {
+      "path": "C:\\Users\\Lyinn\\.rustup\\toolchains\\1.98.1-x86_64-pc-windows-msvc\\bin\\rustfmt.exe",
+      "sha256": "ac9d781249bffabbb1bedb691a5ea6f63a818c1dda73dd698d4dff687ad4c24e",
+      "byte_length": 4752896
+    },
+    "rustdoc": {
+      "path": "C:\\Users\\Lyinn\\.rustup\\toolchains\\1.98.1-x86_64-pc-windows-msvc\\bin\\rustdoc.exe",
+      "sha256": "9daff87cf4052ba3f97decb39d2822e1a96b3ed444eda86ed8df74802679dd60",
+      "byte_length": 11116544
+    }
+  },
+  "registry_before_after_existing_bytes_equal": true,
+  "declared_build_assets": {
+    "crates/noetome-desktop/gen/schemas/windows-schema.json": {
+      "derived_from": "crates/noetome-desktop/gen/schemas/desktop-schema.json",
+      "source_pin": {
+        "sha256": "4a946fe48fbb0c7c535ea53e6070bd8276f3f3d74f96efbaa6d85bd7b53b0f05",
+        "byte_length": 117263
+      },
+      "pin": {
+        "sha256": "4a946fe48fbb0c7c535ea53e6070bd8276f3f3d74f96efbaa6d85bd7b53b0f05",
+        "byte_length": 117263
+      },
+      "method": "exact byte copy of pinned desktop schema, confirmed by prior actual Windows Tauri workspace check"
+    }
+  },
+  "external_sentinel_before_after_equal": true,
+  "commands": [
+    {
+      "name": "rustup-which-cargo",
+      "argv": [
+        "C:\\Users\\Lyinn\\.cargo\\bin\\rustup.exe",
+        "which",
+        "cargo"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 77696,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.7650000000139698,
+      "started_at": "2026-11-07T02:51:36.926304+00:00",
+      "finished_at": "2026-11-07T02:51:38.685997+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\rustup-which-cargo.stdout.bin",
+        "sha256": "cf2a6c2e5daee9a50f0ef62be78507b195bb3dcef569d306c7c44591b962a708",
+        "byte_length": 78
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\rustup-which-cargo.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    },
+    {
+      "name": "rustup-which-rustc",
+      "argv": [
+        "C:\\Users\\Lyinn\\.cargo\\bin\\rustup.exe",
+        "which",
+        "rustc"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 81200,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.687999999965541,
+      "started_at": "2026-11-07T02:51:40.603967+00:00",
+      "finished_at": "2026-11-07T02:51:42.289361+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\rustup-which-rustc.stdout.bin",
+        "sha256": "5cefff15676d953e703f4c81172d2454a65225f4792337cea0f575274f2ec7bb",
+        "byte_length": 78
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\rustup-which-rustc.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    },
+    {
+      "name": "rustup-which-rustfmt",
+      "argv": [
+        "C:\\Users\\Lyinn\\.cargo\\bin\\rustup.exe",
+        "which",
+        "rustfmt"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 19652,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.625,
+      "started_at": "2026-11-07T02:51:43.918502+00:00",
+      "finished_at": "2026-11-07T02:51:45.540959+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\rustup-which-rustfmt.stdout.bin",
+        "sha256": "9b119540e60b0c286f08b1394f9007055b303c02a231f5d5a4151075ea7fecf0",
+        "byte_length": 80
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\rustup-which-rustfmt.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    },
+    {
+      "name": "rustup-which-rustdoc",
+      "argv": [
+        "C:\\Users\\Lyinn\\.cargo\\bin\\rustup.exe",
+        "which",
+        "rustdoc"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 44588,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.577999999979511,
+      "started_at": "2026-11-07T02:51:47.220766+00:00",
+      "finished_at": "2026-11-07T02:51:48.791227+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\rustup-which-rustdoc.stdout.bin",
+        "sha256": "215af6de81b6aa8e29ff6e1cc785408b355b25695d5341c85a142adb433d017c",
+        "byte_length": 80
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\rustup-which-rustdoc.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    },
+    {
+      "name": "rustc-version",
+      "argv": [
+        "C:\\Users\\Lyinn\\.rustup\\toolchains\\1.98.1-x86_64-pc-windows-msvc\\bin\\rustc.exe",
+        "--version",
+        "--verbose"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 76424,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.7349999999860302,
+      "started_at": "2026-11-07T02:51:50.364792+00:00",
+      "finished_at": "2026-11-07T02:51:52.088508+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\rustc-version.stdout.bin",
+        "sha256": "c45e612575abeef05e99e88eb1e7aea52cddab9ad70d4f65ad20eaa65e92a9cf",
+        "byte_length": 194
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\rustc-version.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    },
+    {
+      "name": "cargo-version",
+      "argv": [
+        "C:\\Users\\Lyinn\\.rustup\\toolchains\\1.98.1-x86_64-pc-windows-msvc\\bin\\cargo.exe",
+        "--version",
+        "--verbose"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 77592,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.8439999999827705,
+      "started_at": "2026-11-07T02:51:53.831348+00:00",
+      "finished_at": "2026-11-07T02:51:55.668232+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\cargo-version.stdout.bin",
+        "sha256": "86c2d07f9968fd3174d9cff8c60a4d4323fba3166d5dc6dd36f0987a50677d70",
+        "byte_length": 321
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\cargo-version.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    },
+    {
+      "name": "release-cli-build",
+      "argv": [
+        "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo\\scripts\\cargo_local.ps1",
+        "build",
+        "-p",
+        "noetome-cli",
+        "--bin",
+        "noetome",
+        "--release",
+        "--locked",
+        "--offline",
+        "--message-format=json"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 82108,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 100.20299999997951,
+      "started_at": "2026-11-07T02:52:52.100945+00:00",
+      "finished_at": "2026-11-07T02:54:32.313273+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\release-cli-build.stdout.bin",
+        "sha256": "d453a8ce44f0aa558b05425eab1f6d6d4e1c7179abae632f22aa8df8c2927d5e",
+        "byte_length": 173804
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\release-cli-build.stderr.bin",
+        "sha256": "05044a969da065b714f58cc07f7ad8fc88f8d99cafd125289e46ef4def44f03a",
+        "byte_length": 184
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    },
+    {
+      "name": "release-driver-build",
+      "argv": [
+        "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo\\scripts\\cargo_local.ps1",
+        "test",
+        "-p",
+        "noetome-cli",
+        "--lib",
+        "--release",
+        "--no-run",
+        "--locked",
+        "--offline",
+        "--message-format=json"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 34584,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 119.53099999995902,
+      "started_at": "2026-11-07T02:54:34.004413+00:00",
+      "finished_at": "2026-11-07T02:56:33.533985+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\release-driver-build.stdout.bin",
+        "sha256": "04338df103900887d21f29df8cfe9d51d0f17aba1cd130f531aa76bfd43dab3d",
+        "byte_length": 171333
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\release-driver-build.stderr.bin",
+        "sha256": "b232aeb0f563389c3165694a454a9fe876b1614339f937d21ef5187c7d75a49e",
+        "byte_length": 184
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    },
+    {
+      "name": "test-driver-list",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\selected\\noetome-cli-testdriver.exe",
+        "--list"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 81212,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.0630000000237487,
+      "started_at": "2026-11-07T02:56:35.521262+00:00",
+      "finished_at": "2026-11-07T02:56:37.579761+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\test-driver-list.stdout.bin",
+        "sha256": "9e36a656ab4b028f16eb4a4a3bd798a70c07eacb2bec38332945f30727729ea0",
+        "byte_length": 49272
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\test-driver-list.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    },
+    {
+      "name": "actual-cli-compiler-probe",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\selected\\noetome.exe",
+        "run",
+        "start",
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo\\fixtures\\run-checkpoint-v1\\fixture",
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\cli-runtime-probe",
+        "--paused"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 22544,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 1.875,
+      "started_at": "2026-11-07T02:56:39.347321+00:00",
+      "finished_at": "2026-11-07T02:56:41.214939+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\actual-cli-compiler-probe.stdout.bin",
+        "sha256": "ddf0bf1b947d9d525c1dbe7e6818a0b1957b95a2feff7078a846820a9382ea2c",
+        "byte_length": 2381
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\actual-cli-compiler-probe.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    },
+    {
+      "name": "actual-driver-compiler-probe",
+      "argv": [
+        "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\selected\\noetome-cli-testdriver.exe",
+        "--exact",
+        "fixture_run::tests::checkpoint_child",
+        "--nocapture"
+      ],
+      "cwd": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\repo",
+      "pid": 66184,
+      "exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 2.4070000000065193,
+      "started_at": "2026-11-07T02:56:43.054921+00:00",
+      "finished_at": "2026-11-07T02:56:45.464449+00:00",
+      "stdout": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\actual-driver-compiler-probe.stdout.bin",
+        "sha256": "815f3020e3a705303d65eb803ea7892c972b29026eb2ec6c5719e93831ebe3fc",
+        "byte_length": 414
+      },
+      "stderr": {
+        "path": "D:\\Noetome\\.artifacts\\b07-t02-windows-release-pair-09-20261107\\actual-driver-compiler-probe.stderr.bin",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "byte_length": 0
+      },
+      "snapshot": {
+        "sha256": "76d627212e7760e8b39c650aa620a1960ecdb8234cd6139bd3f26adbe40f77ad",
+        "byte_length": 629322
+      },
+      "source_before_after_equal": true,
+      "declared_build_assets_equal": true,
+      "external_sentinel_before_after_equal": true,
+      "guard_error": null,
+      "cleanup": null
+    }
+  ],
+  "full_rust_tests": "not_run",
+  "full_python_tests": "not_run",
+  "HTTP_acceptance": "not_run",
+  "previous_test_results_reused": false,
+  "temporary_cargo_output_copy_guard": {
+    "cli": {
+      "st_dev": 2371858803676731014,
+      "st_ino": 562949955159480,
+      "st_size": 16127488,
+      "st_mtime_ns": 1794020070600083200,
+      "st_ctime_ns": 1794020070305220700,
+      "st_nlink": 2
+    },
+    "driver": {
+      "st_dev": 2371858803676731014,
+      "st_ino": 281474978426267,
+      "st_size": 22985216,
+      "st_mtime_ns": 1794020191482279500,
+      "st_ctime_ns": 1794005168818764600,
+      "st_nlink": 1
+    },
+    "scope": "Only generated Cargo outputs may have their ordinary Cargo hardlinks; actual ID/time/link-count metadata must remain unchanged across copy. Source/control/selected paths require one link."
+  },
+  "compiler_cache_scope": {
+    "receipt": {
+      "sha256": "de89aab1afae55761b4f15206f000755cb6c0dadc735aec07e82605b0a165306",
+      "byte_length": 208773
+    },
+    "dependency_cache_reused": true,
+    "previous_test_results_reused": false
+  },
+  "strong_metadata_guard": {
+    "before": {
+      "sha256": "56849eff55866e34c8cb90dcf21bc424eb1d489c0655e6a197764282a60d9b3a",
+      "byte_length": 778888
+    },
+    "after": {
+      "sha256": "d0617d9e19949ec69e8692623f9db7a84db009cdfe055b707f0436f808a53b06",
+      "byte_length": 779533
+    },
+    "fixed_initial_per_file": true,
+    "file_actual_ID_mtime_length_singlelink_guard": true,
+    "ancestor_reparse_checked_before_reads": true,
+    "selected_programs_registered_once_before_use": true,
+    "binary_aliases_created": false,
+    "directory_actual_identity_guard": false,
+    "runtime_tool_actual_identity_guard": false
+  }
+}

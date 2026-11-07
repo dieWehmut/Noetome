@@ -2625,7 +2625,7 @@
       "id": "B07-T02",
       "title": "持久预算预留下的有界重试与隔离",
       "batch": "B07",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B07-T01"
       ],
@@ -2648,6 +2648,26 @@
           "note": "当前仅一个既有单请求适配器的synthetic环回持久预算重试；先冻结作者策略/响应/expected，验证并发预留、未知保留、attempt幂等结算、有界退避与失败隔离，真实模型/付费0且原累计授权不重置。",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-07T07:15:41Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "Windows 与 Linux 门禁补测并记录：Windows 813 项计数一致、811 通过 2 项时间敏感失败（隔离全过）、Python 503 OK、powershell/pwsh 各 16 项全过；Linux 完整 Rust 首次实际运行 654 通过 121 平台性失败；原生三目标仍未闭合",
+          "validation": [
+            "Windows: cargo fmt/check exit0；cargo test --workspace --list=813；--no-fail-fast --test-threads=1 → 811 passed/2 failed（各隔离 4 次与 3 次全过，整套下 latency 3694ms 撞 4000ms 期限）；PYTHONUTF8=1+3.12.14 → Ran 503 OK(skipped=12) exit0；credential 脚本 powershell 16 + pwsh 16 全过。Linux: cargo test --workspace --no-fail-fast → 775 项 654 通过 121 失败，失败全为 Windows-only 宿主边界，与既有 98 失败基线同集合。原生三目标未重跑。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B07-T02.md",
+              "sha256": "72a4ff3bc37da3946a1f028351ae43bdf0892ef49ac5420e7a4453f4ae1b24f7"
+            },
+            {
+              "path": "doc/validation/assets/B07-T02/windows-gates-dsh-20261107/README.md",
+              "sha256": "f3ef4c1b87e9848c69811452067c1f6cf5f90febf818f1e07ed3cbfb44f8e121"
+            }
+          ]
         }
       ]
     },

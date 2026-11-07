@@ -1,0 +1,13 @@
+根代理已封存公开原件的独立读回通过。实际审查脚本退出0，读取14份ZIP，包括八份originals归档和六份程序归档；没有运行任何产品、Cargo、HTTP或强制终止。公开审查包位于 `doc/validation/assets/B07-T02/review/root-archives/`，本报告不替代产品语义审查或最终Native04验收。
+
+每份归档均实际读到所有成员末尾，同时独立累计CRC32、SHA256与长度，核唯一完整名字集合和旁manifest的逐成员pin，再对receipt/actual中的整个ZIP pin与文件读取前后一致性。成员数分别为 diagnostic143、Linux Python历史01/02/03各15178、当前Linux Python15178、Windows历史115、review历史339、当前Linux run4327，以及六份程序归档各2；合计65648成员。所有旁manifest/receipt原件也在读取前后核SHA/长度，没有把归档写入时的成功标志当成读回结果。
+
+六份程序ZIP的完整ELF分别属于Linux pair02/03/04的CLI与test driver。每份程序体实际流式读取、验证ELF magic、完整SHA/长度，并对同ZIP的pair-actual.json逐字节等于diagnostic原pair收据；该收据里的程序pin及实际指纹与programs manifest精确一致。三对嵌套原编译ZIP的130个完整具名源before/after相同，成员CRC/SHA/长度核对通过，原CLI probe指纹等于对应pair收据。pair04的130源还与当前Rust源码逐文件相同，指纹为8a62da0b…；程序保全不表示旧pair已通过后续最终功能。
+
+当前Linux完整Python公开actual与归档内原actual字节相同，原stderr真实为466项、OK(skipped=22)，即444通过、22跳过。snapshot/worktree/named输入before/after原件相同，compiler-source-binding的130项逐文件等于已实际构建的pair04原来源及当前Rust；最终checker eb6c及tests42825字节与归档原repo一致。其source数量2058包括两个已选定CLI别名，不能把它称作2058份编译源码，也不能与Windows2056输入混称。Linux full05归档的checker before/after为最终eb6c，原build-receipt的实际FP与同pair04相同；这里只核其原件与来源，62案和真实kill语义由独立产品审查分别判断。
+
+旧Windows native01归档115成员实际读回，含两个完整MZ程序体、旧两探针、原raw和嵌套源码ZIP；嵌套源为2056repo+4辅助、2060唯一成员，全部CRC/SHA/长度和四辅助原件相同。其原Rust确为23摘要789通过，但原完整Python527项、errors=2，outer真实退出1且公共工作树源差异保留、原控制字节不变。此归档保持旧源失败历史，绝不标作最终Native04通过。
+
+历史Linux Python01/02/03、诊断和review中的旧失败/旧checker/人工链样例全部原字节保全；本审查没有改变它们的分类，也没有将checker自造链负例算作产品CLI、两真实worker或OSkill。最终Native04原件仍须全部结束后另读，本轮会复用已核归档库存，只审后续新增Native归档，避免重复完整旧包。
+
+机器结果actual.json保存每份原ZIP/manifest/receipt pin、逐成员集合的规范摘要、真实成员数/总原字节、六个完整程序pin与来源，以及当前Linux/旧Windows结果范围。审查脚本、实际argv/PID/退出码和原stdout/stderr保留于同审查包；旁边的大原ZIP及程序体未复制或改写。

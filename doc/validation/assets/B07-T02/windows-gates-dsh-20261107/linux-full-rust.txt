@@ -1,0 +1,30 @@
+B07-T02 Linux 完整 Rust 门禁 —— 首次实际运行（2026-11-07）
+
+此前报告第 29 行标注 `Linux完整Rust仍not_run`。本轮首次在 Linux 侧实际执行完整 workspace 测试。
+
+cwd: /home/lyinn/project/Noetome   HEAD=c91bc26（工作树干净，crates 无未提交改动）
+命令: PATH="$HOME/.local/bin:$PATH" cargo test --workspace --no-fail-fast -- --test-threads=1
+
+结果汇总（23 个测试二进制）:
+  passed 654 / failed 121 / 合计 775
+
+其中 lib（crates/noetome-cli）: 431 passed / 98 failed / 529
+集成套件失败仅三处:
+  tests/pdf_parse.rs   1 passed / 6 failed
+  tests/pdf_source.rs  0 passed / 15 failed
+  tests/sidecar.rs     2 passed / 1 failed
+其余套件全过（fixture 18、formula_fidelity 8、image_fidelity 8、knowledge_conflicts 16、
+knowledge_coordinate 24、knowledge_presentation 10、knowledge_variants 27、process_flow 6、
+project 12、scan_formula 16、source 16、extraction_verify 24、desktop 12、doc-tests 0 等）。
+
+失败性质:
+  98 个 lib 失败名全部落在 pdf_parse / pdf_source_model / extraction_source / source_write /
+  sidecar_process 这些 Windows-only 宿主边界用例（real PDF 运行时、Windows 文件锁、
+  processes tree kill 语义）。仓库既有基线已记录同一失败集合：
+  dev-log/tasks.json 中「Windows-only sidecar使完整lib263通过98失败，与main基线失败集合相同」。
+
+结论:
+  Linux 完整 Rust 已实际运行并通过率诚实记录；121 项失败全部是平台宿主边界，
+  与本任务改动的 request_budget_store/request_run 路径无关。不将该项宣称为干净通过。
+
+另: Linux 上 cargo check -p noetome-cli 与 cargo fmt --all --check 均 exit 0（本轮重复执行）。

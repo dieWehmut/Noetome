@@ -1,0 +1,12 @@
+--- request_run-before.rs
++++ request_run-after.rs
+@@ -1872,6 +1872,9 @@
+                 .and_then(|_| out.flush())
+                 .map_err(|e| invalid(e.to_string()))?;
+         }
++        if selected != "trace" {
++            drop(_held);
++        }
+         if matched {
+             if let Some(path) = env::var_os("NOETOME_REQUEST_TEST_READY_PATH") {
+                 let path = PathBuf::from(path);

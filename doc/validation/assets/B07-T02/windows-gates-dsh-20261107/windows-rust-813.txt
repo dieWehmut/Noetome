@@ -1,0 +1,54 @@
+B07-T02 Windows Rust 门禁 —— 实际输出摘录（2026-11-07）
+
+cwd: D:\noetome-wsl-head  (git archive HEAD, HEAD=c91bc26)
+env: NOETOME_TEST_PYTHON=NOETOME_PDF_PYTHON=D:\Noetome\.artifacts\b03-t02-python312\Scripts\python.exe
+
+[1] 计数
+$ cargo test --workspace -- --list | grep -c ": test$"
+813
+
+[2] 缺 NOETOME_PDF_PYTHON 的对照（证明这 21 项失败是运行时缺失，不是代码）
+$ cargo test --workspace -- --test-threads=1
+test result: FAILED. 534 passed; 21 failed; 0 ignored; 0 measured; 0 filtered out; finished in 118.10s
+panic 位置集中在 tests/support/pdf_parse_tests.rs:48、extraction_source.rs:671、
+pdf_source_write_tests.rs:478，全部是 real PDF 用例。
+
+[3] 两个解释器都设置后的整套串行运行（第一次）
+$ cargo test --workspace -- --test-threads=1
+test result: FAILED. 554 passed; 1 failed; ...
+失败: sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree
+  left: "SIDECAR_TIMEOUT"  right: "SIDECAR_IO"   (tests/support/sidecar_tests.rs:781)
+
+[4] 同样命令再跑一次
+test result: FAILED. 553 passed; 2 failed; ... finished in 153.82s
+失败: review_broken_pipe_notifies_controller_and_reaps_live_tree,
+      pdf_source_model::tests::source_cache_races::owner_bytes_are_guarded_without_an_acquired_pdf_version
+
+[5] 整套运行时 broken-pipe 用例的真实计时（--nocapture）
+test sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree ...
+broken_pipe_valid_request_bytes=66302
+broken_pipe_live_pids=[54796, 80712, 81724]
+broken_pipe_latency_ms=3694 error=SIDECAR_TIMEOUT: runtime limit
+=> 测试内 Limits.timeout_ms=4000 先用尽；预期是子进程关 stdin 后 500ms 内返回 SIDECAR_IO。
+
+[6] 隔离运行
+$ cargo test -p noetome-cli --lib -- --test-threads=1 --nocapture sidecar_process::tests::review_broken_pipe
+broken_pipe_latency_ms=11 error=SIDECAR_IO: 管道已结束。 (os error 109)
+test result: ok. 1 passed; 0 failed; ... finished in 0.52s
+$ ... (不带 --nocapture) 两次
+test result: ok. 1 passed; ... finished in 0.47s
+test result: ok. 1 passed; ... finished in 0.41s
+$ cargo test -p noetome-cli --lib -- --test-threads=1 pdf_source_model::tests::source_cache_races::owner_bytes_are_guarded
+test result: ok. 1 passed; ... finished in 2.90s
+test result: ok. 1 passed; ... finished in 2.90s
+test result: ok. 1 passed; ... finished in 2.87s
+
+[7] 全 workspace --no-fail-fast 汇总
+lib:           553 passed / 2 failed  (555 项)
+集成套件:       258 项全过（fixture 20、formula_fidelity 7、image_fidelity 7、
+               knowledge_conflicts 16、knowledge_coordinate 25、knowledge_presentation 8、
+               knowledge_variants 27、pdf_parse 7、pdf_source 19、process_flow 6、
+               project 13、scan_formula 16、sidecar 3、source 19 及其余套件）
+desktop:       15 passed
+doc-tests:     0
+合计:          811 通过 / 2 失败 / 813 项

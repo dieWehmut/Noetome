@@ -1,0 +1,43 @@
+B07-T02 Windows Python 门禁 —— 实际输出摘录（2026-11-07）
+
+cwd: D:\noetome-wsl-head  (git archive HEAD, HEAD=c91bc26)
+
+[1] 用系统 anaconda 3.12.7 跑（错误示范，证明必须用锁定运行时）
+$ C:\Users\Lyinn\anaconda3\python.exe -m unittest discover -s tests -p "test_*.py"
+Ran 464 tests in 329.447s
+FAILED (failures=41, errors=1, skipped=12)
+典型失败: AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+        (tests/test_pdf_adapter.py:159 等 41 处)
+
+[2] 换锁定运行时 3.12.14，但未处理控制台编码
+$ "D:/Noetome/.artifacts/b03-t02-python312/Scripts/python.exe" -m unittest discover -s tests -p "test_*.py"
+Ran 503 tests in 441.621s
+FAILED (errors=1, skipped=12)
+唯一错误:
+  File "D:\noetome-wsl-head\tests\test_prepare_visual_compatibility.py", line 263, in
+    test_actual_pele_geometry_check_rejects_signed_text_reversal_and_detached_arrows
+    script.write_text("import assert from 'node:assert/strict';\n" + V.PELE_VALIDATE + ...)
+  File "...\Lib\pathlib.py", line 1048, in write_text
+    return f.write(data)
+UnicodeEncodeError: 'gbk' codec can't encode character '\u2212' in position 1570: illegal multibyte sequence
+=> pathlib.write_text 未指定 encoding，落回 ANSI 代码页 GBK；与产品代码无关。
+
+[3] 加 UTF-8 模式与 pwsh 7（通过项）
+$ cd /d/noetome-wsl-head && PATH="D:\\tools\\pwsh7;$PATH" PYTHONUTF8=1 \
+  "D:/Noetome/.artifacts/b03-t02-python312/Scripts/python.exe" -X utf8 \
+  -m unittest discover -s tests -p "test_*.py"
+........................................................s..................
+（省略 503 个字符级进度点）
+Ran 503 tests in 431.474s
+
+OK (skipped=12)
+Retained actual v3 test root: D:\noetome-wsl-head\target\python-conflicts-7105bc7c95584d58a983066177a22a85
+Retained actual v2 test root: D:\noetome-wsl-head\target\python-variants-73f69f719e3948f4966966cd59f5c262
+Retained multiline presentation verifier root: D:\noetome-wsl-head\target\presentation-display-python-f9d9aa4fc6954efeb3d58e1172aac0e3
+
+exit 0
+
+[4] 计数口径
+tests/*.py 静态 `def test_` = 489
+动态发现 = 503（凭据模块 16 个 def 在两个引擎都在时展开为 2 个类）
+作者报告口径为 527，本机无法复现该差值，未把差额计入通过。

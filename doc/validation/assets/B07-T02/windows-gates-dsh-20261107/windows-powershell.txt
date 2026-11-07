@@ -1,0 +1,36 @@
+B07-T02 Windows PowerShell 门禁 —— 实际输出摘录（2026-11-07）
+
+被测对象: tests/test_api_credential_scripts.py
+测试模块内部按 `for name in ("powershell", "pwsh"): if shutil.which(name) is not None`
+动态生成 TestCredentials_<name> 类，因此「某个引擎没装」时该引擎整类不会生成。
+
+cwd: D:\noetome-wsl-head
+
+[1] 只有内置 Windows PowerShell 5.1（pwsh 7 未安装）
+$ "D:/Noetome/.artifacts/b03-t02-python312/Scripts/python.exe" -m unittest tests.test_api_credential_scripts
+Ran 16 tests in 19.894s
+
+OK
+
+[2] pwsh 7.6.9 加入 PATH 后（Windows 形式 PATH 才生效）
+$ PATH="D:\\tools\\pwsh7;$PATH" "D:/Noetome/.artifacts/b03-t02-python312/Scripts/python.exe" \
+  -m unittest tests.test_api_credential_scripts
+Ran 32 tests in 54.671s
+
+OK
+=> powershell 16 项 + pwsh 16 项，共 32 项全过。
+
+[3] pwsh 7 的来源
+$ curl -sSL https://github.com/PowerShell/PowerShell/releases/download/v7.6.9/PowerShell-7.6.9-win-x64.zip -o D:\tools\pwsh7\pwsh7.zip
+$ powershell.exe -Command "Expand-Archive -Path 'D:\tools\pwsh7\pwsh7.zip' -DestinationPath 'D:\tools\pwsh7' -Force"
+$ pwsh -v
+PowerShell 7.6.9
+（未安装 MSI、未改系统 PATH、不需要管理员）
+
+[4] 关键坑
+用 MSYS 形式 `PATH="/d/tools/pwsh7:$PATH"` 时，Windows 的 python 看不到 pwsh，
+`shutil.which("pwsh")` 返回 None，只会跑 powershell 一类；必须用 `PATH="D:\\tools\\pwsh7;$PATH"`。
+另一处：MSYS 的 unzip 不存在、`python3` 也不存在（exit 9009），解压只能借用 Windows 的 Expand-Archive。
+
+[5] 计数口径
+作者报告写「两 PowerShell 各 39」，本机每个引擎实际 16 个 test 方法；39 应是断言/检查计数，不是方法数。

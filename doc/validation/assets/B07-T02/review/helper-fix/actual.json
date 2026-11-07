@@ -1,0 +1,49 @@
+{
+  "producer": "strict_three_line_test_handshake_lock_scope_readback",
+  "status": "passed",
+  "before": {
+    "sha256": "606ec22cbd049f25b0e934d9606074423a07aeaac582787217e74478927c1bec",
+    "byte_length": 74837
+  },
+  "after": {
+    "sha256": "4235b2cfcd2344e7cfc57b7432a2182997532c19f7f9e32f98936931b1354469",
+    "byte_length": 74905
+  },
+  "insertion_lines": 3,
+  "inserted_byte_length": 68,
+  "remove_exact_insertion_restores_entire_before_file": true,
+  "production_prefix_before_after_exact_equal": true,
+  "production_prefix_sha256": "d69b6b76c30aebe3d5f5dffd0ad2edf8ca9153eb9babe97ad5f51ebdf1950b2a",
+  "production_prefix_byte_length": 68173,
+  "only_cfg_test_tests_boundary_changed": true,
+  "other_two_reviewed_source_files_unchanged": true,
+  "rustfmt_single_file_exit_code": 0,
+  "rustfmt_single_file_check_exit_code": 0,
+  "git_diff_check_selected_file_exit_code": 0,
+  "product_HTTP_Cargo_invocations": 0,
+  "actual_behavior_tests_not_run_here": true,
+  "callback_call_order": {
+    "BudgetStore_mark_may_send": "update SQL IMMEDIATE then COMMIT, layout and method return before Hooks::event",
+    "temporary_boundary_status": "open_readonly().view() returns an owned value before JSON serialization/flush and any stdin wait",
+    "nontrace": "JSON complete line flushed with stdout lock, HANDSHAKE released before matched stdin wait",
+    "trace": "HANDSHAKE still held through exact release stdin handshake",
+    "A_wait": "elapsed UTC consumes original Run/Unit deadline; API computes original remaining and starts min(cfgHTTP200,remaining) only after before_send returns",
+    "actual_event_name": "dispatch_intent_commit"
+  },
+  "rustfmt-check.stdout.bin": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byte_length": 0
+  },
+  "rustfmt-check.stderr.bin": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byte_length": 0
+  },
+  "diff-check.stdout.bin": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byte_length": 0
+  },
+  "diff-check.stderr.bin": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "byte_length": 0
+  }
+}

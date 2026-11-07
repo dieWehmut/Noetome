@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "status": "failed_release07_driver_compile_originals_preserved",
+  "prepare_PIDs": [
+    839380,
+    839385
+  ],
+  "prepare_seconds": 58.013142801,
+  "prepared_readback_PIDs": [
+    840705,
+    840706
+  ],
+  "prepared_readback_seconds": 119.814987737,
+  "launch_PIDs": [
+    841726,
+    841727
+  ],
+  "launch_seconds": 220.280881481,
+  "launch_actual_exit": 1,
+  "all_actual_Popen_waits_closed": true,
+  "actual_Native_commands": [
+    {
+      "name": "rustup-which-cargo",
+      "pid": 83736,
+      "exit_code": 0,
+      "elapsed_seconds": 1.702999999979511
+    },
+    {
+      "name": "rustup-which-rustc",
+      "pid": 77368,
+      "exit_code": 0,
+      "elapsed_seconds": 1.672000000020489
+    },
+    {
+      "name": "rustup-which-rustfmt",
+      "pid": 84608,
+      "exit_code": 0,
+      "elapsed_seconds": 1.6869999999762513
+    },
+    {
+      "name": "rustup-which-rustdoc",
+      "pid": 84024,
+      "exit_code": 0,
+      "elapsed_seconds": 1.6719999999622814
+    },
+    {
+      "name": "rustc-version",
+      "pid": 22728,
+      "exit_code": 0,
+      "elapsed_seconds": 1.6410000000032596
+    },
+    {
+      "name": "cargo-version",
+      "pid": 84068,
+      "exit_code": 0,
+      "elapsed_seconds": 1.6709999999729916
+    },
+    {
+      "name": "release-cli-build",
+      "pid": 81228,
+      "exit_code": 0,
+      "elapsed_seconds": 111.95299999997951
+    },
+    {
+      "name": "release-driver-build",
+      "pid": 82448,
+      "exit_code": 101,
+      "elapsed_seconds": 21.29700000002049
+    }
+  ],
+  "all_actual_source_asset_sentinel_control_guards_passed": true,
+  "source2056_ZIP2061_crc_sha_lengths_all_passed": true,
+  "compiled_source_Run_Store": {
+    "crates/noetome-cli/src/request_run.rs": {
+      "sha256": "e4d598e28784050f3868e6677e2a26559f0304db414075d6c67d91e3d853758e",
+      "byte_length": 74943
+    },
+    "crates/noetome-cli/src/request_budget_store.rs": {
+      "sha256": "57c1d73bb103ea2d94fa5ea015d86b1d81e77525ed631f721fbbfcd1ae388646",
+      "byte_length": 165922
+    }
+  },
+  "whole_CLI_MZ": {
+    "sha256": "34fcde4fc3e1b339e20d066c4ad545f5fa65b9baaa80be521d81aa838b7b7a2b",
+    "byte_length": 16480256
+  },
+  "temporary_CLI_actual_nlink": 2,
+  "temporary_CLI_actual_ID_mtime_length_nlink_before_after_equal": true,
+  "Cargo_fingerprint_values_not_runtime_probes": [
+    "9ec1463f183748092c4389297084516f8e804ffb33a01fc3daebfae0801b14e3"
+  ],
+  "driver_compile_error": "E0433 at Store3073/3080: fs2 dependency reference in newly added Windows-only test",
+  "Root_followup_fix": "Only two cfgtest lines changed to std File try_lock/unlock; new c87 source not claimed to be release07 source",
+  "selected_pair": "not_created",
+  "driver": "not_built",
+  "FP_runtime_probes": "not_run",
+  "full807": "not_run",
+  "HTTP": "not_run",
+  "real_paid": 0,
+  "not_generic_environment_failure_or_native_behavior_pass": true
+}
