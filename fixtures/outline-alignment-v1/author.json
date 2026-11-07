@@ -1,0 +1,35 @@
+{
+  "policy": "outline-alignment-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "outl-glycolysis-v1",
+  "description": "四份自造章节样例：一份编号规范、一份编号有缺陷、一份概念只出现在图注与附录、一份完全没有标题。本包只验证工程契约，不代表真实教材的章节质量。",
+  "concepts": "concepts.json",
+  "documents": [
+    {
+      "source_id": "doc-glycolysis",
+      "path": "documents/glycolysis.md",
+      "title": "糖代谢（编号规范）"
+    },
+    {
+      "source_id": "doc-numbering",
+      "path": "documents/numbering-defects.md",
+      "title": "糖代谢补充（编号有缺陷）"
+    },
+    {
+      "source_id": "doc-appendix",
+      "path": "documents/caption-appendix.md",
+      "title": "术语与图注（只出现在图注或附录）"
+    },
+    {
+      "source_id": "doc-plain",
+      "path": "documents/plain-note.md",
+      "title": "无标题笔记"
+    }
+  ],
+  "limits": {
+    "max_documents": 4,
+    "max_concepts": 32,
+    "max_occurrences_per_concept": 16
+  }
+}

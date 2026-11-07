@@ -3442,7 +3442,7 @@
       "id": "B10-T01",
       "title": "章节粗对齐与全局概念清单",
       "batch": "B10",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B09-T03"
       ],
@@ -3458,7 +3458,88 @@
         "编号缺失、重复编号、跳级标题、图注与附录中的概念、标题与正文不一致五类情况分别产生明确处理结果与警告并落盘，不静默丢弃、不自动改标题。",
         "报告单列章节对齐块并给出已对齐与未对齐计数；通过独立只读审计与完整 Rust/Python 回归后 complete、提交并推送。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T19:01:48Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结含三类章节结构差异的公开作者包与真实RED，定义章节粗对齐与全局概念清单的确定性合同并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-07T19:55:15Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "章节粗对齐与全局概念清单闭环：新增 outline_model(纯判定:标题编号解析/章节树/概念词表ASCII扫描/七类警告/Markdown渲染)+outline_store(冻结根control布局与所有权、输出根五文件字节确定性、四个动词),CLI outline adopt/build/list/status接通;实现中修掉三个真实缺陷(陌生目录误报PROJECT_IO_ERROR→OUTLINE_UNKNOWN_ROOT、两次构建manifest含时间戳不一致、heading判据比Span层松会认领非标题行)",
+          "validation": [
+            "cargo fmt --all --check exit=0",
+            "cargo build --bin noetome 成功,outline 相关零警告",
+            "cargo test --lib outline_model 5 passed 0 failed; cargo test --test outline 13 passed 0 failed",
+            "cargo test --workspace --no-fail-fast: lib 463 passed 99 failed 1 ignored,失败分布 sidecar_process 64/pdf_source_model 18/pdf_parse 7/source_model 5/source_write 3/extraction_source 1/extraction_api_transport 1 与基线4c6580a逐模块一致; outline 13/13 research 14/14 retrieval 14/14 vault 8/8 fixture 18/18 noetome-desktop 28/28",
+            "python3 scripts/verify_outline_alignment.py <根> --output <输出根> --package fixtures/outline-alignment-v1: 合计 74 项检查,失败 0 提示 0",
+            "PYTHONUTF8=1 python3 -m unittest tests.test_verify_outline_alignment: Ran 40 tests OK",
+            "PYTHONUTF8=1 python3 -m unittest discover -s tests: Ran 521 tests failures=41 errors=12 skipped=24,与本任务前 Ran 425 的失败组合同一组,新增96项全过",
+            "两次重复构建五个输出文件全部 cmp SAME(manifest.json 已删 created_at); report.json counts/warning_counts 与 9 条 warning 的 kind+document+line 与实现前手写的 expected.json 逐项相同"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/outline_model.rs",
+              "sha256": "28ac5bad5cc4027d064bca208ac49fc8df7a72287a4755bd4e7ed6b4425e6826"
+            },
+            {
+              "path": "crates/noetome-cli/src/outline_store.rs",
+              "sha256": "c4983555c3405e7d0e39e7d0f981caebfcddf76812e3a712d3d04e50bf1866e8"
+            },
+            {
+              "path": "crates/noetome-cli/src/lib.rs",
+              "sha256": "a113770e789149e39a061667a84b65386fd052a979d38604c7e0787c001d3053"
+            },
+            {
+              "path": "crates/noetome-cli/src/main.rs",
+              "sha256": "64fe65ee10c2baace576736e7f4f3dae704d5804d83ea23eba9495891397e9a3"
+            },
+            {
+              "path": "crates/noetome-cli/tests/outline.rs",
+              "sha256": "9b5a389f3e7f053f4a04d72592877cc896de7b1293fcf94e267bf872b50ad481"
+            },
+            {
+              "path": "fixtures/outline-alignment-v1/author.json",
+              "sha256": "5eeb5a207d9d4f81f62825b7b30300dc3739787c7cb951fa44a96d48fd13f56c"
+            },
+            {
+              "path": "fixtures/outline-alignment-v1/expected.json",
+              "sha256": "a8af08034757602966267e728c541c0e9f587b16dfe9ce3d16ff80ac478ee446"
+            },
+            {
+              "path": "fixtures/outline-alignment-v1/README.md",
+              "sha256": "ec2def552ed8dcd22e5e0f0d57d93078fcb11553ec29a5f57d8c7797bd2eae0c"
+            },
+            {
+              "path": "scripts/verify_outline_alignment.py",
+              "sha256": "66eb2e650dc42b91eb92ed3a6157dc43dc79b4114c17a3ea444fd49f2116d558"
+            },
+            {
+              "path": "tests/test_verify_outline_alignment.py",
+              "sha256": "fbdd1dfed020b648b6bdb226fa40f567fe891265b97cdf83a13202facfcdd222"
+            },
+            {
+              "path": "doc/technical/OUTLINE_ALIGNMENT_CONTRACT.md",
+              "sha256": "c5c05607c512b705d9ac0af76c1a33658226a2d6982256d696b187d249b39461"
+            },
+            {
+              "path": "doc/validation/B10-T01.md",
+              "sha256": "60caf8d1c4c7619df176f629b572a4340cf18184566b37990d4108b7de09c4b3"
+            },
+            {
+              "path": "doc/validation/assets/B10-T01/cli-20261108/audit.txt",
+              "sha256": "64a6041d6b3bf0559789adbb0ab4c3ac4d251d675397154b811680beaef2c1e6"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B10-T02",

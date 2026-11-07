@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "outl-glycolysis-v1",
+  "policy": "outline-alignment-v1",
+  "counts": {
+    "documents": 4,
+    "sections": 15,
+    "sections_aligned": 10,
+    "sections_unaligned": 5,
+    "concepts": 5,
+    "occurrences": 12,
+    "warnings": 9
+  },
+  "warning_counts": {
+    "concept_only_in_caption_or_appendix": 1,
+    "duplicate_number": 3,
+    "heading_concept_missing_from_body": 1,
+    "heading_without_number": 1,
+    "level_jump": 1,
+    "no_headings": 1,
+    "number_depth_mismatch": 1
+  },
+  "documents": [
+    {
+      "source_id": "doc-glycolysis",
+      "sections": 4,
+      "aligned": 4,
+      "unaligned": 0
+    },
+    {
+      "source_id": "doc-numbering",
+      "sections": 7,
+      "aligned": 2,
+      "unaligned": 5
+    },
+    {
+      "source_id": "doc-appendix",
+      "sections": 4,
+      "aligned": 4,
+      "unaligned": 0
+    },
+    {
+      "source_id": "doc-plain",
+      "sections": 0,
+      "aligned": 0,
+      "unaligned": 0
+    }
+  ],
+  "concepts": [
+    {
+      "concept_id": "glycolysis-net",
+      "total": 2,
+      "documents": 1,
+      "first": "doc-glycolysis:5"
+    },
+    {
+      "concept_id": "gluconeogenesis-bypass",
+      "total": 2,
+      "documents": 1,
+      "first": "doc-glycolysis:11"
+    },
+    {
+      "concept_id": "pdc",
+      "total": 2,
+      "documents": 2,
+      "first": "doc-numbering:9"
+    },
+    {
+      "concept_id": "tca",
+      "total": 4,
+      "documents": 2,
+      "first": "doc-numbering:5"
+    },
+    {
+      "concept_id": "nadph",
+      "total": 2,
+      "documents": 1,
+      "first": "doc-appendix:3"
+    }
+  ],
+  "warnings": [
+    {
+      "kind": "concept_only_in_caption_or_appendix",
+      "document": "doc-appendix",
+      "line": 3
+    },
+    {
+      "kind": "heading_concept_missing_from_body",
+      "document": "doc-appendix",
+      "line": 13
+    },
+    {
+      "kind": "heading_without_number",
+      "document": "doc-numbering",
+      "line": 3
+    },
+    {
+      "kind": "duplicate_number",
+      "document": "doc-numbering",
+      "line": 7
+    },
+    {
+      "kind": "level_jump",
+      "document": "doc-numbering",
+      "line": 7
+    },
+    {
+      "kind": "duplicate_number",
+      "document": "doc-numbering",
+      "line": 11
+    },
+    {
+      "kind": "duplicate_number",
+      "document": "doc-numbering",
+      "line": 15
+    },
+    {
+      "kind": "number_depth_mismatch",
+      "document": "doc-numbering",
+      "line": 23
+    },
+    {
+      "kind": "no_headings",
+      "document": "doc-plain",
+      "line": 1
+    }
+  ],
+  "model_calls": 0,
+  "network_requests": 0
+}

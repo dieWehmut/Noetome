@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "outl-glycolysis-v1",
+  "policy": "outline-alignment-v1",
+  "description": "四份自造章节样例驱动章节粗对齐与全局概念清单：编号规范、编号有缺陷、概念只出现在图注与附录、完全没有标题。",
+  "sequence": [
+    {
+      "step": "adopt",
+      "input": "author.json"
+    },
+    {
+      "step": "build",
+      "input": "expected.json"
+    },
+    {
+      "step": "list",
+      "input": null
+    },
+    {
+      "step": "status",
+      "input": null
+    }
+  ],
+  "expected": "expected.json",
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "本包只验证工程契约：章节识别、编号缺陷识别、概念索引与零网络零模型。不证明真实教材的章节结构或科学正确率。"
+  }
+}

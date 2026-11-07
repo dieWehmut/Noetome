@@ -49,6 +49,8 @@ mod knowledge_presentation_input;
 mod knowledge_presentation_model;
 mod knowledge_presentation_plan;
 mod knowledge_presentation_render;
+mod outline_model;
+pub mod outline_store;
 mod pdf_model;
 pub mod pdf_parse;
 mod pdf_source;
@@ -146,6 +148,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome revision revise <修订根> <修订文件>
       noetome revision list <修订根>
       noetome revision status <修订根>
+      noetome outline adopt <author.json> <尚不存在的对齐根>
+      noetome outline build <对齐根> <尚不存在的输出根>
+      noetome outline list <对齐根>
+      noetome outline status <对齐根>
 
 当前支持：
   -h, --help       显示帮助
@@ -170,6 +176,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   research                研究候选队列、授权边界与拒绝记忆（adopt/observe/decide/list/status）
   retrieve                批准范围内的有界检索、持久预算与终止理由（adopt/step/run/pause/resume/finish/list/status）
   revision                写作反馈缺口回到修订与依赖重编译（adopt/gap/revise/list/status）
+  outline                 章节粗对齐与全局概念清单（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
@@ -177,6 +184,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
 研究候选只是待批准线索：队列从不联网、不调用模型，也不把候选当成已完成知识。
 有界检索只在冻结语料内进行：关闭外部检索时零网络请求，命中只是证据线索，不写入知识库或托管Vault。
 写作缺口必须回到修订流程：修订经核验生成新IR版本并重编译所有依赖表示，未受影响表示字节不变；无来源补句标为待核验。
+章节对齐只做粗对齐与概念索引：不合并章节、不改写正文、不生成知识；同一冻结输入的任何两次构建必须字节相同。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -470,6 +478,21 @@ pub enum CliCommand {
     RevisionStatus {
         root: PathBuf,
     },
+    OutlineHelp,
+    OutlineAdopt {
+        author: PathBuf,
+        root: PathBuf,
+    },
+    OutlineBuild {
+        root: PathBuf,
+        output: PathBuf,
+    },
+    OutlineList {
+        root: PathBuf,
+    },
+    OutlineStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -500,6 +523,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "revision") {
         return revision_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "outline") {
+        return outline_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -807,6 +833,62 @@ fn revision_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         }
         [root] if verb == "status" && valid(root) => {
             Ok(CliCommand::RevisionStatus { root: root.into() })
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const OUTLINE_HELP: &str = "Noetome 章节粗对齐与全局概念清单
+
+用法：noetome outline adopt <author.json> <尚不存在的对齐根>
+      noetome outline build <对齐根> <尚不存在的输出根>
+      noetome outline list <对齐根>
+      noetome outline status <对齐根>
+
+adopt：只接受明确作者包与全新目录；逐份文档核对字节、规范化摘要与文本片段后冻结，全部通过才建根。
+build：从冻结输入重新派生章节树、概念清单与对齐报告，写入全新输出根；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算并输出章节数、概念出现次数与七类对齐警告。
+章节只做粗对齐：缺编号、重复编号、跳级、图注或附录独有概念都只报警告，不自动改标题或正文。
+不联网、不调用模型、不写项目与Vault；本阶段不合并章节、不生成知识、不改写来源。
+";
+
+fn outline_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 4] = ["adopt", "build", "list", "status"];
+    if args.is_empty() || matches!(args, [help] if help == "--help" || help == "-h") {
+        return Ok(CliCommand::OutlineHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail, [help] if help == "--help" || help == "-h")
+        && VERBS.iter().any(|candidate| verb == candidate)
+    {
+        return Ok(CliCommand::OutlineHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |path: &OsString| {
+        !path.is_empty() && (separated || path.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [author, root] if verb == "adopt" && valid(author) && valid(root) => {
+            Ok(CliCommand::OutlineAdopt {
+                author: author.into(),
+                root: root.into(),
+            })
+        }
+        [root, output] if verb == "build" && valid(root) && valid(output) => {
+            Ok(CliCommand::OutlineBuild {
+                root: root.into(),
+                output: output.into(),
+            })
+        }
+        [root] if verb == "list" && valid(root) => {
+            Ok(CliCommand::OutlineList { root: root.into() })
+        }
+        [root] if verb == "status" && valid(root) => {
+            Ok(CliCommand::OutlineStatus { root: root.into() })
         }
         _ => Err(INVALID_ARGUMENT),
     }
