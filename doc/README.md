@@ -41,6 +41,7 @@
 | [水平与相关性筛选](technical/RELEVANCE_FILTER_CONTRACT.md) | 用户水平必要性判据、排除理由登记与正文落点、必要前提拒绝、双密度原子不减少、输出根字节确定性 | relevance 动词、理由白名单、必要性判据或输出根布局变化 |
 | [同类结构一致性与导航复习](technical/STRUCTURE_NAVIGATION_CONTRACT.md) | 章节骨架与四类偏离判据、概念唯一解释位置、链接解析与转义、导航确定性生成、输出根字节确定性 | structure 动词、骨架/链接规则或输出根布局变化 |
 | [小节提升与链接迁移](technical/LINK_MIGRATION_CONTRACT.md) | 引用按知识对象而不是文件名核对、重定向位置保留、四种变更判据、身份保持与断链为零、输出根字节确定性 | migrate 动词、对象/计划字段、身份判据或输出根布局变化 |
+| [可移植来源索引](technical/SOURCE_INDEX_CONTRACT.md) | 四区互斥、正文来源负担拒绝、来源按字节摘要识别、重定位三态、输出根字节确定性与所有权身份 | index 动词、区域判定、重定位判据或输出根布局变化 |
 | [写作反馈修订](technical/REVISION_FEEDBACK_CONTRACT.md) | 缺口问题与候选分离、新 IR 版本与依赖重编译、无新证据不推翻、超限升级 | revision 动词、原子/表示字段、修订闸门或控制目录布局变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |

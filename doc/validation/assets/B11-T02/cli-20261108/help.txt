@@ -1,0 +1,16 @@
+Noetome 可移植来源索引与原始资料重定位
+
+用法：noetome index adopt <工程声明> <尚不存在的索引根>
+      noetome index build <索引根> <尚不存在的输出根>
+      noetome index relocate <索引根> <目录>
+      noetome index list <索引根>
+      noetome index status <索引根>
+
+adopt：核对输出区/运行库/临时区互不包含、正文来源负担与来源章节是否真实存在，先按规则预演一次判定，全部通过才建根。
+build：在全新输出根里写出 index.json、relocation.json、report.json、report.md 与输出清单；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+relocate：只读扫描一个目录，按内容摘要判断每条来源现在落在哪里；缺失或摘要不符只提示需要重建映射，不指向任何页面。
+list|status：只读重算并输出区域、计数、正文负担与重定位结果。
+正文保持干净：不插入文献编号、逐句脚注或出处列表，出现即整包拒绝。
+运行数据库、缓存、密钥与临时文件不得进入输出区；索引只写相对路径。
+不联网、不调用模型、不写项目与Vault；本阶段不做阅读器与编辑器。
+exit=0

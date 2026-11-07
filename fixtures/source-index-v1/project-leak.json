@@ -1,0 +1,61 @@
+{
+  "policy": "source-index-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "idx-traceability-v1",
+  "description": "输出区与运行库分离的自造工程；来源索引与重定位期望表写在 expected.json，先于实现手写。",
+  "output_area": "vault",
+  "runtime_area": "runtime",
+  "temp_area": "temp",
+  "notes": [
+    {
+      "note_id": "note-glycolysis",
+      "path": "vault/笔记/糖酵解.md",
+      "title": "糖酵解"
+    },
+    {
+      "note_id": "note-gluconeogenesis",
+      "path": "runtime/笔记/糖异生.md",
+      "title": "糖异生"
+    }
+  ],
+  "resources": [
+    {
+      "resource_id": "res-glossary",
+      "path": "vault/资源/术语表.md",
+      "description": "术语表"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "src-textbook-a",
+      "note_id": "note-glycolysis",
+      "heading": "核心机制",
+      "description": "教材A 糖代谢章 第三节",
+      "locator": "第 112-118 页",
+      "path": "资料/教材A-糖代谢.md"
+    },
+    {
+      "source_id": "src-textbook-b",
+      "note_id": "note-gluconeogenesis",
+      "heading": "四步绕行",
+      "description": "教材B 酶学章 第五节",
+      "locator": "第 88-93 页",
+      "path": "资料/教材B-酶学.md"
+    },
+    {
+      "source_id": "src-lecture",
+      "note_id": "note-glycolysis",
+      "heading": "定义",
+      "description": "课程讲义 第 2 讲",
+      "locator": "第 1-4 页",
+      "path": "资料/讲义-糖代谢.md"
+    }
+  ],
+  "limits": {
+    "max_notes": 8,
+    "max_resources": 8,
+    "max_sources": 8
+  },
+  "relocate_area": "moved"
+}

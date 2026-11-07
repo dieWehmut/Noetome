@@ -3879,7 +3879,7 @@
       "id": "B11-T02",
       "title": "可移植来源索引与原始资料重定位",
       "batch": "B11",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B11-T01"
       ],
@@ -3894,7 +3894,70 @@
         "原始资料被移动后按内容摘要重定位；资料缺失时明确提示「需重建映射」，不指向错误页面、不声称精确匹配。",
         "审计器核对正文无来源编号负担（追溯只在索引侧）、索引可独立复算、模型调用与网络请求均为零；通过完整回归后 complete。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T22:42:48Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结含输出区/运行库/临时目录分离的自造工程与实现前手写期望，定义可移植来源索引的导出格式、按内容摘要重定位与缺失时明确提示重建映射的确定性合同并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-07T23:34:56Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现可移植来源索引：工程声明四区互斥与预演式 adopt、冻结根身份校验、正文来源负担拒绝、按字节摘要的重定位三态、字节确定的五文件输出；配套冻结 fixture、独立只读审计器与 Python 审计器测试",
+          "validation": [
+            "cargo fmt --all --check exit 0",
+            "cargo test --test index：18 passed / 0 failed",
+            "cargo test -p noetome-cli --lib -- --test-threads=2：489 passed / 98 failed / 1 ignored，失败分布与本任务前 480/98 低并发基线逐模块一致，新增 9 项 index_model 单测全过",
+            "全量 Python：Ran 725 / failures=41, errors=12, skipped=24，与任务前 671/41/12/24 同组失败，新增 54 项审计器测试全过",
+            "scripts/verify_source_index.py 真实根+输出 132 项 0 失败；冻结包 54 项 0 失败；两次 build 五文件全部 SAME",
+            "三条拒绝实测 INDEX_CITATION_BURDEN / INDEX_AREA_LEAK / INDEX_LOCATION_MISSING 均 exit 3 且 left=0"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/index_model.rs",
+              "sha256": "a236e76aed2d698e265c071c1f578d5afbea1a586ea6f9ef72b5fef354909460"
+            },
+            {
+              "path": "crates/noetome-cli/src/index_store.rs",
+              "sha256": "689ad3895f7d8f7afb23b4e672087a6846e4e9b27cac8a31d1f9e04d1ea038cb"
+            },
+            {
+              "path": "crates/noetome-cli/tests/index.rs",
+              "sha256": "e5a2f452ab3038dde17895636fd4999800ddc7a1bf61264bc3b1ed32bbadfc3d"
+            },
+            {
+              "path": "fixtures/source-index-v1/expected.json",
+              "sha256": "f98a3cae5ab3eaf1aa86d71b0a2b2448948b1fe1bb68cd43ecbc93ebf07bfe14"
+            },
+            {
+              "path": "scripts/verify_source_index.py",
+              "sha256": "fe8e12be4e23ce171e4f1a9cf65be3fc6233908e589ad1bd0ae44683306a67c6"
+            },
+            {
+              "path": "tests/test_verify_source_index.py",
+              "sha256": "48bd3779df9c23bc72d3037be6294de0b949b176ed564246c3e654d78488e0a4"
+            },
+            {
+              "path": "doc/technical/SOURCE_INDEX_CONTRACT.md",
+              "sha256": "56b04b532f9b39c89d0a1395469c0761bf84b50037868b83b0a05514c973da87"
+            },
+            {
+              "path": "doc/validation/B11-T02.md",
+              "sha256": "b56ae4aba834a329405cc75b39c4b707b9835919b7707e39234882a5bc327885"
+            },
+            {
+              "path": "doc/validation/assets/B11-T02/cli-20261108/audit.txt",
+              "sha256": "40d2ac10ccb63648f4467ba9f1d9cddbae94c674c1ebd119fa7a3240d70bba1c"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B11-T03",

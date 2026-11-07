@@ -35,6 +35,8 @@ pub mod image_fidelity;
 mod image_input;
 mod image_model;
 mod image_render;
+mod index_model;
+pub mod index_store;
 pub mod knowledge_coordinate;
 mod knowledge_coordinate_conflicts;
 mod knowledge_coordinate_context;
@@ -170,6 +172,11 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome migrate build <迁移根> <尚不存在的输出根>
       noetome migrate list <迁移根>
       noetome migrate status <迁移根>
+      noetome index adopt <工程声明> <尚不存在的索引根>
+      noetome index build <索引根> <尚不存在的输出根>
+      noetome index relocate <索引根> <目录>
+      noetome index list <索引根>
+      noetome index status <索引根>
 
 当前支持：
   -h, --help       显示帮助
@@ -198,6 +205,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   relevance               用户水平与相关性筛选的可审计记录（adopt/build/list/status）
   structure               同类结构一致性与导航复习组织（adopt/build/list/status）
   migrate                 小节提升为独立笔记与链接批量更新（adopt/build/list/status）
+  index                   可移植来源索引与原始资料重定位（adopt/build/relocate/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
@@ -209,6 +217,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
 相关性筛选只记录保留与排除：必要前提缺失或必要原子被排除时整包拒绝，极简与详细的必要原子及条件集合必须一致；不静默省略、不改写来源。
 同类结构只做一致性与链接核对：偏离只报告不自动改写、不静默补齐；同一概念只能有一处完整解释，生成链接断链必须为 0。
 链接迁移只按知识对象ID核对引用：概念与原子ID不因拆分改变，断链/歧义/目标缺失/表格未转义一律整包拒绝；不自动搬动作者包文件。
+来源索引不写入正文：文献编号、脚注与出处列表一律整包拒绝；来源按内容摘要识别、缺失只提示重建映射，运行库与临时文件不进入输出区。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -562,6 +571,25 @@ pub enum CliCommand {
     MigrateStatus {
         root: PathBuf,
     },
+    IndexHelp,
+    IndexAdopt {
+        project: PathBuf,
+        root: PathBuf,
+    },
+    IndexBuild {
+        root: PathBuf,
+        output: PathBuf,
+    },
+    IndexRelocate {
+        root: PathBuf,
+        directory: PathBuf,
+    },
+    IndexList {
+        root: PathBuf,
+    },
+    IndexStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -604,6 +632,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "migrate") {
         return migrate_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "index") {
+        return index_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -1139,6 +1170,69 @@ fn migrate_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         }
         [root] if verb == "status" && valid(root) => {
             Ok(CliCommand::MigrateStatus { root: root.into() })
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const INDEX_HELP: &str = "Noetome 可移植来源索引与原始资料重定位
+
+用法：noetome index adopt <工程声明> <尚不存在的索引根>
+      noetome index build <索引根> <尚不存在的输出根>
+      noetome index relocate <索引根> <目录>
+      noetome index list <索引根>
+      noetome index status <索引根>
+
+adopt：核对输出区/运行库/临时区互不包含、正文来源负担与来源章节是否真实存在，先按规则预演一次判定，全部通过才建根。
+build：在全新输出根里写出 index.json、relocation.json、report.json、report.md 与输出清单；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+relocate：只读扫描一个目录，按内容摘要判断每条来源现在落在哪里；缺失或摘要不符只提示需要重建映射，不指向任何页面。
+list|status：只读重算并输出区域、计数、正文负担与重定位结果。
+正文保持干净：不插入文献编号、逐句脚注或出处列表，出现即整包拒绝。
+运行数据库、缓存、密钥与临时文件不得进入输出区；索引只写相对路径。
+不联网、不调用模型、不写项目与Vault；本阶段不做阅读器与编辑器。
+";
+
+fn index_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 5] = ["adopt", "build", "relocate", "list", "status"];
+    if args.is_empty() || matches!(args, [help] if help == "--help" || help == "-h") {
+        return Ok(CliCommand::IndexHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail, [help] if help == "--help" || help == "-h")
+        && VERBS.iter().any(|candidate| verb == candidate)
+    {
+        return Ok(CliCommand::IndexHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |path: &OsString| {
+        !path.is_empty() && (separated || path.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [project, root] if verb == "adopt" && valid(project) && valid(root) => {
+            Ok(CliCommand::IndexAdopt {
+                project: project.into(),
+                root: root.into(),
+            })
+        }
+        [root, output] if verb == "build" && valid(root) && valid(output) => {
+            Ok(CliCommand::IndexBuild {
+                root: root.into(),
+                output: output.into(),
+            })
+        }
+        [root, directory] if verb == "relocate" && valid(root) && valid(directory) => {
+            Ok(CliCommand::IndexRelocate {
+                root: root.into(),
+                directory: directory.into(),
+            })
+        }
+        [root] if verb == "list" && valid(root) => Ok(CliCommand::IndexList { root: root.into() }),
+        [root] if verb == "status" && valid(root) => {
+            Ok(CliCommand::IndexStatus { root: root.into() })
         }
         _ => Err(INVALID_ARGUMENT),
     }

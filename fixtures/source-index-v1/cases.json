@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "idx-traceability-v1",
+  "policy": "source-index-v1",
+  "project": "project.json",
+  "sequence": [
+    {
+      "step": "adopt",
+      "command": "index adopt project.json <root>"
+    },
+    {
+      "step": "build",
+      "command": "index build <root> <output>",
+      "compare": "expected.json"
+    },
+    {
+      "step": "build-again",
+      "command": "index build <root> <output2>",
+      "expect": "byte_identical"
+    },
+    {
+      "step": "relocate-declared",
+      "command": "index relocate <root> moved",
+      "expect": {
+        "relocated": 3,
+        "missing": 0,
+        "digest_mismatch": 0
+      }
+    },
+    {
+      "step": "relocate-partial",
+      "command": "index relocate <root> moved-partial",
+      "expect": {
+        "relocated": 2,
+        "missing": 0,
+        "digest_mismatch": 1
+      }
+    },
+    {
+      "step": "relocate-foreign",
+      "command": "index relocate <root> moved-foreign",
+      "expect": {
+        "relocated": 0,
+        "missing": 3,
+        "digest_mismatch": 0
+      }
+    },
+    {
+      "step": "list",
+      "command": "index list <root>"
+    },
+    {
+      "step": "status",
+      "command": "index status <root>"
+    },
+    {
+      "step": "reject-citation",
+      "command": "index adopt project-citation.json <root2>",
+      "expect": {
+        "code": "INDEX_CITATION_BURDEN",
+        "exit": 3
+      }
+    },
+    {
+      "step": "reject-leak",
+      "command": "index adopt project-leak.json <root3>",
+      "expect": {
+        "code": "INDEX_AREA_LEAK",
+        "exit": 3
+      }
+    },
+    {
+      "step": "reject-bad-heading",
+      "command": "index adopt project-bad-heading.json <root4>",
+      "expect": {
+        "code": "INDEX_LOCATION_MISSING",
+        "exit": 3
+      }
+    }
+  ],
+  "expected": "expected.json",
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "工程、原始资料与期望判据都是自造内容，只证明索引导出、区域分离与重定位语义，不证明真实教材追溯正确率。"
+  },
+  "note": "三条拒绝各只改动一处，用来证明单条规则会整包拒绝；拒绝后不得留下任何索引根。"
+}
