@@ -75,4 +75,8 @@ B05 三项已完成实际验收，[B05-T03记录](validation/B05-T03.md)保留�
 [B07验证](validation/B07-T03.md)记录托管测试集合六动词（adopt/plan/approve/publish/status/rollback）、sqlite Schema1 托管根、approve 四样绑定与 publish 的 stage-verify-commit 恢复语义；端到端矩阵41项、独立审计126项检查通过，Windows 原生门禁在 T03 上未运行。[B08执行卡](execution/B08_STEPS.md)依据路线图B08行与 PRD FR-11/FR-12/FR-13/FR-14 只展开三张todo：候选队列与授权边界、批准范围内的本地合成检索与七类终止理由、写作反馈缺口回到修订与依赖重编译。研究能力目前在编译报告中如实显示为未请求；真实互联网检索、付费模型研究、科学质量与规模门槛仍分别实测，执行卡本身不构成实现或验收。
 
 [B09执行卡](execution/B09_STEPS.md)依据路线图B09行与 PRD 第14章只展开三张 todo：桌面项目入口与真实工程状态、桌面任务中心只读投影、个人版打包配置与安装验收清单。
-[B09-T01验收](validation/B09-T01.md)记录桌面新增 `pick_directory`/`project_create`/`project_open` 三条命令、共六项字段全部来自 `noetome_cli::project` 的 `initialize`/`inspect`、`PROJECT_*` 错误码原样透传与零写入快照；Windows 原生安装内交互与系统目录选择器未运行。[B09-T02验收](validation/B09-T02.md)记录桌面任务中心对六单元运行、研究队列、有界检索、写作反馈修订四类根的只读投影，四维状态按确定性规则分开计数、缺失显示为上未建立而损坏保留 CLI 原错误码、读取前后快照证明零写入；从桌面发起运行/检索/修订、审批与发布仍未接入。桌面交互仍须在安装后的应用内验收，静态预览与浏览器构建不能替代。
+[B09-T01验收](validation/B09-T01.md)记录桌面新增 `pick_directory`/`project_create`/`project_open` 三条命令、共六项字段全部来自 `noetome_cli::project` 的 `initialize`/`inspect`、`PROJECT_*` 错误码原样透传与零写入快照；Windows 原生安装内交互与系统目录选择器未运行。[B09-T02验收](validation/B09-T02.md)记录桌面任务中心对六单元运行、研究队列、有界检索、写作反馈修订四类根的只读投影，四维状态按确定性规则分开计数、缺失显示为「尚未建立」而损坏保留 CLI 原错误码、读取前后快照证明零写入；从桌面发起运行/检索/修订、审批与发布仍未接入。桌面交互仍须在安装后的应用内验收，静态预览与浏览器构建不能替代。
+
+[B09-T03验收](validation/B09-T03.md)记录 `crates/noetome-desktop/packaging-frozen.json` 冻结的十个打包面成员（`tauri.conf.json`、能力清单、图标清单、五个图标、`package.json`、安装后验收清单）、只读审计器 `scripts/verify_desktop_package.py` 的七十二项检查与三十四项反例测试、以及安装后人工清单九个章节。本机只有 `x86_64-unknown-linux-gnu` 目标且没有 NSIS 工具链，Windows 原生安装包未产出、未安装、未卸载，清单全部条目尚未执行，均单列为未运行；不以此宣布个人版发布或生产可用。
+
+[B10执行卡](execution/B10_STEPS.md)依据路线图B10行与 PRD 剩余结构类需求只展开三张 todo：章节粗对齐与全局概念清单、用户水平与相关性筛选的可审计记录、同类结构一致性与导航复习组织。三项均为确定性规划层，只读已登记 Span 与已核对 IR，零模型调用、零网络请求、只写新测试根，不新增模型提供商，不同时做完整阅读器与编辑器。
