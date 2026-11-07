@@ -3070,14 +3070,14 @@ mod tests {
                     .share_mode(1)
                     .open(&path)
                     .unwrap();
-                fs2::FileExt::try_lock_exclusive(&held).unwrap();
+                held.try_lock().unwrap();
                 // Prove a real denied nonempty data read, and also exercise
                 // zero-byte locks without assuming a library's EOF shortcut.
                 if !bytes.is_empty() {
                     assert!(fs::read(&path).is_err());
                 }
                 assert!(registered_identity_matches(&path, &expected).unwrap());
-                fs2::FileExt::unlock(&held).unwrap();
+                held.unlock().unwrap();
             }
         }
     }
