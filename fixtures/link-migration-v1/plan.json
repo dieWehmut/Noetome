@@ -1,0 +1,78 @@
+{
+  "policy": "link-migration-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "mig-section-promotion-v1",
+  "description": "小节「糖酵解核心机制」提升为独立笔记前后的两套自造作者包；迁移期望表写在 expected.json，先于实现手写。",
+  "before_dir": "before",
+  "after_dir": "after",
+  "objects": "objects.json",
+  "before": [
+    {
+      "note_id": "b-glycolysis",
+      "path": "笔记/糖酵解.md",
+      "title": "糖酵解"
+    },
+    {
+      "note_id": "b-gluconeogenesis",
+      "path": "笔记/糖异生.md",
+      "title": "糖异生"
+    },
+    {
+      "note_id": "b-ppp",
+      "path": "笔记/磷酸戊糖途径.md",
+      "title": "磷酸戊糖途径"
+    }
+  ],
+  "after": [
+    {
+      "note_id": "a-glycolysis",
+      "path": "笔记/糖酵解.md",
+      "title": "糖酵解",
+      "counterpart": "b-glycolysis",
+      "change": "promoted"
+    },
+    {
+      "note_id": "a-glycolysis-mechanism",
+      "path": "笔记/糖酵解-核心机制.md",
+      "title": "糖酵解核心机制",
+      "counterpart": null,
+      "change": "created"
+    },
+    {
+      "note_id": "a-gluconeogenesis",
+      "path": "笔记/糖异生.md",
+      "title": "糖异生",
+      "counterpart": "b-gluconeogenesis",
+      "change": "links_only"
+    },
+    {
+      "note_id": "a-ppp",
+      "path": "笔记/磷酸戊糖途径.md",
+      "title": "磷酸戊糖途径",
+      "counterpart": "b-ppp",
+      "change": "unchanged"
+    },
+    {
+      "note_id": "a-glycolysis-appendix",
+      "path": "附录/糖酵解.md",
+      "title": "糖酵解（附录副本）",
+      "counterpart": null,
+      "change": "created"
+    }
+  ],
+  "promotions": [
+    {
+      "promotion_id": "promo-glycolysis-mechanism",
+      "from_note": "b-glycolysis",
+      "from_heading": "核心机制",
+      "to_note": "a-glycolysis-mechanism"
+    }
+  ],
+  "limits": {
+    "max_notes": 8,
+    "max_objects": 8,
+    "max_links": 32,
+    "max_promotions": 4
+  }
+}

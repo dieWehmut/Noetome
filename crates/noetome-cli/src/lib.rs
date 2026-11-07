@@ -49,6 +49,8 @@ mod knowledge_presentation_input;
 mod knowledge_presentation_model;
 mod knowledge_presentation_plan;
 mod knowledge_presentation_render;
+mod migrate_model;
+pub mod migrate_store;
 mod outline_model;
 pub mod outline_store;
 mod pdf_model;
@@ -164,6 +166,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome structure build <结构根> <尚不存在的输出根>
       noetome structure list <结构根>
       noetome structure status <结构根>
+      noetome migrate adopt <plan.json> <尚不存在的迁移根>
+      noetome migrate build <迁移根> <尚不存在的输出根>
+      noetome migrate list <迁移根>
+      noetome migrate status <迁移根>
 
 当前支持：
   -h, --help       显示帮助
@@ -191,6 +197,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   outline                 章节粗对齐与全局概念清单（adopt/build/list/status）
   relevance               用户水平与相关性筛选的可审计记录（adopt/build/list/status）
   structure               同类结构一致性与导航复习组织（adopt/build/list/status）
+  migrate                 小节提升为独立笔记与链接批量更新（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
@@ -201,6 +208,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
 章节对齐只做粗对齐与概念索引：不合并章节、不改写正文、不生成知识；同一冻结输入的任何两次构建必须字节相同。
 相关性筛选只记录保留与排除：必要前提缺失或必要原子被排除时整包拒绝，极简与详细的必要原子及条件集合必须一致；不静默省略、不改写来源。
 同类结构只做一致性与链接核对：偏离只报告不自动改写、不静默补齐；同一概念只能有一处完整解释，生成链接断链必须为 0。
+链接迁移只按知识对象ID核对引用：概念与原子ID不因拆分改变，断链/歧义/目标缺失/表格未转义一律整包拒绝；不自动搬动作者包文件。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -539,6 +547,21 @@ pub enum CliCommand {
     StructureStatus {
         root: PathBuf,
     },
+    MigrateHelp,
+    MigrateAdopt {
+        plan: PathBuf,
+        root: PathBuf,
+    },
+    MigrateBuild {
+        root: PathBuf,
+        output: PathBuf,
+    },
+    MigrateList {
+        root: PathBuf,
+    },
+    MigrateStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -578,6 +601,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "structure") {
         return structure_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "migrate") {
+        return migrate_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -1056,6 +1082,63 @@ fn structure_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         }
         [root] if verb == "status" && valid(root) => {
             Ok(CliCommand::StructureStatus { root: root.into() })
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const MIGRATE_HELP: &str = "Noetome 小节提升为独立笔记与链接批量更新
+
+用法：noetome migrate adopt <plan.json> <尚不存在的迁移根>
+      noetome migrate build <迁移根> <尚不存在的输出根>
+      noetome migrate list <迁移根>
+      noetome migrate status <迁移根>
+
+adopt：只接受明确迁移计划与全新目录；核对计划、知识对象表与两侧笔记字节，按规则预演一次判定，全部通过才建根。
+build：从冻结输入重算两侧链接解析、知识对象身份保持与每份笔记的核对结果并写出五文件输出根；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算并输出迁移前/后链接计数、规范位置与重定向位置条数、重写目标条数与断链数。
+引用按知识对象ID而不是文件名核对：小节提升后概念与原子ID不变，重定向位置也算指向同一对象。
+无法安全迁移时整包拒绝：目标缺失、目标有歧义、表格内未转义别名竖线、声明位置不存在、身份丢失或断链非零都不写报告。
+不联网、不调用模型、不写项目与Vault；本阶段不改写作者包、不搬动文件，也不判断内容质量与科学正确性。
+";
+
+fn migrate_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 4] = ["adopt", "build", "list", "status"];
+    if args.is_empty() || matches!(args, [help] if help == "--help" || help == "-h") {
+        return Ok(CliCommand::MigrateHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail, [help] if help == "--help" || help == "-h")
+        && VERBS.iter().any(|candidate| verb == candidate)
+    {
+        return Ok(CliCommand::MigrateHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |path: &OsString| {
+        !path.is_empty() && (separated || path.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [plan, root] if verb == "adopt" && valid(plan) && valid(root) => {
+            Ok(CliCommand::MigrateAdopt {
+                plan: plan.into(),
+                root: root.into(),
+            })
+        }
+        [root, output] if verb == "build" && valid(root) && valid(output) => {
+            Ok(CliCommand::MigrateBuild {
+                root: root.into(),
+                output: output.into(),
+            })
+        }
+        [root] if verb == "list" && valid(root) => {
+            Ok(CliCommand::MigrateList { root: root.into() })
+        }
+        [root] if verb == "status" && valid(root) => {
+            Ok(CliCommand::MigrateStatus { root: root.into() })
         }
         _ => Err(INVALID_ARGUMENT),
     }

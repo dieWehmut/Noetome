@@ -4,8 +4,8 @@ use std::process::ExitCode;
 
 use noetome_cli::{
     CliCommand, extraction, extraction_api, extraction_verify, fixture, fixture_compile,
-    outline_store, pdf_parse, project, relevance_store, research_store, retrieval_store,
-    revision_store, source, structure_store, vault_store, vault_update,
+    migrate_store, outline_store, pdf_parse, project, relevance_store, research_store,
+    retrieval_store, revision_store, source, structure_store, vault_store, vault_update,
 };
 
 fn main() -> ExitCode {
@@ -547,6 +547,19 @@ fn main() -> ExitCode {
         }
         CliCommand::StructureStatus { root } => {
             vault_result(structure_store::status(&root), &mut result_code)
+        }
+        CliCommand::MigrateHelp => noetome_cli::MIGRATE_HELP.to_owned(),
+        CliCommand::MigrateAdopt { plan, root } => {
+            vault_result(migrate_store::adopt(&plan, &root), &mut result_code)
+        }
+        CliCommand::MigrateBuild { root, output } => {
+            vault_result(migrate_store::build(&root, &output), &mut result_code)
+        }
+        CliCommand::MigrateList { root } => {
+            vault_result(migrate_store::list(&root), &mut result_code)
+        }
+        CliCommand::MigrateStatus { root } => {
+            vault_result(migrate_store::status(&root), &mut result_code)
         }
     };
 

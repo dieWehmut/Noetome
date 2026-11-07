@@ -3773,7 +3773,7 @@
       "id": "B11-T01",
       "title": "小节提升为独立笔记与链接批量更新",
       "batch": "B11",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B10-T03"
       ],
@@ -3789,7 +3789,91 @@
         "无法安全同时更新时保留旧发布位置并给出明确错误，不先移走目标；重复文件名不得误指，表格内别名竖线必须转义。",
         "报告单列迁移前后每个内部引用的解析结果与断链计数（必须为零），并由独立只读审计器复算；通过完整回归后 complete。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T21:49:42Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结小节提升前后两套自造作者包与实现前手写的迁移期望表，定义按概念/知识ID而非文件名的引用迁移、未受影响表示字节不变、无法安全迁移整包拒绝的确定性合同并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-07T22:41:54Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "三层实现：migrate_model.rs（1323 行纯判定：计划/对象表校验、对象位置真实存在核对、两侧链接扫描到对象、身份保持、unchanged/links_only/promoted/created 四种判据、报告渲染）+ migrate_store.rs（986 行冻结根与确定性输出 adopt/open/build/status/list）+ lib.rs/main.rs 接线 migrate adopt|build|list|status。真实缺陷修复：promoted 语义写反（原要求迁移后删标题，实际必须保留原标题作重定向位置）、Placement 链接计数用错 note_id 漏算跨笔记引用、objects_referenced 只算 after 侧、rewritten_targets 用 note_id 比较（3→2）、report.notes 混入 before 侧、location_text 只给标题不给路径、resolve_note 错误类型不匹配。",
+          "validation": [
+            "cargo fmt --all --check exit 0",
+            "cargo build --bin noetome 成功，migrate 相关零警告",
+            "cargo test --test migrate 18 passed / 0 failed",
+            "python3 scripts/verify_link_migration.py --package fixtures/link-migration-v1 → 226 项 0 失败",
+            "python3 scripts/verify_link_migration.py <根> --output <输出> --package … → 295 项 0 失败",
+            "python3 -m unittest tests.test_verify_link_migration → Ran 51 / OK",
+            "两次 build 五个派生文件全部 SAME",
+            "cargo test --workspace --no-fail-fast → lib 478 passed / 100 failed / 1 ignored；migrate 18/18、structure 17/17、outline 13/13、relevance 17/17、research 14/14、retrieval 14/14、vault 8/8、desktop 28/28",
+            "cargo test -p noetome-cli --lib -- --test-threads=2 → lib 480 passed / 98 failed / 1 ignored，与上轮低并发基线逐条相同，无新增失败",
+            "PYTHONUTF8=1 python3 -m unittest discover -s tests -p test_*.py → Ran 671 / failures 41 / errors 12 / skipped 24（基线 620 组同，新增 51 项全过）",
+            "四条拒绝实测全部 exit=3 且不留根：MIGRATE_AMBIGUOUS_TARGET / MIGRATE_TARGET_MISSING / MIGRATE_UNESCAPED_ALIAS / MIGRATE_OBJECT_MISSING"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/migrate_model.rs",
+              "sha256": "9112ec65c7cc0b7ce167e1c747ebe146aae1a2477dccc998ff5af4e4a4b69d61"
+            },
+            {
+              "path": "crates/noetome-cli/src/migrate_store.rs",
+              "sha256": "f17f5db5d3230699503b4a43d8cb04e2c36e25ec7a8cd5787d1a9c4bbecd58de"
+            },
+            {
+              "path": "crates/noetome-cli/tests/migrate.rs",
+              "sha256": "ef5487fb62db1563b34ef0a571ea38da48e64a0063ee2515d65fcbeaa5a27667"
+            },
+            {
+              "path": "fixtures/link-migration-v1/plan.json",
+              "sha256": "573f5196fe4098bfcac3521c2f4376aeb0d541a74e7b965e0ce50d74e25e385f"
+            },
+            {
+              "path": "fixtures/link-migration-v1/expected.json",
+              "sha256": "c799f73b7f078c1548841d5e7b860150b9a20a1054edddae978e2f0ba73f9b49"
+            },
+            {
+              "path": "fixtures/link-migration-v1/frozen-sha256.json",
+              "sha256": "9f27382b3e50bb13a53fc1287f22241c594790b6344bf417cd824652d32242cc"
+            },
+            {
+              "path": "fixtures/link-migration-v1/README.md",
+              "sha256": "0b0b8b0c182b72e72ccb7263a2e09d5294155f0ae799bb5fd2015bb014ee8c56"
+            },
+            {
+              "path": "scripts/verify_link_migration.py",
+              "sha256": "19a1c32e40c7757e0ce4a0a87c2054250923171c2ea527c3994216891c192ee9"
+            },
+            {
+              "path": "tests/test_verify_link_migration.py",
+              "sha256": "affa26cdb06ef46b572db6cf597379b369e6d029896b35780cecf607d88ebe84"
+            },
+            {
+              "path": "doc/technical/LINK_MIGRATION_CONTRACT.md",
+              "sha256": "66517cd6dde599434c1c983dd42d0b0db653c928ecad20fd8d33af7a56577d5e"
+            },
+            {
+              "path": "doc/validation/B11-T01.md",
+              "sha256": "c3c574c23aacb1c7f5090d6288c3f61517876385af014d124ce91c02bd17ad49"
+            },
+            {
+              "path": "doc/validation/assets/B11-T01/cli-20261108/audit.txt",
+              "sha256": "19adff63105bc58794fda84528a4c204d90f8a90c09e7f3473038e026f1999e7"
+            },
+            {
+              "path": "doc/validation/assets/B11-T01/cli-20261108/rejected-ambiguous.txt",
+              "sha256": "e60cfa6bfe948f64e8011bd657f90173dd95b0ba4ead39afc9dedec1e111f75a"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B11-T02",
