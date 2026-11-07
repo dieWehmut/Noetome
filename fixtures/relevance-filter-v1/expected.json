@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "rlv-glycolysis-v1",
+  "policy": "relevance-filter-v1",
+  "level": "university",
+  "counts": {
+    "sources": 3,
+    "spans": 25,
+    "text_spans": 10,
+    "kept_spans": 4,
+    "excluded_spans": 6,
+    "kept_atoms": 5,
+    "deferred_atoms": 1,
+    "conditions": 3
+  },
+  "reason_counts": {
+    "beyond_target_level": 2,
+    "decoration": 1,
+    "duplicate_introduction": 1,
+    "irrelevant_anecdote": 1,
+    "pure_exercise": 1
+  },
+  "spans_by_source": {
+    "doc-basics": 12,
+    "doc-anecdote": 8,
+    "doc-overshoot": 5
+  },
+  "text_spans_by_source": {
+    "doc-basics": 5,
+    "doc-anecdote": 3,
+    "doc-overshoot": 2
+  },
+  "exclusions": [
+    {
+      "source_id": "doc-basics",
+      "line": 13,
+      "reason": "duplicate_introduction"
+    },
+    {
+      "source_id": "doc-anecdote",
+      "line": 2,
+      "reason": "irrelevant_anecdote"
+    },
+    {
+      "source_id": "doc-anecdote",
+      "line": 6,
+      "reason": "decoration"
+    },
+    {
+      "source_id": "doc-anecdote",
+      "line": 9,
+      "reason": "pure_exercise"
+    },
+    {
+      "source_id": "doc-overshoot",
+      "line": 2,
+      "reason": "beyond_target_level"
+    },
+    {
+      "source_id": "doc-overshoot",
+      "line": 6,
+      "reason": "beyond_target_level"
+    }
+  ],
+  "atoms": [
+    {
+      "atom_id": "atom-glycolysis-net",
+      "source_id": "doc-basics",
+      "line": 2,
+      "conditions": 0
+    },
+    {
+      "atom_id": "atom-glycolysis-anaerobic",
+      "source_id": "doc-basics",
+      "line": 3,
+      "conditions": 1
+    },
+    {
+      "atom_id": "atom-hexokinase-ring",
+      "source_id": "doc-basics",
+      "line": 6,
+      "conditions": 0
+    },
+    {
+      "atom_id": "atom-magnesium",
+      "source_id": "doc-basics",
+      "line": 8,
+      "conditions": 1
+    },
+    {
+      "atom_id": "atom-lactate",
+      "source_id": "doc-basics",
+      "line": 11,
+      "conditions": 1
+    }
+  ],
+  "densities": {
+    "minimal": {
+      "atoms": 5,
+      "conditions": 3
+    },
+    "detailed": {
+      "atoms": 5,
+      "conditions": 3
+    }
+  },
+  "rejections": [
+    {
+      "case": "insufficient-knowledge",
+      "author": "author-insufficient.json",
+      "code": "RELEVANCE_PREREQUISITE_MISSING",
+      "exit": 3
+    },
+    {
+      "case": "required-atom-excluded",
+      "author": "author-advanced.json",
+      "code": "RELEVANCE_REQUIRED_EXCLUDED",
+      "exit": 3
+    },
+    {
+      "case": "unknown-reason",
+      "author": "author-unknown-reason.json",
+      "code": "RELEVANCE_ARGUMENT",
+      "exit": 2
+    },
+    {
+      "case": "unregistered-reason",
+      "author": "author-unregistered-reason.json",
+      "code": "RELEVANCE_ARGUMENT",
+      "exit": 2
+    }
+  ],
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false
+  }
+}

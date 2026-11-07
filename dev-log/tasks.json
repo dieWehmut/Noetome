@@ -3545,7 +3545,7 @@
       "id": "B10-T02",
       "title": "用户水平与相关性筛选的可审计记录",
       "batch": "B10",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B10-T01"
       ],
@@ -3562,7 +3562,97 @@
         "同一已核对 IR 分别生成极简与详细两种密度时，必要原子与条件数量不减少，差异只体现在表达与展开程度，计数可复算。",
         "审计器与报告单列保留数、排除数与排除理由分布；筛选过程只读来源 Span、不改写来源与 IR，零模型调用零网络请求；通过回归后 complete。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T20:02:02Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结含必要基础前提、无关轶事与明显超纲内容的自造来源与实现前手写的保留/排除期望，定义用户水平筛选、排除理由登记与双密度必要原子不变的确定性合同并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-07T20:53:39Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "作者包冻结（3 份自造来源 + audience/atoms/review 三份声明 + 4 份变体包）→ control/ 下只读筛选根；纯判定层实现水平必要性、排除理由登记与正文 Span 落点校验、必要前提闭包拒绝、极简/详细双密度编译；输出根五文件字节确定。实现中发现并修掉 6 个缺陷：适用条件被当标识符校验、control/author.json 多写尾换行导致后续 open 报非规范编码、build 摘要把冻结来源标成输出根、审计器 segment 漏算换行导致所有 span 摘要错、审计器 expected-atoms 少比两个字段、审计器缺目录时抛 FileNotFoundError。集成测试首跑 2 项失败经核对均为测试期望错（正文用全称而非缩写、产品 counts 多一个派生键），非产品缺陷。",
+          "validation": [
+            "cargo fmt --all --check exit=0，无输出",
+            "cargo build --bin noetome 成功，relevance 相关零警告",
+            "cargo test --lib relevance_model: 8 passed / 0 failed",
+            "cargo test --test relevance: 17 passed / 0 failed",
+            "cargo test --workspace --no-fail-fast: lib 470 passed / 100 failed / 1 ignored；relevance 17/17、outline 13/13、research 14/14、retrieval 14/14、vault 8/8、fixture 18/18、noetome-desktop 28/28。100 项失败按模块为 sidecar_process 64、pdf_source_model 18、pdf_parse 7、source_model 5、source_write 3、extraction_api_transport 2、extraction_source 1，全部需要 NOETOME_PDF_PYTHON 锁定解释器；比 7809ba5 基线多 1 项是 extraction_api_transport 的计时用例在 16 线程并行下抖动",
+            "cargo test -p noetome-cli --lib -- --test-threads=2: lib 471 passed / 99 failed / 1 ignored，失败集合与 7809ba5 基线逐条相同（diff 无差异）",
+            "cargo test -p noetome-cli --lib extraction_api_transport -- --test-threads=1 连跑 2 次均 8 passed / 0 failed，确认并行抖动",
+            "python3 scripts/verify_relevance_filter.py <根> --output <输出根> --package <包>: 合计 107 项检查，失败 0、提示 0",
+            "python3 scripts/verify_relevance_filter.py --package fixtures/relevance-filter-v1: 合计 25 项检查，失败 0、提示 0",
+            "PYTHONUTF8=1 python3 -m unittest tests.test_verify_relevance_filter: Ran 52 tests, OK",
+            "PYTHONUTF8=1 python3 -m unittest discover -s tests -p 'test_*.py': Ran 573 tests in 190.339s，FAILED (failures=41, errors=12, skipped=24)，与本任务前 Ran 521/failures=41/errors=12/skipped=24 是同一组失败，新增 52 项全部通过",
+            "端到端实测 adopt/build/build-second/status/list 全部 exit=0，两次构建 5 个文件逐个 cmp 全部 SAME；report.json 的 counts、reason_counts、两密度 densities、unchanged_across_densities 与实现前手写的 expected.json 逐项相同",
+            "四条拒绝实测：空自报 → RELEVANCE_PREREQUISITE_MISSING exit=3；高水平排除必需原子 → RELEVANCE_REQUIRED_EXCLUDED exit=3；自造理由与未登记理由 → RELEVANCE_ARGUMENT exit=2；四条均 left=0（语义拒绝不留半成品根）"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/relevance_model.rs",
+              "sha256": "eb3174ddc17b42912d5cbad069c05ea8ff92abe94f043c70e8a6e03605dcbcec"
+            },
+            {
+              "path": "crates/noetome-cli/src/relevance_store.rs",
+              "sha256": "d6b5078070374e1e6f32346c8551dff62f6662263b04102d41332b14fe94a6e3"
+            },
+            {
+              "path": "crates/noetome-cli/tests/relevance.rs",
+              "sha256": "1d3190b94a2a6591288740f5ba665670c48a7d0ac088cdae16e18adae21310fd"
+            },
+            {
+              "path": "fixtures/relevance-filter-v1/author.json",
+              "sha256": "eaf8c9b579c13dac49a263c708ae8fb1f6b0c55f9b9023daf006ccdb32836929"
+            },
+            {
+              "path": "fixtures/relevance-filter-v1/expected.json",
+              "sha256": "2c2f0942a5d5e57f966891024782ea66a7c7729cf2ff0ca278ad9ff4d61173be"
+            },
+            {
+              "path": "fixtures/relevance-filter-v1/frozen-sha256.json",
+              "sha256": "ea97ab466dc0b9047cd4e9098c2e53336a49d4e4c74eda8480734352f22ccf6f"
+            },
+            {
+              "path": "fixtures/relevance-filter-v1/README.md",
+              "sha256": "1cd96d1a6cab49602bc9eef9e97b383914115c5f80dc706f8d1233e1baa1b70f"
+            },
+            {
+              "path": "scripts/verify_relevance_filter.py",
+              "sha256": "c7520d69586775ad5338240fe72c0e3ca4f8e90d0daf7da0057c93899930526f"
+            },
+            {
+              "path": "tests/test_verify_relevance_filter.py",
+              "sha256": "caff3e2d469d78d561d53226135a54e29f24b2bdbd2ab1175f09c037fb61e425"
+            },
+            {
+              "path": "doc/technical/RELEVANCE_FILTER_CONTRACT.md",
+              "sha256": "1f60366e27a665871965ff9cbb86eb7918fe79dba98077b30b85caf8f3e45788"
+            },
+            {
+              "path": "doc/validation/B10-T02.md",
+              "sha256": "5df07e2b4fa8eb5a524b346daccfcf2e74c86f3ab9f36d5fcfb46f1325cb4149"
+            },
+            {
+              "path": "doc/validation/assets/B10-T02/cli-20261108/audit.txt",
+              "sha256": "2210a96b3e3d9566c3c644d6c4f11d17cd507304550966e1887692fbba5e5655"
+            },
+            {
+              "path": "doc/validation/assets/B10-T02/cli-20261108/rejected-author-insufficient.txt",
+              "sha256": "308581fc3cd84085715f784589251dfa3419b64a96ab9b684e935a78d663e663"
+            },
+            {
+              "path": "doc/validation/assets/B10-T02/cli-20261108/determinism.txt",
+              "sha256": "c91e5e8ea41c404cf643e21f62608712b8405a26312d969ebe085d90675dc479"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B10-T03",

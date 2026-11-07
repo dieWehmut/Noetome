@@ -1,0 +1,122 @@
+{
+  "policy": "relevance-atoms-v1",
+  "schema_version": 1,
+  "case_id": "rlv-glycolysis-v1",
+  "atoms": [
+    {
+      "atom_id": "atom-glycolysis-net",
+      "source_id": "doc-basics",
+      "line": 2,
+      "kind": "definition",
+      "statement": "糖酵解在细胞质中把一分子葡萄糖变成两分子丙酮酸",
+      "conditions": [],
+      "requires": [],
+      "covers": [
+        "glycolysis-pathway"
+      ],
+      "levels": [
+        "introductory",
+        "university",
+        "advanced"
+      ]
+    },
+    {
+      "atom_id": "atom-glycolysis-anaerobic",
+      "source_id": "doc-basics",
+      "line": 3,
+      "kind": "condition",
+      "statement": "这一步不直接需要氧气，是多数细胞共有的产能途径",
+      "conditions": [
+        "不直接需要氧气"
+      ],
+      "requires": [
+        "glycolysis-pathway"
+      ],
+      "covers": [
+        "anaerobic-glycolysis"
+      ],
+      "levels": [
+        "introductory",
+        "university",
+        "advanced"
+      ]
+    },
+    {
+      "atom_id": "atom-hexokinase-ring",
+      "source_id": "doc-basics",
+      "line": 6,
+      "kind": "prerequisite",
+      "statement": "葡萄糖的环式结构决定了己糖激酶识别的是哪种底物",
+      "conditions": [],
+      "requires": [
+        "glucose-ring-structure"
+      ],
+      "covers": [
+        "hexokinase-substrate"
+      ],
+      "levels": [
+        "introductory",
+        "university",
+        "advanced"
+      ]
+    },
+    {
+      "atom_id": "atom-magnesium",
+      "source_id": "doc-basics",
+      "line": 8,
+      "kind": "cofactor",
+      "statement": "ATP 的磷酸基团转移需要镁离子作为辅因子",
+      "conditions": [
+        "镁离子存在"
+      ],
+      "requires": [
+        "glycolysis-pathway"
+      ],
+      "covers": [
+        "atp-magnesium"
+      ],
+      "levels": [
+        "introductory",
+        "university",
+        "advanced"
+      ]
+    },
+    {
+      "atom_id": "atom-lactate",
+      "source_id": "doc-basics",
+      "line": 11,
+      "kind": "misconception",
+      "statement": "很多人以为糖酵解必须耗氧，实验里厌氧条件同样能生成乳酸",
+      "conditions": [
+        "厌氧条件"
+      ],
+      "requires": [
+        "glycolysis-pathway"
+      ],
+      "covers": [
+        "lactate-fermentation"
+      ],
+      "levels": [
+        "university",
+        "advanced"
+      ]
+    },
+    {
+      "atom_id": "atom-pfk-fret",
+      "source_id": "doc-overshoot",
+      "line": 2,
+      "kind": "frontier",
+      "statement": "单分子荧光共振能量转移显示，PFK-1 的构象集合在微秒尺度上重新分布",
+      "conditions": [],
+      "requires": [
+        "single-molecule-fret"
+      ],
+      "covers": [
+        "pfk-allostery"
+      ],
+      "levels": [
+        "advanced"
+      ]
+    }
+  ]
+}

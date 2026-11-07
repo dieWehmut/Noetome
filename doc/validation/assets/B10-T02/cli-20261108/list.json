@@ -1,0 +1,676 @@
+{
+  "atoms_sha256": "daf84aa25e3fb073af9f68b628f5bcf7259d2bbb91003709cbe95a2f32ba71d0",
+  "audience": {
+    "case_id": "rlv-glycolysis-v1",
+    "declared_knowledge": [
+      "glucose-ring-structure"
+    ],
+    "level": "university",
+    "policy": "relevance-audience-v1",
+    "purpose": "准备生化考试里的糖代谢计算题",
+    "schema_version": 1
+  },
+  "audience_sha256": "2d3d2430a2d916364be2fc1e67595b1bca39e5d82ab660d3013ed127f9f7bec6",
+  "author_sha256": "eaf8c9b579c13dac49a263c708ae8fb1f6b0c55f9b9023daf006ccdb32836929",
+  "case_id": "rlv-glycolysis-v1",
+  "created_at": "2026-11-07T20:31:10.64414661Z",
+  "detailed": {
+    "atoms": [
+      {
+        "atom_id": "atom-glycolysis-net",
+        "conditions": [],
+        "expansion": "糖酵解在细胞质中把一分子葡萄糖变成两分子丙酮酸。适用条件：无附加条件。前置知识：无。来源：doc-basics 第 2 行。",
+        "kind": "definition",
+        "requires": [],
+        "source": {
+          "line": 2,
+          "source_id": "doc-basics"
+        },
+        "statement": "糖酵解在细胞质中把一分子葡萄糖变成两分子丙酮酸"
+      },
+      {
+        "atom_id": "atom-glycolysis-anaerobic",
+        "conditions": [
+          "不直接需要氧气"
+        ],
+        "expansion": "这一步不直接需要氧气，是多数细胞共有的产能途径。适用条件：不直接需要氧气。前置知识：glycolysis-pathway。来源：doc-basics 第 3 行。",
+        "kind": "condition",
+        "requires": [
+          "glycolysis-pathway"
+        ],
+        "source": {
+          "line": 3,
+          "source_id": "doc-basics"
+        },
+        "statement": "这一步不直接需要氧气，是多数细胞共有的产能途径"
+      },
+      {
+        "atom_id": "atom-hexokinase-ring",
+        "conditions": [],
+        "expansion": "葡萄糖的环式结构决定了己糖激酶识别的是哪种底物。适用条件：无附加条件。前置知识：glucose-ring-structure。来源：doc-basics 第 6 行。",
+        "kind": "prerequisite",
+        "requires": [
+          "glucose-ring-structure"
+        ],
+        "source": {
+          "line": 6,
+          "source_id": "doc-basics"
+        },
+        "statement": "葡萄糖的环式结构决定了己糖激酶识别的是哪种底物"
+      },
+      {
+        "atom_id": "atom-magnesium",
+        "conditions": [
+          "镁离子存在"
+        ],
+        "expansion": "ATP 的磷酸基团转移需要镁离子作为辅因子。适用条件：镁离子存在。前置知识：glycolysis-pathway。来源：doc-basics 第 8 行。",
+        "kind": "cofactor",
+        "requires": [
+          "glycolysis-pathway"
+        ],
+        "source": {
+          "line": 8,
+          "source_id": "doc-basics"
+        },
+        "statement": "ATP 的磷酸基团转移需要镁离子作为辅因子"
+      },
+      {
+        "atom_id": "atom-lactate",
+        "conditions": [
+          "厌氧条件"
+        ],
+        "expansion": "很多人以为糖酵解必须耗氧，实验里厌氧条件同样能生成乳酸。适用条件：厌氧条件。前置知识：glycolysis-pathway。来源：doc-basics 第 11 行。",
+        "kind": "misconception",
+        "requires": [
+          "glycolysis-pathway"
+        ],
+        "source": {
+          "line": 11,
+          "source_id": "doc-basics"
+        },
+        "statement": "很多人以为糖酵解必须耗氧，实验里厌氧条件同样能生成乳酸"
+      }
+    ],
+    "case_id": "rlv-glycolysis-v1",
+    "counts": {
+      "atoms": 5,
+      "conditions": 3
+    },
+    "density": "detailed",
+    "level": "university",
+    "policy": "relevance-filter-v1",
+    "schema_version": 1
+  },
+  "documents": [
+    {
+      "byte_length": 466,
+      "normalized_sha256": "ed6789be7386cc37dfa61b621e94da0ffc46eeacd907d67de90d0d055843fccf",
+      "path": "documents/basics.md",
+      "raw_sha256": "ed6789be7386cc37dfa61b621e94da0ffc46eeacd907d67de90d0d055843fccf",
+      "source_id": "doc-basics",
+      "span_count": 12,
+      "title": "糖酵解速览"
+    },
+    {
+      "byte_length": 278,
+      "normalized_sha256": "c50b83ecd60d00d258676c71cf827a327c0335df665536028db3850598a1be68",
+      "path": "documents/anecdote.md",
+      "raw_sha256": "c50b83ecd60d00d258676c71cf827a327c0335df665536028db3850598a1be68",
+      "source_id": "doc-anecdote",
+      "span_count": 8,
+      "title": "实验室旧事"
+    },
+    {
+      "byte_length": 295,
+      "normalized_sha256": "b18805b953454e818aa58d8a16450f20d4ba82c23d93133dce36f31e312ff19c",
+      "path": "documents/overshoot.md",
+      "raw_sha256": "b18805b953454e818aa58d8a16450f20d4ba82c23d93133dce36f31e312ff19c",
+      "source_id": "doc-overshoot",
+      "span_count": 5,
+      "title": "磷酸果糖激酶的变构调控前沿"
+    }
+  ],
+  "filter": {
+    "atoms": [
+      {
+        "atom_id": "atom-glycolysis-net",
+        "conditions": [],
+        "covers": [
+          "glycolysis-pathway"
+        ],
+        "kind": "definition",
+        "levels": [
+          "introductory",
+          "university",
+          "advanced"
+        ],
+        "line": 2,
+        "required": true,
+        "requires": [],
+        "source_id": "doc-basics",
+        "statement": "糖酵解在细胞质中把一分子葡萄糖变成两分子丙酮酸",
+        "status": "kept"
+      },
+      {
+        "atom_id": "atom-glycolysis-anaerobic",
+        "conditions": [
+          "不直接需要氧气"
+        ],
+        "covers": [
+          "anaerobic-glycolysis"
+        ],
+        "kind": "condition",
+        "levels": [
+          "introductory",
+          "university",
+          "advanced"
+        ],
+        "line": 3,
+        "required": true,
+        "requires": [
+          "glycolysis-pathway"
+        ],
+        "source_id": "doc-basics",
+        "statement": "这一步不直接需要氧气，是多数细胞共有的产能途径",
+        "status": "kept"
+      },
+      {
+        "atom_id": "atom-hexokinase-ring",
+        "conditions": [],
+        "covers": [
+          "hexokinase-substrate"
+        ],
+        "kind": "prerequisite",
+        "levels": [
+          "introductory",
+          "university",
+          "advanced"
+        ],
+        "line": 6,
+        "required": true,
+        "requires": [
+          "glucose-ring-structure"
+        ],
+        "source_id": "doc-basics",
+        "statement": "葡萄糖的环式结构决定了己糖激酶识别的是哪种底物",
+        "status": "kept"
+      },
+      {
+        "atom_id": "atom-magnesium",
+        "conditions": [
+          "镁离子存在"
+        ],
+        "covers": [
+          "atp-magnesium"
+        ],
+        "kind": "cofactor",
+        "levels": [
+          "introductory",
+          "university",
+          "advanced"
+        ],
+        "line": 8,
+        "required": true,
+        "requires": [
+          "glycolysis-pathway"
+        ],
+        "source_id": "doc-basics",
+        "statement": "ATP 的磷酸基团转移需要镁离子作为辅因子",
+        "status": "kept"
+      },
+      {
+        "atom_id": "atom-lactate",
+        "conditions": [
+          "厌氧条件"
+        ],
+        "covers": [
+          "lactate-fermentation"
+        ],
+        "kind": "misconception",
+        "levels": [
+          "university",
+          "advanced"
+        ],
+        "line": 11,
+        "required": true,
+        "requires": [
+          "glycolysis-pathway"
+        ],
+        "source_id": "doc-basics",
+        "statement": "很多人以为糖酵解必须耗氧，实验里厌氧条件同样能生成乳酸",
+        "status": "kept"
+      },
+      {
+        "atom_id": "atom-pfk-fret",
+        "conditions": [],
+        "covers": [
+          "pfk-allostery"
+        ],
+        "kind": "frontier",
+        "levels": [
+          "advanced"
+        ],
+        "line": 2,
+        "required": false,
+        "requires": [
+          "single-molecule-fret"
+        ],
+        "source_id": "doc-overshoot",
+        "statement": "单分子荧光共振能量转移显示，PFK-1 的构象集合在微秒尺度上重新分布",
+        "status": "deferred"
+      }
+    ],
+    "case_id": "rlv-glycolysis-v1",
+    "counts": {
+      "atoms": 6,
+      "conditions": 3,
+      "deferred_atoms": 1,
+      "excluded_spans": 6,
+      "kept_atoms": 5,
+      "kept_spans": 4,
+      "sources": 3,
+      "spans": 25,
+      "text_spans": 10
+    },
+    "level": "university",
+    "policy": "relevance-filter-v1",
+    "purpose": "准备生化考试里的糖代谢计算题",
+    "reason_counts": {
+      "beyond_target_level": 2,
+      "decoration": 1,
+      "duplicate_introduction": 1,
+      "irrelevant_anecdote": 1,
+      "pure_exercise": 1
+    },
+    "schema_version": 1,
+    "spans": [
+      {
+        "detail": null,
+        "end_line": 1,
+        "kind": "heading",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00001",
+        "start_line": 1,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 3,
+        "kind": "text",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00002",
+        "start_line": 2,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 4,
+        "kind": "formatting",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00003",
+        "start_line": 4,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 5,
+        "kind": "heading",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00004",
+        "start_line": 5,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 6,
+        "kind": "text",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00005",
+        "start_line": 6,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 7,
+        "kind": "formatting",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00006",
+        "start_line": 7,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 8,
+        "kind": "text",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00007",
+        "start_line": 8,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 9,
+        "kind": "formatting",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00008",
+        "start_line": 9,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 10,
+        "kind": "heading",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00009",
+        "start_line": 10,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 11,
+        "kind": "text",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00010",
+        "start_line": 11,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 12,
+        "kind": "formatting",
+        "reason": null,
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00011",
+        "start_line": 12,
+        "status": "kept"
+      },
+      {
+        "detail": "第 2-3 行已完整给出同一结论，这里只是重复一遍。",
+        "end_line": 13,
+        "kind": "text",
+        "reason": "duplicate_introduction",
+        "source_id": "doc-basics",
+        "span_id": "doc-basics-00012",
+        "start_line": 13,
+        "status": "excluded"
+      },
+      {
+        "detail": null,
+        "end_line": 1,
+        "kind": "heading",
+        "reason": null,
+        "source_id": "doc-anecdote",
+        "span_id": "doc-anecdote-00001",
+        "start_line": 1,
+        "status": "kept"
+      },
+      {
+        "detail": "手摇离心机的实验室旧事与糖酵解知识无关。",
+        "end_line": 3,
+        "kind": "text",
+        "reason": "irrelevant_anecdote",
+        "source_id": "doc-anecdote",
+        "span_id": "doc-anecdote-00002",
+        "start_line": 2,
+        "status": "excluded"
+      },
+      {
+        "detail": null,
+        "end_line": 4,
+        "kind": "formatting",
+        "reason": null,
+        "source_id": "doc-anecdote",
+        "span_id": "doc-anecdote-00003",
+        "start_line": 4,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 5,
+        "kind": "heading",
+        "reason": null,
+        "source_id": "doc-anecdote",
+        "span_id": "doc-anecdote-00004",
+        "start_line": 5,
+        "status": "kept"
+      },
+      {
+        "detail": "「生命最古老的记忆」只是修辞，不承载可核验结论。",
+        "end_line": 6,
+        "kind": "text",
+        "reason": "decoration",
+        "source_id": "doc-anecdote",
+        "span_id": "doc-anecdote-00005",
+        "start_line": 6,
+        "status": "excluded"
+      },
+      {
+        "detail": null,
+        "end_line": 7,
+        "kind": "formatting",
+        "reason": null,
+        "source_id": "doc-anecdote",
+        "span_id": "doc-anecdote-00006",
+        "start_line": 7,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 8,
+        "kind": "heading",
+        "reason": null,
+        "source_id": "doc-anecdote",
+        "span_id": "doc-anecdote-00007",
+        "start_line": 8,
+        "status": "kept"
+      },
+      {
+        "detail": "画环式结构是纯练习形式，正文未给出答案。",
+        "end_line": 9,
+        "kind": "text",
+        "reason": "pure_exercise",
+        "source_id": "doc-anecdote",
+        "span_id": "doc-anecdote-00008",
+        "start_line": 9,
+        "status": "excluded"
+      },
+      {
+        "detail": null,
+        "end_line": 1,
+        "kind": "heading",
+        "reason": null,
+        "source_id": "doc-overshoot",
+        "span_id": "doc-overshoot-00001",
+        "start_line": 1,
+        "status": "kept"
+      },
+      {
+        "detail": "单分子 FRET 的微秒构象集合属于前沿方法学，大学水平不需要。",
+        "end_line": 3,
+        "kind": "text",
+        "reason": "beyond_target_level",
+        "source_id": "doc-overshoot",
+        "span_id": "doc-overshoot-00002",
+        "start_line": 2,
+        "status": "excluded"
+      },
+      {
+        "detail": null,
+        "end_line": 4,
+        "kind": "formatting",
+        "reason": null,
+        "source_id": "doc-overshoot",
+        "span_id": "doc-overshoot-00003",
+        "start_line": 4,
+        "status": "kept"
+      },
+      {
+        "detail": null,
+        "end_line": 5,
+        "kind": "heading",
+        "reason": null,
+        "source_id": "doc-overshoot",
+        "span_id": "doc-overshoot-00004",
+        "start_line": 5,
+        "status": "kept"
+      },
+      {
+        "detail": "不同实验室相反的别构常数属于未决争议，超出声明水平。",
+        "end_line": 6,
+        "kind": "text",
+        "reason": "beyond_target_level",
+        "source_id": "doc-overshoot",
+        "span_id": "doc-overshoot-00005",
+        "start_line": 6,
+        "status": "excluded"
+      }
+    ]
+  },
+  "inputs_sha256": "ccd1e34dd0aeeb32525e28db6ad1f0a19826ae1640b3251840e853ed0b8d0400",
+  "limits": {
+    "max_atoms": 64,
+    "max_conditions": 8,
+    "max_requirements": 8,
+    "max_sources": 8
+  },
+  "minimal": {
+    "atoms": [
+      {
+        "atom_id": "atom-glycolysis-net",
+        "conditions": [],
+        "expansion": null,
+        "kind": "definition",
+        "requires": [],
+        "source": {
+          "line": 2,
+          "source_id": "doc-basics"
+        },
+        "statement": "糖酵解在细胞质中把一分子葡萄糖变成两分子丙酮酸"
+      },
+      {
+        "atom_id": "atom-glycolysis-anaerobic",
+        "conditions": [
+          "不直接需要氧气"
+        ],
+        "expansion": null,
+        "kind": "condition",
+        "requires": [
+          "glycolysis-pathway"
+        ],
+        "source": {
+          "line": 3,
+          "source_id": "doc-basics"
+        },
+        "statement": "这一步不直接需要氧气，是多数细胞共有的产能途径"
+      },
+      {
+        "atom_id": "atom-hexokinase-ring",
+        "conditions": [],
+        "expansion": null,
+        "kind": "prerequisite",
+        "requires": [
+          "glucose-ring-structure"
+        ],
+        "source": {
+          "line": 6,
+          "source_id": "doc-basics"
+        },
+        "statement": "葡萄糖的环式结构决定了己糖激酶识别的是哪种底物"
+      },
+      {
+        "atom_id": "atom-magnesium",
+        "conditions": [
+          "镁离子存在"
+        ],
+        "expansion": null,
+        "kind": "cofactor",
+        "requires": [
+          "glycolysis-pathway"
+        ],
+        "source": {
+          "line": 8,
+          "source_id": "doc-basics"
+        },
+        "statement": "ATP 的磷酸基团转移需要镁离子作为辅因子"
+      },
+      {
+        "atom_id": "atom-lactate",
+        "conditions": [
+          "厌氧条件"
+        ],
+        "expansion": null,
+        "kind": "misconception",
+        "requires": [
+          "glycolysis-pathway"
+        ],
+        "source": {
+          "line": 11,
+          "source_id": "doc-basics"
+        },
+        "statement": "很多人以为糖酵解必须耗氧，实验里厌氧条件同样能生成乳酸"
+      }
+    ],
+    "case_id": "rlv-glycolysis-v1",
+    "counts": {
+      "atoms": 5,
+      "conditions": 3
+    },
+    "density": "minimal",
+    "level": "university",
+    "policy": "relevance-filter-v1",
+    "schema_version": 1
+  },
+  "model_calls": 0,
+  "network_requests": 0,
+  "policy": "relevance-filter-v1",
+  "producer": "noetome-relevance",
+  "report": {
+    "case_id": "rlv-glycolysis-v1",
+    "counts": {
+      "atoms": 6,
+      "conditions": 3,
+      "deferred_atoms": 1,
+      "excluded_spans": 6,
+      "kept_atoms": 5,
+      "kept_spans": 4,
+      "sources": 3,
+      "spans": 25,
+      "text_spans": 10
+    },
+    "densities": {
+      "detailed": {
+        "atoms": 5,
+        "conditions": 3
+      },
+      "minimal": {
+        "atoms": 5,
+        "conditions": 3
+      }
+    },
+    "level": "university",
+    "model_calls": 0,
+    "network_requests": 0,
+    "policy": "relevance-filter-v1",
+    "reason_counts": {
+      "beyond_target_level": 2,
+      "decoration": 1,
+      "duplicate_introduction": 1,
+      "irrelevant_anecdote": 1,
+      "pure_exercise": 1
+    },
+    "schema_version": 1,
+    "unchanged_across_densities": true
+  },
+  "review_sha256": "0c7a0991d30ce023d618e24d4fd01a014286da6e7f486b80ca8edc8d3045e175",
+  "schema_version": 1
+}

@@ -1,0 +1,35 @@
+{
+  "policy": "relevance-review-v1",
+  "schema_version": 1,
+  "case_id": "rlv-glycolysis-v1",
+  "reasons": [
+    {
+      "reason": "duplicate_introduction",
+      "note": "同一知识已在别处完整讲过，这里是重复介绍。"
+    },
+    {
+      "reason": "decoration",
+      "note": "只起铺陈作用，不承载可核验知识。"
+    },
+    {
+      "reason": "irrelevant_anecdote",
+      "note": "与研究目标和知识体系无关的个人轶事。"
+    },
+    {
+      "reason": "pure_exercise",
+      "note": "纯练习形式，不作为题库导入。"
+    },
+    {
+      "reason": "beyond_target_level",
+      "note": "明显超出声明水平，留待更高层次或专门研究。"
+    }
+  ],
+  "exclusions": [
+    {
+      "source_id": "doc-basics",
+      "line": 13,
+      "reason": "boring",
+      "detail": "自造词，不在允许集合内。"
+    }
+  ]
+}

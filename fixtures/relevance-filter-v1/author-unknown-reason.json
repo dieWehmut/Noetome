@@ -1,0 +1,33 @@
+{
+  "policy": "relevance-filter-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "rlv-glycolysis-v1",
+  "description": "排除理由写成集合外的自造词：必须拒绝写入。",
+  "audience": "audience.json",
+  "atoms": "atoms.json",
+  "review": "review-unknown-reason.json",
+  "sources": [
+    {
+      "source_id": "doc-basics",
+      "path": "documents/basics.md",
+      "title": "糖酵解速览"
+    },
+    {
+      "source_id": "doc-anecdote",
+      "path": "documents/anecdote.md",
+      "title": "实验室旧事"
+    },
+    {
+      "source_id": "doc-overshoot",
+      "path": "documents/overshoot.md",
+      "title": "磷酸果糖激酶的变构调控前沿"
+    }
+  ],
+  "limits": {
+    "max_sources": 8,
+    "max_atoms": 64,
+    "max_conditions": 8,
+    "max_requirements": 8
+  }
+}

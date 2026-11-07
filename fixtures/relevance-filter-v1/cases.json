@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "rlv-glycolysis-v1",
+  "policy": "relevance-filter-v1",
+  "sequence": [
+    {
+      "verb": "adopt",
+      "author": "author.json"
+    },
+    {
+      "verb": "build",
+      "expect": "expected.json"
+    },
+    {
+      "verb": "list"
+    },
+    {
+      "verb": "status"
+    },
+    {
+      "verb": "adopt",
+      "author": "author-insufficient.json",
+      "rejection": "insufficient-knowledge"
+    },
+    {
+      "verb": "adopt",
+      "author": "author-advanced.json",
+      "rejection": "required-atom-excluded"
+    },
+    {
+      "verb": "adopt",
+      "author": "author-unknown-reason.json",
+      "rejection": "unknown-reason"
+    },
+    {
+      "verb": "adopt",
+      "author": "author-unregistered-reason.json",
+      "rejection": "unregistered-reason"
+    }
+  ],
+  "expected": "expected.json",
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "作者包与期望判据均为自造内容，只证明确定性筛选与拒绝语义，不证明真实教材筛选正确率。"
+  }
+}

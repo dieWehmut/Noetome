@@ -1,0 +1,65 @@
+{
+  "policy": "relevance-review-v1",
+  "schema_version": 1,
+  "case_id": "rlv-glycolysis-v1",
+  "reasons": [
+    {
+      "reason": "duplicate_introduction",
+      "note": "同一知识已在别处完整讲过，这里是重复介绍。"
+    },
+    {
+      "reason": "decoration",
+      "note": "只起铺陈作用，不承载可核验知识。"
+    },
+    {
+      "reason": "irrelevant_anecdote",
+      "note": "与研究目标和知识体系无关的个人轶事。"
+    },
+    {
+      "reason": "pure_exercise",
+      "note": "纯练习形式，不作为题库导入。"
+    },
+    {
+      "reason": "beyond_target_level",
+      "note": "明显超出声明水平，留待更高层次或专门研究。"
+    }
+  ],
+  "exclusions": [
+    {
+      "source_id": "doc-basics",
+      "line": 13,
+      "reason": "duplicate_introduction",
+      "detail": "第 2-3 行已完整给出同一结论，这里只是重复一遍。"
+    },
+    {
+      "source_id": "doc-anecdote",
+      "line": 2,
+      "reason": "irrelevant_anecdote",
+      "detail": "手摇离心机的实验室旧事与糖酵解知识无关。"
+    },
+    {
+      "source_id": "doc-anecdote",
+      "line": 6,
+      "reason": "decoration",
+      "detail": "「生命最古老的记忆」只是修辞，不承载可核验结论。"
+    },
+    {
+      "source_id": "doc-anecdote",
+      "line": 9,
+      "reason": "pure_exercise",
+      "detail": "画环式结构是纯练习形式，正文未给出答案。"
+    },
+    {
+      "source_id": "doc-overshoot",
+      "line": 2,
+      "reason": "beyond_target_level",
+      "detail": "单分子 FRET 的微秒构象集合属于前沿方法学，大学水平不需要。"
+    },
+    {
+      "source_id": "doc-overshoot",
+      "line": 6,
+      "reason": "beyond_target_level",
+      "detail": "不同实验室相反的别构常数属于未决争议，超出声明水平。"
+    }
+  ]
+}

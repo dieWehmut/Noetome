@@ -66,6 +66,8 @@ mod process_model;
 mod process_parser;
 pub mod process_review;
 pub mod project;
+mod relevance_model;
+pub mod relevance_store;
 mod request_budget_model;
 mod request_budget_store;
 pub mod request_run;
@@ -152,6 +154,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome outline build <对齐根> <尚不存在的输出根>
       noetome outline list <对齐根>
       noetome outline status <对齐根>
+      noetome relevance adopt <author.json> <尚不存在的筛选根>
+      noetome relevance build <筛选根> <尚不存在的输出根>
+      noetome relevance list <筛选根>
+      noetome relevance status <筛选根>
 
 当前支持：
   -h, --help       显示帮助
@@ -177,6 +183,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   retrieve                批准范围内的有界检索、持久预算与终止理由（adopt/step/run/pause/resume/finish/list/status）
   revision                写作反馈缺口回到修订与依赖重编译（adopt/gap/revise/list/status）
   outline                 章节粗对齐与全局概念清单（adopt/build/list/status）
+  relevance               用户水平与相关性筛选的可审计记录（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
@@ -185,6 +192,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
 有界检索只在冻结语料内进行：关闭外部检索时零网络请求，命中只是证据线索，不写入知识库或托管Vault。
 写作缺口必须回到修订流程：修订经核验生成新IR版本并重编译所有依赖表示，未受影响表示字节不变；无来源补句标为待核验。
 章节对齐只做粗对齐与概念索引：不合并章节、不改写正文、不生成知识；同一冻结输入的任何两次构建必须字节相同。
+相关性筛选只记录保留与排除：必要前提缺失或必要原子被排除时整包拒绝，极简与详细的必要原子及条件集合必须一致；不静默省略、不改写来源。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -493,6 +501,21 @@ pub enum CliCommand {
     OutlineStatus {
         root: PathBuf,
     },
+    RelevanceHelp,
+    RelevanceAdopt {
+        author: PathBuf,
+        root: PathBuf,
+    },
+    RelevanceBuild {
+        root: PathBuf,
+        output: PathBuf,
+    },
+    RelevanceList {
+        root: PathBuf,
+    },
+    RelevanceStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -526,6 +549,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "outline") {
         return outline_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "relevance") {
+        return relevance_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -889,6 +915,63 @@ fn outline_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         }
         [root] if verb == "status" && valid(root) => {
             Ok(CliCommand::OutlineStatus { root: root.into() })
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const RELEVANCE_HELP: &str = "Noetome 用户水平与相关性筛选
+
+用法：noetome relevance adopt <author.json> <尚不存在的筛选根>
+      noetome relevance build <筛选根> <尚不存在的输出根>
+      noetome relevance list <筛选根>
+      noetome relevance status <筛选根>
+
+adopt：只接受明确作者包与全新目录；核对用户水平、原子清单、排除登记与每份来源的字节、规范化摘要和文本片段后冻结，全部通过才建根。
+build：从冻结输入重新做保留/排除决策并编译极简与详细两种密度，写入全新输出根；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算并输出保留数、排除数、排除理由分布、原子保留与暂缓数以及两种密度的一致性。
+排除必须登记理由并落在真实正文片段上：理由未登记、落在标题或空行、必要原子被排除、必要前提缺失，都会拒绝整包而不是静默省略。
+极简与详细只差展开程度：必要原子与适用条件集合必须完全一致，计数可复算。
+不联网、不调用模型、不写项目与Vault；本阶段不判断科学正确性、不改写来源、不删除冻结片段。
+";
+
+fn relevance_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 4] = ["adopt", "build", "list", "status"];
+    if args.is_empty() || matches!(args, [help] if help == "--help" || help == "-h") {
+        return Ok(CliCommand::RelevanceHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail, [help] if help == "--help" || help == "-h")
+        && VERBS.iter().any(|candidate| verb == candidate)
+    {
+        return Ok(CliCommand::RelevanceHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |path: &OsString| {
+        !path.is_empty() && (separated || path.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [author, root] if verb == "adopt" && valid(author) && valid(root) => {
+            Ok(CliCommand::RelevanceAdopt {
+                author: author.into(),
+                root: root.into(),
+            })
+        }
+        [root, output] if verb == "build" && valid(root) && valid(output) => {
+            Ok(CliCommand::RelevanceBuild {
+                root: root.into(),
+                output: output.into(),
+            })
+        }
+        [root] if verb == "list" && valid(root) => {
+            Ok(CliCommand::RelevanceList { root: root.into() })
+        }
+        [root] if verb == "status" && valid(root) => {
+            Ok(CliCommand::RelevanceStatus { root: root.into() })
         }
         _ => Err(INVALID_ARGUMENT),
     }
