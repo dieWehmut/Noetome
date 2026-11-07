@@ -1,0 +1,236 @@
+{
+  "attempts": [
+    {
+      "at": "2026-11-07T13:55:34.487862071Z",
+      "attempt": 1,
+      "hit_keys": [
+        "chapter-gluconeogenesis.md#ATP@140",
+        "chapter-glycolysis.md#ATP@179",
+        "chapter-glycolysis.md#净生成@179",
+        "chapter-glycolysis.md#ATP@253"
+      ],
+      "hits": 4,
+      "new_hits": 4,
+      "outcome": "evidence",
+      "query_id": "q-energy",
+      "reserved_bytes": 65536,
+      "reserved_millis": 1000,
+      "reserved_queries": 1,
+      "settled_bytes": 314,
+      "state": "settled"
+    },
+    {
+      "at": "2026-11-07T13:55:34.536427459Z",
+      "attempt": 2,
+      "hit_keys": [
+        "chapter-gluconeogenesis.md#ATP@140",
+        "chapter-glycolysis.md#ATP@179",
+        "chapter-glycolysis.md#净生成@179",
+        "chapter-glycolysis.md#ATP@253"
+      ],
+      "hits": 4,
+      "new_hits": 0,
+      "outcome": "duplicates_only",
+      "query_id": "q-energy-repeat",
+      "reserved_bytes": 65536,
+      "reserved_millis": 1000,
+      "reserved_queries": 1,
+      "settled_bytes": 314,
+      "state": "settled"
+    },
+    {
+      "at": "2026-11-07T13:55:34.572034375Z",
+      "attempt": 3,
+      "hit_keys": [
+        "chapter-gluconeogenesis.md#丙酮酸羧化酶@140"
+      ],
+      "hits": 1,
+      "new_hits": 1,
+      "outcome": "evidence",
+      "query_id": "q-gluconeo",
+      "reserved_bytes": 65536,
+      "reserved_millis": 1000,
+      "reserved_queries": 1,
+      "settled_bytes": 73,
+      "state": "settled"
+    },
+    {
+      "at": "2026-11-07T13:55:34.603757832Z",
+      "attempt": 4,
+      "hit_keys": [
+        "chapter-ppp.md#NADPH@143",
+        "chapter-ppp.md#NADPH@187"
+      ],
+      "hits": 2,
+      "new_hits": 2,
+      "outcome": "evidence",
+      "query_id": "q-ppp",
+      "reserved_bytes": 65536,
+      "reserved_millis": 1000,
+      "reserved_queries": 1,
+      "settled_bytes": 127,
+      "state": "settled"
+    },
+    {
+      "at": "2026-11-07T13:55:34.636750903Z",
+      "attempt": 5,
+      "hit_keys": [],
+      "hits": 0,
+      "new_hits": 0,
+      "outcome": "no_hits",
+      "query_id": "q-glyoxylate",
+      "reserved_bytes": 65536,
+      "reserved_millis": 1000,
+      "reserved_queries": 1,
+      "settled_bytes": 0,
+      "state": "settled"
+    },
+    {
+      "at": "2026-11-07T13:55:34.669252036Z",
+      "attempt": 6,
+      "hit_keys": [
+        "chapter-shuttle-a.md#肉碱穿梭@132",
+        "chapter-shuttle-a.md#肉碱穿梭@149"
+      ],
+      "hits": 2,
+      "new_hits": 2,
+      "outcome": "evidence",
+      "query_id": "q-shuttle-carnitine",
+      "reserved_bytes": 65536,
+      "reserved_millis": 1000,
+      "reserved_queries": 1,
+      "settled_bytes": 108,
+      "state": "settled"
+    },
+    {
+      "at": "2026-11-07T13:55:34.70673711Z",
+      "attempt": 7,
+      "hit_keys": [
+        "chapter-gluconeogenesis.md#苹果酸@369",
+        "chapter-shuttle-b.md#苹果酸@132",
+        "chapter-shuttle-b.md#苹果酸@152"
+      ],
+      "hits": 3,
+      "new_hits": 3,
+      "outcome": "conflict",
+      "query_id": "q-shuttle-malate",
+      "reserved_bytes": 65536,
+      "reserved_millis": 1000,
+      "reserved_queries": 1,
+      "settled_bytes": 209,
+      "state": "settled"
+    },
+    {
+      "at": "2026-11-07T13:55:34.743414815Z",
+      "attempt": 8,
+      "hit_keys": [],
+      "hits": 0,
+      "new_hits": 0,
+      "outcome": "requires_external",
+      "query_id": "q-external",
+      "reserved_bytes": 65536,
+      "reserved_millis": 1000,
+      "reserved_queries": 1,
+      "settled_bytes": 0,
+      "state": "settled"
+    }
+  ],
+  "budget": {
+    "bytes_remaining": 0,
+    "bytes_used": 524288,
+    "millis_remaining": 0,
+    "millis_used": 8000,
+    "queries_remaining": 0,
+    "queries_used": 8
+  },
+  "case_id": "rtb-glycolysis-v1",
+  "corpus": {
+    "bytes": 1758,
+    "documents": 5,
+    "manifest_sha256": "80ae9c0e22936674bc3a3618076a9e9b94e9ba2b406a7bdcf42e9045a3db4d02",
+    "root": "/home/lyinn/project/Noetome/fixtures/retrieval-budget-v1/corpus"
+  },
+  "external_retrieval": false,
+  "goals": [
+    "糖酵解净能量收支",
+    "糖异生绕行反应"
+  ],
+  "limits": {
+    "max_hits": 4,
+    "max_queries": 8,
+    "max_query_bytes": 65536,
+    "max_query_millis": 1000,
+    "max_total_bytes": 524288,
+    "max_total_millis": 8000
+  },
+  "model_calls": 0,
+  "network_requests": 0,
+  "paused": false,
+  "policy": "retrieval-plan-v1",
+  "termination": null,
+  "totals": {
+    "conflict": 1,
+    "duplicates_only": 1,
+    "evidence": 4,
+    "no_hits": 1,
+    "requires_external": 1
+  },
+  "units": [
+    {
+      "query_id": "q-energy",
+      "requires_external": false,
+      "scope_class": "authorized_target",
+      "state": "settled",
+      "subject": "糖酵解净能量收支"
+    },
+    {
+      "query_id": "q-energy-repeat",
+      "requires_external": false,
+      "scope_class": "authorized_target",
+      "state": "settled",
+      "subject": "糖酵解净能量收支"
+    },
+    {
+      "query_id": "q-gluconeo",
+      "requires_external": false,
+      "scope_class": "authorized_target",
+      "state": "settled",
+      "subject": "糖异生绕行反应"
+    },
+    {
+      "query_id": "q-ppp",
+      "requires_external": false,
+      "scope_class": "required_prerequisite",
+      "state": "settled",
+      "subject": "磷酸戊糖途径"
+    },
+    {
+      "query_id": "q-glyoxylate",
+      "requires_external": false,
+      "scope_class": "authorized_target",
+      "state": "settled",
+      "subject": "糖异生绕行反应"
+    },
+    {
+      "query_id": "q-shuttle-carnitine",
+      "requires_external": false,
+      "scope_class": "authorized_target",
+      "state": "settled",
+      "subject": "糖酵解净能量收支"
+    },
+    {
+      "query_id": "q-shuttle-malate",
+      "requires_external": false,
+      "scope_class": "authorized_target",
+      "state": "settled",
+      "subject": "糖酵解净能量收支"
+    },
+    {
+      "query_id": "q-external",
+      "requires_external": true,
+      "scope_class": "authorized_target",
+      "state": "gapped",
+      "subject": "糖异生绕行反应"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+Noetome 批准范围内的有界检索与终止理由
+
+用法：noetome retrieve adopt <plan.json> <尚不存在的检索根>
+      noetome retrieve step <检索根>
+      noetome retrieve run <检索根>
+      noetome retrieve pause <检索根>
+      noetome retrieve resume <检索根>
+      noetome retrieve finish <检索根> <终止理由文件>
+      noetome retrieve list <检索根>
+      noetome retrieve status <检索根>
+
+adopt：只接受明确作者包与全新目录；冻结语料、预算上限与待执行查询，之后不接受增删。
+step：执行一条待结算查询；先持久预留预算，再扫描，最后结算。
+run：连续执行到没有待执行查询、预算到限、暂停或已记终止理由。
+pause|resume：停止或恢复调度新查询；已预留的尝试只补结算一次，不重复扣减。
+finish：记录终止理由；理由必须有账本证据支撑，否则拒绝且不写任何字节。
+list|status：只读输出预算、查询状态与终止理由的完整记录。
+检索只在已授权的目标与必需前提内进行；越界主题必须先进入候选队列并由人工批准。
+关闭外部检索时零网络请求；命中只是证据线索，不写入知识库或托管Vault。
+仅操作新的测试根；不接管生产项目或生产Vault。

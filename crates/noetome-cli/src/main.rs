@@ -4,7 +4,7 @@ use std::process::ExitCode;
 
 use noetome_cli::{
     CliCommand, extraction, extraction_api, extraction_verify, fixture, fixture_compile, pdf_parse,
-    project, research_store, source, vault_store, vault_update,
+    project, research_store, retrieval_store, source, vault_store, vault_update,
 };
 
 fn main() -> ExitCode {
@@ -466,6 +466,31 @@ fn main() -> ExitCode {
         }
         CliCommand::ResearchStatus { root } => {
             vault_result(research_store::status(&root), &mut result_code)
+        }
+        CliCommand::RetrieveHelp => noetome_cli::RETRIEVAL_HELP.to_owned(),
+        CliCommand::RetrieveAdopt { plan, root } => {
+            vault_result(retrieval_store::adopt(&plan, &root), &mut result_code)
+        }
+        CliCommand::RetrieveStep { root } => {
+            vault_result(retrieval_store::step_text(&root), &mut result_code)
+        }
+        CliCommand::RetrieveRun { root } => {
+            vault_result(retrieval_store::run(&root), &mut result_code)
+        }
+        CliCommand::RetrievePause { root } => {
+            vault_result(retrieval_store::pause(&root), &mut result_code)
+        }
+        CliCommand::RetrieveResume { root } => {
+            vault_result(retrieval_store::resume(&root), &mut result_code)
+        }
+        CliCommand::RetrieveFinish { root, reason } => {
+            vault_result(retrieval_store::finish(&root, &reason), &mut result_code)
+        }
+        CliCommand::RetrieveList { root } => {
+            vault_result(retrieval_store::list(&root), &mut result_code)
+        }
+        CliCommand::RetrieveStatus { root } => {
+            vault_result(retrieval_store::status(&root), &mut result_code)
         }
     };
 

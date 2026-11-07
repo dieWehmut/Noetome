@@ -1,0 +1,61 @@
+{
+  "budget": {
+    "bytes_remaining": 0,
+    "bytes_used": 524288,
+    "millis_remaining": 0,
+    "millis_used": 8000,
+    "queries_remaining": 0,
+    "queries_used": 8
+  },
+  "model_calls": 0,
+  "network_requests": 0,
+  "notes": [
+    "查询 q-gluconeo：有证据线索（命中 1，其中新增 1）",
+    "查询 q-ppp：有证据线索（命中 2，其中新增 2）",
+    "查询 q-glyoxylate：零命中（命中 0，其中新增 0）",
+    "查询 q-shuttle-carnitine：有证据线索（命中 2，其中新增 2）",
+    "查询 q-shuttle-malate：线索互相冲突（命中 3，其中新增 3）",
+    "查询 q-external：需要外部来源（命中 0，其中新增 0）",
+    "RETRIEVAL_ARGUMENT：没有待执行查询；本轮查询已全部结算，未修改任何字节。"
+  ],
+  "records": [
+    {
+      "hits": 1,
+      "new_hits": 1,
+      "outcome": "evidence",
+      "query_id": "q-gluconeo"
+    },
+    {
+      "hits": 2,
+      "new_hits": 2,
+      "outcome": "evidence",
+      "query_id": "q-ppp"
+    },
+    {
+      "hits": 0,
+      "new_hits": 0,
+      "outcome": "no_hits",
+      "query_id": "q-glyoxylate"
+    },
+    {
+      "hits": 2,
+      "new_hits": 2,
+      "outcome": "evidence",
+      "query_id": "q-shuttle-carnitine"
+    },
+    {
+      "hits": 3,
+      "new_hits": 3,
+      "outcome": "conflict",
+      "query_id": "q-shuttle-malate"
+    },
+    {
+      "hits": 0,
+      "new_hits": 0,
+      "outcome": "requires_external",
+      "query_id": "q-external"
+    }
+  ],
+  "steps": 6,
+  "stopped": "already_stopped"
+}

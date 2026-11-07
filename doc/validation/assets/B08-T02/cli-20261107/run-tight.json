@@ -1,0 +1,47 @@
+{
+  "budget": {
+    "bytes_remaining": 0,
+    "bytes_used": 4096,
+    "millis_remaining": 0,
+    "millis_used": 400,
+    "queries_remaining": 4,
+    "queries_used": 4
+  },
+  "model_calls": 0,
+  "network_requests": 0,
+  "notes": [
+    "查询 q-energy：有证据线索（命中 4，其中新增 4）",
+    "查询 q-energy-repeat：只命中重复线索（命中 4，其中新增 0）",
+    "查询 q-gluconeo：有证据线索（命中 1，其中新增 1）",
+    "查询 q-ppp：有证据线索（命中 2，其中新增 2）",
+    "预算不足：下一条查询 q-glyoxylate 已超出剩余额度，停止调度新查询；在途结果保留。"
+  ],
+  "records": [
+    {
+      "hits": 4,
+      "new_hits": 4,
+      "outcome": "evidence",
+      "query_id": "q-energy"
+    },
+    {
+      "hits": 4,
+      "new_hits": 0,
+      "outcome": "duplicates_only",
+      "query_id": "q-energy-repeat"
+    },
+    {
+      "hits": 1,
+      "new_hits": 1,
+      "outcome": "evidence",
+      "query_id": "q-gluconeo"
+    },
+    {
+      "hits": 2,
+      "new_hits": 2,
+      "outcome": "evidence",
+      "query_id": "q-ppp"
+    }
+  ],
+  "steps": 4,
+  "stopped": "budget_exhausted"
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "rtb-glycolysis-v1",
+  "policy": "retrieval-plan-v1",
+  "description": "批准范围内的有界检索：冻结语料、持久预算与七类终止理由。",
+  "sequence": [
+    {
+      "round": "round-01",
+      "action": "adopt",
+      "input": "plan.json",
+      "note": "接管新的检索根；冻结语料、计划与预算上限。"
+    },
+    {
+      "round": "round-02",
+      "action": "step",
+      "note": "单步执行一条查询：先持久预留再扫描。"
+    },
+    {
+      "round": "round-03",
+      "action": "step",
+      "note": "重复查询产生重复线索，用于验证去重口径。"
+    },
+    {
+      "round": "round-04",
+      "action": "run",
+      "note": "连续执行剩余查询直到结算完毕或预算耗尽。"
+    },
+    {
+      "round": "round-05",
+      "action": "finish",
+      "input": "reasons/goal-met.json",
+      "note": "全部目标被已结算证据覆盖后记录终止理由。"
+    }
+  ],
+  "expected": {
+    "plan.json": {
+      "replay": {
+        "outcomes": [
+          "evidence",
+          "duplicates_only",
+          "evidence",
+          "evidence",
+          "no_hits",
+          "evidence",
+          "conflict",
+          "requires_external"
+        ],
+        "hits": [4, 4, 1, 2, 0, 2, 3, 0],
+        "new_hits": [4, 0, 1, 2, 0, 2, 3, 0],
+        "unit_states": {
+          "settled": 7,
+          "gapped": 1
+        }
+      },
+      "budget": {
+        "queries_used": 8,
+        "bytes_used": 524288,
+        "millis_used": 8000
+      },
+      "budget_exhausted": false,
+      "termination_reasons": [
+        "goal_met",
+        "no_reliable_new_evidence",
+        "marginal_gain_insufficient",
+        "network_restricted",
+        "manual_judgment_required"
+      ]
+    },
+    "plan-tight.json": {
+      "replay": {
+        "outcomes": ["evidence", "duplicates_only", "evidence", "evidence"],
+        "hits": [4, 4, 1, 2],
+        "new_hits": [4, 0, 1, 2],
+        "unit_states": {
+          "settled": 4,
+          "pending": 4
+        }
+      },
+      "budget": {
+        "queries_used": 4,
+        "bytes_used": 4096,
+        "millis_used": 400
+      },
+      "budget_exhausted": true,
+      "termination_reasons": ["budget_exhausted"]
+    }
+  },
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_knowledge_base": false,
+    "writes_production_vault": false,
+    "note": "本包只验证工程契约：授权范围、持久预算预留、去重与冲突口径、七类终止理由与断点恢复。语料全部为自造教材样例，不证明科学正确率、真实检索召回或真实模型质量。"
+  }
+}

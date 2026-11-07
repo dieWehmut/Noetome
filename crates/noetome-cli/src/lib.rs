@@ -69,6 +69,8 @@ mod request_budget_store;
 pub mod request_run;
 mod research_model;
 pub mod research_store;
+mod retrieval_model;
+pub mod retrieval_store;
 mod run_model;
 mod run_recovery;
 mod run_store;
@@ -129,6 +131,14 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome research decide <队列根> <决定文件>
       noetome research list <队列根>
       noetome research status <队列根>
+      noetome retrieve adopt <plan.json> <尚不存在的检索根>
+      noetome retrieve step <检索根>
+      noetome retrieve run <检索根>
+      noetome retrieve pause <检索根>
+      noetome retrieve resume <检索根>
+      noetome retrieve finish <检索根> <终止理由文件>
+      noetome retrieve list <检索根>
+      noetome retrieve status <检索根>
 
 当前支持：
   -h, --help       显示帮助
@@ -151,11 +161,13 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   run                     执行有界fixture或人工环回API流程，持久保存检查点和预算
   vault                   托管测试集合的人工审批与可恢复发布（adopt/plan/approve/publish/status/rollback）
   research                研究候选队列、授权边界与拒绝记忆（adopt/observe/decide/list/status）
+  retrieve                批准范围内的有界检索、持久预算与终止理由（adopt/step/run/pause/resume/finish/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
 完整知识编译与生产Vault增量发布尚未实现。
 研究候选只是待批准线索：队列从不联网、不调用模型，也不把候选当成已完成知识。
+有界检索只在冻结语料内进行：关闭外部检索时零网络请求，命中只是证据线索，不写入知识库或托管Vault。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -403,6 +415,33 @@ pub enum CliCommand {
     ResearchStatus {
         root: PathBuf,
     },
+    RetrieveHelp,
+    RetrieveAdopt {
+        plan: PathBuf,
+        root: PathBuf,
+    },
+    RetrieveStep {
+        root: PathBuf,
+    },
+    RetrieveRun {
+        root: PathBuf,
+    },
+    RetrievePause {
+        root: PathBuf,
+    },
+    RetrieveResume {
+        root: PathBuf,
+    },
+    RetrieveFinish {
+        root: PathBuf,
+        reason: PathBuf,
+    },
+    RetrieveList {
+        root: PathBuf,
+    },
+    RetrieveStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -427,6 +466,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "research") {
         return research_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "retrieve") {
+        return retrieve_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -593,6 +635,82 @@ fn research_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         }
         [root] if verb == "status" && valid(root) => {
             Ok(CliCommand::ResearchStatus { root: root.into() })
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const RETRIEVAL_HELP: &str = "Noetome 批准范围内的有界检索与终止理由
+
+用法：noetome retrieve adopt <plan.json> <尚不存在的检索根>
+      noetome retrieve step <检索根>
+      noetome retrieve run <检索根>
+      noetome retrieve pause <检索根>
+      noetome retrieve resume <检索根>
+      noetome retrieve finish <检索根> <终止理由文件>
+      noetome retrieve list <检索根>
+      noetome retrieve status <检索根>
+
+adopt：只接受明确作者包与全新目录；冻结语料、预算上限与待执行查询，之后不接受增删。
+step：执行一条待结算查询；先持久预留预算，再扫描，最后结算。
+run：连续执行到没有待执行查询、预算到限、暂停或已记终止理由。
+pause|resume：停止或恢复调度新查询；已预留的尝试只补结算一次，不重复扣减。
+finish：记录终止理由；理由必须有账本证据支撑，否则拒绝且不写任何字节。
+list|status：只读输出预算、查询状态与终止理由的完整记录。
+检索只在已授权的目标与必需前提内进行；越界主题必须先进入候选队列并由人工批准。
+关闭外部检索时零网络请求；命中只是证据线索，不写入知识库或托管Vault。
+仅操作新的测试根；不接管生产项目或生产Vault。
+";
+
+fn retrieve_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 8] = [
+        "adopt", "step", "run", "pause", "resume", "finish", "list", "status",
+    ];
+    if args.is_empty() || matches!(args, [help] if help == "--help" || help == "-h") {
+        return Ok(CliCommand::RetrieveHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail, [help] if help == "--help" || help == "-h")
+        && VERBS.iter().any(|candidate| verb == candidate)
+    {
+        return Ok(CliCommand::RetrieveHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |path: &OsString| {
+        !path.is_empty() && (separated || path.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [plan, root] if verb == "adopt" && valid(plan) && valid(root) => {
+            Ok(CliCommand::RetrieveAdopt {
+                plan: plan.into(),
+                root: root.into(),
+            })
+        }
+        [root] if verb == "step" && valid(root) => {
+            Ok(CliCommand::RetrieveStep { root: root.into() })
+        }
+        [root] if verb == "run" && valid(root) => Ok(CliCommand::RetrieveRun { root: root.into() }),
+        [root] if verb == "pause" && valid(root) => {
+            Ok(CliCommand::RetrievePause { root: root.into() })
+        }
+        [root] if verb == "resume" && valid(root) => {
+            Ok(CliCommand::RetrieveResume { root: root.into() })
+        }
+        [root, reason] if verb == "finish" && valid(root) && valid(reason) => {
+            Ok(CliCommand::RetrieveFinish {
+                root: root.into(),
+                reason: reason.into(),
+            })
+        }
+        [root] if verb == "list" && valid(root) => {
+            Ok(CliCommand::RetrieveList { root: root.into() })
+        }
+        [root] if verb == "status" && valid(root) => {
+            Ok(CliCommand::RetrieveStatus { root: root.into() })
         }
         _ => Err(INVALID_ARGUMENT),
     }

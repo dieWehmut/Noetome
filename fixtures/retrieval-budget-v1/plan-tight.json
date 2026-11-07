@@ -1,0 +1,94 @@
+{
+  "policy": "retrieval-plan-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "rtb-glycolysis-v1",
+  "corpus": {
+    "root": "corpus",
+    "manifest": "corpus-manifest.json"
+  },
+  "external_retrieval": false,
+  "limits": {
+    "max_queries": 8,
+    "max_query_bytes": 1024,
+    "max_total_bytes": 4096,
+    "max_query_millis": 100,
+    "max_total_millis": 400,
+    "max_hits": 4
+  },
+  "goal_subjects": [
+    "糖酵解净能量收支",
+    "糖异生绕行反应"
+  ],
+  "queries": [
+    {
+      "query_id": "q-energy",
+      "subject": "糖酵解净能量收支",
+      "terms": [
+        "ATP",
+        "净生成"
+      ],
+      "scope_class": "authorized_target"
+    },
+    {
+      "query_id": "q-energy-repeat",
+      "subject": "糖酵解净能量收支",
+      "terms": [
+        "ATP",
+        "净生成"
+      ],
+      "scope_class": "authorized_target"
+    },
+    {
+      "query_id": "q-gluconeo",
+      "subject": "糖异生绕行反应",
+      "terms": [
+        "丙酮酸羧化酶"
+      ],
+      "scope_class": "authorized_target"
+    },
+    {
+      "query_id": "q-ppp",
+      "subject": "磷酸戊糖途径",
+      "terms": [
+        "NADPH"
+      ],
+      "scope_class": "required_prerequisite"
+    },
+    {
+      "query_id": "q-glyoxylate",
+      "subject": "糖异生绕行反应",
+      "terms": [
+        "乙醛酸循环"
+      ],
+      "scope_class": "authorized_target"
+    },
+    {
+      "query_id": "q-shuttle-carnitine",
+      "subject": "糖酵解净能量收支",
+      "terms": [
+        "肉碱穿梭"
+      ],
+      "scope_class": "authorized_target",
+      "conflict_group": "shuttle"
+    },
+    {
+      "query_id": "q-shuttle-malate",
+      "subject": "糖酵解净能量收支",
+      "terms": [
+        "苹果酸"
+      ],
+      "scope_class": "authorized_target",
+      "conflict_group": "shuttle"
+    },
+    {
+      "query_id": "q-external",
+      "subject": "糖异生绕行反应",
+      "terms": [
+        "线粒体转运"
+      ],
+      "scope_class": "authorized_target",
+      "requires_external": true
+    }
+  ]
+}

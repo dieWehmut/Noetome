@@ -36,6 +36,7 @@
 | [有限运行检查点](technical/RUN_CHECKPOINT_CONTRACT.md) | 固定六单元、独立运行日志、严格 snapshot/intent、控制与发布恢复边界 | Run字段、恢复门禁、版本失效或调度控制变化 |
 | [持久请求预算](technical/REQUEST_BUDGET_CONTRACT.md) | 人工环回请求、原子预留、未知承诺、attempt结算及有限重试 | run api、预算策略/事件、传输原件或恢复门槛变化 |
 | [研究候选队列](technical/RESEARCH_QUEUE_CONTRACT.md) | 三类内容划分、候选八字段、拒绝记忆与重开、归并与只追加事件 | research 动词、候选字段、状态机或控制目录布局变化 |
+| [有界检索](technical/RETRIEVAL_BUDGET_CONTRACT.md) | 检索计划、预留即计入的持久预算、结果分类、七类终止理由的证据判据 | retrieve 动词、预算口径、终止理由或控制目录布局变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
 | [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |
