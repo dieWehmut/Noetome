@@ -67,3 +67,5 @@ B05 三项已完成实际验收，[B05-T03记录](validation/B05-T03.md)保留�
 [B06V-T03验收](validation/B06V-T03.md)记录最低1.6.7与当时稳定1.15.0的Windows明暗64组合、实际MathJax/Pele/安装指纹、原生数学/箭头/图片/链接、手写格式探针、完整回归及全部失败历史。[精确能力契约](technical/VISUAL_COMPATIBILITY.md)约束未知与混配版本的回退，兼容声明不能放宽源语义或推成科学/通用OCR/生产发布通过。
 
 [B07-T01计划](execution/B07-T01_RUN_PLAN.md)与[运行检查点契约](technical/RUN_CHECKPOINT_CONTRACT.md)限定一个先验冻结的 fixture 六单元流程，运行日志与原六表编译数据库分别保存调度和发布依据。真实中断、控制、版本失效、原件保护与完整回归各自验收；计划和接口不表示已通过24小时、生产Vault或其他平台恢复，状态仍由账本维护。
+
+[B07验证](validation/B07-T03.md)记录托管测试集合六动词（adopt/plan/approve/publish/status/rollback）、sqlite Schema1 托管根、approve 四样绑定与 publish 的 stage-verify-commit 恢复语义；端到端矩阵41项、独立审计126项检查通过，Windows 原生门禁在 T03 上未运行。[B08执行卡](execution/B08_STEPS.md)依据路线图B08行与 PRD FR-11/FR-12/FR-13/FR-14 只展开三张todo：候选队列与授权边界、批准范围内的本地合成检索与七类终止理由、写作反馈缺口回到修订与依赖重编译。研究能力目前在编译报告中如实显示为未请求；真实互联网检索、付费模型研究、科学质量与规模门槛仍分别实测，执行卡本身不构成实现或验收。
