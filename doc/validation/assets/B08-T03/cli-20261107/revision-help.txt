@@ -1,0 +1,15 @@
+Noetome 写作反馈缺口、修订与依赖重编译
+
+用法：noetome revision adopt <author.json> <尚不存在的修订根>
+      noetome revision gap <修订根> <缺口文件>
+      noetome revision revise <修订根> <修订文件>
+      noetome revision list <修订根>
+      noetome revision status <修订根>
+
+adopt：只接受明确作者包与全新目录；冻结原子、表示与语料，建立IR v1并渲染三种表示。
+gap：登记写作/表格/绘图发现的缺口；影响范围必须恰好等于引用该原子的表示，缺口与研究候选分开存放。
+revise：校验来源后生成新IR版本，只重编译声明依赖的表示，其他表示字节必须不变。
+list|status：只读输出版本、缺口、修订与核验分布。
+无来源补充标为待核验，不发布为结论；同一问题反复修订记录版本、原因与结果。
+超过可配置上限即升级为人工判断；改回旧值而没有新来源会被拒绝。
+仅操作新的测试根；不接管生产项目或生产Vault；不联网、不调用模型。

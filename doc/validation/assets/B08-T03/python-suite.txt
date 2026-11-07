@@ -1,0 +1,671 @@
+ssssssssssssssssE............s..................................................................................................F.FF.FF.FFF.FFFFFFFF.FFF.E........E....E..E.........s...................s....................s........................s....................................................................s.............................................................................................................E...........s.s..EE
+======================================================================
+ERROR: test_capture_scan_budget_originals (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_capture_scan_budget_originals
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.10/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/lyinn/project/Noetome/tests/test_capture_scan_budget_originals.py", line 11, in <module>
+    import capture_scan_budget_originals as C
+  File "/home/lyinn/project/Noetome/scripts/capture_scan_budget_originals.py", line 19, in <module>
+    import verify_scan_formula as V
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 27, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: test_prepare_scan_obsidian (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_prepare_scan_obsidian
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.10/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/lyinn/project/Noetome/tests/test_prepare_scan_obsidian.py", line 34, in <module>
+    S = module("prepare_scan_synthetic_fixture", ROOT / "tests/test_verify_scan_formula.py")
+  File "/home/lyinn/project/Noetome/tests/test_prepare_scan_obsidian.py", line 29, in module
+    spec.loader.exec_module(loaded)
+  File "/home/lyinn/project/Noetome/tests/test_verify_scan_formula.py", line 22, in <module>
+    SPEC.loader.exec_module(V)
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 27, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: test_all_thirteen_actual_frozen_outputs_are_verified_and_copied_without_execution (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests) (case='scan-clear')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 98, in test_all_thirteen_actual_frozen_outputs_are_verified_and_copied_without_execution
+    result = self.prepare(self.args(case))
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 91, in prepare
+    return V.prepare(args)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 854, in prepare
+    verified, checker_pin = verify_case(root, case, expected, source)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 221, in verify_case
+    checker, checker_pin = load_checker(kind)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 207, in load_checker
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 27, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+======================================================================
+ERROR: test_all_thirteen_actual_frozen_outputs_are_verified_and_copied_without_execution (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests) (case='scan-fallback')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 98, in test_all_thirteen_actual_frozen_outputs_are_verified_and_copied_without_execution
+    result = self.prepare(self.args(case))
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 91, in prepare
+    return V.prepare(args)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 854, in prepare
+    verified, checker_pin = verify_case(root, case, expected, source)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 221, in verify_case
+    checker, checker_pin = load_checker(kind)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 207, in load_checker
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 27, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+======================================================================
+ERROR: test_all_thirteen_actual_frozen_outputs_are_verified_and_copied_without_execution (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests) (case='scan-sign')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 98, in test_all_thirteen_actual_frozen_outputs_are_verified_and_copied_without_execution
+    result = self.prepare(self.args(case))
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 91, in prepare
+    return V.prepare(args)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 854, in prepare
+    verified, checker_pin = verify_case(root, case, expected, source)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 221, in verify_case
+    checker, checker_pin = load_checker(kind)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 207, in load_checker
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 27, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+======================================================================
+ERROR: test_all_thirteen_actual_frozen_outputs_are_verified_and_copied_without_execution (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests) (case='scan-subscript')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 98, in test_all_thirteen_actual_frozen_outputs_are_verified_and_copied_without_execution
+    result = self.prepare(self.args(case))
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 91, in prepare
+    return V.prepare(args)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 854, in prepare
+    verified, checker_pin = verify_case(root, case, expected, source)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 221, in verify_case
+    checker, checker_pin = load_checker(kind)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 207, in load_checker
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 27, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+======================================================================
+ERROR: test_diagnostic_erratum_has_an_explicit_new_freeze_and_keeps_unknown_blocking (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 367, in test_diagnostic_erratum_has_an_explicit_new_freeze_and_keeps_unknown_blocking
+    result = self.prepare(args);spec = V.strict_json(Path(result["capture_spec_path"]).read_bytes())
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 91, in prepare
+    return V.prepare(args)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 854, in prepare
+    verified, checker_pin = verify_case(root, case, expected, source)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 221, in verify_case
+    checker, checker_pin = load_checker(kind)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 207, in load_checker
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 27, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+======================================================================
+ERROR: test_full_screenshot_png_rgba_is_independently_decoded_and_corruption_is_refused (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 315, in test_full_screenshot_png_rgba_is_independently_decoded_and_corruption_is_refused
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+======================================================================
+ERROR: test_runtime_record_anchor_and_source_unknown_remain_independent (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 173, in test_runtime_record_anchor_and_source_unknown_remain_independent
+    self.prepare(args)
+  File "/home/lyinn/project/Noetome/tests/test_prepare_visual_compatibility.py", line 91, in prepare
+    return V.prepare(args)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 854, in prepare
+    verified, checker_pin = verify_case(root, case, expected, source)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 221, in verify_case
+    checker, checker_pin = load_checker(kind)
+  File "/home/lyinn/project/Noetome/scripts/prepare_visual_compatibility.py", line 207, in load_checker
+    spec.loader.exec_module(module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 27, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+======================================================================
+ERROR: test_utc_receipts_require_rfc3339_and_not_local_or_loose_iso_text (test_verify_run_checkpoint.CheckpointSemanticTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/scripts/verify_run_checkpoint.py", line 177, in utc_time
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+ValueError: Invalid isoformat string: '2026-11-06T12:00:00.123456789+00:00'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_verify_run_checkpoint.py", line 302, in test_utc_receipts_require_rfc3339_and_not_local_or_loose_iso_text
+    self.assertTrue(audit.utc_time("2026-11-06T12:00:00.123456789Z"))
+  File "/home/lyinn/project/Noetome/scripts/verify_run_checkpoint.py", line 179, in utc_time
+    raise AuditError("invalid actual timestamp") from error
+verify_run_checkpoint.AuditError: invalid actual timestamp
+
+======================================================================
+ERROR: test_verify_scan_formula (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_verify_scan_formula
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.10/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/lyinn/project/Noetome/tests/test_verify_scan_formula.py", line 22, in <module>
+    SPEC.loader.exec_module(V)
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 27, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+ERROR: test_visual_capability_registry (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_visual_capability_registry
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/unittest/loader.py", line 436, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/usr/lib/python3.10/unittest/loader.py", line 377, in _get_module_from_name
+    __import__(name)
+  File "/home/lyinn/project/Noetome/tests/test_visual_capability_registry.py", line 13, in <module>
+    import verify_scan_formula as S
+  File "/home/lyinn/project/Noetome/scripts/verify_scan_formula.py", line 27, in <module>
+    from PIL import Image
+ModuleNotFoundError: No module named 'PIL'
+
+
+======================================================================
+FAIL: test_annotation_uses_raw_rotation_transform_without_following_action (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 474, in test_annotation_uses_raw_rotation_transform_without_following_action
+    _, manifest, _ = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit (test_pdf_adapter.PdfAdapterTests) (filename='damaged.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 586, in test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit
+    case, response, manifest, resources = self.run_fixture(filename)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit (test_pdf_adapter.PdfAdapterTests) (filename='encrypted.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 586, in test_damaged_and_encrypted_keep_raw_evidence_and_document_failure_unit
+    case, response, manifest, resources = self.run_fixture(filename)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_empty_document_gets_failed_document_unit (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 607, in test_empty_document_gets_failed_document_unit
+    response, manifest, _ = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_enumeration_failure_keeps_prefix_and_unknown_total_with_document_unit (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 427, in test_enumeration_failure_keeps_prefix_and_unknown_total_with_document_unit
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_glyph_policy_overflow_does_not_publish_truncated_inventory (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 709, in test_glyph_policy_overflow_does_not_publish_truncated_inventory
+    self.assertIn(b"50000", result.stderr)
+AssertionError: b'50000' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_glyphs_outside_cropbox_fail_page_instead_of_silently_clamping (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 439, in test_glyphs_outside_cropbox_fail_page_instead_of_silently_clamping
+    _, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_overlapping_glyphs_are_preserved_and_require_review (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 463, in test_overlapping_glyphs_are_preserved_and_require_review
+    _, manifest, _ = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_partial_page_failure_retains_confirmed_page_and_true_total (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 414, in test_partial_page_failure_retains_confirmed_page_and_true_total
+    case, _, manifest, resources = self.run_fixture("partial-page-failure.pdf")
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_pdf_page_policy_overflow_does_not_truncate_page_manifest (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 703, in test_pdf_page_policy_overflow_does_not_truncate_page_manifest
+    self.assertIn(b"128", result.stderr)
+AssertionError: b'128' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_real_cropbox_offset_matches_visible_origin (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 375, in test_real_cropbox_offset_matches_visible_origin
+    case, _, manifest, resources = self.run_fixture("crop-offset.pdf")
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_real_multiple_pages_preserves_every_physical_page (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 370, in test_real_multiple_pages_preserves_every_physical_page
+    case, _, manifest, resources = self.run_fixture("multiple-pages.pdf")
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_real_single_page_matches_full_authoring_text_and_utf8_ranges (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 348, in test_real_single_page_matches_full_authoring_text_and_utf8_ranges
+    case, response, manifest, resources = self.run_fixture("single-page.pdf")
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_region_slice_is_exact_authoring_line_excluding_appended_lf (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 356, in test_region_slice_is_exact_authoring_line_excluding_appended_lf
+    case, _, manifest, resources = self.run_fixture("single-page.pdf")
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_rotations_and_userunit_keep_true_transforms_and_review_status (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 563, in test_rotations_and_userunit_keep_true_transforms_and_review_status
+    case, _, manifest, resources = self.run_fixture("rotations.pdf")
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests) (dependency='pdfplumber')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+AssertionError: b'pdfplumber' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests) (dependency='pdfminer.six')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+AssertionError: b'pdfminer.six' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests) (dependency='pypdfium2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+AssertionError: b'pypdfium2' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests) (dependency='Pillow')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+AssertionError: b'Pillow' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests) (dependency='charset-normalizer')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+AssertionError: b'charset-normalizer' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests) (dependency='cryptography')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+AssertionError: b'cryptography' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests) (dependency='cffi')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+AssertionError: b'cffi' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import (test_pdf_adapter.PdfAdapterTests) (dependency='pycparser')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 736, in test_runtime_dependency_mismatch_is_fail_closed_before_any_pdf_import
+    self.assertIn(name.encode("utf-8"), result.stderr)
+AssertionError: b'pycparser' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests) (filename='scanned-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 483, in test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues
+    case, response, manifest, resources = self.run_fixture(filename)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues (test_pdf_adapter.PdfAdapterTests) (filename='blank-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 483, in test_scan_and_unknown_blank_have_real_empty_artifacts_and_review_issues
+    case, response, manifest, resources = self.run_fixture(filename)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_staggered_columns_retain_all_text_and_require_review (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 398, in test_staggered_columns_retain_all_text_and_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_table_formula_image_and_columns_remain_honestly_needs_review (test_pdf_adapter.PdfAdapterTests) (filename='table-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 555, in test_table_formula_image_and_columns_remain_honestly_needs_review
+    case, _, manifest, resources = self.run_fixture(filename)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_table_formula_image_and_columns_remain_honestly_needs_review (test_pdf_adapter.PdfAdapterTests) (filename='formula-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 555, in test_table_formula_image_and_columns_remain_honestly_needs_review
+    case, _, manifest, resources = self.run_fixture(filename)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_table_formula_image_and_columns_remain_honestly_needs_review (test_pdf_adapter.PdfAdapterTests) (filename='image-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 555, in test_table_formula_image_and_columns_remain_honestly_needs_review
+    case, _, manifest, resources = self.run_fixture(filename)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_table_formula_image_and_columns_remain_honestly_needs_review (test_pdf_adapter.PdfAdapterTests) (filename='columns-page.pdf')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 555, in test_table_formula_image_and_columns_remain_honestly_needs_review
+    case, _, manifest, resources = self.run_fixture(filename)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_total_glyph_policy_overflow_never_publishes_incomplete_manifest (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 715, in test_total_glyph_policy_overflow_never_publishes_incomplete_manifest
+    self.assertIn(b"200000", result.stderr)
+AssertionError: b'200000' not found in b'PDF_RUNTIME: Python 3.12.14 is required\n'
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests) (case='trailing_space')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests) (case='leading_space')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests) (case='both_boundary_spaces')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests) (case='large_gap_after_encoded_space')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests) (case='large_gap_before_whitespace_glyph')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_tounicode_glyph_boundary_spaces_and_geometry_require_review (test_pdf_adapter.PdfAdapterTests) (case='overlap_before_whitespace_glyph')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 539, in test_tounicode_glyph_boundary_spaces_and_geometry_require_review
+    _, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_underflowed_display_geometry_cannot_be_reported_as_zero_area_review (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 454, in test_underflowed_display_geometry_cannot_be_reported_as_zero_area_review
+    _, manifest, _ = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_unknown_format_preserves_complete_raw_without_inventing_pages (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 598, in test_unknown_format_preserves_complete_raw_without_inventing_pages
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_visual_reading_order_preserves_actual_drawing_inventory (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 382, in test_visual_reading_order_preserves_actual_drawing_inventory
+    case, _, manifest, resources = self.run_fixture("layout-order.pdf")
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 155, in run_fixture
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+======================================================================
+FAIL: test_whitespace_only_page_retains_nonempty_artifact_and_requires_review (test_pdf_adapter.PdfAdapterTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 496, in test_whitespace_only_page_retains_nonempty_artifact_and_requires_review
+    response, manifest, resources = self.valid_response(result, workspace, request)
+  File "/home/lyinn/project/Noetome/tests/test_pdf_adapter.py", line 159, in valid_response
+    self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+AssertionError: 2 != 0 : PDF_RUNTIME: Python 3.12.14 is required
+
+
+----------------------------------------------------------------------
+Ran 447 tests in 141.085s
+
+FAILED (failures=41, errors=12, skipped=24)
+Retained actual v3 test root: /home/lyinn/project/Noetome/target/python-conflicts-63f6e83e558c4867b00de3b4a485f6ef
+Retained actual v2 test root: /home/lyinn/project/Noetome/target/python-variants-5304e675a94f4cd9b59ea8bc1b6958b8
+Retained multiline presentation verifier root: /home/lyinn/project/Noetome/target/presentation-display-python-b6c45589f2304b2ba6a83870218f5969

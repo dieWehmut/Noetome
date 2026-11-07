@@ -2966,7 +2966,7 @@
       "id": "B08-T03",
       "title": "写作反馈缺口回到修订与依赖重编译",
       "batch": "B08",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B08-T02"
       ],
@@ -2982,7 +2982,112 @@
         "同一问题反复修订记录版本、原因和结果，超过可配置上限时升级问题等级；无新证据时拒绝再次推翻已核验结论。",
         "四维状态与报告同时反映缺口、修订和重编译结果，不把重编译成功当作知识正确；通过独立审计和完整Rust/Python回归后complete、提交并推送。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T14:03:40Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结公开写作缺口与依赖重编译fixture与真实RED，定义缺口问题与研究候选分离、IR 新版本重编译依赖表示、修订循环上限与无新证据拒绝再推翻的合同并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-07T17:54:45Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现 revision 五动词 adopt/gap/revise/list/status；缺口问题与研究候选分离（缺口带来源与影响范围、必须回到修订流程）；修订先过六道闸门再开事务写盘，生成新 IR 版本并只重编译依赖表示、未受影响表示字节必须不变否则判损坏；无新证据不改回旧值、空修订不消耗版本号、超限那一次仍生效但随即升级为人工判断并封锁后续自动修订；无来源补充标为 pending_verification 在渲染里带【待核验】；db 故障沿用 ProjectError::database 统一为 PROJECT_INVALID_DATABASE",
+          "validation": [
+            "cargo fmt --all --check exit 0；git diff --check 无输出",
+            "cargo test --test revision：12 passed / 0 failed",
+            "cargo test --workspace --no-fail-fast：lib 458 passed / 99 failed / 1 ignored（既有环境失败，与 ad48698 基线同组：sidecar_process 64、pdf_source_model 18、pdf_parse 7、source_model 5、source_write 3、extraction_source 1、extraction_api_transport 1）；tests/revision 12/12、research 14/14、retrieval 14/14、vault 8/8、fixture 18/18 全过",
+            "PYTHONUTF8=1 python3 -m unittest tests.test_verify_revision_feedback：Ran 22 tests / OK",
+            "PYTHONUTF8=1 python3 scripts/verify_revision_feedback.py /tmp/rfb-evidence-1/root --package fixtures/revision-feedback-v1：合计 49 项检查，失败 0、提示 0",
+            "12 步端到端序列退出码 0,0,0,3,0,3,0,0,2,0,0；最终 IR v6、5 条修订、3 缺口（escalated/pending_verification/resolved）、核验 verified 4 / pending 1",
+            "审计器探测：改 render 字节/加表/改 gaps.status/改 IR payload/改语料字节分别被 replay-renders、db-table-set、db-gaps-columns、db-ir-atoms-sha256、metadata-corpus-bytes+frozen-bytes 捕获",
+            "PYTHONUTF8=1 python3 -m unittest discover -s tests -p test_*.py：FAILED (failures=41, errors=12, skipped=24)，与本任务前基线同组失败数；新增 22 项审计器测试全过"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B08-T03.md",
+              "sha256": "d4068de5f0cf19d5af4751e648c5978e75be2ffc33b97ade362293c02a65cf2f"
+            },
+            {
+              "path": "doc/validation/assets/B08-T03/cli-20261107/audit.txt",
+              "sha256": "ab151e0ba45ef5e0aa779a86c973623a83e018335b71ff12b62af5d6d61fc813"
+            },
+            {
+              "path": "doc/validation/assets/B08-T03/cli-20261107/audit.json",
+              "sha256": "f4d832f50489fc2c9475bb4fad729bec9fa6c37ea1bbeccf91a761126889892a"
+            },
+            {
+              "path": "doc/validation/assets/B08-T03/cli-20261107/audit-tests.txt",
+              "sha256": "07a08cbd04b928ef48a8f0f3265f2e3cb5356bdf9d273a75491de31d25d488f7"
+            },
+            {
+              "path": "doc/validation/assets/B08-T03/cli-20261107/revision-tests.txt",
+              "sha256": "c07491108fb213ac622808a99d02a5763677b40e0171ead6971f9b6338ec5d3a"
+            },
+            {
+              "path": "doc/validation/assets/B08-T03/cli-20261107/red-stderr.txt",
+              "sha256": "1d010987081df3517726926ec5e884ad77b5043017920702d55e1337724ecfb1"
+            },
+            {
+              "path": "doc/validation/assets/B08-T03/cli-20261107/status-stdout.txt",
+              "sha256": "19fad897d6094b5dae73530401cfd3702793badfa3a0bc614c77c7518006c296"
+            },
+            {
+              "path": "doc/validation/assets/B08-T03/cli-20261107/list-stdout.txt",
+              "sha256": "507acdb85714b5361b8a2e12478fdf3db625bcce93d0db86ca7dcd515906ca03"
+            },
+            {
+              "path": "doc/validation/assets/B08-T03/workspace-tests.txt",
+              "sha256": "12d0476235b8d03611258e8321d612ce3c15eb26824d4a00602af1d3e604c6ce"
+            },
+            {
+              "path": "doc/validation/assets/B08-T03/python-suite.txt",
+              "sha256": "97b8aaed598a7ebc55b21c68a16df264fd5037304e8eb580149d1035cbe2e2fc"
+            },
+            {
+              "path": "doc/technical/REVISION_FEEDBACK_CONTRACT.md",
+              "sha256": "5d2692ae775033d455097cea84587fce3a4eeef97942efa53d1d34eff8c8ff3c"
+            },
+            {
+              "path": "doc/README.md",
+              "sha256": "4f7e8e024bc8851a83444424c54653077b6b5f3b73a739ce8b96273bd353e1f6"
+            },
+            {
+              "path": "fixtures/revision-feedback-v1/cases.json",
+              "sha256": "7dae8bc7285fd653485e28ce4ff78f8994cceaea98fecff9110f9e9086c3b08e"
+            },
+            {
+              "path": "fixtures/revision-feedback-v1/README.md",
+              "sha256": "0665556dbd0775e95e70e35799e60764d0f1a1d0bd15d4856da4dde623c5fdc1"
+            },
+            {
+              "path": "crates/noetome-cli/src/revision_model.rs",
+              "sha256": "4e700fd3b8ae1a114ad791af59c7ba7c81ba7c08a1316bc8ecda59fa17b6ae1d"
+            },
+            {
+              "path": "crates/noetome-cli/src/revision_store.rs",
+              "sha256": "4ca39ac840f7837898a1df874ee02451a683c42f93096ae6aebf079d7263e7e4"
+            },
+            {
+              "path": "crates/noetome-cli/tests/revision.rs",
+              "sha256": "e3ae181d5104dab32b50c1272f138cd3f33377128c32f20a353cc9fa53ae4d78"
+            },
+            {
+              "path": "scripts/verify_revision_feedback.py",
+              "sha256": "8dbeb0d0c914b35eef495197f8192af8db9a3aead48141e03783c366f4bc177f"
+            },
+            {
+              "path": "tests/test_verify_revision_feedback.py",
+              "sha256": "26c17453bca6c10364f2c8ef9537a852cba427de81a43f7c9a25f7b1a13d7c32"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

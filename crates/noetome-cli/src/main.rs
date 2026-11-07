@@ -4,7 +4,7 @@ use std::process::ExitCode;
 
 use noetome_cli::{
     CliCommand, extraction, extraction_api, extraction_verify, fixture, fixture_compile, pdf_parse,
-    project, research_store, retrieval_store, source, vault_store, vault_update,
+    project, research_store, retrieval_store, revision_store, source, vault_store, vault_update,
 };
 
 fn main() -> ExitCode {
@@ -491,6 +491,22 @@ fn main() -> ExitCode {
         }
         CliCommand::RetrieveStatus { root } => {
             vault_result(retrieval_store::status(&root), &mut result_code)
+        }
+        CliCommand::RevisionHelp => noetome_cli::REVISION_HELP.to_owned(),
+        CliCommand::RevisionAdopt { author, root } => {
+            vault_result(revision_store::adopt(&author, &root), &mut result_code)
+        }
+        CliCommand::RevisionGap { root, file } => {
+            vault_result(revision_store::gap(&root, &file), &mut result_code)
+        }
+        CliCommand::RevisionRevise { root, file } => {
+            vault_result(revision_store::revise(&root, &file), &mut result_code)
+        }
+        CliCommand::RevisionList { root } => {
+            vault_result(revision_store::list(&root), &mut result_code)
+        }
+        CliCommand::RevisionStatus { root } => {
+            vault_result(revision_store::status(&root), &mut result_code)
         }
     };
 

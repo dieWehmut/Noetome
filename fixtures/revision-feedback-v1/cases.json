@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "rfv-energy-v1",
+  "policy": "revision-feedback-v1",
+  "description": "写作反馈缺口回到修订与依赖重编译：缺口与研究候选分离、IR 新版本、未受影响表示字节不变、无新证据拒绝再推翻、超限升级人工判断。",
+  "sequence": [
+    {
+      "round": "round-01",
+      "action": "adopt",
+      "input": "author.json",
+      "note": "接管新的修订根：冻结语料、原子与三种表示，渲染初版并生成 IR v1。"
+    },
+    {
+      "round": "round-02",
+      "action": "gap",
+      "input": "gaps/gap-net-account.json",
+      "note": "编表发现净生成 ATP 缺少单位口径，缺口必须带来源与影响范围。"
+    },
+    {
+      "round": "round-03",
+      "action": "revise",
+      "input": "revisions/rev-net-1.json",
+      "note": "有证据的修订：生成 IR v2，重编译依赖表示，未受影响表示字节不变。"
+    },
+    {
+      "round": "round-04",
+      "action": "revise",
+      "input": "revisions/rev-net-2.json",
+      "note": "同一缺口再次修订：生成 IR v3，累计 2 次达到上限。"
+    },
+    {
+      "round": "round-05",
+      "action": "revise",
+      "input": "revisions/rev-net-3.json",
+      "note": "改回旧值且没有新来源：必须被拒绝，不生成版本。"
+    },
+    {
+      "round": "round-06",
+      "action": "revise",
+      "input": "revisions/rev-net-4.json",
+      "note": "带新来源的重入：允许，但已超出上限，缺口升级为人工判断。"
+    },
+    {
+      "round": "round-07",
+      "action": "revise",
+      "input": "revisions/rev-net-5.json",
+      "note": "已升级的缺口不再接受自动修订：必须被拒绝。"
+    },
+    {
+      "round": "round-08",
+      "action": "gap",
+      "input": "gaps/gap-pdc-nadh.json",
+      "note": "表格里一行的证据列为空，登记缺口。"
+    },
+    {
+      "round": "round-09",
+      "action": "revise",
+      "input": "revisions/rev-pdc-1.json",
+      "note": "无来源补充：允许修订，但结果标为待核验，不发布为结论。"
+    },
+    {
+      "round": "round-10",
+      "action": "revise",
+      "input": "revisions/rev-pdc-noop.json",
+      "note": "值、单位、证据都与当前 IR 相同：必须被拒绝，不生成空版本。"
+    },
+    {
+      "round": "round-11",
+      "action": "gap",
+      "input": "gaps/gap-carboxylase-site.json",
+      "note": "正文只写了线粒体，登记第二条缺口。"
+    },
+    {
+      "round": "round-12",
+      "action": "revise",
+      "input": "revisions/rev-carboxylase-1.json",
+      "note": "按教材原文细化定位：生成 IR v6，另一条依赖链的表示字节不变。"
+    }
+  ],
+  "expected": {
+    "ir_versions": [
+      {
+        "version": 1,
+        "revision": null
+      },
+      {
+        "version": 2,
+        "revision": "rev-net-1"
+      },
+      {
+        "version": 3,
+        "revision": "rev-net-2"
+      },
+      {
+        "version": 4,
+        "revision": "rev-net-4"
+      },
+      {
+        "version": 5,
+        "revision": "rev-pdc-1"
+      },
+      {
+        "version": 6,
+        "revision": "rev-carboxylase-1"
+      }
+    ],
+    "revisions": [
+      {
+        "revision_id": "rev-net-1",
+        "sequence": 1,
+        "gap_id": "gap-net-account",
+        "ir_version": 2,
+        "recompiled": [
+          "rep-energy",
+          "rep-trace"
+        ],
+        "unchanged": [
+          "rep-narrative"
+        ],
+        "evidence": 1
+      },
+      {
+        "revision_id": "rev-net-2",
+        "sequence": 2,
+        "gap_id": "gap-net-account",
+        "ir_version": 3,
+        "recompiled": [
+          "rep-energy",
+          "rep-trace"
+        ],
+        "unchanged": [
+          "rep-narrative"
+        ],
+        "evidence": 1
+      },
+      {
+        "revision_id": "rev-net-4",
+        "sequence": 3,
+        "gap_id": "gap-net-account",
+        "ir_version": 4,
+        "recompiled": [
+          "rep-energy",
+          "rep-trace"
+        ],
+        "unchanged": [
+          "rep-narrative"
+        ],
+        "evidence": 2
+      },
+      {
+        "revision_id": "rev-pdc-1",
+        "sequence": 4,
+        "gap_id": "gap-pdc-nadh",
+        "ir_version": 5,
+        "recompiled": [
+          "rep-energy",
+          "rep-trace"
+        ],
+        "unchanged": [
+          "rep-narrative"
+        ],
+        "evidence": 0
+      },
+      {
+        "revision_id": "rev-carboxylase-1",
+        "sequence": 5,
+        "gap_id": "gap-carboxylase-site",
+        "ir_version": 6,
+        "recompiled": [
+          "rep-narrative",
+          "rep-trace"
+        ],
+        "unchanged": [
+          "rep-energy"
+        ],
+        "evidence": 1
+      }
+    ],
+    "gaps": [
+      {
+        "gap_id": "gap-net-account",
+        "status": "escalated",
+        "severity": "manual_judgment_required",
+        "revisions": 3
+      },
+      {
+        "gap_id": "gap-pdc-nadh",
+        "status": "pending_verification",
+        "severity": "normal",
+        "revisions": 1
+      },
+      {
+        "gap_id": "gap-carboxylase-site",
+        "status": "resolved",
+        "severity": "normal",
+        "revisions": 1
+      }
+    ],
+    "verification": {
+      "verified": 4,
+      "pending_verification": 1
+    },
+    "refusals": [
+      {
+        "round": "round-05",
+        "exit": 3,
+        "code": "REVISION_NO_NEW_EVIDENCE",
+        "revision_id": "rev-net-3"
+      },
+      {
+        "round": "round-07",
+        "exit": 3,
+        "code": "REVISION_LIMIT_ESCALATED",
+        "revision_id": "rev-net-5"
+      },
+      {
+        "round": "round-10",
+        "exit": 2,
+        "code": "REVISION_ARGUMENT",
+        "revision_id": "rev-pdc-noop"
+      }
+    ],
+    "unchanged_bytes": [
+      {
+        "revision_id": "rev-net-1",
+        "representation": "rep-narrative"
+      },
+      {
+        "revision_id": "rev-net-2",
+        "representation": "rep-narrative"
+      },
+      {
+        "revision_id": "rev-net-4",
+        "representation": "rep-narrative"
+      },
+      {
+        "revision_id": "rev-pdc-1",
+        "representation": "rep-narrative"
+      },
+      {
+        "revision_id": "rev-carboxylase-1",
+        "representation": "rep-energy"
+      }
+    ],
+    "pending_verification": {
+      "atom_id": "a-pdc-nadh",
+      "reason": "无来源补充只标待核验：表示里必须带【待核验】标记，状态列写 pending_verification。"
+    },
+    "network_calls": 0,
+    "model_calls": 0,
+    "renders_from_contract": {
+      "note": "渲染字节不写进预期：审计器按契约自行渲染，再与账本 render 列和 render/ 目录逐字节比对。",
+      "representations": [
+        "rep-energy.md",
+        "rep-narrative.md",
+        "rep-trace.md"
+      ]
+    }
+  },
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_knowledge_base": false,
+    "writes_production_vault": false,
+    "treats_research_candidate_as_gap": false,
+    "note": "本包只验证工程契约：缺口与研究候选分离、IR 版本链、依赖重编译范围、未受影响表示字节不变、无新证据拒绝再推翻、超限升级人工判断、无来源补充标待核验。语料全部为自造教材样例，不证明科学正确率、真实写作质量或模型能力。"
+  }
+}

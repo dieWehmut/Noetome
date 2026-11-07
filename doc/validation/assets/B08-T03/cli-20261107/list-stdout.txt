@@ -1,0 +1,298 @@
+{
+  "atoms": [
+    {
+      "atom_id": "a-gluconeo-bypass",
+      "evidence": [
+        {
+          "locator": "#四步绕行",
+          "source": "chapter-gluconeogenesis.md"
+        }
+      ],
+      "property": "绕行反应步数",
+      "subject": "糖异生",
+      "unit": "步",
+      "value": "4"
+    },
+    {
+      "atom_id": "a-gluconeo-carboxylase",
+      "evidence": [
+        {
+          "locator": "#线粒体步骤",
+          "source": "chapter-gluconeogenesis.md"
+        }
+      ],
+      "property": "定位",
+      "subject": "丙酮酸羧化酶",
+      "unit": "",
+      "value": "线粒体基质"
+    },
+    {
+      "atom_id": "a-glycolysis-net",
+      "evidence": [
+        {
+          "locator": "#净能量收支",
+          "source": "chapter-glycolysis.md"
+        },
+        {
+          "locator": "#质子平衡",
+          "source": "chapter-glycolysis.md"
+        }
+      ],
+      "property": "净生成ATP",
+      "subject": "糖酵解",
+      "unit": "分子ATP/分子葡萄糖",
+      "value": "2"
+    },
+    {
+      "atom_id": "a-glycolysis-substrate",
+      "evidence": [
+        {
+          "locator": "#底物水平磷酸化",
+          "source": "chapter-glycolysis.md"
+        }
+      ],
+      "property": "底物水平磷酸化次数",
+      "subject": "糖酵解",
+      "unit": "次",
+      "value": "2"
+    },
+    {
+      "atom_id": "a-pdc-nadh",
+      "evidence": [],
+      "property": "NADH产量",
+      "subject": "丙酮酸脱氢酶复合体",
+      "unit": "分子/分子丙酮酸",
+      "value": "1"
+    }
+  ],
+  "case_id": "rfv-energy-v1",
+  "gaps": [
+    {
+      "atom_id": "a-glycolysis-net",
+      "created_at": "2026-11-07T17:46:51.763636694Z",
+      "gap_id": "gap-net-account",
+      "impact": [
+        "rep-energy",
+        "rep-trace"
+      ],
+      "note": "编表时发现净生成 ATP 只写了数字，没有说明是每分子葡萄糖还是每次反应。",
+      "reason": "能量收支表缺少净生成 ATP 的单位口径",
+      "representation_id": "rep-energy",
+      "revisions": 3,
+      "severity": "manual_judgment_required",
+      "source": [
+        {
+          "locator": "#净能量收支",
+          "source": "chapter-glycolysis.md"
+        }
+      ],
+      "status": "escalated",
+      "updated_at": "2026-11-07T17:46:51.798096445Z"
+    },
+    {
+      "atom_id": "a-pdc-nadh",
+      "created_at": "2026-11-07T17:46:51.812467341Z",
+      "gap_id": "gap-pdc-nadh",
+      "impact": [
+        "rep-energy",
+        "rep-trace"
+      ],
+      "note": "表格里这一行的证据列是空的，需要标为待核验。",
+      "reason": "丙酮酸脱氢酶的 NADH 产量缺少来源",
+      "representation_id": "rep-energy",
+      "revisions": 1,
+      "severity": "normal",
+      "source": [
+        {
+          "locator": "#产物",
+          "source": "chapter-pdc.md"
+        }
+      ],
+      "status": "pending_verification",
+      "updated_at": "2026-11-07T17:46:51.820967461Z"
+    },
+    {
+      "atom_id": "a-gluconeo-carboxylase",
+      "created_at": "2026-11-07T17:46:51.834252144Z",
+      "gap_id": "gap-carboxylase-site",
+      "impact": [
+        "rep-narrative",
+        "rep-trace"
+      ],
+      "note": "写作时发现绕行说明只写了“线粒体”，教材原文写的是“线粒体基质”。",
+      "reason": "正文只写了线粒体，没有说明是线粒体基质",
+      "representation_id": "rep-narrative",
+      "revisions": 1,
+      "severity": "normal",
+      "source": [
+        {
+          "locator": "#线粒体步骤",
+          "source": "chapter-gluconeogenesis.md"
+        }
+      ],
+      "status": "resolved",
+      "updated_at": "2026-11-07T17:46:51.844206391Z"
+    }
+  ],
+  "ir_atoms_sha256": "e01d33aea12cfffa4ec2d9cf37515f3ce190997b336baf40a6f7d36f1e0efcda",
+  "ir_version": 6,
+  "limits": {
+    "max_revisions": 2
+  },
+  "model_calls": 0,
+  "network_calls": 0,
+  "policy": "revision-feedback-v1",
+  "representations": [
+    {
+      "atom_ids": [
+        "a-glycolysis-net",
+        "a-glycolysis-substrate",
+        "a-gluconeo-bypass",
+        "a-pdc-nadh"
+      ],
+      "kind": "table",
+      "representation_id": "rep-energy",
+      "title": "糖代谢能量收支表"
+    },
+    {
+      "atom_ids": [
+        "a-gluconeo-bypass",
+        "a-gluconeo-carboxylase"
+      ],
+      "kind": "paragraph",
+      "representation_id": "rep-narrative",
+      "title": "糖异生绕行说明"
+    },
+    {
+      "atom_ids": [
+        "a-glycolysis-net",
+        "a-gluconeo-bypass",
+        "a-gluconeo-carboxylase",
+        "a-pdc-nadh"
+      ],
+      "kind": "traceability",
+      "representation_id": "rep-trace",
+      "title": "追溯关系"
+    }
+  ],
+  "revisions": [
+    {
+      "at": "2026-11-07T17:46:51.77317963Z",
+      "atom_id": "a-glycolysis-net",
+      "evidence": [
+        {
+          "locator": "#净能量收支",
+          "source": "chapter-glycolysis.md"
+        }
+      ],
+      "gap_id": "gap-net-account",
+      "ir_version": 2,
+      "reason": "按教材口径补齐单位：每分子葡萄糖净生成 2 分子 ATP。",
+      "recompiled": [
+        "rep-energy",
+        "rep-trace"
+      ],
+      "revision_id": "rev-net-1",
+      "unchanged": [
+        "rep-narrative"
+      ],
+      "unit": "分子ATP/分子葡萄糖",
+      "value": "2"
+    },
+    {
+      "at": "2026-11-07T17:46:51.784585094Z",
+      "atom_id": "a-glycolysis-net",
+      "evidence": [
+        {
+          "locator": "#底物水平磷酸化",
+          "source": "chapter-glycolysis.md"
+        }
+      ],
+      "gap_id": "gap-net-account",
+      "ir_version": 3,
+      "reason": "把两次底物水平磷酸化的产量先按 4 记录，等待核对。",
+      "recompiled": [
+        "rep-energy",
+        "rep-trace"
+      ],
+      "revision_id": "rev-net-2",
+      "unchanged": [
+        "rep-narrative"
+      ],
+      "unit": "分子ATP/分子葡萄糖",
+      "value": "4"
+    },
+    {
+      "at": "2026-11-07T17:46:51.798096445Z",
+      "atom_id": "a-glycolysis-net",
+      "evidence": [
+        {
+          "locator": "#净能量收支",
+          "source": "chapter-glycolysis.md"
+        },
+        {
+          "locator": "#质子平衡",
+          "source": "chapter-glycolysis.md"
+        }
+      ],
+      "gap_id": "gap-net-account",
+      "ir_version": 4,
+      "reason": "补上质子平衡的那条来源后，确认净生成就是 2 分子 ATP。",
+      "recompiled": [
+        "rep-energy",
+        "rep-trace"
+      ],
+      "revision_id": "rev-net-4",
+      "unchanged": [
+        "rep-narrative"
+      ],
+      "unit": "分子ATP/分子葡萄糖",
+      "value": "2"
+    },
+    {
+      "at": "2026-11-07T17:46:51.820967461Z",
+      "atom_id": "a-pdc-nadh",
+      "evidence": [],
+      "gap_id": "gap-pdc-nadh",
+      "ir_version": 5,
+      "reason": "本轮没有任何冻结来源能证实这一行，先补单位但保留待核验。",
+      "recompiled": [
+        "rep-energy",
+        "rep-trace"
+      ],
+      "revision_id": "rev-pdc-1",
+      "unchanged": [
+        "rep-narrative"
+      ],
+      "unit": "分子/分子丙酮酸",
+      "value": "1"
+    },
+    {
+      "at": "2026-11-07T17:46:51.844206391Z",
+      "atom_id": "a-gluconeo-carboxylase",
+      "evidence": [
+        {
+          "locator": "#线粒体步骤",
+          "source": "chapter-gluconeogenesis.md"
+        }
+      ],
+      "gap_id": "gap-carboxylase-site",
+      "ir_version": 6,
+      "reason": "按教材原文把定位从“线粒体”细化为“线粒体基质”。",
+      "recompiled": [
+        "rep-narrative",
+        "rep-trace"
+      ],
+      "revision_id": "rev-carboxylase-1",
+      "unchanged": [
+        "rep-energy"
+      ],
+      "unit": "",
+      "value": "线粒体基质"
+    }
+  ],
+  "verification": {
+    "pending_verification": 1,
+    "verified": 4
+  }
+}

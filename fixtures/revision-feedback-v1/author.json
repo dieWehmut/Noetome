@@ -1,0 +1,108 @@
+{
+  "policy": "revision-feedback-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "rfv-energy-v1",
+  "corpus": {
+    "root": "corpus",
+    "manifest": "corpus-manifest.json"
+  },
+  "limits": {
+    "max_revisions": 2
+  },
+  "atoms": [
+    {
+      "atom_id": "a-glycolysis-net",
+      "subject": "糖酵解",
+      "property": "净生成ATP",
+      "value": "2",
+      "unit": "分子",
+      "evidence": [
+        {
+          "source": "chapter-glycolysis.md",
+          "locator": "#净能量收支"
+        }
+      ]
+    },
+    {
+      "atom_id": "a-glycolysis-substrate",
+      "subject": "糖酵解",
+      "property": "底物水平磷酸化次数",
+      "value": "2",
+      "unit": "次",
+      "evidence": [
+        {
+          "source": "chapter-glycolysis.md",
+          "locator": "#底物水平磷酸化"
+        }
+      ]
+    },
+    {
+      "atom_id": "a-gluconeo-bypass",
+      "subject": "糖异生",
+      "property": "绕行反应步数",
+      "value": "4",
+      "unit": "步",
+      "evidence": [
+        {
+          "source": "chapter-gluconeogenesis.md",
+          "locator": "#四步绕行"
+        }
+      ]
+    },
+    {
+      "atom_id": "a-gluconeo-carboxylase",
+      "subject": "丙酮酸羧化酶",
+      "property": "定位",
+      "value": "线粒体",
+      "unit": "",
+      "evidence": [
+        {
+          "source": "chapter-gluconeogenesis.md",
+          "locator": "#线粒体步骤"
+        }
+      ]
+    },
+    {
+      "atom_id": "a-pdc-nadh",
+      "subject": "丙酮酸脱氢酶复合体",
+      "property": "NADH产量",
+      "value": "1",
+      "unit": "分子",
+      "evidence": []
+    }
+  ],
+  "representations": [
+    {
+      "representation_id": "rep-energy",
+      "kind": "table",
+      "title": "糖代谢能量收支表",
+      "atom_ids": [
+        "a-glycolysis-net",
+        "a-glycolysis-substrate",
+        "a-gluconeo-bypass",
+        "a-pdc-nadh"
+      ]
+    },
+    {
+      "representation_id": "rep-narrative",
+      "kind": "paragraph",
+      "title": "糖异生绕行说明",
+      "atom_ids": [
+        "a-gluconeo-bypass",
+        "a-gluconeo-carboxylase"
+      ]
+    },
+    {
+      "representation_id": "rep-trace",
+      "kind": "traceability",
+      "title": "追溯关系",
+      "atom_ids": [
+        "a-glycolysis-net",
+        "a-gluconeo-bypass",
+        "a-gluconeo-carboxylase",
+        "a-pdc-nadh"
+      ]
+    }
+  ]
+}
