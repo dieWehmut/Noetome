@@ -224,7 +224,7 @@ fn read_identity(
         "当前平台没有已确认的持久文件身份实现。",
     ))
 }
-fn stamp_mode(path: &Path, owned: bool) -> Result<(FileStamp, Vec<u8>), ProjectError> {
+pub(super) fn stamp_mode(path: &Path, owned: bool) -> Result<(FileStamp, Vec<u8>), ProjectError> {
     project::check_components(path)?;
     project::checked_file(path)?;
     let initial = same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))?;
@@ -386,11 +386,6 @@ fn names(path: &Path) -> Result<BTreeSet<String>, ProjectError> {
         .collect()
 }
 fn layout(root: &Path, owner: &Owner, bytes: &[u8]) -> Result<(), ProjectError> {
-    let (policy_stamp, policy_bytes) = stamp(&root.join(POLICY))?;
-    if policy_stamp != owner.policy_file {
-        return Err(invalid("owned policy身份、时间、SHA或长度变化；保留现场。"));
-    }
-    policy(&policy_bytes, &owner.authority)?;
     if owner.schema_version != SCHEMA_VERSION
         || owner.producer != "synthetic_request_budget"
         || !hash(&owner.compiler_fingerprint)
@@ -404,10 +399,7 @@ fn layout(root: &Path, owner: &Owner, bytes: &[u8]) -> Result<(), ProjectError> 
                 .ok_or_else(|| invalid("authority无父目录。"))?,
         )? != owner.parent_identity
         || identity(&root.join("control"))? != owner.control_identity
-        || identity(&root.join(DB))? != owner.database_identity
-        || identity(&root.join(OWNER))? != owner.owner_identity
         || identity(&root.join(LOCK))? != owner.lock_identity
-        || stamp(&root.join(OWNER))?.1 != bytes
         || names(root)? != BTreeSet::from(["control".into()])
         || names(&root.join("control"))?
             != BTreeSet::from([
@@ -416,17 +408,28 @@ fn layout(root: &Path, owner: &Owner, bytes: &[u8]) -> Result<(), ProjectError> 
                 "authority.lock".into(),
                 "policy.json".into(),
             ])
-        || fs::metadata(root.join(DB))
-            .map_err(|e| ProjectError::io(&root.join(DB), e))?
-            .len()
-            > BYTE_LIMIT
     {
         return Err(invalid(
             "authority身份、原字节、库存或SQLite sidecar变化；保留现场。",
         ));
     }
-    // Reject persisted WAL before a SQLite query can create a sidecar.
-    let db = root.join(DB);
+    // Prove the existing root and database before opening owner/policy text.
+    // A single owner read binds both its actual identity and original bytes.
+    database_header(&root.join(DB), &owner.database_identity)?;
+    let (owner_stamp, owner_bytes) = stamp(&root.join(OWNER))?;
+    if owner_stamp.identity != owner.owner_identity || owner_bytes != bytes {
+        return Err(invalid("authority owner身份或原字节变化；保留现场。"));
+    }
+    let (policy_stamp, policy_bytes) = stamp(&root.join(POLICY))?;
+    if policy_stamp != owner.policy_file {
+        return Err(invalid("owned policy身份、时间、SHA或长度变化；保留现场。"));
+    }
+    policy(&policy_bytes, &owner.authority)
+}
+fn database_header(path: &Path, expected: &Identity) -> Result<(), ProjectError> {
+    project::check_components(path)?;
+    project::checked_file(path)?;
+    let initial = same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))?;
     let mut options = OpenOptions::new();
     options.read(true);
     #[cfg(windows)]
@@ -434,18 +437,60 @@ fn layout(root: &Path, owner: &Owner, bytes: &[u8]) -> Result<(), ProjectError> 
         use std::os::windows::fs::OpenOptionsExt;
         options.share_mode(3).custom_flags(0x00200000);
     }
-    let mut file = options.open(&db).map_err(|e| ProjectError::io(&db, e))?;
+    let file = options.open(path).map_err(|e| ProjectError::io(path, e))?;
+    database_header_opened(path, expected, file, initial, || Ok(()))
+}
+fn database_header_opened(
+    path: &Path,
+    expected: &Identity,
+    mut file: File,
+    initial: same_file::Handle,
+    after_snapshot: impl FnOnce() -> Result<(), ProjectError>,
+) -> Result<(), ProjectError> {
+    // Keep pathname/read/current handles alive through the final comparison.
+    // The database stays mutable between transactions; only this 100-byte read
+    // must observe the registered single-link file with stable length/mtime.
+    let opened =
+        same_file::Handle::from_file(file.try_clone().map_err(|e| ProjectError::io(path, e))?)
+            .map_err(|e| ProjectError::io(path, e))?;
+    let before = file.metadata().map_err(|e| ProjectError::io(path, e))?;
+    let id = read_identity(path, &file, &before)?;
+    let modified = before.modified().map_err(|e| ProjectError::io(path, e))?;
+    if initial != opened || &id != expected || !(100..=BYTE_LIMIT).contains(&before.len()) {
+        return Err(invalid("预算DB打开身份或100B至64MiB长度门槛不等。"));
+    }
+    after_snapshot()?;
     let mut header = [0_u8; 100];
     file.read_exact(&mut header)
-        .map_err(|e| ProjectError::io(&db, e))?;
-    if &header[..16] != b"SQLite format 3\0"
-        || header[18] != 1
-        || header[19] != 1
-        || identity(&db)? != owner.database_identity
+        .map_err(|e| ProjectError::io(path, e))?;
+    let after = file.metadata().map_err(|e| ProjectError::io(path, e))?;
+    if read_identity(path, &file, &after)? != id
+        || after.len() != before.len()
+        || after.modified().map_err(|e| ProjectError::io(path, e))? != modified
     {
+        return Err(invalid("读取预算DB header期间身份、长度或mtime变化。"));
+    }
+    let current = same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))?;
+    let current_metadata = current
+        .as_file()
+        .metadata()
+        .map_err(|e| ProjectError::io(path, e))?;
+    if current != opened
+        || read_identity(path, current.as_file(), &current_metadata)? != id
+        || current_metadata.len() != before.len()
+        || current_metadata
+            .modified()
+            .map_err(|e| ProjectError::io(path, e))?
+            != modified
+    {
+        return Err(invalid("读取预算DB header期间路径身份、长度或mtime变化。"));
+    }
+    project::check_components(path)?;
+    project::checked_file(path)?;
+    if &header[..16] != b"SQLite format 3\0" || header[18] != 1 || header[19] != 1 {
         return Err(invalid("预算DB不是确认的DELETE journal原件。"));
     }
-    authority(&owner.authority)
+    Ok(())
 }
 fn compact(s: &str) -> String {
     s.chars().filter(|c| !c.is_whitespace()).collect()
@@ -2686,6 +2731,163 @@ mod tests {
         assert!(stamp_mode(&path, false).is_err());
         drop(writer);
         assert_eq!(stamp_mode(&path, false).unwrap().1, b"literal bytes");
+    }
+
+    fn literal_database_header() -> [u8; 100] {
+        let mut bytes = [0_u8; 100];
+        bytes[..16].copy_from_slice(b"SQLite format 3\0");
+        bytes[18] = 1;
+        bytes[19] = 1;
+        bytes
+    }
+
+    #[test]
+    fn budget_db_header_accepts_registered_identity_and_size_boundaries() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("header-original");
+        let header = literal_database_header();
+        fs::write(&path, header).unwrap();
+        let expected = identity(&path).unwrap();
+        for len in [100, BYTE_LIMIT] {
+            OpenOptions::new()
+                .write(true)
+                .open(&path)
+                .unwrap()
+                .set_len(len)
+                .unwrap();
+            database_header(&path, &expected).unwrap();
+            assert_eq!(fs::metadata(&path).unwrap().len(), len);
+        }
+    }
+
+    #[test]
+    fn budget_db_header_rejects_same_bytes_mtime_identity_replacement() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("header-original");
+        let header = literal_database_header();
+        fs::write(&path, header).unwrap();
+        let expected = identity(&path).unwrap();
+        let modified = fs::metadata(&path).unwrap().modified().unwrap();
+        let initial = same_file::Handle::from_path(&path).unwrap();
+        let mut options = OpenOptions::new();
+        options.read(true);
+        #[cfg(windows)]
+        {
+            use std::os::windows::fs::OpenOptionsExt;
+            // Test-only deletion sharing permits a real pathname replacement;
+            // production database_header keeps the stricter owned share3.
+            options.share_mode(7);
+        }
+        let file = options.open(&path).unwrap();
+        let result = database_header_opened(&path, &expected, file, initial, || {
+            fs::rename(&path, f.base.join("header-original-retained"))
+                .map_err(|e| ProjectError::io(&path, e))?;
+            fs::write(&path, header).map_err(|e| ProjectError::io(&path, e))?;
+            OpenOptions::new()
+                .write(true)
+                .open(&path)
+                .map_err(|e| ProjectError::io(&path, e))?
+                .set_times(fs::FileTimes::new().set_modified(modified))
+                .map_err(|e| ProjectError::io(&path, e))
+        });
+        assert!(result.is_err());
+        assert_eq!(fs::read(&path).unwrap(), header);
+        assert_eq!(fs::metadata(&path).unwrap().modified().unwrap(), modified);
+        assert_ne!(identity(&path).unwrap(), expected);
+    }
+
+    #[test]
+    fn budget_db_header_rejects_post_snapshot_links_lengths_and_mtime() {
+        let f = Fixture::new(100_000);
+        for mutation in ["hardlink", "grow", "shrink", "mtime"] {
+            let path = f.base.join(format!("header-{mutation}"));
+            fs::write(&path, literal_database_header()).unwrap();
+            let expected = identity(&path).unwrap();
+            let modified = fs::metadata(&path).unwrap().modified().unwrap();
+            let initial = same_file::Handle::from_path(&path).unwrap();
+            let file = File::open(&path).unwrap();
+            let result = database_header_opened(&path, &expected, file, initial, || {
+                if mutation == "hardlink" {
+                    return fs::hard_link(&path, f.base.join("header-second-link"))
+                        .map_err(|e| ProjectError::io(&path, e));
+                }
+                let writer = OpenOptions::new()
+                    .write(true)
+                    .open(&path)
+                    .map_err(|e| ProjectError::io(&path, e))?;
+                if mutation == "mtime" {
+                    writer
+                        .set_times(
+                            fs::FileTimes::new().set_modified(UNIX_EPOCH + Duration::from_secs(20)),
+                        )
+                        .map_err(|e| ProjectError::io(&path, e))
+                } else {
+                    writer
+                        .set_len(if mutation == "grow" { 101 } else { 99 })
+                        .and_then(|_| writer.set_times(fs::FileTimes::new().set_modified(modified)))
+                        .map_err(|e| ProjectError::io(&path, e))
+                }
+            });
+            assert!(result.is_err(), "mutation {mutation}");
+        }
+    }
+
+    #[test]
+    fn budget_db_header_rejects_wal_short_over_limit_and_wrong_identity_before_owner() {
+        let f = Fixture::new(100_000);
+        let path = f.base.join("header-invalid");
+        for (name, len, wal) in [
+            ("short", 99, false),
+            ("over-limit", BYTE_LIMIT + 1, false),
+            ("wal", 100, true),
+        ] {
+            let mut header = literal_database_header();
+            if wal {
+                header[18] = 2;
+                header[19] = 2;
+            }
+            fs::write(&path, header).unwrap();
+            OpenOptions::new()
+                .write(true)
+                .open(&path)
+                .unwrap()
+                .set_len(len)
+                .unwrap();
+            let expected = identity(&path).unwrap();
+            assert!(database_header(&path, &expected).is_err(), "{name}");
+        }
+        fs::write(&path, literal_database_header()).unwrap();
+        let other = f.base.join("other-header");
+        fs::write(&other, literal_database_header()).unwrap();
+        assert!(database_header(&path, &identity(&other).unwrap()).is_err());
+
+        let store = f.store();
+        let owner = store.owner.clone();
+        let owner_bytes = store.owner_bytes.clone();
+        drop(store);
+        let db = f.authority.join(DB);
+        let mut original = fs::read(&db).unwrap();
+        original[18] = 2;
+        original[19] = 2;
+        fs::write(&db, &original).unwrap();
+        // Keep the same allowed name but make opening owner unsafe. A DB/WAL
+        // failure must be observed before any read of that owner pathname.
+        let owner_path = f.authority.join(OWNER);
+        fs::remove_file(&owner_path).unwrap();
+        fs::create_dir(&owner_path).unwrap();
+        let rejected = layout(&f.authority, &owner, &owner_bytes).unwrap_err();
+        assert_eq!(rejected.code(), "REQUEST_BUDGET_INTEGRITY");
+        assert!(rejected.to_string().contains("DELETE journal"));
+        assert_eq!(fs::read(&db).unwrap(), original);
+        assert_eq!(
+            names(&f.authority.join("control")).unwrap(),
+            BTreeSet::from([
+                "budget.sqlite".into(),
+                "owner.json".into(),
+                "authority.lock".into(),
+                "policy.json".into(),
+            ])
+        );
     }
 
     #[test]

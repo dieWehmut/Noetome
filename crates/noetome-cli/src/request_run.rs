@@ -16,7 +16,7 @@ use serde_json::{Value, json};
 use std::{
     collections::{BTreeMap, BTreeSet},
     fs::{self, File, OpenOptions},
-    io::{Read, Write},
+    io::Write,
     path::{Path, PathBuf},
     sync::{
         Arc, Mutex,
@@ -29,7 +29,6 @@ use time::{OffsetDateTime, format_description::well_known::Rfc3339};
 #[path = "request_run_recovery.rs"]
 mod recovery;
 
-const MAX_FILE: u64 = 64 * 1024 * 1024;
 const OWNER: &str = "control/owner.json";
 const LOCK: &str = "control/worker.lock";
 fn err(code: &'static str, text: impl Into<String>) -> ProjectError {
@@ -105,53 +104,16 @@ pub(super) fn owned_stamp(path: &Path) -> Result<(FileStamp, Vec<u8>), ProjectEr
     stamp_with(path, true)
 }
 fn stamp_with(path: &Path, owned: bool) -> Result<(FileStamp, Vec<u8>), ProjectError> {
-    project::checked_file(path)?;
-    let id = identity(path)?;
-    let mut f = if owned {
-        let mut o = OpenOptions::new();
-        o.read(true);
-        #[cfg(windows)]
-        {
-            use std::os::windows::fs::OpenOptionsExt;
-            o.share_mode(3).custom_flags(0x00200000);
+    // Input and owner checks use the same actual-read-handle proof as the
+    // authority. Its owned/external sharing and bounded full-byte checks are
+    // identical; keep this caller's Run integrity error namespace.
+    crate::request_budget_store::stamp_mode(path, owned).map_err(|e| {
+        if e.code() == "REQUEST_BUDGET_INTEGRITY" {
+            invalid(format!("明确选取原件校验失败：{e}"))
+        } else {
+            e
         }
-        o.open(path).map_err(|e| ProjectError::io(path, e))?
-    } else {
-        project::read_guard(path)?
-    };
-    let before = f.metadata().map_err(|e| ProjectError::io(path, e))?;
-    if before.len() > MAX_FILE {
-        return Err(invalid("明确选取文件超过64MiB。"));
-    }
-    let mut bytes = Vec::new();
-    Read::by_ref(&mut f)
-        .take(MAX_FILE + 1)
-        .read_to_end(&mut bytes)
-        .map_err(|e| ProjectError::io(path, e))?;
-    let after = f.metadata().map_err(|e| ProjectError::io(path, e))?;
-    if before.len() != bytes.len() as u64
-        || before.len() != after.len()
-        || before.modified().ok() != after.modified().ok()
-        || identity(path)? != id
-    {
-        return Err(invalid("读取期间原件变化。"));
-    }
-    let modified = before
-        .modified()
-        .map_err(|e| ProjectError::io(path, e))?
-        .duration_since(UNIX_EPOCH)
-        .map_err(|_| invalid("时间早于epoch。"))?
-        .as_nanos()
-        .to_string();
-    Ok((
-        FileStamp {
-            identity: id,
-            sha256: sha256(&bytes),
-            byte_length: bytes.len() as u64,
-            modified,
-        },
-        bytes,
-    ))
+    })
 }
 pub(super) fn write_new(path: &Path, bytes: &[u8]) -> Result<(), ProjectError> {
     project::check_components(path)?;
@@ -450,9 +412,7 @@ impl RunGuard {
             )? != o.parent_identity
             || identity(&self.root.join("control"))? != o.control_identity
             || identity(&self.root.join("attempts"))? != o.attempts_identity
-            || identity(&self.root.join(OWNER))? != o.owner_identity
             || identity(&self.root.join(LOCK))? != o.lock_identity
-            || stamp(&self.root.join(OWNER))?.1 != self.owner_bytes
             || fs::metadata(self.root.join(LOCK))
                 .map_err(|e| ProjectError::io(&self.root, e))?
                 .len()
@@ -460,6 +420,10 @@ impl RunGuard {
             || identity(Path::new(&o.budget_root))? != o.budget_identity
         {
             return Err(invalid("Run/authority/原owner身份或字节变化。"));
+        }
+        let (owner, bytes) = stamp(&self.root.join(OWNER))?;
+        if owner.identity != o.owner_identity || bytes != self.owner_bytes {
+            return Err(invalid("Run原owner身份或字节变化。"));
         }
         let names = |p: &Path| -> Result<BTreeSet<String>, ProjectError> {
             fs::read_dir(p)
