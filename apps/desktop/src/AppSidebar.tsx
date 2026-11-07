@@ -3,7 +3,7 @@ import AppIcon from "./AppIcon";
 import type { Page, Theme } from "./appTypes";
 
 const pageLabels: Record<Page, string> = {
-  workspace: "工作台", runtime: "运行检查", appearance: "外观设置", window: "窗口设置", about: "关于 Noetome",
+  workspace: "工作台", project: "项目", runtime: "运行检查", appearance: "外观设置", window: "窗口设置", about: "关于 Noetome",
 };
 
 interface AppSidebarProps {
@@ -51,6 +51,7 @@ export default function AppSidebar({ page, visible, recentPages, theme, onNaviga
       <nav className="activity-rail" aria-label="快捷导航">
         <div className="rail-top">
           <button className={`rail-button ${page === "workspace" ? "is-active" : ""}`} aria-label="工作台" title="工作台" aria-current={page === "workspace" ? "page" : undefined} onClick={() => onNavigate("workspace")}><AppIcon name="home" filled={page === "workspace"} /></button>
+          <button className={`rail-button ${page === "project" ? "is-active" : ""}`} aria-label="项目" title="项目" aria-current={page === "project" ? "page" : undefined} onClick={() => onNavigate("project")}><AppIcon name="folder" filled={page === "project"} /></button>
           <button className={`rail-button ${page === "runtime" ? "is-active" : ""}`} aria-label="运行检查" title="运行检查" aria-current={page === "runtime" ? "page" : undefined} onClick={() => onNavigate("runtime")}><AppIcon name="pulse" /></button>
           <button className="rail-button" aria-label="关于 Noetome" title="关于 Noetome" onClick={() => onNavigate("about")}><AppIcon name="more" /></button>
         </div>
@@ -73,7 +74,7 @@ export default function AppSidebar({ page, visible, recentPages, theme, onNaviga
           {!search && <section className="sidebar-section" aria-labelledby="projects-heading">
             <h2 id="projects-heading" className="nav-section-label">项目</h2>
             <button className="project-toggle" aria-expanded={projectsExpanded} aria-controls="sidebar-projects" onClick={() => setProjectsExpanded((expanded) => !expanded)}><AppIcon name="folder" /><span>学习项目</span><span className={`project-caret ${projectsExpanded ? "is-expanded" : ""}`}><AppIcon name="caret" /></span></button>
-            <div id="sidebar-projects" className="sidebar-empty" hidden={!projectsExpanded}><p>尚未载入项目</p><small>项目暂通过 CLI 管理</small></div>
+            <div id="sidebar-projects" className="sidebar-empty" hidden={!projectsExpanded}><p>当前会话尚未载入项目</p><button className="text-button" onClick={() => onNavigate("project")}>新建或打开项目<AppIcon name="arrow" /></button></div>
           </section>}
 
           {!search && tools.length > 0 && <section className="sidebar-section" aria-labelledby="tools-heading"><h2 id="tools-heading" className="nav-section-label">工具</h2><nav aria-label="工具导航">{tools.map((target) => pageButton(target, target === "runtime" ? "pulse" : "info"))}</nav></section>}

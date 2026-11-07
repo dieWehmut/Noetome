@@ -3,6 +3,7 @@ import { invoke, isTauri } from "@tauri-apps/api/core";
 import AppMenuBar from "./AppMenuBar";
 import type { AppMenu } from "./AppMenuBar";
 import AppSidebar from "./AppSidebar";
+import AppProject from "./AppProject";
 import AppSettings from "./AppSettings";
 import Icon from "./AppIcon";
 import useThemePreference from "./useThemePreference";
@@ -27,8 +28,9 @@ interface Preview {
   error: string;
 }
 
-const pages: { id: Page; label: string; icon: "home" | "pulse" | "info" | "settings" }[] = [
+const pages: { id: Page; label: string; icon: "home" | "folder" | "pulse" | "info" | "settings" }[] = [
   { id: "workspace", label: "工作台", icon: "home" },
+  { id: "project", label: "项目", icon: "folder" },
   { id: "runtime", label: "运行检查", icon: "pulse" },
   { id: "appearance", label: "设置", icon: "settings" },
   { id: "about", label: "关于", icon: "info" },
@@ -185,6 +187,7 @@ export default function App() {
   const menus: AppMenu[] = [
     { label: "File", actions: [
       { id: "workspace", label: "工作台", onSelect: () => navigate("workspace") },
+      { id: "project", label: "项目", onSelect: () => navigate("project") },
       { id: "runtime", label: "运行检查", onSelect: () => navigate("runtime") },
       { id: "appearance", label: "设置", onSelect: () => navigate("appearance") },
       { id: "settings", label: "窗口设置", onSelect: () => navigate("window", "window-settings-title") },
@@ -226,12 +229,14 @@ export default function App() {
               <div className="section-title-row"><h2>当前可以做什么</h2><span>从小而可靠的能力开始</span></div>
               <div className="capability-grid">
                 <section className="capability-card"><div className="card-icon"><Icon name="terminal" /></div><span className="small-badge available">已接入</span><h3>查看帮助与版本</h3><p>通过本地组件查看 CLI 用法与版本，确认桌面应用连接状态。</p><button className="text-button" onClick={() => navigate("runtime")}>打开运行检查<Icon name="arrow" /></button></section>
-                <section className="capability-card"><div className="card-icon muted"><Icon name="book" /></div><span className="small-badge pending">尚未接入</span><h3>建立学习项目</h3><p>项目与资料操作暂通过 CLI 使用，桌面入口尚未接入。当前工作台尚未载入项目。</p><span className="quiet-note">完成后将在这里开始</span></section>
+                <section className="capability-card"><div className="card-icon"><Icon name="folder" /></div><span className="small-badge available">已接入</span><h3>建立学习项目</h3><p>新建一个项目根，或只读检查已有项目；字段直接来自本地 Rust 组件。资料导入与知识生成尚未接入。</p><button className="text-button" onClick={() => navigate("project")}>新建或打开项目<Icon name="arrow" /></button></section>
               </div>
 
-              <section className="scope-note"><span className="scope-marker" aria-hidden="true" /><p>桌面项目、资料与笔记生成入口仍在开发中，现有核心能力可通过 CLI 使用。</p></section>
+              <section className="scope-note"><span className="scope-marker" aria-hidden="true" /><p>桌面已接入项目新建与只读检查；资料导入、来源登记与笔记生成仍通过 CLI 使用。</p></section>
             </>
           )}
+
+          {page === "project" && <AppProject />}
 
           {page === "runtime" && (
             <>

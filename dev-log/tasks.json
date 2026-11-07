@@ -3100,7 +3100,7 @@
       "id": "B09-T01",
       "title": "桌面项目入口与真实工程状态",
       "batch": "B09",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B08-T03"
       ],
@@ -3117,7 +3117,86 @@
         "项目根路径的规范化与边界复用既有实现（拒绝符号链接、拒绝 `..` 越界、拒绝非普通目录），桌面层只做路径选择与结果投影，不引入新的写入路径或全局权限。",
         "Rust 单元测试覆盖新建/已存在/损坏/外来四类结果的真实返回与环境哨兵，前端通过 tsc 与 vite 构建；通过后 complete、提交并推送，并在验证记录中如实列出 Windows 原生安装未运行。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T18:03:30Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "桌面项目新建与只读检查命令投影，替换工作台尚未接入空状态并覆盖四类真实返回",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-07T18:15:31Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "把已验收的项目新建与只读检查接到桌面：新增 project_entry 适配层与 pick_directory/project_create/project_open 三条 Tauri 命令，capabilities 由 help/version 扩为四项；前端新增「项目」页并替换工作台与侧栏的项目空状态；桌面层只投影 Rust 真实返回，PROJECT_* 错误码原样透传，不自动修复不一新增写路径",
+          "validation": [
+            "cargo fmt --all --check exit 0（assets/B09-T01/desktop-20261108/rust-gates.txt）",
+            "cargo check --workspace exit 0，仅既有 warning（同 rust-gates.txt）",
+            "cargo test -p noetome-desktop 18 passed / 0 failed（原 12 + project_entry 新增 6）",
+            "npm run web:check 与 npm run web:build 均 exit 0，61 modules，dist 资产已更新（assets/B09-T01/desktop-20261108/web-gates.txt）",
+            "cargo test --workspace --no-fail-fast：lib 458 passed/99 failed/1 ignored，失败集中在 sidecar_process 64、pdf_source_model 18、pdf_parse 7、source_model 5、source_write 3、extraction_source 1、extraction_api_transport 1，与 98f1955 基线同量级（assets/B09-T01/desktop-20261108/workspace-tests.txt）",
+            "Windows 原生安装内的桌面交互与 rfd 目录选择器未运行，已在验证记录单列为未闭合"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B09-T01.md",
+              "sha256": "bd1ae1e537151d460d2b6791d8f4e4978bf3c57cd10dec64b1708b9fc0c06d09"
+            },
+            {
+              "path": "doc/validation/assets/B09-T01/desktop-20261108/red-inventory.txt",
+              "sha256": "f95afb0a72af6ec3ff8dedf843d4de68f42cdbfb7d0a4c65672e31f165987286"
+            },
+            {
+              "path": "doc/validation/assets/B09-T01/desktop-20261108/inventory-after.txt",
+              "sha256": "b1b573ccfbecf5d066dcac98f8351545f2f2a31ea78d3c1d0b8f31f038dc2351"
+            },
+            {
+              "path": "doc/validation/assets/B09-T01/desktop-20261108/rust-gates.txt",
+              "sha256": "87b3f67558ff301441de8f93c0fe742c4083bc075ee6f61ece7fabd6c6ee27c0"
+            },
+            {
+              "path": "doc/validation/assets/B09-T01/desktop-20261108/web-gates.txt",
+              "sha256": "bb37221f437472bb72b2baf3a3b6bd340eaa6dc9fb13dee374f10cdce0f603a0"
+            },
+            {
+              "path": "doc/validation/assets/B09-T01/desktop-20261108/workspace-tests.txt",
+              "sha256": "a9c2e03021127fe02a010d1d1cb40a0944366708151b2405c3daad2e2c9e086f"
+            },
+            {
+              "path": "crates/noetome-desktop/src/project_entry.rs",
+              "sha256": "87057ae6a1746676e60ffa82b082c6516ea351d5eb97d5c20e5cfa11a15da4af"
+            },
+            {
+              "path": "crates/noetome-desktop/src/main.rs",
+              "sha256": "827a97b0ee91f1bfa4cd189a910e08dbd2507bcf2101e33fe431edbd31746b65"
+            },
+            {
+              "path": "apps/desktop/src/AppProject.tsx",
+              "sha256": "41c2a3ba6971f45a1cdd944f1135c7c6944803326fcecec1666ecdd22cad409c"
+            },
+            {
+              "path": "apps/desktop/src/App.tsx",
+              "sha256": "b471f2afe7fe093e153c41882a9df609330dba8c95d5ed4bfdf41561b935e94e"
+            },
+            {
+              "path": "apps/desktop/src/AppSidebar.tsx",
+              "sha256": "9225da19337c668a383ba792f6b813a58b3999bc05dd16b6b6b0f7099f8bd7cf"
+            },
+            {
+              "path": "apps/desktop/src/appTypes.ts",
+              "sha256": "75add63e2c843da5334109ddb6df148f60e9ff4987b3105afa5c3f08ae2248ce"
+            },
+            {
+              "path": "doc/standards/DESIGN.md",
+              "sha256": "ada7cfa272a4b09b8f4d9f296144d0ae45517548bbd7e78b3e640884dcc53e9b"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B09-T02",

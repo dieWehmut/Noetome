@@ -12,6 +12,7 @@ use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent}
 use tauri::{Manager, WindowEvent};
 
 mod preferences;
+mod project_entry;
 use preferences::{CloseBehavior, PreferencesState};
 
 const MAIN_TRAY_ID: &str = "noetome-main-tray";
@@ -23,7 +24,7 @@ struct RuntimeInfo {
     app_version: &'static str,
     cli_version: &'static str,
     target: &'static str,
-    capabilities: [&'static str; 2],
+    capabilities: [&'static str; 4],
     cli_help: &'static str,
 }
 
@@ -33,7 +34,7 @@ fn runtime_info() -> RuntimeInfo {
         app_version: env!("CARGO_PKG_VERSION"),
         cli_version: noetome_cli::VERSION,
         target: env!("NOETOME_TARGET"),
-        capabilities: ["help", "version"],
+        capabilities: ["help", "version", "project.create", "project.open"],
         cli_help: noetome_cli::HELP,
     }
 }
@@ -46,6 +47,21 @@ fn cli_preview(option: &str) -> Result<String, String> {
         _ => return Err(noetome_cli::INVALID_ARGUMENT.to_owned()),
     };
     noetome_cli::render(&[OsString::from(flag)]).map_err(str::to_owned)
+}
+
+#[tauri::command]
+fn pick_directory() -> Result<Option<String>, String> {
+    project_entry::pick_directory()
+}
+
+#[tauri::command]
+fn project_create(path: String) -> Result<project_entry::ProjectSummary, String> {
+    project_entry::create(Path::new(&path))
+}
+
+#[tauri::command]
+fn project_open(path: String) -> Result<project_entry::ProjectSummary, String> {
+    project_entry::open(Path::new(&path))
 }
 
 #[tauri::command]
@@ -252,7 +268,15 @@ fn main() {
     }
 
     let app = match tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![runtime_info, cli_preview, get_close_behavior, set_close_behavior])
+        .invoke_handler(tauri::generate_handler![
+            runtime_info,
+            cli_preview,
+            pick_directory,
+            project_create,
+            project_open,
+            get_close_behavior,
+            set_close_behavior
+        ])
         .on_window_event(handle_window_event)
         .setup(move |app| {
             let preferences = match app.path().app_local_data_dir() {
@@ -346,7 +370,10 @@ mod tests {
     fn desktop_and_cli_share_versions_and_supported_capabilities() {
         let info = runtime_info();
         assert_eq!(info.app_version, info.cli_version);
-        assert_eq!(info.capabilities, ["help", "version"]);
+        assert_eq!(
+            info.capabilities,
+            ["help", "version", "project.create", "project.open"]
+        );
         assert_eq!(info.cli_help, cli_preview("help").unwrap());
         assert_eq!(
             cli_preview("version").unwrap(),

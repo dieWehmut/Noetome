@@ -1,0 +1,20 @@
+== tauri::command in desktop ==
+30:#[tauri::command]
+31-fn runtime_info() -> RuntimeInfo {
+--
+41:#[tauri::command]
+42-fn cli_preview(option: &str) -> Result<String, String> {
+--
+51:#[tauri::command]
+52-fn get_close_behavior(state: tauri::State<'_, PreferencesState>) -> Result<String, String> {
+--
+56:#[tauri::command]
+57-fn set_close_behavior(
+
+== project:: usage in desktop ==
+(none)
+
+== frontend project entry ==
+229:                <section className="capability-card"><div className="card-icon muted"><Icon name="book" /></div><span className="small-badge pending">尚未接入</span><h3>建立学习项目</h3><p>项目与资料操作暂通过 CLI 使用，桌面入口尚未接入。当前工作台尚未载入项目。</p><span className="quiet-note">完成后将在这里开始</span></section>
+232:              <section className="scope-note"><span className="scope-marker" aria-hidden="true" /><p>桌面项目、资料与笔记生成入口仍在开发中，现有核心能力可通过 CLI 使用。</p></section>
+248:                <div className="runtime-actions"><button className="button button-primary" disabled={runtimePhase === "running"} onClick={checkRuntime}>{runtimePhase === "running" ? "正在检查…" : runtimePhase === "idle" ? "检查连接" : "重新检查"}<Icon name="arrow" /></button><span role="status" aria-live="polite">{runtimePhase === "success" ? "已收到本地 Rust 组件的实际返回结果。" : runtimePhase === "running" ? "正在读取本地运行信息。" : "检查只读取状态，不创建项目或资料。"}</span></div>

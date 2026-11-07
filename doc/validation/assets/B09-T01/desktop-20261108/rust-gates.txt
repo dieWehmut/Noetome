@@ -1,0 +1,30 @@
+== cargo fmt --all --check ==
+exit=0
+
+== cargo check --workspace ==
+
+warning: `noetome-desktop` (bin "noetome-desktop") generated 1 warning (run `cargo fix --bin "noetome-desktop" -p noetome-desktop` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.21s
+exit=0
+
+== cargo test -p noetome-desktop ==
+running 18 tests
+test tests::desktop_and_cli_share_versions_and_supported_capabilities ... ok
+test tests::desktop_does_not_accept_arbitrary_cli_commands ... ok
+test project_entry::tests::create_refuses_path_traversal_without_writing_anything ... ok
+test preferences::tests::directory_collision_and_oversized_settings_are_preserved ... ok
+test project_entry::tests::open_reports_missing_and_foreign_directories_with_the_cli_codes ... ok
+test tests::profile_preparation_preserves_existing_content_and_reports_file_collision ... ok
+test tests::startup_logs_append_and_preserve_files_that_block_the_log_directory ... ok
+test project_entry::tests::create_refuses_an_existing_directory_and_preserves_it ... ok
+test preferences::tests::reload_rejects_corruption_and_preserves_the_previous_effective_choice ... ok
+test preferences::tests::corrupt_unsupported_and_unknown_settings_are_preserved_with_safe_close_fallback ... ok
+test project_entry::tests::open_refuses_incomplete_and_corrupt_projects_without_repairing_them ... ok
+test preferences::tests::invalid_values_do_not_change_memory_or_saved_bytes ... ok
+test preferences::tests::missing_settings_use_safe_default_without_writing_and_valid_choice_persists ... ok
+test preferences::tests::reload_updates_a_cached_choice_saved_by_an_independent_state_without_writing ... ok
+test preferences::tests::saving_replaces_an_existing_settings_file_and_does_not_leave_temporary_files ... ok
+test preferences::tests::external_edits_deletions_and_same_byte_replacements_are_not_overwritten ... ok
+test project_entry::tests::create_reports_fields_that_match_the_disk ... ok
+test project_entry::tests::open_never_writes_to_a_valid_project ... ok
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
