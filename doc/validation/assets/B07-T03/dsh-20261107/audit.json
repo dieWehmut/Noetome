@@ -1,0 +1,636 @@
+{
+  "failures": 0,
+  "warnings": 0,
+  "checks": [
+    {
+      "check": "layout.root-entries",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "layout.baseline",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "layout.vault",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "layout.control-entries",
+      "status": "ok",
+      "detail": "control/ 只有 owner.json、vault.sqlite、update.lock"
+    },
+    {
+      "check": "owner.strict",
+      "status": "ok",
+      "detail": "owner.json 严格、规范、无未知字段"
+    },
+    {
+      "check": "owner.policy",
+      "status": "ok",
+      "detail": "policy=managed-vault-update-v1 schema_version=1"
+    },
+    {
+      "check": "owner.producer",
+      "status": "ok",
+      "detail": "producer=noetome-managed-vault"
+    },
+    {
+      "check": "owner.root-path",
+      "status": "ok",
+      "detail": "记录路径与检查路径一致"
+    },
+    {
+      "check": "owner.root_identity",
+      "status": "ok",
+      "detail": "{'platform': 'unix', 'device': 2096, 'inode': 2834379}"
+    },
+    {
+      "check": "owner.parent_identity",
+      "status": "ok",
+      "detail": "{'platform': 'unix', 'device': 2096, 'inode': 2834373}"
+    },
+    {
+      "check": "owner.control_identity",
+      "status": "ok",
+      "detail": "{'platform': 'unix', 'device': 2096, 'inode': 2834380}"
+    },
+    {
+      "check": "owner.owner_identity",
+      "status": "ok",
+      "detail": "{'platform': 'unix', 'device': 2096, 'inode': 2834384}"
+    },
+    {
+      "check": "owner.baseline_identity",
+      "status": "ok",
+      "detail": "{'platform': 'unix', 'device': 2096, 'inode': 2834381}"
+    },
+    {
+      "check": "owner.vault_identity",
+      "status": "ok",
+      "detail": "{'platform': 'unix', 'device': 2096, 'inode': 2834382}"
+    },
+    {
+      "check": "owner.lock_identity",
+      "status": "ok",
+      "detail": "{'platform': 'unix', 'device': 2096, 'inode': 2834383}"
+    },
+    {
+      "check": "owner.database_identity",
+      "status": "ok",
+      "detail": "{'platform': 'unix', 'device': 2096, 'inode': 2834385}"
+    },
+    {
+      "check": "db.pragmas",
+      "status": "ok",
+      "detail": "application_id=1314280780 user_version=1 journal_mode=delete"
+    },
+    {
+      "check": "db.tables",
+      "status": "ok",
+      "detail": "实际表：['metadata', 'plans', 'releases']"
+    },
+    {
+      "check": "db.ddl.metadata",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "db.ddl.plans",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "db.ddl.releases",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "db.metadata-row",
+      "status": "ok",
+      "detail": "singleton=1 schema_version=1"
+    },
+    {
+      "check": "db.metadata-strict",
+      "status": "ok",
+      "detail": "metadata_json 严格且规范"
+    },
+    {
+      "check": "db.plan[fc607d630106]",
+      "status": "ok",
+      "detail": "重算 payload SHA256 fc607d63010620f57862dbfd39fbf57c0cca0313f27396b9f5a8557017f12231"
+    },
+    {
+      "check": "db.plan[f6eef82d65fa]",
+      "status": "ok",
+      "detail": "重算 payload SHA256 f6eef82d65fa139a580fa9faf3c387e5bef3c8b61f9a2c2a29f2b5ba477a6f0e"
+    },
+    {
+      "check": "db.plan[408772e0b7d7]",
+      "status": "ok",
+      "detail": "重算 payload SHA256 408772e0b7d72c16c20259feafb54f09b385a160c658ddb3f8773448b52d06aa"
+    },
+    {
+      "check": "db.plan[5bc26449b8d6]",
+      "status": "ok",
+      "detail": "重算 payload SHA256 5bc26449b8d6ed6705de695ec7fce617926358ca6d3375aa4ad3721c70c3f8fe"
+    },
+    {
+      "check": "db.plan[38eb793cfac0]",
+      "status": "ok",
+      "detail": "重算 payload SHA256 38eb793cfac0f8e31ec088e184f44beb1412c58a3da2a2ffaae63d90f571f529"
+    },
+    {
+      "check": "db.plan[687e846500b7]",
+      "status": "ok",
+      "detail": "重算 payload SHA256 687e846500b74f05fd644985fcf5b112e6a7d2d1acf36dfacdf5538495c496fc"
+    },
+    {
+      "check": "db.plan[9e1fc6db5b33]",
+      "status": "ok",
+      "detail": "重算 payload SHA256 9e1fc6db5b33a29c327850f413a274ea66c125411db1c38bfa2f7aea6a84b8f9"
+    },
+    {
+      "check": "db.plan[c4cf0e5ff281]",
+      "status": "ok",
+      "detail": "重算 payload SHA256 c4cf0e5ff2811eedbe487cd396b62e9f93ffa2cca009b7ee5961e661b1eb593d"
+    },
+    {
+      "check": "db.plan[89ea0295732b]",
+      "status": "ok",
+      "detail": "重算 payload SHA256 89ea0295732b024b3300db4ce4c1ce2a3a57e691df4a654f024b3cd2ff262e46"
+    },
+    {
+      "check": "db.plan[5bcdab6c869e]",
+      "status": "ok",
+      "detail": "重算 payload SHA256 5bcdab6c869ecd2d5348c9e708f59ac1a4ac13e694643a605a7662ed4d4bb00e"
+    },
+    {
+      "check": "db.release[1].sequence",
+      "status": "ok",
+      "detail": "序号 1，上一行 0"
+    },
+    {
+      "check": "db.release[1].entries-strict",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "db.release[2].sequence",
+      "status": "ok",
+      "detail": "序号 2，上一行 1"
+    },
+    {
+      "check": "db.release[2].entries-strict",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "db.release[3].sequence",
+      "status": "ok",
+      "detail": "序号 3，上一行 2"
+    },
+    {
+      "check": "db.release[3].entries-strict",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "db.release[4].sequence",
+      "status": "ok",
+      "detail": "序号 4，上一行 3"
+    },
+    {
+      "check": "db.release[4].entries-strict",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "baseline.manifest",
+      "status": "ok",
+      "detail": "重算 eb8af53cbee86d885c2d88729a5e34ad75998691414a3d0c719db1b5618cdf8e / owner.json eb8af53cbee86d885c2d88729a5e34ad75998691414a3d0c719db1b5618cdf8e"
+    },
+    {
+      "check": "baseline.author-manifest",
+      "status": "ok",
+      "detail": "重算 3dd1eedce4f2864eada696e7d90273803feb54d72d4e237574f5cf82769bfc8f / owner.json 3dd1eedce4f2864eada696e7d90273803feb54d72d4e237574f5cf82769bfc8f"
+    },
+    {
+      "check": "baseline.matches-author",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "baseline.matches-metadata",
+      "status": "ok",
+      "detail": "metadata.baseline_files 与 baseline/ 实际字节一致"
+    },
+    {
+      "check": "releases.orphan-directories",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "release[1].dir",
+      "status": "ok",
+      "detail": "3615ec9df6eb90a1787c5a0f7f066158b834b37c4221f22a7d64ca6f9886daee"
+    },
+    {
+      "check": "release[1].record-identity",
+      "status": "ok",
+      "detail": "release_id=3615ec9df6eb approval=3615ec9df6eb"
+    },
+    {
+      "check": "release[1].plan-present",
+      "status": "ok",
+      "detail": "plan_id=9e1fc6db5b33"
+    },
+    {
+      "check": "release[1].impacts-binding",
+      "status": "ok",
+      "detail": "重算 eb4b524688c21522bad045a6f72e2fe84e21d39d0a70b1f753f601c9a4088f2b"
+    },
+    {
+      "check": "release[1].entries-match-plan",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "release[1].log[0].canonical",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "release[1].log[0].sequence",
+      "status": "ok",
+      "detail": "sequence=1 index=0"
+    },
+    {
+      "check": "release[1].state[0]",
+      "status": "ok",
+      "detail": "write 笔记/力学.md state=written"
+    },
+    {
+      "check": "release[1].log-covers-entries",
+      "status": "ok",
+      "detail": "日志 1 行、账本 1 条"
+    },
+    {
+      "check": "release[1].status",
+      "status": "ok",
+      "detail": "status=published 已落盘 1/1"
+    },
+    {
+      "check": "release[1].candidate[笔记/力学.md]",
+      "status": "ok",
+      "detail": "190 字节"
+    },
+    {
+      "check": "release[2].dir",
+      "status": "ok",
+      "detail": "9a0d6a9bd4f1d2120def69d6712dfc009548ef5b6c7d7926ffc25f66ff7e280e"
+    },
+    {
+      "check": "release[2].record-identity",
+      "status": "ok",
+      "detail": "release_id=9a0d6a9bd4f1 approval=9a0d6a9bd4f1"
+    },
+    {
+      "check": "release[2].plan-present",
+      "status": "ok",
+      "detail": "plan_id=c4cf0e5ff281"
+    },
+    {
+      "check": "release[2].impacts-binding",
+      "status": "ok",
+      "detail": "重算 7637a0ce0d8a876c853c4320b5c110bfefddecb617ea9a3b8320a508c5729207"
+    },
+    {
+      "check": "release[2].entries-match-plan",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "release[2].log[0].canonical",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "release[2].log[0].sequence",
+      "status": "ok",
+      "detail": "sequence=2 index=0"
+    },
+    {
+      "check": "release[2].state[0]",
+      "status": "ok",
+      "detail": "write 笔记/力学.md state=written"
+    },
+    {
+      "check": "release[2].log-covers-entries",
+      "status": "ok",
+      "detail": "日志 1 行、账本 1 条"
+    },
+    {
+      "check": "release[2].status",
+      "status": "ok",
+      "detail": "status=published 已落盘 1/1"
+    },
+    {
+      "check": "release[2].candidate[笔记/力学.md]",
+      "status": "ok",
+      "detail": "169 字节"
+    },
+    {
+      "check": "release[3].dir",
+      "status": "ok",
+      "detail": "d166d2f31ace0ac3c88f1254686049e03e47f837ba8ad7779f9f850eacf03ed3"
+    },
+    {
+      "check": "release[3].record-identity",
+      "status": "ok",
+      "detail": "release_id=d166d2f31ace approval=d166d2f31ace"
+    },
+    {
+      "check": "release[3].plan-present",
+      "status": "ok",
+      "detail": "plan_id=89ea0295732b"
+    },
+    {
+      "check": "release[3].impacts-binding",
+      "status": "ok",
+      "detail": "重算 eb4b524688c21522bad045a6f72e2fe84e21d39d0a70b1f753f601c9a4088f2b"
+    },
+    {
+      "check": "release[3].entries-match-plan",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "release[3].log[0].canonical",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "release[3].log[0].sequence",
+      "status": "ok",
+      "detail": "sequence=3 index=0"
+    },
+    {
+      "check": "release[3].state[0]",
+      "status": "ok",
+      "detail": "write 笔记/力学.md state=written"
+    },
+    {
+      "check": "release[3].log-covers-entries",
+      "status": "ok",
+      "detail": "日志 1 行、账本 1 条"
+    },
+    {
+      "check": "release[3].status",
+      "status": "ok",
+      "detail": "status=published 已落盘 1/1"
+    },
+    {
+      "check": "release[3].candidate[笔记/力学.md]",
+      "status": "ok",
+      "detail": "190 字节"
+    },
+    {
+      "check": "release[4].dir",
+      "status": "ok",
+      "detail": "25631febd06a02fc5c5be5ff946103c1f972888086ac9a5a2cddecc2b4ab22dd"
+    },
+    {
+      "check": "release[4].record-identity",
+      "status": "ok",
+      "detail": "release_id=25631febd06a approval=25631febd06a"
+    },
+    {
+      "check": "release[4].plan-present",
+      "status": "ok",
+      "detail": "plan_id=5bcdab6c869e"
+    },
+    {
+      "check": "release[4].impacts-binding",
+      "status": "ok",
+      "detail": "重算 b761aaf8bcb926d8ea10bd64eb85bf21e62a048caa824fc09d7586c0950ab73f"
+    },
+    {
+      "check": "release[4].entries-match-plan",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "release[4].log[0].canonical",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "release[4].log[0].sequence",
+      "status": "ok",
+      "detail": "sequence=4 index=0"
+    },
+    {
+      "check": "release[4].state[0]",
+      "status": "ok",
+      "detail": "write 笔记/光学.md state=written"
+    },
+    {
+      "check": "release[4].log-covers-entries",
+      "status": "ok",
+      "detail": "日志 1 行、账本 1 条"
+    },
+    {
+      "check": "release[4].status",
+      "status": "ok",
+      "detail": "status=published 已落盘 1/1"
+    },
+    {
+      "check": "release[4].candidate[笔记/光学.md]",
+      "status": "ok",
+      "detail": "86 字节"
+    },
+    {
+      "check": "vault.unapproved-overwrite",
+      "status": "ok",
+      "detail": "未批准覆盖 0"
+    },
+    {
+      "check": "vault.unmanaged-content",
+      "status": "ok",
+      "detail": "vault/ 只含托管文件"
+    },
+    {
+      "check": "cases.add-link",
+      "status": "ok",
+      "detail": "独立判定 approvable/None，cases.json 预期 approvable/None"
+    },
+    {
+      "check": "cases.delete-note",
+      "status": "ok",
+      "detail": "独立判定 refuse/delete-requires-explicit-flag，cases.json 预期 refuse/delete-requires-explicit-flag"
+    },
+    {
+      "check": "cases.edit-after-approval",
+      "status": "ok",
+      "detail": "独立判定 approvable/None，cases.json 预期 approvable/None"
+    },
+    {
+      "check": "cases.edit-body",
+      "status": "ok",
+      "detail": "独立判定 approvable/None，cases.json 预期 approvable/None"
+    },
+    {
+      "check": "cases.foreign-touch",
+      "status": "ok",
+      "detail": "独立判定 refuse/path-outside-managed-set，cases.json 预期 refuse/path-outside-managed-set"
+    },
+    {
+      "check": "cases.rename-dangling",
+      "status": "ok",
+      "detail": "独立判定 refuse/link-would-break，cases.json 预期 refuse/link-would-break"
+    },
+    {
+      "check": "cases.rename-linked",
+      "status": "ok",
+      "detail": "独立判定 approvable/None，cases.json 预期 approvable/None"
+    },
+    {
+      "check": "cases.replace-attachment",
+      "status": "ok",
+      "detail": "独立判定 approvable/None，cases.json 预期 approvable/None"
+    },
+    {
+      "check": "approval[c.approval.json].plan-binding",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[c.approval.json].entries",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[c.approval.json].stamps",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[c.approval.json].impacts",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[c.approval.json].vault-untouched",
+      "status": "ok",
+      "detail": "vault_written=False"
+    },
+    {
+      "check": "approval[k.approval.json].plan-binding",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[k.approval.json].entries",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[k.approval.json].stamps",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[k.approval.json].impacts",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[k.approval.json].vault-untouched",
+      "status": "ok",
+      "detail": "vault_written=False"
+    },
+    {
+      "check": "approval[ok.approval.json].plan-binding",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[ok.approval.json].entries",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[ok.approval.json].stamps",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[ok.approval.json].impacts",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[ok.approval.json].vault-untouched",
+      "status": "ok",
+      "detail": "vault_written=False"
+    },
+    {
+      "check": "approval[rb.approval.json].plan-binding",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[rb.approval.json].entries",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[rb.approval.json].stamps",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[rb.approval.json].impacts",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[rb.approval.json].vault-untouched",
+      "status": "ok",
+      "detail": "vault_written=False"
+    },
+    {
+      "check": "approval[stale.approval.json].plan-binding",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[stale.approval.json].entries",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[stale.approval.json].stamps",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[stale.approval.json].impacts",
+      "status": "ok",
+      "detail": ""
+    },
+    {
+      "check": "approval[stale.approval.json].vault-untouched",
+      "status": "ok",
+      "detail": "vault_written=False"
+    },
+    {
+      "check": "approvals.scanned",
+      "status": "ok",
+      "detail": "核对了 5 份批准文件"
+    }
+  ]
+}

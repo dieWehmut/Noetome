@@ -1,0 +1,48 @@
+{
+  "policy": "managed-vault-update-v1",
+  "description": "冻结的托管测试集合：最多两篇笔记与一个 PNG，加一份明确的链接与操作清单。任何不在本清单内的路径都不属于被托管集合。",
+  "notes": [
+    {
+      "path": "笔记/力学.md",
+      "title": "力学",
+      "baseline": "baseline/笔记/力学.md",
+      "sha256": "a436e395e1206a0cb86e5432c2759ba62e830f702faac8ba84e83b0fb5f7d9b0",
+      "byte_length": 169
+    },
+    {
+      "path": "笔记/光学.md",
+      "title": "光学",
+      "baseline": "baseline/笔记/光学.md",
+      "sha256": "5fd27a2c83ef1d85a927a4a699ff21e5c0ff45176645551872e595ebc5c73a08",
+      "byte_length": 50
+    }
+  ],
+  "resources": [
+    {
+      "path": "附件/光谱.png",
+      "baseline": "baseline/附件/光谱.png",
+      "media_type": "image/png",
+      "sha256": "0cb167838a7da1ac0f24fab5caf4a2e1987e2de411cb6aa02f6c1b9abe71e913",
+      "byte_length": 73
+    }
+  ],
+  "links": [
+    {
+      "from": "笔记/力学.md",
+      "raw": "光学.md",
+      "resolves_to": "笔记/光学.md"
+    }
+  ],
+  "operations": [
+    "edit",
+    "link",
+    "attach",
+    "rename",
+    "delete"
+  ],
+  "limits": {
+    "max_notes": 2,
+    "max_resources": 1,
+    "max_operations_per_plan": 2
+  }
+}

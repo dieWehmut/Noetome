@@ -1,0 +1,128 @@
+[通过] layout.root-entries
+[通过] layout.baseline
+[通过] layout.vault
+[通过] layout.control-entries：control/ 只有 owner.json、vault.sqlite、update.lock
+[通过] owner.strict：owner.json 严格、规范、无未知字段
+[通过] owner.policy：policy=managed-vault-update-v1 schema_version=1
+[通过] owner.producer：producer=noetome-managed-vault
+[通过] owner.root-path：记录路径与检查路径一致
+[通过] owner.root_identity：{'platform': 'unix', 'device': 2096, 'inode': 2834379}
+[通过] owner.parent_identity：{'platform': 'unix', 'device': 2096, 'inode': 2834373}
+[通过] owner.control_identity：{'platform': 'unix', 'device': 2096, 'inode': 2834380}
+[通过] owner.owner_identity：{'platform': 'unix', 'device': 2096, 'inode': 2834384}
+[通过] owner.baseline_identity：{'platform': 'unix', 'device': 2096, 'inode': 2834381}
+[通过] owner.vault_identity：{'platform': 'unix', 'device': 2096, 'inode': 2834382}
+[通过] owner.lock_identity：{'platform': 'unix', 'device': 2096, 'inode': 2834383}
+[通过] owner.database_identity：{'platform': 'unix', 'device': 2096, 'inode': 2834385}
+[通过] db.pragmas：application_id=1314280780 user_version=1 journal_mode=delete
+[通过] db.tables：实际表：['metadata', 'plans', 'releases']
+[通过] db.ddl.metadata
+[通过] db.ddl.plans
+[通过] db.ddl.releases
+[通过] db.metadata-row：singleton=1 schema_version=1
+[通过] db.metadata-strict：metadata_json 严格且规范
+[通过] db.plan[fc607d630106]：重算 payload SHA256 fc607d63010620f57862dbfd39fbf57c0cca0313f27396b9f5a8557017f12231
+[通过] db.plan[f6eef82d65fa]：重算 payload SHA256 f6eef82d65fa139a580fa9faf3c387e5bef3c8b61f9a2c2a29f2b5ba477a6f0e
+[通过] db.plan[408772e0b7d7]：重算 payload SHA256 408772e0b7d72c16c20259feafb54f09b385a160c658ddb3f8773448b52d06aa
+[通过] db.plan[5bc26449b8d6]：重算 payload SHA256 5bc26449b8d6ed6705de695ec7fce617926358ca6d3375aa4ad3721c70c3f8fe
+[通过] db.plan[38eb793cfac0]：重算 payload SHA256 38eb793cfac0f8e31ec088e184f44beb1412c58a3da2a2ffaae63d90f571f529
+[通过] db.plan[687e846500b7]：重算 payload SHA256 687e846500b74f05fd644985fcf5b112e6a7d2d1acf36dfacdf5538495c496fc
+[通过] db.plan[9e1fc6db5b33]：重算 payload SHA256 9e1fc6db5b33a29c327850f413a274ea66c125411db1c38bfa2f7aea6a84b8f9
+[通过] db.plan[c4cf0e5ff281]：重算 payload SHA256 c4cf0e5ff2811eedbe487cd396b62e9f93ffa2cca009b7ee5961e661b1eb593d
+[通过] db.plan[89ea0295732b]：重算 payload SHA256 89ea0295732b024b3300db4ce4c1ce2a3a57e691df4a654f024b3cd2ff262e46
+[通过] db.plan[5bcdab6c869e]：重算 payload SHA256 5bcdab6c869ecd2d5348c9e708f59ac1a4ac13e694643a605a7662ed4d4bb00e
+[通过] db.release[1].sequence：序号 1，上一行 0
+[通过] db.release[1].entries-strict
+[通过] db.release[2].sequence：序号 2，上一行 1
+[通过] db.release[2].entries-strict
+[通过] db.release[3].sequence：序号 3，上一行 2
+[通过] db.release[3].entries-strict
+[通过] db.release[4].sequence：序号 4，上一行 3
+[通过] db.release[4].entries-strict
+[通过] baseline.manifest：重算 eb8af53cbee86d885c2d88729a5e34ad75998691414a3d0c719db1b5618cdf8e / owner.json eb8af53cbee86d885c2d88729a5e34ad75998691414a3d0c719db1b5618cdf8e
+[通过] baseline.author-manifest：重算 3dd1eedce4f2864eada696e7d90273803feb54d72d4e237574f5cf82769bfc8f / owner.json 3dd1eedce4f2864eada696e7d90273803feb54d72d4e237574f5cf82769bfc8f
+[通过] baseline.matches-author
+[通过] baseline.matches-metadata：metadata.baseline_files 与 baseline/ 实际字节一致
+[通过] releases.orphan-directories
+[通过] release[1].dir：3615ec9df6eb90a1787c5a0f7f066158b834b37c4221f22a7d64ca6f9886daee
+[通过] release[1].record-identity：release_id=3615ec9df6eb approval=3615ec9df6eb
+[通过] release[1].plan-present：plan_id=9e1fc6db5b33
+[通过] release[1].impacts-binding：重算 eb4b524688c21522bad045a6f72e2fe84e21d39d0a70b1f753f601c9a4088f2b
+[通过] release[1].entries-match-plan
+[通过] release[1].log[0].canonical
+[通过] release[1].log[0].sequence：sequence=1 index=0
+[通过] release[1].state[0]：write 笔记/力学.md state=written
+[通过] release[1].log-covers-entries：日志 1 行、账本 1 条
+[通过] release[1].status：status=published 已落盘 1/1
+[通过] release[1].candidate[笔记/力学.md]：190 字节
+[通过] release[2].dir：9a0d6a9bd4f1d2120def69d6712dfc009548ef5b6c7d7926ffc25f66ff7e280e
+[通过] release[2].record-identity：release_id=9a0d6a9bd4f1 approval=9a0d6a9bd4f1
+[通过] release[2].plan-present：plan_id=c4cf0e5ff281
+[通过] release[2].impacts-binding：重算 7637a0ce0d8a876c853c4320b5c110bfefddecb617ea9a3b8320a508c5729207
+[通过] release[2].entries-match-plan
+[通过] release[2].log[0].canonical
+[通过] release[2].log[0].sequence：sequence=2 index=0
+[通过] release[2].state[0]：write 笔记/力学.md state=written
+[通过] release[2].log-covers-entries：日志 1 行、账本 1 条
+[通过] release[2].status：status=published 已落盘 1/1
+[通过] release[2].candidate[笔记/力学.md]：169 字节
+[通过] release[3].dir：d166d2f31ace0ac3c88f1254686049e03e47f837ba8ad7779f9f850eacf03ed3
+[通过] release[3].record-identity：release_id=d166d2f31ace approval=d166d2f31ace
+[通过] release[3].plan-present：plan_id=89ea0295732b
+[通过] release[3].impacts-binding：重算 eb4b524688c21522bad045a6f72e2fe84e21d39d0a70b1f753f601c9a4088f2b
+[通过] release[3].entries-match-plan
+[通过] release[3].log[0].canonical
+[通过] release[3].log[0].sequence：sequence=3 index=0
+[通过] release[3].state[0]：write 笔记/力学.md state=written
+[通过] release[3].log-covers-entries：日志 1 行、账本 1 条
+[通过] release[3].status：status=published 已落盘 1/1
+[通过] release[3].candidate[笔记/力学.md]：190 字节
+[通过] release[4].dir：25631febd06a02fc5c5be5ff946103c1f972888086ac9a5a2cddecc2b4ab22dd
+[通过] release[4].record-identity：release_id=25631febd06a approval=25631febd06a
+[通过] release[4].plan-present：plan_id=5bcdab6c869e
+[通过] release[4].impacts-binding：重算 b761aaf8bcb926d8ea10bd64eb85bf21e62a048caa824fc09d7586c0950ab73f
+[通过] release[4].entries-match-plan
+[通过] release[4].log[0].canonical
+[通过] release[4].log[0].sequence：sequence=4 index=0
+[通过] release[4].state[0]：write 笔记/光学.md state=written
+[通过] release[4].log-covers-entries：日志 1 行、账本 1 条
+[通过] release[4].status：status=published 已落盘 1/1
+[通过] release[4].candidate[笔记/光学.md]：86 字节
+[通过] vault.unapproved-overwrite：未批准覆盖 0
+[通过] vault.unmanaged-content：vault/ 只含托管文件
+[通过] cases.add-link：独立判定 approvable/None，cases.json 预期 approvable/None
+[通过] cases.delete-note：独立判定 refuse/delete-requires-explicit-flag，cases.json 预期 refuse/delete-requires-explicit-flag
+[通过] cases.edit-after-approval：独立判定 approvable/None，cases.json 预期 approvable/None
+[通过] cases.edit-body：独立判定 approvable/None，cases.json 预期 approvable/None
+[通过] cases.foreign-touch：独立判定 refuse/path-outside-managed-set，cases.json 预期 refuse/path-outside-managed-set
+[通过] cases.rename-dangling：独立判定 refuse/link-would-break，cases.json 预期 refuse/link-would-break
+[通过] cases.rename-linked：独立判定 approvable/None，cases.json 预期 approvable/None
+[通过] cases.replace-attachment：独立判定 approvable/None，cases.json 预期 approvable/None
+[通过] approval[c.approval.json].plan-binding
+[通过] approval[c.approval.json].entries
+[通过] approval[c.approval.json].stamps
+[通过] approval[c.approval.json].impacts
+[通过] approval[c.approval.json].vault-untouched：vault_written=False
+[通过] approval[k.approval.json].plan-binding
+[通过] approval[k.approval.json].entries
+[通过] approval[k.approval.json].stamps
+[通过] approval[k.approval.json].impacts
+[通过] approval[k.approval.json].vault-untouched：vault_written=False
+[通过] approval[ok.approval.json].plan-binding
+[通过] approval[ok.approval.json].entries
+[通过] approval[ok.approval.json].stamps
+[通过] approval[ok.approval.json].impacts
+[通过] approval[ok.approval.json].vault-untouched：vault_written=False
+[通过] approval[rb.approval.json].plan-binding
+[通过] approval[rb.approval.json].entries
+[通过] approval[rb.approval.json].stamps
+[通过] approval[rb.approval.json].impacts
+[通过] approval[rb.approval.json].vault-untouched：vault_written=False
+[通过] approval[stale.approval.json].plan-binding
+[通过] approval[stale.approval.json].entries
+[通过] approval[stale.approval.json].stamps
+[通过] approval[stale.approval.json].impacts
+[通过] approval[stale.approval.json].vault-untouched：vault_written=False
+[通过] approvals.scanned：核对了 5 份批准文件
+
+合计 126 项检查：失败 0、提示 0。

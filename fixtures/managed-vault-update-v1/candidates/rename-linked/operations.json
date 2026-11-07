@@ -1,0 +1,16 @@
+{
+  "policy": "managed-vault-update-v1",
+  "case_id": "rename-linked",
+  "summary": "重命名笔记乙并同步改写笔记甲的引用",
+  "operations": [
+    {
+      "kind": "rename",
+      "from": "笔记/光学.md",
+      "to": "笔记/几何光学.md"
+    },
+    {
+      "kind": "edit",
+      "path": "笔记/力学.md"
+    }
+  ]
+}

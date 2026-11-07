@@ -83,6 +83,9 @@ mod source_model;
 mod source_schema;
 mod source_write;
 pub mod text;
+mod vault_model;
+pub mod vault_store;
+pub mod vault_update;
 mod visual_capabilities;
 
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -113,6 +116,12 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome run api start <run-spec.json> <预算根> <尚不存在的运行根> [--paused]
       noetome run api resume <同一run-spec.json> <预算根> <运行根>
       noetome run api status <预算根> <运行根>
+      noetome vault adopt <author.json> <尚不存在的托管根>
+      noetome vault plan <托管根> <候选目录> <尚不存在的计划文件>
+      noetome vault approve <托管根> <计划文件> <尚不存在的批准文件>
+      noetome vault publish <托管根> <批准文件>
+      noetome vault status <托管根>
+      noetome vault rollback <托管根> <回滚计划文件>
 
 当前支持：
   -h, --help       显示帮助
@@ -133,6 +142,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   case verify             只读校验明确fixture的来源、IR、计划与独立预期
   case compile            将已校验fixture编译到全新临时Vault并保存双报告
   run                     执行有界fixture或人工环回API流程，持久保存检查点和预算
+  vault                   托管测试集合的人工审批与可恢复发布（adopt/plan/approve/publish/status/rollback）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
@@ -339,6 +349,32 @@ pub enum CliCommand {
         case: PathBuf,
         output: PathBuf,
     },
+    VaultHelp,
+    VaultAdopt {
+        author: PathBuf,
+        root: PathBuf,
+    },
+    VaultPlan {
+        root: PathBuf,
+        candidate: PathBuf,
+        plan: PathBuf,
+    },
+    VaultApprove {
+        root: PathBuf,
+        plan: PathBuf,
+        approval: PathBuf,
+    },
+    VaultPublish {
+        root: PathBuf,
+        approval: PathBuf,
+    },
+    VaultStatus {
+        root: PathBuf,
+    },
+    VaultRollback {
+        root: PathBuf,
+        plan: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -358,6 +394,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     if args.first().is_some_and(|arg| arg == "extract") {
         return extraction_command(&args[1..]);
     }
+    if args.first().is_some_and(|arg| arg == "vault") {
+        return vault_command(&args[1..]);
+    }
     match args {
         [] => Ok(CliCommand::Help),
         [arg] if arg == "--help" || arg == "-h" => Ok(CliCommand::Help),
@@ -376,6 +415,87 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
         [project, verb, path] if project == "project" => project_command(verb, path, false),
         [project, verb, separator, path] if project == "project" && separator == "--" => {
             project_command(verb, path, true)
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const VAULT_HELP: &str = "Noetome 托管测试集合的人工审批与可恢复发布
+
+用法：noetome vault adopt <author.json> <尚不存在的托管根>
+      noetome vault plan <托管根> <候选目录> <尚不存在的计划文件>
+      noetome vault approve <托管根> <计划文件> <尚不存在的批准文件>
+      noetome vault publish <托管根> <批准文件>
+      noetome vault status <托管根>
+      noetome vault rollback <托管根> <回滚计划文件>
+
+adopt：只接受明确作者包与全新目录；baseline逐字节冻结，vault复制为初始已发布态。
+plan：把候选操作与当前磁盘、基准三方比对，只写计划文件；删除一律要求批准阶段显式携带。
+approve：绑定计划、受影响路径当前字节、影响清单与owner指纹；输出批准文件。
+publish：写前重采集指纹，任何变化即approval-stale；stage→verify→commit逐项落盘，中断后status报needs_recovery可续。
+status：只读核对托管根布局、账本与待恢复状态。
+rollback：生成反向计划文件；发布后人工改过的路径以rollback-conflict停止。
+仅操作新的测试根；不接管生产Vault；不承诺任意断电原子性。
+";
+
+fn vault_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 6] = ["adopt", "plan", "approve", "publish", "status", "rollback"];
+    if args.is_empty() || matches!(args, [help] if help == "--help" || help == "-h") {
+        return Ok(CliCommand::VaultHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail, [help] if help == "--help" || help == "-h")
+        && VERBS.iter().any(|candidate| verb == candidate)
+    {
+        return Ok(CliCommand::VaultHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |path: &OsString| {
+        !path.is_empty() && (separated || path.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [author, root] if verb == "adopt" && valid(author) && valid(root) => {
+            Ok(CliCommand::VaultAdopt {
+                author: author.into(),
+                root: root.into(),
+            })
+        }
+        [root, candidate, plan]
+            if verb == "plan" && valid(root) && valid(candidate) && valid(plan) =>
+        {
+            Ok(CliCommand::VaultPlan {
+                root: root.into(),
+                candidate: candidate.into(),
+                plan: plan.into(),
+            })
+        }
+        [root, plan, approval]
+            if verb == "approve" && valid(root) && valid(plan) && valid(approval) =>
+        {
+            Ok(CliCommand::VaultApprove {
+                root: root.into(),
+                plan: plan.into(),
+                approval: approval.into(),
+            })
+        }
+        [root, approval] if verb == "publish" && valid(root) && valid(approval) => {
+            Ok(CliCommand::VaultPublish {
+                root: root.into(),
+                approval: approval.into(),
+            })
+        }
+        [root] if verb == "status" && valid(root) => {
+            Ok(CliCommand::VaultStatus { root: root.into() })
+        }
+        [root, plan] if verb == "rollback" && valid(root) && valid(plan) => {
+            Ok(CliCommand::VaultRollback {
+                root: root.into(),
+                plan: plan.into(),
+            })
         }
         _ => Err(INVALID_ARGUMENT),
     }

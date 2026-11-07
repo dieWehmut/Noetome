@@ -1,0 +1,43 @@
+[通过] 陌生 Vault adopt 被拒绝 exit 2（VAULT_ARGUMENT）
+[通过] 陌生 Vault 全部字节未变
+[通过] adopt exit 0
+[通过] status（未发布） exit 0
+[通过] plan edit-body exit 0
+[通过] plan add-link exit 0
+[通过] plan replace-attachment exit 0
+[通过] plan rename-linked exit 0
+[通过] plan edit-after-approval exit 0
+[通过] plan rename-dangling → link-would-break exit 3
+[通过] plan delete-note → delete-requires-explicit-flag exit 3
+[通过] plan foreign-touch → path-outside-managed-set exit 3
+[通过] plan edit-after-approval 第二次 exit 0
+[通过] approve stale.plan exit 0
+[通过] publish 过期批准被拒绝 exit 3
+[通过] 过期批准后 vault/ 保持人工字节
+[通过] plan edit-body exit 0
+[通过] approve ok.plan exit 0
+[通过] publish ok exit 0
+[通过] 独立检查器核验已发布根 exit 0
+[通过] publish 重放 exit 0
+[通过] publish 再次重放 exit 0
+[通过] 重放未改写 vault/
+[通过] rollback 生成反向计划 exit 0
+[通过] approve 反向计划 exit 0
+[通过] publish 反向计划 exit 0
+[通过] rollback 后与基准一致
+[通过] 独立检查器核验回滚后根 exit 0
+[通过] plan edit-body 第三轮 exit 0
+[通过] approve c.plan exit 0
+[通过] publish c exit 0
+[通过] rollback 遇后续人工改动 exit 3（rollback-conflict）
+[通过] plan add-link（用于中断） exit 0
+[通过] approve k.plan exit 0
+[通过] publish 已到 pending 暂停点
+[通过] status（中断后） exit 0
+[通过] status 报告 needs_recovery
+[通过] publish 续跑 exit 0
+[通过] 独立检查器核验恢复后根 exit 0
+[通过] 作者包 foreign/ 全部字节未变
+[通过] 托管 vault/ 未混入陌生内容
+
+矩阵全部通过

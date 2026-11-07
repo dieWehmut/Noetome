@@ -1,0 +1,79 @@
+{
+  "policy": "managed-vault-update-v1",
+  "cases": [
+    {
+      "id": "edit-body",
+      "summary": "只改笔记甲的正文段落，链接与附件不变",
+      "candidate": "candidates/edit-body",
+      "operations": [
+        {"kind": "edit", "path": "笔记/力学.md"}
+      ],
+      "expect": {"decision": "approvable", "refusal": null}
+    },
+    {
+      "id": "add-link",
+      "summary": "在笔记乙新增指向笔记甲的链接",
+      "candidate": "candidates/add-link",
+      "operations": [
+        {"kind": "link", "path": "笔记/光学.md", "target": "笔记/力学.md"}
+      ],
+      "expect": {"decision": "approvable", "refusal": null}
+    },
+    {
+      "id": "replace-attachment",
+      "summary": "替换唯一的 PNG 附件字节",
+      "candidate": "candidates/replace-attachment",
+      "operations": [
+        {"kind": "attach", "path": "附件/光谱.png"}
+      ],
+      "expect": {"decision": "approvable", "refusal": null}
+    },
+    {
+      "id": "rename-dangling",
+      "summary": "重命名笔记乙却不更新笔记甲里的链接，会留下断链",
+      "candidate": "candidates/rename-dangling",
+      "operations": [
+        {"kind": "rename", "from": "笔记/光学.md", "to": "笔记/几何光学.md"}
+      ],
+      "expect": {"decision": "refuse", "refusal": "link-would-break"}
+    },
+    {
+      "id": "rename-linked",
+      "summary": "重命名笔记乙并同步改写笔记甲的引用",
+      "candidate": "candidates/rename-linked",
+      "operations": [
+        {"kind": "rename", "from": "笔记/光学.md", "to": "笔记/几何光学.md"},
+        {"kind": "edit", "path": "笔记/力学.md"}
+      ],
+      "expect": {"decision": "approvable", "refusal": null}
+    },
+    {
+      "id": "delete-note",
+      "summary": "删除笔记甲，候选同时移除指向它的链接",
+      "candidate": "candidates/delete-note",
+      "operations": [
+        {"kind": "delete", "path": "笔记/力学.md"}
+      ],
+      "expect": {"decision": "refuse", "refusal": "delete-requires-explicit-flag"}
+    },
+    {
+      "id": "edit-after-approval",
+      "summary": "批准之后人工再次改写同一笔记，批准必须失效",
+      "candidate": "candidates/edit-after-approval",
+      "operations": [
+        {"kind": "edit", "path": "笔记/力学.md"}
+      ],
+      "expect": {"decision": "approvable", "refusal": null},
+      "mutate_after_approval": {"path": "笔记/力学.md", "content": "人工改写\n"}
+    },
+    {
+      "id": "foreign-touch",
+      "summary": "候选试图改写不在托管集合内的陌生笔记",
+      "candidate": "candidates/foreign-touch",
+      "operations": [
+        {"kind": "edit", "path": "笔记/陌生.md"}
+      ],
+      "expect": {"decision": "refuse", "refusal": "path-outside-managed-set"}
+    }
+  ]
+}

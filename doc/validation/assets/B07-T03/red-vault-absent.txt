@@ -1,0 +1,30 @@
+# B07-T03 真实RED：vault 命令组不存在
+
+时间：2026-11-07T17:31+08:00（复核）
+复核所用二进制：T03 实现前的冻结 CLI，`.artifacts/b07-t02-linux-checked-retry-pair-01-20261107/noetome`，
+sha256 `f18b1bdafebf36787cbebc4f10b175d9b111040f690009356962950257d4ce66` / 17823896B
+（即 B07-T02 验收时封存的那一份，不是本次构建产物）。
+
+## ./target/debug/noetome vault --help（实现前）
+
+```
+CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+```
+`exit=2`
+
+## 冻结 CLI `vault adopt <author.json> <new-root>`（实现前）
+
+```
+CLI_INVALID_ARGUMENT：参数无效或缺少项目路径。请运行 noetome --help 查看用法；包含空格的路径请作为一个参数传入。
+```
+`exit=2`
+
+## 确认没有创建任何根
+
+`/tmp/b07t03-red-recheck-2` 不存在：实现前 CLI 连参数层都没有 `vault`，不会创建托管根。
+
+## 早前记录的更正
+
+本文件首版（2026-11-07T15:54:58+08:00）把两条命令都记成 `[exit=0]`，那是把命令接进管道后取了
+管道（而非 CLI 进程）的退出码所致。上面的复核用冻结二进制直接取进程退出码，实际是 2。
+结论不变：实现前不存在 `vault` 命令组，任何候选都无法进入审批或发布。

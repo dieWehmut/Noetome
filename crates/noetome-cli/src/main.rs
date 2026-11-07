@@ -4,7 +4,7 @@ use std::process::ExitCode;
 
 use noetome_cli::{
     CliCommand, extraction, extraction_api, extraction_verify, fixture, fixture_compile, pdf_parse,
-    project, source,
+    project, source, vault_store, vault_update,
 };
 
 fn main() -> ExitCode {
@@ -422,6 +422,35 @@ fn main() -> ExitCode {
                 }
             }
         }
+        CliCommand::VaultHelp => noetome_cli::VAULT_HELP.to_owned(),
+        CliCommand::VaultAdopt { author, root } => {
+            vault_result(vault_store::adopt(&author, &root), &mut result_code)
+        }
+        CliCommand::VaultPlan {
+            root,
+            candidate,
+            plan,
+        } => vault_result(
+            vault_update::plan(&root, &candidate, &plan),
+            &mut result_code,
+        ),
+        CliCommand::VaultApprove {
+            root,
+            plan,
+            approval,
+        } => vault_result(
+            vault_update::approve(&root, &plan, &approval),
+            &mut result_code,
+        ),
+        CliCommand::VaultPublish { root, approval } => {
+            vault_result(vault_update::publish(&root, &approval), &mut result_code)
+        }
+        CliCommand::VaultStatus { root } => {
+            vault_result(vault_store::status(&root), &mut result_code)
+        }
+        CliCommand::VaultRollback { root, plan } => {
+            vault_result(vault_update::rollback(&root, &plan), &mut result_code)
+        }
     };
 
     if io::stdout().lock().write_all(output.as_bytes()).is_err() {
@@ -446,6 +475,23 @@ fn api_run_result(
         Err(error) => {
             let _ = writeln!(io::stderr().lock(), "{error}");
             // main retains the single common stdout/exit path.
+            *result_code = error.exit_code();
+            String::new()
+        }
+    }
+}
+
+fn vault_result(result: Result<String, project::ProjectError>, result_code: &mut u8) -> String {
+    match result {
+        Ok(text) => {
+            if text.ends_with('\n') {
+                text
+            } else {
+                format!("{text}\n")
+            }
+        }
+        Err(error) => {
+            let _ = writeln!(io::stderr().lock(), "{error}");
             *result_code = error.exit_code();
             String::new()
         }
