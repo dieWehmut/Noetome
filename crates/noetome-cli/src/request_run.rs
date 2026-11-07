@@ -6,7 +6,7 @@ use crate::{
     extraction_source::SourceSession,
     project::{self, ProjectError},
     request_budget_model::*,
-    request_budget_store::{BudgetStore, registered_identity_matches},
+    request_budget_store::{BudgetStore, ReceiptRetryDecision, registered_identity_matches},
     run_model::FileStamp,
     source::CommandOutput,
     text::sha256,
@@ -1140,24 +1140,12 @@ fn unit_loop(
 ) -> Result<(), ProjectError> {
     let cfg = &g.owner.config.units[index];
     let mut store = BudgetStore::open(Path::new(&g.owner.budget_root))?;
-    let mut expect_receipt: Option<AttemptKey> = None;
     loop {
         g.verify()?;
         g.inputs()?;
         let view = store.view()?;
         g.inventory(&view)?;
         let u = unit_view(&view, &g, index)?;
-        if let Some(key) = expect_receipt.take() {
-            if !u
-                .attempts
-                .iter()
-                .any(|a| a.plan.key == key && a.receipt.is_some())
-            {
-                return Err(invalid(
-                    "API exited without an authoritative final receipt; original promise retained。",
-                ));
-            }
-        }
         if u.outcome.is_some() {
             return Ok(());
         }
@@ -1457,10 +1445,37 @@ fn unit_loop(
             )?;
             return Ok(());
         }
-        // Check the authoritative receipt in the next iteration's fresh full
-        // view, after the original input/owner checks, before any retry decision.
-        expect_receipt =
-            Some(finished_key.ok_or_else(|| invalid("API exited without a Prepared identity。"))?);
+        // Revalidate the authoritative receipt in a new complete transaction.
+        // Its guard and input checks precede the transaction's UTC sample;
+        // the next loop's read-only view is not a retry admission snapshot.
+        let key =
+            finished_key.ok_or_else(|| invalid("API exited without a Prepared identity。"))?;
+        let decision = store.schedule_receipt_retry_checked(
+            &key,
+            |view| {
+                g.verify()?;
+                g.inventory(view)?;
+                g.inputs()
+            },
+            || stop.load(Ordering::SeqCst),
+        )?;
+        match decision {
+            ReceiptRetryDecision::Unchanged => {}
+            ReceiptRetryDecision::Scheduled(_) => boundary(
+                "retry_schedule_commit",
+                &cfg.unit_id,
+                key.attempt_no,
+                &g.owner.run_id,
+                &g.root,
+            )?,
+            ReceiptRetryDecision::Finish {
+                outcome,
+                diagnostic,
+            } => {
+                finish_unit(&mut store, &g, index, outcome, &diagnostic, key.attempt_no)?;
+                return Ok(());
+            }
+        }
     }
 }
 struct Hooks<'a> {

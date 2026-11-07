@@ -80,6 +80,16 @@ pub(crate) struct BudgetStore {
     writable: bool,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(super) enum ReceiptRetryDecision {
+    Unchanged,
+    Scheduled(RetrySchedule),
+    Finish {
+        outcome: UnitOutcome,
+        diagnostic: String,
+    },
+}
+
 fn error(code: &'static str, text: impl Into<String>) -> ProjectError {
     ProjectError::new(code, 3, text)
 }
@@ -1242,6 +1252,115 @@ impl BudgetStore {
                 }),
             ))
         })
+    }
+    /// Inspect an API's authoritative receipt and, if eligible, schedule its
+    /// retry in one fresh transaction. Settlement and terminal unit commits
+    /// remain separate; no caller receipt or balance is accepted as evidence.
+    pub(super) fn schedule_receipt_retry_checked(
+        &mut self,
+        key: &AttemptKey,
+        guard: impl FnOnce(&BudgetView) -> Result<(), ProjectError>,
+        stop_requested: impl FnOnce() -> bool,
+    ) -> Result<ReceiptRetryDecision, ProjectError> {
+        self.verify_version()?;
+        self.update_checked(
+            |view| {
+                guard(view)?;
+                verify_inputs(&run(view, &key.run_id)?.spec)
+            },
+            |view, at| {
+                let run = run(view, &key.run_id)?;
+                let unit = unit(run, &key.unit_id)?;
+                let attempt = attempt(view, key)?;
+                // A terminal unit must not hide an API that exited without its
+                // exact Run/unit/attempt/request receipt.
+                let receipt = attempt.receipt.as_ref().ok_or_else(|| {
+                    invalid("API exited without an authoritative final receipt; original promise retained。")
+                })?;
+                if unit.outcome.is_some() || attempt.retry.is_some() {
+                    return Ok((ReceiptRetryDecision::Unchanged, None));
+                }
+                if unit.attempts.last().map(|a| &a.plan.key) != Some(key) {
+                    return Err(invalid("仅当前latest完整attempt身份可决定receipt重试。"));
+                }
+                let finish = |outcome, diagnostic: &str| {
+                    Ok((
+                        ReceiptRetryDecision::Finish {
+                            outcome,
+                            diagnostic: diagnostic.into(),
+                        },
+                        None,
+                    ))
+                };
+                if receipt.candidate_status == CandidateStatus::Validated {
+                    return finish(
+                        UnitOutcome::Succeeded,
+                        "Strict source-bound candidates confirmed; knowledge remains pending",
+                    );
+                }
+                let code = receipt
+                    .error_code
+                    .as_deref()
+                    .ok_or_else(|| invalid("失败receipt缺分类。"))?;
+                if code.starts_with("REQUEST_BUDGET") || code == "REQUEST_RUN_BUDGET_STOP" {
+                    return finish(UnitOutcome::BudgetStopped, code);
+                }
+                let retryable_receipt = receipt.usage.is_none()
+                    && !(receipt.response_complete && receipt.http_status == Some(200))
+                    && retryable(code);
+                if !retryable_receipt || key.attempt_no >= unit.spec.max_attempts {
+                    return finish(UnitOutcome::Failed, code);
+                }
+                if view.global_stopped || run.budget_stopped {
+                    return finish(
+                        UnitOutcome::BudgetStopped,
+                        "Confirmed overrun stops all new sends",
+                    );
+                }
+                if stop_requested() {
+                    return Err(error(
+                        "REQUEST_RUN_STOPPED",
+                        "其他worker要求停止新请求。",
+                    ));
+                }
+                let at = utc(at)?;
+                if at >= utc(&unit.spec.deadline_utc)? || at >= utc(&run.spec.deadline_utc)? {
+                    return finish(UnitOutcome::Failed, "Unit absolute deadline expired");
+                }
+                let delay = run
+                    .spec
+                    .retry_base_delay_ms
+                    .checked_mul(
+                        1_u64
+                            .checked_shl(key.attempt_no - 1)
+                            .ok_or_else(|| invalid("退避溢出。"))?,
+                    )
+                    .ok_or_else(|| invalid("退避溢出。"))?
+                    .min(run.spec.retry_max_delay_ms);
+                let due = at
+                    .checked_add(time::Duration::milliseconds(delay as i64))
+                    .ok_or_else(|| invalid("退避时间溢出。"))?;
+                if due >= utc(&unit.spec.deadline_utc)? {
+                    return finish(
+                        UnitOutcome::Failed,
+                        "No retry fits the original absolute deadline",
+                    );
+                }
+                let schedule = RetrySchedule {
+                    retry_at_utc: due.format(&Rfc3339).map_err(|e| invalid(e.to_string()))?,
+                    error_code: code.into(),
+                };
+                let at = at.format(&Rfc3339).map_err(|e| invalid(e.to_string()))?;
+                validate_retry(view, key, &schedule, &at)?;
+                Ok((
+                    ReceiptRetryDecision::Scheduled(schedule.clone()),
+                    Some(BudgetEvent::RetryScheduled {
+                        key: key.clone(),
+                        schedule,
+                    }),
+                ))
+            },
+        )
     }
     pub(crate) fn finish_unit(
         &mut self,
@@ -3594,6 +3713,278 @@ mod tests {
             s.view().unwrap().totals.held_tokens,
             q.reserved_tokens + q2.reserved_tokens
         );
+    }
+    #[test]
+    fn budget_receipt_retry_checked_revalidates_inputs_after_guard_without_append() {
+        let f = Fixture::new(100_000);
+        let mut s = f.store();
+        let p = f.plan("first", 1);
+        s.reserve(&p).unwrap();
+        s.mark_may_send(&p.key).unwrap();
+        let receipt = f.receipt(&p, None, 1, "EXTRACT_API_HTTP_SERVER");
+        s.seal_transport(&p.key).unwrap();
+        s.settle(&p.key, &receipt).unwrap();
+        let before = fs::read(f.authority.join(DB)).unwrap();
+        let input = f.run.input_pins.keys().next().unwrap();
+        let mut reached_guard = false;
+        let e = s
+            .schedule_receipt_retry_checked(
+                &p.key,
+                |_| {
+                    reached_guard = true;
+                    fs::write(input, b"changed after complete witness, before decision").unwrap();
+                    Ok(())
+                },
+                || panic!("changed input must fail before retry decision"),
+            )
+            .unwrap_err();
+        assert!(reached_guard);
+        assert_eq!(e.code(), "REQUEST_BUDGET_INPUT_CHANGED");
+        assert_eq!(fs::read(f.authority.join(DB)).unwrap(), before);
+    }
+    #[test]
+    fn budget_receipt_retry_checked_samples_clock_after_the_complete_guard() {
+        let mut f = Fixture::new(100_000);
+        let deadline = OffsetDateTime::now_utc() + time::Duration::seconds(4);
+        f.run.deadline_utc = deadline.format(&Rfc3339).unwrap();
+        for unit in &mut f.run.units {
+            unit.deadline_utc = f.run.deadline_utc.clone();
+        }
+        f.run.retry_base_delay_ms = 3000;
+        f.run.retry_max_delay_ms = 3000;
+        let mut s = f.store();
+        let p = f.plan("first", 1);
+        s.reserve(&p).unwrap();
+        s.mark_may_send(&p.key).unwrap();
+        let receipt = f.receipt(&p, None, 1, "EXTRACT_API_HTTP_SERVER");
+        s.seal_transport(&p.key).unwrap();
+        s.settle(&p.key, &receipt).unwrap();
+        let before = fs::read(f.authority.join(DB)).unwrap();
+        let threshold = deadline - time::Duration::milliseconds(2990);
+        let mut reached_guard = false;
+        let result = s
+            .schedule_receipt_retry_checked(
+                &p.key,
+                |_| {
+                    reached_guard = true;
+                    while OffsetDateTime::now_utc() < threshold {
+                        thread::sleep(Duration::from_millis(2));
+                    }
+                    assert!(OffsetDateTime::now_utc() < deadline);
+                    Ok(())
+                },
+                || false,
+            )
+            .unwrap();
+        assert!(reached_guard);
+        assert_eq!(
+            result,
+            ReceiptRetryDecision::Finish {
+                outcome: UnitOutcome::Failed,
+                diagnostic: "No retry fits the original absolute deadline".into(),
+            }
+        );
+        assert_eq!(fs::read(f.authority.join(DB)).unwrap(), before);
+        assert!(attempt(&s.view().unwrap(), &p.key).unwrap().retry.is_none());
+    }
+    #[test]
+    fn budget_receipt_retry_checked_rebuilds_another_writers_terminal_or_overrun() {
+        let f = Fixture::new(100_000);
+        let mut writer = f.store();
+        let p = f.plan("first", 1);
+        writer.reserve(&p).unwrap();
+        writer.mark_may_send(&p.key).unwrap();
+        let receipt = f.receipt(&p, None, 1, "EXTRACT_API_HTTP_SERVER");
+        writer.seal_transport(&p.key).unwrap();
+        writer.settle(&p.key, &receipt).unwrap();
+        let mut reader = BudgetStore::open(&f.authority).unwrap();
+        assert!(
+            unit(
+                run(&reader.view().unwrap(), &p.key.run_id).unwrap(),
+                "first"
+            )
+            .unwrap()
+            .outcome
+            .is_none()
+        );
+        writer
+            .finish_unit(&p.key.run_id, "first", UnitOutcome::Failed, "other writer")
+            .unwrap();
+        let before = fs::read(f.authority.join(DB)).unwrap();
+        assert_eq!(
+            reader
+                .schedule_receipt_retry_checked(
+                    &p.key,
+                    |_| Ok(()),
+                    || { panic!("confirmed terminal must precede stop/retry") }
+                )
+                .unwrap(),
+            ReceiptRetryDecision::Unchanged
+        );
+        assert_eq!(fs::read(f.authority.join(DB)).unwrap(), before);
+
+        let f = Fixture::new(4000);
+        let mut writer = f.store();
+        let p = f.plan("first", 1);
+        let q = f.plan("second", 1);
+        writer.reserve(&p).unwrap();
+        writer.mark_may_send(&p.key).unwrap();
+        writer.reserve(&q).unwrap();
+        writer.mark_may_send(&q.key).unwrap();
+        let receipt = f.receipt(&p, None, 1, "EXTRACT_API_HTTP_SERVER");
+        writer.seal_transport(&p.key).unwrap();
+        writer.settle(&p.key, &receipt).unwrap();
+        let mut reader = BudgetStore::open(&f.authority).unwrap();
+        assert!(!reader.view().unwrap().global_stopped);
+        let overrun = f.receipt(
+            &q,
+            Some(TokenUsage {
+                input_tokens: 1,
+                output_tokens: 6000,
+                total_tokens: 6001,
+            }),
+            1,
+            "EXTRACT_BUDGET_STOP",
+        );
+        writer.seal_transport(&q.key).unwrap();
+        writer.settle(&q.key, &overrun).unwrap();
+        let before = fs::read(f.authority.join(DB)).unwrap();
+        assert_eq!(
+            reader
+                .schedule_receipt_retry_checked(
+                    &p.key,
+                    |_| Ok(()),
+                    || { panic!("confirmed overrun must precede stop/retry") }
+                )
+                .unwrap(),
+            ReceiptRetryDecision::Finish {
+                outcome: UnitOutcome::BudgetStopped,
+                diagnostic: "Confirmed overrun stops all new sends".into(),
+            }
+        );
+        assert_eq!(fs::read(f.authority.join(DB)).unwrap(), before);
+    }
+    #[test]
+    fn budget_receipt_retry_checked_requires_full_key_receipt_before_terminal() {
+        let f = Fixture::new(100_000);
+        let mut s = f.store();
+        let p = f.plan("first", 1);
+        s.reserve(&p).unwrap();
+        s.mark_may_send(&p.key).unwrap();
+        let receipt = f.receipt(&p, None, 1, "EXTRACT_API_HTTP_SERVER");
+        s.seal_transport(&p.key).unwrap();
+        s.settle(&p.key, &receipt).unwrap();
+        s.finish_unit(
+            &p.key.run_id,
+            "first",
+            UnitOutcome::Failed,
+            "already terminal",
+        )
+        .unwrap();
+        let mut foreign = p.key.clone();
+        foreign.request_id = uuid::Uuid::new_v4().to_string();
+        let before = fs::read(f.authority.join(DB)).unwrap();
+        assert!(
+            s.schedule_receipt_retry_checked(&foreign, |_| Ok(()), || false)
+                .is_err()
+        );
+        assert_eq!(fs::read(f.authority.join(DB)).unwrap(), before);
+        let q = f.plan("second", 1);
+        s.reserve(&q).unwrap();
+        s.finish_unit(&q.key.run_id, "second", UnitOutcome::Failed, "no receipt")
+            .unwrap();
+        let before = fs::read(f.authority.join(DB)).unwrap();
+        let e = s
+            .schedule_receipt_retry_checked(&q.key, |_| Ok(()), || false)
+            .unwrap_err();
+        assert!(
+            e.to_string()
+                .contains("without an authoritative final receipt")
+        );
+        assert_eq!(fs::read(f.authority.join(DB)).unwrap(), before);
+    }
+    #[test]
+    fn budget_receipt_retry_checked_appends_once_and_reopens_idempotently() {
+        let f = Fixture::new(100_000);
+        let mut s = f.store();
+        let p = f.plan("first", 1);
+        s.reserve(&p).unwrap();
+        s.mark_may_send(&p.key).unwrap();
+        let receipt = f.receipt(&p, None, 1, "EXTRACT_API_HTTP_SERVER");
+        s.seal_transport(&p.key).unwrap();
+        s.settle(&p.key, &receipt).unwrap();
+        let before = s.view().unwrap();
+        let result = s
+            .schedule_receipt_retry_checked(&p.key, |_| Ok(()), || false)
+            .unwrap();
+        let ReceiptRetryDecision::Scheduled(schedule) = result else {
+            panic!("eligible original HTTP failure must schedule")
+        };
+        let scheduled = s.view().unwrap();
+        assert_eq!(scheduled.sequence, before.sequence + 1);
+        assert_eq!(scheduled.totals, before.totals);
+        assert_eq!(
+            attempt(&scheduled, &p.key).unwrap().retry.as_ref(),
+            Some(&schedule)
+        );
+        let original_db = fs::read(f.authority.join(DB)).unwrap();
+        assert_eq!(
+            s.schedule_receipt_retry_checked(
+                &p.key,
+                |_| Ok(()),
+                || { panic!("existing retry must precede stop/retry") }
+            )
+            .unwrap(),
+            ReceiptRetryDecision::Unchanged
+        );
+        drop(s);
+        let mut s = BudgetStore::open(&f.authority).unwrap();
+        assert_eq!(
+            s.schedule_receipt_retry_checked(&p.key, |_| Ok(()), || false)
+                .unwrap(),
+            ReceiptRetryDecision::Unchanged
+        );
+        assert_eq!(s.view().unwrap(), scheduled);
+        assert_eq!(fs::read(f.authority.join(DB)).unwrap(), original_db);
+    }
+    #[test]
+    fn budget_receipt_retry_checked_complete_200_is_final_and_stop_only_blocks_retry() {
+        let f = Fixture::new(100_000);
+        let mut s = f.store();
+        let p = f.plan("first", 1);
+        s.reserve(&p).unwrap();
+        s.mark_may_send(&p.key).unwrap();
+        let receipt = f.receipt(&p, Some(usage()), 1, "EXTRACT_TIMEOUT");
+        s.seal_transport(&p.key).unwrap();
+        s.settle(&p.key, &receipt).unwrap();
+        let before = fs::read(f.authority.join(DB)).unwrap();
+        assert_eq!(
+            s.schedule_receipt_retry_checked(
+                &p.key,
+                |_| Ok(()),
+                || { panic!("complete 200 with known usage is not a retry-stage stop") }
+            )
+            .unwrap(),
+            ReceiptRetryDecision::Finish {
+                outcome: UnitOutcome::Failed,
+                diagnostic: "EXTRACT_TIMEOUT".into(),
+            }
+        );
+        assert_eq!(fs::read(f.authority.join(DB)).unwrap(), before);
+        let q = f.plan("second", 1);
+        s.reserve(&q).unwrap();
+        s.mark_may_send(&q.key).unwrap();
+        let receipt = f.receipt(&q, None, 1, "EXTRACT_API_HTTP_SERVER");
+        s.seal_transport(&q.key).unwrap();
+        s.settle(&q.key, &receipt).unwrap();
+        let before = fs::read(f.authority.join(DB)).unwrap();
+        assert_eq!(
+            s.schedule_receipt_retry_checked(&q.key, |_| Ok(()), || true)
+                .unwrap_err()
+                .code(),
+            "REQUEST_RUN_STOPPED"
+        );
+        assert_eq!(fs::read(f.authority.join(DB)).unwrap(), before);
     }
     fn refuse_local_timeout_retry_and_rehashed_event(
         f: &Fixture,
