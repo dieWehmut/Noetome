@@ -13,13 +13,14 @@ import { MagnifyingGlassIcon } from "@phosphor-icons/react/dist/csr/MagnifyingGl
 import { NotePencilIcon } from "@phosphor-icons/react/dist/csr/NotePencil";
 import { DotsThreeIcon } from "@phosphor-icons/react/dist/csr/DotsThree";
 import { AppWindowIcon } from "@phosphor-icons/react/dist/csr/AppWindow";
+import { QueueIcon } from "@phosphor-icons/react/dist/csr/Queue";
 
 const icons = {
   home: HouseIcon, pulse: ClockIcon, info: InfoIcon, arrow: ArrowRightIcon,
   book: BookOpenIcon, terminal: TerminalWindowIcon, settings: GearSixIcon,
   sun: SunIcon, moon: MoonIcon, folder: FolderOpenIcon, caret: CaretDownIcon,
   search: MagnifyingGlassIcon, compose: NotePencilIcon, more: DotsThreeIcon,
-  window: AppWindowIcon,
+  window: AppWindowIcon, queue: QueueIcon,
 };
 
 export default function AppIcon({ name, filled = false }: { name: keyof typeof icons; filled?: boolean }) {

@@ -1,0 +1,29 @@
+== cargo fmt --all --check ==
+exit=0
+
+== cargo check --workspace ==
+      1 warning: `noetome-cli` (lib) generated 9 warnings (run `cargo fix --lib -p noetome-cli` to apply 3 suggestions)
+      1 warning: `noetome-desktop` (bin "noetome-desktop") generated 1 warning (run `cargo fix --bin "noetome-desktop" -p noetome-desktop` to apply 1 suggestion)
+      1 warning: constant `IMPACT_CATEGORIES` is never used
+      1 warning: constant `MAX_BYTES` is never used
+      1 warning: field `final_bytes` is never read
+      1 warning: field `owner` is never read
+      1 warning: function `read_bounded` is never used
+      1 warning: methods `authority_matches`, `reserve`, `mark_may_send`, and `schedule_retry` are never used
+      1 warning: unused import: `OpenOptions`
+      1 warning: unused import: `process_wrap::std::*`
+      1 warning: unused imports: `Write`, `process::Stdio`, and `thread`
+      1 warning: unused variable: `title`
+check-exit=0
+
+== cargo test -p noetome-desktop ==
+test tasks::tests::four_kinds_are_read_without_writing_anything ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.21s
+
+
+== desktop warnings ==
+   --> crates/noetome-desktop/src/main.rs:142:25
+    |
+142 | fn report_desktop_error(title: &str, message: &str, log_dir: Option<PathBuf>) {
+    |                         ^^^^^ help: if this is intentional, prefix it with an underscore: `_title`

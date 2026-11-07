@@ -3,7 +3,7 @@ import AppIcon from "./AppIcon";
 import type { Page, Theme } from "./appTypes";
 
 const pageLabels: Record<Page, string> = {
-  workspace: "工作台", project: "项目", runtime: "运行检查", appearance: "外观设置", window: "窗口设置", about: "关于 Noetome",
+  workspace: "工作台", project: "项目", tasks: "任务中心", runtime: "运行检查", appearance: "外观设置", window: "窗口设置", about: "关于 Noetome",
 };
 
 interface AppSidebarProps {
@@ -25,7 +25,7 @@ export default function AppSidebar({ page, visible, recentPages, theme, onNaviga
   const search = query.trim().toLocaleLowerCase();
   const matches = (target: Page) => pageLabels[target].toLocaleLowerCase().includes(search);
   const results = (Object.keys(pageLabels) as Page[]).filter(matches);
-  const tools = (["runtime", "about"] as const).filter(matches);
+  const tools = (["tasks", "runtime", "about"] as const).filter(matches);
   const recent = recentPages.filter(matches);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function AppSidebar({ page, visible, recentPages, theme, onNaviga
     searchButtonRef.current?.focus();
   }
 
-  function pageButton(target: Page, icon?: "pulse" | "info") {
+  function pageButton(target: Page, icon?: "pulse" | "info" | "queue") {
     return (
       <button key={target} className={`nav-item ${page === target ? "is-active" : ""}`} aria-current={page === target ? "page" : undefined} onClick={() => onNavigate(target)}>
         {icon && <AppIcon name={icon} />}<span>{pageLabels[target]}</span>
@@ -52,6 +52,7 @@ export default function AppSidebar({ page, visible, recentPages, theme, onNaviga
         <div className="rail-top">
           <button className={`rail-button ${page === "workspace" ? "is-active" : ""}`} aria-label="工作台" title="工作台" aria-current={page === "workspace" ? "page" : undefined} onClick={() => onNavigate("workspace")}><AppIcon name="home" filled={page === "workspace"} /></button>
           <button className={`rail-button ${page === "project" ? "is-active" : ""}`} aria-label="项目" title="项目" aria-current={page === "project" ? "page" : undefined} onClick={() => onNavigate("project")}><AppIcon name="folder" filled={page === "project"} /></button>
+          <button className={`rail-button ${page === "tasks" ? "is-active" : ""}`} aria-label="任务中心" title="任务中心" aria-current={page === "tasks" ? "page" : undefined} onClick={() => onNavigate("tasks")}><AppIcon name="queue" filled={page === "tasks"} /></button>
           <button className={`rail-button ${page === "runtime" ? "is-active" : ""}`} aria-label="运行检查" title="运行检查" aria-current={page === "runtime" ? "page" : undefined} onClick={() => onNavigate("runtime")}><AppIcon name="pulse" /></button>
           <button className="rail-button" aria-label="关于 Noetome" title="关于 Noetome" onClick={() => onNavigate("about")}><AppIcon name="more" /></button>
         </div>
@@ -77,7 +78,7 @@ export default function AppSidebar({ page, visible, recentPages, theme, onNaviga
             <div id="sidebar-projects" className="sidebar-empty" hidden={!projectsExpanded}><p>当前会话尚未载入项目</p><button className="text-button" onClick={() => onNavigate("project")}>新建或打开项目<AppIcon name="arrow" /></button></div>
           </section>}
 
-          {!search && tools.length > 0 && <section className="sidebar-section" aria-labelledby="tools-heading"><h2 id="tools-heading" className="nav-section-label">工具</h2><nav aria-label="工具导航">{tools.map((target) => pageButton(target, target === "runtime" ? "pulse" : "info"))}</nav></section>}
+          {!search && tools.length > 0 && <section className="sidebar-section" aria-labelledby="tools-heading"><h2 id="tools-heading" className="nav-section-label">工具</h2><nav aria-label="工具导航">{tools.map((target) => pageButton(target, target === "runtime" ? "pulse" : target === "tasks" ? "queue" : "info"))}</nav></section>}
           {!search && recent.length > 0 && <section className="sidebar-section recent-section" aria-labelledby="recent-heading"><h2 id="recent-heading" className="nav-section-label">最近访问</h2><nav aria-label="最近访问">{recent.map((target) => pageButton(target))}</nav></section>}
           {search && <section className="sidebar-section" aria-labelledby="search-results-heading"><h2 id="search-results-heading" className="nav-section-label">搜索结果</h2>{results.length > 0 ? <nav aria-label="搜索结果">{results.map((target) => pageButton(target))}</nav> : <p className="navigation-empty" role="status">没有匹配的页面</p>}</section>}
         </div>

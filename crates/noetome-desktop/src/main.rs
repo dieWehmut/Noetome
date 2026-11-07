@@ -13,6 +13,7 @@ use tauri::{Manager, WindowEvent};
 
 mod preferences;
 mod project_entry;
+mod tasks;
 use preferences::{CloseBehavior, PreferencesState};
 
 const MAIN_TRAY_ID: &str = "noetome-main-tray";
@@ -24,7 +25,7 @@ struct RuntimeInfo {
     app_version: &'static str,
     cli_version: &'static str,
     target: &'static str,
-    capabilities: [&'static str; 4],
+    capabilities: [&'static str; 5],
     cli_help: &'static str,
 }
 
@@ -34,7 +35,13 @@ fn runtime_info() -> RuntimeInfo {
         app_version: env!("CARGO_PKG_VERSION"),
         cli_version: noetome_cli::VERSION,
         target: env!("NOETOME_TARGET"),
-        capabilities: ["help", "version", "project.create", "project.open"],
+        capabilities: [
+            "help",
+            "version",
+            "project.create",
+            "project.open",
+            "task.read",
+        ],
         cli_help: noetome_cli::HELP,
     }
 }
@@ -62,6 +69,16 @@ fn project_create(path: String) -> Result<project_entry::ProjectSummary, String>
 #[tauri::command]
 fn project_open(path: String) -> Result<project_entry::ProjectSummary, String> {
     project_entry::open(Path::new(&path))
+}
+
+#[tauri::command]
+fn task_read(kind: String, path: String) -> Result<tasks::TaskSummary, String> {
+    tasks::read(&kind, Path::new(&path))
+}
+
+#[tauri::command]
+fn task_kinds() -> Vec<tasks::TaskKind> {
+    tasks::kinds()
 }
 
 #[tauri::command]
@@ -274,6 +291,8 @@ fn main() {
             pick_directory,
             project_create,
             project_open,
+            task_read,
+            task_kinds,
             get_close_behavior,
             set_close_behavior
         ])
@@ -372,7 +391,13 @@ mod tests {
         assert_eq!(info.app_version, info.cli_version);
         assert_eq!(
             info.capabilities,
-            ["help", "version", "project.create", "project.open"]
+            [
+                "help",
+                "version",
+                "project.create",
+                "project.open",
+                "task.read"
+            ]
         );
         assert_eq!(info.cli_help, cli_preview("help").unwrap());
         assert_eq!(

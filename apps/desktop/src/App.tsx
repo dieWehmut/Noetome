@@ -4,6 +4,7 @@ import AppMenuBar from "./AppMenuBar";
 import type { AppMenu } from "./AppMenuBar";
 import AppSidebar from "./AppSidebar";
 import AppProject from "./AppProject";
+import AppTasks from "./AppTasks";
 import AppSettings from "./AppSettings";
 import Icon from "./AppIcon";
 import useThemePreference from "./useThemePreference";
@@ -28,9 +29,10 @@ interface Preview {
   error: string;
 }
 
-const pages: { id: Page; label: string; icon: "home" | "folder" | "pulse" | "info" | "settings" }[] = [
+const pages: { id: Page; label: string; icon: "home" | "folder" | "queue" | "pulse" | "info" | "settings" }[] = [
   { id: "workspace", label: "工作台", icon: "home" },
   { id: "project", label: "项目", icon: "folder" },
+  { id: "tasks", label: "任务中心", icon: "queue" },
   { id: "runtime", label: "运行检查", icon: "pulse" },
   { id: "appearance", label: "设置", icon: "settings" },
   { id: "about", label: "关于", icon: "info" },
@@ -188,6 +190,7 @@ export default function App() {
     { label: "File", actions: [
       { id: "workspace", label: "工作台", onSelect: () => navigate("workspace") },
       { id: "project", label: "项目", onSelect: () => navigate("project") },
+      { id: "tasks", label: "任务中心", onSelect: () => navigate("tasks") },
       { id: "runtime", label: "运行检查", onSelect: () => navigate("runtime") },
       { id: "appearance", label: "设置", onSelect: () => navigate("appearance") },
       { id: "settings", label: "窗口设置", onSelect: () => navigate("window", "window-settings-title") },
@@ -230,13 +233,16 @@ export default function App() {
               <div className="capability-grid">
                 <section className="capability-card"><div className="card-icon"><Icon name="terminal" /></div><span className="small-badge available">已接入</span><h3>查看帮助与版本</h3><p>通过本地组件查看 CLI 用法与版本，确认桌面应用连接状态。</p><button className="text-button" onClick={() => navigate("runtime")}>打开运行检查<Icon name="arrow" /></button></section>
                 <section className="capability-card"><div className="card-icon"><Icon name="folder" /></div><span className="small-badge available">已接入</span><h3>建立学习项目</h3><p>新建一个项目根，或只读检查已有项目；字段直接来自本地 Rust 组件。资料导入与知识生成尚未接入。</p><button className="text-button" onClick={() => navigate("project")}>新建或打开项目<Icon name="arrow" /></button></section>
+                <section className="capability-card"><div className="card-icon"><Icon name="queue" /></div><span className="small-badge available">已接入</span><h3>查看任务状态</h3><p>只读投影六单元运行、研究队列、有界检索与写作反馈修订四类账本；四维状态与错误码原样显示。</p><button className="text-button" onClick={() => navigate("tasks")}>打开任务中心<Icon name="arrow" /></button></section>
               </div>
 
-              <section className="scope-note"><span className="scope-marker" aria-hidden="true" /><p>桌面已接入项目新建与只读检查；资料导入、来源登记与笔记生成仍通过 CLI 使用。</p></section>
+              <section className="scope-note"><span className="scope-marker" aria-hidden="true" /><p>桌面已接入项目新建、只读检查与任务状态投影；启动运行、资料导入、审批与发布仍通过 CLI 使用。</p></section>
             </>
           )}
 
           {page === "project" && <AppProject />}
+
+          {page === "tasks" && <AppTasks />}
 
           {page === "runtime" && (
             <>

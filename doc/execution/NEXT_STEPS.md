@@ -10,15 +10,15 @@ B07 三项现已实际验收：[有限流程检查点与恢复](../validation/B0
 
 B08 三项现已实际验收：[研究候选队列与拒绝记忆](../validation/B08-T01.md)、[批准范围内的有界检索](../validation/B08-T02.md)、[写作反馈缺口回到修订重编译](../validation/B08-T03.md)。T01 实现 research 五动词与三表 sqlite 账本（application_id 0x4E525148），必做集合只由 adopt 冻结、越界主题只能以 out_of_scope 进队列、拒绝记忆用只追加事件区分 blocked_repeat 与 reopened，独立审计132项。T02 实现 retrieve 八动词与五表账本（0x4E525452），预留即计入的持久预算、五种结果、七类终止理由的证据判据、reserved 尝试补结算不重复预留，独立审计107项与99项（紧凑预算）。T03 实现 revision 五动词与五表账本（0x4E525652），缺口与候选分离、新 IR 版本只重编译声明依赖的表示、无来源补充标待核验、超上限升级、无新证据拒绝再推翻，独立审计49项。三者均记录真实 RED、独立审计器单测与 CLI 集成测试，收束提交分别为 e5c7c81、ad48698、98f1955，均已普通推送并核对远端一致。归档卡见[B08 步骤](B08_STEPS.md)。
 
-依据[路线图 B09 行](ROADMAP.md)与 PRD 第14章页面清单，当前批次只展开[B09 三张桌面个人版执行卡](B09_STEPS.md)。三张卡依次验收：先把项目新建与只读检查接到桌面，再把四类既有根的状态做成只读任务中心，最后冻结打包配置并写安装后验收清单；状态由日志工具维护，切批次不自动启动下一项。
+依据[路线图 B09 行](ROADMAP.md)与 PRD 第14章页面清单，B09 只展开[B09 三张桌面个人版执行卡](B09_STEPS.md)：先把项目新建与只读检查接到桌面、再把四类既有根的状态做成只读任务中心、最后冻结打包配置并写安装后验收清单。T01 与 T02 现已实际验收，T03 待做；状态由日志工具维护，切批次不自动启动下一项。
 
-## 1 B09-T01 桌面项目入口与真实工程状态
+## 1 B09-T01 桌面项目入口与真实工程状态（已验收，791d19b）
 
-依赖B08-T03。新增受限 Tauri 命令投影 `project::initialize` 与 `project::inspect` 的真实结果；前端新增项目页替换"尚未接入"空状态。新建只接受尚不存在的新目录并显示实际 `project_id`/`schema_version`/`created_at`/`state`/`database`；已存在、未初始化完成、损坏与外来布局按既有错误码拒绝并保留现场。桌面层不新增写入路径、不联网、不调用模型、不创建 Vault；前端不重算或伪造状态。Rust 单测覆盖四类结果，前端 `tsc --noEmit` 与 `vite build` 实际通过，Windows 原生安装内交互测试如实列为未运行。
+依赖B08-T03。新增受限 Tauri 命令 `pick_directory`/`project_create`/`project_open` 投影 `project::initialize` 与 `project::inspect` 的真实结果；前端新增「项目」页替换"尚未接入"空状态。新建只接受尚不存在的新目录并显示实际 `project_id`/`schema_version`/`created_at`/`state`/`database`；已存在、未初始化完成、损坏与外来布局按既有错误码（`PROJECT_PATH_EXISTS`/`PROJECT_INCOMPLETE`/`PROJECT_INVALID_CONFIG`/`PROJECT_INVALID_DATABASE`/`PROJECT_UNSAFE_PATH`/`PROJECT_IO_ERROR`）拒绝并保留现场。桌面层不新增写入路径、不联网、不调用模型、不创建 Vault；前端不重算或伪造状态。`cargo test -p noetome-desktop` 18 项通过（含新增 6 项四类真实返回与零写入快照），`npm run web:check` 与 `npm run web:build` 通过，Windows 原生安装内交互与 rfd 目录选择器如实列为未运行。详见[B09-T01 验收](../validation/B09-T01.md)。
 
-## 2 B09-T02 桌面任务中心只读投影
+## 2 B09-T02 桌面任务中心只读投影（已验收）
 
-依赖B09-T01。新增只读命令复用 run/research/retrieve/revision 四类既有状态查询，前端分列显示四维状态、计数、候选五态、预算与七类终止理由、缺口与修订结果，不重算阈值。未建立、损坏、外来布局分别显示真实错误码，不显示成空任务或成功。四维状态口径与 CLI 报告一致：分母为零显示不适用，未启用研究显示未请求或不适切，不用百分比代替计数。只读投影零写入，读取前后对每个根做快照比对；不调度新请求、不调用模型、不写 Vault。
+依赖B09-T01。新增只读命令 `task_read`/`task_kinds` 复用 `fixture_run::status`、`research_store::list`、`retrieval_store::list`、`revision_store::list` 四类既有只读入口；前端「任务中心」页分别显示四维状态、计数、候选五态、预算与终止理由、缺口与修订结果，不重算阈值、不转百分比。未建立显示为「尚未建立」（不当成失败），损坏与外来根保留 CLI 原错误码（如 `RESEARCH_UNKNOWN_ROOT`、`REVISION_UNKNOWN_ROOT`、`PROJECT_INVALID_DATABASE`）并原样显示`代码：说明`，不显示成空任务或成功。只读投影零写入，四类根读取前后快照比对；不调度新请求、不调用模型、不写 Vault。`cargo test -p noetome-desktop` 28 项通过（含新增 10 项），`npm run web:check` 与 `npm run web:build` 通过，Windows 原生安装内的任务类型切换与读取操作如实列为未运行。详见[B09-T02 验收](../validation/B09-T02.md)。
 
 ## 3 B09-T03 个人版打包配置与安装验收清单
 

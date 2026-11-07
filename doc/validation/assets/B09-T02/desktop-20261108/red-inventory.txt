@@ -1,0 +1,29 @@
+== #[tauri::command] functions before B09-T02 ==
+32:fn runtime_info() -> RuntimeInfo {
+43:fn cli_preview(option: &str) -> Result<String, String> {
+53:fn pick_directory() -> Result<Option<String>, String> {
+58:fn project_create(path: String) -> Result<project_entry::ProjectSummary, String> {
+63:fn project_open(path: String) -> Result<project_entry::ProjectSummary, String> {
+68:fn get_close_behavior(state: tauri::State<'_, PreferencesState>) -> Result<String, String> {
+73:fn set_close_behavior(
+
+== capabilities line ==
+27:    capabilities: [&'static str; 4],
+37:        capabilities: ["help", "version", "project.create", "project.open"],
+
+== grep task/tasks in desktop crate ==
+crates/noetome-desktop/src/main.rs:210:    // Standard minimize/resize events remain native Windows taskbar behavior.
+
+== App.tsx pages ==
+31:const pages: { id: Page; label: string; icon: "home" | "folder" | "pulse" | "info" | "settings" }[] = [
+32-  { id: "workspace", label: "工作台", icon: "home" },
+33-  { id: "project", label: "项目", icon: "folder" },
+34-  { id: "runtime", label: "运行检查", icon: "pulse" },
+35-  { id: "appearance", label: "设置", icon: "settings" },
+36-  { id: "about", label: "关于", icon: "info" },
+37-];
+38-
+39-function errorText(error: unknown) {
+
+== App.tsx 任务 mentions ==
+apps/desktop/src/AppSettings.tsx:84:        <div className="settings-row-copy"><label htmlFor="close-behavior">关闭窗口时</label><p>最小化后仍显示在任务栏；托盘菜单“退出”始终结束程序。</p></div>
