@@ -41,6 +41,7 @@
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |
 | [工作流程](standards/WORKFLOW.md) | 每轮范围、日志、Git和验证顺序 | 开发协作方式变化 |
+| [桌面安装验收](standards/DESKTOP_ACCEPTANCE.md) | 安装后人工验收清单与判定规则 | 打包目标、窗口与命令面或桌面入口变化 |
 | [阶段路线](execution/ROADMAP.md) | 后续阶段目标及进入条件 | 阶段验收后滚动修订 |
 | [近期步骤](execution/NEXT_STEPS.md) | 下一批最多3个可执行任务卡 | 当前批次完成后展开下一批 |
 | [任务模板](templates/TASK.md) | 新任务卡的必填内容 | 工作卡结构变化 |

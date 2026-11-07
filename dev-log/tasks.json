@@ -3310,7 +3310,7 @@
       "id": "B09-T03",
       "title": "个人版打包配置与安装验收清单",
       "batch": "B09",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B09-T02"
       ],
@@ -3325,7 +3325,111 @@
         "在本环境可执行的部分必须实际运行并留下原件：前端 tsc 与 vite 构建、Rust release 构建（或如实记录不可用原因）、打包前置检查；Windows 原生 NSIS 安装与卸载未运行时必须在验证记录中单列，不得声称已通过。",
         "验证记录包含清单、实际执行结果与未运行项；通过后 complete、提交并推送，不把本批次当作科学质量、生产 Vault 或长期规模门槛已达标。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T18:47:49Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结个人版打包配置与安装后验收清单，新增只读打包审计脚本并在本环境实际执行可运行部分",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-07T18:55:02Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "冻结个人版打包面 10 个成员（tauri.conf.json / capabilities/main.json / icons manifest / 5 个图标 / package.json / DESKTOP_ACCEPTANCE.md），仅改 longDescription 反映项目入口与任务中心已接入；新增安装后验收清单 9 节 40 余条与只读打包审计器（72 项检查）+ 34 项反例测试；本机实跑 web:check/web:build/fmt/check/desktop 单测 28 项/release 构建；Windows 原生 NSIS 与清单执行未运行，如实单列",
+          "validation": [
+            "python3 scripts/verify_desktop_package.py . -> 合计 72 项检查：失败 0、提示 0（exit 0）",
+            "PYTHONUTF8=1 python3 -m unittest tests.test_verify_desktop_package -> Ran 34 tests / OK",
+            "npm run web:check exit 0；npm run web:build exit 0（61->64 modules，index-C1_5kHW4.css 19.94 kB、index-CD7Cb9Kv.js 323.63 kB，143ms）",
+            "cargo fmt --all --check exit 0；cargo check --workspace exit 0（仅既有 warning）",
+            "cargo test -p noetome-desktop -> running 28 tests / 28 passed / 0 failed",
+            "cargo build --release -p noetome-desktop exit 0（target/release/noetome-desktop 18040496 字节，2m11s）",
+            "未运行：Windows 原生 NSIS 安装/卸载与 DESKTOP_ACCEPTANCE.md 全部人工条目（本机 rustup 目标只有 x86_64-unknown-linux-gnu，makensis 不存在）"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B09-T03.md",
+              "sha256": "db708d5846166a1538bb2d043d7062e6c964de9deeae6f6d0c9b1bd2869437f9"
+            },
+            {
+              "path": "doc/standards/DESKTOP_ACCEPTANCE.md",
+              "sha256": "3e76e3234173a5a49318ef9aa9e9e383a926a835d245ed0357ac4cb425455a05"
+            },
+            {
+              "path": "scripts/verify_desktop_package.py",
+              "sha256": "32c102f12607c96f9312d1831b840e9f30feaea4692bf9dac692bbcd18319e07"
+            },
+            {
+              "path": "tests/test_verify_desktop_package.py",
+              "sha256": "2a20bbccbab51f29de80bcc2a5208299bab787977e1364ecea6ac7a14c7f0016"
+            },
+            {
+              "path": "crates/noetome-desktop/packaging-frozen.json",
+              "sha256": "4975a803a0e3ca4d840207261bbf4f311ab7ca336bc099a0c3a33c3977353a5d"
+            },
+            {
+              "path": "crates/noetome-desktop/tauri.conf.json",
+              "sha256": "b6483191850d1c38128eee5258f5f518603abe5d7b189389880f9ab1a965635d"
+            },
+            {
+              "path": "doc/README.md",
+              "sha256": "55cefb7ef20befb2f889dd00d68d9e4baf9516d16b9c8693e35465cc20dd323d"
+            },
+            {
+              "path": "doc/execution/NEXT_STEPS.md",
+              "sha256": "b66abe00fbc935930ea924ac3601a2298abc91ac4ce8a9954afca20e6ca3c039"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/audit.txt",
+              "sha256": "8e74d55b1c59c57c8d4afa373f09db3312fbdde599e81564711f9dd7881d51b1"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/audit.json",
+              "sha256": "084baad5d15dce84d3a3e30bcad75c48286e9022de3fd7cccda83c36a2c1e7bd"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/audit-tests.txt",
+              "sha256": "2ddfd0de1205b7f8740966653d5ac278e0100967819fd2294067c93b9e68d4ba"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/web-check.txt",
+              "sha256": "f110e6a443686e09bdf16d952375896e15520ebe4c077973981b04419009ae04"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/web-build.txt",
+              "sha256": "742efe3c93fcd7e1d4f5569d0a91cae6e01bf3aa98ae45721819b83601b9885a"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/rust-fmt.txt",
+              "sha256": "b83a1486b5adb5e228c7f1a1315eac443e636b9b40d0df75cc589e1cf89be832"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/rust-check.txt",
+              "sha256": "62a7b18e1afc309f9ea6bcc2c9d337ce04f020c3fa4bdb96ee38bf5d773f149a"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/rust-desktop-tests.txt",
+              "sha256": "b4b5fae0a83fb068c998e4882306876ef6ec5b6d3446f72cf16c46bbc99c3830"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/rust-release-build.txt",
+              "sha256": "376f0ac158add173efb7299de25b0d69bd7dc4d3e48953532fb65f41d51b340d"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/inventory-after.txt",
+              "sha256": "41b0e510a8a32b4e0abf6a9c75694d4880deeefc1ae27a0d2eb4b466e1f3c1e8"
+            },
+            {
+              "path": "doc/validation/assets/B09-T03/desktop-20261108/red-inventory.txt",
+              "sha256": "1c4fe7d864dd75bab55e2ffb69d9d967aea1b896735977b47f8e78bb74740155"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

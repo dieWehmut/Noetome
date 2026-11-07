@@ -1,0 +1,14 @@
+== python3 -m unittest tests.test_verify_desktop_package ==
+..仓库根不存在：/tmp/noetome-package-cli-a_j_m__e/absent
+.未知参数：--nonsense
+...............................
+----------------------------------------------------------------------
+Ran 34 tests in 0.167s
+
+OK
+合计 72 项检查：失败 0、提示 0
+[失败] config-identifier：identifier 应为 com.noetome.desktop，实际 'com.example.other'
+[失败] frozen-digest：crates/noetome-desktop/tauri.conf.json 与冻结摘要不符：冻结 b6483191850d1c38128eee5258f5f518603abe5d7b189389880f9ab1a965635d，实际 dc300e3772e6de25a0ea50e09a0c5a144afd7a09ed499297e5ed153550eac0c2
+合计 72 项检查：失败 2、提示 0
+已冻结 10 个成员（version=0.1.0）
+exit=0
