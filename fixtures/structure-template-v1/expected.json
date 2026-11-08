@@ -1,0 +1,76 @@
+{
+  "policy": "structure-template-v1",
+  "plan_version": 1,
+  "case_id": "tpl-metabolism-v1",
+  "counts": {
+    "templates": 1,
+    "topics": 2,
+    "goals": 6,
+    "notes": 6,
+    "concepts": 4,
+    "atoms": 10,
+    "explanations": 4,
+    "references": 5,
+    "embeds": 1,
+    "sections": 8,
+    "special_sections": 0,
+    "omitted_sections": 10,
+    "deviations": 10,
+    "findings": 0,
+    "model_calls": 0,
+    "network_requests": 0
+  },
+  "verdict": "pass",
+  "topics": [
+    {"topic_id": "topic-glycolysis", "title": "糖酵解", "folder": "糖酵解", "template_id": "pathway", "level": 1},
+    {"topic_id": "topic-gluconeogenesis", "title": "糖异生", "folder": "糖异生", "template_id": "pathway", "level": 1}
+  ],
+  "goals": [
+    {"goal_id": "goal-glycolysis-main", "path": "代谢/糖酵解/01-goal-glycolysis-main.md", "title": "糖酵解：总览", "kind": "overview", "sections": ["定位", "反应"], "atoms": 2, "references": 1},
+    {"goal_id": "goal-glycolysis-energy", "path": "代谢/糖酵解/02-goal-glycolysis-energy.md", "title": "糖酵解：能量", "kind": "energy", "sections": ["反应"], "atoms": 2, "references": 2},
+    {"goal_id": "goal-glycolysis-regulation", "path": "代谢/糖酵解/03-goal-glycolysis-regulation.md", "title": "糖酵解：调控", "kind": "regulation", "sections": ["调控"], "atoms": 1, "references": 0},
+    {"goal_id": "goal-gluconeogenesis-main", "path": "代谢/糖异生/01-goal-gluconeogenesis-main.md", "title": "糖异生：总览", "kind": "overview", "sections": ["定位", "反应"], "atoms": 2, "references": 0},
+    {"goal_id": "goal-gluconeogenesis-energy", "path": "代谢/糖异生/02-goal-gluconeogenesis-energy.md", "title": "糖异生：能量", "kind": "energy", "sections": ["反应"], "atoms": 2, "references": 2},
+    {"goal_id": "goal-gluconeogenesis-compare", "path": "代谢/糖异生/03-goal-gluconeogenesis-compare.md", "title": "糖异生：比较", "kind": "comparison", "sections": ["定位"], "atoms": 1, "references": 1}
+  ],
+  "explanations": [
+    {"concept_id": "concept-glycolysis", "note": "代谢/糖酵解/01-goal-glycolysis-main.md", "references": 1},
+    {"concept_id": "concept-pfk", "note": "代谢/糖酵解/03-goal-glycolysis-regulation.md", "references": 2},
+    {"concept_id": "concept-gluconeogenesis", "note": "代谢/糖异生/01-goal-gluconeogenesis-main.md", "references": 2},
+    {"concept_id": "concept-pyruvate", "note": "代谢/糖异生/01-goal-gluconeogenesis-main.md", "references": 1}
+  ],
+  "deviations": {
+    "section_omitted": 10,
+    "special_section": 0,
+    "title_deviation": 0,
+    "depth_deviation": 0
+  },
+  "findings": [],
+  "variants": {
+    "empty-section": {"code": "TEMPLATE_EMPTY_SECTION", "exit": 3},
+    "section-order": {"code": "TEMPLATE_SECTION_ORDER", "exit": 3},
+    "inconsistent": {"finding": "inconsistent_structure", "exit": 3},
+    "duplicate": {"finding": "duplicate_explanation", "exit": 3}
+  },
+  "determinism": "同一冻结输入的两次构建，输出根五个文件的字节必须完全相同（输出清单不含时间戳）。",
+  "model_calls": 0,
+  "network_requests": 0,
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "自造声明，不含真实教材原文；本阶段只做结构规划，不生成知识正文，也不判断内容正确性。"
+  },
+  "derivation": [
+    "6 份笔记 = 2 个主题 × 3 个阅读目标；笔记路径 = folder_root/主题目录/NN-goal_id.md，NN 按主题内目标声明序从 01 起。",
+    "8 个章节 = 各目标声明章节数之和 2+1+1+2+1+1。",
+    "4 处主解释 = 4 个概念各恰有一个 role=explanation 的原子（糖酵解、磷酸果糖激酶、糖异生、丙酮酸）。",
+    "5 处引用 = atom-pfk-reference、atom-glycolysis-net、atom-pfk-energy、atom-gluconeogenesis-cost、atom-gluconeogenesis-contrast。",
+    "1 处嵌入 = atom-pyruvate-shuttle。",
+    "10 处省略 = 每个目标相对模板三章未声明的章节数之和 (3-2)+(3-1)+(3-1)+(3-2)+(3-1)+(3-1)。",
+    "同类一致：overview 组合的两个目标章节序列均为 [定位, 反应]；energy 组合均为 [反应]，故无 inconsistent_structure 缺口。",
+    "四变体各只破坏一条规则：空章节、章节乱序、同类形状不一致、同一概念重复解释。"
+  ]
+}

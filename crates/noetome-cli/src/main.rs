@@ -6,7 +6,7 @@ use noetome_cli::{
     CliCommand, audit_store, extraction, extraction_api, extraction_verify, fixture,
     fixture_compile, index_store, migrate_store, outline_store, pdf_parse, plan_store, project,
     relevance_store, research_store, retrieval_store, revision_store, source, structure_store,
-    vault_store, vault_update,
+    template_store, vault_store, vault_update,
 };
 
 fn main() -> ExitCode {
@@ -597,6 +597,19 @@ fn main() -> ExitCode {
         CliCommand::PlanList { root } => vault_result(plan_store::list(&root), &mut result_code),
         CliCommand::PlanStatus { root } => {
             vault_result(plan_store::status(&root), &mut result_code)
+        }
+        CliCommand::TemplateHelp => noetome_cli::TEMPLATE_HELP.to_owned(),
+        CliCommand::TemplateAdopt { project, root } => {
+            vault_result(template_store::adopt(&project, &root), &mut result_code)
+        }
+        CliCommand::TemplateBuild { root, output } => {
+            vault_result(template_store::build(&root, &output), &mut result_code)
+        }
+        CliCommand::TemplateList { root } => {
+            vault_result(template_store::list(&root), &mut result_code)
+        }
+        CliCommand::TemplateStatus { root } => {
+            vault_result(template_store::status(&root), &mut result_code)
         }
     };
 

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "tpl-metabolism-v1",
+  "policy": "structure-template-v1",
+  "sequence": ["template adopt project.json <root>", "template build <root> <output>", "template list <root>", "template status <root>"],
+  "expected": "expected.json",
+  "variants": ["project-empty-section.json", "project-section-order.json", "project-inconsistent.json", "project-duplicate.json"],
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false
+  }
+}

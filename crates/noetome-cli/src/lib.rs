@@ -102,6 +102,8 @@ mod source_schema;
 mod source_write;
 mod structure_model;
 pub mod structure_store;
+mod template_model;
+pub mod template_store;
 pub mod text;
 mod vault_model;
 pub mod vault_store;
@@ -189,6 +191,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome plan build <规划根> <尚不存在的输出根>
       noetome plan list <规划根>
       noetome plan status <规划根>
+      noetome template adopt <结构声明> <尚不存在的结构根>
+      noetome template build <结构根> <尚不存在的输出根>
+      noetome template list <结构根>
+      noetome template status <结构根>
 
 当前支持：
   -h, --help       显示帮助
@@ -220,6 +226,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   index                   可移植来源索引与原始资料重定位（adopt/build/relocate/list/status）
   audit                   全库链接可用性与唯一解释位置审计（adopt/build/list/status）
   plan                    教材式自适应规划：概念关系、教学顺序与规划位置（adopt/build/list/status）
+  template                同一主题的多阅读目标与同类结构一致（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
@@ -234,6 +241,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
 来源索引不写入正文：文献编号、脚注与出处列表一律整包拒绝；来源按内容摘要识别、缺失只提示重建映射，运行库与临时文件不进入输出区。
 全库审计只核对结构与位置：链接须在笔记与标题都唯一时才算可用，同名标题与同名笔记记为歧义；「完整解释」只认显式标记，有缺口仍写出报告并逐条列名，不判断内容质量。
 教材式规划只决定知识点放在哪个文件：知识图谱可以多重归属，但文件树只选一个主要位置，其余联系用链接表达；连续反应链被拆到多份笔记时必须给出可检查的拆分理由，否则整包拒绝。
+结构模板是结构规范而不是填空：不适用的章节可以省略，但不得为模板齐全生成空章节，特殊结构必须写出理由；同类同层级主题的命名、章节顺序与导航深度必须一致，差异必须声明理由。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -636,6 +644,21 @@ pub enum CliCommand {
     PlanStatus {
         root: PathBuf,
     },
+    TemplateHelp,
+    TemplateAdopt {
+        project: PathBuf,
+        root: PathBuf,
+    },
+    TemplateBuild {
+        root: PathBuf,
+        output: PathBuf,
+    },
+    TemplateList {
+        root: PathBuf,
+    },
+    TemplateStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -687,6 +710,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "plan") {
         return plan_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "template") {
+        return template_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -1892,6 +1918,66 @@ fn plan_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         [root] if verb == "list" && valid(root) => Ok(CliCommand::PlanList { root: root.into() }),
         [root] if verb == "status" && valid(root) => {
             Ok(CliCommand::PlanStatus { root: root.into() })
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const TEMPLATE_HELP: &str = "Noetome 主题阅读目标与结构模板
+
+用法：noetome template adopt <结构声明> <尚不存在的结构根>
+      noetome template build <结构根> <尚不存在的输出根>
+      noetome template list <结构根>
+      noetome template status <结构根>
+
+adopt：核对模板、主题、阅读目标与原子归属，先按规则预演一次结构规划，空章节、模板外章节缺理由或章节乱序都在建根之前报出。
+build：在全新输出根里写出 plan.json、report.json、report.md 与输出清单；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算并输出每份笔记的章节、原子、引用与唯一解释位置。
+模板是结构规范而不是填空：不适用的章节可以省略，省略会作为偏差列出；但不得为模板齐全留空章节。
+模板外的章节必须给出 special_reason，命名与导航深度偏离必须给出 title_reason 与 depth_reason，否则整包拒绝。
+同一类型同一层级的主题必须采用一致的章节顺序；不一致却没有理由时记为缺口而不是静默通过。
+每个概念在整份规划里恰好有一处完整解释；其余笔记只能引用或同源嵌入，重复解释记为缺口。
+有缺口时仍然写出完整报告，只把退出码置为非零——缺口必须逐条可见。
+不联网、不调用模型、不写项目与Vault；本阶段只做结构规划，不生成知识、不判断内容质量与科学正确性。
+";
+
+fn template_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 4] = ["adopt", "build", "list", "status"];
+    if args.is_empty() || matches!(args, [help] if help == "--help" || help == "-h") {
+        return Ok(CliCommand::TemplateHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail, [help] if help == "--help" || help == "-h")
+        && VERBS.iter().any(|candidate| verb == candidate)
+    {
+        return Ok(CliCommand::TemplateHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |path: &OsString| {
+        !path.is_empty() && (separated || path.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [project, root] if verb == "adopt" && valid(project) && valid(root) => {
+            Ok(CliCommand::TemplateAdopt {
+                project: project.into(),
+                root: root.into(),
+            })
+        }
+        [root, output] if verb == "build" && valid(root) && valid(output) => {
+            Ok(CliCommand::TemplateBuild {
+                root: root.into(),
+                output: output.into(),
+            })
+        }
+        [root] if verb == "list" && valid(root) => {
+            Ok(CliCommand::TemplateList { root: root.into() })
+        }
+        [root] if verb == "status" && valid(root) => {
+            Ok(CliCommand::TemplateStatus { root: root.into() })
         }
         _ => Err(INVALID_ARGUMENT),
     }

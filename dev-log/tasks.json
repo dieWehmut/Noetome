@@ -4150,7 +4150,7 @@
       "id": "B12-T02",
       "title": "同一主题的多阅读目标与同类结构一致",
       "batch": "B12",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B12-T01"
       ],
@@ -4165,7 +4165,70 @@
         "同类同层级的主题采用可复算一致的命名、章节顺序与导航深度；差异必须给出声明过的理由，不用百分比掩盖偏差。",
         "规划报告单列每个阅读目标的原子归属与引用关系，独立只读审计器复算一致性与唯一解释位置；通过完整回归后 complete。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-08T00:54:07Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结同一主题多阅读目标与模板结构声明的自造输入与实现前手写期望，定义模板作为结构规范（可省略不可填空、特殊结构须有理由）、同类同层命名与章节顺序一致（差异须声明理由）、整份规划每个概念恰一处完整解释的确定性口径并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-08T01:26:39Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "主题阅读目标与结构模板合同落地：模板是结构规范（省略合法可见、空章节拒绝、模板外须理由）、同类同层一致性按(template_id,level,kind)分组、唯一解释位置与输出字节确定性，CLI template adopt|build|list|status 全链路可用",
+          "validation": [
+            "cargo fmt --all --check exit 0",
+            "cargo test --test template 20 passed / 0 failed",
+            "cargo test -p noetome-cli --lib -- --test-threads=2 521 passed / 98 failed，失败分布与任务前 511/98 基线逐模块一致",
+            "PYTHONUTF8=1 python3 -m unittest discover -s tests -p 'test_*.py' Ran 886 / failures=41 errors=12 skipped=24，对 835 基线同组失败，新增 51 项全过",
+            "python3 scripts/verify_template_structure.py <根> --output <输出> --package fixtures/structure-template-v1 合计 103 项检查：失败 0",
+            "python3 scripts/verify_template_structure.py --package fixtures/structure-template-v1 合计 49 项检查：失败 0"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/template_model.rs",
+              "sha256": "bad66becbabdad4f5ca637899e1a3c96b3a0970a5a726241db69b446fc27952d"
+            },
+            {
+              "path": "crates/noetome-cli/src/template_store.rs",
+              "sha256": "8f309186567789942ebc730d4ff4673194563b4cd03adb40355c5279eb83a984"
+            },
+            {
+              "path": "crates/noetome-cli/tests/template.rs",
+              "sha256": "1dd030879a0272cf8a878505a8633050c1f166446c0a7257d0385979cc426f2a"
+            },
+            {
+              "path": "fixtures/structure-template-v1/expected.json",
+              "sha256": "7e81e9bb509bf7a0741447ac033d556a620f1512abf0c9e4e3f548b7e6ed4e61"
+            },
+            {
+              "path": "scripts/verify_template_structure.py",
+              "sha256": "9dca166c6cc4b80696de6454cafbd4dd9d07aa76b6e8b9c69e3d72230eac1815"
+            },
+            {
+              "path": "tests/test_verify_template_structure.py",
+              "sha256": "b3cf40ff4965521388de0a383a2e29935cb35d2dd09ca4b09669d7874f13b837"
+            },
+            {
+              "path": "doc/technical/TEMPLATE_STRUCTURE_CONTRACT.md",
+              "sha256": "6aebec069fc86caa74730e4a4cc51312d8314866e284785b890f0a82add38527"
+            },
+            {
+              "path": "doc/validation/B12-T02.md",
+              "sha256": "7b2f2e742d41d5e7c8da0a0ba6e8f50acde3642e4cb183685afc8f316ce4dace"
+            },
+            {
+              "path": "doc/validation/assets/B12-T02/cli-20261108/audit.txt",
+              "sha256": "506d3c3cb5faa1649d13a9a17b85cfdd68be8c1aaa69ac0a76e99210e7047313"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B12-T03",

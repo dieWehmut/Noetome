@@ -1,0 +1,323 @@
+{
+  "case_id": "tpl-metabolism-v1",
+  "counts": {
+    "atoms": 10,
+    "concepts": 4,
+    "deviations": 10,
+    "embeds": 1,
+    "explanations": 4,
+    "findings": 0,
+    "goals": 6,
+    "model_calls": 0,
+    "network_requests": 0,
+    "notes": 6,
+    "omitted_sections": 10,
+    "references": 5,
+    "sections": 8,
+    "special_sections": 0,
+    "templates": 1,
+    "topics": 2
+  },
+  "created_at": "2026-11-08T01:21:03.487186012Z",
+  "deviations": [
+    {
+      "detail": "省略模板章节「调控」：该章节不适用于这个阅读目标，省略是允许的。",
+      "kind": "section_omitted",
+      "subject": "goal-glycolysis-main#调控"
+    },
+    {
+      "detail": "省略模板章节「定位」：该章节不适用于这个阅读目标，省略是允许的。",
+      "kind": "section_omitted",
+      "subject": "goal-glycolysis-energy#定位"
+    },
+    {
+      "detail": "省略模板章节「调控」：该章节不适用于这个阅读目标，省略是允许的。",
+      "kind": "section_omitted",
+      "subject": "goal-glycolysis-energy#调控"
+    },
+    {
+      "detail": "省略模板章节「定位」：该章节不适用于这个阅读目标，省略是允许的。",
+      "kind": "section_omitted",
+      "subject": "goal-glycolysis-regulation#定位"
+    },
+    {
+      "detail": "省略模板章节「反应」：该章节不适用于这个阅读目标，省略是允许的。",
+      "kind": "section_omitted",
+      "subject": "goal-glycolysis-regulation#反应"
+    },
+    {
+      "detail": "省略模板章节「调控」：该章节不适用于这个阅读目标，省略是允许的。",
+      "kind": "section_omitted",
+      "subject": "goal-gluconeogenesis-main#调控"
+    },
+    {
+      "detail": "省略模板章节「定位」：该章节不适用于这个阅读目标，省略是允许的。",
+      "kind": "section_omitted",
+      "subject": "goal-gluconeogenesis-energy#定位"
+    },
+    {
+      "detail": "省略模板章节「调控」：该章节不适用于这个阅读目标，省略是允许的。",
+      "kind": "section_omitted",
+      "subject": "goal-gluconeogenesis-energy#调控"
+    },
+    {
+      "detail": "省略模板章节「反应」：该章节不适用于这个阅读目标，省略是允许的。",
+      "kind": "section_omitted",
+      "subject": "goal-gluconeogenesis-compare#反应"
+    },
+    {
+      "detail": "省略模板章节「调控」：该章节不适用于这个阅读目标，省略是允许的。",
+      "kind": "section_omitted",
+      "subject": "goal-gluconeogenesis-compare#调控"
+    }
+  ],
+  "explanations": [
+    {
+      "canonical": "糖酵解",
+      "concept_id": "concept-glycolysis",
+      "note": "代谢/糖酵解/01-goal-glycolysis-main.md",
+      "references": 1
+    },
+    {
+      "canonical": "磷酸果糖激酶",
+      "concept_id": "concept-pfk",
+      "note": "代谢/糖酵解/03-goal-glycolysis-regulation.md",
+      "references": 2
+    },
+    {
+      "canonical": "糖异生",
+      "concept_id": "concept-gluconeogenesis",
+      "note": "代谢/糖异生/01-goal-gluconeogenesis-main.md",
+      "references": 2
+    },
+    {
+      "canonical": "丙酮酸",
+      "concept_id": "concept-pyruvate",
+      "note": "代谢/糖异生/01-goal-gluconeogenesis-main.md",
+      "references": 1
+    }
+  ],
+  "findings": [],
+  "goals": [
+    {
+      "atoms": [
+        "atom-glycolysis-position",
+        "atom-pfk-reference"
+      ],
+      "goal_id": "goal-glycolysis-main",
+      "kind": "overview",
+      "navigation_depth": 2,
+      "path": "代谢/糖酵解/01-goal-glycolysis-main.md",
+      "references": [
+        {
+          "concept_id": "concept-pfk",
+          "role": "reference",
+          "target_note": "代谢/糖酵解/03-goal-glycolysis-regulation.md"
+        }
+      ],
+      "sections": [
+        {
+          "atoms": [
+            "atom-glycolysis-position"
+          ],
+          "section": "定位",
+          "special": false
+        },
+        {
+          "atoms": [
+            "atom-pfk-reference"
+          ],
+          "section": "反应",
+          "special": false
+        }
+      ],
+      "template_id": "pathway",
+      "title": "糖酵解：总览",
+      "topic_id": "topic-glycolysis"
+    },
+    {
+      "atoms": [
+        "atom-glycolysis-net",
+        "atom-pfk-energy"
+      ],
+      "goal_id": "goal-glycolysis-energy",
+      "kind": "energy",
+      "navigation_depth": 2,
+      "path": "代谢/糖酵解/02-goal-glycolysis-energy.md",
+      "references": [
+        {
+          "concept_id": "concept-glycolysis",
+          "role": "reference",
+          "target_note": "代谢/糖酵解/01-goal-glycolysis-main.md"
+        },
+        {
+          "concept_id": "concept-pfk",
+          "role": "reference",
+          "target_note": "代谢/糖酵解/03-goal-glycolysis-regulation.md"
+        }
+      ],
+      "sections": [
+        {
+          "atoms": [
+            "atom-glycolysis-net",
+            "atom-pfk-energy"
+          ],
+          "section": "反应",
+          "special": false
+        }
+      ],
+      "template_id": "pathway",
+      "title": "糖酵解：能量",
+      "topic_id": "topic-glycolysis"
+    },
+    {
+      "atoms": [
+        "atom-pfk-control"
+      ],
+      "goal_id": "goal-glycolysis-regulation",
+      "kind": "regulation",
+      "navigation_depth": 2,
+      "path": "代谢/糖酵解/03-goal-glycolysis-regulation.md",
+      "references": [],
+      "sections": [
+        {
+          "atoms": [
+            "atom-pfk-control"
+          ],
+          "section": "调控",
+          "special": false
+        }
+      ],
+      "template_id": "pathway",
+      "title": "糖酵解：调控",
+      "topic_id": "topic-glycolysis"
+    },
+    {
+      "atoms": [
+        "atom-gluconeogenesis-position",
+        "atom-pyruvate-position"
+      ],
+      "goal_id": "goal-gluconeogenesis-main",
+      "kind": "overview",
+      "navigation_depth": 2,
+      "path": "代谢/糖异生/01-goal-gluconeogenesis-main.md",
+      "references": [],
+      "sections": [
+        {
+          "atoms": [
+            "atom-gluconeogenesis-position"
+          ],
+          "section": "定位",
+          "special": false
+        },
+        {
+          "atoms": [
+            "atom-pyruvate-position"
+          ],
+          "section": "反应",
+          "special": false
+        }
+      ],
+      "template_id": "pathway",
+      "title": "糖异生：总览",
+      "topic_id": "topic-gluconeogenesis"
+    },
+    {
+      "atoms": [
+        "atom-gluconeogenesis-cost",
+        "atom-pyruvate-shuttle"
+      ],
+      "goal_id": "goal-gluconeogenesis-energy",
+      "kind": "energy",
+      "navigation_depth": 2,
+      "path": "代谢/糖异生/02-goal-gluconeogenesis-energy.md",
+      "references": [
+        {
+          "concept_id": "concept-gluconeogenesis",
+          "role": "reference",
+          "target_note": "代谢/糖异生/01-goal-gluconeogenesis-main.md"
+        },
+        {
+          "concept_id": "concept-pyruvate",
+          "role": "embed",
+          "target_note": "代谢/糖异生/01-goal-gluconeogenesis-main.md"
+        }
+      ],
+      "sections": [
+        {
+          "atoms": [
+            "atom-gluconeogenesis-cost",
+            "atom-pyruvate-shuttle"
+          ],
+          "section": "反应",
+          "special": false
+        }
+      ],
+      "template_id": "pathway",
+      "title": "糖异生：能量",
+      "topic_id": "topic-gluconeogenesis"
+    },
+    {
+      "atoms": [
+        "atom-gluconeogenesis-contrast"
+      ],
+      "goal_id": "goal-gluconeogenesis-compare",
+      "kind": "comparison",
+      "navigation_depth": 2,
+      "path": "代谢/糖异生/03-goal-gluconeogenesis-compare.md",
+      "references": [
+        {
+          "concept_id": "concept-gluconeogenesis",
+          "role": "reference",
+          "target_note": "代谢/糖异生/01-goal-gluconeogenesis-main.md"
+        }
+      ],
+      "sections": [
+        {
+          "atoms": [
+            "atom-gluconeogenesis-contrast"
+          ],
+          "section": "定位",
+          "special": false
+        }
+      ],
+      "template_id": "pathway",
+      "title": "糖异生：比较",
+      "topic_id": "topic-gluconeogenesis"
+    }
+  ],
+  "inputs_sha256": "5dc2215c384f5d4d7a3d5f085878984b9649bc74406c1704b362d11dc00e8ea5",
+  "plan_version": 1,
+  "policy": "structure-template-v1",
+  "producer": "noetome-template",
+  "project_sha256": "0392cab4e670ee6aacc997a5d49df78644a6624455504ed0a6f98ce00534b4c2",
+  "root": "/tmp/tpl-final-HFoW/root",
+  "schema_version": 1,
+  "topics": [
+    {
+      "folder": "糖酵解",
+      "goals": [
+        "goal-glycolysis-main",
+        "goal-glycolysis-energy",
+        "goal-glycolysis-regulation"
+      ],
+      "level": 1,
+      "template_id": "pathway",
+      "title": "糖酵解",
+      "topic_id": "topic-glycolysis"
+    },
+    {
+      "folder": "糖异生",
+      "goals": [
+        "goal-gluconeogenesis-main",
+        "goal-gluconeogenesis-energy",
+        "goal-gluconeogenesis-compare"
+      ],
+      "level": 1,
+      "template_id": "pathway",
+      "title": "糖异生",
+      "topic_id": "topic-gluconeogenesis"
+    }
+  ],
+  "verdict": "pass"
+}
