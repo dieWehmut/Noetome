@@ -380,7 +380,10 @@ pub fn adopt(project_path: &Path, root: &Path) -> Result<String, ProjectError> {
     match result {
         Ok(manifest) => Ok(adopt_summary(&manifest, &audit)),
         Err(error) => {
-            if identity(&root).map(|value| value == root_identity).unwrap_or(false) {
+            if identity(&root)
+                .map(|value| value == root_identity)
+                .unwrap_or(false)
+            {
                 let _ = fs::remove_dir_all(&root);
             }
             Err(error)
@@ -402,8 +405,7 @@ fn adopt_into(
     root_identity: Identity,
 ) -> Result<Manifest, ProjectError> {
     let control = root.join(CONTROL);
-    fs::create_dir(&control)
-        .map_err(|error| integrity(format!("无法建立控制目录：{error}。")))?;
+    fs::create_dir(&control).map_err(|error| integrity(format!("无法建立控制目录：{error}。")))?;
     let control_identity = identity(&control)?;
     let notes_dir = control.join(NOTES);
     fs::create_dir(&notes_dir)
@@ -420,7 +422,11 @@ fn adopt_into(
     write_new(&control.join(PROJECT), project_bytes, "冻结工程声明")?;
 
     let inputs_text = canonical(&inputs)?;
-    write_new(&control.join(INPUTS), inputs_text.as_bytes(), "冻结输入清单")?;
+    write_new(
+        &control.join(INPUTS),
+        inputs_text.as_bytes(),
+        "冻结输入清单",
+    )?;
     let inputs_sha256 = digest_of(inputs_text.as_bytes());
 
     write_new(&control.join(MANIFEST), b"", "冻结清单占位")?;
@@ -538,10 +544,12 @@ pub(crate) fn open(root: &Path) -> Result<Frozen, ProjectError> {
         || manifest.producer != APP_PRODUCER
         || manifest.schema_version != SCHEMA_VERSION
     {
-        return Err(integrity("冻结清单的 policy/producer/schema_version 不符。".to_owned()));
+        return Err(integrity(
+            "冻结清单的 policy/producer/schema_version 不符。".to_owned(),
+        ));
     }
-    let canonical_root = fs::canonicalize(&root)
-        .map_err(|error| integrity(format!("无法定位审计根：{error}。")))?;
+    let canonical_root =
+        fs::canonicalize(&root).map_err(|error| integrity(format!("无法定位审计根：{error}。")))?;
     if manifest.root != canonical_root.to_string_lossy() {
         return Err(integrity(format!(
             "冻结清单记录的根是 {}，实际是 {}。",
@@ -554,7 +562,11 @@ pub(crate) fn open(root: &Path) -> Result<Frozen, ProjectError> {
         check_identity(parent, &manifest.parent_identity, "审计根的父目录")?;
     }
     check_identity(&control, &manifest.control_identity, "控制目录")?;
-    check_identity(&control.join(MANIFEST), &manifest.manifest_identity, "冻结清单")?;
+    check_identity(
+        &control.join(MANIFEST),
+        &manifest.manifest_identity,
+        "冻结清单",
+    )?;
     check_identity(&control.join(NOTES), &manifest.notes_identity, "笔记目录")?;
     check_identity(&control.join(INPUTS), &manifest.inputs_identity, "输入清单")?;
 
@@ -578,7 +590,9 @@ pub(crate) fn open(root: &Path) -> Result<Frozen, ProjectError> {
         || inputs.schema_version != SCHEMA_VERSION
         || inputs.case_id != project.case_id
     {
-        return Err(integrity("输入清单的 policy/schema/case_id 不符。".to_owned()));
+        return Err(integrity(
+            "输入清单的 policy/schema/case_id 不符。".to_owned(),
+        ));
     }
     if inputs.gold_sha256 != manifest.gold_sha256 {
         return Err(integrity("输入清单里的金标准摘要不符。".to_owned()));
@@ -651,7 +665,10 @@ fn walk(dir: &Path) -> Result<Vec<(String, PathBuf)>, ProjectError> {
             let metadata = fs::symlink_metadata(&path)
                 .map_err(|error| integrity(format!("无法读取 {}：{error}。", path.display())))?;
             if project::is_link(&metadata) {
-                return Err(argument(format!("冻结目录里不允许符号链接：{}。", path.display())));
+                return Err(argument(format!(
+                    "冻结目录里不允许符号链接：{}。",
+                    path.display()
+                )));
             }
             if metadata.is_dir() {
                 stack.push(path);
@@ -705,9 +722,10 @@ pub fn build(root: &Path, output: &Path) -> Result<String, ProjectError> {
     require_dir(parent, "输出根的父目录")?;
     let frozen_canonical = fs::canonicalize(&frozen.root)
         .map_err(|error| integrity(format!("无法定位审计根：{error}。")))?;
-    let output_canonical = parent
-        .join(output.file_name().unwrap_or_default());
-    if output_canonical.starts_with(&frozen_canonical) || frozen_canonical.starts_with(&output_canonical) {
+    let output_canonical = parent.join(output.file_name().unwrap_or_default());
+    if output_canonical.starts_with(&frozen_canonical)
+        || frozen_canonical.starts_with(&output_canonical)
+    {
         return Err(argument(
             "输出根不能与审计根互相包含：冻结输入必须保持只读。".to_owned(),
         ));
@@ -752,13 +770,20 @@ fn write_output(
     output: &Path,
 ) -> Result<OutputManifest, ProjectError> {
     let links_text = format!("{}\n", canonical(&links_file(&frozen.project, audit))?);
-    let explanations_text = format!("{}\n", canonical(&explanations_file(&frozen.project, audit))?);
+    let explanations_text = format!(
+        "{}\n",
+        canonical(&explanations_file(&frozen.project, audit))?
+    );
     let summary = summarize(&frozen.project, audit);
     let report_text = format!("{}\n", canonical(&summary)?);
     let markdown = render_markdown(&frozen.project, audit);
 
     write_new(&output.join(LINKS), links_text.as_bytes(), "链接明细")?;
-    write_new(&output.join(EXPLANATIONS), explanations_text.as_bytes(), "解释位置")?;
+    write_new(
+        &output.join(EXPLANATIONS),
+        explanations_text.as_bytes(),
+        "解释位置",
+    )?;
     write_new(&output.join(REPORT), report_text.as_bytes(), "审计摘要")?;
     write_new(&output.join(MARKDOWN), markdown.as_bytes(), "审计报告")?;
 
@@ -790,7 +815,10 @@ fn write_output(
     let entries = names(output)?;
     let mut actual: Vec<String> = entries.keys().cloned().collect();
     actual.sort();
-    let mut expected: Vec<String> = OUTPUT_ENTRIES.iter().map(|name| (*name).to_owned()).collect();
+    let mut expected: Vec<String> = OUTPUT_ENTRIES
+        .iter()
+        .map(|name| (*name).to_owned())
+        .collect();
     expected.sort();
     if actual != expected {
         return Err(integrity(format!(
@@ -916,7 +944,13 @@ mod tests {
     fn control_entries_match_the_documented_layout() {
         assert_eq!(
             CONTROL_ENTRIES.to_vec(),
-            vec!["gold.json", "inputs.json", "manifest.json", "notes", "project.json"]
+            vec![
+                "gold.json",
+                "inputs.json",
+                "manifest.json",
+                "notes",
+                "project.json"
+            ]
         );
     }
 }

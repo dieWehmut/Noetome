@@ -330,7 +330,10 @@ pub(crate) fn relative(text: &str, label: &str) -> Result<(), ProjectError> {
             "{label} 必须是相对路径且不含盘符与反斜杠：{text}"
         )));
     }
-    if text.split('/').any(|part| part.is_empty() || part == "." || part == "..") {
+    if text
+        .split('/')
+        .any(|part| part.is_empty() || part == "." || part == "..")
+    {
         return Err(argument(format!(
             "{label} 不能包含空路径段、. 或 ..：{text}"
         )));
@@ -415,9 +418,7 @@ impl Project {
 fn simple_title(text: &str, label: &str) -> Result<(), ProjectError> {
     single(text, label, MAX_TITLE)?;
     if text.contains('|') || text.contains('[') || text.contains(']') {
-        return Err(argument(format!(
-            "{label} 不能包含竖线或方括号：{text}"
-        )));
+        return Err(argument(format!("{label} 不能包含竖线或方括号：{text}")));
     }
     Ok(())
 }
@@ -461,10 +462,7 @@ impl Gold {
             identifier(&concept.concept_id, "concept_id")?;
             simple_title(&concept.canonical, "概念正名")?;
             if !concept_ids.insert(concept.concept_id.as_str()) {
-                return Err(argument(format!(
-                    "concept_id 重复：{}",
-                    concept.concept_id
-                )));
+                return Err(argument(format!("concept_id 重复：{}", concept.concept_id)));
             }
         }
         if self.atoms.is_empty() || self.atoms.len() > MAX_ATOMS {
@@ -635,10 +633,7 @@ pub(crate) fn scan_links(text: &str) -> Vec<RawLink> {
 
 pub(crate) fn parse_link(inner: &str, line: usize, embed: bool, in_table: bool) -> RawLink {
     let (body, alias_split) = match inner.find("\\|") {
-        Some(position) => (
-            &inner[..position],
-            Some((position + 2, true)),
-        ),
+        Some(position) => (&inner[..position], Some((position + 2, true))),
         None => match inner.find('|') {
             Some(position) => (&inner[..position], Some((position + 1, false))),
             None => (inner, None),
@@ -655,10 +650,7 @@ pub(crate) fn parse_link(inner: &str, line: usize, embed: bool, in_table: bool) 
     };
     RawLink {
         line,
-        raw: format!(
-            "{}[[{inner}]]",
-            if embed { "!" } else { "" }
-        ),
+        raw: format!("{}[[{inner}]]", if embed { "!" } else { "" }),
         target: target.trim_end_matches(".md").to_owned(),
         heading,
         alias,
@@ -709,7 +701,10 @@ fn resolve_note<'a>(
             ));
         }
     }
-    Err((BASIS_PATH_MISSING, format!("发布集合里没有 {target} 这份笔记")))
+    Err((
+        BASIS_PATH_MISSING,
+        format!("发布集合里没有 {target} 这份笔记"),
+    ))
 }
 
 fn resolve_heading<'a>(
@@ -912,7 +907,14 @@ pub(crate) fn evaluate(
         } else if records.len() > 1 {
             let places = records
                 .iter()
-                .map(|record| format!("{}#{}（第 {} 行）", record.note_id, record.heading.clone().unwrap_or_default(), record.line))
+                .map(|record| {
+                    format!(
+                        "{}#{}（第 {} 行）",
+                        record.note_id,
+                        record.heading.clone().unwrap_or_default(),
+                        record.line
+                    )
+                })
                 .collect::<Vec<_>>()
                 .join("、");
             findings.push(Finding {
@@ -996,7 +998,11 @@ pub(crate) fn evaluate(
                     "原子 {}（概念 {}，{}）期望位置 {}#{}，实际结论：{}。",
                     atom.atom_id,
                     atom.concept_id,
-                    if atom.key { "关键原子" } else { "一般原子" },
+                    if atom.key {
+                        "关键原子"
+                    } else {
+                        "一般原子"
+                    },
                     atom.note_id,
                     atom.heading,
                     reason
@@ -1015,17 +1021,23 @@ pub(crate) fn evaluate(
     }
 
     let key_total = atoms.iter().filter(|atom| atom.key).count();
-    let key_hit = atoms.iter().filter(|atom| atom.key && atom.recalled).count();
+    let key_hit = atoms
+        .iter()
+        .filter(|atom| atom.key && atom.recalled)
+        .count();
     let general_total = atoms.len() - key_total;
-    let general_hit = atoms.iter().filter(|atom| !atom.key && atom.recalled).count();
+    let general_hit = atoms
+        .iter()
+        .filter(|atom| !atom.key && atom.recalled)
+        .count();
     let key_recall = ratio(key_hit, key_total, "NFR-02 要求关键原子 100%");
     let general_recall = ratio(
         general_hit,
         general_total,
         &format!("NFR-02 允许一般原子最多缺 {GENERAL_RECALL_PERCENT}% 以下的缺口"),
     );
-    let general_ok = general_total == 0
-        || general_hit * 100 >= general_total * GENERAL_RECALL_PERCENT;
+    let general_ok =
+        general_total == 0 || general_hit * 100 >= general_total * GENERAL_RECALL_PERCENT;
     if !general_ok && general_total > 0 {
         findings.push(Finding {
             kind: FINDING_RECALL_BELOW.to_owned(),
@@ -1097,7 +1109,10 @@ pub(crate) fn evaluate(
         atoms_general: general_total,
         atoms_recalled: key_hit + general_hit,
         atoms_missing: atoms.len() - key_hit - general_hit,
-        duplicate_concepts: concepts.iter().filter(|record| record.markers.len() > 1).count(),
+        duplicate_concepts: concepts
+            .iter()
+            .filter(|record| record.markers.len() > 1)
+            .count(),
         findings: findings.len(),
         model_calls: 0,
         network_requests: 0,
@@ -1232,7 +1247,10 @@ pub(crate) fn status_text(audit: &Audit, case_id: &str) -> String {
     if audit.findings.is_empty() {
         out.push_str("缺口：0 条\n");
     } else {
-        out.push_str(&format!("缺口：{} 条（逐条见报告）\n", audit.findings.len()));
+        out.push_str(&format!(
+            "缺口：{} 条（逐条见报告）\n",
+            audit.findings.len()
+        ));
         for finding in &audit.findings {
             out.push_str(&format!(
                 "  - [{}] {}：{}\n",
@@ -1253,18 +1271,22 @@ pub(crate) fn verdict_text(verdict: &str) -> &'static str {
 
 pub(crate) fn render_markdown(project: &Project, audit: &Audit) -> String {
     let mut out = String::new();
-    out.push_str(&format!("# 全库链接与唯一解释位置审计（{}）\n\n", project.case_id));
-    out.push_str(&format!("{}\n\n", project.description));
-    out.push_str(&format!("## 结论\n\n- 审计结论：{}\n", verdict_text(&audit.verdict)));
     out.push_str(&format!(
-        "- 模型调用与网络请求：0 次\n\n"
+        "# 全库链接与唯一解释位置审计（{}）\n\n",
+        project.case_id
     ));
-    out.push_str("## 口径\n\n| 指标 | 分子 | 分母 | 结果 | 不适用情形 |\n| --- | --- | --- | --- | --- |\n");
+    out.push_str(&format!("{}\n\n", project.description));
+    out.push_str(&format!(
+        "## 结论\n\n- 审计结论：{}\n",
+        verdict_text(&audit.verdict)
+    ));
+    out.push_str(&format!("- 模型调用与网络请求：0 次\n\n"));
+    out.push_str(
+        "## 口径\n\n| 指标 | 分子 | 分母 | 结果 | 不适用情形 |\n| --- | --- | --- | --- | --- |\n",
+    );
     out.push_str(&format!(
         "| 链接可用率 | {} | {} | {} | 发布集合内没有任何内部链接时显示「不适用」 |\n",
-        audit.availability.numerator,
-        audit.availability.denominator,
-        audit.availability.display
+        audit.availability.numerator, audit.availability.denominator, audit.availability.display
     ));
     out.push_str(&format!(
         "| 关键原子召回 | {} | {} | {} | 金标准没有关键原子时显示「不适用」 |\n",
@@ -1294,7 +1316,9 @@ pub(crate) fn render_markdown(project: &Project, audit: &Audit) -> String {
         ));
     }
     out.push('\n');
-    out.push_str("## 唯一解释位置\n\n| 概念 | 正名 | 完整解释位置 | 是否唯一 |\n| --- | --- | --- | --- |\n");
+    out.push_str(
+        "## 唯一解释位置\n\n| 概念 | 正名 | 完整解释位置 | 是否唯一 |\n| --- | --- | --- | --- |\n",
+    );
     for concept in &audit.concepts {
         let where_text = if concept.markers.is_empty() {
             "无".to_owned()
@@ -1337,8 +1361,12 @@ pub(crate) fn render_markdown(project: &Project, audit: &Audit) -> String {
     out.push_str("## 边界\n\n");
     out.push_str("- 只核对结构与位置：链接是否唯一解析、每个概念是否恰有一处完整解释，不判断内容质量与科学正确性。\n");
     out.push_str("- 「完整解释」只认正文里显式写出的 `> 完整解释：<概念>` 标记；没有标记的段落不算声明，标记了也不会自动变成长度合格的讲解。\n");
-    out.push_str("- 链接只在笔记与标题都唯一时才算可用；同名标题与同名笔记一律记为歧义，不取第一个匹配。\n");
-    out.push_str("- 表格单元里的别名必须写成 `\\|`，未转义即整包拒绝：那是声明错误，不是审计结论。\n");
+    out.push_str(
+        "- 链接只在笔记与标题都唯一时才算可用；同名标题与同名笔记一律记为歧义，不取第一个匹配。\n",
+    );
+    out.push_str(
+        "- 表格单元里的别名必须写成 `\\|`，未转义即整包拒绝：那是声明错误，不是审计结论。\n",
+    );
     out
 }
 
@@ -1477,10 +1505,12 @@ mod tests {
         let audit = evaluate(&project, &notes, &gold).expect("must evaluate");
         assert_eq!(audit.verdict, "findings");
         assert_eq!(audit.counts.links_broken, 1);
-        assert!(audit
-            .findings
-            .iter()
-            .any(|finding| finding.kind == FINDING_BROKEN_LINK));
+        assert!(
+            audit
+                .findings
+                .iter()
+                .any(|finding| finding.kind == FINDING_BROKEN_LINK)
+        );
     }
 
     #[test]
@@ -1501,10 +1531,12 @@ mod tests {
         assert_eq!(audit.verdict, "findings");
         assert_eq!(audit.counts.duplicate_concepts, 1);
         assert_eq!(audit.counts.atoms_missing, 1);
-        assert!(audit
-            .findings
-            .iter()
-            .any(|finding| finding.kind == FINDING_DUPLICATE_EXPLANATION));
+        assert!(
+            audit
+                .findings
+                .iter()
+                .any(|finding| finding.kind == FINDING_DUPLICATE_EXPLANATION)
+        );
     }
 
     #[test]

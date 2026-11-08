@@ -1,0 +1,148 @@
+{
+  "case_id": "plan-metabolism-v1",
+  "chains": [
+    {
+      "chain_id": "chain-glycolysis",
+      "label": "糖酵解十步反应的收支顺序",
+      "notes": [
+        "topic-glycolysis-goal-glycolysis-energy",
+        "topic-glycolysis-goal-glycolysis-main"
+      ],
+      "split_reason": "chain_too_long"
+    }
+  ],
+  "counts": {
+    "atoms": 8,
+    "atoms_planned": 8,
+    "chains": 1,
+    "chains_split": 1,
+    "concepts": 4,
+    "cross_refs": 3,
+    "folders": 2,
+    "goals": 6,
+    "notes": 6,
+    "topics": 2
+  },
+  "created_at": "2026-11-08T00:44:14.960371264Z",
+  "folders": [
+    {
+      "path": "代谢/糖酵解",
+      "title": "糖酵解",
+      "topic_id": "topic-glycolysis"
+    },
+    {
+      "path": "代谢/糖异生",
+      "title": "糖异生",
+      "topic_id": "topic-gluconeogenesis"
+    }
+  ],
+  "inputs_sha256": "1403b1951188f769d2090b28fcdcf1bef8dff6c5a0d1dba6090efcf8560c2537",
+  "model_calls": 0,
+  "network_requests": 0,
+  "notes": [
+    {
+      "atom_ids": [
+        "atom-glycolysis-definition",
+        "atom-glycolysis-invest",
+        "atom-pfk-allosteric"
+      ],
+      "goal_id": "goal-glycolysis-main",
+      "links": [],
+      "note_id": "topic-glycolysis-goal-glycolysis-main",
+      "path": "代谢/糖酵解/01-goal-glycolysis-main.md",
+      "primary": true,
+      "title": "糖酵解：反应与调控",
+      "topic_id": "topic-glycolysis"
+    },
+    {
+      "atom_ids": [
+        "atom-glycolysis-payoff"
+      ],
+      "goal_id": "goal-glycolysis-energy",
+      "links": [
+        {
+          "concept_id": "concept-glycolysis",
+          "display_text": "糖酵解",
+          "target_note": "代谢/糖酵解/01-goal-glycolysis-main.md"
+        }
+      ],
+      "note_id": "topic-glycolysis-goal-glycolysis-energy",
+      "path": "代谢/糖酵解/02-goal-glycolysis-energy.md",
+      "primary": false,
+      "title": "糖酵解的能量收支",
+      "topic_id": "topic-glycolysis"
+    },
+    {
+      "atom_ids": [
+        "atom-pfk-regulation"
+      ],
+      "goal_id": "goal-glycolysis-regulation",
+      "links": [
+        {
+          "concept_id": "concept-pfk",
+          "display_text": "磷酸果糖激酶",
+          "target_note": "代谢/糖酵解/01-goal-glycolysis-main.md"
+        }
+      ],
+      "note_id": "topic-glycolysis-goal-glycolysis-regulation",
+      "path": "代谢/糖酵解/03-goal-glycolysis-regulation.md",
+      "primary": false,
+      "title": "糖酵解的调控",
+      "topic_id": "topic-glycolysis"
+    },
+    {
+      "atom_ids": [
+        "atom-pyruvate-carboxylase",
+        "atom-gluconeogenesis-definition"
+      ],
+      "goal_id": "goal-gluconeogenesis-main",
+      "links": [],
+      "note_id": "topic-gluconeogenesis-goal-gluconeogenesis-main",
+      "path": "代谢/糖异生/01-goal-gluconeogenesis-main.md",
+      "primary": true,
+      "title": "糖异生：绕行与总账",
+      "topic_id": "topic-gluconeogenesis"
+    },
+    {
+      "atom_ids": [
+        "atom-gluconeogenesis-compare"
+      ],
+      "goal_id": "goal-gluconeogenesis-compare",
+      "links": [
+        {
+          "concept_id": "concept-gluconeogenesis",
+          "display_text": "糖异生",
+          "target_note": "代谢/糖异生/01-goal-gluconeogenesis-main.md"
+        }
+      ],
+      "note_id": "topic-gluconeogenesis-goal-gluconeogenesis-compare",
+      "path": "代谢/糖异生/02-goal-gluconeogenesis-compare.md",
+      "primary": false,
+      "title": "糖异生与糖酵解的对照",
+      "topic_id": "topic-gluconeogenesis"
+    },
+    {
+      "atom_ids": [],
+      "goal_id": "goal-gluconeogenesis-energy",
+      "links": [],
+      "note_id": "topic-gluconeogenesis-goal-gluconeogenesis-energy",
+      "path": "代谢/糖异生/03-goal-gluconeogenesis-energy.md",
+      "primary": false,
+      "title": "糖异生的能量成本",
+      "topic_id": "topic-gluconeogenesis"
+    }
+  ],
+  "plan_version": 1,
+  "policy": "adaptive-plan-v1",
+  "producer": "noetome-plan",
+  "project_sha256": "a66152e0e668f5e792f85f5e46e9dfaa6d231af610312353cda6493c74ee548e",
+  "root": "/tmp/plan-final-1Alb/root",
+  "schema_version": 1,
+  "warnings": [
+    {
+      "detail": "阅读目标 goal-gluconeogenesis-energy 没有自己的原子，只保留指向完整解释位置的链接：代谢/糖异生/03-goal-gluconeogenesis-energy.md。",
+      "kind": "goal_without_atoms",
+      "subject": "topic-gluconeogenesis-goal-gluconeogenesis-energy"
+    }
+  ]
+}

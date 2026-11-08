@@ -1,6 +1,8 @@
 use std::ffi::OsString;
 use std::path::PathBuf;
 
+mod audit_model;
+pub mod audit_store;
 mod compile_identity;
 mod compile_model;
 mod compile_report;
@@ -37,8 +39,6 @@ mod image_model;
 mod image_render;
 mod index_model;
 pub mod index_store;
-mod audit_model;
-pub mod audit_store;
 pub mod knowledge_coordinate;
 mod knowledge_coordinate_conflicts;
 mod knowledge_coordinate_context;
@@ -63,6 +63,8 @@ mod pdf_source;
 mod pdf_source_model;
 mod pdf_validate;
 mod pdf_workspace;
+mod plan_model;
+pub mod plan_store;
 pub mod process_flow;
 mod process_flow_model;
 mod process_flow_plan;
@@ -183,6 +185,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome audit build <审计根> <尚不存在的输出根>
       noetome audit list <审计根>
       noetome audit status <审计根>
+      noetome plan adopt <规划声明> <尚不存在的规划根>
+      noetome plan build <规划根> <尚不存在的输出根>
+      noetome plan list <规划根>
+      noetome plan status <规划根>
 
 当前支持：
   -h, --help       显示帮助
@@ -213,6 +219,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   migrate                 小节提升为独立笔记与链接批量更新（adopt/build/list/status）
   index                   可移植来源索引与原始资料重定位（adopt/build/relocate/list/status）
   audit                   全库链接可用性与唯一解释位置审计（adopt/build/list/status）
+  plan                    教材式自适应规划：概念关系、教学顺序与规划位置（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
@@ -226,6 +233,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
 链接迁移只按知识对象ID核对引用：概念与原子ID不因拆分改变，断链/歧义/目标缺失/表格未转义一律整包拒绝；不自动搬动作者包文件。
 来源索引不写入正文：文献编号、脚注与出处列表一律整包拒绝；来源按内容摘要识别、缺失只提示重建映射，运行库与临时文件不进入输出区。
 全库审计只核对结构与位置：链接须在笔记与标题都唯一时才算可用，同名标题与同名笔记记为歧义；「完整解释」只认显式标记，有缺口仍写出报告并逐条列名，不判断内容质量。
+教材式规划只决定知识点放在哪个文件：知识图谱可以多重归属，但文件树只选一个主要位置，其余联系用链接表达；连续反应链被拆到多份笔记时必须给出可检查的拆分理由，否则整包拒绝。
 ";
 
 pub const PROJECT_HELP: &str = "Noetome 项目命令
@@ -613,6 +621,21 @@ pub enum CliCommand {
     AuditStatus {
         root: PathBuf,
     },
+    PlanHelp,
+    PlanAdopt {
+        project: PathBuf,
+        root: PathBuf,
+    },
+    PlanBuild {
+        root: PathBuf,
+        output: PathBuf,
+    },
+    PlanList {
+        root: PathBuf,
+    },
+    PlanStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -661,6 +684,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "audit") {
         return audit_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "plan") {
+        return plan_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -1811,6 +1837,61 @@ fn knowledge_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
                 coordinated: saved.into(),
                 output: o.into(),
             })
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const PLAN_HELP: &str = "Noetome 教材式自适应规划
+
+用法：noetome plan adopt <规划声明> <尚不存在的规划根>
+      noetome plan build <规划根> <尚不存在的输出根>
+      noetome plan list <规划根>
+      noetome plan status <规划根>
+
+adopt：核对主题、阅读目标、概念关系与必要原子，先按规则预演一次规划，成环、拆链无理由或原子无处安放都在建根之前报出。
+build：在全新输出根里写出 plan.json、report.json、report.md 与输出清单；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算并输出笔记位置、原子安置、反应链与提醒。
+每个必要原子恰有一个规划位置；知识图谱可以多重归属，但文件树只选一个主要位置，其余联系用链接表达。
+连续反应链被拆到多份笔记时必须给出可检查的拆分理由（chain_too_long、topic_boundary、user_lock），否则整包拒绝。
+不联网、不调用模型、不写项目与Vault；本阶段只做结构规划，不生成知识、不判断内容质量与科学正确性。
+";
+
+fn plan_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 4] = ["adopt", "build", "list", "status"];
+    if args.is_empty() || matches!(args, [help] if help == "--help" || help == "-h") {
+        return Ok(CliCommand::PlanHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    if matches!(tail, [help] if help == "--help" || help == "-h")
+        && VERBS.iter().any(|candidate| verb == candidate)
+    {
+        return Ok(CliCommand::PlanHelp);
+    }
+    let (tail, separated) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |path: &OsString| {
+        !path.is_empty() && (separated || path.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [project, root] if verb == "adopt" && valid(project) && valid(root) => {
+            Ok(CliCommand::PlanAdopt {
+                project: project.into(),
+                root: root.into(),
+            })
+        }
+        [root, output] if verb == "build" && valid(root) && valid(output) => {
+            Ok(CliCommand::PlanBuild {
+                root: root.into(),
+                output: output.into(),
+            })
+        }
+        [root] if verb == "list" && valid(root) => Ok(CliCommand::PlanList { root: root.into() }),
+        [root] if verb == "status" && valid(root) => {
+            Ok(CliCommand::PlanStatus { root: root.into() })
         }
         _ => Err(INVALID_ARGUMENT),
     }

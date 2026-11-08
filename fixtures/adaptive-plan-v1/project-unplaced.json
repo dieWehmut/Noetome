@@ -1,0 +1,188 @@
+{
+  "policy": "adaptive-plan-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "plan-metabolism-v1",
+  "description": "教材式自适应规划的冻结声明：两个主题、六个阅读目标、一条带拆分理由的反应链。",
+  "folder_root": "代谢",
+  "topics": [
+    {
+      "topic_id": "topic-glycolysis",
+      "title": "糖酵解",
+      "folder": "糖酵解",
+      "concepts": [
+        "concept-glycolysis",
+        "concept-pfk"
+      ],
+      "goals": [
+        "goal-glycolysis-main",
+        "goal-glycolysis-energy",
+        "goal-glycolysis-regulation"
+      ],
+      "primary_goal": "goal-glycolysis-main"
+    },
+    {
+      "topic_id": "topic-gluconeogenesis",
+      "title": "糖异生",
+      "folder": "糖异生",
+      "concepts": [
+        "concept-gluconeogenesis",
+        "concept-pyruvate"
+      ],
+      "goals": [
+        "goal-gluconeogenesis-main",
+        "goal-gluconeogenesis-compare",
+        "goal-gluconeogenesis-energy"
+      ],
+      "primary_goal": "goal-gluconeogenesis-main"
+    }
+  ],
+  "goals": [
+    {
+      "goal_id": "goal-glycolysis-main",
+      "topic_id": "topic-glycolysis",
+      "title": "糖酵解：反应与调控",
+      "kind": "reaction"
+    },
+    {
+      "goal_id": "goal-glycolysis-energy",
+      "topic_id": "topic-glycolysis",
+      "title": "糖酵解的能量收支",
+      "kind": "energy"
+    },
+    {
+      "goal_id": "goal-glycolysis-regulation",
+      "topic_id": "topic-glycolysis",
+      "title": "糖酵解的调控",
+      "kind": "regulation"
+    },
+    {
+      "goal_id": "goal-gluconeogenesis-main",
+      "topic_id": "topic-gluconeogenesis",
+      "title": "糖异生：绕行与总账",
+      "kind": "overview"
+    },
+    {
+      "goal_id": "goal-gluconeogenesis-compare",
+      "topic_id": "topic-gluconeogenesis",
+      "title": "糖异生与糖酵解的对照",
+      "kind": "comparison"
+    },
+    {
+      "goal_id": "goal-gluconeogenesis-energy",
+      "topic_id": "topic-gluconeogenesis",
+      "title": "糖异生的能量成本",
+      "kind": "energy"
+    }
+  ],
+  "concepts": [
+    {
+      "concept_id": "concept-glycolysis",
+      "canonical": "糖酵解"
+    },
+    {
+      "concept_id": "concept-pfk",
+      "canonical": "磷酸果糖激酶"
+    },
+    {
+      "concept_id": "concept-gluconeogenesis",
+      "canonical": "糖异生"
+    },
+    {
+      "concept_id": "concept-pyruvate",
+      "canonical": "丙酮酸"
+    }
+  ],
+  "relations": [
+    {
+      "from": "concept-glycolysis",
+      "to": "concept-pfk",
+      "kind": "prerequisite"
+    },
+    {
+      "from": "concept-glycolysis",
+      "to": "concept-gluconeogenesis",
+      "kind": "prerequisite"
+    },
+    {
+      "from": "concept-pyruvate",
+      "to": "concept-gluconeogenesis",
+      "kind": "prerequisite"
+    },
+    {
+      "from": "concept-pfk",
+      "to": "concept-gluconeogenesis",
+      "kind": "related"
+    }
+  ],
+  "chains": [
+    {
+      "chain_id": "chain-glycolysis",
+      "label": "糖酵解十步反应的收支顺序",
+      "split_reason": "chain_too_long"
+    }
+  ],
+  "atoms": [
+    {
+      "atom_id": "atom-glycolysis-definition",
+      "concept_id": "concept-glycolysis",
+      "label": "糖酵解的定义与净反应式",
+      "goal_id": "goal-glycolysis-main",
+      "chain_id": "chain-glycolysis",
+      "step": 1
+    },
+    {
+      "atom_id": "atom-glycolysis-invest",
+      "concept_id": "concept-glycolysis",
+      "label": "投资阶段的两次磷酸化",
+      "goal_id": "goal-glycolysis-main",
+      "chain_id": "chain-glycolysis",
+      "step": 2
+    },
+    {
+      "atom_id": "atom-glycolysis-payoff",
+      "concept_id": "concept-glycolysis",
+      "label": "回报阶段的四次底物水平磷酸化",
+      "goal_id": "goal-glycolysis-energy",
+      "chain_id": "chain-glycolysis",
+      "step": 3
+    },
+    {
+      "atom_id": "atom-pfk-allosteric",
+      "concept_id": "concept-pfk",
+      "label": "磷酸果糖激酶-1 的别构位点",
+      "goal_id": "goal-glycolysis-main"
+    },
+    {
+      "atom_id": "atom-pfk-regulation",
+      "concept_id": "concept-pfk",
+      "label": "ATP 与柠檬酸的抑制",
+      "goal_id": "goal-glycolysis-regulation"
+    },
+    {
+      "atom_id": "atom-gluconeogenesis-definition",
+      "concept_id": "concept-gluconeogenesis",
+      "label": "糖异生的定义与四步绕行",
+      "goal_id": "goal-gluconeogenesis-compare"
+    },
+    {
+      "atom_id": "atom-pyruvate-carboxylase",
+      "concept_id": "concept-pyruvate",
+      "label": "丙酮酸羧化酶的线粒体定位",
+      "goal_id": "goal-gluconeogenesis-main"
+    },
+    {
+      "atom_id": "atom-gluconeogenesis-compare",
+      "concept_id": "concept-gluconeogenesis",
+      "label": "与糖酵解的能量账对照",
+      "goal_id": "goal-gluconeogenesis-compare"
+    }
+  ],
+  "limits": {
+    "max_topics": 4,
+    "max_goals": 8,
+    "max_concepts": 64,
+    "max_atoms": 256,
+    "max_chains": 32
+  }
+}

@@ -1,0 +1,258 @@
+{
+  "policy": "adaptive-plan-v1",
+  "plan_version": 1,
+  "case_id": "plan-metabolism-v1",
+  "teaching_order": [
+    {
+      "concept_id": "concept-glycolysis",
+      "canonical": "糖酵解"
+    },
+    {
+      "concept_id": "concept-pfk",
+      "canonical": "磷酸果糖激酶"
+    },
+    {
+      "concept_id": "concept-pyruvate",
+      "canonical": "丙酮酸"
+    },
+    {
+      "concept_id": "concept-gluconeogenesis",
+      "canonical": "糖异生"
+    }
+  ],
+  "counts": {
+    "topics": 2,
+    "goals": 6,
+    "concepts": 4,
+    "atoms": 8,
+    "atoms_planned": 8,
+    "notes": 6,
+    "folders": 2,
+    "chains": 1,
+    "chains_split": 1,
+    "cross_refs": 3
+  },
+  "folders": [
+    {
+      "topic_id": "topic-glycolysis",
+      "path": "代谢/糖酵解",
+      "title": "糖酵解"
+    },
+    {
+      "topic_id": "topic-gluconeogenesis",
+      "path": "代谢/糖异生",
+      "title": "糖异生"
+    }
+  ],
+  "notes": [
+    {
+      "note_id": "topic-glycolysis-goal-glycolysis-main",
+      "topic_id": "topic-glycolysis",
+      "goal_id": "goal-glycolysis-main",
+      "path": "代谢/糖酵解/01-goal-glycolysis-main.md",
+      "title": "糖酵解：反应与调控",
+      "primary": true,
+      "atom_ids": [
+        "atom-glycolysis-definition",
+        "atom-glycolysis-invest",
+        "atom-pfk-allosteric"
+      ],
+      "links": []
+    },
+    {
+      "note_id": "topic-glycolysis-goal-glycolysis-energy",
+      "topic_id": "topic-glycolysis",
+      "goal_id": "goal-glycolysis-energy",
+      "path": "代谢/糖酵解/02-goal-glycolysis-energy.md",
+      "title": "糖酵解的能量收支",
+      "primary": false,
+      "atom_ids": [
+        "atom-glycolysis-payoff"
+      ],
+      "links": [
+        {
+          "concept_id": "concept-glycolysis",
+          "target_note": "代谢/糖酵解/01-goal-glycolysis-main.md",
+          "display_text": "糖酵解"
+        }
+      ]
+    },
+    {
+      "note_id": "topic-glycolysis-goal-glycolysis-regulation",
+      "topic_id": "topic-glycolysis",
+      "goal_id": "goal-glycolysis-regulation",
+      "path": "代谢/糖酵解/03-goal-glycolysis-regulation.md",
+      "title": "糖酵解的调控",
+      "primary": false,
+      "atom_ids": [
+        "atom-pfk-regulation"
+      ],
+      "links": [
+        {
+          "concept_id": "concept-pfk",
+          "target_note": "代谢/糖酵解/01-goal-glycolysis-main.md",
+          "display_text": "磷酸果糖激酶"
+        }
+      ]
+    },
+    {
+      "note_id": "topic-gluconeogenesis-goal-gluconeogenesis-main",
+      "topic_id": "topic-gluconeogenesis",
+      "goal_id": "goal-gluconeogenesis-main",
+      "path": "代谢/糖异生/01-goal-gluconeogenesis-main.md",
+      "title": "糖异生：绕行与总账",
+      "primary": true,
+      "atom_ids": [
+        "atom-pyruvate-carboxylase",
+        "atom-gluconeogenesis-definition"
+      ],
+      "links": []
+    },
+    {
+      "note_id": "topic-gluconeogenesis-goal-gluconeogenesis-compare",
+      "topic_id": "topic-gluconeogenesis",
+      "goal_id": "goal-gluconeogenesis-compare",
+      "path": "代谢/糖异生/02-goal-gluconeogenesis-compare.md",
+      "title": "糖异生与糖酵解的对照",
+      "primary": false,
+      "atom_ids": [
+        "atom-gluconeogenesis-compare"
+      ],
+      "links": [
+        {
+          "concept_id": "concept-gluconeogenesis",
+          "target_note": "代谢/糖异生/01-goal-gluconeogenesis-main.md",
+          "display_text": "糖异生"
+        }
+      ]
+    },
+    {
+      "note_id": "topic-gluconeogenesis-goal-gluconeogenesis-energy",
+      "topic_id": "topic-gluconeogenesis",
+      "goal_id": "goal-gluconeogenesis-energy",
+      "path": "代谢/糖异生/03-goal-gluconeogenesis-energy.md",
+      "title": "糖异生的能量成本",
+      "primary": false,
+      "atom_ids": [],
+      "links": []
+    }
+  ],
+  "atoms": [
+    {
+      "atom_id": "atom-glycolysis-definition",
+      "concept_id": "concept-glycolysis",
+      "chain_id": "chain-glycolysis",
+      "note_id": "topic-glycolysis-goal-glycolysis-main",
+      "position": 1
+    },
+    {
+      "atom_id": "atom-glycolysis-invest",
+      "concept_id": "concept-glycolysis",
+      "chain_id": "chain-glycolysis",
+      "note_id": "topic-glycolysis-goal-glycolysis-main",
+      "position": 2
+    },
+    {
+      "atom_id": "atom-pfk-allosteric",
+      "concept_id": "concept-pfk",
+      "chain_id": null,
+      "note_id": "topic-glycolysis-goal-glycolysis-main",
+      "position": 3
+    },
+    {
+      "atom_id": "atom-glycolysis-payoff",
+      "concept_id": "concept-glycolysis",
+      "chain_id": "chain-glycolysis",
+      "note_id": "topic-glycolysis-goal-glycolysis-energy",
+      "position": 1
+    },
+    {
+      "atom_id": "atom-pfk-regulation",
+      "concept_id": "concept-pfk",
+      "chain_id": null,
+      "note_id": "topic-glycolysis-goal-glycolysis-regulation",
+      "position": 1
+    },
+    {
+      "atom_id": "atom-pyruvate-carboxylase",
+      "concept_id": "concept-pyruvate",
+      "chain_id": null,
+      "note_id": "topic-gluconeogenesis-goal-gluconeogenesis-main",
+      "position": 1
+    },
+    {
+      "atom_id": "atom-gluconeogenesis-definition",
+      "concept_id": "concept-gluconeogenesis",
+      "chain_id": null,
+      "note_id": "topic-gluconeogenesis-goal-gluconeogenesis-main",
+      "position": 2
+    },
+    {
+      "atom_id": "atom-gluconeogenesis-compare",
+      "concept_id": "concept-gluconeogenesis",
+      "chain_id": null,
+      "note_id": "topic-gluconeogenesis-goal-gluconeogenesis-compare",
+      "position": 1
+    }
+  ],
+  "chains": [
+    {
+      "chain_id": "chain-glycolysis",
+      "label": "糖酵解十步反应的收支顺序",
+      "notes": [
+        "topic-glycolysis-goal-glycolysis-energy",
+        "topic-glycolysis-goal-glycolysis-main"
+      ],
+      "split_reason": "chain_too_long"
+    }
+  ],
+  "warnings": [
+    {
+      "kind": "goal_without_atoms",
+      "subject": "topic-gluconeogenesis-goal-gluconeogenesis-energy"
+    }
+  ],
+  "rejections": [
+    {
+      "variant": "project-cycle.json",
+      "code": "PLAN_PREREQUISITE_CYCLE",
+      "exit": 3
+    },
+    {
+      "variant": "project-split.json",
+      "code": "PLAN_CHAIN_SPLIT",
+      "exit": 3
+    },
+    {
+      "variant": "project-unplaced.json",
+      "code": "PLAN_UNPLACED",
+      "exit": 3
+    },
+    {
+      "variant": "project-argument.json",
+      "code": "PLAN_ARGUMENT",
+      "exit": 2
+    }
+  ],
+  "determinism": {
+    "second_build_identical": true
+  },
+  "model_calls": 0,
+  "network_requests": 0,
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "规划只决定知识点放在哪个文件；不生成正文、不判断内容质量与科学正确性。"
+  },
+  "derivation": [
+    "教学顺序按 prerequisite 边做 Kahn 拓扑排序，同层按声明顺序：糖酵解 → 磷酸果糖激酶 → 丙酮酸 → 糖异生。",
+    "笔记按目标内最小学位序排序，因此两个主题的主阅读目标都排在 01。",
+    "跨笔记引用只在非主目标携带某概念原子时生成一次：能量笔记、调控笔记、对照笔记各 1 条，共 3 条。",
+    "反应链被拆到能量笔记与主笔记两份，链上声明 chain_too_long，因此 chains_split 记 1。",
+    "空目标只产生 goal_without_atoms 提醒，不阻止规划：提醒不等于通过，也不等于失败。",
+    "糖异生主目标先放丙酮酸羧化酶（位序 2）再放糖异生定义（位序 3），因为原子按概念位序排序。"
+  ]
+}

@@ -3,10 +3,10 @@ use std::io::{self, Write};
 use std::process::ExitCode;
 
 use noetome_cli::{
-    CliCommand, extraction, extraction_api, extraction_verify, fixture, fixture_compile,
-    audit_store, index_store, migrate_store, outline_store, pdf_parse, project, relevance_store,
-    research_store,
-    retrieval_store, revision_store, source, structure_store, vault_store, vault_update,
+    CliCommand, audit_store, extraction, extraction_api, extraction_verify, fixture,
+    fixture_compile, index_store, migrate_store, outline_store, pdf_parse, plan_store, project,
+    relevance_store, research_store, retrieval_store, revision_store, source, structure_store,
+    vault_store, vault_update,
 };
 
 fn main() -> ExitCode {
@@ -586,6 +586,17 @@ fn main() -> ExitCode {
         CliCommand::AuditList { root } => vault_result(audit_store::list(&root), &mut result_code),
         CliCommand::AuditStatus { root } => {
             vault_result(audit_store::status(&root), &mut result_code)
+        }
+        CliCommand::PlanHelp => noetome_cli::PLAN_HELP.to_owned(),
+        CliCommand::PlanAdopt { project, root } => {
+            vault_result(plan_store::adopt(&project, &root), &mut result_code)
+        }
+        CliCommand::PlanBuild { root, output } => {
+            vault_result(plan_store::build(&root, &output), &mut result_code)
+        }
+        CliCommand::PlanList { root } => vault_result(plan_store::list(&root), &mut result_code),
+        CliCommand::PlanStatus { root } => {
+            vault_result(plan_store::status(&root), &mut result_code)
         }
     };
 

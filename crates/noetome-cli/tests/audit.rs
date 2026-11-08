@@ -105,7 +105,10 @@ fn adopt_freezes_the_notes_and_only_writes_control() {
     let output = adopt(&root);
     assert_eq!(output.status.code(), Some(0), "{}", text(&output));
     let message = text(&output);
-    assert!(message.contains("4 份笔记、12 个标题、5 条链接"), "{message}");
+    assert!(
+        message.contains("4 份笔记、12 个标题、5 条链接"),
+        "{message}"
+    );
     assert!(message.contains("模型调用与网络请求：0 次"), "{message}");
 
     let mut top: Vec<String> = fs::read_dir(&root)
@@ -160,7 +163,11 @@ fn adopt_refuses_an_existing_root_without_touching_it() {
     let before = tree(&sandbox);
     let output = adopt(&root);
     assert_eq!(output.status.code(), Some(2), "{}", text(&output));
-    assert!(text(&output).contains("AUDIT_ARGUMENT"), "{}", text(&output));
+    assert!(
+        text(&output).contains("AUDIT_ARGUMENT"),
+        "{}",
+        text(&output)
+    );
     assert_eq!(tree(&sandbox), before);
 }
 
@@ -184,7 +191,9 @@ fn a_link_to_a_missing_heading_is_reported_and_the_report_is_still_written() {
     let sandbox = sandbox("broken");
     let root = sandbox.join("root");
     assert_eq!(
-        adopt_file("variants/broken/project.json", &root).status.code(),
+        adopt_file("variants/broken/project.json", &root)
+            .status
+            .code(),
         Some(0)
     );
     let output = sandbox.join("out");
@@ -233,7 +242,10 @@ fn two_markers_for_one_concept_are_reported_as_duplicates() {
         .iter()
         .map(|finding| finding["kind"].as_str().unwrap_or_default().to_owned())
         .collect();
-    assert!(kinds.contains(&"duplicate_explanation".to_owned()), "{kinds:?}");
+    assert!(
+        kinds.contains(&"duplicate_explanation".to_owned()),
+        "{kinds:?}"
+    );
 }
 
 #[test]
@@ -258,7 +270,10 @@ fn a_concept_without_a_marker_is_reported_as_unexplained() {
         .iter()
         .map(|finding| finding["kind"].as_str().unwrap_or_default().to_owned())
         .collect();
-    assert!(kinds.contains(&"concept_unexplained".to_owned()), "{kinds:?}");
+    assert!(
+        kinds.contains(&"concept_unexplained".to_owned()),
+        "{kinds:?}"
+    );
 }
 
 #[test]
@@ -300,9 +315,18 @@ fn build_is_deterministic_and_matches_the_frozen_expectation() {
     for (key, value) in prior["counts"].as_object().expect("counts") {
         assert_eq!(&report["counts"][key], value, "计数 {key} 与先验不符");
     }
-    assert_eq!(report["availability"]["display"], prior["availability"]["display"]);
-    assert_eq!(report["key_recall"]["display"], prior["key_recall"]["display"]);
-    assert_eq!(report["general_recall"]["display"], prior["general_recall"]["display"]);
+    assert_eq!(
+        report["availability"]["display"],
+        prior["availability"]["display"]
+    );
+    assert_eq!(
+        report["key_recall"]["display"],
+        prior["key_recall"]["display"]
+    );
+    assert_eq!(
+        report["general_recall"]["display"],
+        prior["general_recall"]["display"]
+    );
     assert_eq!(report["model_calls"], 0);
     assert_eq!(report["network_requests"], 0);
 
@@ -343,7 +367,10 @@ fn the_links_file_matches_the_frozen_links() {
             "resolved_note",
             "resolved_heading",
         ] {
-            assert_eq!(&got[index][field], &want[field], "第 {index} 条链接的 {field}");
+            assert_eq!(
+                &got[index][field], &want[field],
+                "第 {index} 条链接的 {field}"
+            );
         }
     }
 }
@@ -426,7 +453,11 @@ fn a_changed_frozen_body_is_detected_before_any_report_is_written() {
     let sandbox = sandbox("tamper");
     let root = sandbox.join("root");
     assert_eq!(adopt(&root).status.code(), Some(0));
-    let note = root.join("control").join("notes").join("笔记").join("糖酵解.md");
+    let note = root
+        .join("control")
+        .join("notes")
+        .join("笔记")
+        .join("糖酵解.md");
     let mut bytes = fs::read(&note).expect("note");
     bytes.extend_from_slice(b"\n");
     fs::write(&note, bytes).expect("tamper");
@@ -445,7 +476,11 @@ fn an_extra_entry_in_the_control_directory_is_refused() {
     fs::write(root.join("control").join("note.txt"), b"extra").expect("extra");
     let status = cli(&["audit".into(), "status".into(), arg(&root)]);
     assert_eq!(status.status.code(), Some(3), "{}", text(&status));
-    assert!(text(&status).contains("AUDIT_INTEGRITY"), "{}", text(&status));
+    assert!(
+        text(&status).contains("AUDIT_INTEGRITY"),
+        "{}",
+        text(&status)
+    );
 }
 
 #[test]
@@ -469,8 +504,7 @@ fn list_returns_machine_readable_counts() {
     assert_eq!(adopt(&root).status.code(), Some(0));
     let output = cli(&["audit".into(), "list".into(), arg(&root)]);
     assert_eq!(output.status.code(), Some(0), "{}", text(&output));
-    let listing: serde_json::Value =
-        serde_json::from_slice(&output.stdout).expect("list is json");
+    let listing: serde_json::Value = serde_json::from_slice(&output.stdout).expect("list is json");
     assert_eq!(listing["policy"], "library-audit-v1");
     assert_eq!(listing["producer"], "noetome-audit");
     assert_eq!(listing["verdict"], "pass");

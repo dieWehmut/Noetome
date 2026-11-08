@@ -43,6 +43,7 @@
 | [小节提升与链接迁移](technical/LINK_MIGRATION_CONTRACT.md) | 引用按知识对象而不是文件名核对、重定向位置保留、四种变更判据、身份保持与断链为零、输出根字节确定性 | migrate 动词、对象/计划字段、身份判据或输出根布局变化 |
 | [可移植来源索引](technical/SOURCE_INDEX_CONTRACT.md) | 四区互斥、正文来源负担拒绝、来源按字节摘要识别、重定位三态、输出根字节确定性与所有权身份 | index 动词、区域判定、重定位判据或输出根布局变化 |
 | [全库链接与解释审计](technical/LIBRARY_AUDIT_CONTRACT.md) | 标题与章节归属、完整解释标记、链接六种解析依据与三态、原子召回门槛、口径不适用与输出字节确定性 | audit 动词、标记或链接判据、召回门槛或输出根布局变化 |
+| [教材式自适应规划](technical/ADAPTIVE_PLAN_CONTRACT.md) | 教学顺序与前置环拒绝、笔记与文件夹规划、多重归属只留一个主要位置、反应链拆分理由、原子必须落在主目标、输出字节确定性 | plan 动词、排序或拆分判据、错误码或输出根布局变化 |
 | [写作反馈修订](technical/REVISION_FEEDBACK_CONTRACT.md) | 缺口问题与候选分离、新 IR 版本与依赖重编译、无新证据不推翻、超限升级 | revision 动词、原子/表示字段、修订闸门或控制目录布局变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |

@@ -4061,7 +4061,7 @@
       "id": "B12-T01",
       "title": "教材式自适应规划：概念关系、教学顺序与规划位置",
       "batch": "B12",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B11-T03"
       ],
@@ -4075,7 +4075,76 @@
         "连续反应链不得无理由拆成大量单句文件：拆分必须给出可检查的理由（链条过长、主题归属或用户锁定），否则整包拒绝而不是照单执行。",
         "规划只读已核对 IR 与声明，零模型调用、零网络请求，不生成知识、不写正文；独立只读审计器复算规划结果并在任何原子缺位时报失败，通过完整回归后 complete。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-08T00:21:36Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结概念关系、必要原子与主题声明的自造输入与实现前手写的规划期望，定义教材式自适应规划的确定性口径（每个必要原子唯一规划位置、连续反应链不得无理由拆碎）并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-08T00:52:37Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现 plan adopt|build|list|status：教学顺序拓扑排序（同层按声明序）、笔记与文件夹规划、多重归属只留一个主要位置、反应链拆分必须给出可检查理由、每个概念在主目标必须有完整解释位置；冻结根与输出字节确定性；修复 adopt 摘要把笔记标题当教学顺序、原子按字母序输出、提醒缺种类、审计器缺文件抛异常四处缺陷",
+          "validation": [
+            "cargo fmt --all --check exit 0（含上一任务末尾手改的格式修正）",
+            "cargo build --bin noetome exit 0，无新增 warning",
+            "cargo test --test plan → 19 passed / 0 failed",
+            "cargo test -p noetome-cli --lib -- --test-threads=2 → 511 passed / 98 failed / 1 ignored；失败分布 sidecar_process 64、pdf_source_model 18、pdf_parse 7、source_model 5、source_write 3、extraction_source 1，与本任务前 501/98 基线逐模块一致；新增 10 项 plan_model 单测全过",
+            "python3 -m unittest tests.test_verify_adaptive_plan → Ran 45 / OK",
+            "python3 -m unittest discover -s tests -p 'test_*.py' → Ran 835 / failures=41 errors=12 skipped=24，与任务前 Ran 790 同组失败，新增 45 项全过",
+            "独立审计器：根+输出+包 111 项 0 失败；仅包 33 项 0 失败；--freeze 冻结 8 个成员",
+            "端到端实测：adopt/status/list/build 全 exit 0，两次构建四文件全部 SAME，plan.json 与 report.json 与手写先验逐项相同，四个变体分别 exit 2/3 且不留根"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/plan_model.rs",
+              "sha256": "20911d1163ad0cbb67c842d03679791a3c837b4c61d1cb98df7ac68b18876a89"
+            },
+            {
+              "path": "crates/noetome-cli/src/plan_store.rs",
+              "sha256": "917fce310b00c3dafad2e1aa179205041d3e6458be116f3d597b752ef7d89132"
+            },
+            {
+              "path": "crates/noetome-cli/tests/plan.rs",
+              "sha256": "91a9c831d6f00a4bf36f9f540e01df255f9cdd7c01d90edfb990f803bca01774"
+            },
+            {
+              "path": "fixtures/adaptive-plan-v1/project.json",
+              "sha256": "a66152e0e668f5e792f85f5e46e9dfaa6d231af610312353cda6493c74ee548e"
+            },
+            {
+              "path": "fixtures/adaptive-plan-v1/expected.json",
+              "sha256": "8de95e9e61376bf65beab49c17416d84273384213cba6f1c5c2d59b7cef3217a"
+            },
+            {
+              "path": "scripts/verify_adaptive_plan.py",
+              "sha256": "d5101b14ef7569ffc5262d1b95a3c789b46617598000d6c57aa54bfbfab490d6"
+            },
+            {
+              "path": "tests/test_verify_adaptive_plan.py",
+              "sha256": "ef3417a6ae6a267d0047593356b3ab52af17fc1f4c199c43508015a3c21e22cd"
+            },
+            {
+              "path": "doc/technical/ADAPTIVE_PLAN_CONTRACT.md",
+              "sha256": "04c3c718f3ee6b8922e4de977a438ef89e199e23c357a0cb1ceb7b94626a72e1"
+            },
+            {
+              "path": "doc/validation/B12-T01.md",
+              "sha256": "45a30d85c4751155ab605feb013cba25459c2b1cd3634c4df580696bf6a1a22a"
+            },
+            {
+              "path": "doc/validation/assets/B12-T01/cli-20261108/audit.txt",
+              "sha256": "330a1248c7ecdbd5998573bda03cae748f8aa5910c41ee2604c983445b7683b8"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B12-T02",

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "plan-metabolism-v1",
+  "policy": "adaptive-plan-v1",
+  "sequence": [
+    {
+      "verb": "adopt",
+      "project": "project.json",
+      "root": null,
+      "note": "冻结声明后预演一次规划：成环、拆链无理由、原子无处安放都必须在建根之前报出。"
+    },
+    {
+      "verb": "build",
+      "root": null,
+      "output": null,
+      "note": "同一冻结输入的两次构建必须字节相同。"
+    },
+    {"verb": "list", "root": null},
+    {"verb": "status", "root": null}
+  ],
+  "variants": [
+    {"project": "project-cycle.json", "code": "PLAN_PREREQUISITE_CYCLE", "exit": 3},
+    {"project": "project-split.json", "code": "PLAN_CHAIN_SPLIT", "exit": 3},
+    {"project": "project-unplaced.json", "code": "PLAN_UNPLACED", "exit": 3},
+    {"project": "project-argument.json", "code": "PLAN_ARGUMENT", "exit": 2}
+  ],
+  "expected": "expected.json",
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "规划只决定知识点落在哪个文件；不生成正文，不判断内容质量与科学正确性。"
+  }
+}
