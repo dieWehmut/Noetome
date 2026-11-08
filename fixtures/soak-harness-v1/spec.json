@@ -1,0 +1,28 @@
+{
+  "policy": "soak-harness-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "soak-synthetic-v1",
+  "description": "冻结的 soak 规格：8 轮、轮间隔 0、不暂停；另附一个暂停闸门样例（暂停时点 0 毫秒）。",
+  "spec": {
+    "rounds": 8,
+    "interval_ms": 0,
+    "pause_after_ms": null,
+    "max_rss_growth_bytes": 1073741824
+  },
+  "paused_spec": {
+    "rounds": 8,
+    "interval_ms": 0,
+    "pause_after_ms": 0,
+    "max_rss_growth_bytes": 1073741824
+  },
+  "boundaries": {
+    "scientific_status": "not_run",
+    "synthetic": true,
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "合成负载，只跑文本分析；不代表真实项目负载，也不证明 NFR-09 达标。"
+  }
+}

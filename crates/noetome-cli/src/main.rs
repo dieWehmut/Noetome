@@ -6,7 +6,7 @@ use noetome_cli::{
     CliCommand, audit_store, bench_store, change_store, extraction, extraction_api,
     extraction_verify, fixture, fixture_compile, index_store, migrate_store, outline_store,
     pdf_parse, plan_store, project, relevance_store, research_store, retrieval_store,
-    revision_store, scale_store, source, structure_store, template_store, vault_store,
+    revision_store, scale_store, soak_store, source, structure_store, template_store, vault_store,
     vault_update,
 };
 
@@ -622,6 +622,23 @@ fn main() -> ExitCode {
             output,
         } => vault_result(
             bench_store::measure(&notes, &edits, &samples, &warmup, &output),
+            &mut result_code,
+        ),
+        CliCommand::SoakHelp => noetome_cli::SOAK_HELP.to_owned(),
+        CliCommand::SoakRun {
+            rounds,
+            interval_ms,
+            pause_after_ms,
+            max_rss_growth_bytes,
+            output,
+        } => vault_result(
+            soak_store::run(
+                &rounds,
+                &interval_ms,
+                pause_after_ms.as_deref(),
+                &max_rss_growth_bytes,
+                &output,
+            ),
             &mut result_code,
         ),
         CliCommand::ScaleMeasure {

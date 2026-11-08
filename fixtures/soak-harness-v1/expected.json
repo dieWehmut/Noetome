@@ -1,0 +1,120 @@
+{
+  "policy": "soak-harness-v1",
+  "schema_version": 1,
+  "case_id": "soak-synthetic-v1",
+  "enforcement": {
+    "pause_bound_millis": 2000,
+    "required_millis": 86400000,
+    "planned_floor_millis": 0,
+    "unit": "每轮的工作单元是对一页合成文本跑一次只读分析并核对摘要；不写文件、不联网、不调用模型。"
+  },
+  "coverage": [
+    {
+      "requirement": "NFR-09",
+      "status": "not_met"
+    },
+    {
+      "requirement": "NFR-13",
+      "status": "partially_measured"
+    }
+  ],
+  "no_pause": {
+    "spec": {
+      "rounds": 8,
+      "interval_ms": 0,
+      "pause_after_ms": null,
+      "max_rss_growth_bytes": 1073741824
+    },
+    "summary": {
+      "rounds": 8,
+      "scheduled": 8,
+      "refused": 0,
+      "units": 8,
+      "errors": 0,
+      "scheduled_after_pause": 0
+    },
+    "pause": {
+      "after_ms": null,
+      "effective_round": null,
+      "within_bound": null,
+      "scheduled_after_pause": 0
+    },
+    "every_round_scheduled": true
+  },
+  "paused": {
+    "spec": {
+      "rounds": 8,
+      "interval_ms": 0,
+      "pause_after_ms": 0,
+      "max_rss_growth_bytes": 1073741824
+    },
+    "summary": {
+      "rounds": 8,
+      "scheduled": 0,
+      "refused": 8,
+      "units": 0,
+      "errors": 0,
+      "scheduled_after_pause": 0
+    },
+    "pause": {
+      "after_ms": 0,
+      "effective_round": 1,
+      "within_bound": true,
+      "scheduled_after_pause": 0
+    },
+    "every_round_refused": true
+  },
+  "rejections": [
+    {
+      "name": "zero-rounds",
+      "code": "SOAK_ARGUMENT",
+      "exit": 2
+    },
+    {
+      "name": "interval-too-large",
+      "code": "SOAK_ARGUMENT",
+      "exit": 2
+    },
+    {
+      "name": "bad-number",
+      "code": "SOAK_ARGUMENT",
+      "exit": 2
+    },
+    {
+      "name": "existing-output",
+      "code": "SOAK_ARGUMENT",
+      "exit": 2
+    },
+    {
+      "name": "missing-flag",
+      "code": "CLI_INVALID_ARGUMENT",
+      "exit": 2
+    }
+  ],
+  "determinism": {
+    "comparable": [
+      "structure.json",
+      "manifest.json",
+      "report.md"
+    ],
+    "excluded": [
+      "timings.json"
+    ],
+    "note": "结构产物只由参数决定；读数全在 timings.json，因此同参数两次运行只有它不同。"
+  },
+  "boundaries": {
+    "scientific_status": "not_run",
+    "synthetic": true,
+    "note": "不判断性能是否可接受，只记录读数；NFR-09 未达标。"
+  },
+  "derivation": [
+    "enforcement.planned_floor_millis = rounds × interval_ms = 8 × 0 = 0：只算轮间隔，不算工作单元本身。",
+    "pause_bound_millis 与 required_millis 是 NFR-13 / NFR-09 的规格常量，不来自任何一次运行。",
+    "不暂停时每轮都被调度：rounds = scheduled = units = 8，refused = 0。",
+    "暂停时点为 0 毫秒时，第 1 轮开始时 elapsed 已 ≥ 0，因此第 1 轮即被拒绝：scheduled = 0、refused = 8。",
+    "两个样例的 scheduled_after_pause 都必须为 0：闸门关闭后不再调度新请求。",
+    "coverage 恒为 NFR-09 = not_met（未跑满 24 小时）与 NFR-13 = partially_measured（没有应用暂停命令的界面）。",
+    "structure.json / manifest.json / report.md 由参数唯一决定；timings.json 每次不同。",
+    "五条拒绝各对应一类参数问题，全部在写盘前拦下，不留输出根。"
+  ]
+}

@@ -102,6 +102,8 @@ mod scan_render;
 pub mod sidecar_model;
 pub mod sidecar_process;
 mod sidecar_workspace;
+mod soak_model;
+pub mod soak_store;
 pub mod source;
 mod source_model;
 mod source_schema;
@@ -203,6 +205,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome template status <结构根>
       noetome scale measure --pages 1000 --headings 4 --paragraphs 3 --output <输出根>
       noetome bench measure --notes 3000 --edits 200 --samples 20 --warmup 2 --output <输出根>
+      noetome soak run --rounds 20 --interval-ms 100 --pause-after-ms 1500 --max-rss-growth-bytes 1073741824 --output <输出根>
       noetome change adopt <变更声明> <变更根>
       noetome change build <变更根> <输出根>
       noetome change list <变更根>
@@ -241,6 +244,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   template                同一主题的多阅读目标与同类结构一致（adopt/build/list/status）
   scale                   合成语料的千页规模实测：真实跑文本分析与章节对齐，规划上限如实列为未达标（measure）
   bench                   大库规模实测：3000 笔记 / 200 处人工改动的四阶段 P95 与内存（measure）
+  soak                    长时运行 soak：逐轮耗时/内存/错误码，用可观测计数证明暂停后不再调度（run）
   change                  锁定位置与规划变更的局部影响（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
@@ -689,6 +693,14 @@ pub enum CliCommand {
         warmup: String,
         output: PathBuf,
     },
+    SoakHelp,
+    SoakRun {
+        rounds: String,
+        interval_ms: String,
+        pause_after_ms: Option<String>,
+        max_rss_growth_bytes: String,
+        output: PathBuf,
+    },
     ChangeHelp,
     ChangeAdopt {
         project: PathBuf,
@@ -767,6 +779,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "bench") {
         return bench_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "soak") {
+        return soak_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -2209,6 +2224,65 @@ fn bench_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         edits: edits.ok_or(INVALID_ARGUMENT)?,
         samples: samples.ok_or(INVALID_ARGUMENT)?,
         warmup: warmup.ok_or(INVALID_ARGUMENT)?,
+        output: output.ok_or(INVALID_ARGUMENT)?,
+    })
+}
+
+pub const SOAK_HELP: &str = "\
+Noetome 长时运行 soak
+
+用法：
+  noetome soak run --rounds 20 --interval-ms 100 --pause-after-ms 1500 --max-rss-growth-bytes 1073741824 --output <输出根>
+  noetome soak --help
+
+说明：
+  run：按参数重复执行只读工作单元（对一页合成文本做一次分析），逐轮记录耗时、内存与错误码
+  暂停闸门：每轮开始时用距起点的毫秒数判断闸门是否已关；关了就永远关，关闭后仍被调度的轮数必须为 0
+  未跑满 24 小时即未达到 NFR-09：报告与产物都写 not_met，不把短时结果当长时结论
+  读数只存在 timings.json，结构与报告只由参数决定；输出根恰四个文件
+  不联网、不调用模型、不写项目与 Vault；本阶段不做性能优化，只测量与判定。";
+
+fn soak_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args
+        .first()
+        .is_some_and(|arg| arg == "--help" || arg == "-h")
+    {
+        return Ok(CliCommand::SoakHelp);
+    }
+    let verb = args.first().ok_or(INVALID_ARGUMENT)?.to_string_lossy();
+    if verb != "run" {
+        return Err(INVALID_ARGUMENT);
+    }
+    let mut rounds: Option<String> = None;
+    let mut interval_ms: Option<String> = None;
+    let mut pause_after_ms: Option<String> = None;
+    let mut pause_seen = false;
+    let mut max_rss_growth_bytes: Option<String> = None;
+    let mut output: Option<PathBuf> = None;
+    let mut index = 1;
+    while index < args.len() {
+        let flag = args[index].to_string_lossy();
+        let value = args.get(index + 1).ok_or(INVALID_ARGUMENT)?;
+        match flag.as_ref() {
+            "--rounds" => rounds = Some(value.to_string_lossy().into_owned()),
+            "--interval-ms" => interval_ms = Some(value.to_string_lossy().into_owned()),
+            "--pause-after-ms" => {
+                pause_seen = true;
+                pause_after_ms = Some(value.to_string_lossy().into_owned());
+            }
+            "--max-rss-growth-bytes" => {
+                max_rss_growth_bytes = Some(value.to_string_lossy().into_owned())
+            }
+            "--output" => output = Some(PathBuf::from(value)),
+            _ => return Err(INVALID_ARGUMENT),
+        }
+        index += 2;
+    }
+    Ok(CliCommand::SoakRun {
+        rounds: rounds.ok_or(INVALID_ARGUMENT)?,
+        interval_ms: interval_ms.ok_or(INVALID_ARGUMENT)?,
+        pause_after_ms: if pause_seen { pause_after_ms } else { None },
+        max_rss_growth_bytes: max_rss_growth_bytes.ok_or(INVALID_ARGUMENT)?,
         output: output.ok_or(INVALID_ARGUMENT)?,
     })
 }

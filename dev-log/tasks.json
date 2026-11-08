@@ -4506,7 +4506,7 @@
       "id": "B13-T03",
       "title": "长时运行与暂停语义的可复现 soak",
       "batch": "B13",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B13-T02"
       ],
@@ -4520,7 +4520,74 @@
         "本轮实测时长如实记录；未跑满 24 小时必须明确写「未达到 NFR-09」，不把短时结果当长时结论",
         "独立只读审计器复算轮次与暂停窗口，任何不符即失败"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-08T02:37:56Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结长时运行与暂停闸门的可复现 soak 声明与实现前手写期望，用可观测计数证明暂停后不再调度新请求，并把未跑满 24 小时如实写作未达到 NFR-09",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-08T03:07:12Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现 soak harness：逐轮只读工作单元、单一闸门判断与关闭后不再调度的可观测计数、覆盖率按参数如实标注 NFR-09 not_met 与 NFR-13 partially_measured，读数与确定性产物分离",
+          "validation": [
+            "cargo fmt --all --check exit 0",
+            "cargo test --test soak: 14 passed / 0 failed (4.07s)",
+            "cargo test -p noetome-cli --lib -- --test-threads=2: 548 passed / 98 failed / 1 ignored，失败分布 sidecar_process 64 / pdf_source_model 18 / pdf_parse 7 / source_model 5 / source_write 3 / extraction_source 1，与任务前 542/98 基线逐模块一致",
+            "全量 Python: Ran 1044 / failures 41 / errors 12 / skipped 24，与任务前 Ran 1004 同组失败，新增 40 项全过",
+            "独立审计器 verify_soak_harness.py：8 轮 118 项 / 暂停 118 项 / 中途暂停 116 项 / 200 轮 114 项 / 仅包 45 项，全部零失败",
+            "端到端实测：8 轮不暂停 scheduled 8 refused 0；暂停 0 毫秒 scheduled 0 refused 8 且第 1 轮生效；400 轮+暂停 1500 scheduled 144 refused 256 延迟 6 毫秒 scheduled_after_pause 0；两次同参数 SAME structure.json/manifest.json/report.md 且 DIFF timings.json"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/soak_model.rs",
+              "sha256": "6e537d1565946a9119b97d8dd8ec167abf97e0bc79f4bf7de32bcc6ae2a86208"
+            },
+            {
+              "path": "crates/noetome-cli/src/soak_store.rs",
+              "sha256": "d9f29fb7415d1704d51391ed083a1dcd13299bbaba589a6af863e0c7a45932cd"
+            },
+            {
+              "path": "crates/noetome-cli/tests/soak.rs",
+              "sha256": "71808a09198a7d97331a032db051e1648974406bf00577bf339066a659aa5c47"
+            },
+            {
+              "path": "fixtures/soak-harness-v1/spec.json",
+              "sha256": "56ab8d367ed59a935421a1e8654adac01b87a9e6a1fb1ac4903a757a63804ea7"
+            },
+            {
+              "path": "fixtures/soak-harness-v1/expected.json",
+              "sha256": "feb175273c2ee0ef26de5ca10b066dd87b41f22c089e3a3b803e75d54b9382ce"
+            },
+            {
+              "path": "scripts/verify_soak_harness.py",
+              "sha256": "e385205d5b812e739ea81fe838da74764ff9976640cab3d2696b648f91519df7"
+            },
+            {
+              "path": "tests/test_verify_soak_harness.py",
+              "sha256": "1df11bd7901cb721e8b9f45faf429cc02c30050cb909e3121a4dce10170d7049"
+            },
+            {
+              "path": "doc/technical/SOAK_HARNESS_CONTRACT.md",
+              "sha256": "cd6e8b3053b59351e5a895d6878704d1bf9f0314b6dcd36f69af21ff0a1fbb61"
+            },
+            {
+              "path": "doc/validation/B13-T03.md",
+              "sha256": "127ff7cfddb8b48bb7ce34d0933da94418397d28b30416ebbd9383238ee5f085"
+            },
+            {
+              "path": "doc/validation/assets/B13-T03/cli-20261108/audit.txt",
+              "sha256": "312ee4b131a2f6417cee94564d773c486150ca1fa6075aeae930e670a065b38f"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
