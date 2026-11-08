@@ -1,0 +1,94 @@
+{
+  "policy": "diagnostics-export-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "diag-traceability-v1",
+  "description": "抽取失败后的现场：日志、运行记录与来源正文被分成三个范围，用户只勾选不带原文的前两个。",
+  "config": [
+    {
+      "key": "model",
+      "value": "deepseek-flash"
+    },
+    {
+      "key": "request_timeout_ms",
+      "value": "60000"
+    },
+    {
+      "key": "pdf_python",
+      "value": "locked-3.12"
+    }
+  ],
+  "fingerprints": [
+    {
+      "name": "cli",
+      "digest": "ac4c0369a3b9f23e29e8d47a46bee7f4a172a3bf8657b11025b6e50f7801c30b"
+    },
+    {
+      "name": "policy",
+      "digest": "320489922192d82b3d813d76e83ea8b9d0a2e1100328612acef5555990f91189"
+    },
+    {
+      "name": "pdf_parser",
+      "digest": "886b2ffbf66f325f3872f39edde6309580267d2726042c3c442c591a16c4b43f"
+    }
+  ],
+  "categories": [
+    {
+      "category_id": "journal-events",
+      "label": "审计事件",
+      "sensitive": false,
+      "entries": [
+        {
+          "entry_id": "ev-1",
+          "label": "task-parse started",
+          "bytes": 120,
+          "preview": "task-parse 在 1 号事件开始，来源 教材A 第三章。"
+        },
+        {
+          "entry_id": "ev-2",
+          "label": "task-parse failed",
+          "bytes": 180,
+          "preview": "第 12 页没有文本层。"
+        }
+      ]
+    },
+    {
+      "category_id": "run-logs",
+      "label": "运行日志",
+      "sensitive": false,
+      "entries": [
+        {
+          "entry_id": "log-1",
+          "label": "sidecar stderr",
+          "bytes": 400,
+          "preview": "pdf_parse: 12 pages, 3 without text layer"
+        }
+      ]
+    },
+    {
+      "category_id": "source-body",
+      "label": "来源正文",
+      "sensitive": true,
+      "entries": [
+        {
+          "entry_id": "src-1",
+          "label": "教材A 第三章原文",
+          "bytes": 9000,
+          "preview": "糖酵解发生在细胞质中，净产生两分子 ATP。"
+        }
+      ]
+    }
+  ],
+  "selection": [
+    "journal-events",
+    "network-capture"
+  ],
+  "consent": {
+    "sensitive_approved": false
+  },
+  "limits": {
+    "max_categories": 8,
+    "max_entries": 16,
+    "max_preview": 240
+  }
+}

@@ -11,6 +11,8 @@ mod compile_identity;
 mod compile_model;
 mod compile_report;
 mod compile_store;
+mod diagnostics_model;
+pub mod diagnostics_store;
 pub mod extraction;
 pub mod extraction_api;
 mod extraction_api_config;
@@ -216,6 +218,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome journal build <审计根> <尚不存在的输出根>
       noetome journal list <审计根>
       noetome journal status <审计根>
+      noetome diagnostics adopt <导出声明> <尚不存在的诊断根>
+      noetome diagnostics build <诊断根> <尚不存在的输出根>
+      noetome diagnostics list <诊断根>
+      noetome diagnostics status <诊断根>
 
 当前支持：
   -h, --help       显示帮助
@@ -253,9 +259,11 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   soak                    长时运行 soak：逐轮耗时/内存/错误码，用可观测计数证明暂停后不再调度（run）
   change                  锁定位置与规划变更的局部影响（adopt/build/list/status）
   journal                 可定位任务的审计事件日志：四层回溯与凭据硬拒绝（adopt/build/list/status）
+  diagnostics             带范围与内容预览的诊断导出：勾选决定内容、默认排除原文（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 审计事件日志只追加、不重写：同一任务的先后由事件序号决定，重排声明不会悄悄改变日志；每条失败事件必须能定位到任务、来源、知识对象与受影响文件；声明里出现疑似凭据字样时整包拒绝，不做「过滤后继续」。
+诊断导出只导出声明的类别与条目：没勾选的内容如实标为未导出，不静默补全；默认不含原文与来源正文，勾选敏感范围必须记录同意；声明里出现绝对路径或疑似凭据时整包拒绝，拒绝时不写出任何字节。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
 完整知识编译与生产Vault增量发布尚未实现。
 研究候选只是待批准线索：队列从不联网、不调用模型，也不把候选当成已完成知识。
@@ -739,6 +747,21 @@ pub enum CliCommand {
     JournalStatus {
         root: PathBuf,
     },
+    DiagnosticsHelp,
+    DiagnosticsAdopt {
+        project: PathBuf,
+        root: PathBuf,
+    },
+    DiagnosticsBuild {
+        root: PathBuf,
+        output: PathBuf,
+    },
+    DiagnosticsList {
+        root: PathBuf,
+    },
+    DiagnosticsStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -808,6 +831,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "journal") {
         return journal_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "diagnostics") {
+        return diagnostics_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -2370,6 +2396,70 @@ fn journal_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
             root: PathBuf::from(&rest[0]),
         }),
         "status" if rest.len() == 1 && valid(&rest[0]) => Ok(CliCommand::JournalStatus {
+            root: PathBuf::from(&rest[0]),
+        }),
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const DIAGNOSTICS_HELP: &str = "\
+Noetome 诊断导出
+
+用法：
+  noetome diagnostics adopt <导出声明> <尚不存在的诊断根>
+  noetome diagnostics build <诊断根> <尚不存在的输出根>
+  noetome diagnostics list <诊断根>
+  noetome diagnostics status <诊断根>
+
+adopt：核对声明、范围类别与同意，先按规则预演一次导出，全部通过才建根。
+build：把冻结声明渲染成 export.json、report.json 与 report.md；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算导出范围并输出每个类别的条目、字节与是否导出。
+导出内容由勾选决定：没勾选的类别如实标为未导出，不静默补全。
+默认不含原文与来源正文；勾选敏感范围必须在声明里记录同意，没有同意直接拒绝。
+声明里出现绝对路径或疑似凭据字样时整包拒绝，拒绝时不写出任何字节。
+预览只是短摘要，不是原文；诊断包会被分享出去，只能写相对路径。
+不联网、不调用模型、不写项目与Vault；本阶段不判断内容质量与科学正确性。
+";
+
+fn diagnostics_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 4] = ["adopt", "build", "list", "status"];
+    let Some(first) = args.first() else {
+        return Err(INVALID_ARGUMENT);
+    };
+    if first == "--help" || first == "-h" {
+        return Ok(CliCommand::DiagnosticsHelp);
+    }
+    let verb = first.to_string_lossy();
+    if !VERBS.contains(&verb.as_ref()) {
+        return Err(INVALID_ARGUMENT);
+    }
+    let mut rest: Vec<OsString> = Vec::new();
+    let mut index = 1;
+    let mut separator = false;
+    while index < args.len() {
+        let value = &args[index];
+        if !separator && value == "--" {
+            separator = true;
+            index += 1;
+            continue;
+        }
+        rest.push(value.clone());
+        index += 1;
+    }
+    let valid = |value: &OsString| !value.is_empty() && !value.to_string_lossy().starts_with('-');
+    match verb.as_ref() {
+        "adopt" if rest.len() == 2 && rest.iter().all(valid) => Ok(CliCommand::DiagnosticsAdopt {
+            project: PathBuf::from(&rest[0]),
+            root: PathBuf::from(&rest[1]),
+        }),
+        "build" if rest.len() == 2 && rest.iter().all(valid) => Ok(CliCommand::DiagnosticsBuild {
+            root: PathBuf::from(&rest[0]),
+            output: PathBuf::from(&rest[1]),
+        }),
+        "list" if rest.len() == 1 && valid(&rest[0]) => Ok(CliCommand::DiagnosticsList {
+            root: PathBuf::from(&rest[0]),
+        }),
+        "status" if rest.len() == 1 && valid(&rest[0]) => Ok(CliCommand::DiagnosticsStatus {
             root: PathBuf::from(&rest[0]),
         }),
         _ => Err(INVALID_ARGUMENT),

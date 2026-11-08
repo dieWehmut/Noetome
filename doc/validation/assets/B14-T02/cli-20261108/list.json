@@ -1,0 +1,78 @@
+{
+  "case_id": "diag-traceability-v1",
+  "categories": [
+    {
+      "bytes": 300,
+      "category_id": "journal-events",
+      "entries": 2,
+      "exported_bytes": 300,
+      "included": true,
+      "label": "审计事件",
+      "preview": "task-parse 在 1 号事件开始，来源 教材A 第三章。",
+      "selected_entries": 2,
+      "sensitive": false
+    },
+    {
+      "bytes": 400,
+      "category_id": "run-logs",
+      "entries": 1,
+      "exported_bytes": 400,
+      "included": true,
+      "label": "运行日志",
+      "preview": "pdf_parse: 12 pages, 3 without text layer",
+      "selected_entries": 1,
+      "sensitive": false
+    },
+    {
+      "bytes": 9000,
+      "category_id": "source-body",
+      "entries": 1,
+      "exported_bytes": 0,
+      "included": false,
+      "label": "来源正文",
+      "preview": "糖酵解发生在细胞质中，净产生两分子 ATP。",
+      "selected_entries": 0,
+      "sensitive": true
+    }
+  ],
+  "configuration": 3,
+  "counts": {
+    "categories": 3,
+    "config": 3,
+    "entries": 4,
+    "excluded_bytes": 9000,
+    "excluded_categories": 1,
+    "exported_bytes": 700,
+    "fingerprints": 3,
+    "model_calls": 0,
+    "network_requests": 0,
+    "selected_categories": 2,
+    "selected_entries": 3,
+    "sensitive_categories": 1,
+    "sensitive_included": 0
+  },
+  "created_at": "1794115231",
+  "export_version": 1,
+  "fingerprints": [
+    {
+      "digest": "ac4c0369a3b9f23e29e8d47a46bee7f4a172a3bf8657b11025b6e50f7801c30b",
+      "name": "cli"
+    },
+    {
+      "digest": "320489922192d82b3d813d76e83ea8b9d0a2e1100328612acef5555990f91189",
+      "name": "policy"
+    },
+    {
+      "digest": "886b2ffbf66f325f3872f39edde6309580267d2726042c3c442c591a16c4b43f",
+      "name": "pdf_parser"
+    }
+  ],
+  "inputs_sha256": "dfc61e51d05e9e2afa56dfa121582dd147b8378a8be565562828a92224817d6e",
+  "model_calls": 0,
+  "network_requests": 0,
+  "policy": "diagnostics-export-v1",
+  "producer": "noetome-diagnostics",
+  "project_sha256": "e5aa673d2139dfbe83b33bf69a78844fec1bd1bae704f05340dcc5b4efae85c6",
+  "root": "/tmp/diag-ev-NOlC/root",
+  "schema_version": 1
+}

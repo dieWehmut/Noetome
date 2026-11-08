@@ -4689,7 +4689,7 @@
       "id": "B14-T02",
       "title": "带范围与内容预览的诊断导出",
       "batch": "B14",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B14-T01"
       ],
@@ -4703,7 +4703,72 @@
         "导出包本身不得含明文凭据或绝对路径；出现即整包拒绝，且拒绝时不写出任何字节",
         "导出清单不含时间戳从而两次导出字节相同，独立只读审计器复算范围、预览与排除项，任何不符即失败"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-08T03:59:20Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结带范围与内容预览的诊断导出声明与实现前手写期望，定义勾选决定导出内容、默认排除原文与来源正文、绝对路径与凭据整包拒绝、清单不带时间戳的确定性口径并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-08T05:39:16Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "冻结带范围与内容预览的诊断导出声明与实现前手写期望，定义勾选决定导出内容、默认排除原文与来源正文、绝对路径与凭据整包拒绝、清单不带时间戳的确定性口径并实现其CLI闭环",
+          "validation": [
+            "cargo fmt --all --check exit 0",
+            "cargo test --test diagnostics 18 passed / 0 failed",
+            "cargo test -p noetome-cli --lib -- --test-threads=2 570 passed / 98 failed / 1 ignored(失败分布与基线逐模块一致,无新增)",
+            "PYTHONUTF8=1 python3 -m unittest tests.test_verify_diagnostics_export Ran 60 / OK",
+            "全量 Python discover Ran 1157 / failures=41 errors=12 skipped=24(与基线1097同组失败,新增60项全过)",
+            "scripts/verify_diagnostics_export.py 包模式49项0失败;根+输出+包92项0失败",
+            "端到端 adopt/build 各 exit 0,两次构建 export.json/report.json/report.md/manifest.json 全部 SAME,report.json.counts 13项与 expected.json 逐项相等",
+            "五个变体实测拒绝:consent exit3/absolute exit3/secret exit3/unknown exit2/empty exit2,均 left=0 不留根"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/diagnostics_model.rs",
+              "sha256": "df4f1f3e8eb855d312a21a597623414fceff381941203dea2f7a12dc37614c0b"
+            },
+            {
+              "path": "crates/noetome-cli/src/diagnostics_store.rs",
+              "sha256": "4bb7bbaec9b0f2dc6cdab2e43deee88a1019d05bf02b98a6ac71f046633a258f"
+            },
+            {
+              "path": "crates/noetome-cli/tests/diagnostics.rs",
+              "sha256": "fb703cb33695cfc3b1a34dc96d10e0b9349b16abf36953ef7e478c670a6bf198"
+            },
+            {
+              "path": "fixtures/diagnostics-export-v1/project.json",
+              "sha256": "e5aa673d2139dfbe83b33bf69a78844fec1bd1bae704f05340dcc5b4efae85c6"
+            },
+            {
+              "path": "fixtures/diagnostics-export-v1/expected.json",
+              "sha256": "185f5b8c70430de83d04c5e1c29a0aeb13c3539cf46ffbc0280af1c72344f3d5"
+            },
+            {
+              "path": "scripts/verify_diagnostics_export.py",
+              "sha256": "cce4a7f2138e116b0cbf3bd755213c32f25e894bb7c4aa1970b88e251b767dd8"
+            },
+            {
+              "path": "tests/test_verify_diagnostics_export.py",
+              "sha256": "95ff0cd6845baeb51e4751bd7059590f21711997bf33fdbbf783b3f56c13fc92"
+            },
+            {
+              "path": "doc/technical/DIAGNOSTICS_EXPORT_CONTRACT.md",
+              "sha256": "0c8f0ab3b74003cf1f0f3719caf4d6d5a6c0fb267a0d954d50e4db548ece8a77"
+            },
+            {
+              "path": "doc/validation/B14-T02.md",
+              "sha256": "79589d2cacafba703d774fea4a173a9e34b8800e6d287c5efb80915838c9251d"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B14-T03",

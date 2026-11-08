@@ -1,0 +1,17 @@
+Noetome 诊断导出
+
+用法：
+  noetome diagnostics adopt <导出声明> <尚不存在的诊断根>
+  noetome diagnostics build <诊断根> <尚不存在的输出根>
+  noetome diagnostics list <诊断根>
+  noetome diagnostics status <诊断根>
+
+adopt：核对声明、范围类别与同意，先按规则预演一次导出，全部通过才建根。
+build：把冻结声明渲染成 export.json、report.json 与 report.md；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算导出范围并输出每个类别的条目、字节与是否导出。
+导出内容由勾选决定：没勾选的类别如实标为未导出，不静默补全。
+默认不含原文与来源正文；勾选敏感范围必须在声明里记录同意，没有同意直接拒绝。
+声明里出现绝对路径或疑似凭据字样时整包拒绝，拒绝时不写出任何字节。
+预览只是短摘要，不是原文；诊断包会被分享出去，只能写相对路径。
+不联网、不调用模型、不写项目与Vault；本阶段不判断内容质量与科学正确性。
+exit=0

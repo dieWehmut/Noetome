@@ -1,0 +1,121 @@
+{
+  "policy": "diagnostics-export-v1",
+  "export_version": 1,
+  "case_id": "diag-traceability-v1",
+  "counts": {
+    "categories": 3,
+    "selected_categories": 2,
+    "excluded_categories": 1,
+    "sensitive_categories": 1,
+    "sensitive_included": 0,
+    "entries": 4,
+    "selected_entries": 3,
+    "exported_bytes": 700,
+    "excluded_bytes": 9000,
+    "config": 3,
+    "fingerprints": 3,
+    "model_calls": 0,
+    "network_requests": 0
+  },
+  "categories": [
+    {
+      "category_id": "journal-events",
+      "sensitive": false,
+      "included": true,
+      "entries": 2,
+      "selected_entries": 2,
+      "bytes": 300,
+      "exported_bytes": 300
+    },
+    {
+      "category_id": "run-logs",
+      "sensitive": false,
+      "included": true,
+      "entries": 1,
+      "selected_entries": 1,
+      "bytes": 400,
+      "exported_bytes": 400
+    },
+    {
+      "category_id": "source-body",
+      "sensitive": true,
+      "included": false,
+      "entries": 1,
+      "selected_entries": 0,
+      "bytes": 9000,
+      "exported_bytes": 0
+    }
+  ],
+  "entries": [
+    {
+      "entry_id": "ev-1",
+      "category_id": "journal-events",
+      "bytes": 120,
+      "preview": "task-parse 在 1 号事件开始，来源 教材A 第三章。"
+    },
+    {
+      "entry_id": "ev-2",
+      "category_id": "journal-events",
+      "bytes": 180,
+      "preview": "第 12 页没有文本层。"
+    },
+    {
+      "entry_id": "log-1",
+      "category_id": "run-logs",
+      "bytes": 400,
+      "preview": "pdf_parse: 12 pages, 3 without text layer"
+    }
+  ],
+  "rejections": [
+    {
+      "project": "project-consent.json",
+      "code": "DIAGNOSTICS_CONSENT",
+      "exit": 3
+    },
+    {
+      "project": "project-absolute.json",
+      "code": "DIAGNOSTICS_ABSOLUTE_PATH",
+      "exit": 3
+    },
+    {
+      "project": "project-secret.json",
+      "code": "DIAGNOSTICS_SECRET_MARKER",
+      "exit": 3
+    },
+    {
+      "project": "project-unknown.json",
+      "code": "DIAGNOSTICS_ARGUMENT",
+      "exit": 2
+    },
+    {
+      "project": "project-empty.json",
+      "code": "DIAGNOSTICS_ARGUMENT",
+      "exit": 2
+    }
+  ],
+  "determinism": {
+    "files": [
+      "export.json",
+      "report.json",
+      "report.md",
+      "manifest.json"
+    ],
+    "manifest_has_created_at": false
+  },
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "诊断导出只搬运声明的条目与预览：既不读取原文，也不判断内容质量。"
+  },
+  "derivation": [
+    "条目总数 4 = journal-events 的 2 条 + run-logs 的 1 条 + source-body 的 1 条。",
+    "已导出条目 3 = 勾选的两个类别（journal-events、run-logs）各自的条目数之和。",
+    "已导出字节 700 = 120 + 180 + 400；未导出字节 9000 全部来自未被勾选的 source-body。",
+    "sensitive_included 0：source-body 是敏感类别且没有被勾选，所以即使有同意也不会进包。",
+    "未导出类别 1 = 三个类别里没有出现在 selection 里的那一个。",
+    "五个变体各破坏一条规则：缺同意、绝对路径、凭据字样、勾选不存在的类别、空类别。"
+  ]
+}

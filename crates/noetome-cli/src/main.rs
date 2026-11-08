@@ -3,9 +3,9 @@ use std::io::{self, Write};
 use std::process::ExitCode;
 
 use noetome_cli::{
-    CliCommand, audit_store, bench_store, change_store, extraction, extraction_api,
-    extraction_verify, fixture, fixture_compile, index_store, journal_store, migrate_store,
-    outline_store, pdf_parse, plan_store, project, relevance_store, research_store,
+    CliCommand, audit_store, bench_store, change_store, diagnostics_store, extraction,
+    extraction_api, extraction_verify, fixture, fixture_compile, index_store, journal_store,
+    migrate_store, outline_store, pdf_parse, plan_store, project, relevance_store, research_store,
     retrieval_store, revision_store, scale_store, soak_store, source, structure_store,
     template_store, vault_store, vault_update,
 };
@@ -675,6 +675,19 @@ fn main() -> ExitCode {
         }
         CliCommand::JournalStatus { root } => {
             vault_result(journal_store::status(&root), &mut result_code)
+        }
+        CliCommand::DiagnosticsHelp => noetome_cli::DIAGNOSTICS_HELP.to_owned(),
+        CliCommand::DiagnosticsAdopt { project, root } => {
+            vault_result(diagnostics_store::adopt(&project, &root), &mut result_code)
+        }
+        CliCommand::DiagnosticsBuild { root, output } => {
+            vault_result(diagnostics_store::build(&root, &output), &mut result_code)
+        }
+        CliCommand::DiagnosticsList { root } => {
+            vault_result(diagnostics_store::list(&root), &mut result_code)
+        }
+        CliCommand::DiagnosticsStatus { root } => {
+            vault_result(diagnostics_store::status(&root), &mut result_code)
         }
     };
 

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "diag-traceability-v1",
+  "policy": "diagnostics-export-v1",
+  "sequence": [
+    {
+      "verb": "adopt",
+      "project": "project.json"
+    },
+    {
+      "verb": "build"
+    },
+    {
+      "verb": "list"
+    },
+    {
+      "verb": "status"
+    }
+  ],
+  "variants": [
+    {
+      "project": "project-consent.json",
+      "reason": "勾选敏感类别但没有记录同意",
+      "expect": {
+        "code": "DIAGNOSTICS_CONSENT",
+        "exit": 3
+      }
+    },
+    {
+      "project": "project-absolute.json",
+      "reason": "预览里粘进了绝对路径",
+      "expect": {
+        "code": "DIAGNOSTICS_ABSOLUTE_PATH",
+        "exit": 3
+      }
+    },
+    {
+      "project": "project-secret.json",
+      "reason": "预览里出现凭据字样",
+      "expect": {
+        "code": "DIAGNOSTICS_SECRET_MARKER",
+        "exit": 3
+      }
+    },
+    {
+      "project": "project-unknown.json",
+      "reason": "勾选了不存在的范围类别",
+      "expect": {
+        "code": "DIAGNOSTICS_ARGUMENT",
+        "exit": 2
+      }
+    },
+    {
+      "project": "project-empty.json",
+      "reason": "声明了一个没有任何条目的类别",
+      "expect": {
+        "code": "DIAGNOSTICS_ARGUMENT",
+        "exit": 2
+      }
+    }
+  ],
+  "expected": "expected.json",
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false
+  }
+}
