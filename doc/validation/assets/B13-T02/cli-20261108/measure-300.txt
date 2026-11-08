@@ -1,0 +1,9 @@
+大库实测 /tmp/bench-ev-odHp/a：
+参数：笔记 300、人工改动 20、样本 3、预热 0
+语料：主题 30、概念 600、文本片段 3080；改动 20 处、变更清单 1 页、影响范围 190 篇
+阶段 P95：scan P95 53 ms（中位 25、最小 14、最大 53）；detect P95 0 ms（中位 0、最小 0、最大 0）；plan P95 0 ms（中位 0、最小 0、最大 0）；page P95 0 ms（中位 0、最小 0、最大 0）
+门槛：2000 ms；判定：scan=met、detect=met、plan=met、page=met
+覆盖：NFR-11 partially_measured、NFR-12 partially_measured
+输出：structure.json 04eaeddd9959f9af；timings.json b3392e3f798af869
+边界：合成语料，不代表真实笔记库；不联网、不调用模型、不写项目与 Vault。
+exit=0

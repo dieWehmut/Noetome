@@ -3,6 +3,8 @@ use std::path::PathBuf;
 
 mod audit_model;
 pub mod audit_store;
+mod bench_model;
+pub mod bench_store;
 mod change_model;
 pub mod change_store;
 mod compile_identity;
@@ -200,6 +202,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome template list <结构根>
       noetome template status <结构根>
       noetome scale measure --pages 1000 --headings 4 --paragraphs 3 --output <输出根>
+      noetome bench measure --notes 3000 --edits 200 --samples 20 --warmup 2 --output <输出根>
       noetome change adopt <变更声明> <变更根>
       noetome change build <变更根> <输出根>
       noetome change list <变更根>
@@ -237,6 +240,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   plan                    教材式自适应规划：概念关系、教学顺序与规划位置（adopt/build/list/status）
   template                同一主题的多阅读目标与同类结构一致（adopt/build/list/status）
   scale                   合成语料的千页规模实测：真实跑文本分析与章节对齐，规划上限如实列为未达标（measure）
+  bench                   大库规模实测：3000 笔记 / 200 处人工改动的四阶段 P95 与内存（measure）
   change                  锁定位置与规划变更的局部影响（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
@@ -677,6 +681,14 @@ pub enum CliCommand {
         paragraphs: String,
         output: PathBuf,
     },
+    BenchHelp,
+    BenchMeasure {
+        notes: String,
+        edits: String,
+        samples: String,
+        warmup: String,
+        output: PathBuf,
+    },
     ChangeHelp,
     ChangeAdopt {
         project: PathBuf,
@@ -752,6 +764,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "scale") {
         return scale_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "bench") {
+        return bench_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -2140,6 +2155,60 @@ fn scale_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         pages: pages.ok_or(INVALID_ARGUMENT)?,
         headings: headings.ok_or(INVALID_ARGUMENT)?,
         paragraphs: paragraphs.ok_or(INVALID_ARGUMENT)?,
+        output: output.ok_or(INVALID_ARGUMENT)?,
+    })
+}
+
+/// Help for the library-scale measurement verb.
+pub const BENCH_HELP: &str = "\
+Noetome 大库规模实测
+
+用法：
+  noetome bench measure --notes 3000 --edits 200 --samples 20 --warmup 2 --output <输出根>
+  noetome bench --help
+
+说明：
+  measure：按参数确定性生成合成笔记库（含人工改动），逐阶段测量 scan（文本分析取摘要）、detect（与基线比摘要）、plan（汇总共享概念与主题的笔记）、page（渲染变更清单第一页）
+  P95 口径写进产物：样本数、预热次数、是否含进程启动、分位数算法逐项固定；毫秒读数只存在 timings.json，不进入结构与报告
+  输出根恰四个文件；同一参数两次运行的结构产物与报告必须字节相同（耗时产物除外）
+  本轮如实记录未达标项：合成语料不代表真实笔记库，「不因全量渲染冻结界面」属于界面行为，本轮没有界面可测
+  不联网、不调用模型、不写项目与 Vault；本阶段只测量，不优化算法。";
+
+fn bench_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args
+        .first()
+        .is_some_and(|arg| arg == "--help" || arg == "-h")
+    {
+        return Ok(CliCommand::BenchHelp);
+    }
+    let verb = args.first().ok_or(INVALID_ARGUMENT)?.to_string_lossy();
+    if verb != "measure" {
+        return Err(INVALID_ARGUMENT);
+    }
+    let mut notes: Option<String> = None;
+    let mut edits: Option<String> = None;
+    let mut samples: Option<String> = None;
+    let mut warmup: Option<String> = None;
+    let mut output: Option<PathBuf> = None;
+    let mut index = 1;
+    while index < args.len() {
+        let flag = args[index].to_string_lossy();
+        let value = args.get(index + 1).ok_or(INVALID_ARGUMENT)?;
+        match flag.as_ref() {
+            "--notes" => notes = Some(value.to_string_lossy().into_owned()),
+            "--edits" => edits = Some(value.to_string_lossy().into_owned()),
+            "--samples" => samples = Some(value.to_string_lossy().into_owned()),
+            "--warmup" => warmup = Some(value.to_string_lossy().into_owned()),
+            "--output" => output = Some(PathBuf::from(value)),
+            _ => return Err(INVALID_ARGUMENT),
+        }
+        index += 2;
+    }
+    Ok(CliCommand::BenchMeasure {
+        notes: notes.ok_or(INVALID_ARGUMENT)?,
+        edits: edits.ok_or(INVALID_ARGUMENT)?,
+        samples: samples.ok_or(INVALID_ARGUMENT)?,
+        warmup: warmup.ok_or(INVALID_ARGUMENT)?,
         output: output.ok_or(INVALID_ARGUMENT)?,
     })
 }

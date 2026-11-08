@@ -4418,7 +4418,7 @@
       "id": "B13-T02",
       "title": "大库增量与人工改动的规模实测",
       "batch": "B13",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B13-T01"
       ],
@@ -4432,7 +4432,75 @@
         "未达门槛（若有）与达到门槛（若有）都要给出可复现命令与原始日志",
         "审计器独立复算样本与分位数，任何不符即失败"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-08T02:14:19Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结3000笔记与200处人工改动的合成库生成与实测口径，逐阶段测量指纹、变更检测与影响范围规划的耗时与内存，P95 写明样本量/warmup/是否含进程启动，规划上限如实列为未达标",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-08T02:36:50Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现 bench 动词：确定性合成大库（扇出由笔记数推导）+ 四阶段真实计时（scan/detect/plan/page）+ 结构产物与耗时产物分离 + 覆盖率按参数生成的 partially_measured + 输出清单不含 timings 摘要；3000 篇/200 改动的 P95 全部 met；独立审计器 150/49 项 0 失败",
+          "validation": [
+            "cargo fmt --all --check exit 0",
+            "cargo test --test bench 13 passed / 0 failed",
+            "cargo test -p noetome-cli --lib -- --test-threads=2 -> 542 passed / 98 failed / 1 ignored，失败分布 sidecar_process 64 / pdf_source_model 18 / pdf_parse 7 / source_model 5 / source_write 3 / extraction_source 1 = 98，与任务前 536/98 基线逐模块一致",
+            "全量 Python Ran 1004 / failures=41 / errors=12 / skipped=24，与 955 基线同组失败，新增 49 项全过",
+            "scripts/verify_library_bench.py 真实输出根 + 包 150 项检查失败 0；仅包 49 项失败 0",
+            "bench measure --notes 3000 --edits 200 --samples 10 --warmup 2 实测 scan P95 147ms、detect/plan/page 0-2ms，四条判定全 met",
+            "同参数两次运行 structure.json/manifest.json/report.md 字节相同，timings.json 不同"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/bench_model.rs",
+              "sha256": "8bda149feb7bd5c678b1d2458dee035e7e1702eb40b2514f82bcefb8a00b2627"
+            },
+            {
+              "path": "crates/noetome-cli/src/bench_store.rs",
+              "sha256": "596e6d5a72b4f7620e7f1dbfa71f910b2554c312580afc656536ce11a63f14f2"
+            },
+            {
+              "path": "crates/noetome-cli/tests/bench.rs",
+              "sha256": "c189d8754732e37132e2ce07bfdaa3368c1949915463f6d61daa009e75d7151b"
+            },
+            {
+              "path": "fixtures/library-bench-v1/spec.json",
+              "sha256": "8468b7eb76d36c79a7265677a1f57b21f46fcd06833eec412dfedaf6134d33aa"
+            },
+            {
+              "path": "fixtures/library-bench-v1/expected.json",
+              "sha256": "552d601905cc4404ea0f95defb2d84dddc107b8ae98ce75900a9967cbaa622b6"
+            },
+            {
+              "path": "scripts/verify_library_bench.py",
+              "sha256": "5cbf8f8d1cd9116f0b9ce63e6d18d720d52455e0b9d602d914535db98a1dc0dc"
+            },
+            {
+              "path": "tests/test_verify_library_bench.py",
+              "sha256": "fa6fdcb6f5ba9e48ae5f86861cf72cce775a3aecf6b2852b7bc0eac4ef00772f"
+            },
+            {
+              "path": "doc/technical/LIBRARY_BENCH_CONTRACT.md",
+              "sha256": "22c4f804a62340249543a37c27371db955c58554cd2ecdccbeacacf0c8a4194e"
+            },
+            {
+              "path": "doc/validation/B13-T02.md",
+              "sha256": "d00b4fa400dbba193ae9c4d58ae51e712a77cfc0831215faf139a3ca316a9465"
+            },
+            {
+              "path": "doc/validation/assets/B13-T02/cli-20261108/audit.txt",
+              "sha256": "c79ed04d1ee0cd146834fd520a6e5c023650556864dada2b338e39e8d1ca32cc"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B13-T03",

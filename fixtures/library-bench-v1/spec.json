@@ -1,0 +1,20 @@
+{
+  "policy": "library-bench-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "bench-library-v1",
+  "description": "300 篇笔记、20 处人工改动的合成库；用来核对阶段产物、分页与 P95 口径，不代表真实笔记库。",
+  "spec": {
+    "notes": 300,
+    "edits": 20,
+    "samples": 3,
+    "warmup": 0
+  },
+  "threshold_millis": 2000,
+  "boundaries": {
+    "scientific_status": "not_run",
+    "synthetic": true,
+    "uses_network": false,
+    "uses_model": false
+  }
+}

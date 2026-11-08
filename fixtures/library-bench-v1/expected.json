@@ -1,0 +1,93 @@
+{
+  "policy": "library-bench-v1",
+  "case_id": "bench-library-v1",
+  "spec": {
+    "notes": 300,
+    "edits": 20,
+    "samples": 3,
+    "warmup": 0
+  },
+  "counts": {
+    "notes": 300,
+    "edits": 20,
+    "changed": 20,
+    "topics": 30,
+    "concepts": 600,
+    "spans": 3080,
+    "pages": 1,
+    "page_size": 100,
+    "impacts": 190
+  },
+  "corpus_sha256": "455ac5d289b7e43a8f00057820c4ad298cf2bc8bf3eaf41ed4bf4ff3099efe56",
+  "baseline_sha256": "a0797bb94305157da043dbbf9475e95ad7c86dd5d4316e046a546b216ecb6def",
+  "first_page_sha256": "da1addb345296f2282ddb40bcade51bbb70002be7585dd4a3fdcd43fe785d559",
+  "changed_notes": [
+    "note-00003",
+    "note-00010",
+    "note-00017",
+    "note-00024",
+    "note-00031",
+    "note-00038",
+    "note-00045",
+    "note-00052",
+    "note-00059",
+    "note-00066",
+    "note-00073",
+    "note-00080",
+    "note-00087",
+    "note-00094",
+    "note-00101",
+    "note-00108",
+    "note-00115",
+    "note-00122",
+    "note-00129",
+    "note-00136"
+  ],
+  "protocol": {
+    "samples": 3,
+    "warmup": 0,
+    "process_start_included": false,
+    "percentile": 95,
+    "quantile_method": "nearest_rank"
+  },
+  "threshold_millis": 2000,
+  "coverage": [
+    {
+      "requirement": "NFR-11",
+      "status": "partially_measured"
+    },
+    {
+      "requirement": "NFR-12",
+      "status": "partially_measured"
+    }
+  ],
+  "determinism": {
+    "comparable": [
+      "structure.json",
+      "manifest.json",
+      "report.md"
+    ],
+    "excluded": [
+      "timings.json"
+    ]
+  },
+  "stages": [
+    "scan",
+    "detect",
+    "plan",
+    "page"
+  ],
+  "boundaries": {
+    "scientific_status": "not_run",
+    "synthetic": true
+  },
+  "derivation": [
+    "编辑下标按 cursor=3 起、每步 +7 对 note 数取模、去重后取前 edits 个；300/20 时落在 3,10,...,136。",
+    "主题数 = max(notes/10,1) = 30；概念数 = max(notes*2,3) = 600，都由笔记数推导而不是写死常量。",
+    "每篇正文 = 标题 + 定位小节 + 反应小节，未改动篇 10 个片段、改动篇 14 个片段；300 篇里 20 篇改动，合计 280*10 + 20*14 = 3080。",
+    "改动检测按规范化摘要比对：改动篇的摘要与基线不同，恰好 20 处。",
+    "影响范围 = 与改动笔记共享主题或概念、且自身未改动的笔记；300 篇里 190 篇。",
+    "变更清单每页 100 条，20 处改动只有 1 页；第一页内容是表头、分隔行加 20 条记录。",
+    "corpus/baseline/first_page 三个摘要是对生成顺序与拼接分隔符的直接复算，不来自产品输出。"
+  ]
+}

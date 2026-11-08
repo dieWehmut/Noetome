@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "bench-library-v1",
+  "policy": "library-bench-v1",
+  "sequence": [
+    {
+      "step": "measure",
+      "arguments": {
+        "notes": "300",
+        "edits": "20",
+        "samples": "3",
+        "warmup": "0"
+      }
+    },
+    {
+      "step": "measure-second",
+      "arguments": {
+        "notes": "300",
+        "edits": "20",
+        "samples": "3",
+        "warmup": "0"
+      }
+    }
+  ],
+  "expected": "expected.json",
+  "variants": [
+    {
+      "name": "rejected-existing",
+      "arguments": {
+        "notes": "300",
+        "edits": "20",
+        "samples": "3",
+        "warmup": "0"
+      },
+      "expect": {
+        "code": "BENCH_ARGUMENT",
+        "exit": 2
+      }
+    },
+    {
+      "name": "rejected-zero-notes",
+      "arguments": {
+        "notes": "0",
+        "edits": "0",
+        "samples": "3",
+        "warmup": "0"
+      },
+      "expect": {
+        "code": "BENCH_ARGUMENT",
+        "exit": 2
+      }
+    },
+    {
+      "name": "rejected-too-many-edits",
+      "arguments": {
+        "notes": "300",
+        "edits": "301",
+        "samples": "3",
+        "warmup": "0"
+      },
+      "expect": {
+        "code": "BENCH_ARGUMENT",
+        "exit": 2
+      }
+    },
+    {
+      "name": "rejected-bad-number",
+      "arguments": {
+        "notes": "abc",
+        "edits": "20",
+        "samples": "3",
+        "warmup": "0"
+      },
+      "expect": {
+        "code": "BENCH_ARGUMENT",
+        "exit": 2
+      }
+    },
+    {
+      "name": "rejected-missing-flag",
+      "arguments": {
+        "notes": "300",
+        "edits": "20",
+        "samples": "3"
+      },
+      "expect": {
+        "code": "CLI_INVALID_ARGUMENT",
+        "exit": 2
+      }
+    }
+  ],
+  "boundaries": {
+    "scientific_status": "not_run",
+    "synthetic": true,
+    "note": "没有真实笔记库、没有界面、没有真实人工编辑；只证明这个规模上阶段产物与分页能算出来。"
+  }
+}

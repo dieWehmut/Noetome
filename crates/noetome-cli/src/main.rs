@@ -3,10 +3,11 @@ use std::io::{self, Write};
 use std::process::ExitCode;
 
 use noetome_cli::{
-    CliCommand, audit_store, change_store, extraction, extraction_api, extraction_verify, fixture,
-    fixture_compile, index_store, migrate_store, outline_store, pdf_parse, plan_store, project,
-    relevance_store, research_store, retrieval_store, revision_store, scale_store, source,
-    structure_store, template_store, vault_store, vault_update,
+    CliCommand, audit_store, bench_store, change_store, extraction, extraction_api,
+    extraction_verify, fixture, fixture_compile, index_store, migrate_store, outline_store,
+    pdf_parse, plan_store, project, relevance_store, research_store, retrieval_store,
+    revision_store, scale_store, source, structure_store, template_store, vault_store,
+    vault_update,
 };
 
 fn main() -> ExitCode {
@@ -612,6 +613,17 @@ fn main() -> ExitCode {
             vault_result(template_store::status(&root), &mut result_code)
         }
         CliCommand::ScaleHelp => noetome_cli::SCALE_HELP.to_owned(),
+        CliCommand::BenchHelp => noetome_cli::BENCH_HELP.to_owned(),
+        CliCommand::BenchMeasure {
+            notes,
+            edits,
+            samples,
+            warmup,
+            output,
+        } => vault_result(
+            bench_store::measure(&notes, &edits, &samples, &warmup, &output),
+            &mut result_code,
+        ),
         CliCommand::ScaleMeasure {
             pages,
             headings,
