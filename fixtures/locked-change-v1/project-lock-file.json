@@ -1,0 +1,165 @@
+{
+  "policy": "locked-change-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "chg-metabolism-v1",
+  "description": "锁定目录、文件、章节与顺序之后，新增资料只影响声明范围内的笔记。",
+  "notes": [
+    {
+      "note_id": "n-gly",
+      "path": "代谢/糖酵解/01-糖酵解.md",
+      "title": "糖酵解",
+      "topic_id": "t-gly",
+      "position": 1,
+      "sections": [
+        "定位",
+        "反应"
+      ],
+      "concepts": [
+        "c-gly"
+      ],
+      "fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "note_id": "n-pfk",
+      "path": "代谢/糖酵解/02-磷酸果糖激酶.md",
+      "title": "磷酸果糖激酶",
+      "topic_id": "t-gly",
+      "position": 2,
+      "sections": [
+        "定位",
+        "调控"
+      ],
+      "concepts": [
+        "c-pfk"
+      ],
+      "fingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "note_id": "n-gng",
+      "path": "代谢/糖异生/01-糖异生.md",
+      "title": "糖异生",
+      "topic_id": "t-gng",
+      "position": 1,
+      "sections": [
+        "定位",
+        "反应"
+      ],
+      "concepts": [
+        "c-gng"
+      ],
+      "fingerprint": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    {
+      "note_id": "n-tca",
+      "path": "代谢/三羧酸循环/01-三羧酸循环.md",
+      "title": "三羧酸循环",
+      "topic_id": "t-tca",
+      "position": 1,
+      "sections": [
+        "定位",
+        "反应"
+      ],
+      "concepts": [
+        "c-tca"
+      ],
+      "fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    },
+    {
+      "note_id": "n-pyr",
+      "path": "代谢/糖酵解/03-丙酮酸.md",
+      "title": "丙酮酸",
+      "topic_id": "t-pyr",
+      "position": 1,
+      "sections": [
+        "定位"
+      ],
+      "concepts": [
+        "c-pyr"
+      ],
+      "fingerprint": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "changes": [
+    {
+      "change_id": "chg-gly",
+      "kind": "source_added",
+      "topic_id": "t-gly",
+      "concepts": [
+        "c-gly"
+      ],
+      "notes": [
+        "n-gly"
+      ],
+      "proposed_path": "代谢/糖酵解/01-糖酵解-增补.md",
+      "proposed_sections": [
+        "定位",
+        "反应"
+      ]
+    },
+    {
+      "change_id": "chg-pfk",
+      "kind": "external_edit",
+      "topic_id": "t-gly",
+      "concepts": [
+        "c-pfk"
+      ],
+      "notes": [
+        "n-pfk"
+      ],
+      "proposed_path": "代谢/糖酵解/02-磷酸果糖激酶-重写.md"
+    },
+    {
+      "change_id": "chg-gng",
+      "kind": "source_updated",
+      "topic_id": "t-gng",
+      "concepts": [
+        "c-gng"
+      ],
+      "notes": [
+        "n-gng"
+      ]
+    }
+  ],
+  "locks": [
+    {
+      "lock_id": "lock-file-pfk",
+      "kind": "file",
+      "path": "代谢/糖酵解/02-磷酸果糖激酶.md"
+    },
+    {
+      "lock_id": "lock-section-gly",
+      "kind": "section",
+      "note_id": "n-gly",
+      "section": "反应"
+    },
+    {
+      "lock_id": "lock-order-gly",
+      "kind": "order",
+      "note_id": "n-gly",
+      "position": 1
+    }
+  ],
+  "refactors": [
+    {
+      "refactor_id": "r-tca-move",
+      "kind": "move",
+      "note_id": "n-tca",
+      "targets": [
+        "代谢/三羧酸循环/01-三羧酸循环-修订.md"
+      ],
+      "references": [
+        {
+          "from": "[[代谢/三羧酸循环/01-三羧酸循环#定位]]",
+          "to": "[[代谢/三羧酸循环/01-三羧酸循环-修订#定位]]"
+        }
+      ]
+    }
+  ],
+  "limits": {
+    "max_notes": 8,
+    "max_changes": 8,
+    "max_locks": 8,
+    "max_refactors": 4
+  }
+}

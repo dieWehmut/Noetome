@@ -1,0 +1,121 @@
+{
+  "policy": "locked-change-v1",
+  "case_id": "chg-metabolism-v1",
+  "plan_version": 1,
+  "counts": {
+    "notes": 5,
+    "changes": 3,
+    "locks": 3,
+    "applied": 3,
+    "candidates": 0,
+    "refactors": 1,
+    "reference_changes": 1,
+    "unchanged": 1,
+    "findings": 0,
+    "model_calls": 0,
+    "network_requests": 0
+  },
+  "verdict": "pass",
+  "applied": [
+    {
+      "change_id": "chg-gly",
+      "note_id": "n-gly",
+      "path": "代谢/糖酵解/01-糖酵解-增补.md",
+      "reason": "source_added"
+    },
+    {
+      "change_id": "chg-pfk",
+      "note_id": "n-pfk",
+      "path": "代谢/糖酵解/02-磷酸果糖激酶.md",
+      "reason": "external_edit"
+    },
+    {
+      "change_id": "chg-gng",
+      "note_id": "n-gng",
+      "path": "代谢/糖异生/01-糖异生.md",
+      "reason": "source_updated"
+    }
+  ],
+  "candidates": [],
+  "refactors": [
+    {
+      "refactor_id": "r-tca-move",
+      "kind": "move",
+      "note_id": "n-tca",
+      "targets": [
+        "代谢/三羧酸循环/01-三羧酸循环-修订.md"
+      ],
+      "references": 1,
+      "atoms": 0
+    }
+  ],
+  "unchanged": [
+    {
+      "note_id": "n-pyr",
+      "path": "代谢/糖酵解/03-丙酮酸.md",
+      "fingerprint": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "findings": [],
+  "variants": [
+    {
+      "project": "project-lock-file.json",
+      "kind": "candidates",
+      "applied": 2,
+      "candidates": 1,
+      "findings": 1
+    },
+    {
+      "project": "project-lock-dir.json",
+      "kind": "candidates",
+      "applied": 2,
+      "candidates": 1,
+      "findings": 1
+    },
+    {
+      "project": "project-canonical.json",
+      "kind": "rejection",
+      "code": "CHANGE_UNSAFE_REFACTOR",
+      "exit": 3
+    },
+    {
+      "project": "project-missed.json",
+      "kind": "findings",
+      "findings": 1,
+      "kinds": [
+        "missed_dependency"
+      ]
+    },
+    {
+      "project": "project-unexpected.json",
+      "kind": "findings",
+      "findings": 1,
+      "kinds": [
+        "unexpected_touch"
+      ]
+    },
+    {
+      "project": "project-unsafe-split.json",
+      "kind": "rejection",
+      "code": "CHANGE_UNSAFE_REFACTOR",
+      "exit": 3
+    }
+  ],
+  "determinism": true,
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "自造声明与指纹，不含真实教材原文；只验证锁定保持与影响范围，不判断科学正确性。"
+  },
+  "derivation": [
+    "5 份笔记、3 条变更、3 条锁定、1 条重构由声明直接读出。",
+    "chg-gly 提出新路径，但只有 file/section/order 三条锁，且 n-gly 不在文件锁里、章节顺序未变、位置未变，故允许应用。",
+    "chg-pfk 与 chg-gng 没有提案，路径与章节保持原样，因此文件锁与目录锁都不触发。",
+    "r-tca-move 只移动 n-tca 并列出 1 处引用变化，故 reference_changes = 1。",
+    "n-pyr 不在任何变更或重构里，故 unchanged = 1，指纹取声明值。",
+    "三个变更各自只触动本主题的一个概念，且所有引用该概念的笔记都已声明，故 findings = 0。"
+  ]
+}

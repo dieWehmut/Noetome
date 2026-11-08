@@ -3,6 +3,8 @@ use std::path::PathBuf;
 
 mod audit_model;
 pub mod audit_store;
+mod change_model;
+pub mod change_store;
 mod compile_identity;
 mod compile_model;
 mod compile_report;
@@ -195,6 +197,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome template build <结构根> <尚不存在的输出根>
       noetome template list <结构根>
       noetome template status <结构根>
+      noetome change adopt <变更声明> <变更根>
+      noetome change build <变更根> <输出根>
+      noetome change list <变更根>
+      noetome change status <变更根>
 
 当前支持：
   -h, --help       显示帮助
@@ -227,6 +233,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   audit                   全库链接可用性与唯一解释位置审计（adopt/build/list/status）
   plan                    教材式自适应规划：概念关系、教学顺序与规划位置（adopt/build/list/status）
   template                同一主题的多阅读目标与同类结构一致（adopt/build/list/status）
+  change                  锁定位置与规划变更的局部影响（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
@@ -659,6 +666,21 @@ pub enum CliCommand {
     TemplateStatus {
         root: PathBuf,
     },
+    ChangeHelp,
+    ChangeAdopt {
+        project: PathBuf,
+        root: PathBuf,
+    },
+    ChangeBuild {
+        root: PathBuf,
+        output: PathBuf,
+    },
+    ChangeList {
+        root: PathBuf,
+    },
+    ChangeStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -713,6 +735,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "template") {
         return template_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "change") {
+        return change_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -1980,5 +2005,78 @@ fn template_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
             Ok(CliCommand::TemplateStatus { root: root.into() })
         }
         _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const CHANGE_HELP: &str = "Noetome 锁定位置与规划变更的局部影响
+
+用法：
+      noetome change adopt <变更声明> <变更根>
+      noetome change build <变更根> <输出根>
+      noetome change list <变更根>
+      noetome change status <变更根>
+
+adopt：冻结变更声明与未受影响笔记的指纹，先把锁定与影响范围预演一遍，全部通过才建根。
+build：重新规划并写出 changes.json、report.json、report.md；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算并输出已应用、转候选、重构与缺口清单。
+
+锁定冲突只进候选，绝不覆盖已锁定结构：目录、文件、章节、顺序与规范位置都可以锁。
+变更必须只影响声明范围：同主题里引用了被触动概念的笔记必须被声明，与之无关的笔记不得被声明。
+重构必须列出每一处引用变化并给出完整拆分划分；无法同时更新时保留旧位置并报错。
+不联网、不调用模型、不写项目与Vault；本阶段只做位置与影响范围规划，不生成正文、不判断内容质量与科学正确性。
+";
+
+fn change_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 4] = ["adopt", "build", "list", "status"];
+    if args.is_empty() {
+        return Err("缺少子命令：请使用 adopt、build、list 或 status。");
+    }
+    let verb = args[0].to_str().ok_or("子命令不是合法文本。")?;
+    if verb == "--help" || verb == "-h" {
+        return Ok(CliCommand::ChangeHelp);
+    }
+    if !VERBS.contains(&verb) {
+        return Err("未知子命令：请使用 adopt、build、list 或 status。");
+    }
+    let rest: Vec<&OsString> = args[1..]
+        .iter()
+        .filter(|item| item.as_os_str() != "--")
+        .collect();
+    let valid = |value: &OsString| !value.is_empty() && !value.to_string_lossy().starts_with('-');
+    match verb {
+        "adopt" => {
+            if rest.len() != 2 || !valid(rest[0]) || !valid(rest[1]) {
+                return Err("adopt 需要 <变更声明> <变更根> 两个参数。");
+            }
+            Ok(CliCommand::ChangeAdopt {
+                project: rest[0].into(),
+                root: rest[1].into(),
+            })
+        }
+        "build" => {
+            if rest.len() != 2 || !valid(rest[0]) || !valid(rest[1]) {
+                return Err("build 需要 <变更根> <输出根> 两个参数。");
+            }
+            Ok(CliCommand::ChangeBuild {
+                root: rest[0].into(),
+                output: rest[1].into(),
+            })
+        }
+        "list" => {
+            if rest.len() != 1 || !valid(rest[0]) {
+                return Err("list 需要 <变更根> 一个参数。");
+            }
+            Ok(CliCommand::ChangeList {
+                root: rest[0].into(),
+            })
+        }
+        _ => {
+            if rest.len() != 1 || !valid(rest[0]) {
+                return Err("status 需要 <变更根> 一个参数。");
+            }
+            Ok(CliCommand::ChangeStatus {
+                root: rest[0].into(),
+            })
+        }
     }
 }

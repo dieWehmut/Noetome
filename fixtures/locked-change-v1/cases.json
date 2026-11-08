@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "chg-metabolism-v1",
+  "policy": "locked-change-v1",
+  "sequence": [
+    "adopt project.json",
+    "build",
+    "list",
+    "status"
+  ],
+  "variants": [
+    "project-lock-file.json",
+    "project-lock-dir.json",
+    "project-canonical.json",
+    "project-missed.json",
+    "project-unexpected.json",
+    "project-unsafe-split.json"
+  ],
+  "expected": "expected.json",
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "自造声明与指纹，不含真实教材原文；只验证锁定保持与影响范围，不判断科学正确性。"
+  }
+}
