@@ -1,0 +1,72 @@
+{
+  "policy": "retention-policy-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "retention-cleanup-v1",
+  "description": "已发布版本之后的保留策略：运行日志与中间缓存可清理，但已发布版本必需的来源索引与追溯条目必须留下。",
+  "categories": [
+    {
+      "category_id": "run-logs",
+      "label": "运行日志",
+      "keep_days": 14
+    },
+    {
+      "category_id": "cache",
+      "label": "中间缓存",
+      "keep_days": 30
+    }
+  ],
+  "entries": [
+    {
+      "entry_id": "log-1",
+      "category_id": "run-logs",
+      "bytes": 400,
+      "age_days": 21,
+      "recovery": "按日志重放失败任务",
+      "trace": "trace-parse"
+    },
+    {
+      "entry_id": "log-1",
+      "category_id": "run-logs",
+      "bytes": 300,
+      "age_days": 3,
+      "trace": "trace-parse"
+    },
+    {
+      "entry_id": "cache-1",
+      "category_id": "cache",
+      "bytes": 9000,
+      "age_days": 45
+    },
+    {
+      "entry_id": "index-1",
+      "category_id": "cache",
+      "bytes": 1200,
+      "age_days": 12
+    },
+    {
+      "entry_id": "trace-1",
+      "category_id": "cache",
+      "bytes": 700,
+      "age_days": 20,
+      "trace": "trace-parse"
+    }
+  ],
+  "published": [
+    {
+      "release_id": "rel-1",
+      "required_index": [
+        "index-1"
+      ],
+      "required_traces": [
+        "trace-1"
+      ]
+    }
+  ],
+  "limits": {
+    "max_categories": 8,
+    "max_entries": 64,
+    "max_published": 8,
+    "max_required": 32
+  }
+}

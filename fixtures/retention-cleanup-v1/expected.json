@@ -1,0 +1,143 @@
+{
+  "policy": "retention-policy-v1",
+  "plan_version": 1,
+  "case_id": "retention-cleanup-v1",
+  "counts": {
+    "categories": 2,
+    "entries": 5,
+    "published": 1,
+    "deleted": 2,
+    "kept": 3,
+    "protected": 2,
+    "deleted_bytes": 9400,
+    "kept_bytes": 2200,
+    "lost_recovery": 1,
+    "shortened_traces": 1,
+    "model_calls": 0,
+    "network_requests": 0
+  },
+  "actions": [
+    {
+      "entry_id": "cache-1",
+      "category_id": "cache",
+      "bytes": 9000,
+      "keep_days": 30,
+      "age_days": 45,
+      "action": "delete",
+      "reason": "超过保留期"
+    },
+    {
+      "entry_id": "index-1",
+      "category_id": "cache",
+      "bytes": 1200,
+      "keep_days": 30,
+      "age_days": 12,
+      "action": "keep",
+      "reason": "已发布版本仍需引用",
+      "release_id": "rel-1"
+    },
+    {
+      "entry_id": "log-1",
+      "category_id": "run-logs",
+      "bytes": 400,
+      "keep_days": 14,
+      "age_days": 21,
+      "action": "delete",
+      "reason": "超过保留期"
+    },
+    {
+      "entry_id": "log-2",
+      "category_id": "run-logs",
+      "bytes": 300,
+      "keep_days": 14,
+      "age_days": 3,
+      "action": "keep",
+      "reason": "未超过保留期"
+    },
+    {
+      "entry_id": "trace-1",
+      "category_id": "cache",
+      "bytes": 700,
+      "keep_days": 30,
+      "age_days": 20,
+      "action": "keep",
+      "reason": "已发布版本仍需引用",
+      "release_id": "rel-1"
+    }
+  ],
+  "protected": [
+    {
+      "entry_id": "index-1",
+      "release_id": "rel-1",
+      "reason": "已发布版本必需的索引条目"
+    },
+    {
+      "entry_id": "trace-1",
+      "release_id": "rel-1",
+      "reason": "已发布版本必需的追溯条目"
+    }
+  ],
+  "recovery_loss": [
+    {
+      "entry_id": "log-1",
+      "recovery": "按日志重放失败任务"
+    }
+  ],
+  "trace_changes": [
+    {
+      "trace": "trace-parse",
+      "before": 3,
+      "after": 2,
+      "removed": [
+        "log-1"
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "variant": "project-protected.json",
+      "code": "RETENTION_PROTECTED",
+      "exit": 3
+    },
+    {
+      "variant": "project-unknown.json",
+      "code": "RETENTION_ARGUMENT",
+      "exit": 2
+    },
+    {
+      "variant": "project-missing.json",
+      "code": "RETENTION_ARGUMENT",
+      "exit": 2
+    },
+    {
+      "variant": "project-duplicate.json",
+      "code": "RETENTION_ARGUMENT",
+      "exit": 2
+    }
+  ],
+  "determinism": [
+    "plan.json",
+    "report.json",
+    "report.md",
+    "manifest.json"
+  ],
+  "boundaries": {
+    "scientific_status": "not_run",
+    "deletes_files": false,
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "本包只证明保留与清理计划的判定与确定性；真实存储清理、已发布版本退役与恢复演练未由本包证明。"
+  },
+  "derivation": [
+    "log-1：run-logs 保留 14 天，年龄 21 天 → 超过保留期 → 删除，并因带 recovery 记 1 条恢复能力丧失。",
+    "log-2：run-logs 保留 14 天，年龄 3 天 → 未超过保留期 → 保留。",
+    "cache-1：cache 保留 30 天，年龄 45 天 → 超过保留期 → 删除（9000 字节進 deleted_bytes）。",
+    "index-1：cache 保留 30 天，年龄 12 天，但 rel-1 的 required_index → 受保护保留，理由为「已发布版本仍需引用」。",
+    "trace-1：cache 保留 30 天，年龄 20 天，但 rel-1 的 required_traces → 受保护保留。",
+    "deleted_bytes = 400 + 9000 = 9400；kept_bytes = 300 + 1200 + 700 = 2200；deleted + kept = entries = 5。",
+    "trace-parse 原本 3 条（log-1、log-2、trace-1），删掉 log-1 后剩 2 条。",
+    "四个变体各破坏一条规则：保留期缩短到 10 天会让受保护条目过期（整条拒绝、不留根）、条目引用未声明类别、必需条目不存在、条目编号重复。"
+  ]
+}

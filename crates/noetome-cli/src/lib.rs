@@ -89,6 +89,8 @@ mod request_budget_store;
 pub mod request_run;
 mod research_model;
 pub mod research_store;
+mod retention_model;
+pub mod retention_store;
 mod retrieval_model;
 pub mod retrieval_store;
 mod revision_model;
@@ -222,6 +224,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome diagnostics build <诊断根> <尚不存在的输出根>
       noetome diagnostics list <诊断根>
       noetome diagnostics status <诊断根>
+      noetome retention adopt <保留声明> <尚不存在的保留根>
+      noetome retention build <保留根> <尚不存在的输出根>
+      noetome retention list <保留根>
+      noetome retention status <保留根>
 
 当前支持：
   -h, --help       显示帮助
@@ -260,10 +266,12 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   change                  锁定位置与规划变更的局部影响（adopt/build/list/status）
   journal                 可定位任务的审计事件日志：四层回溯与凭据硬拒绝（adopt/build/list/status）
   diagnostics             带范围与内容预览的诊断导出：勾选决定内容、默认排除原文（adopt/build/list/status）
+  retention               保留与清理策略及已发布索引保护：清理前说明影响（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
 审计事件日志只追加、不重写：同一任务的先后由事件序号决定，重排声明不会悄悄改变日志；每条失败事件必须能定位到任务、来源、知识对象与受影响文件；声明里出现疑似凭据字样时整包拒绝，不做「过滤后继续」。
 诊断导出只导出声明的类别与条目：没勾选的内容如实标为未导出，不静默补全；默认不含原文与来源正文，勾选敏感范围必须记录同意；声明里出现绝对路径或疑似凭据时整包拒绝，拒绝时不写出任何字节。
+保留与清理只生成计划、不删除任何文件：已发布版本必需的索引与追溯条目一律受保护，命中保护即整条拒绝，而不是跳过它们继续清理；清理前必须说明会丧失哪些恢复能力、哪些追溯链会变短。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
 完整知识编译与生产Vault增量发布尚未实现。
 研究候选只是待批准线索：队列从不联网、不调用模型，也不把候选当成已完成知识。
@@ -762,6 +770,21 @@ pub enum CliCommand {
     DiagnosticsStatus {
         root: PathBuf,
     },
+    RetentionHelp,
+    RetentionAdopt {
+        project: PathBuf,
+        root: PathBuf,
+    },
+    RetentionBuild {
+        root: PathBuf,
+        output: PathBuf,
+    },
+    RetentionList {
+        root: PathBuf,
+    },
+    RetentionStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -834,6 +857,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "diagnostics") {
         return diagnostics_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "retention") {
+        return retention_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -2460,6 +2486,69 @@ fn diagnostics_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
             root: PathBuf::from(&rest[0]),
         }),
         "status" if rest.len() == 1 && valid(&rest[0]) => Ok(CliCommand::DiagnosticsStatus {
+            root: PathBuf::from(&rest[0]),
+        }),
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+pub const RETENTION_HELP: &str = "\
+Noetome 保留与清理
+
+用法：
+  noetome retention adopt <保留声明> <尚不存在的保留根>
+  noetome retention build <保留根> <尚不存在的输出根>
+  noetome retention list <保留根>
+  noetome retention status <保留根>
+
+adopt：核对保留策略与已发布版本，先按规则预演一次清理计划，全部通过才建根。
+build：把冻结声明渲染成 plan.json、report.json 与 report.md；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算清理计划，输出逐条动作、影响说明与受保护条目。
+只生成计划，不删除任何文件：清理动作由调用方按计划执行。
+已发布版本必需的索引与追溯条目一律受保护；若当前保留期会让它们过期，整条拒绝而不是跳过它们继续清理。
+清理前必须说明会丧失哪些恢复能力、哪些追溯链会因此变短。
+不联网、不调用模型、不写项目与Vault；本阶段不判断内容质量与科学正确性。
+";
+
+fn retention_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 4] = ["adopt", "build", "list", "status"];
+    let Some(first) = args.first() else {
+        return Err(INVALID_ARGUMENT);
+    };
+    if first == "--help" || first == "-h" {
+        return Ok(CliCommand::RetentionHelp);
+    }
+    let verb = first.to_string_lossy();
+    if !VERBS.contains(&verb.as_ref()) {
+        return Err(INVALID_ARGUMENT);
+    }
+    let mut rest: Vec<OsString> = Vec::new();
+    let mut index = 1;
+    let mut separator = false;
+    while index < args.len() {
+        let value = &args[index];
+        if !separator && value == "--" {
+            separator = true;
+            index += 1;
+            continue;
+        }
+        rest.push(value.clone());
+        index += 1;
+    }
+    let valid = |value: &OsString| !value.is_empty() && !value.to_string_lossy().starts_with('-');
+    match verb.as_ref() {
+        "adopt" if rest.len() == 2 && rest.iter().all(valid) => Ok(CliCommand::RetentionAdopt {
+            project: PathBuf::from(&rest[0]),
+            root: PathBuf::from(&rest[1]),
+        }),
+        "build" if rest.len() == 2 && rest.iter().all(valid) => Ok(CliCommand::RetentionBuild {
+            root: PathBuf::from(&rest[0]),
+            output: PathBuf::from(&rest[1]),
+        }),
+        "list" if rest.len() == 1 && valid(&rest[0]) => Ok(CliCommand::RetentionList {
+            root: PathBuf::from(&rest[0]),
+        }),
+        "status" if rest.len() == 1 && valid(&rest[0]) => Ok(CliCommand::RetentionStatus {
             root: PathBuf::from(&rest[0]),
         }),
         _ => Err(INVALID_ARGUMENT),

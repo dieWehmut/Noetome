@@ -51,6 +51,7 @@
 | [长时运行 soak](technical/SOAK_HARNESS_CONTRACT.md) | 逐轮工作单元与读数、暂停闸门只在一处判断并用计数证明、覆盖率按参数如实标为未达成或部分测量、读数与确定性产物分离 | soak 动词、闸门或覆盖率判据、错误码或输出根布局变化 |
 | [审计事件日志](technical/AUDIT_JOURNAL_CONTRACT.md) | 四层可定位失败、三张表统一按任务排序、事件先后由序号决定、凭据字样整包拒绝、输出字节确定性与身份机制 | journal 动词、事件或排序判据、凭据标记或输出根布局变化 |
 | [诊断导出](technical/DIAGNOSTICS_EXPORT_CONTRACT.md) | 勾选决定导出内容、未勾选如实记为未导出、绝对路径（含句中路径）与凭据整包拒绝、敏感类别需记录同意、导出清单不含时间戳 | diagnostics 动词、范围或勾选判据、拒绝码或输出根布局变化 |
+| [保留与清理计划](technical/RETENTION_CLEANUP_CONTRACT.md) | 受保护即整条拒绝、逐条动作与理由、恢复能力与追溯链影响说明、只生成计划不删文件、输出字节确定性 | retention 动词、保留或保护判据、错误码或输出根布局变化 |
 | [写作反馈修订](technical/REVISION_FEEDBACK_CONTRACT.md) | 缺口问题与候选分离、新 IR 版本与依赖重编译、无新证据不推翻、超限升级 | revision 动词、原子/表示字段、修订闸门或控制目录布局变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |

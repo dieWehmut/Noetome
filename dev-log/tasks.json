@@ -4774,7 +4774,7 @@
       "id": "B14-T03",
       "title": "保留与清理策略及已发布索引保护",
       "batch": "B14",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B14-T02"
       ],
@@ -4788,7 +4788,77 @@
         "清理前必须给出影响说明：哪些条目会被删、哪些恢复能力会因此丧失、哪些追溯链会变短，且与实际结果逐条一致",
         "同一冻结输入的两次清理计划字节相同，独立只读审计器复算保护集合与影响说明，任何不符即失败"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-08T05:39:58Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结保留策略、可清理类别与已发布版本索引的声明与实现前手写期望，定义清理计划逐条说明删什么保什么、已发布必需索引受保护即整条拒绝、两次计划字节相同的确定性口径并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-08T06:06:46Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "保留与清理策略及已发布索引保护：冻结声明与实现前手写期望，清理计划逐条给出删什么保什么与理由，已发布必需索引受保护即整条拒绝，影响说明（恢复能力与追溯链）逐条一致，两次计划字节相同，独立只读审计器复算",
+          "validation": [
+            "cargo fmt --all --check exit 0",
+            "cargo build --bin noetome exit 0，retention 两文件零警告",
+            "cargo test --test retention 18 passed / 0 failed",
+            "cargo test -p noetome-cli --lib retention_model 10 passed / 0 failed",
+            "cargo test -p noetome-cli --lib -- --test-threads=2 580 passed / 98 failed / 1 ignored（失败分布 sidecar_process 64 / pdf_source_model 18 / pdf_parse 7 / source_model 5 / source_write 3 / extraction_source 1，与 570/98 基线逐模块一致）",
+            "python3 -m unittest tests.test_verify_retention_cleanup Ran 57 / OK",
+            "python3 -m unittest discover -s tests -p 'test_*.py' Ran 1214 / failures=41, errors=12, skipped=24（与 1157 基线同组失败）",
+            "python3 scripts/verify_retention_cleanup.py 真实根+输出+包 92 项检查 0 失败",
+            "python3 scripts/verify_retention_cleanup.py --package fixtures/retention-cleanup-v1 48 项检查 0 失败"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/retention_model.rs",
+              "sha256": "5ddbb7c16541911638ab48c9dbb44168905589f838112a0cd7bbdd68d1a41e4b"
+            },
+            {
+              "path": "crates/noetome-cli/src/retention_store.rs",
+              "sha256": "a404366b6b3942963d3ba12e9f4093c1139cd0d2d9320915e76f1164e1217049"
+            },
+            {
+              "path": "crates/noetome-cli/tests/retention.rs",
+              "sha256": "0757d7f23fcae87bced5a596542962735cccf9032c1295fb0202965169b91bea"
+            },
+            {
+              "path": "fixtures/retention-cleanup-v1/project.json",
+              "sha256": "846afc3dd8b4a1bd77fcb901957630266ce80bf663c7d192a82e9b1d245e66cd"
+            },
+            {
+              "path": "fixtures/retention-cleanup-v1/expected.json",
+              "sha256": "5cb64b1c90545fd42905b9566a4fcf9bfcfd35979d93a98ba8e80e0470770620"
+            },
+            {
+              "path": "scripts/verify_retention_cleanup.py",
+              "sha256": "efcfebec24bcb700193bff68f11e8c09cf6e2c8c5a85bf70b470c8356d9f9d92"
+            },
+            {
+              "path": "tests/test_verify_retention_cleanup.py",
+              "sha256": "7eb9d2468c4ba913c2cfa0358597f0244ae1d3ab5d2581a1617eec0c02792b4f"
+            },
+            {
+              "path": "doc/technical/RETENTION_CLEANUP_CONTRACT.md",
+              "sha256": "67dc4d626ec0a31d231aafcf7f67197de9e9ae54f9157596ccaa3647801a01b0"
+            },
+            {
+              "path": "doc/validation/B14-T03.md",
+              "sha256": "e4340d355577350163db4da531bebe86d976e3976a7653b6a00f39ca59f2d21e"
+            },
+            {
+              "path": "doc/validation/assets/B14-T03/cli-20261108/audit.txt",
+              "sha256": "3fb33c137fe07f3f883cc4b613ae13f2331ba2f3750d5eb489f3438053dc30f3"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

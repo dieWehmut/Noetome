@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "retention-cleanup-v1",
+  "policy": "retention-policy-v1",
+  "sequence": [
+    {
+      "verb": "adopt",
+      "project": "project.json",
+      "expect": {
+        "exit": 0
+      }
+    },
+    {
+      "verb": "build",
+      "expect": {
+        "exit": 0
+      }
+    },
+    {
+      "verb": "list",
+      "expect": {
+        "exit": 0
+      }
+    },
+    {
+      "verb": "status",
+      "expect": {
+        "exit": 0
+      }
+    }
+  ],
+  "variants": [
+    {
+      "name": "protected",
+      "project": "project-protected.json",
+      "expect": {
+        "code": "RETENTION_PROTECTED",
+        "exit": 3,
+        "creates_root": false
+      }
+    },
+    {
+      "name": "unknown",
+      "project": "project-unknown.json",
+      "expect": {
+        "code": "RETENTION_ARGUMENT",
+        "exit": 2,
+        "creates_root": false
+      }
+    },
+    {
+      "name": "missing",
+      "project": "project-missing.json",
+      "expect": {
+        "code": "RETENTION_ARGUMENT",
+        "exit": 2,
+        "creates_root": false
+      }
+    },
+    {
+      "name": "duplicate",
+      "project": "project-duplicate.json",
+      "expect": {
+        "code": "RETENTION_ARGUMENT",
+        "exit": 2,
+        "creates_root": false
+      }
+    }
+  ],
+  "expected": "expected.json",
+  "boundaries": {
+    "scientific_status": "not_run",
+    "deletes_files": false,
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "本包只证明保留与清理计划的判定与确定性；真实存储清理、已发布版本退役与恢复演练未由本包证明。"
+  }
+}

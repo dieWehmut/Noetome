@@ -1,0 +1,16 @@
+Noetome 保留与清理
+
+用法：
+  noetome retention adopt <保留声明> <尚不存在的保留根>
+  noetome retention build <保留根> <尚不存在的输出根>
+  noetome retention list <保留根>
+  noetome retention status <保留根>
+
+adopt：核对保留策略与已发布版本，先按规则预演一次清理计划，全部通过才建根。
+build：把冻结声明渲染成 plan.json、report.json 与 report.md；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算清理计划，输出逐条动作、影响说明与受保护条目。
+只生成计划，不删除任何文件：清理动作由调用方按计划执行。
+已发布版本必需的索引与追溯条目一律受保护；若当前保留期会让它们过期，整条拒绝而不是跳过它们继续清理。
+清理前必须说明会丧失哪些恢复能力、哪些追溯链会因此变短。
+不联网、不调用模型、不写项目与Vault；本阶段不判断内容质量与科学正确性。
+exit=0
