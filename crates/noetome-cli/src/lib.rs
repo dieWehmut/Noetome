@@ -43,6 +43,8 @@ mod image_model;
 mod image_render;
 mod index_model;
 pub mod index_store;
+mod journal_model;
+pub mod journal_store;
 pub mod knowledge_coordinate;
 mod knowledge_coordinate_conflicts;
 mod knowledge_coordinate_context;
@@ -210,6 +212,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome change build <变更根> <输出根>
       noetome change list <变更根>
       noetome change status <变更根>
+      noetome journal adopt <事件声明> <尚不存在的审计根>
+      noetome journal build <审计根> <尚不存在的输出根>
+      noetome journal list <审计根>
+      noetome journal status <审计根>
 
 当前支持：
   -h, --help       显示帮助
@@ -246,8 +252,10 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   bench                   大库规模实测：3000 笔记 / 200 处人工改动的四阶段 P95 与内存（measure）
   soak                    长时运行 soak：逐轮耗时/内存/错误码，用可观测计数证明暂停后不再调度（run）
   change                  锁定位置与规划变更的局部影响（adopt/build/list/status）
+  journal                 可定位任务的审计事件日志：四层回溯与凭据硬拒绝（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
+审计事件日志只追加、不重写：同一任务的先后由事件序号决定，重排声明不会悄悄改变日志；每条失败事件必须能定位到任务、来源、知识对象与受影响文件；声明里出现疑似凭据字样时整包拒绝，不做「过滤后继续」。
 当前来源由用户明确选取；候选知识保持pending。API本地HTTP假服务仅验证工程契约，实际服务冒烟与科学质量验收仍待执行。
 完整知识编译与生产Vault增量发布尚未实现。
 研究候选只是待批准线索：队列从不联网、不调用模型，也不把候选当成已完成知识。
@@ -716,6 +724,21 @@ pub enum CliCommand {
     ChangeStatus {
         root: PathBuf,
     },
+    JournalHelp,
+    JournalAdopt {
+        project: PathBuf,
+        root: PathBuf,
+    },
+    JournalBuild {
+        root: PathBuf,
+        output: PathBuf,
+    },
+    JournalList {
+        root: PathBuf,
+    },
+    JournalStatus {
+        root: PathBuf,
+    },
 }
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
@@ -782,6 +805,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "soak") {
         return soak_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "journal") {
+        return journal_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -2285,4 +2311,67 @@ fn soak_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         max_rss_growth_bytes: max_rss_growth_bytes.ok_or(INVALID_ARGUMENT)?,
         output: output.ok_or(INVALID_ARGUMENT)?,
     })
+}
+
+pub const JOURNAL_HELP: &str = "\
+Noetome 审计事件日志
+
+用法：
+  noetome journal adopt <事件声明> <尚不存在的审计根>
+  noetome journal build <审计根> <尚不存在的输出根>
+  noetome journal list <审计根>
+  noetome journal status <审计根>
+
+adopt：核对声明、四层定位与凭据字样，先按规则预演一次日志，全部通过才建根。
+build：把冻结声明渲染成 journal.json、report.json 与 report.md；同一冻结输入的两次构建必须字节相同（输出清单不含时间戳）。
+list|status：只读重算日志并输出事件构成、失败定位与任务结果。
+每条失败事件都必须能定位到任务、来源、知识对象与受影响文件：定位不到的失败无法复核。
+日志只追加、不重写：事件按任务与序号排序，重排声明不会改变日志。
+声明里出现疑似凭据字样时整包拒绝——日志与导出会跟着被分享出去，凭据不能进声明。
+不联网、不调用模型、不写项目与Vault；本阶段不判断内容质量与科学正确性。
+";
+
+fn journal_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    const VERBS: [&str; 4] = ["adopt", "build", "list", "status"];
+    let Some(first) = args.first() else {
+        return Err(INVALID_ARGUMENT);
+    };
+    if first == "--help" || first == "-h" {
+        return Ok(CliCommand::JournalHelp);
+    }
+    let verb = first.to_string_lossy();
+    if !VERBS.contains(&verb.as_ref()) {
+        return Err(INVALID_ARGUMENT);
+    }
+    let mut rest: Vec<OsString> = Vec::new();
+    let mut index = 1;
+    let mut separator = false;
+    while index < args.len() {
+        let value = &args[index];
+        if !separator && value == "--" {
+            separator = true;
+            index += 1;
+            continue;
+        }
+        rest.push(value.clone());
+        index += 1;
+    }
+    let valid = |value: &OsString| !value.is_empty() && !value.to_string_lossy().starts_with('-');
+    match verb.as_ref() {
+        "adopt" if rest.len() == 2 && rest.iter().all(valid) => Ok(CliCommand::JournalAdopt {
+            project: PathBuf::from(&rest[0]),
+            root: PathBuf::from(&rest[1]),
+        }),
+        "build" if rest.len() == 2 && rest.iter().all(valid) => Ok(CliCommand::JournalBuild {
+            root: PathBuf::from(&rest[0]),
+            output: PathBuf::from(&rest[1]),
+        }),
+        "list" if rest.len() == 1 && valid(&rest[0]) => Ok(CliCommand::JournalList {
+            root: PathBuf::from(&rest[0]),
+        }),
+        "status" if rest.len() == 1 && valid(&rest[0]) => Ok(CliCommand::JournalStatus {
+            root: PathBuf::from(&rest[0]),
+        }),
+        _ => Err(INVALID_ARGUMENT),
+    }
 }

@@ -4600,7 +4600,7 @@
       "id": "B14-T01",
       "title": "可定位任务的审计事件日志与凭据过滤",
       "batch": "B14",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B13-T03"
       ],
@@ -4614,7 +4614,76 @@
         "默认不写完整密钥、认证头与无关原文：声明里若出现凭据样式字符串即整包拒绝，日志正文只保留分类与指纹",
         "同一冻结输入的事件流两次运行字节相同，独立只读审计器复算四层定位与过滤结果，任何不符即失败"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-08T03:26:35Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结含任务、来源、知识对象与受影响文件的声明与实现前手写期望，定义四层可回溯事件流、只追加记录与凭据硬拒绝的确定性口径并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-08T03:58:32Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现 journal adopt/build/list/status：四层可定位失败、三张表按任务序、凭据整包拒绝、只追加与字节确定性",
+          "validation": [
+            "cargo fmt --all --check 退出码 0",
+            "cargo test --test journal → 19 passed / 0 failed",
+            "cargo test -p noetome-cli --lib journal_model → 10 passed / 0 failed",
+            "cargo test -p noetome-cli --lib -- --test-threads=2 → 558 passed / 98 failed / 1 ignored，失败分布与 548/98 基线逐模块相同",
+            "全量 Python：Ran 1097 tests / failures=41 errors=12 skipped=24，与 1044 基线同组失败、新增 53 项全过",
+            "scripts/verify_audit_journal.py 根+输出+包 → 合计 87 项检查：失败 0、提示 0；仅包 → 45 项 0 失败",
+            "python3 -m unittest tests.test_verify_audit_journal → Ran 53 / OK",
+            "端到端 adopt/build 各退出码 0，两次构建四文件全 SAME；四变体与未知根按预期拒绝且不留根"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/journal_model.rs",
+              "sha256": "716a72d2206dc56eb358976a5f8206ef1ab3f1cb3d6ea8a212e935df61d03fb2"
+            },
+            {
+              "path": "crates/noetome-cli/src/journal_store.rs",
+              "sha256": "0c5c2c02f1d7d84403e14cd177fea3934827f4231dda9530f55c64bbbbe822f0"
+            },
+            {
+              "path": "crates/noetome-cli/tests/journal.rs",
+              "sha256": "6e533d91dbb2be4ecf264de366027bffc6f057ed2b2214d6145ba12e42bed00b"
+            },
+            {
+              "path": "fixtures/journal-audit-v1/project.json",
+              "sha256": "2af6959002137624f21ec44b9538f650557bb9e069206deccffaecbd86519a6d"
+            },
+            {
+              "path": "fixtures/journal-audit-v1/expected.json",
+              "sha256": "eccab18687d66e291d1871eec85bce8cc96a186893ab0e098a5578efea6b43fd"
+            },
+            {
+              "path": "scripts/verify_audit_journal.py",
+              "sha256": "d5fdac371c22264cb25c4e9816c419d95085f6203bf5dbdf807bca115c3c4197"
+            },
+            {
+              "path": "tests/test_verify_audit_journal.py",
+              "sha256": "c84d10322bccebceee685b40d3657af5d64fa8eb239b733c3e044c3cf207ff9e"
+            },
+            {
+              "path": "doc/technical/AUDIT_JOURNAL_CONTRACT.md",
+              "sha256": "ace1d8d1abe7fd5f9bedf53f60880cc08fd1f18495a5e47582a396fb98f312e7"
+            },
+            {
+              "path": "doc/validation/B14-T01.md",
+              "sha256": "2b08958125b517f9bfb4c7533ad47ae18ceacc5f06570f4bf50ee15daf94da7c"
+            },
+            {
+              "path": "doc/validation/assets/B14-T01/cli-20261108/audit.txt",
+              "sha256": "7a59f1a9af2daccc477ffe790d356959102071676912735e8b96a630628d2fc1"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B14-T02",

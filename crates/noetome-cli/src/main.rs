@@ -4,10 +4,10 @@ use std::process::ExitCode;
 
 use noetome_cli::{
     CliCommand, audit_store, bench_store, change_store, extraction, extraction_api,
-    extraction_verify, fixture, fixture_compile, index_store, migrate_store, outline_store,
-    pdf_parse, plan_store, project, relevance_store, research_store, retrieval_store,
-    revision_store, scale_store, soak_store, source, structure_store, template_store, vault_store,
-    vault_update,
+    extraction_verify, fixture, fixture_compile, index_store, journal_store, migrate_store,
+    outline_store, pdf_parse, plan_store, project, relevance_store, research_store,
+    retrieval_store, revision_store, scale_store, soak_store, source, structure_store,
+    template_store, vault_store, vault_update,
 };
 
 fn main() -> ExitCode {
@@ -662,6 +662,19 @@ fn main() -> ExitCode {
         }
         CliCommand::ChangeStatus { root } => {
             vault_result(change_store::status(&root), &mut result_code)
+        }
+        CliCommand::JournalHelp => noetome_cli::JOURNAL_HELP.to_owned(),
+        CliCommand::JournalAdopt { project, root } => {
+            vault_result(journal_store::adopt(&project, &root), &mut result_code)
+        }
+        CliCommand::JournalBuild { root, output } => {
+            vault_result(journal_store::build(&root, &output), &mut result_code)
+        }
+        CliCommand::JournalList { root } => {
+            vault_result(journal_store::list(&root), &mut result_code)
+        }
+        CliCommand::JournalStatus { root } => {
+            vault_result(journal_store::status(&root), &mut result_code)
         }
     };
 

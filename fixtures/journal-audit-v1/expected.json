@@ -1,0 +1,155 @@
+{
+  "policy": "audit-journal-v1",
+  "journal_version": 1,
+  "case_id": "journal-traceability-v1",
+  "counts": {
+    "tasks": 2,
+    "events": 6,
+    "started": 2,
+    "failed": 2,
+    "retried": 1,
+    "resolved": 1,
+    "sources": 2,
+    "objects": 2,
+    "files": 2,
+    "located_failures": 2,
+    "unresolved_failures": 1,
+    "model_calls": 0,
+    "network_requests": 0
+  },
+  "event_order": [
+    "e5",
+    "e6",
+    "e1",
+    "e2",
+    "e3",
+    "e4"
+  ],
+  "tasks": [
+    {
+      "task_id": "task-compile",
+      "title": "编译糖异生笔记",
+      "sources": [
+        "src-notes-b"
+      ],
+      "objects": [
+        "obj-gluconeogenesis"
+      ],
+      "files": [
+        "file-gluconeogenesis"
+      ],
+      "events": 2,
+      "failures": 1,
+      "outcome": "failed"
+    },
+    {
+      "task_id": "task-parse",
+      "title": "抽取教材A 第三章",
+      "sources": [
+        "src-textbook-a"
+      ],
+      "objects": [
+        "obj-glycolysis"
+      ],
+      "files": [
+        "file-glycolysis"
+      ],
+      "events": 4,
+      "failures": 1,
+      "outcome": "resolved"
+    }
+  ],
+  "failures": [
+    {
+      "event_id": "e6",
+      "task_id": "task-compile",
+      "at": 2,
+      "class": "COMPILE_LINK",
+      "sources": [
+        "src-notes-b"
+      ],
+      "objects": [
+        "obj-gluconeogenesis"
+      ],
+      "files": [
+        "file-gluconeogenesis"
+      ],
+      "followed_by_action": false
+    },
+    {
+      "event_id": "e2",
+      "task_id": "task-parse",
+      "at": 2,
+      "class": "PDF_PARSE",
+      "sources": [
+        "src-textbook-a"
+      ],
+      "objects": [
+        "obj-glycolysis"
+      ],
+      "files": [
+        "file-glycolysis"
+      ],
+      "followed_by_action": true
+    }
+  ],
+  "severity": {
+    "started": "info",
+    "failed": "error",
+    "retried": "info",
+    "resolved": "info"
+  },
+  "rejections": [
+    {
+      "project": "project-no-source.json",
+      "code": "JOURNAL_ARGUMENT",
+      "exit": 2,
+      "why": "任务没有声明任何来源，失败的定位链断在第一层"
+    },
+    {
+      "project": "project-duplicate-at.json",
+      "code": "JOURNAL_ARGUMENT",
+      "exit": 2,
+      "why": "同一任务里两条事件用了同一个序号，先后无法判定"
+    },
+    {
+      "project": "project-secret.json",
+      "code": "JOURNAL_SECRET_MARKER",
+      "exit": 3,
+      "why": "声明里出现疑似凭据字样，整包拒绝而不是过滤后继续"
+    },
+    {
+      "project": "project-foreign-file.json",
+      "code": "JOURNAL_ARGUMENT",
+      "exit": 2,
+      "why": "声明的文件不属于该任务列出的任何知识对象"
+    }
+  ],
+  "determinism": {
+    "comparable": [
+      "journal.json",
+      "report.json",
+      "manifest.json"
+    ],
+    "excluded_report_md_from_cli_comparison": true,
+    "note": "report.md 也是确定的；这里只把 CLI 侧比较的三个产物列出来，因为它们是同一冻结输入的规范投影。"
+  },
+  "boundaries": {
+    "scientific_status": "not_run",
+    "synthetic": true,
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "这是自造的声明与事件，不含任何真实教材内容；它证明日志的定位与排序口径可复算，不证明真实抽取质量。"
+  },
+  "derivation": [
+    "任务 2 个、事件 6 条：e1..e4 属于 task-parse，e5..e6 属于 task-compile。",
+    "三张表（任务、失败、事件）统一按任务 id 再按序号排序：task-compile < task-parse，所以 e5、e6 与 task-compile 都排在前面；与声明里的书写顺序无关。",
+    "started 2（e1、e5）、failed 2（e2、e6）、retried 1（e3）、resolved 1（e4）。",
+    "失败定位 2 条：e2 之后有同任务的 retried 与 resolved，所以 followed_by_action 为 true；e6 之后该任务再无事件，为 false。",
+    "未处理失败 1 条 = followed_by_action 为 false 的失败事件数。",
+    "任务结果取该任务最后一条事件的 kind：task-parse 结束于 resolved，task-compile 结束于 failed。",
+    "四个变体各违反一条规则，且都在建根之前被拒绝，不会留下半个根。"
+  ]
+}
