@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "aud-traceability-v1",
+  "policy": "library-audit-v1",
+  "sequence": [
+    {
+      "verb": "adopt",
+      "project": "project.json"
+    },
+    {
+      "verb": "build",
+      "expected": "expected.json"
+    },
+    {
+      "verb": "list",
+      "expected": "expected.json"
+    },
+    {
+      "verb": "status",
+      "expected": "expected.json"
+    }
+  ],
+  "variants": [
+    {
+      "name": "broken",
+      "project": "variants/broken/project.json"
+    },
+    {
+      "name": "duplicate",
+      "project": "variants/duplicate/project.json"
+    },
+    {
+      "name": "recall",
+      "project": "variants/recall/project.json"
+    }
+  ],
+  "expected": "expected.json",
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "note": "自造笔记只用于核对链接解析与唯一解释位置；不判断内容质量，也不代表真实笔记库。"
+  }
+}

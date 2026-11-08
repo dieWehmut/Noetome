@@ -3963,7 +3963,7 @@
       "id": "B11-T03",
       "title": "全库链接可用性与唯一解释位置审计",
       "batch": "B11",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B11-T01",
         "B11-T02"
@@ -3980,7 +3980,75 @@
         "唯一解释位置可复算：同一概念全库恰有一处完整解释，其余为引用；未召回或不唯一的条目逐条列名，不用百分比掩盖具体缺口。",
         "报告单列口径（分子分母与不适用情形），审计器独立复算计数并对任何缺口报失败；通过完整回归后 complete。"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-07T23:36:58Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结发布集合金标准清单与链接样本及真实RED，定义全库链接可用性与唯一解释位置审计的确定性口径并实现其CLI闭环",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-08T00:17:17Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现全库链接可用性与唯一解释位置审计：冻结根 + 金标准原子清单 + 十种链接解析依据 + 完整解释标记唯一性 + 口径不适用表达，配独立只读审计器与 65 项审计器测试",
+          "validation": [
+            "cargo fmt --all --check exit 0",
+            "cargo test --test audit: 18 passed / 0 failed（0.06s）",
+            "cargo test -p noetome-cli --lib -- --test-threads=2: 501 passed / 98 failed / 1 ignored，失败分布 sidecar_process 64 / pdf_source_model 18 / pdf_parse 7 / source_model 5 / source_write 3 / extraction_source 1，与任务前 489/98 基线逐模块一致",
+            "python3 -m unittest tests.test_verify_library_audit: Ran 65 / OK",
+            "全量 Python: Ran 790 tests / failures=41, errors=12, skipped=24（与任务前 Ran 725 同组失败，新增 65 项全过）",
+            "审计器 --package: 151 项检查，失败 0；真实根+输出: 232 项检查，失败 0",
+            "端到端 adopt/build/status/list 全 exit 0，两次构建五文件字节相同；三个变体 build 均 exit 3 并写出报告；未知根 exit 3、已存在输出根 exit 2"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/audit_model.rs",
+              "sha256": "9ec85824a953f27751b680284aa3e3517e344b948aea09f46a4341b6ff30fdbf"
+            },
+            {
+              "path": "crates/noetome-cli/src/audit_store.rs",
+              "sha256": "c1ea0f63222abad5d96106caffa287bef144f2a7ca58c8c657f5e86358a6326f"
+            },
+            {
+              "path": "crates/noetome-cli/tests/audit.rs",
+              "sha256": "e0ddaa44538a1f8a715c08b2a8843fddfd289da0b76c435ac4ae355f7ef1fa76"
+            },
+            {
+              "path": "fixtures/library-audit-v1/project.json",
+              "sha256": "c557d42b741f0ffeb7759899ed6f2f1977a04917238b6183278fc490700cbbd3"
+            },
+            {
+              "path": "fixtures/library-audit-v1/expected.json",
+              "sha256": "d67a606f200ae236e402469dd8d6fbd02e1c8c410183f8e138300d40829bf54e"
+            },
+            {
+              "path": "scripts/verify_library_audit.py",
+              "sha256": "f447243cdbf7ac21c580da1dcec7288c25c6711f0c98bcc75c6e0ff54a5e1ffd"
+            },
+            {
+              "path": "tests/test_verify_library_audit.py",
+              "sha256": "0372431965c1645e93e1e0bcd2508a39f9381abdb34e63361299daa6f7a2dc59"
+            },
+            {
+              "path": "doc/technical/LIBRARY_AUDIT_CONTRACT.md",
+              "sha256": "0b2f6678f141b71c94435d65732f0e3d9db01892d6533d0eb2270950ae99fe13"
+            },
+            {
+              "path": "doc/validation/B11-T03.md",
+              "sha256": "7ffcde28c186c13d05735d894c6900fe53d26800848bddc6476989e459acf622"
+            },
+            {
+              "path": "doc/validation/assets/B11-T03/cli-20261108/audit.txt",
+              "sha256": "fae88342180d712a13b59510573131ea5746328704597e79a23872c26de6e467"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

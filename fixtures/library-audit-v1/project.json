@@ -1,0 +1,35 @@
+{
+  "policy": "library-audit-v1",
+  "schema_version": 1,
+  "producer": "fixture_author",
+  "case_id": "aud-traceability-v1",
+  "description": "四条自造笔记的全库链接与唯一解释位置审计样本，覆盖中文路径、表格转义别名、嵌入与按文件名链接。",
+  "gold": "gold.json",
+  "notes": [
+    {
+      "note_id": "note-glycolysis",
+      "path": "笔记/糖酵解.md",
+      "title": "糖酵解"
+    },
+    {
+      "note_id": "note-gluconeogenesis",
+      "path": "笔记/糖异生.md",
+      "title": "糖异生"
+    },
+    {
+      "note_id": "note-tca",
+      "path": "笔记/三羧酸循环.md",
+      "title": "三羧酸循环"
+    },
+    {
+      "note_id": "note-glossary",
+      "path": "笔记/术语表.md",
+      "title": "术语表"
+    }
+  ],
+  "limits": {
+    "max_notes": 16,
+    "max_atoms": 512,
+    "max_links": 4096
+  }
+}
