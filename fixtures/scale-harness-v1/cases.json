@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "producer": "independent_fixture_author",
+  "case_id": "scale-synthetic-v1",
+  "policy": "scale-harness-v1",
+  "sequence": [
+    {
+      "verb": "scale measure",
+      "arguments": [
+        "--pages",
+        "8",
+        "--headings",
+        "2",
+        "--paragraphs",
+        "2",
+        "--output",
+        "<输出根>"
+      ],
+      "expect": "exit 0，写出 structure.json / timings.json / report.md / manifest.json"
+    },
+    {
+      "verb": "scale measure",
+      "arguments": [
+        "--pages",
+        "8",
+        "--headings",
+        "2",
+        "--paragraphs",
+        "2",
+        "--output",
+        "<第二个输出根>"
+      ],
+      "expect": "exit 0，且 structure.json / manifest.json / report.md 与前一次逐字节相同"
+    }
+  ],
+  "variants": [
+    {
+      "name": "rejected-existing",
+      "arguments": [
+        "--pages",
+        "8",
+        "--headings",
+        "2",
+        "--paragraphs",
+        "2",
+        "--output",
+        "<已存在的目录>"
+      ],
+      "expect": {
+        "code": "SCALE_ARGUMENT",
+        "exit": 2
+      }
+    },
+    {
+      "name": "rejected-zero-pages",
+      "arguments": [
+        "--pages",
+        "0",
+        "--headings",
+        "2",
+        "--paragraphs",
+        "2",
+        "--output",
+        "<新目录>"
+      ],
+      "expect": {
+        "code": "SCALE_ARGUMENT",
+        "exit": 2
+      }
+    },
+    {
+      "name": "rejected-too-many-headings",
+      "arguments": [
+        "--pages",
+        "8",
+        "--headings",
+        "13",
+        "--paragraphs",
+        "2",
+        "--output",
+        "<新目录>"
+      ],
+      "expect": {
+        "code": "SCALE_ARGUMENT",
+        "exit": 2
+      }
+    },
+    {
+      "name": "rejected-bad-number",
+      "arguments": [
+        "--pages",
+        "八",
+        "--headings",
+        "2",
+        "--paragraphs",
+        "2",
+        "--output",
+        "<新目录>"
+      ],
+      "expect": {
+        "code": "SCALE_ARGUMENT",
+        "exit": 2
+      }
+    },
+    {
+      "name": "rejected-missing-flag",
+      "arguments": [
+        "--pages",
+        "8",
+        "--headings",
+        "2",
+        "--output",
+        "<新目录>"
+      ],
+      "expect": {
+        "cli_argument": true,
+        "exit": 2
+      }
+    },
+    {
+      "name": "help",
+      "arguments": [
+        "--help"
+      ],
+      "expect": {
+        "exit": 0
+      }
+    }
+  ],
+  "expected": "expected.json",
+  "boundaries": {
+    "scientific_status": "not_run",
+    "uses_network": false,
+    "uses_model": false,
+    "writes_project": false,
+    "writes_vault": false,
+    "synthetic": true,
+    "note": "合成语料只用于规模测量，不证明真实教材抽取质量，不判断科学正确性。"
+  }
+}

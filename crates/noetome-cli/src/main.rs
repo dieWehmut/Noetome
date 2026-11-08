@@ -5,8 +5,8 @@ use std::process::ExitCode;
 use noetome_cli::{
     CliCommand, audit_store, change_store, extraction, extraction_api, extraction_verify, fixture,
     fixture_compile, index_store, migrate_store, outline_store, pdf_parse, plan_store, project,
-    relevance_store, research_store, retrieval_store, revision_store, source, structure_store,
-    template_store, vault_store, vault_update,
+    relevance_store, research_store, retrieval_store, revision_store, scale_store, source,
+    structure_store, template_store, vault_store, vault_update,
 };
 
 fn main() -> ExitCode {
@@ -611,6 +611,16 @@ fn main() -> ExitCode {
         CliCommand::TemplateStatus { root } => {
             vault_result(template_store::status(&root), &mut result_code)
         }
+        CliCommand::ScaleHelp => noetome_cli::SCALE_HELP.to_owned(),
+        CliCommand::ScaleMeasure {
+            pages,
+            headings,
+            paragraphs,
+            output,
+        } => vault_result(
+            scale_store::measure(&pages, &headings, &paragraphs, &output),
+            &mut result_code,
+        ),
         CliCommand::ChangeHelp => noetome_cli::CHANGE_HELP.to_owned(),
         CliCommand::ChangeAdopt { project, root } => {
             vault_result(change_store::adopt(&project, &root), &mut result_code)

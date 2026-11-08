@@ -46,6 +46,7 @@
 | [教材式自适应规划](technical/ADAPTIVE_PLAN_CONTRACT.md) | 教学顺序与前置环拒绝、笔记与文件夹规划、多重归属只留一个主要位置、反应链拆分理由、原子必须落在主目标、输出字节确定性 | plan 动词、排序或拆分判据、错误码或输出根布局变化 |
 | [主题阅读目标与结构模板](technical/TEMPLATE_STRUCTURE_CONTRACT.md) | 模板作为结构规范（省略合法、空章节拒绝）、命名与导航深度偏离须理由、同类同层一致性、唯一解释位置、输出字节确定性 | template 动词、模板或一致性判据、错误码或输出根布局变化 |
 | [锁定位置与规划变更](technical/LOCKED_CHANGE_CONTRACT.md) | 五类锁定的命中判据、锁定冲突转候选、影响范围的漏报与多报、重构安全性与引用变化、未受影响笔记指纹 | change 动词、锁定或影响范围判据、错误码或输出根布局变化 |
+| [规模实测](technical/SCALE_HARNESS_CONTRACT.md) | 合成语料的确定性生成、千页规模真实跑文本分析与章节对齐、耗时与结构产物分离、规划上限如实列为未达标 | scale 动词、生成规则、上限声明或输出根布局变化 |
 | [写作反馈修订](technical/REVISION_FEEDBACK_CONTRACT.md) | 缺口问题与候选分离、新 IR 版本与依赖重编译、无新证据不推翻、超限升级 | revision 动词、原子/表示字段、修订闸门或控制目录布局变化 |
 | [设计标准](standards/DESIGN.md) | CLI、报告、笔记和后续桌面交互 | 用户可见行为和呈现变化 |
 | [测试标准](standards/TESTING.md) | 阶段门槛、fixture和独立验证规则 | 引入新能力或新故障类型 |

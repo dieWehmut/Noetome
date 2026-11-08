@@ -1,0 +1,201 @@
+warning: unused import: `BTreeMap`
+  --> crates/noetome-cli/src/change_model.rs:18:24
+   |
+18 | use std::collections::{BTreeMap, BTreeSet};
+   |                        ^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: function `resolve` is never used
+   --> crates/noetome-cli/src/change_store.rs:104:4
+    |
+104 | fn resolve(root: &Path, relative: &str) -> Result<PathBuf, ProjectError> {
+    |    ^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `create_parent` is never used
+   --> crates/noetome-cli/src/change_store.rs:146:4
+    |
+146 | fn create_parent(path: &Path, label: &str) -> Result<(), ProjectError> {
+    |    ^^^^^^^^^^^^^
+
+warning: field `inputs` is never read
+   --> crates/noetome-cli/src/plan_store.rs:248:16
+    |
+245 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+248 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: methods `authority_matches`, `reserve`, `mark_may_send`, and `schedule_retry` are never used
+    --> crates/noetome-cli/src/request_budget_store.rs:788:19
+     |
+ 682 | impl BudgetStore {
+     | ---------------- methods in this implementation
+...
+ 788 |     pub(crate) fn authority_matches(&self, expected: &AuthoritySpec) -> Result<(), ProjectError> {
+     |                   ^^^^^^^^^^^^^^^^^
+...
+ 982 |     pub(crate) fn reserve(
+     |                   ^^^^^^^
+...
+1019 |     pub(crate) fn mark_may_send(
+     |                   ^^^^^^^^^^^^^
+...
+1185 |     pub(crate) fn schedule_retry(
+     |                   ^^^^^^^^^^^^^^
+
+warning: constant `MAX_BYTES` is never used
+  --> crates/noetome-cli/src/research_model.rs:19:18
+   |
+19 | pub(crate) const MAX_BYTES: u64 = 4 * 1024 * 1024;
+   |                  ^^^^^^^^^
+
+warning: field `owner` is never read
+   --> crates/noetome-cli/src/research_store.rs:100:16
+    |
+ 98 | pub(crate) struct ResearchStore {
+    |                   ------------- field in this struct
+ 99 |     pub(crate) root: PathBuf,
+100 |     pub(crate) owner: Owner,
+    |                ^^^^^
+
+warning: function `unsafe_path` is never used
+  --> crates/noetome-cli/src/scale_model.rs:46:15
+   |
+46 | pub(crate) fn unsafe_path(message: impl Into<String>) -> ProjectError {
+   |               ^^^^^^^^^^^
+
+warning: type alias `Measured` is never used
+   --> crates/noetome-cli/src/scale_store.rs:219:17
+    |
+219 | pub(crate) type Measured = (Structure, Timings);
+    |                 ^^^^^^^^
+
+warning: function `paths` is never used
+   --> crates/noetome-cli/src/scale_store.rs:222:15
+    |
+222 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+
+warning: constant `REF_LINKED` is never used
+  --> crates/noetome-cli/src/structure_model.rs:45:18
+   |
+45 | pub(crate) const REF_LINKED: &str = "linked";
+   |                  ^^^^^^^^^^
+
+warning: constant `REF_EXTERNAL` is never used
+  --> crates/noetome-cli/src/structure_model.rs:46:18
+   |
+46 | pub(crate) const REF_EXTERNAL: &str = "external";
+   |                  ^^^^^^^^^^^^
+
+warning: method `term_of` is never used
+   --> crates/noetome-cli/src/structure_model.rs:195:8
+    |
+156 | impl ConceptFile {
+    | ---------------- method in this implementation
+...
+195 |     fn term_of(&self, concept_id: &str) -> Option<&str> {
+    |        ^^^^^^^
+
+warning: constant `FINDING_EMPTY` is never used
+  --> crates/noetome-cli/src/template_model.rs:48:18
+   |
+48 | pub(crate) const FINDING_EMPTY: &str = "empty_section";
+   |                  ^^^^^^^^^^^^^
+
+warning: constant `FINDING_UNREASONED` is never used
+  --> crates/noetome-cli/src/template_model.rs:49:18
+   |
+49 | pub(crate) const FINDING_UNREASONED: &str = "unreasoned_structure";
+   |                  ^^^^^^^^^^^^^^^^^^
+
+warning: method `goal` is never used
+   --> crates/noetome-cli/src/template_model.rs:427:19
+    |
+245 | impl Plan {
+    | --------- method in this implementation
+...
+427 |     pub(crate) fn goal(&self, goal_id: &str) -> Option<(&TopicSpec, &GoalSpec)> {
+    |                   ^^^^
+
+warning: field `inputs` is never read
+   --> crates/noetome-cli/src/template_store.rs:257:16
+    |
+254 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+257 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: constant `IMPACT_CATEGORIES` is never used
+  --> crates/noetome-cli/src/vault_model.rs:25:11
+   |
+25 | pub const IMPACT_CATEGORIES: [&str; 6] = [
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: field `final_bytes` is never read
+   --> crates/noetome-cli/src/vault_model.rs:348:9
+    |
+342 | pub struct Analysis {
+    |            -------- field in this struct
+...
+348 |     pub final_bytes: BTreeMap<String, Option<Vec<u8>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Analysis` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: `noetome-cli` (lib) generated 23 warnings (run `cargo fix --lib -p noetome-cli` to apply 4 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.18s
+     Running tests/scale.rs (target/debug/deps/scale-233b2500605182b1)
+
+running 12 tests
+test a_missing_parent_directory_is_reported_as_io ... ok
+test an_existing_output_root_is_refused_without_touching_it ... ok
+test an_unparsable_number_is_refused ... ok
+test page_bounds_are_refused_before_anything_is_written ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test the_report_states_the_synthetic_boundary_and_the_unmet_limit ... ok
+test the_output_root_holds_exactly_four_files ... ok
+test the_eight_page_case_matches_the_written_expectation ... ok
+test the_summary_prints_the_measured_numbers_and_the_unmet_cap ... ok
+test two_runs_with_the_same_parameters_are_byte_identical_apart_from_the_timings ... ok
+test a_different_parameter_changes_the_structure ... ok
+test a_thousand_pages_really_run_through_the_text_pipeline ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.03s
+
+exit=0

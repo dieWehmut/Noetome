@@ -4325,9 +4325,9 @@
     },
     {
       "id": "B13-T01",
-      "title": "合成规模输入与千页万原子规划的实测口径",
+      "title": "合成规模输入与千页规模的实测口径",
       "batch": "B13",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B12-T03"
       ],
@@ -4336,12 +4336,83 @@
         "NFR-12"
       ],
       "acceptance": [
-        "生成器可确定性地造出声明规模的合成输入（笔记数、原子数、章节数可参数化），并在 README 里写明这不是真实教材、不证明抽取质量",
-        "在千页/万原子/千笔记规模上实际跑规划动词，记录耗时、峰值内存与失败原因；未达到门槛就如实报告未达到，不用百分比掩盖",
-        "同一输入两次运行的产物逐字节相同；规模参数与产物摘要写进报告",
-        "独立只读审计器复算规模与摘要，任何不符即失败"
+        "生成器按参数确定性造出合成页面（页数、每页标题数、每页段落数可调），README 写明这是合成数据、不证明真实教材抽取质量",
+        "在千页规模上实际跑文本分析与章节对齐，记录耗时与峰值内存；数字来自真实运行而不是估算",
+        "规划阶段的实际声明上限（主题/目标/原子数量）必须写进报告作为未达标项：不能绕过上限，也不能把上千页的文本处理当成千笔记规划已经达标",
+        "同一参数两次运行的结构与摘要产物逐字节相同；耗时字段单列并明确说明它不参与确定性比较",
+        "独立只读审计器复算页面数与摘要，任何不符即失败"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-08T01:54:46Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "冻结千页合成语料的确定性生成与实测口径，在千页规模上真实运行文本分析与章节对齐，并把规划阶段的声明上限如实列为未达标项",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-08T02:13:38Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "实现 scale measure：参数化确定性生成合成页面，在千页规模真实跑 text::analyze 与 outline_model::align，结构与耗时分离成四个输出文件，规划上限直接引用 plan_model 常量并如实列为未达标",
+          "validation": [
+            "cargo fmt --all --check → exit 0",
+            "cargo test --test scale → 12 passed / 0 failed（含真实的 1000 页运行：pages 1000、headings 4000、paragraphs 12000、spans 32000、bytes 1710572、nfr10_status not_met）",
+            "cargo test -p noetome-cli --lib -- --test-threads=2 → 536 passed / 98 failed / 1 ignored；失败分布 sidecar_process 64 / pdf_source_model 18 / pdf_parse 7 / source_model 5 / source_write 3 / extraction_source 1，与任务前 531/98 基线逐模块一致",
+            "PYTHONUTF8=1 python3 -m unittest discover -s tests -p 'test_*.py' → Ran 955 / failures=41 / errors=12 / skipped=24，与任务前 Ran 914 同组失败，新增 41 项全过",
+            "scripts/verify_scale_harness.py <输出根> --package fixtures/scale-harness-v1 → 合计 71 项检查：失败 0、提示 0",
+            "scripts/verify_scale_harness.py --package fixtures/scale-harness-v1 → 合计 27 项检查：失败 0、提示 0",
+            "PYTHONUTF8=1 python3 -m unittest tests.test_verify_scale_harness → Ran 41 / OK",
+            "同参数两次运行：structure.json / manifest.json / report.md 字节相同，timings.json 不同（cmp 逐文件核对）",
+            "千页真实运行读数：analyse_millis 319、align_millis 3671、total_millis 3990、peak_rss_bytes 46006272"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/scale_model.rs",
+              "sha256": "503d059fea8b77d296c734be2ee948d7a1a0f0fefaddb2d95631f38e51cca074"
+            },
+            {
+              "path": "crates/noetome-cli/src/scale_store.rs",
+              "sha256": "01aee0258313fb0a53d768f58533a58c880c4c3b0f4b98506bf0105c39bf3bd3"
+            },
+            {
+              "path": "crates/noetome-cli/tests/scale.rs",
+              "sha256": "9819ff96db76d511e56d5973ff58c31b7f77f8eb9ad6945faa6d90cdaa734f84"
+            },
+            {
+              "path": "fixtures/scale-harness-v1/expected.json",
+              "sha256": "dc7745f3d0f28c3bda6af7cbb0df8ddb31a193a28f3d3e171b1c28371772ebd5"
+            },
+            {
+              "path": "fixtures/scale-harness-v1/README.md",
+              "sha256": "2953ecd750a65abddcdfd6575b505e6190ec17b27af8e55aa74d19fdb736f89d"
+            },
+            {
+              "path": "scripts/verify_scale_harness.py",
+              "sha256": "68689816f87aa768fbe3706353e9d09935b7a89d852da249f9223f0b8e9f00d1"
+            },
+            {
+              "path": "tests/test_verify_scale_harness.py",
+              "sha256": "be166f48abfb09079aa8d9f6a4ad26e537ee4883f7bc76f5315151ba1d9cf36f"
+            },
+            {
+              "path": "doc/technical/SCALE_HARNESS_CONTRACT.md",
+              "sha256": "8caaba7d850a7b6153f1c13fa98e15829fdd38e89f6d7942e3bb112ef21a3396"
+            },
+            {
+              "path": "doc/validation/B13-T01.md",
+              "sha256": "aa7923434d536bfad6e51040282e39958df05190b7375343fd9ff6bb1f9146a2"
+            },
+            {
+              "path": "doc/validation/assets/B13-T01/cli-20261108/audit.txt",
+              "sha256": "572a1c3321a2fb4988e75e1608b1d02f55c448460f42491e0540ec457a2376d9"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B13-T02",

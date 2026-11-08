@@ -90,6 +90,8 @@ pub mod revision_store;
 mod run_model;
 mod run_recovery;
 mod run_store;
+mod scale_model;
+pub mod scale_store;
 mod scan_api;
 pub mod scan_formula;
 mod scan_input;
@@ -197,6 +199,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome template build <结构根> <尚不存在的输出根>
       noetome template list <结构根>
       noetome template status <结构根>
+      noetome scale measure --pages 1000 --headings 4 --paragraphs 3 --output <输出根>
       noetome change adopt <变更声明> <变更根>
       noetome change build <变更根> <输出根>
       noetome change list <变更根>
@@ -233,6 +236,7 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
   audit                   全库链接可用性与唯一解释位置审计（adopt/build/list/status）
   plan                    教材式自适应规划：概念关系、教学顺序与规划位置（adopt/build/list/status）
   template                同一主题的多阅读目标与同类结构一致（adopt/build/list/status）
+  scale                   合成语料的千页规模实测：真实跑文本分析与章节对齐，规划上限如实列为未达标（measure）
   change                  锁定位置与规划变更的局部影响（adopt/build/list/status）
 
 不传参数时显示帮助；project --help、source --help、extract --help 或 run --help 查看命令说明。
@@ -666,6 +670,13 @@ pub enum CliCommand {
     TemplateStatus {
         root: PathBuf,
     },
+    ScaleHelp,
+    ScaleMeasure {
+        pages: String,
+        headings: String,
+        paragraphs: String,
+        output: PathBuf,
+    },
     ChangeHelp,
     ChangeAdopt {
         project: PathBuf,
@@ -738,6 +749,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "change") {
         return change_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "scale") {
+        return scale_command(&args[1..]);
     }
     match args {
         [] => Ok(CliCommand::Help),
@@ -2079,4 +2093,53 @@ fn change_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
             })
         }
     }
+}
+
+pub const SCALE_HELP: &str = "\
+Noetome 合成语料的规模实测
+
+用法：
+  noetome scale measure --pages <页数> --headings <每页标题数> --paragraphs <每页段落数> --output <输出根>
+  noetome scale --help
+
+说明：
+  measure：按参数确定性生成合成页面，真实跑文本分析与章节对齐，写出结构产物、耗时、报告与输出清单。
+  结构产物只由参数决定：同一参数两次运行的结构产物字节相同；耗时单独成文件，不参与确定性比较。
+  规划动词的声明上限（topics=4、goals=8、concepts=64、atoms=256）会写进报告作为未达标项：
+  不绕过上限，也不把上千页的文本处理当成千笔记规划已经达标。
+  页面是合成的，不证明真实教材的抽取质量；不联网、不调用模型、不写项目与 Vault。
+";
+
+fn scale_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.is_empty() || args.iter().any(|arg| arg == "--help" || arg == "-h") {
+        return Ok(CliCommand::ScaleHelp);
+    }
+    if args.first().is_none_or(|arg| arg != "measure") {
+        return Err(INVALID_ARGUMENT);
+    }
+    let mut pages: Option<String> = None;
+    let mut headings: Option<String> = None;
+    let mut paragraphs: Option<String> = None;
+    let mut output: Option<PathBuf> = None;
+    let mut index = 1;
+    while index < args.len() {
+        let flag = args[index].to_string_lossy();
+        let value = args
+            .get(index + 1)
+            .ok_or("scale measure 的参数缺少取值。")?;
+        match flag.as_ref() {
+            "--pages" => pages = Some(value.to_string_lossy().into_owned()),
+            "--headings" => headings = Some(value.to_string_lossy().into_owned()),
+            "--paragraphs" => paragraphs = Some(value.to_string_lossy().into_owned()),
+            "--output" => output = Some(PathBuf::from(value)),
+            _ => return Err(INVALID_ARGUMENT),
+        }
+        index += 2;
+    }
+    Ok(CliCommand::ScaleMeasure {
+        pages: pages.ok_or(INVALID_ARGUMENT)?,
+        headings: headings.ok_or(INVALID_ARGUMENT)?,
+        paragraphs: paragraphs.ok_or(INVALID_ARGUMENT)?,
+        output: output.ok_or(INVALID_ARGUMENT)?,
+    })
 }
