@@ -18,14 +18,25 @@ jobs:
         shell: pwsh
     steps:
       - uses: actions/checkout@v4
+        id: checkout
+        env:
+          # Historical evidence has paths longer than MAX_PATH. Scope this to
+          # the checkout process rather than changing the runner's Git config.
+          GIT_CONFIG_COUNT: '1'
+          GIT_CONFIG_KEY_0: core.longpaths
+          GIT_CONFIG_VALUE_0: 'true'
       - uses: actions/setup-node@v4
+        id: node
         with:
           node-version: '26.10.0'
           cache: npm
       - name: Create evidence directory
+        id: evidence
+        if: always()
         run: New-Item -ItemType Directory -Force .artifacts/windows-validation | Out-Null
       - name: Install locked Rust toolchain
         id: rust
+        if: always() && steps.checkout.outcome == 'success' && steps.evidence.outcome == 'success'
         run: |
           $ErrorActionPreference = 'Stop'
           rustup toolchain install 1.98.1 --profile minimal --component rustfmt *>&1 | Tee-Object .artifacts/windows-validation/rust-setup.log
@@ -34,7 +45,7 @@ jobs:
           exit $LASTEXITCODE
       - name: Prepare locked portable PDF Python
         id: runtime
-        if: always()
+        if: always() && steps.checkout.outcome == 'success' && steps.evidence.outcome == 'success'
         run: |
           $ErrorActionPreference = 'Stop'
           & ./scripts/prepare_windows_runtime.ps1 *>&1 | Tee-Object .artifacts/windows-validation/python-setup.log
@@ -45,7 +56,7 @@ jobs:
           Copy-Item target/windows-runtime/runtime-receipt.json .artifacts/windows-validation/
       - name: Install locked frontend dependencies
         id: npm
-        if: always()
+        if: always() && steps.checkout.outcome == 'success' && steps.node.outcome == 'success' && steps.evidence.outcome == 'success'
         run: |
           npm ci --ignore-scripts *>&1 | Tee-Object .artifacts/windows-validation/npm-setup.log
           exit $LASTEXITCODE
@@ -102,7 +113,7 @@ jobs:
           & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/devlog.py check *>&1 | Tee-Object .artifacts/windows-validation/devlog-check.log
           exit $LASTEXITCODE
       - name: Record source and environment identity
-        if: always()
+        if: always() && steps.evidence.outcome == 'success'
         run: |
           $taskFacts = [ordered]@{
             source_commit = $env:GITHUB_SHA
@@ -118,7 +129,7 @@ jobs:
           git diff --check *>&1 | Tee-Object .artifacts/windows-validation/git-diff-check.log
           exit $LASTEXITCODE
       - name: Upload raw Windows evidence, including failures
-        if: always()
+        if: always() && steps.evidence.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: windows-validation-${{ github.run_id }}-${{ github.run_attempt }}

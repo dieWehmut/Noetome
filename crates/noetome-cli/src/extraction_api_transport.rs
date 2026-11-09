@@ -5,6 +5,13 @@ use std::task::Poll;
 use std::time::Duration;
 use std::time::Instant;
 
+#[cfg(test)]
+thread_local! {
+    // The current-thread client reports bytes after it has received them. A
+    // server accept/write signal alone cannot prove the client consumed a body.
+    static TEST_BODY_BYTES: std::cell::Cell<usize> = const { std::cell::Cell::new(0) };
+}
+
 pub(crate) struct TransportResult {
     pub(crate) status: Option<u16>,
     pub(crate) request_id: Option<String>,
@@ -77,6 +84,8 @@ pub(crate) fn send(
                     return Err(failure("EXTRACT_RESPONSE_LIMIT"));
                 }
                 result.body.extend_from_slice(&chunk);
+                #[cfg(test)]
+                TEST_BODY_BYTES.with(|received| received.set(result.body.len()));
             }
             // Normal EOF proves HTTP framing is complete, including a zero-byte
             // body. The wire decoder determines whether those bytes are usable.
@@ -133,18 +142,30 @@ mod tests {
         atomic::{AtomicBool, Ordering},
     };
     use std::thread;
-    use std::time::Instant;
 
     fn server(
         response: Vec<u8>,
         delay: Duration,
         accepted: Arc<AtomicBool>,
     ) -> (String, thread::JoinHandle<()>) {
+        server_with_release(response, delay, accepted, None)
+    }
+    fn server_with_release(
+        response: Vec<u8>,
+        delay: Duration,
+        accepted: Arc<AtomicBool>,
+        release: Option<std::sync::mpsc::Receiver<()>>,
+    ) -> (String, thread::JoinHandle<()>) {
         let listener = TcpListener::bind("127.0.0.1:0").unwrap();
         listener.set_nonblocking(true).unwrap();
         let endpoint = format!("http://{}/v1/responses", listener.local_addr().unwrap());
         let worker = thread::spawn(move || {
-            let until = Instant::now() + Duration::from_millis(800);
+            let accept_timeout = if release.is_some() {
+                Duration::from_secs(3)
+            } else {
+                Duration::from_millis(800)
+            };
+            let until = Instant::now() + accept_timeout;
             let mut stream: TcpStream = loop {
                 if let Ok((s, _)) = listener.accept() {
                     break s;
@@ -170,7 +191,13 @@ mod tests {
             accepted.store(true, Ordering::SeqCst);
             let _ = stream.write_all(&response);
             let _ = stream.flush();
-            thread::sleep(delay);
+            if let Some(release) = release {
+                // An incomplete response stays open until the client returns;
+                // the timeout also bounds cleanup if the assertion ever fails.
+                let _ = release.recv_timeout(Duration::from_secs(5));
+            } else {
+                thread::sleep(delay);
+            }
             drop(stream);
             assert!(
                 listener.accept().is_err(),
@@ -225,42 +252,45 @@ mod tests {
     #[test]
     fn timeout_and_cancel_drop_future_and_keep_partial_body() {
         let partial = b"HTTP/1.1 200 OK\r\nContent-Length: 99\r\n\r\nabc";
-        let result = run(
-            partial,
-            Duration::from_millis(200),
-            200,
-            Duration::from_millis(100),
-        );
-        assert_eq!(result.failure.unwrap().code(), "EXTRACT_TIMEOUT");
-        assert_eq!(result.body, b"abc");
-        assert!(!result.complete);
-        let observed = Arc::new(AtomicBool::new(false));
-        let (endpoint, worker) = server(
-            partial.to_vec(),
-            Duration::from_millis(200),
-            observed.clone(),
-        );
-        let start = Instant::now();
-        let result = send(
-            &endpoint,
-            "noetome-test-key",
-            b"{}",
-            Duration::from_secs(2),
-            200,
-            &|| {
-                if observed.load(Ordering::SeqCst) && start.elapsed() > Duration::from_millis(70) {
-                    Err(ProjectError::new("EXTRACT_CANCELLED", 3, "cancelled"))
-                } else {
-                    Ok(())
-                }
-            },
-        )
-        .unwrap();
-        assert!(start.elapsed() < Duration::from_millis(180));
-        worker.join().unwrap();
-        assert_eq!(result.failure.unwrap().code(), "EXTRACT_CANCELLED");
-        assert_eq!(result.body, b"abc");
-        assert!(!result.complete);
+        for cancel_after_body in [false, true] {
+            TEST_BODY_BYTES.with(|received| received.set(0));
+            let (release, held) = std::sync::mpsc::channel();
+            let (endpoint, worker) = server_with_release(
+                partial.to_vec(),
+                Duration::ZERO,
+                Arc::new(AtomicBool::new(false)),
+                Some(held),
+            );
+            let result = send(
+                &endpoint,
+                "noetome-test-key",
+                b"{}",
+                Duration::from_secs(2),
+                200,
+                &|| {
+                    if cancel_after_body && TEST_BODY_BYTES.with(|received| received.get()) == 3 {
+                        Err(ProjectError::new("EXTRACT_CANCELLED", 3, "cancelled"))
+                    } else {
+                        Ok(())
+                    }
+                },
+            );
+            // Release and join even when send returned an unexpected failure.
+            let released = release.send(());
+            worker.join().unwrap();
+            let result = result.unwrap();
+            assert!(released.is_ok(), "server closed before the client returned");
+            let expected = if cancel_after_body {
+                "EXTRACT_CANCELLED"
+            } else {
+                "EXTRACT_TIMEOUT"
+            };
+            assert_eq!(result.failure.unwrap().code(), expected);
+            assert_eq!(result.status, Some(200));
+            assert_eq!(TEST_BODY_BYTES.with(|received| received.get()), 3);
+            assert_eq!(result.body, b"abc");
+            assert!(!result.complete);
+        }
     }
     #[test]
     fn truncated_chunked_and_oversize_receipts_fail() {
@@ -363,7 +393,8 @@ mod tests {
         );
         let scheduled = AtomicBool::new(false);
         let (done, wait) = std::sync::mpsc::channel();
-        let start = Instant::now();
+        let (release, held) = std::sync::mpsc::channel();
+        let held = std::sync::Mutex::new(Some(held));
         let result = send(
             &endpoint,
             "noetome-test-key",
@@ -374,23 +405,40 @@ mod tests {
                 if let Ok(runtime) = tokio::runtime::Handle::try_current() {
                     if !scheduled.swap(true, Ordering::SeqCst) {
                         let done = done.clone();
+                        let held = held.lock().unwrap().take().unwrap();
+                        let (started, running) = std::sync::mpsc::channel();
                         runtime.spawn_blocking(move || {
-                            thread::sleep(Duration::from_millis(300));
-                            done.send(()).unwrap();
+                            started.send(()).unwrap();
+                            // A synchronous runtime shutdown reaches this
+                            // fallback and fails the ordering assertion below.
+                            // It therefore cannot deadlock the test process.
+                            let released = held.recv_timeout(Duration::from_secs(3)).is_ok();
+                            done.send(released).unwrap();
                         });
+                        running.recv_timeout(Duration::from_secs(2)).unwrap();
                     }
                 }
                 Ok(())
             },
-        )
-        .unwrap();
-        let elapsed = start.elapsed();
+        );
+        let before_release = wait.try_recv();
+        let still_running = matches!(before_release, Err(std::sync::mpsc::TryRecvError::Empty));
+        let released = release.send(());
         worker.join().unwrap();
-        wait.recv_timeout(Duration::from_secs(2)).unwrap();
+        let completed_after_release = match before_release {
+            Ok(completed) => completed,
+            Err(std::sync::mpsc::TryRecvError::Empty) => {
+                wait.recv_timeout(Duration::from_secs(2)).unwrap()
+            }
+            Err(error) => panic!("blocking worker lost its completion signal: {error}"),
+        };
+        let result = result.unwrap();
         assert!(result.complete);
         assert!(
-            elapsed < Duration::from_millis(200),
-            "shutdown waited {elapsed:?}"
+            still_running,
+            "send waited for the blocking worker before its release signal"
         );
+        assert!(released.is_ok());
+        assert!(completed_after_release);
     }
 }
