@@ -255,6 +255,21 @@ class PackagingTest(unittest.TestCase):
         path.write_text(text, encoding="utf-8")
         self.assert_fails("main-rs-command")
 
+    def test_defined_command_missing_from_handler_is_detected(self) -> None:
+        path = self.root / V.MAIN_RS
+        text = path.read_text(encoding="utf-8")
+        start = text.index("generate_handler![")
+        text = text[:start] + text[start:].replace("source_extract,", "", 1)
+        path.write_text(text, encoding="utf-8", newline="\n")
+        self.assertIn("fn source_extract(", text)
+        self.assert_fails("main-rs-handler")
+
+    def test_unreviewed_extra_handler_command_is_detected(self) -> None:
+        path = self.root / V.MAIN_RS
+        text = path.read_text(encoding="utf-8").replace("generate_handler![", "generate_handler![arbitrary_process,")
+        path.write_text(text, encoding="utf-8", newline="\n")
+        self.assert_fails("main-rs-handler")
+
     def test_acceptance_checklist_must_cover_every_area(self) -> None:
         path = self.root / V.ACCEPTANCE
         text = path.read_text(encoding="utf-8").replace("任务中心", "任务列表")

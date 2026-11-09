@@ -1,0 +1,222 @@
+{
+  "passed": true,
+  "kind": "QA only; Tauri mock IPC, not native UI or real model/PDF verification",
+  "browser": "Browser plugin not available; Playwright MCP",
+  "url": "http://127.0.0.1:1420/",
+  "title": "Noetome",
+  "checks": [
+    {
+      "name": "page identity",
+      "passed": true
+    },
+    {
+      "name": "meaningful screen without overlay",
+      "passed": true
+    },
+    {
+      "name": "model settings hide main sidebar",
+      "passed": true
+    },
+    {
+      "name": "no React credential input",
+      "passed": true
+    },
+    {
+      "name": "Chinese and spaced project creation DTO",
+      "passed": true
+    },
+    {
+      "name": "complete exact selected source text displayed",
+      "passed": true
+    },
+    {
+      "name": "source and consent survive page changes",
+      "passed": true
+    },
+    {
+      "name": "one explicit model invocation",
+      "passed": true
+    },
+    {
+      "name": "selection passed verbatim with camelCase importId",
+      "passed": true
+    },
+    {
+      "name": "confirmedUnits carries exact displayed text and binding",
+      "passed": true
+    },
+    {
+      "name": "PDF locator is human-readable",
+      "passed": true
+    },
+    {
+      "name": "preview explicitly pending",
+      "passed": true
+    },
+    {
+      "name": "invalid export has no success result",
+      "passed": true
+    },
+    {
+      "name": "saved result export never invokes model again",
+      "passed": true
+    },
+    {
+      "name": "640px light no viewport overflow",
+      "passed": true
+    },
+    {
+      "name": "640px dark no viewport overflow",
+      "passed": true
+    },
+    {
+      "name": "1200px light no viewport overflow",
+      "passed": true
+    },
+    {
+      "name": "1200px dark no viewport overflow",
+      "passed": true
+    },
+    {
+      "name": "offline self test separate from model flow",
+      "passed": true
+    },
+    {
+      "name": "history restore confirmation defaults false",
+      "passed": true
+    },
+    {
+      "name": "credential dialog does not silently restore budget",
+      "passed": true
+    },
+    {
+      "name": "explicit confirmed history restoration",
+      "passed": true
+    },
+    {
+      "name": "restored cumulative history shown and restore entry removed",
+      "passed": true
+    },
+    {
+      "name": "invalid ledger cannot be overwritten",
+      "passed": true
+    },
+    {
+      "name": "failed import blocks model and export",
+      "passed": true
+    },
+    {
+      "name": "unconfirmed scan region cannot be selected",
+      "passed": true
+    },
+    {
+      "name": "needs-review never invokes model",
+      "passed": true
+    },
+    {
+      "name": "no-text source states unavailable text",
+      "passed": true
+    },
+    {
+      "name": "no-text never invokes model",
+      "passed": true
+    },
+    {
+      "name": "64KiB selection bound enforced",
+      "passed": true
+    },
+    {
+      "name": "oversize never invokes model",
+      "passed": true
+    },
+    {
+      "name": "many import never auto-selects",
+      "passed": true
+    },
+    {
+      "name": "many bulk respects 64 units/64KiB, selectable and nonempty bounds",
+      "passed": true
+    },
+    {
+      "name": "many bulk never previews or sends automatically",
+      "passed": true
+    },
+    {
+      "name": "many clear removes selection and preflight",
+      "passed": true
+    },
+    {
+      "name": "bulk-bytes import never auto-selects",
+      "passed": true
+    },
+    {
+      "name": "bulk-bytes bulk respects 64 units/64KiB, selectable and nonempty bounds",
+      "passed": true
+    },
+    {
+      "name": "bulk-bytes bulk never previews or sends automatically",
+      "passed": true
+    },
+    {
+      "name": "bulk-bytes clear removes selection and preflight",
+      "passed": true
+    },
+    {
+      "name": "text Span locator is human-readable",
+      "passed": true
+    },
+    {
+      "name": "real text selection DTO supported",
+      "passed": true
+    },
+    {
+      "name": "changing source file clears confirmed text and result",
+      "passed": true
+    },
+    {
+      "name": "reloaded saved import and API result export uses zero model calls",
+      "passed": true
+    },
+    {
+      "name": "bad-choice-binding blocks mismatched success",
+      "passed": true
+    },
+    {
+      "name": "bad-unit-binding blocks mismatched success",
+      "passed": true
+    },
+    {
+      "name": "bad-extract-binding blocks mismatched success",
+      "passed": true
+    },
+    {
+      "name": "failed extraction is not exportable",
+      "passed": true
+    },
+    {
+      "name": "same-tick double submit has one paid invocation",
+      "passed": true
+    },
+    {
+      "name": "pending model request survives page changes",
+      "passed": true
+    },
+    {
+      "name": "changing project clears imported source and result",
+      "passed": true
+    },
+    {
+      "name": "late old-project response cannot overwrite current project",
+      "passed": true
+    },
+    {
+      "name": "cancel never repeats paid request",
+      "passed": true
+    },
+    {
+      "name": "no browser runtime or console errors",
+      "passed": true
+    }
+  ],
+  "consoleErrors": []
+}

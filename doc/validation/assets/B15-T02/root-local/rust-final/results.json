@@ -1,0 +1,50 @@
+[
+  {
+    "name": "format",
+    "command": [
+      "/home/lyinn/.local/bin/cargo",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exit_code": 0,
+    "seconds": 1.1679777160170488
+  },
+  {
+    "name": "check",
+    "command": [
+      "/home/lyinn/.local/bin/cargo",
+      "check",
+      "--workspace",
+      "--locked"
+    ],
+    "exit_code": 0,
+    "seconds": 5.389893133949954
+  },
+  {
+    "name": "preview-lib",
+    "command": [
+      "/home/lyinn/.local/bin/cargo",
+      "test",
+      "-p",
+      "noetome-cli",
+      "--lib",
+      "preview"
+    ],
+    "exit_code": 0,
+    "seconds": 18.41289436997613
+  },
+  {
+    "name": "preview-cli",
+    "command": [
+      "/home/lyinn/.local/bin/cargo",
+      "test",
+      "-p",
+      "noetome-cli",
+      "--test",
+      "extraction_preview"
+    ],
+    "exit_code": 0,
+    "seconds": 1.343475061992649
+  }
+]

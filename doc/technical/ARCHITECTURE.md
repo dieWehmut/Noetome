@@ -250,9 +250,13 @@ B04-T02沿用只读来源与领域校验，分开实现文本API native HTTP/wir
 
 ### 桌面前端
 
-2026年11月1日用户要求提前搭建、安装并测试Windows应用。B01的桌面骨架由 `apps/desktop` 中的React TypeScript前端和 `crates/noetome-desktop` 中的Tauri入口组成。CLI和桌面入口共用 `crates/noetome-cli` 的纯Rust帮助、版本接口；B01最初提供 `runtime_info` 和受限的 `cli_preview`。B01A为窗口偏好增加 `get_close_behavior`、`set_close_behavior`，当前仅提供这四个受限命令，不接受任意文件路径、CLI参数或shell命令。
+2026年11月1日用户要求提前搭建、安装并测试Windows应用。B01的桌面骨架由 `apps/desktop` 中的React TypeScript前端和 `crates/noetome-desktop` 中的Tauri入口组成。CLI和桌面入口共用 `crates/noetome-cli` 的纯Rust帮助、版本接口；B01最初提供 `runtime_info` 和受限的 `cli_preview`。B01A为窗口偏好增加 `get_close_behavior`、`set_close_behavior`，B09接项目与任务只读入口，B15-T02再接受限资料工作流；不开放通用 CLI 参数或 shell 执行命令。
 
-当前 `runtime_info` 返回桌面与CLI版本、编译目标、已有能力和帮助文本；`cli_preview` 仅接受 `help` 或 `version`，不能执行项目或来源命令。前端在调用前显示未运行，收到实际结果后显示连接或执行状态。CLI来源登记能力尚未接入桌面选择、导入或查看，不能因帮助中出现source命令就宣称GUI已支持；模型和知识产物也不由桌面空状态推定为成功。
+当前 `runtime_info` 返回桌面与CLI版本、编译目标、17项已有能力和帮助文本；`cli_preview` 仍仅接受 `help` 或 `version`。B15 的 `workbench` 使用单操作闸门与异步受限命令，来源导入、真实片段选择、模型状态、单次候选、保存结果预览导出和作者样例自检分别有明确入口；不通过帮助接口间接执行。React App 持有项目和工作流状态，切页保留，切项目清空旧结果并拒绝迟到响应。前端不接收密钥，不新增文件/网络/进程插件权限。
+
+模型调用前持有 `extraction_preview::SelectedSource`，将真实 binding/units 与用户已查看并确认的原文逐字段比对，来源保护持续到受控子 CLI 完成。临时配置、取消信号和 API 结果位于项目外的应用数据目录，避免改变 SourceSession 的项目清单。Windows Job Object 包装先悬挂根进程、分配 containment 再恢复，关闭/取消终止所属进程树；进程管理不构成文件或网络沙盒。完整锁定 PDF 环境通过同一 `pdf_parse::runtime_path` 选取；安装资源随 B15-T03 单独验证。
+
+`extraction_preview` 在零网络恢复时重验保存 API 原始字节与当前来源，不改成 fixture_reviewed 或正式 IR。新目录内 `vault/` 提供概念、证据、条件单位、全部所选原文和原件附件，`reports/` 保留审计；状态始终 pending/unverified，科学质量 not_run，published=false。具体边界见[模型候选笔记预览](EXTRACTION_PREVIEW_CONTRACT.md)。Windows CurrentUser DPAPI 与已批准共享累计账本由固定资源辅助脚本管理，缺失/非法历史不能按安装或项目自动归零。
 
 `get_close_behavior`通过Rust的 `PreferencesState.reload` 实际重读固定设置文件；关于页打开或“重新读取”时不会只返回启动缓存。成功重读更新已生效偏好并返回其值，失败返回稳定错误并保留原有已生效行为。`set_close_behavior`仅接受两个关闭行为枚举，持久保存成功后才更新运行时值，失败保留原值与未知文件内容。设置版本、文件边界与恢复语义见[桌面窗口偏好契约](DATA_CONTRACTS.md#桌面窗口偏好契约)。
 

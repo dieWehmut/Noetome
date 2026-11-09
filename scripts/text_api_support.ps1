@@ -382,4 +382,3 @@ function Stop-SelectedChild {
     } catch { }
     return [pscustomobject]@{strategy=$strategy;root_pid=$process.Id;containment_assignment='after_process_start';active_processes_before=$before;active_processes_after=$after;job_empty_confirmed=$empty;root_exit_confirmed=$rootExited}
 }
-

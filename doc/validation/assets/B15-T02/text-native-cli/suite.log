@@ -1,0 +1,47 @@
+test_real_native_cli_dpapi_chat_and_preview_preserve_selected_source (tests.test_text_api_native_cli.TextApiNativeCliTests.test_real_native_cli_dpapi_chat_and_preview_preserve_selected_source) ... ERROR
+test_real_native_no_request_budget_stops_before_loopback_http (tests.test_text_api_native_cli.TextApiNativeCliTests.test_real_native_no_request_budget_stops_before_loopback_http) ... ERROR
+
+======================================================================
+ERROR: test_real_native_cli_dpapi_chat_and_preview_preserve_selected_source (tests.test_text_api_native_cli.TextApiNativeCliTests.test_real_native_cli_dpapi_chat_and_preview_preserve_selected_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_text_api_native_cli.py", line 39, in setUp
+    self.cli("project","init",self.project)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_text_api_native_cli.py", line 82, in cli
+    self.assertEqual(result.returncode,0,result.stderr);return json.loads(result.stdout)
+                                                               ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/lyinn/miniconda3/lib/python3.14/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/home/lyinn/miniconda3/lib/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/miniconda3/lib/python3.14/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+======================================================================
+ERROR: test_real_native_no_request_budget_stops_before_loopback_http (tests.test_text_api_native_cli.TextApiNativeCliTests.test_real_native_no_request_budget_stops_before_loopback_http)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_text_api_native_cli.py", line 39, in setUp
+    self.cli("project","init",self.project)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/project/Noetome/tests/test_text_api_native_cli.py", line 82, in cli
+    self.assertEqual(result.returncode,0,result.stderr);return json.loads(result.stdout)
+                                                               ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/lyinn/miniconda3/lib/python3.14/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/home/lyinn/miniconda3/lib/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/lyinn/miniconda3/lib/python3.14/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.269s
+
+FAILED (errors=2)

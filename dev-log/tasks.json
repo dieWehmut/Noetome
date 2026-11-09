@@ -4936,7 +4936,7 @@
       "id": "B15-T02",
       "title": "自己的PDF到模型候选与Obsidian实测笔记",
       "batch": "B15",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B15-T01"
       ],
@@ -4952,7 +4952,53 @@
         "离线样例用于安装自检，与自己的真实资料和模型结果明确区分；新入口不接管生产Vault",
         "后端行为测试、凭据与失败边界、本地假服务集成、前端构建与浏览器交互验证通过，真实模型调用若无当前凭据如实标未运行；Windows入口随最终安装验收"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-09T08:19:12Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "按自己的PDF→模型整理→Obsidian笔记补齐桌面入口、持久项目状态、真实区域选择、共享预算加密凭据与新目录待核验导出；最多64真实单位且64KiB和单次API硬限额保留",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-09T09:55:59Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "桌面资料到待核验笔记功能验收完成；实际Windows入口与完整NSIS继续T03",
+          "validation": [
+            "Python全量1336项0失败0错误25跳过265.156s；Rust fmt/workspace check退出0、预览库13及API配置7/PDF运行时4通过；Windows CLI预览10、原生DPAPI/profile10、预算/进程11、实际CLI环回Chat/导出2、生产桌面进程模块2通过；桌面库40和浏览器53通过；前端构建、89项打包审计/37反例、独立同API零HTTP恢复与篡改拒绝通过；真实外部模型及安装版UI未运行，证据逐源保存"
+          ],
+          "artifacts": [
+            {
+              "path": "crates/noetome-cli/src/extraction_preview.rs",
+              "sha256": "9e61339ae134cff4eea8bd578aaafc047b066c36fa6817b1bef479b5f73c5519"
+            },
+            {
+              "path": "crates/noetome-desktop/src/workbench.rs",
+              "sha256": "9a780054eb1312076047bcfe05f34ea59cb2efcc2e203e021a2cd407c3812c33"
+            },
+            {
+              "path": "apps/desktop/src/AppSources.tsx",
+              "sha256": "dfd8c1f582ce4014b43a6902a8a49e24d4d2ab12e4e971ab7087273e12ade90d"
+            },
+            {
+              "path": "scripts/text_api_support.ps1",
+              "sha256": "ec2642a368983d779d7775ecf15d623ce75918e2843b18606d8f6bd8d1acae91"
+            },
+            {
+              "path": "doc/technical/EXTRACTION_PREVIEW_CONTRACT.md",
+              "sha256": "ad4aaa8f325bdb8e3fbd6456ff5796f8f1bd2a015f0f2baea56fba9ca3730b1a"
+            },
+            {
+              "path": "doc/validation/B15-T02.md",
+              "sha256": "d292e20609cd0bf15ba18d7e6cc0265e092e3f46855900458d0d4cbe48be4917"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B15-T03",

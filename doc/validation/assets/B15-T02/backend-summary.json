@@ -1,0 +1,98 @@
+{
+  "scope": "B15-T02-desktop-backend-text-model",
+  "source_sha256": {
+    "crates/noetome-desktop/Cargo.toml": "a46d667ce52eeb72095fa97d6126cb4c46caae96416556d2652348ca0ea98d0e",
+    "crates/noetome-desktop/src/main.rs": "0b9aaf19d24e226a6a1e1df32130ff141c9f48340634a39ecc7ebcbadc772fc8",
+    "crates/noetome-desktop/src/project_entry.rs": "51eacd754395b530b3ad895f5b17f6dc0afea2dcbae3d27d469eddcf4ffefd7a",
+    "crates/noetome-desktop/src/workbench.rs": "9a780054eb1312076047bcfe05f34ea59cb2efcc2e203e021a2cd407c3812c33",
+    "scripts/invoke_text_api_credential.ps1": "baac07cd2fa0478836d681a08f4172884712b1165d312ea014e1220da3431367",
+    "scripts/text_api_support.ps1": "810ef71bf3407e30aae399c8f57a1cce134518c9fb72963f2ec322629055e496",
+    "scripts/set_text_api_credential.ps1": "4db4f659ac87ed2fd4e0e04ad5880f3d3c8c629a97bb9ca68822f31953b68f33",
+    "scripts/text_model_profile.ps1": "c087c8d03b78a2d6c185fd51c03299ddb501762add7ff15349ec87827501c02a",
+    "tests/test_text_api_credential.py": "c618bc1efa89b7edd700f2620d3ac0c145df95a1ed3df6c861ceece9e23554c5",
+    "tests/test_text_api_native_cli.py": "431450d5517fee84c43035c67a13b08b9cfadc27ecc6a11aeaf6c266eefe27d9",
+    "tests/test_text_model_profile.py": "346e0ad605345722376fc9425ab820859e1d595941afd726531e07f593a1edfc"
+  },
+  "checks": {
+    "linux_desktop": {
+      "passed": 40,
+      "failed": 0,
+      "elapsed_seconds": 0.61,
+      "actual_exit": 0,
+      "raw_log": ".artifacts/B15-T02/backend-all-tests.log"
+    },
+    "native_profile_current_policy": {
+      "passed": 10,
+      "failed": 0,
+      "elapsed_seconds": 22.403,
+      "actual_exit": 0,
+      "raw_log": ".artifacts/B15-T02/text-profile-native/backend-final-suite.log"
+    },
+    "native_synthetic_cli_dpapi_quota_process": {
+      "passed": 11,
+      "failed": 0,
+      "elapsed_seconds": 47.349,
+      "actual_exit": 0,
+      "raw_log": ".artifacts/B15-T02/text-api-native/final-suite.log",
+      "external_model_requests": 0
+    },
+    "real_native_cli_dpapi_local_fake_http": {
+      "passed": 2,
+      "failed": 0,
+      "elapsed_seconds": 6.513,
+      "actual_exit": 0,
+      "raw_log": ".artifacts/B15-T02/text-native-cli/verified-suite.log",
+      "external_model_requests": 0,
+      "local_http_requests": 1
+    },
+    "native_workbench_process": {
+      "passed": 2,
+      "failed": 0,
+      "actual_exits": {
+        "lock_exit": 0,
+        "root_exit_test_exit": 0,
+        "cancel_test_exit": 0
+      },
+      "raw_log": ".artifacts/B15-T02/native-workbench-process/workbench-gate.log",
+      "direct_production_module": true,
+      "root_lock_versions_and_checksums_identical": true,
+      "tauri_ui_tested": false
+    }
+  },
+  "desktop_trusted_ps_argv_templates": {
+    "scope": "source-declared templates, full desktop IPC invocation not yet executed",
+    "extract": [
+      "powershell.exe",
+      "-NoProfile",
+      "-ExecutionPolicy",
+      "Bypass",
+      "-File",
+      "<fixed installed helpers/invoke_text_api_credential.ps1>"
+    ],
+    "profile": [
+      "powershell.exe",
+      "-NoProfile",
+      "-ExecutionPolicy",
+      "Bypass",
+      "-STA",
+      "-File",
+      "<fixed installed helpers/text_model_profile.ps1>"
+    ],
+    "credential_setter": [
+      "powershell.exe",
+      "-NoProfile",
+      "-ExecutionPolicy",
+      "Bypass",
+      "-STA",
+      "-File",
+      "<guarded fixed installed helpers/set_text_api_credential.ps1>",
+      "-Dialog"
+    ],
+    "system_execution_policy_modified": false
+  },
+  "not_run": [
+    "live Tangmao model call",
+    "native Tauri frontend IPC/UI",
+    "native installed NSIS smoke (B15-T03)"
+  ]
+}

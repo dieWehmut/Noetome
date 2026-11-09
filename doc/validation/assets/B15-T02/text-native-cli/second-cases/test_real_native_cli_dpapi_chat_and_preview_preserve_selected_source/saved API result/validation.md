@@ -1,0 +1,109 @@
+# 本地HTTP假服务 API 候选验证
+
+状态："candidates_validated"；候选原子：1。知识：pending；发布：false；科学质量：not_run。
+
+配置模型："noetome-test-model"；实际返回模型："noetome-test-model"；HTTP状态：200；完整响应：true。
+
+实际网络尝试：1。input_reserved_tokens 为实际请求UTF8字节加1024的工程预留；实际Token用量只记录已验证的原响应。价格、tokenizer及账单未知。
+
+来源绑定、请求策略、用量、失败诊断及实际文件指纹如下，逐字段对应 validation.json。
+
+```json
+{
+  "actual_model": "noetome-test-model",
+  "artifacts": {
+    ".owner.json": {
+      "byte_length": 185,
+      "sha256": "6373413a31737a0776b4f8f3cfdbdd9e2cbbd16aa7151dbc0dd4c4bf0f6d79de"
+    },
+    "candidates.json": {
+      "byte_length": 2753,
+      "sha256": "677a1d8d65f40e7035f2ff4320bec4c7979da8a4bbbc4e4bb98f20f30a05f2a1"
+    },
+    "request-body.json": {
+      "byte_length": 7509,
+      "sha256": "6f2c7651f6fab25863fc183f491e2e071b4c31ef536933e3d854e20708bd011f"
+    },
+    "request.json": {
+      "byte_length": 2196,
+      "sha256": "3a8af7e31b2cfd4d325619e041ba6637bed25ede3f6f3916f4990fe62e0ca90f"
+    },
+    "response.bin": {
+      "byte_length": 2092,
+      "sha256": "8619c9bea132d7945691f7c974ae21fa413e16b355787a65c69a1f759ac928e0"
+    }
+  },
+  "binding": {
+    "content_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+    "import_id": "a861bfdd-df7b-491d-b76f-19ca7de2406c",
+    "manifest_sha256": null,
+    "normalized_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+    "parse_id": null,
+    "project_id": "faa31852-a29c-45e3-957b-aea9f09eb11d",
+    "source_id": "3b9c89f3-04bd-4a86-8a8c-9f036045b8d8",
+    "version_id": "b1b5c894-f00f-4a47-a12b-076058156c3f"
+  },
+  "configured_model": "noetome-test-model",
+  "endpoint": "http://127.0.0.1:37515/v1/chat/completions",
+  "errors": [],
+  "http_request_id": null,
+  "http_status": 200,
+  "knowledge_status": "pending",
+  "producer": "api",
+  "provider": "openai_chat_completions",
+  "published": false,
+  "report_kind": "text_api_extraction",
+  "request_id": "0781485d-6cfd-42d1-ba65-740b308d7703",
+  "request_strategy": "tangmao-deepseek-chat-positive-revision-v6",
+  "response_complete": true,
+  "response_id": "chatcmpl-noetome-test",
+  "response_receipt": {
+    "byte_length": 2092,
+    "omission_reason": null,
+    "sha256": "8619c9bea132d7945691f7c974ae21fa413e16b355787a65c69a1f759ac928e0"
+  },
+  "schema_version": 1,
+  "scientific_quality": "not_run",
+  "service_tier": null,
+  "source_statuses": [
+    "parsed"
+  ],
+  "status": "candidates_validated",
+  "transport_mode": "local_http_test",
+  "usage": {
+    "input_reserved_tokens": 8533,
+    "model_tokenizer": null,
+    "model_usage": {
+      "input_tokens": 100,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 600,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 700
+    },
+    "model_usage_status": "validated",
+    "network_attempts": 1,
+    "paid_calls": 0,
+    "price_usd": null,
+    "raw_model_usage": {
+      "completion_tokens": 600,
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "prompt_tokens": 100,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "total_tokens": 700
+    },
+    "real_model_calls": 0,
+    "request_utf8_bytes": 7509,
+    "reservation_policy": "request_utf8_bytes_plus_1024_v1",
+    "reserved_tokens": 16725
+  },
+  "validated_atoms": 1
+}
+```

@@ -1,0 +1,69 @@
+{
+  "actual_model": null,
+  "artifacts": {
+    ".owner.json": {
+      "byte_length": 185,
+      "sha256": "cc9f059ac5e1147d9139b420c6a155bc6f4212d888b10ce5f68ac9baeef8a446"
+    },
+    "request-body.json": {
+      "byte_length": 7509,
+      "sha256": "aecf4a1e91f665338a334da7153a6c7ab628db1aa058b03d1d61e574dc3739ab"
+    },
+    "request.json": {
+      "byte_length": 2196,
+      "sha256": "b2541343dd739b61b40bc7c58cdaac3701b26a6e88a1127814f54391e06328e0"
+    }
+  },
+  "binding": {
+    "content_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+    "import_id": "cf089ada-4978-417d-abd8-2f08bcf8214f",
+    "manifest_sha256": null,
+    "normalized_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+    "parse_id": null,
+    "project_id": "b43b3ab3-2c7e-42d0-8365-475b7daed5a9",
+    "source_id": "d3e57aff-4eaf-47f0-b01b-dace12bf704c",
+    "version_id": "5d4488db-b956-47d1-89dd-1dc972be7a8f"
+  },
+  "configured_model": "noetome-test-model",
+  "endpoint": "http://127.0.0.1:37865/v1/chat/completions",
+  "errors": [
+    {
+      "code": "EXTRACT_BUDGET_STOP",
+      "message": "EXTRACT_BUDGET_STOP：单次请求次数或预留总量超过明确预算；未调用。"
+    }
+  ],
+  "http_request_id": null,
+  "http_status": null,
+  "knowledge_status": "pending",
+  "producer": "api",
+  "provider": "openai_chat_completions",
+  "published": false,
+  "report_kind": "text_api_extraction",
+  "request_id": "95c7269d-08da-44c3-819f-c6123e6f461a",
+  "request_strategy": "tangmao-deepseek-chat-positive-revision-v6",
+  "response_complete": false,
+  "response_id": null,
+  "response_receipt": null,
+  "schema_version": 1,
+  "scientific_quality": "not_run",
+  "service_tier": null,
+  "source_statuses": [
+    "parsed"
+  ],
+  "status": "failed",
+  "transport_mode": "local_http_test",
+  "usage": {
+    "input_reserved_tokens": 8533,
+    "model_tokenizer": null,
+    "model_usage": null,
+    "model_usage_status": "not_validated",
+    "network_attempts": 0,
+    "paid_calls": 0,
+    "price_usd": null,
+    "real_model_calls": 0,
+    "request_utf8_bytes": 7509,
+    "reservation_policy": "request_utf8_bytes_plus_1024_v1",
+    "reserved_tokens": 16725
+  },
+  "validated_atoms": 0
+}

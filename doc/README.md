@@ -25,6 +25,7 @@
 | [PDF 来源登记契约](technical/PDF_SOURCE_CONTRACT.md) | Schema3、原始版本、独立解析尝试、复用键及缓存保护 | PDF项目登记、迁移、重解析或持久报告变化 |
 | [知识抽取网关契约](technical/EXTRACTION_CONTRACT.md) | 严格候选、真实来源绑定、单请求预算、失败审计及离线fake边界 | 抽取请求、候选、provider或输出保护变化 |
 | [单请求文本API契约](technical/EXTRACTION_API_CONTRACT.md) | Responses配置、外部凭据引用、预算预留、原响应及API候选报告 | 文本API、用量、HTTP故障或凭据保护变化 |
+| [模型候选笔记预览](technical/EXTRACTION_PREVIEW_CONTRACT.md) | 真实片段选择、保存结果重查、共享预算和新目录待核验 Obsidian 笔记 | preview 命令、桌面资料流程或预览身份变化 |
 | [有界来源知识核对](technical/EXTRACTION_REVIEW_CONTRACT.md) | 已保存候选、独立作者gold、真实来源证据及离线测量核对 | extract verify输入、判据、分母或输出保护变化 |
 | [有界多来源知识协调](technical/KNOWLEDGE_COORDINATION_CONTRACT.md) | 显式身份映射、来源依据重验、重复/互补保留与待复核分母 | knowledge coordinate输入、关系或保护变化 |
 | [条件与来源时间协调](technical/KNOWLEDGE_VARIANTS_CONTRACT.md) | 严格v2条件状态、来源背景、并列变体与历史先后 | 条件、时间证据、协调版本或分母变化 |

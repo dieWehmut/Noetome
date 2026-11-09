@@ -1,0 +1,251 @@
+warning: unused import: `BTreeMap`
+  --> crates/noetome-cli/src/change_model.rs:18:24
+   |
+18 | use std::collections::{BTreeMap, BTreeSet};
+   |                        ^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `process_wrap::std::*`
+ --> crates/noetome-cli/src/sidecar_process.rs:6:5
+  |
+6 | use process_wrap::std::*;
+  |     ^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Write`, `process::Stdio`, and `thread`
+  --> crates/noetome-cli/src/sidecar_process.rs:10:16
+   |
+10 |     io::{Read, Write},
+   |                ^^^^^
+11 |     path::Path,
+12 |     process::Stdio,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     thread,
+   |     ^^^^^^
+
+warning: unused import: `OpenOptions`
+ --> crates/noetome-cli/src/sidecar_workspace.rs:6:22
+  |
+6 |     fs::{self, File, OpenOptions},
+  |                      ^^^^^^^^^^^
+
+warning: constant `STAGES` is never used
+  --> crates/noetome-cli/src/bench_model.rs:44:18
+   |
+44 | pub(crate) const STAGES: [&str; 4] = [STAGE_SCAN, STAGE_DETECT, STAGE_PLAN, STAGE_PAGE];
+   |                  ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `edited` is never read
+   --> crates/noetome-cli/src/bench_model.rs:148:9
+    |
+141 | pub(crate) struct Note {
+    |                   ---- field in this struct
+...
+148 |     pub edited: bool,
+    |         ^^^^^^
+    |
+    = note: `Note` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `paths` is never used
+   --> crates/noetome-cli/src/bench_store.rs:238:15
+    |
+238 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: function `resolve` is never used
+   --> crates/noetome-cli/src/change_store.rs:104:4
+    |
+104 | fn resolve(root: &Path, relative: &str) -> Result<PathBuf, ProjectError> {
+    |    ^^^^^^^
+
+warning: function `create_parent` is never used
+   --> crates/noetome-cli/src/change_store.rs:146:4
+    |
+146 | fn create_parent(path: &Path, label: &str) -> Result<(), ProjectError> {
+    |    ^^^^^^^^^^^^^
+
+warning: method `task` is never used
+   --> crates/noetome-cli/src/journal_model.rs:509:8
+    |
+245 | impl Declaration {
+    | ---------------- method in this implementation
+...
+509 |     fn task(&self, id: &str) -> Option<&TaskSpec> {
+    |        ^^^^
+
+warning: field `inputs` is never read
+   --> crates/noetome-cli/src/plan_store.rs:249:16
+    |
+246 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+249 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: methods `authority_matches`, `reserve`, `mark_may_send`, and `schedule_retry` are never used
+    --> crates/noetome-cli/src/request_budget_store.rs:788:19
+     |
+ 682 | impl BudgetStore {
+     | ---------------- methods in this implementation
+...
+ 788 |     pub(crate) fn authority_matches(&self, expected: &AuthoritySpec) -> Result<(), ProjectError> {
+     |                   ^^^^^^^^^^^^^^^^^
+...
+ 982 |     pub(crate) fn reserve(
+     |                   ^^^^^^^
+...
+1019 |     pub(crate) fn mark_may_send(
+     |                   ^^^^^^^^^^^^^
+...
+1185 |     pub(crate) fn schedule_retry(
+     |                   ^^^^^^^^^^^^^^
+
+warning: constant `MAX_BYTES` is never used
+  --> crates/noetome-cli/src/research_model.rs:19:18
+   |
+19 | pub(crate) const MAX_BYTES: u64 = 4 * 1024 * 1024;
+   |                  ^^^^^^^^^
+
+warning: field `owner` is never read
+   --> crates/noetome-cli/src/research_store.rs:100:16
+    |
+ 98 | pub(crate) struct ResearchStore {
+    |                   ------------- field in this struct
+ 99 |     pub(crate) root: PathBuf,
+100 |     pub(crate) owner: Owner,
+    |                ^^^^^
+
+warning: function `unsafe_path` is never used
+  --> crates/noetome-cli/src/scale_model.rs:46:15
+   |
+46 | pub(crate) fn unsafe_path(message: impl Into<String>) -> ProjectError {
+   |               ^^^^^^^^^^^
+
+warning: type alias `Measured` is never used
+   --> crates/noetome-cli/src/scale_store.rs:219:17
+    |
+219 | pub(crate) type Measured = (Structure, Timings);
+    |                 ^^^^^^^^
+
+warning: function `paths` is never used
+   --> crates/noetome-cli/src/scale_store.rs:222:15
+    |
+222 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: function `read_bounded` is never used
+   --> crates/noetome-cli/src/sidecar_process.rs:299:4
+    |
+299 | fn read_bounded(
+    |    ^^^^^^^^^^^^
+
+warning: constant `REF_LINKED` is never used
+  --> crates/noetome-cli/src/structure_model.rs:45:18
+   |
+45 | pub(crate) const REF_LINKED: &str = "linked";
+   |                  ^^^^^^^^^^
+
+warning: constant `REF_EXTERNAL` is never used
+  --> crates/noetome-cli/src/structure_model.rs:46:18
+   |
+46 | pub(crate) const REF_EXTERNAL: &str = "external";
+   |                  ^^^^^^^^^^^^
+
+warning: method `term_of` is never used
+   --> crates/noetome-cli/src/structure_model.rs:195:8
+    |
+156 | impl ConceptFile {
+    | ---------------- method in this implementation
+...
+195 |     fn term_of(&self, concept_id: &str) -> Option<&str> {
+    |        ^^^^^^^
+
+warning: constant `FINDING_EMPTY` is never used
+  --> crates/noetome-cli/src/template_model.rs:48:18
+   |
+48 | pub(crate) const FINDING_EMPTY: &str = "empty_section";
+   |                  ^^^^^^^^^^^^^
+
+warning: constant `FINDING_UNREASONED` is never used
+  --> crates/noetome-cli/src/template_model.rs:49:18
+   |
+49 | pub(crate) const FINDING_UNREASONED: &str = "unreasoned_structure";
+   |                  ^^^^^^^^^^^^^^^^^^
+
+warning: method `goal` is never used
+   --> crates/noetome-cli/src/template_model.rs:427:19
+    |
+245 | impl Plan {
+    | --------- method in this implementation
+...
+427 |     pub(crate) fn goal(&self, goal_id: &str) -> Option<(&TopicSpec, &GoalSpec)> {
+    |                   ^^^^
+
+warning: field `inputs` is never read
+   --> crates/noetome-cli/src/template_store.rs:258:16
+    |
+255 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+258 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: constant `IMPACT_CATEGORIES` is never used
+  --> crates/noetome-cli/src/vault_model.rs:25:11
+   |
+25 | pub const IMPACT_CATEGORIES: [&str; 6] = [
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: field `final_bytes` is never read
+   --> crates/noetome-cli/src/vault_model.rs:348:9
+    |
+342 | pub struct Analysis {
+    |            -------- field in this struct
+...
+348 |     pub final_bytes: BTreeMap<String, Option<Vec<u8>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Analysis` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: `noetome-cli` (lib) generated 27 warnings (run `cargo fix --lib -p noetome-cli` to apply 4 suggestions)
+   Compiling noetome-desktop v0.1.0 (/home/lyinn/project/Noetome/crates/noetome-desktop)
+warning: unused variable: `title`
+   --> crates/noetome-desktop/src/main.rs:283:25
+    |
+283 | fn report_desktop_error(title: &str, message: &str, log_dir: Option<PathBuf>) {
+    |                         ^^^^^ help: if this is intentional, prefix it with an underscore: `_title`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `noetome-desktop` (bin "noetome-desktop" test) generated 1 warning (run `cargo fix --bin "noetome-desktop" -p noetome-desktop --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.44s
+     Running unittests src/main.rs (target/debug/deps/noetome_desktop-d9054fdc3507bfc5)
+
+running 10 tests
+test workbench::tests::successful_exit_without_an_object_report_is_a_failure_and_failed_report_is_retained ... ok
+test workbench::tests::project_creation_and_jobs_refuse_a_selected_vault_before_writing ... ok
+test workbench::tests::restoring_without_explicit_confirmation_does_not_touch_disk ... ok
+test workbench::tests::release_missing_resource_never_uses_existing_compile_repository ... ok
+test workbench::tests::simultaneous_operations_are_rejected_and_cancel_is_bound_to_its_operation ... ok
+test workbench::tests::existing_job_json_is_never_overwritten ... ok
+test workbench::tests::project_parent_and_single_name_preserve_chinese_spaces_and_refuse_existing ... ok
+test workbench::tests::invalid_selection_stops_before_model_profile_and_jobs ... ok
+test workbench::tests::changed_confirmed_units_stop_before_profile_or_job_creation ... ok
+
+thread 'workbench::tests::offline_fixture_runs_real_cli_in_a_new_owned_root' (2470585) panicked at crates/noetome-desktop/src/workbench.rs:947:9:
+assertion failed: vault.join(".noetome-manifest.json").is_file() ||
+    vault.join("概念").is_dir()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test workbench::tests::offline_fixture_runs_real_cli_in_a_new_owned_root ... FAILED
+
+failures:
+
+failures:
+    workbench::tests::offline_fixture_runs_real_cli_in_a_new_owned_root
+
+test result: FAILED. 9 passed; 1 failed; 0 ignored; 0 measured; 28 filtered out; finished in 0.46s
+
+error: test failed, to rerun pass `-p noetome-desktop --bin noetome-desktop`

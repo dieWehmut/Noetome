@@ -1,0 +1,18 @@
+test_plaintext_echo_is_omitted_from_capture_and_saved_receipts (tests.test_text_api_credential.TextApiCredentialTests.test_plaintext_echo_is_omitted_from_capture_and_saved_receipts) ... FAIL
+
+======================================================================
+FAIL: test_plaintext_echo_is_omitted_from_capture_and_saved_receipts (tests.test_text_api_credential.TextApiCredentialTests.test_plaintext_echo_is_omitted_from_capture_and_saved_receipts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/lyinn/project/Noetome/tests/test_text_api_credential.py", line 152, in test_plaintext_echo_is_omitted_from_capture_and_saved_receipts
+    self.assertEqual(result.stdout,"[REDACTED]");self.assertEqual(result.stderr,"[REDACTED]")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '[redacted]' != '[REDACTED]'
+- [redacted]
++ [REDACTED]
+
+
+----------------------------------------------------------------------
+Ran 1 test in 2.116s
+
+FAILED (failures=1)

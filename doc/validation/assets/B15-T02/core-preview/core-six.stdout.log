@@ -1,0 +1,25 @@
+
+running 6 tests
+test a_marker_file_and_selected_ancestor_link_cannot_bypass_existing_vault_check ... ok
+test strict_selection_rejects_duplicates_unknown_locator_and_sixty_five_units ... ok
+test sixty_four_real_text_spans_fit_and_input_over_sixty_four_kib_is_refused ... FAILED
+test existing_vault_source_and_api_overlap_refuse_without_any_writes ... ok
+test cli_choices_units_and_one_saved_api_export_preserve_truth_and_original_source ... ok
+test failures_tampered_receipts_and_rebound_candidates_do_not_become_exportable ... ok
+
+failures:
+
+---- sixty_four_real_text_spans_fit_and_input_over_sixty_four_kib_is_refused stdout ----
+
+thread 'sixty_four_real_text_spans_fit_and_input_over_sixty_four_kib_is_refused' (2457258) panicked at crates/noetome-cli/tests/extraction_preview.rs:541:5:
+assertion `left == right` failed
+  left: 127
+ right: 64
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    sixty_four_real_text_spans_fit_and_input_over_sixty_four_kib_is_refused
+
+test result: FAILED. 5 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.23s
+

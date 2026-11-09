@@ -1,0 +1,20 @@
+{
+  "scope": "native_workbench_process_only",
+  "source_updates": {
+    "crates/noetome-desktop/src/workbench.rs": {
+      "previous_sha256": "cac0b7256dd233414b242c4f588e84606885fe79560e65c0d70aeb52ba340520",
+      "sha256": "9a780054eb1312076047bcfe05f34ea59cb2efcc2e203e021a2cd407c3812c33"
+    },
+    "crates/noetome-desktop/src/project_entry.rs": {
+      "previous_sha256": "1c6f2557edad17f5de765873f988d372dd9972a95f40bd1114e31dad62afa53c",
+      "sha256": "51eacd754395b530b3ad895f5b17f6dc0afea2dcbae3d27d469eddcf4ffefd7a"
+    }
+  },
+  "workbench_module_compiled_directly": true,
+  "tauri_ui_tested": false,
+  "manifest": "[package]\nname = \"noetome-native-workbench-process-gate\"\nversion = \"0.1.0\"\nedition = \"2024\"\nrust-version = \"1.98.1\"\n[dependencies]\nnoetome-cli = { path = \"../source/crates/noetome-cli\" }\nserde = { version = \"=1.0.229\", features = [\"derive\"] }\nserde_json = \"=1.0.154\"\nsame-file = \"=1.0.6\"\nprocess-wrap = { version = \"=10.0.1\", default-features = false, features = [\"std\", \"job-object\", \"creation-flags\"] }\nrfd = { version = \"=0.17.2\", default-features = false }\nwin32job = \"=2.0.3\"\n[lints.rust]\nunsafe_code = \"forbid\"\n",
+  "script": "$ErrorActionPreference='Continue'\nSet-Location 'C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-b15-native-fituqqap\\workbench-gate'\n$env:CARGO_TARGET_DIR='C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-b15-native-fituqqap\\target'\n& 'C:\\Users\\Lyinn\\.cargo\\bin\\cargo.exe' generate-lockfile --offline *> 'C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-b15-native-fituqqap\\workbench-gate.log'\n$gen=$LASTEXITCODE\n$one=-1;$two=-1\nif($gen -eq 0){\n& 'C:\\Users\\Lyinn\\.cargo\\bin\\cargo.exe' test --locked workbench::tests::native_descendant_is_killed_after_the_root_exits_with_inherited_pipes -- --exact --nocapture *>> 'C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-b15-native-fituqqap\\workbench-gate.log'\n$one=$LASTEXITCODE\n& 'C:\\Users\\Lyinn\\.cargo\\bin\\cargo.exe' test --locked workbench::tests::cancellation_interrupts_an_acknowledged_real_child_within_the_bound -- --exact --nocapture *>> 'C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-b15-native-fituqqap\\workbench-gate.log'\n$two=$LASTEXITCODE\n}\n[IO.File]::WriteAllText('C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-b15-native-fituqqap\\workbench-gate-result.json',('{\"lock_exit\":'+$gen+',\"root_exit_test_exit\":'+$one+',\"cancel_test_exit\":'+$two+'}'))\nif($gen -eq 0 -and $one -eq 0 -and $two -eq 0){exit 0}else{exit 1}\n",
+  "work": "/mnt/c/Users/Lyinn/AppData/Local/Temp/noetome-b15-native-fituqqap",
+  "log": "/mnt/c/Users/Lyinn/AppData/Local/Temp/noetome-b15-native-fituqqap/workbench-gate.log",
+  "result": "/mnt/c/Users/Lyinn/AppData/Local/Temp/noetome-b15-native-fituqqap/workbench-gate-result.json"
+}

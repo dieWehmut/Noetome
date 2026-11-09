@@ -1,0 +1,548 @@
+cargo.exe :      Locking 189 packages to latest Rust 1.98.1 compatible versions
+所在位置 C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\workbench-gate.ps1:4 字符: 1
++ & 'C:\Users\Lyinn\.cargo\bin\cargo.exe' generate-lockfile --offline * ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (     Locking 18...atible versions:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+cargo.exe :    Compiling windows-sys v0.61.2
+所在位置 C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\workbench-gate.ps1:8 字符: 1
++ & 'C:\Users\Lyinn\.cargo\bin\cargo.exe' test --locked workbench::test ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (   Compiling windows-sys v0.61.2:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   Compiling noetome-cli v0.1.0 (C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cl
+i)
+   Compiling rfd v0.17.2
+   Compiling raw-window-handle v0.6.2
+   Compiling socket2 v0.6.5
+   Compiling mio v1.2.4
+   Compiling schannel v0.1.30
+   Compiling winapi-util v0.1.11
+   Compiling same-file v1.0.6
+   Compiling native-tls v0.2.18
+   Compiling tokio v1.54.1
+   Compiling hyper v1.12.0
+   Compiling tower v0.5.3
+   Compiling tokio-native-tls v0.3.1
+   Compiling tower-http v0.6.11
+   Compiling hyper-util v0.1.21
+   Compiling hyper-tls v0.6.0
+   Compiling reqwest v0.13.5
+warning: unused import: `BTreeMap`
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\change_model.rs:18:24
+   |
+18 | use std::collections::{BTreeMap, BTreeSet};
+   |                        ^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `STAGES` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\bench_model.rs:44:18
+   |
+44 | pub(crate) const STAGES: [&str; 4] = [STAGE_SCAN, STAGE_DETECT, STAGE_PLAN, STAGE_PAGE];
+   |                  ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `edited` is never read
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\bench_model.rs:148:9
+    |
+141 | pub(crate) struct Note {
+    |                   ---- field in this struct
+...
+148 |     pub edited: bool,
+    |         ^^^^^^
+    |
+    = note: `Note` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dea
+d code analysis
+
+warning: function `paths` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\bench_store.rs:238:1
+5
+    |
+238 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: function `resolve` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\change_store.rs:104:
+4
+    |
+104 | fn resolve(root: &Path, relative: &str) -> Result<PathBuf, ProjectError> {
+    |    ^^^^^^^
+
+warning: function `create_parent` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\change_store.rs:146:
+4
+    |
+146 | fn create_parent(path: &Path, label: &str) -> Result<(), ProjectError> {
+    |    ^^^^^^^^^^^^^
+
+warning: method `task` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\journal_model.rs:509
+:8
+    |
+245 | impl Declaration {
+    | ---------------- method in this implementation
+...
+509 |     fn task(&self, id: &str) -> Option<&TaskSpec> {
+    |        ^^^^
+
+warning: field `inputs` is never read
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\plan_store.rs:249:16
+    |
+246 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+249 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: methods `authority_matches`, `reserve`, `mark_may_send`, and `schedule_retry` are never used
+    --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\request_budget_stor
+e.rs:788:19
+     |
+ 682 | impl BudgetStore {
+     | ---------------- methods in this implementation
+...
+ 788 |     pub(crate) fn authority_matches(&self, expected: &AuthoritySpec) -> Result<(), ProjectError> {
+     |                   ^^^^^^^^^^^^^^^^^
+...
+ 982 |     pub(crate) fn reserve(
+     |                   ^^^^^^^
+...
+1019 |     pub(crate) fn mark_may_send(
+     |                   ^^^^^^^^^^^^^
+...
+1185 |     pub(crate) fn schedule_retry(
+     |                   ^^^^^^^^^^^^^^
+
+warning: constant `MAX_BYTES` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\research_model.rs:19:
+18
+   |
+19 | pub(crate) const MAX_BYTES: u64 = 4 * 1024 * 1024;
+   |                  ^^^^^^^^^
+
+warning: field `owner` is never read
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\research_store.rs:10
+0:16
+    |
+ 98 | pub(crate) struct ResearchStore {
+    |                   ------------- field in this struct
+ 99 |     pub(crate) root: PathBuf,
+100 |     pub(crate) owner: Owner,
+    |                ^^^^^
+
+warning: function `unsafe_path` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\scale_model.rs:46:15
+   |
+46 | pub(crate) fn unsafe_path(message: impl Into<String>) -> ProjectError {
+   |               ^^^^^^^^^^^
+
+warning: type alias `Measured` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\scale_store.rs:219:1
+7
+    |
+219 | pub(crate) type Measured = (Structure, Timings);
+    |                 ^^^^^^^^
+
+warning: function `paths` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\scale_store.rs:222:1
+5
+    |
+222 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: constant `REF_LINKED` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\structure_model.rs:45
+:18
+   |
+45 | pub(crate) const REF_LINKED: &str = "linked";
+   |                  ^^^^^^^^^^
+
+warning: constant `REF_EXTERNAL` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\structure_model.rs:46
+:18
+   |
+46 | pub(crate) const REF_EXTERNAL: &str = "external";
+   |                  ^^^^^^^^^^^^
+
+warning: method `term_of` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\structure_model.rs:1
+95:8
+    |
+156 | impl ConceptFile {
+    | ---------------- method in this implementation
+...
+195 |     fn term_of(&self, concept_id: &str) -> Option<&str> {
+    |        ^^^^^^^
+
+warning: constant `FINDING_EMPTY` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\template_model.rs:48:
+18
+   |
+48 | pub(crate) const FINDING_EMPTY: &str = "empty_section";
+   |                  ^^^^^^^^^^^^^
+
+warning: constant `FINDING_UNREASONED` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\template_model.rs:49:
+18
+   |
+49 | pub(crate) const FINDING_UNREASONED: &str = "unreasoned_structure";
+   |                  ^^^^^^^^^^^^^^^^^^
+
+warning: method `goal` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\template_model.rs:42
+7:19
+    |
+245 | impl Plan {
+    | --------- method in this implementation
+...
+427 |     pub(crate) fn goal(&self, goal_id: &str) -> Option<(&TopicSpec, &GoalSpec)> {
+    |                   ^^^^
+
+warning: field `inputs` is never read
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\template_store.rs:25
+8:16
+    |
+255 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+258 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: constant `IMPACT_CATEGORIES` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\vault_model.rs:25:11
+   |
+25 | pub const IMPACT_CATEGORIES: [&str; 6] = [
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: field `final_bytes` is never read
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\vault_model.rs:348:9
+    |
+342 | pub struct Analysis {
+    |            -------- field in this struct
+...
+348 |     pub final_bytes: BTreeMap<String, Option<Vec<u8>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Analysis` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during
+ dead code analysis
+
+warning: `noetome-cli` (lib) generated 23 warnings (run `cargo fix --lib -p noetome-cli` to apply 1 suggestion)
+   Compiling noetome-native-workbench-process-gate v0.1.0 (C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqa
+p\workbench-gate)
+warning: function `pick_directory` is never used
+   --> src\..\..\source\crates\noetome-desktop\src\project_entry.rs:122:8
+    |
+122 | pub fn pick_directory() -> Result<Option<String>, String> {
+    |        ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: struct `ImportResult` is never constructed
+  --> src\..\..\source\crates\noetome-desktop\src\workbench.rs:31:12
+   |
+31 | pub struct ImportResult {
+   |            ^^^^^^^^^^^^
+
+warning: associated function `unavailable` is never used
+  --> src\..\..\source\crates\noetome-desktop\src\workbench.rs:64:8
+   |
+63 | impl ModelStatus {
+   | ---------------- associated function in this implementation
+64 |     fn unavailable(message: String) -> Self {
+   |        ^^^^^^^^^^^
+
+warning: methods `import`, `export`, and `store_credential` are never used
+   --> src\..\..\source\crates\noetome-desktop\src\workbench.rs:164:12
+    |
+103 | impl WorkbenchState {
+    | ------------------- methods in this implementation
+...
+164 |     pub fn import(&self, project: &Path, source: &Path) -> Result<ImportResult, String> {
+    |            ^^^^^^
+...
+272 |     pub fn export(
+    |            ^^^^^^
+...
+301 |     pub fn store_credential(&self) -> Result<ModelStatus, String> {
+    |            ^^^^^^^^^^^^^^^^
+
+warning: function `source_pick` is never used
+   --> src\..\..\source\crates\noetome-desktop\src\workbench.rs:737:8
+    |
+737 | pub fn source_pick() -> Result<Option<String>, String> {
+    |        ^^^^^^^^^^^
+
+warning: `noetome-native-workbench-process-gate` (lib test) generated 5 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 20s
+     Running unittests src\lib.rs (C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\target\debug\deps\noet
+ome_native_workbench_process_gate-dc848fa22c85730e.exe)
+
+running 1 test
+test workbench::tests::native_descendant_is_killed_after_the_root_exits_with_inherited_pipes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 19 filtered out; finished in 0.75s
+
+cargo.exe : warning: unused import: `BTreeMap`
+所在位置 C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\workbench-gate.ps1:10 字符: 1
++ & 'C:\Users\Lyinn\.cargo\bin\cargo.exe' test --locked workbench::test ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: unused import: `BTreeMap`:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\change_model.rs:18:24
+   |
+18 | use std::collections::{BTreeMap, BTreeSet};
+   |                        ^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `STAGES` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\bench_model.rs:44:18
+   |
+44 | pub(crate) const STAGES: [&str; 4] = [STAGE_SCAN, STAGE_DETECT, STAGE_PLAN, STAGE_PAGE];
+   |                  ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `edited` is never read
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\bench_model.rs:148:9
+    |
+141 | pub(crate) struct Note {
+    |                   ---- field in this struct
+...
+148 |     pub edited: bool,
+    |         ^^^^^^
+    |
+    = note: `Note` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dea
+d code analysis
+
+warning: function `paths` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\bench_store.rs:238:1
+5
+    |
+238 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: function `resolve` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\change_store.rs:104:
+4
+    |
+104 | fn resolve(root: &Path, relative: &str) -> Result<PathBuf, ProjectError> {
+    |    ^^^^^^^
+
+warning: function `create_parent` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\change_store.rs:146:
+4
+    |
+146 | fn create_parent(path: &Path, label: &str) -> Result<(), ProjectError> {
+    |    ^^^^^^^^^^^^^
+
+warning: method `task` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\journal_model.rs:509
+:8
+    |
+245 | impl Declaration {
+    | ---------------- method in this implementation
+...
+509 |     fn task(&self, id: &str) -> Option<&TaskSpec> {
+    |        ^^^^
+
+warning: field `inputs` is never read
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\plan_store.rs:249:16
+    |
+246 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+249 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: methods `authority_matches`, `reserve`, `mark_may_send`, and `schedule_retry` are never used
+    --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\request_budget_stor
+e.rs:788:19
+     |
+ 682 | impl BudgetStore {
+     | ---------------- methods in this implementation
+...
+ 788 |     pub(crate) fn authority_matches(&self, expected: &AuthoritySpec) -> Result<(), ProjectError> {
+     |                   ^^^^^^^^^^^^^^^^^
+...
+ 982 |     pub(crate) fn reserve(
+     |                   ^^^^^^^
+...
+1019 |     pub(crate) fn mark_may_send(
+     |                   ^^^^^^^^^^^^^
+...
+1185 |     pub(crate) fn schedule_retry(
+     |                   ^^^^^^^^^^^^^^
+
+warning: constant `MAX_BYTES` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\research_model.rs:19:
+18
+   |
+19 | pub(crate) const MAX_BYTES: u64 = 4 * 1024 * 1024;
+   |                  ^^^^^^^^^
+
+warning: field `owner` is never read
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\research_store.rs:10
+0:16
+    |
+ 98 | pub(crate) struct ResearchStore {
+    |                   ------------- field in this struct
+ 99 |     pub(crate) root: PathBuf,
+100 |     pub(crate) owner: Owner,
+    |                ^^^^^
+
+warning: function `unsafe_path` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\scale_model.rs:46:15
+   |
+46 | pub(crate) fn unsafe_path(message: impl Into<String>) -> ProjectError {
+   |               ^^^^^^^^^^^
+
+warning: type alias `Measured` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\scale_store.rs:219:1
+7
+    |
+219 | pub(crate) type Measured = (Structure, Timings);
+    |                 ^^^^^^^^
+
+warning: function `paths` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\scale_store.rs:222:1
+5
+    |
+222 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: constant `REF_LINKED` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\structure_model.rs:45
+:18
+   |
+45 | pub(crate) const REF_LINKED: &str = "linked";
+   |                  ^^^^^^^^^^
+
+warning: constant `REF_EXTERNAL` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\structure_model.rs:46
+:18
+   |
+46 | pub(crate) const REF_EXTERNAL: &str = "external";
+   |                  ^^^^^^^^^^^^
+
+warning: method `term_of` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\structure_model.rs:1
+95:8
+    |
+156 | impl ConceptFile {
+    | ---------------- method in this implementation
+...
+195 |     fn term_of(&self, concept_id: &str) -> Option<&str> {
+    |        ^^^^^^^
+
+warning: constant `FINDING_EMPTY` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\template_model.rs:48:
+18
+   |
+48 | pub(crate) const FINDING_EMPTY: &str = "empty_section";
+   |                  ^^^^^^^^^^^^^
+
+warning: constant `FINDING_UNREASONED` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\template_model.rs:49:
+18
+   |
+49 | pub(crate) const FINDING_UNREASONED: &str = "unreasoned_structure";
+   |                  ^^^^^^^^^^^^^^^^^^
+
+warning: method `goal` is never used
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\template_model.rs:42
+7:19
+    |
+245 | impl Plan {
+    | --------- method in this implementation
+...
+427 |     pub(crate) fn goal(&self, goal_id: &str) -> Option<(&TopicSpec, &GoalSpec)> {
+    |                   ^^^^
+
+warning: field `inputs` is never read
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\template_store.rs:25
+8:16
+    |
+255 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+258 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: constant `IMPACT_CATEGORIES` is never used
+  --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\vault_model.rs:25:11
+   |
+25 | pub const IMPACT_CATEGORIES: [&str; 6] = [
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: field `final_bytes` is never read
+   --> C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\source\crates\noetome-cli\src\vault_model.rs:348:9
+    |
+342 | pub struct Analysis {
+    |            -------- field in this struct
+...
+348 |     pub final_bytes: BTreeMap<String, Option<Vec<u8>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Analysis` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during
+ dead code analysis
+
+warning: `noetome-cli` (lib) generated 23 warnings (run `cargo fix --lib -p noetome-cli` to apply 1 suggestion)
+warning: function `pick_directory` is never used
+   --> src\..\..\source\crates\noetome-desktop\src\project_entry.rs:122:8
+    |
+122 | pub fn pick_directory() -> Result<Option<String>, String> {
+    |        ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: struct `ImportResult` is never constructed
+  --> src\..\..\source\crates\noetome-desktop\src\workbench.rs:31:12
+   |
+31 | pub struct ImportResult {
+   |            ^^^^^^^^^^^^
+
+warning: associated function `unavailable` is never used
+  --> src\..\..\source\crates\noetome-desktop\src\workbench.rs:64:8
+   |
+63 | impl ModelStatus {
+   | ---------------- associated function in this implementation
+64 |     fn unavailable(message: String) -> Self {
+   |        ^^^^^^^^^^^
+
+warning: methods `import`, `export`, and `store_credential` are never used
+   --> src\..\..\source\crates\noetome-desktop\src\workbench.rs:164:12
+    |
+103 | impl WorkbenchState {
+    | ------------------- methods in this implementation
+...
+164 |     pub fn import(&self, project: &Path, source: &Path) -> Result<ImportResult, String> {
+    |            ^^^^^^
+...
+272 |     pub fn export(
+    |            ^^^^^^
+...
+301 |     pub fn store_credential(&self) -> Result<ModelStatus, String> {
+    |            ^^^^^^^^^^^^^^^^
+
+warning: function `source_pick` is never used
+   --> src\..\..\source\crates\noetome-desktop\src\workbench.rs:737:8
+    |
+737 | pub fn source_pick() -> Result<Option<String>, String> {
+    |        ^^^^^^^^^^^
+
+warning: `noetome-native-workbench-process-gate` (lib test) generated 5 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.22s
+     Running unittests src\lib.rs (C:\Users\Lyinn\AppData\Local\Temp\noetome-b15-native-fituqqap\target\debug\deps\noet
+ome_native_workbench_process_gate-dc848fa22c85730e.exe)
+
+running 1 test
+test workbench::tests::cancellation_interrupts_an_acknowledged_real_child_within_the_bound ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 19 filtered out; finished in 0.41s
+

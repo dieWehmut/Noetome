@@ -4,6 +4,8 @@
 
 2026-11-09 用户要求 Windows 安装上手实测，当前执行入口调整为 [B15 三步](B15_STEPS.md)：原生回归环境 → 桌面资料与离线流程入口 → 完整安装交付。下文 B06–B14 为历史验收与残留门槛记录；B15 的实际验证会更新对应结论。
 
+B15-T01/T02 的实际回归与功能验证分别见[Windows环境](../validation/B15-T01.md)和[PDF到候选笔记入口](../validation/B15-T02.md)。随后执行 B15-T03，交付 Windows 11 x64 NSIS、内置PDF运行时和安装后实测证据；安装产物未生成前不把打包计划算作交付。
+
 B06 的主动比较表、有据过程流程、明确公式保真分别按[B06-T01](../validation/B06-T01.md)、[B06-T02](../validation/B06-T02.md)、[B06-T03](../validation/B06-T03.md)验收；设置侧栏和本地重装见[B06U-T02](../validation/B06U-T02.md)。执行范围归档于[B06 步骤](B06_STEPS.md)。
 
 B06V 三项现已实际验收：[一般图像](../validation/B06V-T01.md)、[单页扫描公式](../validation/B06V-T02.md)、[最低与当前稳定兼容矩阵](../validation/B06V-T03.md)。T03 覆盖 Windows Obsidian 1.6.7/1.15.0 明暗64唯一组合，完整 Windows Rust726、Windows Python441（434通过/7跳过）、Linux Python380（361通过/19跳过）、五视觉317次CLI；科学质量仍 not_run、知识仍 pending、生产发布未进行。归档卡见[B06V 步骤](B06V_STEPS.md)。

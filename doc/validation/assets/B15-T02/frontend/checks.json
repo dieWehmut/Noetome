@@ -1,0 +1,109 @@
+{
+  "scope": "desktop frontend; browser mock QA is separate from native Windows/PDF/model behavior",
+  "results": [
+    {
+      "name": "web-build",
+      "command": [
+        "npm",
+        "run",
+        "web:build"
+      ],
+      "exit_code": 0,
+      "seconds": 0.7893864350044169
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "apps/desktop"
+      ],
+      "exit_code": 0,
+      "seconds": 0.013746900018304586
+    }
+  ],
+  "files": {
+    "apps/desktop/src/useWorkbench.ts": {
+      "sha256": "91d673ac9bcf5b388105790c5b8ccdc0513ae4b99499df60c5490b713b2fca15",
+      "byte_length": 15119
+    },
+    "apps/desktop/src/AppSettings.tsx": {
+      "sha256": "f1077e120d8aeebf6a32ed2e5de8e1c2a3a6fb9972c26769d91fcbb9d98c2427",
+      "byte_length": 8675
+    },
+    "apps/desktop/src/AppSidebar.tsx": {
+      "sha256": "60b6f97a89a32a64842068be163575f5873535cc5833dc967d9797fb37449c54",
+      "byte_length": 7677
+    },
+    "apps/desktop/src/styles.css": {
+      "sha256": "f90030ca290f026e04b7088e3e408b3d59811c59a011200eb518df363c0c1ec6",
+      "byte_length": 25701
+    },
+    "apps/desktop/src/AppIcon.tsx": {
+      "sha256": "5521ccd4ab57a42e80b440a755023e78730f05b8e041aefd54f6f3249f458da6",
+      "byte_length": 1743
+    },
+    "apps/desktop/src/appTypes.ts": {
+      "sha256": "6c012716a22b0afeda33822f2b82d4eeccaad7190cd74175dec77ef5f177d8fe",
+      "byte_length": 209
+    },
+    "apps/desktop/src/useThemePreference.ts": {
+      "sha256": "7a17ac5ecb54af6dad9803bbff6b908b1c66d3cf24fbf03b3c50c022c3b04e9f",
+      "byte_length": 1685
+    },
+    "apps/desktop/src/workbenchTypes.ts": {
+      "sha256": "927193422971727f94dcfc2933562d40b0df16c99dcd8c835c9f9c0443ef0105",
+      "byte_length": 3180
+    },
+    "apps/desktop/src/AppModel.tsx": {
+      "sha256": "4527ba1e297ac32728d61c7f4ce6f27f1574bfc74128179759329bac84c67c80",
+      "byte_length": 2751
+    },
+    "apps/desktop/src/AppProject.tsx": {
+      "sha256": "b6db490eb7324abb7e5657a51cf9104678f2bcfc815acb89dd2539c407c2aabb",
+      "byte_length": 3704
+    },
+    "apps/desktop/src/AppTasks.tsx": {
+      "sha256": "e3512c6c4e8d84f11f60e0798450b6095cbb2f1612881db0714a22e46e51311c",
+      "byte_length": 9354
+    },
+    "apps/desktop/src/AppSources.tsx": {
+      "sha256": "dfd8c1f582ce4014b43a6902a8a49e24d4d2ab12e4e971ab7087273e12ade90d",
+      "byte_length": 12323
+    },
+    "apps/desktop/src/App.tsx": {
+      "sha256": "9de10b85562317ab70b99d95d1c76174899d56556ac241862576fbcdc5bf263b",
+      "byte_length": 18461
+    },
+    "apps/desktop/src/main.tsx": {
+      "sha256": "87887cd7de3ec2867d6a96c001cceb1e8dc88f5f6bdb234f933c6411e8588b81",
+      "byte_length": 333
+    },
+    "apps/desktop/src/WindowControls.tsx": {
+      "sha256": "37ecb87a46251577db621877d5432fc66dc501d90d28cca59c7a4ba0096daf26",
+      "byte_length": 4754
+    },
+    "apps/desktop/src/vite-env.d.ts": {
+      "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+      "byte_length": 38
+    },
+    "apps/desktop/src/AppMenuBar.tsx": {
+      "sha256": "681e22d934cee209543f894d7046b33a50f53156e3a19fb74e061d62b2e17165",
+      "byte_length": 8212
+    },
+    "apps/desktop/qa/workbench.playwright.js": {
+      "sha256": "22e2b1b413d2c8072675620443b5b2f025125f02fa1dfd69519d13b1f9fbda69",
+      "byte_length": 23056
+    },
+    "apps/desktop/qa/README.md": {
+      "sha256": "54ceb4914f8cdcac40df1875395058fb21e25be2c76f68f5a61b61b9c6f92fa1",
+      "byte_length": 1362
+    },
+    "apps/desktop/qa/tauriMocks.ts": {
+      "sha256": "698e249a119c99ae195693adab9398c73bb7a5a8a1d1ce3c2cf13bb1b3093b96",
+      "byte_length": 137
+    }
+  }
+}

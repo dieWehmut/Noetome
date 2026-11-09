@@ -1,0 +1,81 @@
+# 本地HTTP假服务 API 候选验证
+
+状态："failed"；候选原子：0。知识：pending；发布：false；科学质量：not_run。
+
+配置模型："noetome-test-model"；实际返回模型：null；HTTP状态：null；完整响应：false。
+
+实际网络尝试：0。input_reserved_tokens 为实际请求UTF8字节加1024的工程预留；实际Token用量只记录已验证的原响应。价格、tokenizer及账单未知。
+
+来源绑定、请求策略、用量、失败诊断及实际文件指纹如下，逐字段对应 validation.json。
+
+```json
+{
+  "actual_model": null,
+  "artifacts": {
+    ".owner.json": {
+      "byte_length": 185,
+      "sha256": "bcd5d4f237ac77fb99766f30eb084f3272ecd6fcf000b776bd6852c85465dbf8"
+    },
+    "request-body.json": {
+      "byte_length": 7509,
+      "sha256": "0434721866935e96094d2b617add926cc38d4a332198dfaec3a5f0e99b98543a"
+    },
+    "request.json": {
+      "byte_length": 2196,
+      "sha256": "032319331c1145cbf2d91ca1035a0373b55d063058e53d7b857bc42c3bb3f0ab"
+    }
+  },
+  "binding": {
+    "content_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+    "import_id": "722270e5-f9a2-462c-9e3b-a482e7a061d8",
+    "manifest_sha256": null,
+    "normalized_sha256": "35b0a7f6589dacf32a149a947986dff17369ee165607fdf6a301c398519f860a",
+    "parse_id": null,
+    "project_id": "32096002-f42d-4c63-858f-a6210df0c4d9",
+    "source_id": "3af86c58-af30-4dc6-80ee-9c1bf467e28a",
+    "version_id": "af6c6dd8-9267-4438-85fd-fb43fa63d98b"
+  },
+  "configured_model": "noetome-test-model",
+  "endpoint": "http://127.0.0.1:36949/v1/chat/completions",
+  "errors": [
+    {
+      "code": "EXTRACT_BUDGET_STOP",
+      "message": "EXTRACT_BUDGET_STOP：单次请求次数或预留总量超过明确预算；未调用。"
+    }
+  ],
+  "http_request_id": null,
+  "http_status": null,
+  "knowledge_status": "pending",
+  "producer": "api",
+  "provider": "openai_chat_completions",
+  "published": false,
+  "report_kind": "text_api_extraction",
+  "request_id": "9a587d79-6f90-48f7-9122-807c1ce6da13",
+  "request_strategy": "tangmao-deepseek-chat-positive-revision-v6",
+  "response_complete": false,
+  "response_id": null,
+  "response_receipt": null,
+  "schema_version": 1,
+  "scientific_quality": "not_run",
+  "service_tier": null,
+  "source_statuses": [
+    "parsed"
+  ],
+  "status": "failed",
+  "transport_mode": "local_http_test",
+  "usage": {
+    "input_reserved_tokens": 8533,
+    "model_tokenizer": null,
+    "model_usage": null,
+    "model_usage_status": "not_validated",
+    "network_attempts": 0,
+    "paid_calls": 0,
+    "price_usd": null,
+    "real_model_calls": 0,
+    "request_utf8_bytes": 7509,
+    "reservation_policy": "request_utf8_bytes_plus_1024_v1",
+    "reserved_tokens": 16725
+  },
+  "validated_atoms": 0
+}
+```

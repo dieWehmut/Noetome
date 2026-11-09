@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -86,7 +87,13 @@ EXPECTED_ICON_LIST = [
 EXPECTED_WINDOW_LABEL = "main"
 EXPECTED_WINDOW_MIN = (640, 600)
 EXPECTED_DECORATIONS = False
-EXPECTED_SHELL_COMMANDS = ("runtime_info", "cli_preview", "pick_directory", "project_create", "project_open")
+EXPECTED_SHELL_COMMANDS = (
+    "runtime_info", "cli_preview", "pick_directory", "project_create", "project_open",
+    "task_read", "task_kinds", "get_close_behavior", "set_close_behavior",
+    "project_create_in_parent", "source_pick", "source_import", "source_choices",
+    "source_units", "source_extract", "source_cancel", "source_preview_export",
+    "model_status", "model_credential_store", "model_budget_restore", "desktop_self_test",
+)
 MAIN_RS = "crates/noetome-desktop/src/main.rs"
 
 FORBIDDEN_PERMISSIONS = (
@@ -445,8 +452,14 @@ def check_main_rs(root: Path, report: Report) -> None:
             report.ok("main-rs-command", command)
         else:
             report.fail("main-rs-command", f"缺少命令 {command}")
-    if "generate_handler![" in text:
-        report.ok("main-rs-handler", "已注册 generate_handler")
+    handler = re.search(r"generate_handler!\s*\[([^\]]*)\]", text)
+    if handler:
+        registered = {entry.strip() for entry in handler.group(1).split(",") if entry.strip()}
+        expected = set(EXPECTED_SHELL_COMMANDS)
+        if registered == expected:
+            report.ok("main-rs-handler", f"完整注册 {len(expected)} 条受限应用命令")
+        else:
+            report.fail("main-rs-handler", f"未注册 {sorted(expected - registered)}；未声明 {sorted(registered - expected)}")
     else:
         report.fail("main-rs-handler", "缺少 generate_handler 注册")
     if "fs::write" in text and "preferences" not in text:
@@ -464,6 +477,7 @@ def check_acceptance(root: Path, report: Report) -> None:
         "窗口与导航",
         "Rust 组件通信",
         "项目入口",
+        "资料与模型笔记",
         "任务中心",
         "关闭行为、托盘与重启",
         "卸载",
