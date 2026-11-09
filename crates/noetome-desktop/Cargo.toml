@@ -14,10 +14,12 @@ noetome-cli = { path = "../noetome-cli" }
 serde = { version = "=1.0.229", features = ["derive"] }
 serde_json = "=1.0.154"
 same-file = "=1.0.6"
+process-wrap = { version = "=10.0.1", default-features = false, features = ["std", "job-object", "creation-flags"] }
 tauri = { version = "=2.12.5", features = ["tray-icon"] }
 
 [target.'cfg(target_os = "windows")'.dependencies]
 rfd = { version = "=0.17.2", default-features = false }
+win32job = "=2.0.3"
 
 [features]
 custom-protocol = ["tauri/custom-protocol"]

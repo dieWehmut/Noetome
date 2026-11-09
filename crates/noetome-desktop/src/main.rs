@@ -14,6 +14,7 @@ use tauri::{Manager, WindowEvent};
 mod preferences;
 mod project_entry;
 mod tasks;
+mod workbench;
 use preferences::{CloseBehavior, PreferencesState};
 
 const MAIN_TRAY_ID: &str = "noetome-main-tray";
@@ -25,7 +26,7 @@ struct RuntimeInfo {
     app_version: &'static str,
     cli_version: &'static str,
     target: &'static str,
-    capabilities: [&'static str; 5],
+    capabilities: [&'static str; 17],
     cli_help: &'static str,
 }
 
@@ -41,6 +42,18 @@ fn runtime_info() -> RuntimeInfo {
             "project.create",
             "project.open",
             "task.read",
+            "source.pick",
+            "project.create_in_parent",
+            "source.import",
+            "source.choices",
+            "source.units",
+            "source.extract",
+            "source.preview_export",
+            "model.status",
+            "model.credential_store",
+            "model.budget_restore",
+            "desktop.self_test",
+            "source.cancel",
         ],
         cli_help: noetome_cli::HELP,
     }
@@ -79,6 +92,134 @@ fn task_read(kind: String, path: String) -> Result<tasks::TaskSummary, String> {
 #[tauri::command]
 fn task_kinds() -> Vec<tasks::TaskKind> {
     tasks::kinds()
+}
+
+async fn workbench_blocking<T: Send + 'static>(
+    operation: impl FnOnce() -> Result<T, String> + Send + 'static,
+) -> Result<T, String> {
+    tauri::async_runtime::spawn_blocking(operation)
+        .await
+        .map_err(|error| format!("DESKTOP_WORKER_FAILED：后台操作失败：{error}"))?
+}
+
+#[tauri::command]
+async fn source_pick() -> Result<Option<String>, String> {
+    workbench_blocking(workbench::source_pick).await
+}
+#[tauri::command]
+async fn project_create_in_parent(
+    parent: String,
+    name: String,
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<project_entry::ProjectSummary, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || state.create_project(Path::new(&parent), &name)).await
+}
+#[tauri::command]
+async fn source_import(
+    project: String,
+    path: String,
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<workbench::ImportResult, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || state.import(Path::new(&project), Path::new(&path))).await
+}
+#[tauri::command]
+async fn source_choices(project: String, import_id: String) -> Result<serde_json::Value, String> {
+    workbench_blocking(move || {
+        noetome_cli::extraction_preview::choices(Path::new(&project), &import_id)
+            .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn source_units(
+    project: String,
+    import_id: String,
+    selection: Vec<serde_json::Value>,
+) -> Result<serde_json::Value, String> {
+    workbench_blocking(move || {
+        noetome_cli::extraction_preview::selected_units(
+            Path::new(&project),
+            &import_id,
+            &serde_json::Value::Array(selection),
+        )
+        .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn source_extract(
+    project: String,
+    import_id: String,
+    selection: Vec<serde_json::Value>,
+    confirmed_units: serde_json::Value,
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<workbench::ExtractResult, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || {
+        state.extract(
+            Path::new(&project),
+            &import_id,
+            serde_json::Value::Array(selection),
+            confirmed_units,
+        )
+    })
+    .await
+}
+#[tauri::command]
+async fn source_preview_export(
+    project: String,
+    import_id: String,
+    result_root: String,
+    parent: String,
+    name: String,
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<serde_json::Value, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || {
+        state.export(
+            Path::new(&project),
+            &import_id,
+            Path::new(&result_root),
+            Path::new(&parent),
+            &name,
+        )
+    })
+    .await
+}
+#[tauri::command]
+async fn model_status(
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<workbench::ModelStatus, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || state.model_status()).await
+}
+#[tauri::command]
+async fn model_credential_store(
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<workbench::ModelStatus, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || state.store_credential()).await
+}
+#[tauri::command]
+async fn model_budget_restore(
+    confirmed: bool,
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<workbench::ModelStatus, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || state.restore_ledger(confirmed)).await
+}
+#[tauri::command]
+async fn desktop_self_test(
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<workbench::SelfTestResult, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || state.self_test()).await
+}
+#[tauri::command]
+fn source_cancel(state: tauri::State<'_, workbench::WorkbenchState>) -> bool {
+    state.cancel()
 }
 
 #[tauri::command]
@@ -294,10 +435,14 @@ fn main() {
             task_read,
             task_kinds,
             get_close_behavior,
-            set_close_behavior
+            set_close_behavior,
+            source_pick, project_create_in_parent, source_import, source_choices, source_units,
+            source_extract, source_preview_export, model_status, model_credential_store,
+            model_budget_restore, desktop_self_test, source_cancel
         ])
         .on_window_event(handle_window_event)
         .setup(move |app| {
+            app.manage(workbench::WorkbenchState::new(app.path().app_local_data_dir().map_err(|error|error.to_string())));
             let preferences = match app.path().app_local_data_dir() {
                 Ok(directory) => PreferencesState::load(directory),
                 Err(error) => PreferencesState::unavailable(error.to_string()),
@@ -396,7 +541,19 @@ mod tests {
                 "version",
                 "project.create",
                 "project.open",
-                "task.read"
+                "task.read",
+                "source.pick",
+                "project.create_in_parent",
+                "source.import",
+                "source.choices",
+                "source.units",
+                "source.extract",
+                "source.preview_export",
+                "model.status",
+                "model.credential_store",
+                "model.budget_restore",
+                "desktop.self_test",
+                "source.cancel",
             ]
         );
         assert_eq!(info.cli_help, cli_preview("help").unwrap());

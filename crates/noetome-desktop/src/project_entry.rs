@@ -72,8 +72,45 @@ fn validate_selected_path(path: &Path) -> Result<(), String> {
 /// `PROJECT_IO_ERROR`, …) are returned as the CLI's own `CODE：message` text.
 pub fn create(path: &Path) -> Result<ProjectSummary, String> {
     validate_selected_path(path)?;
+    noetome_cli::extraction_preview::ensure_outside_vault(path)
+        .map_err(|error| error.to_string())?;
     let info = noetome_cli::project::initialize(path).map_err(|error| error.to_string())?;
     Ok(summarise(path, info))
+}
+
+pub fn create_in_parent(parent: &Path, name: &str) -> Result<ProjectSummary, String> {
+    validate_selected_path(parent)?;
+    validate_name(name)?;
+    if !parent.is_dir() {
+        return Err("PROJECT_PARENT_MISSING：请选择已存在的父目录。".into());
+    }
+    create(&parent.join(name))
+}
+
+pub fn validate_name(name: &str) -> Result<(), String> {
+    let stem = name
+        .split('.')
+        .next()
+        .unwrap_or_default()
+        .to_ascii_uppercase();
+    if name.is_empty()
+        || name.len() > 180
+        || name.contains(['/', '\\', ':', '\0', '<', '>', '"', '|', '?', '*'])
+        || name.chars().any(char::is_control)
+        || matches!(name, "." | "..")
+        || name.ends_with(['.', ' '])
+        || matches!(stem.as_str(), "CON" | "PRN" | "AUX" | "NUL")
+        || (stem.len() == 4
+            && (stem.starts_with("COM") || stem.starts_with("LPT"))
+            && matches!(stem.as_bytes()[3], b'1'..=b'9'))
+    {
+        Err(
+            "PROJECT_UNSAFE_NAME：名称须为单个普通目录名，不能含跳转、分隔符或Windows设备名。"
+                .into(),
+        )
+    } else {
+        Ok(())
+    }
 }
 
 /// Ask the operating system for a directory.
