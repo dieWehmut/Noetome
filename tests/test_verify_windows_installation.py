@@ -336,9 +336,13 @@ class InstallationVerifierTests(unittest.TestCase):
                 "PYTHONHOME": "dev-python",
                 "VIRTUAL_ENV": "dev-venv",
                 "CARGO_HOME": "dev-cargo",
+                "PSModulePath": "developer-PowerShell7-modules",
+                "PSMODULEPATH": "developer-uppercase-modules",
             },
         ):
+            parent = dict(os.environ)
             environment = SMOKE.clean_environment()
+            self.assertEqual(dict(os.environ), parent)
         self.assertFalse(any(key.upper().startswith("NOETOME_") for key in environment))
         self.assertNotIn("developer", environment["PATH"])
         for name in (
@@ -350,6 +354,82 @@ class InstallationVerifierTests(unittest.TestCase):
         ):
             self.assertNotIn(name, environment)
         self.assertIn("System32", environment["PATH"])
+        self.assertEqual(
+            environment["PSModulePath"],
+            str(self.root / "System32/WindowsPowerShell/v1.0/Modules"),
+        )
+        self.assertEqual(
+            [key for key in environment if key.upper() == "PSMODULEPATH"],
+            ["PSModulePath"],
+        )
+
+    @unittest.skipUnless(SHELL, "Native Windows PowerShell is unavailable")
+    def test_native_winps_hash_uses_builtin_modules_despite_inherited_core_path(self):
+        windows_root = os.environ.get("SystemRoot", "C:\\Windows")
+        with patch.dict(os.environ, {"SystemRoot": windows_root}):
+            builtin_modules = SMOKE.clean_environment()["PSModulePath"]
+        # A new, deliberately unusable Core module fixture models a foreign
+        # shell's module path. No module is installed into any host directory.
+        command = r"""
+$ErrorActionPreference='Stop'
+[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)
+$original=$env:PSModulePath
+$owned=Join-Path ([IO.Path]::GetTempPath()) ('noetome-winps-module-test-'+[Guid]::NewGuid().ToString('N'))
+try {
+  $modules=Join-Path $owned 'PowerShell7-Modules'
+  $utility=Join-Path $modules 'Microsoft.PowerShell.Utility'
+  [IO.Directory]::CreateDirectory($utility) | Out-Null
+  $manifest="@{ModuleVersion='7.0.0'; CompatiblePSEditions=@('Core'); PowerShellVersion='3.0'; CmdletsToExport=@('Get-FileHash'); NestedModules=@('Unavailable.PowerShell7.Utility.dll')}"
+  [IO.File]::WriteAllText((Join-Path $utility 'Microsoft.PowerShell.Utility.psd1'),$manifest)
+  $sample=Join-Path $owned 'author-input.txt'; [IO.File]::WriteAllText($sample,'owned SHA probe')
+  $script=Join-Path $owned 'hash.ps1'
+  [IO.File]::WriteAllText($script, @'
+param([string]$InputFile)
+$ErrorActionPreference='Stop'
+[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false)
+$hash=Get-FileHash -LiteralPath $InputFile -Algorithm SHA256
+[Console]::WriteLine($hash.Hash.ToLowerInvariant())
+'@)
+  function Probe([string]$ModulePath) {
+    $info=[Diagnostics.ProcessStartInfo]::new()
+    $info.FileName=Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
+    $info.Arguments='-NoProfile -NonInteractive -ExecutionPolicy Bypass -File "'+$script+'" -InputFile "'+$sample+'"'
+    $info.UseShellExecute=$false; $info.RedirectStandardOutput=$true; $info.RedirectStandardError=$true; $info.CreateNoWindow=$true
+    $info.EnvironmentVariables['PSModulePath']=$ModulePath
+    $process=[Diagnostics.Process]::new(); $process.StartInfo=$info
+    if (-not $process.Start()) {throw 'hash-probe-spawn-failed'}
+    $out=$process.StandardOutput.ReadToEndAsync(); $err=$process.StandardError.ReadToEndAsync()
+    if (-not $process.WaitForExit(20000)) { $process.Kill(); throw 'owned-hash-probe-timeout' }
+    return @{exit_code=$process.ExitCode;stdout=$out.Result.Trim();stderr=$err.Result}
+  }
+  $wrong=$modules+';'+(Join-Path $env:ProgramFiles 'WindowsPowerShell\Modules')
+  $red=Probe $wrong; $green=Probe BUILTIN
+  $expected=(Get-FileHash -LiteralPath $sample -Algorithm SHA256).Hash.ToLowerInvariant()
+  if ($red.exit_code -eq 0 -or $red.stderr -notmatch 'Get-FileHash') {throw 'foreign-module-path-did-not-fail'}
+  if ($green.exit_code -ne 0 -or $green.stdout -cne $expected) {throw 'builtin-module-path-did-not-restore-real-hash'}
+  if ($env:PSModulePath -cne $original) {throw 'parent-module-path-changed'}
+  @{status='passed';red=$red;green=$green;expected_sha256=$expected;parent_unchanged=$true;module_installs=0} | ConvertTo-Json -Depth 5 -Compress
+} finally { if ([IO.Directory]::Exists($owned)) { [IO.Directory]::Delete($owned,$true) } }
+""".replace("BUILTIN", "'" + builtin_modules.replace("'", "''") + "'")
+        encoded = base64.b64encode(command.encode("utf-16le")).decode("ascii")
+        result = subprocess.run(
+            [SHELL, "-NoProfile", "-NonInteractive", "-EncodedCommand", encoded],
+            capture_output=True,
+            timeout=60,
+        )
+        evidence = os.environ.get("NOETOME_INSTALLATION_TEST_EVIDENCE")
+        if evidence:
+            output = Path(evidence)
+            output.mkdir(parents=True, exist_ok=True)
+            (output / "native-psmodulepath.stdout.log").write_bytes(result.stdout)
+            (output / "native-psmodulepath.stderr.log").write_bytes(result.stderr)
+        self.assertEqual(result.returncode, 0, result.stderr.decode("utf-8", "replace"))
+        proof = json.loads(result.stdout)
+        self.assertEqual(proof["status"], "passed")
+        self.assertNotEqual(proof["red"]["exit_code"], 0)
+        self.assertEqual(proof["green"]["exit_code"], 0)
+        self.assertEqual(proof["green"]["stdout"], proof["expected_sha256"])
+        self.assertTrue(proof["parent_unchanged"])
 
     def test_existing_app_registration_shortcut_and_unknown_installed_content_are_preserved(
         self,

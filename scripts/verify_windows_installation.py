@@ -377,10 +377,10 @@ def registrations() -> list[dict]:
     return found
 
 
-def shortcut_paths() -> list[Path]:
-    programs = Path(os.environ["APPDATA"]) / "Microsoft/Windows/Start Menu/Programs"
+def shortcut_paths(environment: dict) -> list[Path]:
+    programs = Path(environment["APPDATA"]) / "Microsoft/Windows/Start Menu/Programs"
     shell = (
-        Path(os.environ["SystemRoot"])
+        Path(environment["SystemRoot"])
         / "System32/WindowsPowerShell/v1.0/powershell.exe"
     )
     result = subprocess.run(
@@ -392,6 +392,7 @@ def shortcut_paths() -> list[Path]:
             "$OutputEncoding=[Console]::OutputEncoding=New-Object Text.UTF8Encoding($false); [Console]::Write([Environment]::GetFolderPath('Desktop'))",
         ],
         capture_output=True,
+        env=environment,
         timeout=20,
         check=True,
     )
@@ -409,7 +410,14 @@ def clean_environment() -> dict:
         for k, v in os.environ.items()
         if not k.upper().startswith("NOETOME_")
         and k.upper()
-        not in {"PYTHONHOME", "PYTHONPATH", "VIRTUAL_ENV", "CARGO_HOME", "RUSTUP_HOME"}
+        not in {
+            "PYTHONHOME",
+            "PYTHONPATH",
+            "VIRTUAL_ENV",
+            "CARGO_HOME",
+            "RUSTUP_HOME",
+            "PSMODULEPATH",
+        }
     }
     environment["SystemRoot"] = os.environ["SystemRoot"]
     windows = Path(environment["SystemRoot"])
@@ -421,6 +429,11 @@ def clean_environment() -> dict:
             windows / "System32/Wbem",
             windows / "System32/WindowsPowerShell/v1.0",
         )
+    )
+    # A Python child of PowerShell 7 can pass its module search path to WinPS
+    # 5.1. Keep this clean CI probe on that shell's built-in modules only.
+    environment["PSModulePath"] = str(
+        windows / "System32/WindowsPowerShell/v1.0/Modules"
     )
     return environment
 
@@ -837,7 +850,7 @@ def main(argv=None) -> int:
             )
         }
         local = normal(Path(os.environ["LOCALAPPDATA"]).absolute())
-        shortcuts = shortcut_paths()
+        shortcuts = shortcut_paths(environment)
         known = [local / "Programs/Noetome", local / "Noetome"] + [
             Path(os.environ[name]) / "Noetome"
             for name in ("ProgramFiles", "ProgramFiles(x86)")
@@ -862,6 +875,7 @@ def main(argv=None) -> int:
             trusted_preparation_manifest_sha256=args.manifest_sha256,
             source_commit=value["source_commit"],
             child_path=environment["PATH"],
+            child_psmodulepath=environment["PSModulePath"],
             no_pdf_python_override="NOETOME_PDF_PYTHON" not in environment,
         )
         shell = str(
@@ -891,7 +905,7 @@ def main(argv=None) -> int:
                     "-OutputDir",
                     str(evidence / "prepared-installer"),
                 ],
-                os.environ.copy(),
+                environment,
                 timeout=600,
             )
         finally:
