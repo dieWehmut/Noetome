@@ -420,6 +420,162 @@ class TimingsTests(unittest.TestCase):
             self.assertIn("timings-no-error-codes", failed(report))
 
 
+class MemoryReadingsTests(unittest.TestCase):
+    summary_fields = ("first_rss_bytes", "last_rss_bytes", "peak_rss_bytes",
+                      "rss_growth_bytes")
+
+    def unavailable_timings(self) -> dict:
+        timings = timings_for(package_declaration()["spec"])
+        for field in self.summary_fields:
+            timings["summary"][field] = None
+        for round in timings["rounds"]:
+            round["rss_bytes"] = None
+        return timings
+
+    def assert_rejected(self, timings: dict, check: str, spec: dict | None = None) -> None:
+        with Sandbox() as path:
+            root = build_root(path / "run", spec, timings=timings)
+            report = audit(root)
+            self.assertIn(check, failed(report), show(report))
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                code = V.main([str(root), "--json"])
+            self.assertEqual(code, 1, out.getvalue())
+            self.assertGreater(json.loads(out.getvalue())["failures"], 0)
+
+    def test_unavailable_memory_passes_without_claiming_a_growth_measurement(self) -> None:
+        with Sandbox() as path:
+            timings = self.unavailable_timings()
+            self.assertGreater(timings["summary"]["scheduled"], 0)
+            root = build_root(path / "run", timings=timings)
+            report = audit(root)
+            self.assertEqual(failed(report), set(), show(report))
+            self.assertIn(("timings-rss-unavailable", True,
+                           "内存不可得，未验证增长阈值"), report.checks)
+            names = {name for name, _, _ in report.checks}
+            self.assertNotIn("timings-rss-peak", names)
+            self.assertNotIn("timings-rss-growth", names)
+
+    def test_unavailable_memory_is_visible_in_text_and_json_cli_results(self) -> None:
+        with Sandbox() as path:
+            root = build_root(path / "run", timings=self.unavailable_timings())
+            for arguments in ([str(root)], [str(root), "--json"]):
+                with self.subTest(arguments=arguments):
+                    out = io.StringIO()
+                    with contextlib.redirect_stdout(out):
+                        code = V.main(arguments)
+                    self.assertEqual(code, 0, out.getvalue())
+                    self.assertIn("内存不可得，未验证增长阈值", out.getvalue())
+            self.assertIn("提示 1", self.run_text_cli(root))
+
+    def run_text_cli(self, root: Path) -> str:
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(V.main([str(root)]), 0)
+        return out.getvalue()
+
+    def test_zero_growth_with_positive_readings_passes(self) -> None:
+        with Sandbox() as path:
+            timings = timings_for(package_declaration()["spec"])
+            timings["summary"]["last_rss_bytes"] = timings["summary"]["first_rss_bytes"]
+            timings["summary"]["rss_growth_bytes"] = 0
+            report = audit(build_root(path / "run", timings=timings))
+            self.assertEqual(failed(report), set(), show(report))
+            self.assertIn(("timings-rss-growth", True, "0 != 0"), report.checks)
+
+    def test_a_measured_decrease_with_positive_readings_passes(self) -> None:
+        with Sandbox() as path:
+            timings = timings_for(package_declaration()["spec"])
+            timings["summary"]["last_rss_bytes"] = 19_000_000
+            timings["summary"]["rss_growth_bytes"] = -1_000_000
+            report = audit(build_root(path / "run", timings=timings))
+            self.assertEqual(failed(report), set(), show(report))
+
+    def test_unavailable_summary_cannot_mix_with_any_round_reading(self) -> None:
+        for reading in (20_000_000, 0, False, "unknown"):
+            with self.subTest(reading=reading):
+                timings = self.unavailable_timings()
+                timings["rounds"][0]["rss_bytes"] = reading
+                self.assert_rejected(timings, "timings-rss-unavailable")
+
+    def test_partial_summary_readings_are_rejected(self) -> None:
+        for field in self.summary_fields:
+            with self.subTest(field=field):
+                timings = timings_for(package_declaration()["spec"])
+                timings["summary"][field] = None
+                self.assert_rejected(timings, "timings-rss-present")
+
+    def test_numeric_summary_requires_every_scheduled_round_reading(self) -> None:
+        for all_rounds in (False, True):
+            with self.subTest(all_rounds=all_rounds):
+                timings = timings_for(package_declaration()["spec"])
+                for round in timings["rounds"] if all_rounds else timings["rounds"][:1]:
+                    round["rss_bytes"] = None
+                self.assert_rejected(timings, "timings-rss-rounds")
+
+    def test_zero_or_negative_summary_rss_is_rejected(self) -> None:
+        for field in self.summary_fields[:3]:
+            for reading in (0, -1):
+                with self.subTest(field=field, reading=reading):
+                    timings = timings_for(package_declaration()["spec"])
+                    timings["summary"][field] = reading
+                    self.assert_rejected(timings, "timings-rss-present")
+
+    def test_zeroes_cannot_impersonate_unavailable_or_measured_memory(self) -> None:
+        timings = self.unavailable_timings()
+        for field in self.summary_fields:
+            timings["summary"][field] = 0
+        for round in timings["rounds"]:
+            round["rss_bytes"] = 0
+        self.assert_rejected(timings, "timings-rss-present")
+        self.assert_rejected(timings, "timings-rss-rounds")
+
+    def test_noninteger_summary_readings_are_rejected(self) -> None:
+        for field in self.summary_fields:
+            for reading in (False, True, 1.0, "1"):
+                with self.subTest(field=field, reading=reading):
+                    timings = timings_for(package_declaration()["spec"])
+                    timings["summary"][field] = reading
+                    self.assert_rejected(timings, "timings-rss-present")
+
+    def test_scheduled_round_rss_must_be_a_positive_integer(self) -> None:
+        for reading in (0, -1, False, True, 1.0, "1", None):
+            with self.subTest(reading=reading):
+                timings = timings_for(package_declaration()["spec"])
+                timings["rounds"][0]["rss_bytes"] = reading
+                self.assert_rejected(timings, "timings-rss-rounds")
+
+    def test_missing_summary_rss_keys_are_rejected_in_both_reading_states(self) -> None:
+        for unavailable in (False, True):
+            for field in self.summary_fields:
+                with self.subTest(unavailable=unavailable, field=field):
+                    timings = self.unavailable_timings() if unavailable \
+                        else timings_for(package_declaration()["spec"])
+                    del timings["summary"][field]
+                    self.assert_rejected(timings, "timings-summary-fields")
+
+    def test_missing_round_rss_key_is_rejected_in_both_reading_states(self) -> None:
+        for unavailable in (False, True):
+            with self.subTest(unavailable=unavailable):
+                timings = self.unavailable_timings() if unavailable \
+                    else timings_for(package_declaration()["spec"])
+                del timings["rounds"][0]["rss_bytes"]
+                self.assert_rejected(timings, "timings-round-fields:0")
+
+    def test_refused_rounds_cannot_carry_a_memory_reading(self) -> None:
+        spec = dict(package_declaration()["paused_spec"])
+        for reading in (0, 20_000_000):
+            with self.subTest(reading=reading):
+                timings = timings_for(spec)
+                timings["rounds"][0]["rss_bytes"] = reading
+                self.assert_rejected(timings, "timings-rss-absent", spec)
+
+    def test_a_peak_below_first_or_last_is_rejected(self) -> None:
+        timings = timings_for(package_declaration()["spec"])
+        timings["summary"]["peak_rss_bytes"] = 19_000_000
+        self.assert_rejected(timings, "timings-rss-peak")
+
+
 class ManifestTests(unittest.TestCase):
     def test_a_reading_in_the_manifest_is_reported(self) -> None:
         with Sandbox() as path:

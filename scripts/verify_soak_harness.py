@@ -100,8 +100,12 @@ class Report:
         else:
             for name, _, detail in self.failures:
                 sys.stdout.write(f"[失败] {name}：{detail}\n")
+            notices = [detail for name, ok, detail in self.checks
+                       if ok and name == "timings-rss-unavailable"]
+            for detail in notices:
+                sys.stdout.write(f"[提示] {detail}\n")
             sys.stdout.write(
-                f"合计 {len(self.checks)} 项检查：失败 {len(self.failures)}、提示 0\n"
+                f"合计 {len(self.checks)} 项检查：失败 {len(self.failures)}、提示 {len(notices)}\n"
             )
         return 0 if not self.failures else 1
 
@@ -313,12 +317,21 @@ def check_timings(path: Path, structure: dict | None, report: Report) -> dict | 
     summary = timings["summary"]
     pause = timings["pause"]
     rounds = timings["rounds"]
-    report.record("timings-summary-fields", set(summary) == set(SUMMARY_FIELDS),
-                  str(sorted(summary)))
-    report.record("timings-pause-fields", set(pause) == set(PAUSE_FIELDS), str(sorted(pause)))
+    summary_fields = isinstance(summary, dict) and set(summary) == set(SUMMARY_FIELDS)
+    pause_fields = isinstance(pause, dict) and set(pause) == set(PAUSE_FIELDS)
+    report.record("timings-summary-fields", summary_fields, str(summary))
+    report.record("timings-pause-fields", pause_fields, str(pause))
+    if not isinstance(rounds, list):
+        report.record("timings-rounds-list", False, "逐轮读数必须是列表")
+        return None
+    round_fields = True
     for index, round in enumerate(rounds):
-        if set(round) != set(ROUND_FIELDS):
-            report.record(f"timings-round-fields:{index}", False, str(sorted(round)))
+        if not isinstance(round, dict) or set(round) != set(ROUND_FIELDS):
+            report.record(f"timings-round-fields:{index}", False, str(round))
+            round_fields = False
+    # A missing RSS key is a malformed record, never an unavailable reading.
+    if not summary_fields or not pause_fields or not round_fields:
+        return None
     report.record("timings-note", "不参与确定性比较" in timings["note"], timings["note"])
 
     # 逐轮计数必须自洽：scheduled + refused == rounds，units == scheduled。
@@ -400,22 +413,41 @@ def check_timings(path: Path, structure: dict | None, report: Report) -> dict | 
     last = summary["last_rss_bytes"]
     peak = summary["peak_rss_bytes"]
     growth = summary["rss_growth_bytes"]
+    unavailable = all(value is None for value in (first, last, peak, growth))
+    rounds_unavailable = all(round["rss_bytes"] is None for round in rounds)
     if scheduled == 0:
         # 没有任何轮次被调度时也就没有任何读数：这时只能写 null，
         # 编一个 0 出来会把「不可得」伪装成「量到了」。
         report.record(
             "timings-rss-absent",
-            first is None and last is None and peak is None and growth is None,
-            f"没有调度任何轮次，内存读数应当全部为 null：{first}/{last}/{peak}/{growth}",
+            unavailable and rounds_unavailable,
+            "没有调度任何轮次，摘要及逐轮内存读数应当全部为 null",
+        )
+    elif unavailable:
+        report.record(
+            "timings-rss-unavailable", rounds_unavailable,
+            "内存不可得，未验证增长阈值" if rounds_unavailable
+            else "摘要内存不可得，但逐轮内存混有数值",
         )
     elif first is None or last is None or peak is None or growth is None:
-        report.record("timings-rss-present", False, "内存读数缺失")
+        report.record("timings-rss-present", False, "摘要内存读数部分不可得")
     else:
-        report.record("timings-rss-present", True)
-        report.record("timings-rss-peak", peak >= max(first, last),
-                      f"峰值 {peak} 低于首末 {first}/{last}")
-        report.record("timings-rss-growth", growth == last - first,
-                      f'{growth} != {last - first}')
+        numeric = all(type(value) is int and value > 0 for value in (first, last, peak)) \
+            and type(growth) is int
+        report.record("timings-rss-present", numeric,
+                      "首末峰值必须为正整数字节，增长必须为整数（允许 0）")
+        report.record(
+            "timings-rss-rounds",
+            all(type(round["rss_bytes"]) is int and round["rss_bytes"] > 0
+                if round["state"] == STATE_SCHEDULED else round["rss_bytes"] is None
+                for round in rounds),
+            "已调度轮次必须有正整数 RSS，拒绝轮次必须为 null",
+        )
+        if numeric:
+            report.record("timings-rss-peak", peak >= max(first, last),
+                          f"峰值 {peak} 低于首末 {first}/{last}")
+            report.record("timings-rss-growth", growth == last - first,
+                          f'{growth} != {last - first}')
 
     if structure is not None:
         report.record(

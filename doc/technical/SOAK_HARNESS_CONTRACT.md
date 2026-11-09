@@ -23,7 +23,7 @@
 | `--rounds` | 1 ..= 100000 | 总轮次数；每一轮是一个观测点 |
 | `--interval-ms` | 0 ..= 1000 | 轮间隔；同时是计划时长的乘数 |
 | `--pause-after-ms` | 0 ..= 600000 或省略 | 暂停时点；省略即全程不暂停 |
-| `--max-rss-growth-bytes` | 0 ..= 1073741824 | 允许的 RSS 增长上限；超出即判无界增长 |
+| `--max-rss-growth-bytes` | 0 ..= 1073741824 | 有内存读数时允许的 RSS 增长上限；超出即判无界增长 |
 
 `--pause-after-ms` 用独立的 `pause_seen` 标记区分「没给」与「给了 0」：给了 0 表示
 第一轮就关门，这与不暂停是两个不同的样例，报告与摘要必须能区分。
@@ -71,9 +71,21 @@
 
 - `scheduled + refused == rounds`，`units == scheduled`，`errors == 0`；
 - 每轮 `total_millis >= work_millis`，轮次编号从 1 连续递增；
-- `peak_rss_bytes >= max(first, last)`，`rss_growth_bytes == last - first`；
-- 没有轮次被调度时，四个内存读数必须全部为 `null`（不可得就是不可得，不能补 0）；
-- 有轮次被调度时四个读数必须齐全。
+- 摘要与每一轮的字段集合必须完整，缺少字段不能当作 `null`；
+- 没有轮次被调度时，四个摘要内存读数及所有逐轮 `rss_bytes` 必须全部为 `null`；
+- 有轮次被调度但内存不可得时，四个摘要内存读数及所有逐轮 `rss_bytes` 也必须全部为
+  `null`。审计器明确记录并显示「内存不可得，未验证增长阈值」，不把这项结构检查通过
+  写成内存增长测量通过；
+- 有内存数值时，首末与峰值必须是大于 0 的整数字节，所有已调度轮次的 `rss_bytes`
+  也必须是正整数；被拒绝的轮次没有采样，`rss_bytes` 必须为 `null`。
+  `rss_growth_bytes` 是整数，允许真实的 0 或负增长；
+- 数值分支继续要求 `peak_rss_bytes >= max(first, last)`、
+  `rss_growth_bytes == last - first`。部分摘要不可得、摘要未知却夹逐轮数值、
+  摘要为数值却缺已调度轮次读数、用 0 冒充内存读数均须拒绝。
+
+当前采样实现只读取 Linux 的 `/proc/self/status`；Windows 等无法提供该读数的宿主
+保存上述全 `null` 状态。既有可空字段与 Schema 1 不变，审计器不按自己的运行平台
+猜测产物平台；有数值的 Linux 产物继续接受定量检查。
 
 ## 7 输出根
 

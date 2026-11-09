@@ -6,7 +6,7 @@ on:
       target:
         description: Native checks to run; use one target when unrelated code is unchanged.
         type: choice
-        options: [all, rust, python, desktop]
+        options: [all, rust, python, python-soak, desktop]
         default: all
   push:
     branches:
@@ -28,7 +28,7 @@ jobs:
         # The branch workflow may not exist on the default branch yet. Explicit
         # push markers provide the same focused regression as dispatch inputs.
         # Unmarked product changes continue to run every native target.
-        include: ${{ fromJSON((inputs.target == 'rust' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[windows:rust]'))) && '[{"target":"rust","profile":"debug"}]' || (inputs.target == 'python' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[windows:python]'))) && '[{"target":"python","profile":"debug"}]' || inputs.target == 'desktop' && '[{"target":"desktop","profile":"release"}]' || '[{"target":"rust","profile":"debug"},{"target":"python","profile":"debug"},{"target":"desktop","profile":"release"}]') }}
+        include: ${{ fromJSON((inputs.target == 'rust' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[windows:rust]'))) && '[{"target":"rust","profile":"debug"}]' || (inputs.target == 'python-soak' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[windows:python-soak]'))) && '[{"target":"python-soak","profile":"debug"}]' || (inputs.target == 'python' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[windows:python]'))) && '[{"target":"python","profile":"debug"}]' || inputs.target == 'desktop' && '[{"target":"desktop","profile":"release"}]' || '[{"target":"rust","profile":"debug"},{"target":"python","profile":"debug"},{"target":"desktop","profile":"release"}]') }}
     defaults:
       run:
         shell: pwsh
@@ -72,7 +72,7 @@ jobs:
           exit $LASTEXITCODE
       - name: Build ordinary debug CLI for independent Python behaviors
         id: cli
-        if: always() && matrix.target == 'python' && steps.setup.outcome == 'success'
+        if: always() && (matrix.target == 'python' || matrix.target == 'python-soak') && steps.setup.outcome == 'success'
         run: |
           cargo build -p noetome-cli --locked *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/cli-build.log"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -87,6 +87,16 @@ jobs:
         if: always() && matrix.target == 'python' && steps.setup.outcome == 'success' && steps.cli.outcome == 'success' && steps.python_web.outcome == 'success'
         run: |
           & $env:NOETOME_TEST_PYTHON -B -X utf8 -m unittest discover -s tests -p 'test_*.py' -v *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/python-tests.log"
+          exit $LASTEXITCODE
+      - name: Focused Python soak auditor regression
+        if: always() && matrix.target == 'python-soak' && steps.setup.outcome == 'success' && steps.cli.outcome == 'success'
+        run: |
+          & $env:NOETOME_TEST_PYTHON -B -X utf8 -m unittest discover -s tests -p 'test_verify_soak_harness.py' -v *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/python-soak-tests.log"
+          exit $LASTEXITCODE
+      - name: Actual CLI soak runs with independent zero-failure audits
+        if: always() && matrix.target == 'python-soak' && steps.setup.outcome == 'success' && steps.cli.outcome == 'success'
+        run: |
+          & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/verify_soak_runtime.py "$env:TASK_EVIDENCE_DIR/soak-behaviors" --binary $env:NOETOME_TEST_BINARY *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/soak-behaviors.log"
           exit $LASTEXITCODE
       - name: Independent real PDF parse and read-only inspection
         if: always() && matrix.target == 'python' && steps.setup.outcome == 'success' && steps.cli.outcome == 'success'
@@ -133,6 +143,7 @@ jobs:
             run_id = $env:GITHUB_RUN_ID
             run_attempt = $env:GITHUB_RUN_ATTEMPT
             job = '${{ matrix.target }}'
+            scope = '${{ matrix.target == 'python-soak' && 'targeted_soak' || matrix.target }}'
             os = [Environment]::OSVersion.VersionString
             node = (& node --version)
             rust = (& rustc --version)
@@ -150,7 +161,9 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
       - name: Save compiled artifacts after an actual successful check or build
-        if: always() && steps.setup.outcome == 'success' && steps.setup.outputs.target-hit != 'true' && (steps.rust_check.outcome == 'success' || steps.cli.outcome == 'success' || steps.desktop.outcome == 'success')
+        # Auditor-only soak runs reuse the full debug cache without uploading a
+        # duplicate cache for unchanged Rust source and dependencies.
+        if: always() && matrix.target != 'python-soak' && steps.setup.outcome == 'success' && steps.setup.outputs.target-hit != 'true' && (steps.rust_check.outcome == 'success' || steps.cli.outcome == 'success' || steps.desktop.outcome == 'success')
         uses: actions/cache/save@v4
         with:
           key: ${{ steps.setup.outputs.target-key }}
