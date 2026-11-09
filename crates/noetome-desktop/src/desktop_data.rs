@@ -303,16 +303,18 @@ pub fn model_root_override() -> Result<Option<PathBuf>, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    static EXAMPLE_SEQUENCE: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
     fn example(test: impl FnOnce(&Path)) {
         let base = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../target/desktop-data-tests");
         fs::create_dir_all(&base).unwrap();
         let parent = fs::canonicalize(base).unwrap().join(format!(
-            "case-{}-{}",
+            "case-{}-{}-{}",
             std::process::id(),
             std::time::SystemTime::now()
                 .duration_since(std::time::UNIX_EPOCH)
                 .unwrap()
-                .as_nanos()
+                .as_nanos(),
+            EXAMPLE_SEQUENCE.fetch_add(1, std::sync::atomic::Ordering::Relaxed)
         ));
         fs::create_dir(&parent).unwrap();
         test(&parent);
