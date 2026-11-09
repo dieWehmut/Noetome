@@ -1,0 +1,35 @@
+
+running 28 tests
+test vault_model::tests::link_parsing_ignores_external_and_anchor_targets ... ok
+test vault_model::tests::frozen_author_package_declares_two_notes_one_png_and_one_link ... ok
+test vault_model::tests::rename_without_rewriting_the_reference_is_refused ... ok
+test vault_model::tests::candidate_bytes_must_be_exactly_the_declared_targets ... ok
+test vault_model::tests::impact_categories_are_listed_separately ... ok
+test vault_update::tests::crash_worker ... ignored
+test vault_model::tests::delete_and_outside_paths_are_refused_before_any_byte_is_written ... ok
+test vault_model::tests::rename_that_keeps_the_reference_is_accepted_and_rewrites_both_files ... ok
+test vault_model::tests::every_frozen_case_matches_its_declared_decision ... ok
+test vault_store::tests::a_caller_path_that_climbs_above_its_own_anchor_is_refused ... ok
+test vault_store::tests::a_stranger_vault_is_refused_and_keeps_every_byte ... ok
+test vault_store::tests::adopt_refuses_an_existing_root_or_a_missing_parent ... ok
+test vault_store::tests::adopt_leaves_no_root_when_the_author_baseline_disagrees ... ok
+test vault_store::tests::a_root_without_baseline_stays_read_only ... ok
+test vault_store::tests::unknown_entries_sidecars_and_empty_dirs_are_refused_without_changes ... ok
+test vault_store::tests::status_writes_no_bytes_at_all ... ok
+test vault_update::tests::unsafe_write_spellings_leave_the_entire_managed_root_unchanged ... ok
+test vault_store::tests::adopt_freezes_baseline_and_the_initial_vault_is_a_byte_copy ... ok
+test vault_update::tests::a_candidate_changed_after_approval_leaves_the_vault_untouched ... ok
+test vault_update::tests::plan_and_approve_refuse_to_overwrite_existing_files ... ok
+test vault_update::tests::an_edit_after_approval_invalidates_the_approval ... ok
+
+running 1 test
+test vault_store::tests::a_dot_dot_caller_path_is_normalized_while_links_stay_refused ... ok
+test vault_update::tests::publishing_the_edit_body_case_lands_the_candidate_bytes ... ok
+test vault_update::tests::publishing_keeps_unrelated_content_and_obsidian_config_byte_identical ... ok
+test vault_update::tests::every_frozen_case_decision_is_reproduced ... ok
+test vault_update::tests::publishing_a_rename_writes_adds_and_deletes ... ok
+test vault_update::tests::rollback_emits_a_reverse_plan_and_detects_later_manual_edits ... ok
+test vault_update::tests::a_real_abort_mid_commit_reports_needs_recovery_and_then_resumes ... ok
+
+test result: ok. 27 passed; 0 failed; 1 ignored; 0 measured; 652 filtered out; finished in 0.23s
+

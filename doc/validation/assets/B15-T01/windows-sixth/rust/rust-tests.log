@@ -1,0 +1,1744 @@
+   Compiling noetome-cli v0.1.0 (D:\a\Noetome\Noetome\crates\noetome-cli)
+   Compiling noetome-desktop v0.1.0 (D:\a\Noetome\Noetome\crates\noetome-desktop)
+warning: unused import: `BTreeMap`
+  --> crates\noetome-cli\src\change_model.rs:18:24
+   |
+18 | use std::collections::{BTreeMap, BTreeSet};
+   |                        ^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `STAGES` is never used
+  --> crates\noetome-cli\src\bench_model.rs:44:18
+   |
+44 | pub(crate) const STAGES: [&str; 4] = [STAGE_SCAN, STAGE_DETECT, STAGE_PLAN, STAGE_PAGE];
+   |                  ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `edited` is never read
+   --> crates\noetome-cli\src\bench_model.rs:148:9
+    |
+141 | pub(crate) struct Note {
+    |                   ---- field in this struct
+...
+148 |     pub edited: bool,
+    |         ^^^^^^
+    |
+    = note: `Note` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `paths` is never used
+   --> crates\noetome-cli\src\bench_store.rs:238:15
+    |
+238 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: function `resolve` is never used
+   --> crates\noetome-cli\src\change_store.rs:104:4
+    |
+104 | fn resolve(root: &Path, relative: &str) -> Result<PathBuf, ProjectError> {
+    |    ^^^^^^^
+
+warning: function `create_parent` is never used
+   --> crates\noetome-cli\src\change_store.rs:146:4
+    |
+146 | fn create_parent(path: &Path, label: &str) -> Result<(), ProjectError> {
+    |    ^^^^^^^^^^^^^
+
+warning: method `task` is never used
+   --> crates\noetome-cli\src\journal_model.rs:509:8
+    |
+245 | impl Declaration {
+    | ---------------- method in this implementation
+...
+509 |     fn task(&self, id: &str) -> Option<&TaskSpec> {
+    |        ^^^^
+
+warning: field `inputs` is never read
+   --> crates\noetome-cli\src\plan_store.rs:249:16
+    |
+246 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+249 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: methods `authority_matches`, `reserve`, `mark_may_send`, and `schedule_retry` are never used
+    --> crates\noetome-cli\src\request_budget_store.rs:788:19
+     |
+ 682 | impl BudgetStore {
+     | ---------------- methods in this implementation
+...
+ 788 |     pub(crate) fn authority_matches(&self, expected: &AuthoritySpec) -> Result<(), ProjectError> {
+     |                   ^^^^^^^^^^^^^^^^^
+...
+ 982 |     pub(crate) fn reserve(
+     |                   ^^^^^^^
+...
+1019 |     pub(crate) fn mark_may_send(
+     |                   ^^^^^^^^^^^^^
+...
+1185 |     pub(crate) fn schedule_retry(
+     |                   ^^^^^^^^^^^^^^
+
+warning: constant `MAX_BYTES` is never used
+  --> crates\noetome-cli\src\research_model.rs:19:18
+   |
+19 | pub(crate) const MAX_BYTES: u64 = 4 * 1024 * 1024;
+   |                  ^^^^^^^^^
+
+warning: field `owner` is never read
+   --> crates\noetome-cli\src\research_store.rs:100:16
+    |
+ 98 | pub(crate) struct ResearchStore {
+    |                   ------------- field in this struct
+ 99 |     pub(crate) root: PathBuf,
+100 |     pub(crate) owner: Owner,
+    |                ^^^^^
+
+warning: function `unsafe_path` is never used
+  --> crates\noetome-cli\src\scale_model.rs:46:15
+   |
+46 | pub(crate) fn unsafe_path(message: impl Into<String>) -> ProjectError {
+   |               ^^^^^^^^^^^
+
+warning: type alias `Measured` is never used
+   --> crates\noetome-cli\src\scale_store.rs:219:17
+    |
+219 | pub(crate) type Measured = (Structure, Timings);
+    |                 ^^^^^^^^
+
+warning: function `paths` is never used
+   --> crates\noetome-cli\src\scale_store.rs:222:15
+    |
+222 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: constant `REF_LINKED` is never used
+  --> crates\noetome-cli\src\structure_model.rs:45:18
+   |
+45 | pub(crate) const REF_LINKED: &str = "linked";
+   |                  ^^^^^^^^^^
+
+warning: constant `REF_EXTERNAL` is never used
+  --> crates\noetome-cli\src\structure_model.rs:46:18
+   |
+46 | pub(crate) const REF_EXTERNAL: &str = "external";
+   |                  ^^^^^^^^^^^^
+
+warning: method `term_of` is never used
+   --> crates\noetome-cli\src\structure_model.rs:195:8
+    |
+156 | impl ConceptFile {
+    | ---------------- method in this implementation
+...
+195 |     fn term_of(&self, concept_id: &str) -> Option<&str> {
+    |        ^^^^^^^
+
+warning: constant `FINDING_EMPTY` is never used
+  --> crates\noetome-cli\src\template_model.rs:48:18
+   |
+48 | pub(crate) const FINDING_EMPTY: &str = "empty_section";
+   |                  ^^^^^^^^^^^^^
+
+warning: constant `FINDING_UNREASONED` is never used
+  --> crates\noetome-cli\src\template_model.rs:49:18
+   |
+49 | pub(crate) const FINDING_UNREASONED: &str = "unreasoned_structure";
+   |                  ^^^^^^^^^^^^^^^^^^
+
+warning: method `goal` is never used
+   --> crates\noetome-cli\src\template_model.rs:427:19
+    |
+245 | impl Plan {
+    | --------- method in this implementation
+...
+427 |     pub(crate) fn goal(&self, goal_id: &str) -> Option<(&TopicSpec, &GoalSpec)> {
+    |                   ^^^^
+
+warning: field `inputs` is never read
+   --> crates\noetome-cli\src\template_store.rs:258:16
+    |
+255 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+258 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: constant `IMPACT_CATEGORIES` is never used
+  --> crates\noetome-cli\src\vault_model.rs:25:11
+   |
+25 | pub const IMPACT_CATEGORIES: [&str; 6] = [
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: field `final_bytes` is never read
+   --> crates\noetome-cli\src\vault_model.rs:348:9
+    |
+342 | pub struct Analysis {
+    |            -------- field in this struct
+...
+348 |     pub final_bytes: BTreeMap<String, Option<Vec<u8>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Analysis` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: unused variable: `timings`
+   --> crates\noetome-cli\src\scale_model.rs:480:25
+    |
+480 |         let (structure, timings) = measure(&spec()).expect("measure");
+    |                         ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_timings`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `schedule_retry` is never used
+    --> crates\noetome-cli\src\request_budget_store.rs:1185:19
+     |
+ 682 | impl BudgetStore {
+     | ---------------- method in this implementation
+...
+1185 |     pub(crate) fn schedule_retry(
+     |                   ^^^^^^^^^^^^^^
+
+warning: `noetome-cli` (lib) generated 23 warnings (run `cargo fix --lib -p noetome-cli` to apply 1 suggestion)
+warning: `noetome-cli` (lib test) generated 23 warnings (21 duplicates) (run `cargo fix --lib -p noetome-cli --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 19s
+     Running unittests src\lib.rs (target\debug\deps\noetome_cli-9b0260349cb54742.exe)
+
+running 709 tests
+test audit_model::tests::a_heading_needs_a_space_after_the_hashes ... ok
+test audit_model::tests::a_marker_is_attributed_to_the_heading_it_sits_under ... ok
+test audit_model::tests::a_duplicated_heading_is_ambiguous_rather_than_first_match ... ok
+test audit_model::tests::a_ratio_with_a_zero_denominator_is_not_applicable ... ok
+test audit_model::tests::a_section_owns_every_line_until_the_next_heading ... ok
+test audit_model::tests::a_table_alias_must_escape_its_pipe ... ok
+test audit_model::tests::an_unknown_marker_concept_is_refused ... ok
+test audit_model::tests::evaluation_passes_when_everything_resolves ... ok
+test audit_model::tests::a_missing_heading_is_a_broken_link_finding ... ok
+test audit_model::tests::two_markers_for_one_concept_are_duplicates ... ok
+test audit_store::tests::output_entries_are_the_five_documented_files ... ok
+test audit_store::tests::control_entries_match_the_documented_layout ... ok
+test bench_model::tests::edited_notes_differ_from_their_baseline ... ok
+test bench_model::tests::impact_never_contains_the_changed_notes_themselves ... ok
+test bench_model::tests::nearest_rank_picks_the_documented_sample ... ok
+test bench_model::tests::every_edit_is_detected_and_nothing_else_is ... ok
+test bench_model::tests::the_same_parameters_produce_the_same_corpus ... ok
+test bench_model::tests::the_page_holds_at_most_one_page_of_changes ... ok
+test change_model::tests::a_declared_reason_marks_the_note_as_applied ... ok
+test change_model::tests::a_clean_declaration_keeps_the_unchanged_notes_visible ... ok
+test change_model::tests::a_lock_conflict_becomes_a_candidate_and_keeps_the_note ... ok
+test change_model::tests::a_missed_dependency_is_reported ... ok
+test change_model::tests::a_refactor_without_reference_changes_is_refused ... ok
+test change_model::tests::a_safe_refactor_lists_every_reference ... ok
+test change_model::tests::a_section_that_moves_is_refused_by_its_lock ... ok
+test change_model::tests::a_split_without_a_partition_is_refused ... ok
+test change_model::tests::an_unrelated_touch_is_reported ... ok
+test change_model::tests::an_unknown_lock_kind_is_refused ... ok
+test compile_identity::write_read_tests::completed_writer_transitions_to_the_same_strict_read_capability ... ok
+test compile_identity::write_read_tests::identical_bytes_replaced_between_writer_close_and_reader_open_are_refused ... ok
+test compile_report::tests::diagnostic_text_does_not_inject_table_columns_or_html ... ok
+test compile_report::tests::file_revision_and_each_link_scope_are_visible_in_markdown ... ok
+test compile_report::tests::markdown_preserves_failed_facts_counts_and_unrun_science ... ok
+test compile_report::tests::underscore_delimited_diagnostic_is_visible_as_literal_text ... ok
+test compile_store::tests::creation_persists_independent_scope_and_actual_counts ... ok
+test compile_store::tests::active_sqlite_journal_is_rejected_without_recovery_reads ... ok
+test compile_store::tests::existing_and_input_child_roots_are_rejected_without_writes ... ok
+test compile_store::tests::hot_journal_child ... ok
+test compile_store::tests::incorrect_or_missing_base_counts_fail_before_creating_output ... ok
+test compile_store::tests::exclusive_file_write_preserves_existing_bytes ... ok
+test compile_store::tests::killed_sqlite_writer_leaves_a_hot_journal_that_read_checks_preserve ... ok
+test compile_store::tests::mismatched_markdown_cannot_be_published_as_the_same_snapshot ... ok
+test compile_store::tests::preflight_selects_an_absent_sibling_without_writing ... ok
+test compile_store::tests::publication_atomically_binds_both_report_bytes_and_manifest ... ok
+test compile_store::tests::raw_parent_traversal_is_rejected_before_filesystem_access ... ok
+test compile_store::tests::recovery_refuses_to_write_when_an_owned_directory_is_replaced ... ok
+test compile_store::tests::rendering_failure_records_failed_run_and_staged_release ... ok
+test compile_store::tests::same_bytes_with_a_new_file_identity_are_rejected ... ok
+test compile_store::tests::same_empty_directory_name_with_new_identity_is_rejected ... ok
+test compile_store::tests::same_root_and_existing_input_ancestors_use_the_overlap_error ... ok
+test compile_store::tests::missing_failed_or_not_run_required_checks_block_publication ... ok
+test compile_store::tests::snapshot_empty_directory_replacement_and_unknown_partial_are_preserved ... ok
+test compile_store::tests::snapshot_intent_rechecks_complete_initialization_and_restarts_only_absent_root ... ok
+test compile_store::tests::snapshot_intent_does_not_mask_unrelated_sql_changes_or_old_identity_changes ... ok
+test compile_store::tests::snapshot_intent_recovers_first_synced_file_and_staged_commit_gap ... ok
+test compile_store::tests::snapshot_intent_rejects_truncated_unknown_and_unsealed_pending_files ... ok
+test compile_store::tests::snapshot_intent_recovers_verified_and_published_commits_exactly_once ... ok
+test compile_store::tests::snapshot_reconciles_only_a_fully_bound_publication_commit_window ... ok
+test compile_store::tests::snapshot_reconciliation_rejects_a_forged_commit_hash_even_with_one_row ... ok
+test compile_store::tests::snapshot_roundtrip_reopens_confirmed_partial_inventory_without_plaintext ... ok
+test compile_store::tests::snapshot_resume_refuses_a_real_hot_journal_without_recovery_writes ... ok
+test compile_store::tests::snapshot_schema_and_changed_context_are_rejected_before_reuse ... ok
+test compile_store::tests::snapshot_same_bytes_replacement_and_hardlink_are_not_owned ... ok
+test compile_store::tests::sqlite_reader_makes_final_commit_busy_and_rolls_back_publication ... ok
+test compile_store::tests::unknown_file_is_preserved_and_blocks_publication ... ok
+test compile_store::tests::snapshot_verified_resume_commits_exactly_once_and_keeps_original_ids ... ok
+test compile_store::tests::windows_protected_root_cannot_be_moved_during_a_run ... ok
+test diagnostics_model::tests::a_credential_shaped_preview_refuses_the_whole_declaration ... ok
+test diagnostics_model::tests::a_fingerprint_that_is_not_a_digest_is_refused ... ok
+test diagnostics_model::tests::a_path_pasted_mid_sentence_is_still_an_absolute_path ... ok
+test diagnostics_model::tests::a_preview_longer_than_the_limit_is_refused ... ok
+test diagnostics_model::tests::an_absolute_path_refuses_the_whole_declaration ... ok
+test compile_store::tests::windows_active_file_writer_blocks_read_and_keeps_bytes ... ok
+test diagnostics_model::tests::an_empty_category_is_refused ... ok
+test diagnostics_model::tests::every_entry_carries_its_category_bytes_and_preview ... ok
+test diagnostics_model::tests::selecting_a_sensitive_category_needs_recorded_consent ... ok
+test diagnostics_model::tests::selecting_an_unknown_category_is_refused ... ok
+test diagnostics_model::tests::the_markdown_lists_the_excluded_category_and_the_boundaries ... ok
+test diagnostics_model::tests::the_same_declaration_produces_the_same_export ... ok
+test diagnostics_model::tests::unselected_categories_are_reported_not_silently_filled ... ok
+test extraction_api::tests::actual_usage_rejects_each_limit_and_overflow_without_zero_defaults ... ok
+test extraction_api::tests::credential_scan_catches_nested_escaped_and_malformed_strings ... ok
+test extraction_api::tests::credential_scan_catches_literal_escape_keys_with_mixed_encoding_depths ... ok
+test extraction_api_config::tests::chat_fix_exact_selected_and_numeric_test_provider_endpoints_validate ... ok
+test extraction_api_config::tests::endpoint_allows_only_explicit_numeric_loopback_or_official_live ... ok
+test extraction_api_config::tests::revision_fix_updates_only_selected_chat_strategy_version ... ok
+test extraction_api_config::tests::selected_gateway_accepts_only_exact_live_endpoint_and_selected_model ... ok
+test extraction_api_config::tests::selected_guard_does_not_consume_siblings_and_rejects_hardlinks_and_size ... ok
+test extraction_api_config::tests::strict_config_rejects_duplicates_extra_missing_and_nullable_omissions ... ok
+test extraction_api_schema::tests::inline_fix_selected_input_contains_task_schema_and_original_absolute_request ... ok
+test extraction_api_schema::tests::request_has_explicit_policy_strict_nullable_schema_and_full_utf8_anchor ... ok
+test extraction_api::tests::credential_scan_fails_closed_when_the_total_work_limit_is_exceeded ... ok
+test extraction_api_schema::tests::revision_fix_chat_schema_has_only_two_positive_integer_boundaries ... ok
+test extraction_api_schema::tests::revision_fix_chat_task_demands_positive_revision_and_keeps_v5_prefix ... ok
+test extraction_api_transport::tests::framed_empty_receipts_are_complete_and_keep_http_classification ... ok
+test extraction_api_transport::tests::http_errors_and_redirect_are_stable_and_never_retried ... ok
+test extraction_api_transport::tests::pre_cancel_sends_nothing ... ok
+test extraction_api_transport::tests::one_http1_post_preserves_complete_receipt ... ok
+test extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work ... ok
+test extraction_api_transport::tests::truncated_chunked_and_oversize_receipts_fail ... ok
+test extraction_api_transport::tests::zero_deadline_counts_no_unstarted_attempt ... ok
+test extraction_api_wire::chat::tests::cache_pair_requires_checked_prompt_sum_without_inventing_absent_counters ... ok
+test extraction_api_wire::chat::tests::duplicates_fences_trailing_unknown_candidates_and_bad_usage_fail ... ok
+test extraction_api_wire::chat::tests::mapped_metadata_keeps_raw_usage_and_survives_length_candidate_failures ... ok
+test extraction_api_wire::chat::tests::only_one_stopped_assistant_plain_json_and_typed_metadata_is_accepted ... ok
+test extraction_api_wire::chat::tests::qualifier_fix_original_fourth_structure_passes_but_unit_stays_missing ... ok
+test extraction_api_wire::chat::tests::revision_fix_original_fifth_decodes_with_usage_but_has_four_revision_issues ... ok
+test extraction_api_wire::chat::tests::shape_fix_original_third_flattened_candidate_stays_rejected_with_usage ... ok
+test extraction_api_wire::tests::actual_metadata_fields_reject_null_or_wrong_types ... ok
+test extraction_api_wire::tests::candidate_missing_nullable_extra_version_types_and_duplicates_fail ... ok
+test extraction_api_wire::tests::chat_fix_valid_single_chat_candidate_requires_chat_decoder ... ok
+test extraction_api_wire::tests::completed_assistant_and_reasoning_allow_evolving_metadata ... ok
+test extraction_api_wire::tests::inline_fix_first_actual_plaintext_is_candidate_failure_with_real_usage_preserved ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_completed_accepts_candidates_but_default_stays_strict ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_duplicates_tools_extra_text_and_fences_stay_rejected ... ok
+test extraction_api_wire::tests::inline_fix_selected_sparse_status_errors_types_and_usage_remain_strict ... ok
+test extraction_api_wire::tests::metadata_preserves_real_usage_independent_of_candidate_approval ... ok
+test extraction_api_wire::tests::reasoning_cannot_hide_extra_output_text_refusal_or_incomplete_status ... ok
+test extraction_api_wire::tests::refusal_incomplete_tools_and_extra_text_are_rejected ... ok
+test extraction_api_wire::tests::rejects_duplicate_keys_at_unknown_nesting_and_trailing_json ... ok
+test extraction_api_wire::tests::usage_missing_fractional_negative_wrong_sum_and_details_fail ... ok
+test extraction_api_wire::tests::valid_metadata_survives_invalid_output_fields_and_decode_rejects_them ... ok
+test extraction_model::tests::binding_requires_nullable_fields_and_rejects_unknown_fields ... ok
+test extraction_model::tests::fake_config_and_measurement_require_explicit_nullable_fields ... ok
+test extraction_model::tests::payload_rejects_unknown_versions_producers_fields_duplicate_and_trailing_json ... ok
+test extraction_model::tests::selectors_and_locators_reject_mixed_or_unknown_fields ... ok
+test extraction_output::budget_output_tests::guarded_api_rejects_replaced_parent_before_creating_any_output ... ok
+test extraction_api_transport::tests::timeout_and_cancel_drop_future_and_keep_partial_body ... ok
+test extraction_source::tests::actual_pdf_parse_produces_page_resource_and_bbox_without_legacy_span ... ok
+test extraction_source::tests::project_database_is_bounded_before_hashing_or_semantic_loading ... ok
+test extraction_source::tests::registered_cache_hard_link_is_rejected_before_consuming_changed_target ... ok
+test extraction_source::tests::request_selection_and_input_limits_are_enforced ... ok
+test extraction_source::tests::session_holds_config_database_and_snapshot_against_writers ... ok
+test extraction_source::tests::session_uses_real_utf8_span_and_checks_new_project_inventory ... ok
+test extraction_source::tests::source_cache_caps_run_before_semantic_loading ... ok
+test extraction_source::tests::failed_utf8_and_failed_pdf_never_supply_request_units ... ok
+test extraction_source::tests::unknown_cache_bytes_are_not_hashed_before_semantic_inventory_rejection ... ok
+test extraction_source::tests::unknown_private_project_files_use_metadata_only ... ok
+test extraction_source::tests::source_cache_file_count_is_bounded_before_semantic_loading ... ok
+test extraction_verify::guard_tests::actual_hardlink_and_linked_directory_inputs_fail_before_output ... ok
+test extraction_verify::guard_tests::held_source_inputs_and_results_deny_actual_concurrent_write_and_delete ... ok
+test extraction_verify::guard_tests::output_added_during_final_guard_retains_human_file ... ok
+test extraction_verify::guard_tests::result_hardlink_is_denied_or_invalidates_and_cleans_only_owned_results ... ok
+test extraction_verify::guard_tests::selected_case_ignores_private_sibling_content ... ok
+test extraction_verify::guard_tests::source_added_during_final_guard_removes_only_captured_results ... ok
+test fixture_compile::tests::actual_process_kill_after_persisted_staging_retains_unpublished_state ... ok
+test fixture_compile::tests::active_windows_input_writer_is_blocked_and_original_bytes_publish ... ok
+test fixture_compile::tests::checkpoint_child ... ok
+test fixture_compile::tests::actual_unit_loss_with_refreshed_hash_and_offsets_is_blocked ... ok
+test fixture_compile::tests::first_staged_file_failure_keeps_partial_scene_and_truthful_reports ... ok
+test fixture_compile::tests::occupied_report_path_is_preserved_and_does_not_claim_a_report_pair ... ok
+test fixture_compile::tests::unknown_staged_file_is_preserved_without_publication ... ok
+test fixture_input::tests::aggregate_size_and_path_reuse_are_checked_before_the_next_read ... ok
+test fixture_input::tests::json_size_is_rejected_before_decoding_or_reading_the_large_file ... ok
+test fixture_input::tests::nullable_coverage_fields_are_required_even_when_the_value_is_null ... ok
+test fixture_input::tests::real_fixture_loading_rebuilds_twelve_spans_without_writing ... ok
+test fixture_input::tests::safe_relative_paths_preserve_unicode_and_spaces ... ok
+test fixture_input::tests::unsafe_relative_names_are_rejected_before_filesystem_access ... ok
+test fixture_knowledge::tests::atom_content_and_qualifiers_cannot_be_empty ... ok
+test fixture_knowledge::tests::atoms_require_nonempty_unambiguous_concept_and_evidence_references ... ok
+test fixture_knowledge::tests::concepts_require_text_but_names_and_aliases_may_overlap ... ok
+test fixture_compile::tests::real_sqlite_commit_busy_rolls_back_all_success_records ... ok
+test fixture_knowledge::tests::coverage_is_exactly_one_record_per_actual_span ... ok
+test fixture_knowledge::tests::duplicate_chains_must_be_acyclic_and_end_at_included_mapping ... ok
+test fixture_knowledge::tests::duplicate_mapping_must_agree_and_have_support_at_the_repeat_position ... ok
+test fixture_knowledge::tests::coverage_requires_current_scope_policy_and_mapped_or_planned_stage ... ok
+test fixture_knowledge::tests::each_included_position_needs_its_own_valid_supporting_excerpt ... ok
+test fixture_knowledge::tests::duplicates_require_existing_reference_identical_span_hash_and_no_cycle ... ok
+test fixture_knowledge::tests::evidence_can_bind_a_nonempty_partial_unicode_excerpt ... ok
+test fixture_knowledge::tests::evidence_hash_must_match_the_actual_excerpt_bytes ... ok
+test fixture_knowledge::tests::evidence_offsets_must_be_utf8_character_boundaries ... ok
+test fixture_knowledge::tests::evidence_references_must_resolve_to_actual_spans ... ok
+test fixture_knowledge::tests::evidence_rejects_empty_reversed_or_out_of_bounds_ranges ... ok
+test fixture_knowledge::tests::exclusions_require_reason_no_mapping_and_no_duplicate_reference ... ok
+test fixture_knowledge::tests::included_and_duplicate_decisions_cannot_claim_deterministic_format_review ... ok
+test fixture_knowledge::tests::included_coverage_requires_nonempty_mapping_and_resolved_atoms ... ok
+test fixture_knowledge::tests::included_mapping_cannot_also_claim_exclusion_or_duplicate ... ok
+test fixture_knowledge::tests::ids_and_entity_revisions_cannot_be_invalid_or_ambiguous ... ok
+test fixture_knowledge::tests::repeated_source_bindings_are_rejected_even_if_the_set_is_unchanged ... ok
+test fixture_knowledge::tests::knowledge_sources_must_match_the_entire_manifest_binding ... ok
+test fixture_knowledge::tests::required_atoms_must_be_known_and_fixture_reviewed ... ok
+test fixture_knowledge::tests::required_mapping_is_exactly_the_required_subset_of_mapped_atoms ... ok
+test fixture_knowledge::tests::required_atoms_need_valid_support_not_only_refutes_or_qualifies ... ok
+test fixture_knowledge::tests::reviewed_fixture_has_valid_knowledge_and_complete_coverage ... ok
+test fixture_knowledge::tests::unresolved_dispositions_and_unreviewed_parse_status_cannot_pass ... ok
+test fixture_plan::tests::all_display_fields_reject_raw_html_and_hidden_comments ... ok
+test fixture_plan::tests::all_display_fields_reject_unregistered_wiki_links_and_embeds ... ok
+test fixture_plan::tests::ambiguous_headings_do_not_resolve_to_a_canonical_link_target ... ok
+test fixture_plan::tests::all_display_fields_reject_raw_markdown_links_images_and_definitions ... ok
+test fixture_plan::tests::canonical_placements_need_one_existing_related_section ... ok
+test fixture_plan::tests::canonical_section_must_display_its_reviewed_explanation_atoms ... ok
+test fixture_plan::tests::empty_or_unsupported_plan_and_invalid_identity_are_rejected ... ok
+test fixture_plan::tests::display_fields_reject_controls_and_numeric_email_autolinks ... ok
+test fixture_plan::tests::every_plan_identity_scope_rejects_duplicates ... ok
+test fixture_plan::tests::expected_canonical_and_required_semantic_links_must_exist_exactly ... ok
+test fixture_plan::tests::expected_atoms_fix_content_conditions_concepts_type_and_support_positions ... ok
+test fixture_plan::tests::expected_case_identity_and_duplicate_expected_entries_are_rejected ... ok
+test fixture_plan::tests::expected_required_atom_set_catches_required_false_drift ... ok
+test fixture_plan::tests::expected_coverage_fix_all_spans_and_exact_exclusion_decisions ... ok
+test fixture_plan::tests::expected_support_positions_and_expected_collections_cannot_be_relabelled ... ok
+test fixture_plan::tests::expected_tables_fix_all_columns_rows_cells_labels_and_missing_states ... ok
+test fixture_plan::tests::literal_output_paths_reject_wiki_address_control_characters ... ok
+test fixture_plan::tests::headings_reject_wiki_syntax_and_case_trim_ambiguity ... ok
+test fixture_plan::tests::mapped_paragraph_and_list_item_must_show_their_own_atom_text ... ok
+test fixture_plan::tests::missing_required_mapping_and_unknown_atom_are_rejected ... ok
+test fixture_plan::tests::normal_comparison_text_and_single_brackets_remain_visible_plain_text ... ok
+test fixture_plan::tests::node_atom_ids_equal_child_mapping_sets_without_duplicate_refs ... ok
+test fixture_plan::tests::output_file_directory_collision_is_detected_with_interleaving_sorted_paths ... ok
+test fixture_plan::tests::plan_binds_both_full_raw_ir_hash_and_revision ... ok
+test fixture_plan::tests::paragraph_atom_hidden_in_html_or_obsidian_comment_is_not_complete ... ok
+test fixture_plan::tests::reviewed_canonical_atom_ids_cannot_be_empty_duplicate_unknown_or_unrelated ... ok
+test fixture_plan::tests::reviewed_evidence_ranges_cannot_shrink_to_nonknowledge_prefixes ... ok
+test fixture_plan::tests::reviewed_evidence_inventory_and_every_evidence_field_are_fixed ... ok
+test fixture_plan::tests::table_cell_cannot_borrow_units_or_qualifiers_from_another_cell ... ok
+test fixture_plan::tests::semantic_links_resolve_concept_ids_even_when_names_are_equal ... ok
+test fixture_plan::tests::table_rectangles_content_label_and_missing_states_are_enforced ... ok
+test fixture_plan::tests::unsafe_and_windows_colliding_output_paths_are_rejected ... ok
+test fixture_plan::tests::valid_fixture_resolves_by_identity_to_two_literal_canonical_targets ... ok
+test fixture_render::tests::actual_newline_tab_and_literal_entity_variant_cannot_be_double_decoded ... ok
+test fixture_render::tests::all_actual_links_include_ghost_tokens_outside_declared_scopes ... ok
+test fixture_render::tests::actual_tables_and_headings_are_parsed_independently_of_metadata ... ok
+test fixture_render::tests::an_alias_cannot_complete_a_qualifier_deleted_from_its_cell_body ... ok
+test fixture_render::tests::codec_uses_literal_ascii_escapes_and_decodes_control_tokens_once ... ok
+test fixture_render::tests::content_checks_catch_unit_condition_and_missing_cell_drift_after_sha_refresh ... ok
+test fixture_render::tests::independent_validator_accepts_literal_bytes_without_calling_renderer ... ok
+test fixture_render::tests::independently_reviewed_table_alias_variant_has_literal_escaped_pipe ... ok
+test fixture_render::tests::manifest_and_utf8_failures_are_distinct_from_content_checks ... ok
+test fixture_render::tests::links_cannot_disappear_or_move_into_the_body_mapping ... ok
+test fixture_render::tests::metadata_atom_ids_cannot_hide_missing_or_invalid_scope_ranges ... ok
+test fixture_render::tests::output_limit_refuses_a_complete_chunk_without_truncating_text ... ok
+test fixture_render::tests::renderer_matches_two_author_declared_literal_notes_and_child_mappings ... ok
+test fixture_render::tests::renderable_aliases_reject_unsupported_separators_and_whitespace ... ok
+test fixture_render::tests::scopes_do_not_borrow_units_from_another_cell_or_alias ... ok
+test fixture_render::tests::table_parser_counts_escape_parity_without_splitting_literal_pipes ... ok
+test fixture_render::tests::wiki_target_headings_reject_backslashes_before_rendering ... ok
+test fixture_run::tests::checkpoint_child ... ok
+test formula::guard_tests::generated_note_edit_survives_but_unchanged_success_reports_are_removed ... ok
+test formula::guard_tests::inventory_mutation_before_creation_and_after_save_is_detected_without_deleting_it ... ok
+test formula::guard_tests::new_unknown_output_and_hardlink_alias_preserve_external_bytes_and_clear_success ... ok
+test formula::guard_tests::original_attachment_and_profile_changes_are_denied_or_detected_while_held ... ok
+test formula_parser::tests::fidelity_preserves_scripts_signs_relations_and_fraction_arguments ... ok
+test formula_parser::tests::rendering_syntax_and_unbounded_nesting_never_pass_as_semantics ... ok
+test image_fidelity::guard_tests::an_arrowhead_corner_cannot_cover_a_third_shape_when_its_center_line_is_clear ... ok
+test image_fidelity::guard_tests::changed_svg_is_preserved_and_unchanged_success_objects_are_discarded ... ok
+test image_fidelity::guard_tests::held_output_root_and_parent_deny_rename_after_save ... ok
+test image_fidelity::guard_tests::inventory_changed_before_creation_and_after_save_preserves_unknown_source ... ok
+test image_fidelity::guard_tests::known_dark_fill_colors_use_original_without_changing_labels_units_or_palette ... ok
+test image_fidelity::guard_tests::original_png_and_profile_changes_are_denied_or_detected_while_held ... ok
+test fixture_run::tests::control_request_rechecks_terminal_under_sqlite_writer_lock ... ok
+test image_fidelity::guard_tests::parent_label_occlusion_and_an_intermediate_shape_across_the_arrow_use_original ... ok
+test image_fidelity::guard_tests::redirected_arrow_and_spatial_declaration_are_blocked_before_a_success_plan ... ok
+test image_fidelity::guard_tests::svg_has_an_explicit_white_canvas_and_black_relation_ink_with_source_mappings ... ok
+test image_fidelity::guard_tests::significant_whitespace_and_long_labels_use_original_without_changing_literal_text ... ok
+test index_model::tests::a_bracketed_number_in_the_body_is_a_citation_burden ... ok
+test index_model::tests::a_missing_material_asks_for_a_rebuilt_mapping ... ok
+test index_model::tests::a_note_outside_the_output_area_is_refused ... ok
+test index_model::tests::a_reference_list_section_is_a_citation_burden ... ok
+test index_model::tests::a_renamed_material_is_the_same_source_and_an_edited_one_is_not ... ok
+test index_model::tests::a_source_heading_that_does_not_exist_is_refused ... ok
+test index_model::tests::a_source_inside_the_runtime_area_is_refused ... ok
+test index_model::tests::areas_must_not_overlap ... ok
+test index_model::tests::the_markdown_keeps_the_areas_and_the_boundaries_visible ... ok
+test journal_model::tests::a_credential_shaped_string_refuses_the_whole_declaration ... ok
+test journal_model::tests::a_failure_localizes_all_four_layers ... ok
+test journal_model::tests::a_file_must_belong_to_an_object_the_task_lists ... ok
+test journal_model::tests::a_later_retry_marks_the_failure_as_followed_up ... ok
+test journal_model::tests::a_task_without_sources_is_refused ... ok
+test journal_model::tests::duplicate_event_sequences_are_refused ... ok
+test journal_model::tests::events_are_ordered_by_task_then_sequence_not_declaration_order ... ok
+test journal_model::tests::severity_follows_the_event_kind ... ok
+test journal_model::tests::the_markdown_names_the_four_layers_and_the_boundary ... ok
+test journal_model::tests::the_same_declaration_produces_the_same_journal ... ok
+test image_fidelity::guard_tests::unknown_output_and_added_hardlink_preserve_external_bytes_and_clear_success ... ok
+test knowledge_coordinate::guard_tests::final_input_inventory_change_discards_only_captured_results ... ok
+test knowledge_coordinate::guard_tests::final_result_hardlink_denied_or_invalidated_without_alias_cleanup ... ok
+test knowledge_coordinate::guard_tests::held_inputs_sources_and_results_deny_concurrent_write_delete ... ok
+test knowledge_coordinate::guard_tests::final_source_and_output_changes_preserve_unknown_content ... ok
+test knowledge_coordinate::variants_guard_tests::v2_final_input_inventory_change_preserves_originals_and_human_additions ... ok
+test knowledge_coordinate::variants_guard_tests::v2_final_source_or_output_inventory_change_discards_captured_results ... ok
+test knowledge_coordinate::variants_guard_tests::v2_held_sources_inputs_and_results_deny_writes ... ok
+test knowledge_presentation::guard_tests::inputs_held_inventory_changes_reject_before_preview_creation ... ok
+test knowledge_presentation::guard_tests::results_saved_inventory_changes_preserve_originals_and_unknown_bytes ... ok
+test knowledge_presentation_render::tests::body_drift_is_rejected_after_rehashing_output ... ok
+test knowledge_presentation_render::tests::byte_ranges_and_scope_identity_are_checked_against_observed_structure ... ok
+test knowledge_presentation_render::tests::full_fact_context_must_occur_in_its_own_body_and_cannot_come_from_alias ... ok
+test knowledge_presentation_render::tests::independently_authored_table_and_paragraph_bytes_have_exact_scopes ... ok
+test knowledge_presentation_render::tests::unsafe_paths_and_undeclared_or_wrong_links_are_rejected ... ok
+test outline_model::tests::ascii_case_insensitive_search_preserves_byte_offsets ... ok
+test outline_model::tests::captions_are_recognised_by_leading_marker ... ok
+test outline_model::tests::heading_levels_and_titles_ignore_deep_indentation ... ok
+test outline_model::tests::number_depth_counts_non_empty_segments ... ok
+test outline_model::tests::numbers_split_from_titles_with_chinese_punctuation ... ok
+test pdf_parse::tests::bounded_control_diagnostics_remain_a_capturable_host_failure ... ok
+test pdf_parse::tests::cancellation_before_launch_does_not_create_an_output_root ... ok
+test pdf_parse::tests::host_failure_keeps_parser_directory_alive_until_registry_capture ... ok
+test pdf_parse::tests::input_byte_limit_never_invents_confirmed_sha_or_pages ... ok
+test pdf_parse::tests::input_change_attempt_is_refused_and_preserves_original_bytes ... ok
+test pdf_parse::tests::junction_output_parent_cannot_cross_the_selected_sandbox ... ok
+test pdf_parse::tests::locked_input_and_multiple_hard_links_are_not_confirmed_as_complete ... ok
+test pdf_parse::tests::outer_sandbox_replacement_attempt_is_refused_by_live_directory_guards ... ok
+test pdf_parse::tests::real_live_pdf_helper_cancels_and_exits ... ok
+test knowledge_presentation::guard_tests::windows_v1_v2_v3_held_inputs_and_saved_results_deny_actual_write_and_delete ... ok
+test pdf_parse::tests::real_parser_report_collision_preserves_existing_report_bytes_and_cannot_inspect_as_complete ... ok
+test pdf_parse::tests::real_parser_resource_limit_returns_nonzero_with_a_locatable_reason ... ok
+test pdf_parse::tests::stdout_overflow_is_not_truncated_into_a_successful_pdf_report ... ok
+test pdf_parse::tests::synthetic_producer_is_refused_by_the_pdf_wrapper ... ok
+test pdf_parse::tests::unsuccessful_real_child_preserves_bounded_diagnostics_and_unconfirmed_failure ... ok
+test pdf_source_model::tests::a_new_exclusively_occupied_cache_root_is_rejected_during_absence_recheck ... ok
+test pdf_source_model::tests::bounded_host_diagnostics_survive_json_control_character_expansion ... ok
+test pdf_source_model::tests::cache_key_binds_every_parser_component_and_import_option ... ok
+test pdf_source_model::tests::controlled_raw_capture_and_host_failure_are_checked_without_claiming_pages ... ok
+test pdf_source_model::tests::global_import_history_rejects_cross_table_ids_and_rowid_collisions ... ok
+test pdf_source_model::tests::historical_adapter_sha_recomputes_key_while_unsupported_actual_parser_is_rejected ... ok
+test pdf_source_model::tests::host_failure_keeps_partial_non_utf8_parser_bytes_unconfirmed ... ok
+test pdf_source_model::tests::host_failure_rejects_fabricated_confirmed_pages_even_with_outer_hashes_updated ... ok
+test pdf_source_model::tests::native_semantic_inspector_rejects_utf8_cut_even_with_sql_and_all_outer_shas_updated ... ok
+test pdf_source_model::tests::native_snapshot_reader_binds_full_page_region_and_core_resource_inventory ... ok
+test pdf_source_model::tests::needs_review_reports_hydrate_actual_bound_issues_and_keep_knowledge_pending ... ok
+test pdf_source_model::tests::next_global_import_order_reports_i64_overflow_without_wrapping ... ok
+test pdf_source_model::tests::nullable_pdf_report_fields_are_required_and_unknown_fields_are_rejected ... ok
+test pdf_source_model::tests::pdf_report_requires_nullable_fields_in_its_embedded_original_version ... ok
+test pdf_source_model::tests::pdf_snapshot_reader_rejects_unknown_content_and_hardlinked_owners_and_raw ... ok
+test pdf_source_model::tests::report_hydration_rejects_caller_altered_sql_facts ... ok
+test pdf_source_model::tests::report_hydration_rejects_foreign_import_identity ... ok
+test pdf_source_model::tests::shared_pdf_reader_rejects_orphans_mismatched_keys_and_untruthful_states ... ok
+test pdf_source_model::tests::shared_store_loads_complete_pdf_edges_before_validating_version_history ... ok
+test pdf_parse::tests::real_live_pdf_helper_times_out_and_exits ... ok
+test pdf_source_model::tests::source_cache_races::owner_bytes_are_guarded_without_an_acquired_pdf_version ... ok
+test pdf_source_model::tests::source_cache_races::initially_absent_source_cache_created_during_staged_read_is_rejected ... ok
+test pdf_source_model::tests::source_cache_races::owner_mutation_fixture_can_write_and_replace_without_the_owner_guard ... ok
+test pdf_source_model::tests::source_cache_races::unknown_source_cache_entry_added_during_raw_read_is_rejected ... ok
+test pdf_source_model::tests::source_cache_races::owner_identity_is_guarded_without_an_acquired_pdf_version ... ok
+test pdf_source_model::tests::unified_source_helpers_follow_global_rowid_even_when_clock_moves_backwards ... ok
+test pdf_validate::tests::accepts_declared_complete_synthetic_page_and_utf8_region ... ok
+test pdf_validate::tests::accepts_review_page_with_confirmed_empty_artifact_and_no_wire_range ... ok
+test pdf_validate::tests::refuses_multicodepoint_glyph_claimed_as_parsed_despite_consistent_body ... ok
+test pdf_validate::tests::refuses_staggered_disjoint_line_columns_claimed_as_parsed ... ok
+test pdf_validate::tests::refuses_whitespace_only_page_claimed_as_parsed ... ok
+test pdf_validate::tests::rejects_in_bounds_bbox_that_does_not_enclose_its_actual_glyphs ... ok
+test pdf_validate::tests::rejects_missing_body_even_when_all_artifact_shas_are_valid ... ok
+test pdf_validate::tests::rejects_missing_page_and_fake_page_count ... ok
+test pdf_validate::tests::rejects_nonfinite_and_out_of_page_coordinates ... ok
+test pdf_validate::tests::rejects_review_or_failed_page_claimed_as_whole_document_parsed ... ok
+test pdf_validate::tests::rejects_text_artifact_resource_sha_or_page_reference_change ... ok
+test pdf_validate::tests::rejects_unconfirmed_page_count_claimed_as_parsed ... ok
+test pdf_validate::tests::rejects_utf8_byte_range_cutting_an_actual_character ... ok
+test pdf_validate::tests::rejects_wrong_crop_rotation_matrix ... ok
+test pdf_validate::tests::rejects_wrong_page_location ... ok
+test plan_model::tests::a_chain_with_non_contiguous_steps_is_refused ... ok
+test plan_model::tests::a_concept_without_an_atom_in_the_primary_goal_is_refused ... ok
+test plan_model::tests::a_declared_reason_allows_the_split_and_is_recorded ... ok
+test plan_model::tests::a_prerequisite_cycle_is_refused ... ok
+test plan_model::tests::every_atom_gets_one_position_and_the_primary_goal_keeps_the_chain ... ok
+test plan_model::tests::everything_in_one_goal_needs_no_cross_reference ... ok
+test plan_model::tests::splitting_a_chain_without_a_reason_is_refused ... ok
+test plan_model::tests::teaching_order_puts_prerequisites_first ... ok
+test pdf_source_model::tests::staged_pdf_reader_only_accepts_registered_ids_in_the_current_writer_paths ... ok
+test plan_model::tests::the_secondary_goal_links_to_the_primary_note_instead_of_copying_it ... ok
+test plan_model::tests::unknown_goal_and_duplicate_concept_are_refused ... ok
+test process_flow::guard_tests::changed_generated_note_is_preserved_but_unchanged_success_report_is_removed ... ok
+test process_flow::guard_tests::changed_profile_is_detected_or_denied_while_held ... ok
+test process_flow::guard_tests::late_output_hardlink_does_not_delete_external_alias_bytes ... ok
+test process_flow::guard_tests::native_held_inputs_and_generated_files_deny_write_and_delete ... ok
+test process_flow::guard_tests::unknown_output_addition_survives_and_captured_generated_results_are_removed ... ok
+test process_flow_model::profile_tests::each_profile_schema_round_trips_without_fabricating_a_mermaid_version ... ok
+test process_flow_model::profile_tests::profile_schema_rejects_mixed_missing_null_and_unbounded_engine_fields ... ok
+test process_flow_plan::tests::body_only_whitespace_does_not_disable_an_otherwise_verified_diagram ... ok
+test process_flow_plan::tests::detached_cycle_is_diagnosed_before_secondary_disconnection ... ok
+test process_flow_plan::tests::frozen_semantic_cases_have_their_primary_issue ... ok
+test process_flow_plan::tests::goals_must_equal_actual_terminal_set ... ok
+test process_flow_plan::tests::label_and_criterion_whitespace_have_a_conservative_display_boundary ... ok
+test process_flow_plan::tests::multiline_labels_fall_back_without_losing_characters_or_semantics ... ok
+test process_flow_plan::tests::profile_claim_cannot_promote_an_unmeasured_target ... ok
+test process_flow_plan::tests::strict_profile_rejects_missing_extra_and_codec_fields ... ok
+test process_flow_render::tests::body_fence_delimiters_and_trailing_whitespace_preserve_literal_text ... ok
+test process_flow_render::tests::every_frozen_success_renders_and_independently_reads_back ... ok
+test process_flow_render::tests::extra_mermaid_instruction_and_broken_link_are_rejected ... ok
+test process_flow_render::tests::missing_nullable_fields_do_not_deserialize_as_implicit_null ... ok
+test process_flow_render::tests::negative_sign_branch_criterion_and_exception_cannot_disappear ... ok
+test process_flow_render::tests::punctuation_codec_is_one_pass_and_rejects_raw_syntax ... ok
+test process_flow_render::tests::reversed_arrow_rejected_even_when_fingerprint_is_rewritten ... ok
+test process_flow_render::tests::synchronized_mapping_and_plan_forgery_rejected_against_document ... ok
+test process_parser::tests::complete_consumption_rejects_unknown_fields_tails_and_physical_blank_lines ... ok
+test process_parser::tests::document_validation_rejects_counterfeit_evidence_and_type_fields ... ok
+test process_parser::tests::frozen_authors_match_all_parsed_fields_and_real_utf8_ranges ... ok
+test process_parser::tests::json_tokens_preserve_quoted_delimiters_and_do_not_infer_relations ... ok
+test process_parser::tests::known_but_invalid_structure_cannot_create_a_document ... ok
+test process_parser::tests::limits_and_empty_arrays_are_explicit_and_normalization_preserves_author_order ... ok
+test project::tests::actual_process_termination_preserves_partial_state_and_new_path_retry_succeeds ... ok
+test project::tests::configuration_requires_a_real_uuid_v4_rfc4122_variant ... ok
+test project::tests::exact_schema_three_project_inspection_is_readonly ... ok
+test project::tests::handled_initialization_failures_clean_only_owned_files_and_allow_same_path_retry ... ok
+test project::tests::initialized_schema_one_inspection_rejects_weakened_metadata_constraints ... ok
+test project::tests::rollback_does_not_remove_a_replacement_empty_directory ... ok
+test project::tests::rollback_preserves_unknown_content_changed_bytes_deleted_files_and_replaced_files ... ok
+test project::tests::schema_three_inspection_rejects_mismatched_and_unknown_versions_without_migration ... ok
+test project::tests::schema_three_inspection_rejects_unknown_objects_changed_constraints_and_bad_metadata ... ok
+test project::tests::source_schema_two_preserves_project_identity_and_inspection_is_readonly ... ok
+test project::tests::writer_inspection_never_ignores_old_initialization_remnants_or_a_file_marker ... ok
+test project::tests::writer_inspection_only_allows_its_own_ordinary_directory ... ok
+test project::tests::writer_inspection_rejects_a_junction_write_directory_without_touching_its_target ... ok
+test relevance_model::tests::a_missing_prerequisite_is_a_refusal_and_a_declared_one_is_not ... ok
+test relevance_model::tests::an_exclusion_needs_a_registered_reason ... ok
+test relevance_model::tests::an_option_of_a_higher_level_can_be_deferred_but_not_needed ... ok
+test relevance_model::tests::both_densities_carry_the_same_atoms_and_conditions ... ok
+test relevance_model::tests::excluding_an_atom_the_level_requires_is_refused ... ok
+test relevance_model::tests::headings_cannot_be_excluded_because_they_are_structure ... ok
+test relevance_model::tests::levels_are_ordered_from_introductory_to_advanced ... ok
+test relevance_model::tests::the_markdown_record_lists_counts_reasons_and_boundaries ... ok
+test request_budget_model::tests::required_nullable_price_is_not_an_omitted_default ... ok
+test request_budget_model::tests::tagged_events_refuse_unknown_fields_and_unknown_state ... ok
+test request_budget_store::tests::budget_actual_artifact_replacement_and_sidecar_refuse_without_sqlite_recovery ... ok
+test request_budget_store::tests::budget_checked_guard_precedes_decision_clock_and_input_recheck ... ok
+test process_flow::guard_tests::input_inventory_changes_before_output_and_after_save_never_keep_success_results ... ok
+test request_budget_store::tests::budget_checked_guards_reject_before_reserve_or_send_commit ... ok
+test request_budget_store::tests::budget_checked_reserve_rebuilds_another_workers_latest_commitment ... ok
+test request_budget_store::tests::budget_checked_reserve_requires_the_original_prepared_plan ... ok
+test request_budget_store::tests::budget_complete_200_known_usage_local_timeout_cannot_schedule_or_replay_retry ... ok
+test request_budget_store::tests::budget_db_header_accepts_registered_identity_and_size_boundaries ... ok
+test request_budget_store::tests::budget_db_header_rejects_post_snapshot_links_lengths_and_mtime ... ok
+test request_budget_store::tests::budget_db_header_rejects_same_bytes_mtime_identity_replacement ... ok
+test request_budget_store::tests::budget_db_header_rejects_wal_short_over_limit_and_wrong_identity_before_owner ... ok
+test request_budget_store::tests::budget_complete_200_unknown_usage_local_timeout_cannot_schedule_or_replay_retry ... ok
+test request_budget_store::tests::budget_dispatch_permission_is_not_an_idempotent_second_send ... ok
+test request_budget_store::tests::budget_duplicate_settlement_after_reopen_is_once_and_conflicts_refuse ... ok
+test request_budget_store::tests::budget_input_change_stops_dispatch_without_refunding_existing_request ... ok
+test request_budget_store::tests::budget_known_usage_over_reservation_is_saved_and_stops_new_dispatch ... ok
+test request_budget_store::tests::budget_may_send_and_unknown_cannot_refund_a_self_reported_zero ... ok
+test request_budget_store::tests::budget_may_send_refund_requires_the_sealed_original_zero_transport ... ok
+test request_budget_store::tests::budget_near_cap_known_refund_still_cannot_admit_one_token_too_many ... ok
+test request_budget_store::tests::budget_owned_policy_same_bytes_replacement_and_mtime_change_are_rejected ... ok
+test request_budget_store::tests::budget_opening_and_version_are_not_reset_on_new_run ... ok
+test request_budget_store::tests::budget_prepared_restart_reserves_same_key_without_another_logical_attempt ... ok
+test request_budget_store::tests::budget_prepared_denial_seals_originals_without_commitments ... ok
+test request_budget_store::tests::budget_readonly_status_cannot_mutate_sqlite_or_append_an_event ... ok
+test request_budget_store::tests::budget_receipt_retry_checked_appends_once_and_reopens_idempotently ... ok
+test request_budget_store::tests::budget_receipt_retry_checked_complete_200_is_final_and_stop_only_blocks_retry ... ok
+test request_budget_store::tests::budget_receipt_retry_checked_requires_full_key_receipt_before_terminal ... ok
+test request_budget_store::tests::budget_receipt_retry_checked_revalidates_inputs_after_guard_without_append ... ok
+test request_budget_store::tests::budget_receipt_retry_checked_rebuilds_another_writers_terminal_or_overrun ... ok
+test request_budget_store::tests::budget_registered_identity_checks_known_file_directory_without_byte_binding ... ok
+test request_budget_store::tests::budget_registered_identity_rejects_foreign_opened_handle_before_callback ... ok
+test request_budget_store::tests::budget_registered_identity_rejects_links_and_changed_ancestor ... ok
+test request_budget_store::tests::budget_registered_identity_rejects_same_bytes_mtime_path_replacement ... ok
+test request_budget_store::tests::budget_registered_identity_requires_complete_chain_and_keeps_windows_sharing ... ok
+test request_budget_store::tests::budget_registered_run_owner_changed_in_place_is_not_a_new_trust_anchor ... ok
+test request_budget_store::tests::budget_rehashed_accounting_forgery_still_disagrees_with_raw_response ... ok
+test request_budget_store::tests::budget_replaced_intermediate_ancestor_is_not_hidden_by_same_leaf_ids ... ok
+test request_budget_store::tests::budget_receipt_retry_checked_samples_clock_after_the_complete_guard ... ok
+test request_budget_store::tests::budget_run_control_replacement_cannot_self_authenticate_in_a_new_owner ... ok
+test request_budget_store::tests::budget_sealed_transport_sync_forgery_cannot_replace_body_or_framing ... ok
+test request_budget_store::tests::budget_stamp_binds_full_raw_bytes_and_rejects_over_limit ... ok
+test request_budget_store::tests::budget_stamp_keeps_owned_and_external_share_modes ... ok
+test request_budget_store::tests::budget_stamp_rejects_a_hardlink_added_after_snapshot ... ok
+test request_budget_store::tests::budget_stamp_rejects_another_same_byte_read_handle ... ok
+test request_budget_store::tests::budget_stamp_rejects_growth_or_truncation_with_restored_mtime ... ok
+test request_budget_store::tests::budget_same_response_sha_is_charged_for_each_distinct_request ... ok
+test request_budget_store::tests::budget_terminal_check_blocks_late_send_and_preserves_held_attempt ... ok
+test request_budget_store::tests::budget_synchronized_owner_metadata_caps_or_opening_cannot_reset_owned_policy ... ok
+test request_budget_store::tests::budget_two_threads_cannot_reserve_the_same_remaining_capacity ... ok
+test request_budget_store::tests::budget_unknown_without_final_report_can_later_settle_same_raw_identity ... ok
+test request_budget_store::tests::budget_unsealed_recovery_response_is_unknown_and_cannot_be_adopted ... ok
+test request_run::tests::checkpoint_driver ... ok
+test request_run::tests::request_run_retry_classes_do_not_expand_to_wire_or_candidates ... ok
+test request_run::tests::request_run_unknown_project_entry_is_rejected_before_read ... ok
+test retention_model::tests::a_policy_that_would_expire_a_required_entry_is_refused ... ok
+test retention_model::tests::a_published_index_entry_is_kept_even_when_old ... ok
+test retention_model::tests::a_required_entry_that_does_not_exist_is_refused ... ok
+test retention_model::tests::a_shortened_trace_counts_what_is_left ... ok
+test retention_model::tests::an_expired_entry_is_deleted_and_a_fresh_one_is_kept ... ok
+test retention_model::tests::an_unknown_category_or_duplicate_entry_is_refused ... ok
+test retention_model::tests::counts_add_up ... ok
+test retention_model::tests::recovery_loss_is_reported_for_every_deleted_entry_that_had_one ... ok
+test retention_model::tests::the_markdown_names_the_impact_and_the_boundary ... ok
+test retention_model::tests::the_same_declaration_produces_the_same_plan ... ok
+test revision_store::tests::compact_strips_all_whitespace ... ok
+test revision_store::tests::schema_declares_five_frozen_tables ... ok
+test run_recovery::tests::actual_selected_input_change_blocks_hot_journal_recovery ... ok
+test run_recovery::tests::cold_zero_header_and_truncated_journal_are_refused ... ok
+test run_recovery::tests::corrupt_checksum_page_number_sector_and_padding_are_refused ... ok
+test run_recovery::tests::journal_and_database_hard_links_are_refused ... ok
+test run_recovery::tests::locked_sqlite_sector_header_initialization_replicas_are_exact ... ok
+test run_recovery::tests::real_shared_page_only_journal_cannot_borrow_unchanged_run_identity ... ok
+test request_budget_store::tests::budget_wire_candidate_error_is_not_retryable_but_http_retry_has_durable_due ... ok
+test run_recovery::tests::real_sqlite_hot_journal_is_validated_without_disk_writes ... ok
+test run_recovery::tests::recovery_witness_detects_bytes_and_replaced_journal_identity ... ok
+test run_recovery::tests::real_sqlite_small_page_hot_journal_is_validated ... ok
+test run_recovery::tests::wrong_journal_path_is_refused ... ok
+test run_recovery::tests::valid_foreign_run_journal_is_refused_before_real_recovery ... ok
+test run_store::tests::actual_cancel_then_pause_prefix_reopens_cancelled_without_rewriting_confirmations ... ok
+test run_store::tests::reconstructed_hashes_cannot_turn_created_seed_into_terminal_or_started_work ... ok
+test run_store::tests::unsealed_worker_bytes_are_refused_without_touching_database ... ok
+test scale_model::tests::a_different_parameter_changes_the_bytes ... ok
+test scale_model::tests::every_page_gets_a_heading_and_its_own_digest ... ok
+test scale_model::tests::page_bounds_are_enforced ... ok
+test scale_model::tests::the_markdown_states_the_synthetic_boundary_and_the_unmet_limit ... ok
+test scale_model::tests::the_same_parameters_produce_the_same_pages ... ok
+test run_store::tests::reconstructed_work_or_resume_cannot_acknowledge_and_skip_cancel ... ok
+test scan_formula::guard_tests::cancellation_after_actual_post_preserves_attempt_and_token_reservation ... ok
+test scan_formula::guard_tests::canonical_scripts_keep_every_sign_variable_and_fraction_role ... ok
+test scan_formula::guard_tests::casefold_colliding_source_references_fail_at_the_schema_gate ... ok
+test scan_formula::guard_tests::greek_casefold_aliases_fail_at_the_schema_gate ... ok
+test scan_formula::guard_tests::artificial_http_success_preserves_raw_tex_and_single_script_rewrite ... ok
+test scan_formula::guard_tests::guessed_clear_answer_does_not_resolve_unknown_source_sign_or_subscript ... ok
+test scan_formula::guard_tests::held_config_profile_and_source_edits_are_denied_or_detected ... ok
+test scan_formula::guard_tests::manual_note_change_and_unknown_output_survive_cleanup ... ok
+test scan_formula::guard_tests::original_crop_pixel_mismatch_and_png_trailing_data_reject_before_http ... ok
+test scan_formula::guard_tests::selected_ancestor_junction_rejects_before_read ... ok
+test scan_formula::guard_tests::recognized_uncertainty_blocks_even_matching_expression ... ok
+test scan_formula::guard_tests::target_without_native_math_uses_original_only_after_semantic_match ... ok
+test scan_formula::guard_tests::source_inventory_changes_before_or_after_response_are_detected_and_preserved ... ok
+test sidecar_process::tests::actual_input_fingerprint_is_complete ... ok
+test sidecar_process::tests::blocked_stdin_writer_is_joined_on_timeout ... ok
+test sidecar_process::tests::bounded_diagnostic_overflow_is_explicit ... ok
+test sidecar_process::tests::cancellation_reaps_live_tree ... ok
+test scan_formula::guard_tests::wrong_sign_and_extra_bar_are_not_repaired ... ok
+test sidecar_process::tests::concurrent_stderr_is_drained ... ok
+test sidecar_process::tests::crashed_process ... ok
+test sidecar_process::tests::diagnostics_are_separate ... ok
+test sidecar_process::tests::duplicate_units ... ok
+test sidecar_process::tests::empty_parser_version ... ok
+test sidecar_process::tests::empty_response ... ok
+test sidecar_process::tests::existing_workspace_is_rejected ... ok
+test sidecar_process::tests::failed_protocol_retains_diagnostics ... ok
+test sidecar_process::tests::early_parent_exit_reaps_noninherited_descendants ... ok
+test sidecar_process::tests::failed_unit_without_issue ... ok
+test sidecar_process::tests::input_byte_limit ... ok
+test sidecar_process::tests::input_hardlink_rejected ... ok
+test sidecar_process::tests::hardlink_resource_rejected_with_external_sentinel_unchanged ... ok
+test sidecar_process::tests::invalid_json_response ... ok
+test sidecar_process::tests::input_write_is_denied ... ok
+test sidecar_process::tests::issue_count_limit ... ok
+test sidecar_process::tests::invalid_utf8_response ... ok
+test sidecar_process::tests::missing_nullable_text_field ... ok
+test sidecar_process::tests::junction_rejected_with_external_sentinel_unchanged ... ok
+test sidecar_process::tests::missing_ordinal ... ok
+test sidecar_process::tests::missing_units ... ok
+test sidecar_process::tests::no_stdin_reader_times_out ... ok
+test sidecar_process::tests::pre_cancel_does_not_launch ... ok
+test sidecar_process::tests::public_entry_rejects_fake ... ok
+test sidecar_process::tests::real_parser_zero_units_rejected ... ok
+test sidecar_process::tests::request_byte_limit ... ok
+test sidecar_process::tests::resource_absolute_path ... ok
+test sidecar_process::tests::overflow_reaps_live_tree ... ok
+test sidecar_process::tests::resource_byte_limit ... ok
+test sidecar_process::tests::resource_case_collision ... ok
+test sidecar_process::tests::resource_count_limit ... ok
+test sidecar_process::tests::resource_directory_depth_limit ... ok
+test sidecar_process::tests::resource_invalid_utf8 ... ok
+test sidecar_process::tests::resource_parent_path ... ok
+test sidecar_process::tests::resource_prefix_collision ... ok
+test sidecar_process::tests::resource_range_splits_character ... ok
+test sidecar_process::tests::resource_reserved_name ... ok
+test sidecar_process::tests::resource_trailing_dot ... ok
+test sidecar_process::tests::resource_unknown_directory ... ok
+test sidecar_process::tests::resource_unknown_reference ... ok
+test sidecar_process::tests::resource_unknown_file ... ok
+test sidecar_process::tests::resource_unreferenced ... ok
+test sidecar_process::tests::resource_wrong_length ... ok
+test sidecar_process::tests::resource_wrong_sha ... ok
+test sidecar_process::tests::review_broken_pipe_notifies_controller_and_reaps_live_tree ... ok
+test sidecar_process::tests::review_large_resource_timeout_latency ... ok
+test sidecar_process::tests::review_primary_terminate_failure_reaps_real_tree ... ok
+test sidecar_process::tests::review_unit_without_issue ... ok
+test sidecar_process::tests::review_units_preserve_status_and_issue ... ok
+test sidecar_process::tests::second_stdout_json ... ok
+test sidecar_process::tests::start_failure ... ok
+test sidecar_process::tests::stderr_byte_limit ... ok
+test sidecar_process::tests::stdout_byte_limit ... ok
+test sidecar_process::tests::successful_result_holds_resource_and_directory_guards ... ok
+test sidecar_process::tests::review_large_resource_validation_cancel_latency ... ok
+test sidecar_process::tests::total_resource_byte_limit ... ok
+test sidecar_process::tests::trailing_whitespace_is_accepted ... ok
+test sidecar_process::tests::truncated_response ... ok
+test sidecar_process::tests::unit_count_limit ... ok
+test sidecar_process::tests::unknown_capability ... ok
+test sidecar_process::tests::unknown_enum ... ok
+test sidecar_process::tests::unknown_field ... ok
+test sidecar_process::tests::unknown_issue_reference ... ok
+test sidecar_process::tests::unknown_nested_field ... ok
+test sidecar_process::tests::unknown_unit_cannot_be_parsed ... ok
+test sidecar_process::tests::unsupported_capability_version ... ok
+test sidecar_process::tests::unsupported_version ... ok
+test sidecar_process::tests::valid_json_with_nonzero_exit_is_failure ... ok
+test sidecar_process::tests::valid_resources ... ok
+test sidecar_process::tests::wrong_length ... ok
+test sidecar_process::tests::wrong_request_id ... ok
+test sidecar_process::tests::timeout_reaps_live_tree ... ok
+test sidecar_process::tests::wrong_sha ... ok
+test sidecar_process::tests::zero_policy_rejected_without_workspace ... ok
+test soak_model::tests::a_failing_unit_names_the_round_and_the_reproduce_command ... ok
+test soak_model::tests::a_paused_run_schedules_nothing_after_the_gate_closes ... ok
+test soak_model::tests::a_run_without_pause_schedules_every_round ... ok
+test soak_model::tests::bounds_are_enforced_before_anything_runs ... ok
+test soak_model::tests::the_report_states_the_unmet_requirement_and_carries_no_readings ... ok
+test soak_model::tests::the_same_spec_produces_the_same_structure ... ok
+test source_model::tests::failed_utf8_versions_have_only_real_raw_bytes_and_no_spans ... ok
+test source_model::tests::loading_and_validating_real_snapshots_preserves_complete_records ... ok
+test source_model::tests::pending_count_constraint_rejects_a_different_count_without_changing_the_report ... ok
+test source_model::tests::records_reject_invalid_hashes_and_reuse_before_the_first_import ... ok
+test source_model::tests::snapshots_reject_changed_raw_bytes_and_incomplete_span_inventory ... ok
+test source_model::tests::snapshots_reject_unknown_cache_content_and_invalid_owner ... ok
+test source_model::tests::staged_snapshot_validation_is_restricted_to_the_current_writer_directory ... ok
+test sidecar_process::tests::wrong_workspace_identity ... ok
+test source_schema::tests::a_real_sqlite_reader_lock_rolls_back_schema_three_rows_and_database_bytes ... ok
+test source_schema::tests::candidate_upgrade_rejects_a_mismatched_identity_without_rewriting_old_rows ... ok
+test source_schema::tests::exact_schema_routing_rejects_broken_foreign_keys_even_if_writes_disabled_them ... ok
+test source_schema::tests::exact_schema_three_accepts_its_empty_registration_state ... ok
+test source_schema::tests::exact_source_schema_accepts_its_empty_registration_state ... ok
+test source_schema::tests::legacy_upgrade_keeps_schema_three_without_a_downgrade ... ok
+test source_schema::tests::exact_schema_routing_rejects_unknown_tables_indexes_views_triggers_and_constraints ... ok
+test source_schema::tests::pdf_upgrade_of_empty_schema_one_reaches_three_with_the_original_identity ... ok
+test source_schema::tests::schema_one_upgrades_recheck_metadata_after_a_real_write_lock_handoff ... ok
+test source_schema::tests::schema_three_migration_preserves_every_legacy_row_value_identity_and_order ... ok
+test source_schema::tests::schema_three_noop_upgrades_preserve_all_pdf_rows_and_identities ... ok
+test source_schema::tests::schema_three_page_and_resource_columns_reject_wrong_types_and_states ... ok
+test source_schema::tests::schema_three_pdf_imports_bind_source_version_and_parse_without_fabricating_failed_versions ... ok
+test source_schema::tests::schema_three_parse_rows_require_verified_or_real_host_failure_outcomes ... ok
+test source_schema::tests::schema_three_pdf_versions_enforce_acquisition_and_do_not_reinterpret_text_states ... ok
+test source_schema::tests::schema_three_region_columns_enforce_finite_bbox_ranges_and_same_parse_foreign_keys ... ok
+test source_schema::tests::schema_three_preserves_legacy_span_kinds_and_nonempty_ranges ... ok
+test source_schema::tests::source_schema_rejects_unknown_objects_and_changed_constraints ... ok
+test source_schema::tests::schema_upgrades_reject_unknown_versions_and_wrong_version_pairs_without_mutation ... ok
+test source_schema::tests::upgrading_a_candidate_preserves_identity_and_rejects_unknown_schema_atomically ... ok
+test source_write::pdf_tests::pdf_writer_interruption_child ... ok
+test source_write::pdf_tests::real_pdf_writer_process_kill_preserves_old_history_at_five_publish_stages ... ok
+test source_write::pdf_tests::controlled_pdf_write_errors_restore_old_text_and_both_project_files_at_seven_stages ... ok
+test source_write::pdf_tests::real_windows_delete_locks_on_published_pdf_files_preserve_recovery_backups ... ok
+test source_write::tests::a_replaced_project_directory_and_its_original_moved_tree_are_untouched ... ok
+test source_write::tests::actual_abort_snapshot_delete_failure_restores_pair_and_retains_both_backups ... ok
+test source_write::tests::actual_cleanup_delete_failure_keeps_validated_files_marker_and_both_backups ... ok
+test source_write::tests::actual_process_kill_preserves_backups_and_blocks_inspection_at_three_stages ... ok
+test source_write::tests::actual_windows_delete_sharing_failure_restores_old_project ... ok
+test source_write::tests::beginning_then_aborting_preserves_original_project_and_sentinel ... ok
+test source_write::tests::callback_failure_does_not_change_original_database_or_config ... ok
+test source_write::tests::candidate_replacement_and_unknown_transaction_or_root_content_are_preserved ... ok
+test source_write::tests::controlled_failures_at_all_six_stages_restore_exact_original_bytes ... ok
+test source_write::tests::drop_rolls_back_a_known_callback_failure_without_an_explicit_abort ... ok
+test source_write::tests::externally_deleted_backup_is_not_recreated_during_abort ... ok
+test source_write::tests::invalid_internal_ids_or_project_identity_changes_do_not_publish ... ok
+test source_write::tests::preexisting_unowned_cache_and_version_collision_are_never_taken_over ... ok
+test source_write::tests::same_byte_replacement_of_published_targets_keeps_backups_and_marker ... ok
+test source_write::tests::second_commit_preserves_existing_cache_and_raw_only_versions ... ok
+test source_write::tests::successful_commit_upgrades_identity_and_publishes_owned_snapshots ... ok
+test source_write::tests::unknown_published_snapshot_content_is_preserved_without_rollback_deletion ... ok
+test structure_model::tests::a_concept_explained_twice_is_refused ... ok
+test structure_model::tests::a_matching_note_is_consistent_and_a_missing_required_section_is_not ... ok
+test structure_model::tests::a_reference_to_an_unexplained_concept_stays_external_and_never_fakes_a_link ... ok
+test structure_model::tests::an_empty_section_is_reported_even_when_the_title_is_in_place ... ok
+test structure_model::tests::an_escaped_alias_inside_a_table_is_accepted ... ok
+test structure_model::tests::an_out_of_order_section_is_reported_rather_than_reordered ... ok
+test structure_model::tests::an_unescaped_alias_inside_a_table_is_refused ... ok
+test structure_model::tests::generated_links_stay_inside_the_family_and_never_break ... ok
+test template_model::tests::a_concept_without_an_explanation_is_a_finding ... ok
+test template_model::tests::a_reference_inside_the_explanation_note_is_refused ... ok
+test template_model::tests::a_section_out_of_order_is_refused ... ok
+test template_model::tests::a_special_section_needs_a_reason ... ok
+test template_model::tests::a_title_that_does_not_follow_the_pattern_needs_a_reason ... ok
+test template_model::tests::an_empty_declared_section_is_refused ... ok
+test template_model::tests::inconsistent_shapes_need_a_reason ... ok
+test template_model::tests::omission_is_allowed_and_reported ... ok
+test template_model::tests::references_point_at_the_explanation_note ... ok
+test template_model::tests::two_explanations_are_a_finding_not_a_pass ... ok
+test text::tests::blank_unicode_whitespace_is_preserved_in_one_formatting_span ... ok
+test text::tests::consecutive_closed_fences_remain_distinct_blocks ... ok
+test text::tests::deeply_indented_fences_are_text_and_not_code_delimiters ... ok
+test text::tests::empty_or_only_bom_inputs_have_no_phantom_spans ... ok
+test text::tests::enum_names_are_strict_and_all_declared_statuses_round_trip ... ok
+test text::tests::headings_require_one_to_six_hashes_and_at_most_three_spaces ... ok
+test text::tests::invalid_utf8_reports_original_byte_offset_without_replacement ... ok
+test text::tests::matching_longer_tilde_fence_keeps_headings_and_other_markers_as_code ... ok
+test text::tests::mixed_unicode_blocks_have_explicit_byte_and_line_boundaries ... ok
+test text::tests::only_the_first_bom_and_newline_encoding_are_normalized ... ok
+test text::tests::sha256_matches_independent_empty_ascii_and_utf8_vectors ... ok
+test text::tests::short_or_suffixed_closing_fences_do_not_hide_unclosed_code ... ok
+test text::tests::trailing_newlines_do_not_invent_uncovered_or_empty_lines ... ok
+test vault_model::tests::candidate_bytes_must_be_exactly_the_declared_targets ... ok
+test vault_model::tests::delete_and_outside_paths_are_refused_before_any_byte_is_written ... ok
+test vault_model::tests::every_frozen_case_matches_its_declared_decision ... ok
+test vault_model::tests::frozen_author_package_declares_two_notes_one_png_and_one_link ... ok
+test vault_model::tests::impact_categories_are_listed_separately ... ok
+test vault_model::tests::link_parsing_ignores_external_and_anchor_targets ... ok
+test vault_model::tests::rename_that_keeps_the_reference_is_accepted_and_rewrites_both_files ... ok
+test vault_model::tests::rename_without_rewriting_the_reference_is_refused ... ok
+test vault_store::tests::a_caller_path_that_climbs_above_its_own_anchor_is_refused ... ok
+test vault_store::tests::a_dot_dot_caller_path_is_normalized_while_links_stay_refused ... ok
+test vault_store::tests::a_root_without_baseline_stays_read_only ... ok
+test vault_store::tests::a_stranger_vault_is_refused_and_keeps_every_byte ... ok
+test vault_store::tests::adopt_freezes_baseline_and_the_initial_vault_is_a_byte_copy ... ok
+test vault_store::tests::adopt_leaves_no_root_when_the_author_baseline_disagrees ... ok
+test vault_store::tests::adopt_refuses_an_existing_root_or_a_missing_parent ... ok
+test vault_store::tests::status_writes_no_bytes_at_all ... ok
+test vault_store::tests::unknown_entries_sidecars_and_empty_dirs_are_refused_without_changes ... ok
+test vault_update::tests::a_candidate_changed_after_approval_leaves_the_vault_untouched ... ok
+
+running 1 test
+test source_write::pdf_tests::unregistered_files_at_pdf_publication_preserve_human_bytes_and_recovery_backups ... ok
+test vault_update::tests::an_edit_after_approval_invalidates_the_approval ... ok
+test vault_update::tests::crash_worker ... ignored
+test vault_update::tests::a_real_abort_mid_commit_reports_needs_recovery_and_then_resumes ... ok
+test vault_update::tests::plan_and_approve_refuse_to_overwrite_existing_files ... ok
+test vault_update::tests::every_frozen_case_decision_is_reproduced ... ok
+test vault_update::tests::publishing_keeps_unrelated_content_and_obsidian_config_byte_identical ... ok
+test vault_update::tests::publishing_a_rename_writes_adds_and_deletes ... ok
+test vault_update::tests::publishing_the_edit_body_case_lands_the_candidate_bytes ... ok
+test vault_update::tests::unsafe_write_spellings_leave_the_entire_managed_root_unchanged ... ok
+test visual_capabilities::tests::flow_requires_the_measured_renderer_and_label_configuration ... ok
+test visual_capabilities::tests::math_requires_an_exact_measured_pair ... ok
+test visual_capabilities::tests::pele_requires_the_exact_engine_source_and_svg_label_configuration ... ok
+test visual_capabilities::tests::svg_does_not_infer_support_from_a_newer_version ... ok
+test vault_update::tests::rollback_emits_a_reverse_plan_and_detects_later_manual_edits ... ok
+
+test result: ok. 708 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 180.13s
+
+     Running unittests src\main.rs (target\debug\deps\noetome-7236d90108b0844d.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests\audit.rs (target\debug\deps\audit-70cc0f515d66cc1a.exe)
+
+running 18 tests
+test a_changed_frozen_body_is_detected_before_any_report_is_written ... ok
+test a_concept_without_a_marker_is_reported_as_unexplained ... ok
+test adopt_freezes_the_notes_and_only_writes_control ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test a_link_to_a_missing_heading_is_reported_and_the_report_is_still_written ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test an_extra_entry_in_the_control_directory_is_refused ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test build_refuses_an_output_inside_the_audit_root ... ok
+test list_returns_machine_readable_counts ... ok
+test status_reports_the_verdict_and_the_three_ratios ... ok
+test the_explanations_file_lists_one_marker_per_concept ... ok
+test the_links_file_matches_the_frozen_links ... ok
+test the_markdown_keeps_the_ratios_and_the_boundaries_visible ... ok
+test two_markers_for_one_concept_are_reported_as_duplicates ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.44s
+
+     Running tests\bench.rs (target\debug\deps\bench-26a922ffe6614a1f.exe)
+
+running 13 tests
+test a_missing_parent_directory_is_reported_as_io ... ok
+test an_existing_output_root_is_refused_without_touching_it ... ok
+test an_unparsable_number_is_refused ... ok
+test bounds_are_refused_before_anything_is_written ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test a_different_parameter_changes_the_structure ... ok
+test the_output_root_holds_exactly_four_files ... ok
+test the_report_states_the_synthetic_boundary_without_any_clock_reading ... ok
+test the_summary_prints_the_stage_percentiles_and_the_coverage ... ok
+test the_three_hundred_note_case_matches_the_written_expectation ... ok
+test the_timings_are_internally_consistent_and_cover_every_stage ... ok
+test two_runs_with_the_same_parameters_are_byte_identical_apart_from_the_timings ... ok
+test the_three_thousand_note_target_really_runs ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.93s
+
+     Running tests\change.rs (target\debug\deps\change-dee2f5fc57b6a359.exe)
+
+running 19 tests
+test a_canonical_lock_makes_a_move_unsafe ... ok
+test a_changed_declaration_is_detected_before_any_report_is_written ... ok
+test a_directory_lock_turns_a_move_into_a_candidate ... ok
+test a_file_lock_turns_a_rename_into_a_candidate ... ok
+test a_missed_dependency_is_reported_and_the_report_is_written ... ok
+test a_split_without_a_partition_is_refused ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test adopt_freezes_the_declaration_and_only_writes_control ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test an_unexpected_touch_is_reported ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test status_accepts_the_same_root_through_a_relative_path_without_writing ... ok
+test every_unchanged_note_keeps_its_declared_fingerprint ... ok
+test status_and_list_report_the_same_plan_without_writing ... ok
+test the_refactor_lists_every_reference_change ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.71s
+
+     Running tests\cli.rs (target\debug\deps\cli-6b9e187065ed2ac8.exe)
+
+running 4 tests
+test help_succeeds_without_writing_files ... ok
+test non_unicode_windows_argument_is_rejected_without_panicking_or_writing_files ... ok
+test version_matches_package_without_writing_files ... ok
+test invalid_arguments_are_actionable_input_errors_without_writing_files ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+
+     Running tests\compile.rs (target\debug\deps\compile-2ded226a4ba6619b.exe)
+
+running 12 tests
+test closed_stdout_after_real_compile_keeps_committed_publication_authority ... ok
+test author_reviewed_table_alias_variant_emits_escaped_real_canonical_link ... ok
+test invalid_fixture_preflight_never_creates_output_or_false_publication ... ok
+test existing_targets_and_human_edited_published_vault_are_never_overwritten ... ok
+test literal_ascii_punctuation_is_escaped_without_changing_required_content ... ok
+test malformed_fixture_and_invalid_utf8_fail_before_output_allocation ... ok
+test parameter_separator_supports_dash_paths_and_extra_arguments_remain_read_only ... ok
+test overlapping_input_output_roots_are_rejected_but_component_siblings_are_valid ... ok
+test real_windows_source_lock_and_junctions_do_not_write_external_targets ... ok
+test valid_case_compile_creates_published_output_only_in_selected_new_root ... ok
+test windows_path_controls_are_rejected_before_any_selected_root_is_created ... ok
+test two_new_roots_keep_note_bytes_and_identities_stable_with_independent_runs ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.25s
+
+     Running tests\diagnostics.rs (target\debug\deps\diagnostics-d296325b636e96d7.exe)
+
+running 18 tests
+test a_credential_shaped_preview_is_refused ... ok
+test adopt_freezes_the_declaration_and_only_writes_control ... ok
+test a_changed_declaration_is_detected_before_any_report_is_written ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test an_absolute_path_pasted_into_a_preview_is_refused ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test an_unknown_selection_and_an_empty_category_are_arguments ... ok
+test an_extra_entry_in_the_control_directory_is_refused ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test selecting_a_sensitive_category_without_consent_is_refused ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test status_and_list_report_the_same_export_without_writing ... ok
+test the_parsed_command_round_trips ... ok
+test the_markdown_lists_the_excluded_category_and_the_boundaries ... ok
+test unselected_categories_are_reported_not_silently_filled ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.53s
+
+     Running tests\extraction.rs (target\debug\deps\extraction-c6f03efa29ea272e.exe)
+
+running 3 tests
+test ordinary_fake_runtime_cancel_does_not_publish ... ok
+test ordinary_fake_rejects_chinese_interior_byte_without_candidates ... ok
+test ordinary_fake_uses_real_source_and_preserves_project ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.82s
+
+     Running tests\extraction_api.rs (target\debug\deps\extraction_api-287b2fa6d4463d65.exe)
+
+running 7 tests
+test ordinary_api_rate_limit_is_one_attempt_without_retry ... ok
+test ordinary_api_sends_one_structured_request_and_validates_author_candidate ... ok
+test ordinary_api_zero_budget_stops_before_any_http_request ... ok
+test ordinary_chat_local_http_maps_usage_and_accepts_author_candidates ... ok
+test ordinary_chat_selected_zero_budget_keeps_source_and_disabled_thinking_request ... ok
+test ordinary_selected_gateway_rejects_other_authorities_models_and_paths ... ok
+test ordinary_selected_gateway_zero_budget_keeps_model_strategy_and_never_calls ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.81s
+
+     Running tests\extraction_verify.rs (target\debug\deps\extraction_verify-9bb7df8c42e80a9a.exe)
+
+running 24 tests
+test author_gold_cannot_use_substring_of_wrong_source_value ... ok
+test author_exception_passes_ordinary_cli ... ok
+test broken_concept_link_fails ... ok
+test existing_embedded_and_hardlinked_paths_rejected ... ok
+test excluded_pending_and_review_are_not_passed ... ok
+test failed_primary_cannot_borrow_duplicate_quality_passes ... ok
+test fix1_same_id_primary_checks_cannot_borrow_passes ... ok
+test fix1_duplicate_json_keys_keep_actual_counts_unknown ... ok
+test fix1_source_and_unknown_review_preserve_known_condition_failure ... ok
+test invalid_evidence_sha_cannot_report_evidence_passed ... ok
+test irrelevant_quote_and_extra_body_assertions_fail ... ok
+test fix1_workflow_preserves_observed_category_failures ... ok
+test missing_both_condition_fields_fails ... ok
+test malformed_candidate_preserves_actual_objects_and_source_mismatch_quality ... ok
+test missing_both_unit_fields_fails ... ok
+test missing_exception_fails ... ok
+test omitted_candidate_is_unprocessed ... ok
+test original_gold1_split_concepts_and_context_pass_without_repair ... ok
+test real_needs_review_source_remains_review ... ok
+test semantic_duplicate_new_id_fails ... ok
+test right_quote_wrong_fact_fails ... ok
+test strict_candidate_and_evidence_errors_have_reports ... ok
+test unknown_author_value_stays_review_and_nonzero_utf8_span_passes ... ok
+test strict_review_gold_decision_and_wrapper_inputs_are_rejected ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.96s
+
+     Running tests\fixture.rs (target\debug\deps\fixture-1ba4e494f6b4b4a5.exe)
+
+running 20 tests
+test canonical_targets_and_title_paths_must_be_unique_and_unambiguous ... ok
+test complete_raw_ir_binding_detects_whitespace_change_even_with_same_json_fields ... ok
+test complete_coverage_rejects_missing_duplicate_self_cycle_and_fake_exclusions ... ok
+test evidence_ranges_require_actual_utf8_boundaries_and_slice_sha ... ok
+test independent_expected_catches_required_false_and_content_or_qualifier_drift ... ok
+test independent_expected_fixes_table_labels_missing_values_and_cell_kind ... ok
+test missing_atom_and_evidence_and_refutes_only_cannot_validate_required_knowledge ... ok
+test malformed_contract_versions_unknown_fields_and_missing_fields_are_explicit_input_errors ... ok
+test note_output_paths_reject_traversal_reserved_names_and_windows_ambiguity ... ok
+test real_windows_exclusive_source_lock_fails_without_any_written_bytes ... ok
+test real_windows_root_and_source_junctions_never_widen_selected_inputs ... ok
+test note_plan_requires_content_in_each_mapped_paragraph_list_item_and_table_cell ... ok
+test review_regression_definition_moved_away_cannot_leave_a_canonical_value_only_section ... ok
+test review_regression_full_reviewed_evidence_cannot_shrink_to_one_utf8_character ... ok
+test review_regression_required_atoms_inside_html_or_hidden_comments_are_not_displayed ... ok
+test review_regression_unplanned_optional_atoms_still_require_plain_text ... ok
+test review_regression_raw_wiki_and_html_in_all_display_fields_and_aliases_are_rejected ... ok
+test selected_input_paths_reject_traversal_absolute_ads_collisions_and_reserved_names ... ok
+test source_mismatch_stops_later_checks_and_does_not_slice_declared_bad_boundaries ... ok
+test valid_fixture_reports_only_contract_success_and_preserves_all_inputs ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.99s
+
+     Running tests\formula_fidelity.rs (target\debug\deps\formula_fidelity-0a610c63724a2bcf.exe)
+
+running 7 tests
+test attachment_fingerprints_png_contents_and_region_bounds_are_not_trusted_from_headers ... ok
+test claimed_but_unmeasured_target_versions_cannot_enable_native_math ... ok
+test existing_output_collision_preserves_every_existing_file ... ok
+test fraction_compatibility_is_decided_from_original_source_not_transcription ... ok
+test all_frozen_author_cases_run_through_ordinary_cli_and_preserve_source_bytes ... ok
+test malformed_source_and_transcription_cannot_succeed_even_when_synchronized ... ok
+test strict_manifest_semantics_and_profile_reject_missing_null_duplicate_and_unknown_fields ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.09s
+
+     Running tests\image_fidelity.rs (target\debug\deps\image_fidelity-89ee5c049550f522.exe)
+
+running 7 tests
+test existing_output_is_never_adopted_or_overwritten ... ok
+test contradictory_known_geometry_and_critical_unknowns_block_instead_of_fallback ... ok
+test full_png_decode_exact_selected_inventory_and_geometry_bounds_are_required ... ok
+test missing_nullable_duplicate_unknown_and_wrongly_typed_fields_are_rejected ... ok
+test frozen_author_cases_run_ordinary_cli_with_originals_and_exact_decisions ... ok
+test observation_and_declared_data_availability_cannot_enable_synthetic_curve_redraw ... ok
+test self_reported_unmeasured_targets_use_original_image ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.14s
+
+     Running tests\index.rs (target\debug\deps\index-997733599a677aec.exe)
+
+running 18 tests
+test a_note_inside_the_runtime_area_is_refused ... ok
+test a_note_with_citation_marks_in_the_body_is_refused ... ok
+test a_source_heading_that_does_not_exist_is_refused ... ok
+test a_changed_frozen_body_is_detected_before_any_report_is_written ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test adopt_freezes_the_output_area_and_leaves_the_runtime_area_alone ... ok
+test an_extra_entry_in_the_control_directory_is_refused ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test list_returns_machine_readable_counts ... ok
+test status_reports_the_areas_the_citation_burden_and_the_relocation ... ok
+test the_index_matches_the_frozen_files_and_source_map ... ok
+test the_markdown_keeps_the_areas_and_the_boundaries_visible ... ok
+test the_relocation_finds_renamed_files_and_asks_for_a_rebuild_on_an_edit ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.20s
+
+     Running tests\journal.rs (target\debug\deps\journal-9e52c574ced29dbd.exe)
+
+running 19 tests
+test a_credential_shaped_string_refuses_the_whole_declaration ... ok
+test a_duplicate_sequence_is_refused ... ok
+test a_file_outside_the_task_objects_is_refused ... ok
+test a_task_without_sources_is_refused_before_the_root_exists ... ok
+test a_changed_declaration_is_detected_before_any_report_is_written ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test adopt_freezes_the_declaration_and_only_writes_control ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test an_extra_entry_in_the_control_directory_is_refused ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test every_failure_localizes_all_four_layers ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test status_and_list_report_the_same_journal_without_writing ... ok
+test the_journal_orders_all_three_tables_by_task_then_sequence ... ok
+test the_parsed_command_round_trips ... ok
+test the_markdown_names_the_layers_and_the_boundary ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.60s
+
+     Running tests\knowledge_conflicts.rs (target\debug\deps\knowledge_conflicts-a7159a87bd6fc247.exe)
+
+running 16 tests
+test broken_counter_reference_is_input_failure_before_any_conflict_report ... ok
+test counter_evidence_in_nonzero_utf8_unit_keeps_absolute_positions ... ok
+test explicit_not_applicable_scope_can_contain_a_true_conflict ... ok
+test frozen_same_context_conflict_is_reported_after_successful_source_review ... ok
+test independent_unknown_condition_does_not_taint_complementary_property ... ok
+test conditions_history_and_exact_decimal_equality_avoid_false_conflicts ... ok
+test large_decimal_inequality_is_compared_exactly_without_float_rounding ... ok
+test input_order_and_display_names_never_select_a_winner ... ok
+test majority_support_retains_all_three_parties_and_two_conflict_pairs ... ok
+test missing_support_is_not_promoted_to_a_legitimate_viewpoint ... ok
+test output_collision_and_case_overlap_preserve_human_content ... ok
+test qualifier_links_preserve_relations_without_duplicating_original_evidence ... ok
+test real_counter_evidence_is_preserved_with_its_original_link_and_position ... ok
+test source_counter_to_the_claim_is_retained_without_a_fake_verified_verdict ... ok
+test unresolved_conflict_does_not_hide_the_passed_complement ... ok
+test missing_or_incomparable_evidence_is_located_without_inventing_values ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 60.05s
+
+     Running tests\knowledge_coordinate.rs (target\debug\deps\knowledge_coordinate-20d3d09c317dadc6.exe)
+
+running 25 tests
+test actual_junction_case_and_output_parent_are_rejected ... ok
+test copied_actual_unit_rejected ... ok
+test author_condition_and_unit_differences_require_review ... ok
+test final_review_original_gold_author_cannot_be_discarded ... ok
+test final_review_original_gold_author_obeys_text_limit ... ok
+test final_review_saved_owner_version_is_schema_exit_two ... ok
+test knowledge_help_and_invalid_arguments_are_filesystem_free ... ok
+test forged_candidate_and_ir_with_coherent_all_fingerprints_fail_real_assessment ... ok
+test legal_two_source_case_has_one_fact ... ok
+test ordinary_cli_coalesces_duplicate_preserving_three_sources ... ok
+test mapping_missing_unknown_duplicate_wrong_role_rejected ... ok
+test output_collision_overlap_hardlink_and_junction_preserve_inputs ... ok
+test reordered_inputs_mapping_and_display_names_preserve_ids ... ok
+test repinned_fake_old_counts_and_markdown_rejected ... ok
+test same_sha_binding_swap_rejected ... ok
+test repinned_ir_candidate_measurement_and_extra_evidence_rejected ... ok
+test same_source_distinct_registered_versions_require_review ... ok
+test saved_bundle_extra_inventory_is_schema_exit_two ... ok
+test saved_bundle_invalid_type_is_schema_exit_two ... ok
+test saved_bundle_malformed_json_is_schema_exit_two ... ok
+test saved_bundle_missing_nullable_is_schema_exit_two ... ok
+test saved_bundle_nested_duplicate_key_is_schema_exit_two ... ok
+test saved_bundle_unknown_field_is_schema_exit_two ... ok
+test saved_bundle_unsupported_version_is_schema_exit_two ... ok
+test strict_schema_extra_duplicate_nullable_and_inventory_rejected ... ok
+
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 53.80s
+
+     Running tests\knowledge_presentation.rs (target\debug\deps\knowledge_presentation-af319688dc0441d4.exe)
+
+running 8 tests
+test cross_atom_concept_role_reuse_preserves_source_backed_paragraph ... ok
+test legacy_source_reviews_coordinate_and_present_without_context_upgrade_or_lost_qualifiers ... ok
+test ordinary_present_chooses_table_after_source_review_and_successful_coordination ... ok
+test present_accepts_delimited_four_paths_and_new_unicode_vault_path ... ok
+test present_preserves_existing_output_and_rejects_input_descendant_targets ... ok
+test present_preserves_multiline_display_name_and_stable_detail_link ... ok
+test every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules has been running for over 60 seconds
+test present_reopens_saved_coordination_and_original_source_review_materials ... ok
+test every_frozen_author_case_obeys_table_paragraph_or_unresolved_preview_rules ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 85.49s
+
+     Running tests\knowledge_variants.rs (target\debug\deps\knowledge_variants-873ae943a55c9296.exe)
+
+running 27 tests
+test combined_context ... ok
+test conditional_variants_preserve_all_author_fields ... ok
+test background_must_be_complete_adjacent_and_fact_unique ... ok
+test conditions_and_exceptions_cannot_be_coherently_deleted ... ok
+test display_names_and_all_manifest_order_do_not_change_identity ... ok
+test exception_difference ... ok
+test history ... ok
+test history_day ... ok
+test mixed_state ... ok
+test declared_context_must_match_actual_source ... ok
+test multiple_supports_keep_original_order_and_exact_context_set ... ok
+test nonzero_source_unit_rejects_support_covering_only_fact ... ok
+test nonzero_source_unit_preserves_frozen_history_and_absolute_context ... ok
+test nonzero_utf8_context_range_keeps_actual_source_prefix ... ok
+test not_applicable ... ok
+test overlapping_time ... ok
+test output_collisions_and_overlap_preserve_existing_content ... ok
+test same_source_condition ... ok
+test same_source_history ... ok
+test same_source_undated ... ok
+test support_must_cover_both_background_and_fact ... ok
+test time_nullable_contract_and_gregorian_values_are_enforced ... ok
+test undated_difference ... ok
+test schema_two_strict_fields_enums_and_versions ... ok
+test unit_difference ... ok
+test unknown_condition ... ok
+test unknown_and_not_applicable_cannot_be_exchanged ... ok
+
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 130.84s
+
+     Running tests\migrate.rs (target\debug\deps\migrate-ced3e4ed9494c230.exe)
+
+running 18 tests
+test a_missing_target_is_refused ... ok
+test adopt_freezes_before_and_after_notes_and_only_writes_control ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test a_changed_frozen_body_is_detected_before_any_report_is_written ... ok
+test an_ambiguous_target_is_refused ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test an_object_whose_declared_position_is_missing_is_refused ... ok
+test an_unescaped_alias_in_a_table_is_refused ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test an_extra_entry_in_the_control_directory_is_refused ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test every_reference_resolves_to_the_same_object_after_the_move ... ok
+test list_returns_machine_readable_counts ... ok
+test status_reports_each_after_note_and_the_identity_counts ... ok
+test the_report_and_status_keep_the_redirect_position_visible ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.42s
+
+     Running tests\outline.rs (target\debug\deps\outline-dee892b392d64d29.exe)
+
+running 13 tests
+test adopt_freezes_the_four_documents_and_only_writes_control ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test a_changed_frozen_body_is_detected_before_any_report_is_written ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test adopt_refuses_a_package_whose_document_bytes_were_changed ... ok
+test an_empty_foreign_directory_is_unknown_root_and_an_extra_entry_is_integrity ... ok
+test an_extra_file_in_the_control_directory_is_refused ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test status_reports_counts_warnings_and_zero_calls ... ok
+test list_returns_machine_readable_counts ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.89s
+
+     Running tests\pdf_parse.rs (target\debug\deps\pdf_parse-8acd4555f9573a71.exe)
+
+running 7 tests
+test existing_root_unreadable_input_and_unknown_workspace_entries_never_succeed ... ok
+test inspect_uses_saved_raw_after_input_moves_and_rejects_changed_text ... ok
+test missing_or_relative_runtime_is_explicit_failure_without_creating_a_sandbox ... ok
+test multicodepoint_unicode_mapping_preserves_one_edge_space_and_remains_reviewable ... ok
+test location_and_body_mutations_fail_even_after_artifact_hashes_are_updated ... ok
+test real_cli_parses_fixed_single_and_multiple_pages_with_actual_positions ... ok
+test real_boundary_matrix_preserves_physical_pages_and_honest_nonzero_status ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.23s
+
+     Running tests\pdf_source.rs (target\debug\deps\pdf_source-2e6290d14904eb2e.exe)
+
+running 19 tests
+test actual_pdf_cache_junction_is_rejected_and_its_target_stays_unchanged ... ok
+test actual_hardlinked_pdf_resource_is_rejected_even_with_identical_bytes ... ok
+test actual_windows_exclusive_pdf_lock_creates_no_version_and_unlock_recovers ... ok
+test changed_raw_and_sql_resource_or_page_index_are_rejected_without_writes ... ok
+test configuration_schema_mismatch_or_unknown_schema_never_implicitly_migrates ... ok
+test cross_table_duplicate_import_rowid_or_uuid_cannot_hide_behind_text_inspect ... ok
+test complete_raw_above_parser_resource_limit_retains_a_retryable_original_version ... ok
+test damaged_encrypted_partial_and_review_keep_raw_and_honest_page_counts ... ok
+test missing_and_oversized_pdf_record_only_failed_import_then_valid_input_recovers ... ok
+test missing_runtime_keeps_acquired_raw_and_failed_attempt_then_recovers_readonly ... ok
+test explicit_source_id_isolates_same_sha_versions_and_parse_evidence ... ok
+test real_windows_database_replace_lock_preserves_old_text_and_config_bytes ... ok
+test mixed_text_and_pdf_imports_share_a_unique_increasing_sql_rowid_sequence ... ok
+test reparse_on_schema1_creates_one_fresh_real_attempt ... ok
+test schema1_pdf_import_registers_authored_pages_and_exact_ten_tables ... ok
+test schema2_upgrade_preserves_all_old_rows_reports_snapshots_and_text_semantics ... ok
+test same_bytes_repeat_and_rename_reuse_version_parse_without_new_evidence ... ok
+test semantic_region_and_utf8_tamper_fail_even_when_all_outer_hashes_match ... ok
+test unknown_pdf_cache_and_snapshot_entries_are_never_accepted_or_cleaned ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 107.56s
+
+     Running tests\plan.rs (target\debug\deps\plan-4086c2243abcce07.exe)
+
+running 19 tests
+test a_chain_split_without_a_reason_is_refused ... ok
+test a_concept_without_an_atom_in_the_primary_goal_is_refused ... ok
+test a_prerequisite_cycle_is_refused_before_the_root_exists ... ok
+test a_changed_declaration_is_detected_before_any_report_is_written ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test adopt_freezes_the_declaration_and_only_writes_control ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test an_atom_cannot_be_moved_into_another_topic ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test an_extra_entry_in_the_control_directory_is_refused ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test every_atom_has_exactly_one_position ... ok
+test status_and_list_report_the_same_plan_without_writing ... ok
+test the_markdown_shows_the_order_the_chains_and_the_boundaries ... ok
+test the_plan_records_the_teaching_order_it_used ... ok
+test the_secondary_goals_link_to_the_primary_note_instead_of_copying_atoms ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.70s
+
+     Running tests\process_flow.rs (target\debug\deps\process_flow-c7ecf023f81c5f47.exe)
+
+running 6 tests
+test command_parsing_keeps_os_paths_and_requires_exact_new_entrypoint_arity ... ok
+test hardlinked_profile_and_linked_case_ancestors_are_rejected ... ok
+test new_roots_collisions_and_profile_reuse_are_checked_without_writes ... ok
+test changed_saved_review_and_synchronized_gold_are_rebuilt_against_actual_source ... ok
+test strict_case_gold_and_profile_fields_cannot_be_relaxed ... ok
+test ordinary_cli_covers_all_frozen_sources_graphs_fallbacks_and_semantic_blocks ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.45s
+
+     Running tests\project.rs (target\debug\deps\project-761d3b42217483ee.exe)
+
+running 13 tests
+test case_insensitive_windows_sidecar_names_remain_blocking_and_untouched ... ok
+test active_rollback_and_wal_journals_are_blocked_without_touching_sqlite_files ... ok
+test existing_targets_and_invalid_parents_preserve_all_content ... ok
+test corrupt_or_mismatched_databases_are_rejected_without_migration ... ok
+test initialization_persists_matching_identity_schema_and_empty_state ... ok
+test inspection_works_with_readonly_files_and_windows_write_sharing_denied ... ok
+test incomplete_layouts_are_reported_and_not_cleaned_by_readonly_inspection ... ok
+test project_help_and_invalid_syntax_have_no_filesystem_side_effects ... ok
+test relative_and_dash_prefixed_paths_are_supported_and_projects_can_move ... ok
+test malformed_configs_are_rejected_without_repair_or_path_escape ... ok
+test supported_schema_versions_must_match_without_migration ... ok
+test writing_directory_is_incomplete_and_preserved_by_public_inspection ... ok
+test windows_junction_roots_and_parents_are_rejected_without_writing_the_target ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.19s
+
+     Running tests\relevance.rs (target\debug\deps\relevance-a0905e523c0426c9.exe)
+
+running 17 tests
+test a_missing_prerequisite_is_refused_rather_than_quietly_omitted ... ok
+test adopt_freezes_three_sources_and_only_writes_control ... ok
+test a_changed_frozen_body_is_detected_before_any_report_is_written ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test an_unregistered_or_unknown_reason_is_refused ... ok
+test an_extra_entry_in_the_control_directory_is_refused ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test excluding_an_atom_the_level_needs_is_refused ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test list_returns_machine_readable_counts ... ok
+test status_reports_counts_reasons_and_both_densities ... ok
+test the_markdown_record_lists_counts_reasons_and_boundaries ... ok
+test the_minimal_and_detailed_densities_keep_the_same_atoms_and_conditions ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.13s
+
+     Running tests\research.rs (target\debug\deps\research-779696ec5ea143e6.exe)
+
+running 14 tests
+test adopt_refuses_existing_root_and_keeps_site ... ok
+test adopt_refuses_foreign_directory_layout ... ok
+test adopt_freezes_authorized_set_and_creates_only_control ... ok
+test corrupted_ledger_is_refused_and_site_preserved ... ok
+test counters_match_frozen_expectations ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test decide_cannot_create_candidates ... ok
+test merge_transfers_evidence_and_keeps_must_do_unchanged ... ok
+test observations_queue_out_of_scope_without_widening_must_do ... ok
+test observe_refuses_malformed_input_without_touching_queue ... ok
+test queue_survives_process_restart ... ok
+test rejected_topic_is_blocked_without_new_reason_and_reopens_with_one ... ok
+test tampered_owner_record_is_refused_and_site_preserved ... ok
+test unknown_files_inside_control_are_refused ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.41s
+
+     Running tests\retention.rs (target\debug\deps\retention-932f0792d71693f5.exe)
+
+running 18 tests
+test a_policy_that_would_expire_a_published_requirement_is_refused_before_the_root_exists ... ok
+test adopt_freezes_the_declaration_and_only_writes_control ... ok
+test a_changed_declaration_is_detected_before_any_report_is_written ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test an_extra_entry_in_the_control_directory_is_refused ... ok
+test an_expired_entry_is_deleted_and_a_fresh_one_is_kept ... ok
+test an_unknown_category_a_missing_requirement_and_a_duplicate_entry_are_arguments ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test published_requirements_are_kept_and_listed_as_protected ... ok
+test status_and_list_report_the_same_plan_without_writing ... ok
+test the_impact_of_each_deletion_is_spelled_out ... ok
+test the_parsed_command_round_trips ... ok
+test the_markdown_shows_the_actions_the_impact_and_the_boundaries ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.60s
+
+     Running tests\retrieval.rs (target\debug\deps\retrieval-c6a5cc28c2cbf81e.exe)
+
+running 14 tests
+test adopt_refuses_missing_root_and_corpus_mismatch_keeps_site ... ok
+test adopt_freezes_corpus_plan_and_budget_without_spending ... ok
+test corrupted_ledger_and_foreign_layout_are_refused_without_touching_site ... ok
+test duplicate_and_conflict_and_external_outcomes_are_distinguished ... ok
+test exhausted_budget_stops_scheduling_and_keeps_pending_work ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test interrupted_reservation_is_settled_once_without_double_spending ... ok
+test ledger_survives_process_restart_and_matches_frozen_expectations ... ok
+test owner_tampering_is_refused_with_research_specific_code ... ok
+test pause_blocks_scheduling_and_resume_restores_it ... ok
+test all_seven_termination_reasons_are_supported_and_recorded_once ... ok
+test step_reserves_before_scanning_and_records_every_attempt ... ok
+test unauthorized_scope_is_rejected_before_any_root_exists ... ok
+test termination_without_evidence_is_refused ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 18.62s
+
+     Running tests\revision.rs (target\debug\deps\revision-3dcda45476651dec.exe)
+
+running 12 tests
+test adopt_freezes_corpus_atoms_and_renders_every_representation ... ok
+test adopt_refuses_existing_root_and_corpus_mismatch_keeps_site ... ok
+test corrupted_ledger_and_foreign_layout_are_refused_without_touching_site ... ok
+test exceeding_the_revision_limit_escalates_and_blocks_automation ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test gap_requires_sources_and_reports_the_exact_impact_set ... ok
+test noop_revision_is_refused_without_burning_a_version ... ok
+test overturn_without_new_evidence_is_refused_without_touching_bytes ... ok
+test owner_tampering_is_refused_with_revision_specific_code ... ok
+test revision_creates_a_new_ir_version_and_recompiles_only_dependents ... ok
+test sourceless_revision_is_marked_pending_and_not_published ... ok
+test whole_frozen_sequence_survives_a_restart_and_matches_expectations ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.65s
+
+     Running tests\scale.rs (target\debug\deps\scale-b73b59cbde54a2e5.exe)
+
+running 12 tests
+test a_missing_parent_directory_is_reported_as_io ... ok
+test a_different_parameter_changes_the_structure ... ok
+test an_existing_output_root_is_refused_without_touching_it ... ok
+test an_unparsable_number_is_refused ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test page_bounds_are_refused_before_anything_is_written ... ok
+test the_eight_page_case_matches_the_written_expectation ... ok
+test the_output_root_holds_exactly_four_files ... ok
+test the_report_states_the_synthetic_boundary_and_the_unmet_limit ... ok
+test the_summary_prints_the_measured_numbers_and_the_unmet_cap ... ok
+test two_runs_with_the_same_parameters_are_byte_identical_apart_from_the_timings ... ok
+test a_thousand_pages_really_run_through_the_text_pipeline ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.01s
+
+     Running tests\scan_formula.rs (target\debug\deps\scan_formula-1951043bae09fe8b.exe)
+
+running 16 tests
+test actual_response_byte_limit_retains_only_bounded_received_bytes ... ok
+test artificial_post_contains_only_exact_inline_source_and_preserves_raw_tex ... ok
+test authorized_zero_budget_has_no_key_read_or_network_and_keeps_source_audit ... ok
+test casefold_colliding_source_references_reject_before_output ... ok
+test capability_byte_and_money_limits_stop_before_any_post ... ok
+test greek_casefold_aliases_reject_before_output ... ok
+test credential_echo_nested_or_malformed_is_omitted_before_persistence ... ok
+test invalid_or_over_budget_usage_never_accepts_recognition ... ok
+test http_errors_partial_framing_and_timeouts_keep_bounded_receipts_without_retry ... ok
+test literal_escape_test_keys_and_mixed_unicode_tails_are_omitted_before_persistence ... ok
+test resource_config_inventory_collision_and_hardlink_protections_precede_network ... ok
+test strict_four_path_help_and_argument_rules ... ok
+test metadata_usage_survives_length_refusal_and_invalid_transcription ... ok
+test unknown_source_states_and_actual_model_uncertainty_block_success ... ok
+test wrong_symbol_sign_and_extra_bar_block_without_text_repair ... ok
+test strict_transcription_and_envelope_reject_missing_duplicate_and_invalid_fields ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.37s
+
+     Running tests\sidecar.rs (target\debug\deps\sidecar-c63f48b196cb1f2f.exe)
+
+running 3 tests
+test cli_has_no_fake_command_or_flag ... ok
+test project_import_cannot_take_fake_producer_flag ... ok
+test production_library_rejects_actual_fake_process ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests\soak.rs (target\debug\deps\soak-007cd7913ad45c66.exe)
+
+running 14 tests
+test a_missing_parent_directory_is_reported_as_io ... ok
+test a_long_run_keeps_recording_rounds_without_unbounded_growth ... ok
+test an_existing_output_root_is_refused_without_touching_it ... ok
+test an_unparsable_number_is_refused ... ok
+test bounds_are_refused_before_anything_is_written ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test the_eight_round_case_matches_the_written_expectation ... ok
+test the_output_root_holds_exactly_four_files ... ok
+test the_paused_case_refuses_every_round_and_never_schedules_after_the_gate ... ok
+test the_report_states_the_unmet_requirement_and_carries_no_readings ... ok
+test the_summary_prints_the_counts_the_pause_and_the_unmet_requirement ... ok
+test the_timings_are_internally_consistent ... ok
+test two_runs_with_the_same_parameters_are_byte_identical_apart_from_the_timings ... ok
+test a_pause_in_the_middle_of_the_run_stops_scheduling_without_exception ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.17s
+
+     Running tests\source.rs (target\debug\deps\source-7f4a8cf8941f10d4.exe)
+
+running 19 tests
+test actual_exclusive_windows_source_lock_records_failure_without_a_fake_version ... ok
+test actual_windows_database_replace_block_preserves_all_previous_project_bytes ... ok
+test chinese_bom_and_mixed_newlines_preserve_full_byte_and_line_locations ... ok
+test changed_content_creates_new_version_without_rewriting_old_evidence ... ok
+test existing_write_marker_and_unknown_snapshot_content_are_never_cleaned_or_overwritten ... ok
+test empty_and_bom_only_sources_have_zero_spans_without_fake_knowledge_completion ... ok
+test invalid_or_unknown_source_and_import_ids_do_not_change_project_content ... ok
+test explicit_source_identity_survives_content_hash_shared_with_another_source ... ok
+test missing_selected_file_records_an_attempt_without_a_fake_version ... ok
+test invalid_utf8_records_only_a_real_raw_version_and_remains_inspectable ... ok
+test project_source_and_snapshot_junctions_do_not_write_their_targets ... ok
+test same_display_name_with_other_content_does_not_merge_source_identity ... ok
+test repeated_and_renamed_files_reuse_versions_and_span_identity ... ok
+test source_exceeding_read_bound_records_no_truncated_content_version ... ok
+test source_help_and_invalid_syntax_have_no_filesystem_side_effects ... ok
+test source_import_persists_real_snapshots_and_readonly_inspection ... ok
+test source_material_is_data_and_does_not_execute_embedded_file_commands ... ok
+test unsupported_type_and_path_traversal_are_rejected_without_project_changes ... ok
+test unclosed_fence_is_preserved_as_needing_review ... ok
+
+test result: ok. 19 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.21s
+
+     Running tests\structure.rs (target\debug\deps\structure-1d46ceba524f8202.exe)
+
+running 17 tests
+test adopt_freezes_three_notes_and_only_writes_control ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test a_changed_frozen_body_is_detected_before_any_report_is_written ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test an_unescaped_alias_in_a_table_is_refused ... ok
+test an_unknown_concept_is_refused ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test an_extra_entry_in_the_control_directory_is_refused ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test explaining_one_concept_twice_is_refused ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test list_returns_machine_readable_counts ... ok
+test status_reports_counts_and_deviation_per_note ... ok
+test the_links_keep_one_canonical_place_and_never_break ... ok
+test the_report_lists_deviation_and_boundaries ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.06s
+
+     Running tests\template.rs (target\debug\deps\template-237b43cb80e07dc5.exe)
+
+running 20 tests
+test a_changed_declaration_is_detected_before_any_report_is_written ... ok
+test a_section_out_of_order_is_refused ... ok
+test a_section_outside_the_template_needs_a_reason ... ok
+test a_second_explanation_for_one_concept_is_a_finding ... ok
+test a_title_that_does_not_follow_the_pattern_needs_a_reason ... ok
+test adopt_refuses_a_missing_parent_and_leaves_nothing_behind ... ok
+test adopt_refuses_an_existing_root_without_touching_it ... ok
+test an_empty_declared_section_is_refused_before_the_root_exists ... ok
+test adopt_freezes_the_declaration_and_only_writes_control ... ok
+test an_extra_entry_in_the_control_directory_is_refused ... ok
+test an_unknown_root_is_reported_as_such_and_left_alone ... ok
+test an_inconsistent_shape_is_a_finding_and_the_report_is_still_written ... ok
+test build_refuses_an_existing_output_root ... ok
+test build_is_deterministic_and_matches_the_frozen_expectation ... ok
+test build_refuses_an_output_inside_the_frozen_root ... ok
+test help_and_invalid_arguments_are_reported ... ok
+test every_concept_has_exactly_one_explanation_note ... ok
+test references_point_at_the_explanation_note_instead_of_copying_it ... ok
+test status_and_list_report_the_same_structure_without_writing ... ok
+test the_markdown_shows_sections_deviations_and_boundaries ... ok
+
+test result: ok. 20 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.70s
+
+     Running tests\vault.rs (target\debug\deps\vault-2cb863eb52b061d5.exe)
+
+running 8 tests
+test adopt_refuses_to_create_a_root_with_missing_parent_or_existing_root ... ok
+test adopt_freezes_baseline_and_publishes_initial_vault_copy ... ok
+test delete_without_explicit_flag_is_refused ... ok
+test edit_after_approval_invalidates_the_approval ... ok
+test foreign_touch_is_refused_with_path_outside_managed_set ... ok
+test edit_body_plan_approve_publish_end_to_end ... ok
+test rename_dangling_is_refused_and_writes_nothing ... ok
+test interrupted_publish_is_recoverable ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.57s
+
+     Running unittests src\main.rs (target\debug\deps\noetome_desktop-2e727d8f246d9b62.exe)
+
+running 32 tests
+test preferences::tests::corrupt_unsupported_and_unknown_settings_are_preserved_with_safe_close_fallback ... ok
+test preferences::tests::directory_collision_and_oversized_settings_are_preserved ... ok
+test preferences::tests::actual_windows_replace_failure_keeps_old_file_and_effective_choice ... ok
+test preferences::tests::invalid_values_do_not_change_memory_or_saved_bytes ... ok
+test preferences::tests::external_edits_deletions_and_same_byte_replacements_are_not_overwritten ... ok
+test preferences::tests::missing_settings_use_safe_default_without_writing_and_valid_choice_persists ... ok
+test preferences::tests::reload_recovers_after_a_windows_read_lock_blocks_initial_loading ... ok
+test preferences::tests::reload_rejects_corruption_and_preserves_the_previous_effective_choice ... ok
+test preferences::tests::junction_settings_directory_is_rejected_without_touching_its_target ... ok
+test preferences::tests::reload_updates_a_cached_choice_saved_by_an_independent_state_without_writing ... ok
+test preferences::tests::saving_replaces_an_existing_settings_file_and_does_not_leave_temporary_files ... ok
+test project_entry::tests::create_refuses_an_existing_directory_and_preserves_it ... ok
+test project_entry::tests::create_refuses_path_traversal_without_writing_anything ... ok
+test project_entry::tests::create_reports_fields_that_match_the_disk ... ok
+test project_entry::tests::open_never_writes_to_a_valid_project ... ok
+test project_entry::tests::open_refuses_incomplete_and_corrupt_projects_without_repairing_them ... ok
+test project_entry::tests::original_windows_mixed_separators_are_refused_before_io ... ok
+test project_entry::tests::open_reports_missing_and_foreign_directories_with_the_cli_codes ... ok
+test tasks::tests::a_root_of_another_kind_is_refused_with_its_own_code ... ok
+test tasks::tests::a_foreign_or_corrupt_root_keeps_the_cli_code_and_is_never_written ... ok
+test tasks::tests::missing_root_is_reported_as_not_established_not_as_a_failure ... ok
+test tasks::tests::paused_run_is_present_and_keeps_every_field ... ok
+test tasks::tests::research_candidates_are_listed_with_the_frozen_must_do_set ... ok
+test tasks::tests::four_kinds_are_read_without_writing_anything ... ok
+test tasks::tests::retrieval_budget_and_termination_are_reported_as_counts ... ok
+test tasks::tests::unknown_kind_and_empty_path_are_refused_by_name ... ok
+test tasks::tests::values_are_copied_from_the_ledger_instead_of_being_derived ... ok
+test tests::desktop_and_cli_share_versions_and_supported_capabilities ... ok
+test tests::desktop_does_not_accept_arbitrary_cli_commands ... ok
+test tests::profile_preparation_preserves_existing_content_and_reports_file_collision ... ok
+test tests::startup_logs_append_and_preserve_files_that_block_the_log_directory ... ok
+test tasks::tests::revision_gaps_and_revisions_are_listed_separately ... ok
+
+test result: ok. 32 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.01s
+
+   Doc-tests noetome_cli
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

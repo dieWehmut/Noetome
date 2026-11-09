@@ -4,6 +4,8 @@
 
 所有“通过”必须有实际执行证据。未运行、环境不可用、被跳过、已知失败和不适用分别报告，不能统称通过。
 
+Windows 原生门禁使用[锁定检查工作流](../../.github/workflows/windows-validation.yml)：Rust、Python 与桌面构建独立运行并各自上传日志，Rust 全量使用 `--no-fail-fast`，缓存恢复不替代实际执行。PDF 环境通过[可搬移环境准备工具](../../scripts/prepare_windows_runtime.ps1)核对 CPython 3.12.14 Windows x64、八个锁定包、分发摘要及许可证；错误 Python 版本与 Linux 不具备 Windows 进程树宿主能力不能充当业务回归结论。全量 Python 检查前先构建其打包测试需要的前端 dist，子解释器保持 UTF-8；规范 JSON、冻结摘要和期望 Markdown 的写入显式使用 LF，不能放宽精确字节校验来接受平台自动换行。冻结清单按相对路径组件的 Unicode 顺序排列，保留既有原件字节。soak 读数不可得时，四个摘要字段和每轮 RSS 必须明确全为 null，审计器说明未验证内存增长阈值；部分读数、缺字段与伪0不能当不可得或通过。构建桌面 `--no-bundle` 仅证明 release executable，NSIS 生成、实际安装和安装后行为仍需单独验收。
+
 ## 1 首阶段目标
 
 首阶段证明确定性资料登记、知识映射、计划、输出与报告能构成可信闭环。IR 与计划由已审阅 fixture 提供，测试结果不代表自动抽取、事实裁决、学科覆盖或模型质量已经达标。

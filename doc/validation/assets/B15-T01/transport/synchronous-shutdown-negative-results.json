@@ -1,0 +1,25 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "noetome-cli",
+    "--lib",
+    "extraction_api_transport::tests::runtime_shutdown_does_not_wait_for_uncancellable_resolver_work",
+    "--target-dir",
+    "/home/lyinn/project/Noetome/target",
+    "--",
+    "--exact",
+    "--nocapture"
+  ],
+  "cwd": "/tmp/noetome-transport-shutdown-negative-pbl3dnhx",
+  "exit_code": 101,
+  "elapsed_seconds": 53.17006205295911,
+  "expected_exit_code": 101,
+  "expected_ordering_assertion_present": true,
+  "workspace_source_sha256": "4ed3fed4e5f6cf13ab674519213aab8bc57ce6ac0bf31220eb0407c1da35ae58",
+  "workspace_source_unchanged": true,
+  "mutation": "Only temporary copy uses drop(runtime) instead of shutdown_background().",
+  "stdout": "synchronous-shutdown-negative-stdout.log",
+  "stderr": "synchronous-shutdown-negative-stderr.log"
+}

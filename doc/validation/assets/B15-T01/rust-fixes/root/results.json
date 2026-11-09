@@ -1,0 +1,55 @@
+[
+  {
+    "name": "budget",
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "noetome-cli",
+      "--lib",
+      "request_budget_store::tests::budget_wire_candidate_error_is_not_retryable_but_http_retry_has_durable_due",
+      "--locked",
+      "--offline"
+    ],
+    "exit_code": 0,
+    "seconds": 0.614
+  },
+  {
+    "name": "soak",
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "noetome-cli",
+      "--test",
+      "soak",
+      "--locked",
+      "--offline"
+    ],
+    "exit_code": 0,
+    "seconds": 5.029
+  },
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exit_code": 0,
+    "seconds": 1.345
+  },
+  {
+    "name": "check",
+    "command": [
+      "cargo",
+      "check",
+      "--workspace",
+      "--locked",
+      "--offline"
+    ],
+    "exit_code": 0,
+    "seconds": 7.596
+  }
+]

@@ -1,0 +1,211 @@
+
+> noetome@0.1.0 desktop:build
+> tauri build --config crates/noetome-desktop/tauri.conf.json --no-bundle
+
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `npm run web:build`
+
+> noetome@0.1.0 web:build
+> npm run web:check && vite build --config apps/desktop/vite.config.ts
+
+
+> noetome@0.1.0 web:check
+> tsc --project apps/desktop/tsconfig.json --noEmit
+
+[36mvite v8.3.5 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 64 modules transformed.
+rendering chunks...
+computing gzip size...
+apps/desktop/dist/index.html                   0.50 kB │ gzip:  0.31 kB
+apps/desktop/dist/assets/index-C1_5kHW4.css   19.94 kB │ gzip:  4.56 kB
+apps/desktop/dist/assets/index-CD7Cb9Kv.js   323.63 kB │ gzip: 95.72 kB
+
+[32m✓ built in 171ms[39m
+   Compiling noetome-cli v0.1.0 (D:\a\Noetome\Noetome\crates\noetome-cli)
+   Compiling noetome-desktop v0.1.0 (D:\a\Noetome\Noetome\crates\noetome-desktop)
+warning: unused import: `BTreeMap`
+  --> crates\noetome-cli\src\change_model.rs:18:24
+   |
+18 | use std::collections::{BTreeMap, BTreeSet};
+   |                        ^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `STAGES` is never used
+  --> crates\noetome-cli\src\bench_model.rs:44:18
+   |
+44 | pub(crate) const STAGES: [&str; 4] = [STAGE_SCAN, STAGE_DETECT, STAGE_PLAN, STAGE_PAGE];
+   |                  ^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `edited` is never read
+   --> crates\noetome-cli\src\bench_model.rs:148:9
+    |
+141 | pub(crate) struct Note {
+    |                   ---- field in this struct
+...
+148 |     pub edited: bool,
+    |         ^^^^^^
+    |
+    = note: `Note` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `paths` is never used
+   --> crates\noetome-cli\src\bench_store.rs:238:15
+    |
+238 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: function `resolve` is never used
+   --> crates\noetome-cli\src\change_store.rs:104:4
+    |
+104 | fn resolve(root: &Path, relative: &str) -> Result<PathBuf, ProjectError> {
+    |    ^^^^^^^
+
+warning: function `create_parent` is never used
+   --> crates\noetome-cli\src\change_store.rs:146:4
+    |
+146 | fn create_parent(path: &Path, label: &str) -> Result<(), ProjectError> {
+    |    ^^^^^^^^^^^^^
+
+warning: method `task` is never used
+   --> crates\noetome-cli\src\journal_model.rs:509:8
+    |
+245 | impl Declaration {
+    | ---------------- method in this implementation
+...
+509 |     fn task(&self, id: &str) -> Option<&TaskSpec> {
+    |        ^^^^
+
+warning: field `inputs` is never read
+   --> crates\noetome-cli\src\plan_store.rs:248:16
+    |
+245 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+248 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: methods `authority_matches`, `reserve`, `mark_may_send`, and `schedule_retry` are never used
+    --> crates\noetome-cli\src\request_budget_store.rs:788:19
+     |
+ 682 | impl BudgetStore {
+     | ---------------- methods in this implementation
+...
+ 788 |     pub(crate) fn authority_matches(&self, expected: &AuthoritySpec) -> Result<(), ProjectError> {
+     |                   ^^^^^^^^^^^^^^^^^
+...
+ 982 |     pub(crate) fn reserve(
+     |                   ^^^^^^^
+...
+1019 |     pub(crate) fn mark_may_send(
+     |                   ^^^^^^^^^^^^^
+...
+1185 |     pub(crate) fn schedule_retry(
+     |                   ^^^^^^^^^^^^^^
+
+warning: constant `MAX_BYTES` is never used
+  --> crates\noetome-cli\src\research_model.rs:19:18
+   |
+19 | pub(crate) const MAX_BYTES: u64 = 4 * 1024 * 1024;
+   |                  ^^^^^^^^^
+
+warning: field `owner` is never read
+   --> crates\noetome-cli\src\research_store.rs:100:16
+    |
+ 98 | pub(crate) struct ResearchStore {
+    |                   ------------- field in this struct
+ 99 |     pub(crate) root: PathBuf,
+100 |     pub(crate) owner: Owner,
+    |                ^^^^^
+
+warning: function `unsafe_path` is never used
+  --> crates\noetome-cli\src\scale_model.rs:46:15
+   |
+46 | pub(crate) fn unsafe_path(message: impl Into<String>) -> ProjectError {
+   |               ^^^^^^^^^^^
+
+warning: type alias `Measured` is never used
+   --> crates\noetome-cli\src\scale_store.rs:219:17
+    |
+219 | pub(crate) type Measured = (Structure, Timings);
+    |                 ^^^^^^^^
+
+warning: function `paths` is never used
+   --> crates\noetome-cli\src\scale_store.rs:222:15
+    |
+222 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {
+    |               ^^^^^
+
+warning: constant `REF_LINKED` is never used
+  --> crates\noetome-cli\src\structure_model.rs:45:18
+   |
+45 | pub(crate) const REF_LINKED: &str = "linked";
+   |                  ^^^^^^^^^^
+
+warning: constant `REF_EXTERNAL` is never used
+  --> crates\noetome-cli\src\structure_model.rs:46:18
+   |
+46 | pub(crate) const REF_EXTERNAL: &str = "external";
+   |                  ^^^^^^^^^^^^
+
+warning: method `term_of` is never used
+   --> crates\noetome-cli\src\structure_model.rs:195:8
+    |
+156 | impl ConceptFile {
+    | ---------------- method in this implementation
+...
+195 |     fn term_of(&self, concept_id: &str) -> Option<&str> {
+    |        ^^^^^^^
+
+warning: constant `FINDING_EMPTY` is never used
+  --> crates\noetome-cli\src\template_model.rs:48:18
+   |
+48 | pub(crate) const FINDING_EMPTY: &str = "empty_section";
+   |                  ^^^^^^^^^^^^^
+
+warning: constant `FINDING_UNREASONED` is never used
+  --> crates\noetome-cli\src\template_model.rs:49:18
+   |
+49 | pub(crate) const FINDING_UNREASONED: &str = "unreasoned_structure";
+   |                  ^^^^^^^^^^^^^^^^^^
+
+warning: method `goal` is never used
+   --> crates\noetome-cli\src\template_model.rs:427:19
+    |
+245 | impl Plan {
+    | --------- method in this implementation
+...
+427 |     pub(crate) fn goal(&self, goal_id: &str) -> Option<(&TopicSpec, &GoalSpec)> {
+    |                   ^^^^
+
+warning: field `inputs` is never read
+   --> crates\noetome-cli\src\template_store.rs:257:16
+    |
+254 | pub(crate) struct Frozen {
+    |                   ------ field in this struct
+...
+257 |     pub(crate) inputs: Inputs,
+    |                ^^^^^^
+
+warning: constant `IMPACT_CATEGORIES` is never used
+  --> crates\noetome-cli\src\vault_model.rs:25:11
+   |
+25 | pub const IMPACT_CATEGORIES: [&str; 6] = [
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: field `final_bytes` is never read
+   --> crates\noetome-cli\src\vault_model.rs:348:9
+    |
+342 | pub struct Analysis {
+    |            -------- field in this struct
+...
+348 |     pub final_bytes: BTreeMap<String, Option<Vec<u8>>>,
+    |         ^^^^^^^^^^^
+    |
+    = note: `Analysis` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: `noetome-cli` (lib) generated 23 warnings (run `cargo fix --lib -p noetome-cli` to apply 1 suggestion)
+    Finished `release` profile [optimized] target(s) in 6m 56s
+       Built application at: D:\a\Noetome\Noetome\target\release\noetome-desktop.exe

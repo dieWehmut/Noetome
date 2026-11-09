@@ -1,0 +1,926 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-11-09T06:55:57.988279+00:00",
+  "verifier": "stdlib authoring oracle and filesystem byte audit, no parser/Core helpers",
+  "platform": "Windows-2025Server-10.0.26100-SP0",
+  "verifier_python": "3.12.14",
+  "binary": {
+    "path": "D:\\a\\Noetome\\Noetome\\target\\debug\\noetome.exe",
+    "sha256": "ba061951efc3093af4cd2c908df17ddb24a468c44a0dfd1cbe01cdece5b6ac06",
+    "byte_length": 41646592,
+    "version": "noetome 0.1.0"
+  },
+  "runtime": "D:\\a\\Noetome\\Noetome\\target\\windows-runtime\\python\\python.exe",
+  "test_root": "D:\\a\\Noetome\\Noetome\\.artifacts\\windows-validation\\python\\pdf-behaviors",
+  "expected": {
+    "sha256": "020977dbb0eecb79799dbac3bb89bcec11db9443507a0d90b04ee4a0d8ffb352",
+    "byte_length": 292838
+  },
+  "prior_visual_review": {
+    "sha256": "1e9997eda2ed075d54076db9297fb193e18efe99c1fcaeeedb698b79e956b6ab",
+    "byte_length": 20480
+  },
+  "measurement": "one real CLI process per operation; wall_ms includes launch, sidecar, Core and reports; elapsed_ms is reported acquisition+child+initial Core; resource_bytes sums validated raw/text/manifest",
+  "not_run": [
+    "memory/CPU sampling",
+    "1000-page throughput",
+    "24-hour stability",
+    "cross-platform compatibility",
+    "human scientific gold standard",
+    "OCR",
+    "model/knowledge recall or scientific accuracy",
+    "physical UserUnit scaling by independent renderer",
+    "pdftotext unavailable"
+  ],
+  "cases": [
+    {
+      "file": "single-page.pdf",
+      "category": "single_column",
+      "raw_sha256": "1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457",
+      "input_bytes": 873,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "parsed",
+      "parse_exit": 0,
+      "inspect_exit": 0,
+      "wall_ms": 647.215,
+      "inspect_wall_ms": 40.768,
+      "reported_elapsed_ms": 608,
+      "resource_bytes": 25955,
+      "total_output_file_bytes": 29457,
+      "parsed_pages": 1,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 143,
+      "literal_lines_checked": 3,
+      "diagnostics": "",
+      "inspect_diagnostics": "",
+      "issues": [],
+      "files": {
+        "parse-result.json": {
+          "sha256": "de2cc088a09016f0de867d48ecefc6666bc853aa56b20e913020888a703f6d00",
+          "byte_length": 2590
+        },
+        "parse-result.md": {
+          "sha256": "78df1d55f354147f85a46715a310f20d6807ea4c88fb1a36b34f7ac52d4a7b46",
+          "byte_length": 912
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "ba2f6db48aa0f2a485453db4bed9dd4d54e728a3486171f54f17d14f0266f1eb",
+          "byte_length": 147
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "f3ff3555e5cde1bcf4e04289ac6d55ffefccd331a8547a605ce228e26fff7046",
+          "byte_length": 24935
+        },
+        "parser/raw.pdf": {
+          "sha256": "1a8bbfe535892b74e2ec1e0fdb6f99320d98e3492441f5f8ae339a57644fc457",
+          "byte_length": 873
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "multiple-pages.pdf",
+      "category": "multiple_pages",
+      "raw_sha256": "52f87463abf89916ff5a91abb1c443e572c4d0036ee0c2511bca5f594a86c115",
+      "input_bytes": 1562,
+      "authoring_page_count": 3,
+      "page_count": 3,
+      "status": "parsed",
+      "parse_exit": 0,
+      "inspect_exit": 0,
+      "wall_ms": 519.866,
+      "inspect_wall_ms": 49.453,
+      "reported_elapsed_ms": 481,
+      "resource_bytes": 37360,
+      "total_output_file_bytes": 42198,
+      "parsed_pages": 3,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 199,
+      "literal_lines_checked": 6,
+      "diagnostics": "",
+      "inspect_diagnostics": "",
+      "issues": [],
+      "files": {
+        "parse-result.json": {
+          "sha256": "8f4c50e7f0a9057634fffaec90e5efd7c4a2c44e90ff882be67b6a3872d03797",
+          "byte_length": 3887
+        },
+        "parse-result.md": {
+          "sha256": "e1fa85184b1545bf02851a9c8fecdca9096e5760dbef3fec7afc39b1530a3d58",
+          "byte_length": 951
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "8a4c0ee60a207e1b1805df47bcef6fe5b2ef78b00f81854ab8f1bc294c71ba31",
+          "byte_length": 66
+        },
+        "parser/pages/000001.txt": {
+          "sha256": "31f5340429f8110071769257fc69e42eba58a1934710d5d457517f6bb64b75ad",
+          "byte_length": 74
+        },
+        "parser/pages/000002.txt": {
+          "sha256": "3f801d01041b3a9bcb19f663ebe7019971d93d0ae49ec740ca92169c2bc9b25a",
+          "byte_length": 65
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "4b4168147cc4a8d836d3668ebe8af95c218154fbd1a5403debc3db2ab76a80a9",
+          "byte_length": 35593
+        },
+        "parser/raw.pdf": {
+          "sha256": "52f87463abf89916ff5a91abb1c443e572c4d0036ee0c2511bca5f594a86c115",
+          "byte_length": 1562
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "crop-offset.pdf",
+      "category": "crop_media_offset",
+      "raw_sha256": "880f56601906d86db02ae585e2e01bb6689236a8e33d41de421ccbd24bc1c532",
+      "input_bytes": 787,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "parsed",
+      "parse_exit": 0,
+      "inspect_exit": 0,
+      "wall_ms": 512.192,
+      "inspect_wall_ms": 40.246,
+      "reported_elapsed_ms": 478,
+      "resource_bytes": 17283,
+      "total_output_file_bytes": 20783,
+      "parsed_pages": 1,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 91,
+      "literal_lines_checked": 2,
+      "diagnostics": "",
+      "inspect_diagnostics": "",
+      "issues": [],
+      "files": {
+        "parse-result.json": {
+          "sha256": "387ca6fcfd41489cf788b5ad8c87eef232cc72748dc292063ac7fa967b6a1e3e",
+          "byte_length": 2588
+        },
+        "parse-result.md": {
+          "sha256": "ad2599ee705e9bf074dcc0e4dc825c051e2b9eadb439299a5d2d0e0f5f58fc21",
+          "byte_length": 912
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "cd166e8895e4a2ffae01af15ab06a6c8a6f7c77f0dabc77ca0b74789538dadcf",
+          "byte_length": 93
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "086acba9a85f119459a6534297584922c99a965baf14af9f34fda2d3f0552dca",
+          "byte_length": 16403
+        },
+        "parser/raw.pdf": {
+          "sha256": "880f56601906d86db02ae585e2e01bb6689236a8e33d41de421ccbd24bc1c532",
+          "byte_length": 787
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "rotations.pdf",
+      "category": "rotation_crop_and_user_unit",
+      "raw_sha256": "c24e9c95454bc60e46ac9363839a765019456d35dd69726a0322cf8b655b1e00",
+      "input_bytes": 3048,
+      "authoring_page_count": 8,
+      "page_count": 8,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 571.845,
+      "inspect_wall_ms": 74.612,
+      "reported_elapsed_ms": 520,
+      "resource_bytes": 99807,
+      "total_output_file_bytes": 114681,
+      "parsed_pages": 1,
+      "review_pages": 7,
+      "failed_pages": 0,
+      "glyphs_checked": 281,
+      "literal_lines_checked": 1,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 1 parsed, 7 needs_review, 0 failed pages; confirmed total 8. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 1 parsed, 7 needs_review, 0 failed pages; confirmed total 8. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_TEXT_ORIENTATION",
+          "unit_ids": [
+            "page-000001"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000001"
+          ]
+        },
+        {
+          "code": "PDF_MIXED_FONT_SIZE",
+          "unit_ids": [
+            "page-000001"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000002"
+          ]
+        },
+        {
+          "code": "PDF_TEXT_ORIENTATION",
+          "unit_ids": [
+            "page-000003"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000003"
+          ]
+        },
+        {
+          "code": "PDF_MIXED_FONT_SIZE",
+          "unit_ids": [
+            "page-000003"
+          ]
+        },
+        {
+          "code": "PDF_TEXT_ORIENTATION",
+          "unit_ids": [
+            "page-000004"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000004"
+          ]
+        },
+        {
+          "code": "PDF_MIXED_FONT_SIZE",
+          "unit_ids": [
+            "page-000004"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000005"
+          ]
+        },
+        {
+          "code": "PDF_TEXT_ORIENTATION",
+          "unit_ids": [
+            "page-000006"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_ROTATION",
+          "unit_ids": [
+            "page-000006"
+          ]
+        },
+        {
+          "code": "PDF_MIXED_FONT_SIZE",
+          "unit_ids": [
+            "page-000006"
+          ]
+        },
+        {
+          "code": "PDF_PAGE_USER_UNIT",
+          "unit_ids": [
+            "page-000007"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "4e4655f89d0b5ffa70268a876035b0d70ed0b9f48e02279a4b3ff36bb388713d",
+          "byte_length": 12272
+        },
+        "parse-result.md": {
+          "sha256": "9e5c3472085920f76c896f63ba448a5f36d0b2b1f62afa109c7f74504f23c92a",
+          "byte_length": 2602
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "8771173b15b05dea527abe84ebc34cd978342630d787a26e76ceedd32feb1adf",
+          "byte_length": 32
+        },
+        "parser/pages/000001.txt": {
+          "sha256": "09150762d7ee6e6e96ffd0a0f48d7b300f03f5c3d460e0fd391286b12d8dce63",
+          "byte_length": 62
+        },
+        "parser/pages/000002.txt": {
+          "sha256": "e17306cc928caecf9b5c43263bfa1865f43cdca8046f63e3d628ff965345ff91",
+          "byte_length": 34
+        },
+        "parser/pages/000003.txt": {
+          "sha256": "e5df32c79bc9fe1500c2ecbfb34680102d198698589ee4d8414aa93b4ee1b796",
+          "byte_length": 64
+        },
+        "parser/pages/000004.txt": {
+          "sha256": "1749541eadec02891e2dabf21185b570576b1739eceacc33f8ddb38e57417ad5",
+          "byte_length": 71
+        },
+        "parser/pages/000005.txt": {
+          "sha256": "840e0ad7f4cd4424b32e83a231818ef1dd34cc9cb296e649e9d63cef3ab46f35",
+          "byte_length": 38
+        },
+        "parser/pages/000006.txt": {
+          "sha256": "af4e0be37560c9faf8fd0ad078ed7288c78585663795d6d3d05c9ec1c86a9e7f",
+          "byte_length": 73
+        },
+        "parser/pages/000007.txt": {
+          "sha256": "819439b2d311c885feade6634e6eea13135f95c556c679cc024195e53e523e2c",
+          "byte_length": 43
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "d70b5658776ac2bad2dfa92a4f01b21aacbfae754536362af61d5d29f088222c",
+          "byte_length": 96342
+        },
+        "parser/raw.pdf": {
+          "sha256": "c24e9c95454bc60e46ac9363839a765019456d35dd69726a0322cf8b655b1e00",
+          "byte_length": 3048
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "scanned-page.pdf",
+      "category": "scan_no_text_layer",
+      "raw_sha256": "758c09cd50c8191618fd9c19aca94c0acff608b9292193111b63704bd206455c",
+      "input_bytes": 1945,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 500.226,
+      "inspect_wall_ms": 38.614,
+      "reported_elapsed_ms": 467,
+      "resource_bytes": 3946,
+      "total_output_file_bytes": 8317,
+      "parsed_pages": 0,
+      "review_pages": 1,
+      "failed_pages": 0,
+      "glyphs_checked": 0,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_VISUAL_CONTENT",
+          "unit_ids": [
+            "page-000000"
+          ]
+        },
+        {
+          "code": "PDF_NO_TEXT_LAYER",
+          "unit_ids": [
+            "page-000000"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "56619ed67b1ac10f0c30438a47332b1fa4346a3f588d368d447ee8d72023e20a",
+          "byte_length": 3214
+        },
+        "parse-result.md": {
+          "sha256": "51ecc5829242f2f891dfe65524b39e6a3244b1fe80ad2833a61954315cb10783",
+          "byte_length": 1157
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "79a40ccc70fd406168ad0f04d0ce29461b7bcb2959b396f6e97e649b66007463",
+          "byte_length": 2001
+        },
+        "parser/raw.pdf": {
+          "sha256": "758c09cd50c8191618fd9c19aca94c0acff608b9292193111b63704bd206455c",
+          "byte_length": 1945
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "blank-page.pdf",
+      "category": "unknown_blank",
+      "raw_sha256": "0a038a5819cd4cce7712396a69718e7615dda0a4fbfac8f4f6d7a37613a5b05d",
+      "input_bytes": 906,
+      "authoring_page_count": 2,
+      "page_count": 2,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 494.487,
+      "inspect_wall_ms": 39.533,
+      "reported_elapsed_ms": 460,
+      "resource_bytes": 4220,
+      "total_output_file_bytes": 9238,
+      "parsed_pages": 0,
+      "review_pages": 2,
+      "failed_pages": 0,
+      "glyphs_checked": 3,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 2 needs_review, 0 failed pages; confirmed total 2. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 2 needs_review, 0 failed pages; confirmed total 2. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_UNKNOWN_BLANK",
+          "unit_ids": [
+            "page-000000"
+          ]
+        },
+        {
+          "code": "PDF_UNKNOWN_BLANK",
+          "unit_ids": [
+            "page-000001"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "d4aa284c3a4266572b16c1c6c18ead8208d181e621fd2579073c41baadf0d751",
+          "byte_length": 3850
+        },
+        "parse-result.md": {
+          "sha256": "9c604fd0ea459499a59911fbe2da875093e5a3ceaa3791656be7784964b49440",
+          "byte_length": 1168
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "byte_length": 0
+        },
+        "parser/pages/000001.txt": {
+          "sha256": "2106c36011520fe73876d45bfb9ef8bf7b2e9f4362096a320376d8ee9b27ef12",
+          "byte_length": 4
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "503f6a0f469716260f52e89622ab88b2e8f5f36867632fff07bf4977c33be044",
+          "byte_length": 3310
+        },
+        "parser/raw.pdf": {
+          "sha256": "0a038a5819cd4cce7712396a69718e7615dda0a4fbfac8f4f6d7a37613a5b05d",
+          "byte_length": 906
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "damaged.pdf",
+      "category": "damaged",
+      "raw_sha256": "54c3dab0dc44186b92eca235cfc6d705e233c6b54f903efaf71a45e77d13d69a",
+      "input_bytes": 61,
+      "authoring_page_count": null,
+      "page_count": null,
+      "status": "failed",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 492.781,
+      "inspect_wall_ms": 30.75,
+      "reported_elapsed_ms": 463,
+      "resource_bytes": 920,
+      "total_output_file_bytes": 4365,
+      "parsed_pages": 0,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 0,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status failed: 0 parsed, 0 needs_review, 0 failed pages; confirmed total unknown. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status failed: 0 parsed, 0 needs_review, 0 failed pages; confirmed total unknown. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_ENUMERATION",
+          "unit_ids": [
+            "pdf-document"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "7011bbb72ddd16b23c26989cdb1b798ada741c1cec101e761d7e370349c66779",
+          "byte_length": 2467
+        },
+        "parse-result.md": {
+          "sha256": "6c38a883944b9af87bf5f1fcd584f2ceef40d7b530668408ee6ee4827d4b16a3",
+          "byte_length": 978
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "10fcaeb3727340ee34d1f6b5a05e9b04e943f3ffae304fd2089fcce7a52ad433",
+          "byte_length": 859
+        },
+        "parser/raw.pdf": {
+          "sha256": "54c3dab0dc44186b92eca235cfc6d705e233c6b54f903efaf71a45e77d13d69a",
+          "byte_length": 61
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "encrypted.pdf",
+      "category": "encrypted",
+      "raw_sha256": "d37bdfe11346ca7fe99414a7a45f33aa74f43011286da93b82010eafb3187e5d",
+      "input_bytes": 1932,
+      "authoring_page_count": 1,
+      "page_count": null,
+      "status": "failed",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 480.119,
+      "inspect_wall_ms": 31.248,
+      "reported_elapsed_ms": 451,
+      "resource_bytes": 2795,
+      "total_output_file_bytes": 6250,
+      "parsed_pages": 0,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 0,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status failed: 0 parsed, 0 needs_review, 0 failed pages; confirmed total unknown. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status failed: 0 parsed, 0 needs_review, 0 failed pages; confirmed total unknown. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_ENUMERATION",
+          "unit_ids": [
+            "pdf-document"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "8e70306f83eb3bdb6d8ae1604f8320d806fe0394ce1de2589cbd2a07f5db3b29",
+          "byte_length": 2474
+        },
+        "parse-result.md": {
+          "sha256": "ead86944abbcfd5ccd0670481c13be9f3f15dff52700ad90154e2a9ecbe80b0f",
+          "byte_length": 981
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "f52d3ecb1cf7daca1e150df42816618bf567bd148937f4167c18a1468b505a7a",
+          "byte_length": 863
+        },
+        "parser/raw.pdf": {
+          "sha256": "d37bdfe11346ca7fe99414a7a45f33aa74f43011286da93b82010eafb3187e5d",
+          "byte_length": 1932
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "table-page.pdf",
+      "category": "table",
+      "raw_sha256": "478664217ca4520eff3f0e7f0d990a2f11149a589c06b84d16ac53bfe70f0939",
+      "input_bytes": 853,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 493.387,
+      "inspect_wall_ms": 36.81,
+      "reported_elapsed_ms": 461,
+      "resource_bytes": 6618,
+      "total_output_file_bytes": 11085,
+      "parsed_pages": 0,
+      "review_pages": 1,
+      "failed_pages": 0,
+      "glyphs_checked": 19,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_VISUAL_CONTENT",
+          "unit_ids": [
+            "page-000000"
+          ]
+        },
+        {
+          "code": "PDF_LAYOUT_GAP",
+          "unit_ids": [
+            "page-000000"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "331381142eb15b4cd80e3acdf31e478f7b52351c3e363a3f6e97f5802e280faa",
+          "byte_length": 3312
+        },
+        "parse-result.md": {
+          "sha256": "26356b946f2ec0b10765cb7240d4f794f675182e092eccc61ee2ff69a14b0cb4",
+          "byte_length": 1155
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "ee59aa3a93b567fa884d7b0216ed5e97339d076a9cfb33283e339376fa1b6a5f",
+          "byte_length": 23
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "ca5d4707a885b79efa41f2f21f7fb2e0b969f214a074e010dd2bd1133e98a5e3",
+          "byte_length": 5742
+        },
+        "parser/raw.pdf": {
+          "sha256": "478664217ca4520eff3f0e7f0d990a2f11149a589c06b84d16ac53bfe70f0939",
+          "byte_length": 853
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "formula-page.pdf",
+      "category": "formula_superscript",
+      "raw_sha256": "ec8a0268a3cd6de50423453fd8cfdb4939d0dc96dda746373f019909246c4411",
+      "input_bytes": 710,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 496.659,
+      "inspect_wall_ms": 35.943,
+      "reported_elapsed_ms": 464,
+      "resource_bytes": 5059,
+      "total_output_file_bytes": 9043,
+      "parsed_pages": 0,
+      "review_pages": 1,
+      "failed_pages": 0,
+      "glyphs_checked": 16,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_MIXED_FONT_SIZE",
+          "unit_ids": [
+            "page-000000"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "2a3245c41388e7e707f28fe9932bbfa823d265832a5b5a440a34e9b4c04fb0ba",
+          "byte_length": 2951
+        },
+        "parse-result.md": {
+          "sha256": "6550150de9fa1a6f552a2d7591c15f48db681428cf7242f914b501ca10d256e0",
+          "byte_length": 1033
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "71046e767099bc04fd29f15ec1c8cfbeaf071de5b3d90962f55658e3fb87f765",
+          "byte_length": 17
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "9d27f4899476e9cd23e58e555db835dfb9b3acc222ebe9d296382b3d8585df77",
+          "byte_length": 4332
+        },
+        "parser/raw.pdf": {
+          "sha256": "ec8a0268a3cd6de50423453fd8cfdb4939d0dc96dda746373f019909246c4411",
+          "byte_length": 710
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "image-page.pdf",
+      "category": "image_with_text",
+      "raw_sha256": "ea70777b04400d8027798401b15bba9b596126b59c7f579dfd130cd097f3099d",
+      "input_bytes": 2021,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 493.396,
+      "inspect_wall_ms": 37.234,
+      "reported_elapsed_ms": 461,
+      "resource_bytes": 9491,
+      "total_output_file_bytes": 13515,
+      "parsed_pages": 0,
+      "review_pages": 1,
+      "failed_pages": 0,
+      "glyphs_checked": 35,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 1 needs_review, 0 failed pages; confirmed total 1. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_VISUAL_CONTENT",
+          "unit_ids": [
+            "page-000000"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "825fcf99f0d9824a7cd2b693d35593e8feeceddc5f756a991bfa368a0bbe7198",
+          "byte_length": 2972
+        },
+        "parse-result.md": {
+          "sha256": "d2b91f3ef3d8c44d380d2a22728457e26c95fe39751393f783efab33015f1582",
+          "byte_length": 1052
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "4f3e2b4a9d0c04d49392b2591d52fbe1d782b7d776524b1d46f55f7250efd8b0",
+          "byte_length": 36
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "0f18f2ebf8304cef3bdb1565d444999fbc03615f11448d55e4b01e350481c95e",
+          "byte_length": 7434
+        },
+        "parser/raw.pdf": {
+          "sha256": "ea70777b04400d8027798401b15bba9b596126b59c7f579dfd130cd097f3099d",
+          "byte_length": 2021
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "columns-page.pdf",
+      "category": "multiple_columns",
+      "raw_sha256": "aed0c63a4f1a83fab8763281d45086b9281c204392ea73b3f2362713a9060196",
+      "input_bytes": 1342,
+      "authoring_page_count": 2,
+      "page_count": 2,
+      "status": "needs_review",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 510.636,
+      "inspect_wall_ms": 47.06,
+      "reported_elapsed_ms": 474,
+      "resource_bytes": 28947,
+      "total_output_file_bytes": 34094,
+      "parsed_pages": 0,
+      "review_pages": 2,
+      "failed_pages": 0,
+      "glyphs_checked": 152,
+      "literal_lines_checked": 0,
+      "diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 2 needs_review, 0 failed pages; confirmed total 2. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status needs_review: 0 parsed, 2 needs_review, 0 failed pages; confirmed total 2. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_LAYOUT_GAP",
+          "unit_ids": [
+            "page-000000"
+          ]
+        },
+        {
+          "code": "PDF_POSSIBLE_COLUMNS",
+          "unit_ids": [
+            "page-000001"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "a72c7541c635b54479121d5265c7c9a684f9b8939d26271b96a201cfc4b0b38c",
+          "byte_length": 3968
+        },
+        "parse-result.md": {
+          "sha256": "42a7e17e85a1883a800f7b0115f099f7b4d60bf0e647f3d6c043059a0b51a53b",
+          "byte_length": 1179
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "0dbab5b62932932922dfdfa82224bd912dac14d68303c777aa176c5ac9605d2a",
+          "byte_length": 76
+        },
+        "parser/pages/000001.txt": {
+          "sha256": "204e448e32a3c296444bb52ac78d2867e833c250f36976a3a72913e70c4e9554",
+          "byte_length": 84
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "91d9aba970ca933b580494636510f702d49d512137c07a319f9747160161345e",
+          "byte_length": 27445
+        },
+        "parser/raw.pdf": {
+          "sha256": "aed0c63a4f1a83fab8763281d45086b9281c204392ea73b3f2362713a9060196",
+          "byte_length": 1342
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "partial-page-failure.pdf",
+      "category": "partial_page_failure",
+      "raw_sha256": "618fa6e5b4c561637a011305047becb91644847e865484d88e2ba45c4d248eea",
+      "input_bytes": 1050,
+      "authoring_page_count": 2,
+      "page_count": 2,
+      "status": "failed",
+      "parse_exit": 3,
+      "inspect_exit": 3,
+      "wall_ms": 492.448,
+      "inspect_wall_ms": 38.473,
+      "reported_elapsed_ms": 459,
+      "resource_bytes": 10901,
+      "total_output_file_bytes": 15004,
+      "parsed_pages": 1,
+      "review_pages": 0,
+      "failed_pages": 1,
+      "glyphs_checked": 49,
+      "literal_lines_checked": 1,
+      "diagnostics": "PDF_INCOMPLETE: PDF status failed: 1 parsed, 0 needs_review, 1 failed pages; confirmed total 2. See manifest/report for reasons.\n",
+      "inspect_diagnostics": "PDF_INCOMPLETE: PDF status failed: 1 parsed, 0 needs_review, 1 failed pages; confirmed total 2. See manifest/report for reasons.\n",
+      "issues": [
+        {
+          "code": "PDF_PAGE_GEOMETRY",
+          "unit_ids": [
+            "page-000001"
+          ]
+        }
+      ],
+      "files": {
+        "parse-result.json": {
+          "sha256": "0defa8a2a4f412d480da86acd9b7f8357fe22574514ec242649e25ee5b5469ff",
+          "byte_length": 3103
+        },
+        "parse-result.md": {
+          "sha256": "ddf4013865a3c03764e57af452a7f16cb4a92da8dd453e3fc254953e7d6b5ab4",
+          "byte_length": 1000
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "9db2039f3cd4b1e49b2b9d4b30d25234f05027de29d7593ac9f427c3bc95d263",
+          "byte_length": 50
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "4d3453c12500a092e733fad6e9134697e2acd06ab9e93c4b52336285d264b317",
+          "byte_length": 9801
+        },
+        "parser/raw.pdf": {
+          "sha256": "618fa6e5b4c561637a011305047becb91644847e865484d88e2ba45c4d248eea",
+          "byte_length": 1050
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    },
+    {
+      "file": "layout-order.pdf",
+      "category": "drawing_order_differs",
+      "raw_sha256": "beab8ce1dde90530833939d4bc2c2346fd0b41725c0ba07fd084094f385771a5",
+      "input_bytes": 727,
+      "authoring_page_count": 1,
+      "page_count": 1,
+      "status": "parsed",
+      "parse_exit": 0,
+      "inspect_exit": 0,
+      "wall_ms": 491.021,
+      "inspect_wall_ms": 37.619,
+      "reported_elapsed_ms": 459,
+      "resource_bytes": 8326,
+      "total_output_file_bytes": 11823,
+      "parsed_pages": 1,
+      "review_pages": 0,
+      "failed_pages": 0,
+      "glyphs_checked": 37,
+      "literal_lines_checked": 2,
+      "diagnostics": "",
+      "inspect_diagnostics": "",
+      "issues": [],
+      "files": {
+        "parse-result.json": {
+          "sha256": "5841582d202ab0a8e665eb5a9105e020fe93466e20c25a5563c7214d081adf62",
+          "byte_length": 2586
+        },
+        "parse-result.md": {
+          "sha256": "216eb5c02d2e3a23cd4b7a100f905cd8751a4a1bff0c196d862062b897e3787c",
+          "byte_length": 911
+        },
+        "parser/pages/000000.txt": {
+          "sha256": "78486ff3227764ad34291f94dff5d12e511a5c7774686eab98cfab7bc6c9544e",
+          "byte_length": 39
+        },
+        "parser/pdf-manifest.json": {
+          "sha256": "e00fa234218bcfbd00367056689cf6eff55cee3a94bb74cc190adcb6e531604d",
+          "byte_length": 7560
+        },
+        "parser/raw.pdf": {
+          "sha256": "beab8ce1dde90530833939d4bc2c2346fd0b41725c0ba07fd084094f385771a5",
+          "byte_length": 727
+        }
+      },
+      "inspect_read_only": true,
+      "input_and_sentinel_unchanged": true
+    }
+  ],
+  "real_cli_calls": 29,
+  "physical_pages_recorded": 24,
+  "result": "passed"
+}

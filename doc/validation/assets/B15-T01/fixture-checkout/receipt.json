@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "platform": "linux_git_checkout_with_windows_autocrlf_policy",
+  "facts": [
+    {
+      "policy": "control",
+      "core.autocrlf": true,
+      "files": {
+        "fixtures/source-index-v1/moved-foreign/无关材料.txt": {
+          "exact_original": false,
+          "original_bytes": 28,
+          "checkout_bytes": 29,
+          "sha256": "0ee9950a781a442a60261d38a2600b7a8d523a723055ea8861cbb600908fe827"
+        },
+        "fixtures/source-index-v1/temp/upload.part": {
+          "exact_original": false,
+          "original_bytes": 21,
+          "checkout_bytes": 22,
+          "sha256": "f56d2e646ee7ae743e52b4ffa06bd0c766837c9cef63ab9ccfa17d6ef1156c7c"
+        }
+      }
+    },
+    {
+      "policy": "fixed",
+      "core.autocrlf": true,
+      "files": {
+        "fixtures/source-index-v1/moved-foreign/无关材料.txt": {
+          "exact_original": true,
+          "original_bytes": 28,
+          "checkout_bytes": 28,
+          "sha256": "58829092c7fda23c528c8438ac1980b82a2a9365a66c5bd843168fdeeeea4142"
+        },
+        "fixtures/source-index-v1/temp/upload.part": {
+          "exact_original": true,
+          "original_bytes": 21,
+          "checkout_bytes": 21,
+          "sha256": "8d7300663d60e86200a0a7ba6cad283fe05d1eb37aeff82ecbd861441c67f554"
+        }
+      }
+    }
+  ],
+  "checks": [
+    {
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_verify_structure_navigation"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "scripts/verify_structure_navigation.py",
+        "--package",
+        "fixtures/structure-family-v1",
+        "--json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "scripts/verify_source_index.py",
+        "--package",
+        "fixtures/source-index-v1",
+        "--json"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

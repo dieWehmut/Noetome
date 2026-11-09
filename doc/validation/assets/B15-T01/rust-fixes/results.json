@@ -1,0 +1,86 @@
+[
+  {
+    "name": "writer-transition",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "noetome-cli",
+      "--lib",
+      "compile_identity::write_read_tests",
+      "--",
+      "--nocapture"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 13.465374768013135,
+    "stdout": "writer-transition-stdout.log",
+    "stderr": "writer-transition-stderr.log"
+  },
+  {
+    "name": "frozen-integration",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "noetome-cli",
+      "--no-fail-fast",
+      "--test",
+      "audit",
+      "--test",
+      "change",
+      "--test",
+      "index",
+      "--test",
+      "migrate",
+      "--test",
+      "plan",
+      "--test",
+      "structure",
+      "--test",
+      "template"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 41.88417174696224,
+    "stdout": "frozen-integration-stdout.log",
+    "stderr": "frozen-integration-stderr.log"
+  },
+  {
+    "name": "fmt-apply",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 1.2639470630092546,
+    "stdout": "fmt-apply-stdout.log",
+    "stderr": "fmt-apply-stderr.log"
+  },
+  {
+    "name": "fmt-check",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--check"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 1.2306710589909926,
+    "stdout": "fmt-check-stdout.log",
+    "stderr": "fmt-check-stderr.log"
+  },
+  {
+    "name": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.044593085011001676,
+    "stdout": "diff-check-stdout.log",
+    "stderr": "diff-check-stderr.log"
+  }
+]

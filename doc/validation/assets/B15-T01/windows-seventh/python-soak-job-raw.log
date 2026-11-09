@@ -1,0 +1,861 @@
+﻿2026-11-09T07:55:56.3209968Z Current runner version: '2.338.2'
+2026-11-09T07:55:56.3242909Z ##[group]Runner Image Provisioner
+2026-11-09T07:55:56.3243862Z Hosted Compute Agent
+2026-11-09T07:55:56.3244616Z Version: 20261103.629
+2026-11-09T07:55:56.3245376Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-09T07:55:56.3246191Z Build Date: 2026-11-03T17:26:59Z
+2026-11-09T07:55:56.3246992Z Worker ID: {19493281-5495-4c62-9579-ccb4fc075494}
+2026-11-09T07:55:56.3247774Z Region: westus3
+2026-11-09T07:55:56.3248421Z Cloud: Azure
+2026-11-09T07:55:56.3248989Z ##[endgroup]
+2026-11-09T07:55:56.3250728Z ##[group]Operating System
+2026-11-09T07:55:56.3251839Z Microsoft Windows Server 2025
+2026-11-09T07:55:56.3252515Z 10.0.26100
+2026-11-09T07:55:56.3253084Z Datacenter
+2026-11-09T07:55:56.3253630Z ##[endgroup]
+2026-11-09T07:55:56.3254190Z ##[group]Runner Image
+2026-11-09T07:55:56.3254877Z Image: windows-2025-vs2026
+2026-11-09T07:55:56.3255570Z Version: 20261103.298.1
+2026-11-09T07:55:56.3257439Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261103.298/images/windows/Windows2025-VS2026-Readme.md
+2026-11-09T07:55:56.3259414Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261103.298
+2026-11-09T07:55:56.3260563Z ##[endgroup]
+2026-11-09T07:55:56.3261771Z ##[group]GITHUB_TOKEN Permissions
+2026-11-09T07:55:56.3264175Z Contents: read
+2026-11-09T07:55:56.3264796Z Metadata: read
+2026-11-09T07:55:56.3265401Z ##[endgroup]
+2026-11-09T07:55:56.3267862Z Secret source: Actions
+2026-11-09T07:55:56.3269567Z Cache mode: write
+2026-11-09T07:55:56.3271608Z Prepare workflow directory
+2026-11-09T07:55:56.3996148Z Prepare all required actions
+2026-11-09T07:55:56.4059712Z Getting action download info
+2026-11-09T07:55:56.7105215Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-09T07:55:56.8262782Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-11-09T07:55:56.9500184Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-09T07:55:57.3808307Z Complete job name: Windows python-soak
+2026-11-09T07:55:57.5314298Z ##[group]Run actions/checkout@v4
+2026-11-09T07:55:57.5315842Z with:
+2026-11-09T07:55:57.5316217Z   repository: dieWehmut/Noetome
+2026-11-09T07:55:57.5319606Z   token: ***
+2026-11-09T07:55:57.5319946Z   ssh-strict: true
+2026-11-09T07:55:57.5320298Z   ssh-user: git
+2026-11-09T07:55:57.5320654Z   persist-credentials: true
+2026-11-09T07:55:57.5321039Z   clean: true
+2026-11-09T07:55:57.5321382Z   sparse-checkout-cone-mode: true
+2026-11-09T07:55:57.5321788Z   fetch-depth: 1
+2026-11-09T07:55:57.5322122Z   fetch-tags: false
+2026-11-09T07:55:57.5322468Z   show-progress: true
+2026-11-09T07:55:57.5322814Z   lfs: false
+2026-11-09T07:55:57.5323133Z   submodules: false
+2026-11-09T07:55:57.5323498Z   set-safe-directory: true
+2026-11-09T07:55:57.5323893Z   allow-unsafe-pr-checkout: false
+2026-11-09T07:55:57.5324584Z env:
+2026-11-09T07:55:57.5325009Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T07:55:57.5325562Z   GIT_CONFIG_COUNT: 1
+2026-11-09T07:55:57.5325976Z   GIT_CONFIG_KEY_0: core.longpaths
+2026-11-09T07:55:57.5326391Z   GIT_CONFIG_VALUE_0: true
+2026-11-09T07:55:57.5326755Z ##[endgroup]
+2026-11-09T07:55:58.0967425Z Syncing repository: dieWehmut/Noetome
+2026-11-09T07:55:58.0969454Z ##[group]Getting Git version info
+2026-11-09T07:55:58.0970286Z Working directory is 'D:\a\Noetome\Noetome'
+2026-11-09T07:55:58.0972351Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-09T07:55:59.0945343Z git version 2.56.0.windows.4
+2026-11-09T07:55:59.1020449Z ##[endgroup]
+2026-11-09T07:55:59.1024945Z Temporarily overriding HOME='D:\a\_temp\2c026799-8e5c-49b6-840d-f625b15c86ac' before making global git config changes
+2026-11-09T07:55:59.1025866Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-09T07:55:59.1026664Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Noetome\Noetome
+2026-11-09T07:55:59.1032253Z Deleting the contents of 'D:\a\Noetome\Noetome'
+2026-11-09T07:55:59.1033042Z ##[group]Initializing the repository
+2026-11-09T07:55:59.1033603Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\Noetome\Noetome
+2026-11-09T07:55:59.1034215Z Initialized empty Git repository in D:/a/Noetome/Noetome/.git/
+2026-11-09T07:55:59.1035616Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/dieWehmut/Noetome
+2026-11-09T07:55:59.1037044Z ##[endgroup]
+2026-11-09T07:55:59.1104073Z ##[group]Disabling automatic garbage collection
+2026-11-09T07:55:59.1105383Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-11-09T07:55:59.1108620Z ##[endgroup]
+2026-11-09T07:55:59.1109232Z ##[group]Setting up auth
+2026-11-09T07:55:59.1109907Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-09T07:55:59.1111661Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-09T07:56:01.1374156Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-09T07:56:01.1735900Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-09T07:56:01.7411851Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-09T07:56:01.7780615Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-09T07:56:02.3506376Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-11-09T07:56:02.3869420Z ##[endgroup]
+2026-11-09T07:56:02.3872754Z ##[group]Fetching the repository
+2026-11-09T07:56:02.3883002Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9643ec441085ff95cf4dba92b1abd45e47866cf3:refs/remotes/origin/codex/b15-t01-windows-runtime
+2026-11-09T07:57:37.7109744Z From https://github.com/dieWehmut/Noetome
+2026-11-09T07:57:37.7110838Z  * [new ref]         9643ec441085ff95cf4dba92b1abd45e47866cf3 -> origin/codex/b15-t01-windows-runtime
+2026-11-09T07:57:37.7145635Z ##[endgroup]
+2026-11-09T07:57:37.7146291Z ##[group]Determining the checkout info
+2026-11-09T07:57:37.7148082Z ##[endgroup]
+2026-11-09T07:57:37.7186353Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-11-09T07:57:37.8773440Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-11-09T07:57:37.9134953Z ##[group]Checking out the ref
+2026-11-09T07:57:37.9150483Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B codex/b15-t01-windows-runtime refs/remotes/origin/codex/b15-t01-windows-runtime
+2026-11-09T07:57:39.0571637Z Updating files:   9% (1678/17722)
+2026-11-09T07:57:39.3355241Z Updating files:  10% (1773/17722)
+2026-11-09T07:57:39.3815693Z Updating files:  11% (1950/17722)
+2026-11-09T07:57:39.5003631Z Updating files:  12% (2127/17722)
+2026-11-09T07:57:39.7485060Z Updating files:  13% (2304/17722)
+2026-11-09T07:57:39.7885922Z Updating files:  14% (2482/17722)
+2026-11-09T07:57:39.8276838Z Updating files:  15% (2659/17722)
+2026-11-09T07:57:39.8675014Z Updating files:  16% (2836/17722)
+2026-11-09T07:57:39.9081088Z Updating files:  17% (3013/17722)
+2026-11-09T07:57:39.9823016Z Updating files:  18% (3190/17722)
+2026-11-09T07:57:39.9970798Z Updating files:  19% (3368/17722)
+2026-11-09T07:57:40.0229507Z Updating files:  19% (3432/17722)
+2026-11-09T07:57:40.0629049Z Updating files:  20% (3545/17722)
+2026-11-09T07:57:40.1073823Z Updating files:  21% (3722/17722)
+2026-11-09T07:57:40.1458425Z Updating files:  22% (3899/17722)
+2026-11-09T07:57:40.1841650Z Updating files:  23% (4077/17722)
+2026-11-09T07:57:40.2225770Z Updating files:  24% (4254/17722)
+2026-11-09T07:57:40.2600520Z Updating files:  25% (4431/17722)
+2026-11-09T07:57:40.2979803Z Updating files:  26% (4608/17722)
+2026-11-09T07:57:40.3359231Z Updating files:  27% (4785/17722)
+2026-11-09T07:57:40.3739547Z Updating files:  28% (4963/17722)
+2026-11-09T07:57:40.4119166Z Updating files:  29% (5140/17722)
+2026-11-09T07:57:40.4501695Z Updating files:  30% (5317/17722)
+2026-11-09T07:57:40.4880911Z Updating files:  31% (5494/17722)
+2026-11-09T07:57:40.5350984Z Updating files:  32% (5672/17722)
+2026-11-09T07:57:40.7333890Z Updating files:  33% (5849/17722)
+2026-11-09T07:57:40.7713447Z Updating files:  34% (6026/17722)
+2026-11-09T07:57:40.8101203Z Updating files:  35% (6203/17722)
+2026-11-09T07:57:40.8476538Z Updating files:  36% (6380/17722)
+2026-11-09T07:57:40.8796193Z Updating files:  37% (6558/17722)
+2026-11-09T07:57:40.9112352Z Updating files:  38% (6735/17722)
+2026-11-09T07:57:40.9421676Z Updating files:  39% (6912/17722)
+2026-11-09T07:57:40.9751738Z Updating files:  40% (7089/17722)
+2026-11-09T07:57:41.0080532Z Updating files:  41% (7267/17722)
+2026-11-09T07:57:41.0411635Z Updating files:  42% (7444/17722)
+2026-11-09T07:57:41.0944710Z Updating files:  43% (7621/17722)
+2026-11-09T07:57:41.1282378Z Updating files:  44% (7798/17722)
+2026-11-09T07:57:41.1631821Z Updating files:  45% (7975/17722)
+2026-11-09T07:57:41.1968046Z Updating files:  46% (8153/17722)
+2026-11-09T07:57:41.2299651Z Updating files:  47% (8330/17722)
+2026-11-09T07:57:41.2623612Z Updating files:  48% (8507/17722)
+2026-11-09T07:57:41.2964758Z Updating files:  49% (8684/17722)
+2026-11-09T07:57:41.3292031Z Updating files:  50% (8861/17722)
+2026-11-09T07:57:41.3624869Z Updating files:  51% (9039/17722)
+2026-11-09T07:57:41.3956097Z Updating files:  52% (9216/17722)
+2026-11-09T07:57:41.4284015Z Updating files:  53% (9393/17722)
+2026-11-09T07:57:41.4626482Z Updating files:  54% (9570/17722)
+2026-11-09T07:57:41.4981174Z Updating files:  55% (9748/17722)
+2026-11-09T07:57:41.5303614Z Updating files:  56% (9925/17722)
+2026-11-09T07:57:41.5635199Z Updating files:  57% (10102/17722)
+2026-11-09T07:57:41.5966249Z Updating files:  58% (10279/17722)
+2026-11-09T07:57:41.6459738Z Updating files:  59% (10456/17722)
+2026-11-09T07:57:41.6734537Z Updating files:  60% (10634/17722)
+2026-11-09T07:57:41.7060458Z Updating files:  61% (10811/17722)
+2026-11-09T07:57:41.7391219Z Updating files:  62% (10988/17722)
+2026-11-09T07:57:41.7735425Z Updating files:  63% (11165/17722)
+2026-11-09T07:57:41.8074643Z Updating files:  64% (11343/17722)
+2026-11-09T07:57:41.8423970Z Updating files:  65% (11520/17722)
+2026-11-09T07:57:41.8769203Z Updating files:  66% (11697/17722)
+2026-11-09T07:57:42.0806853Z Updating files:  67% (11874/17722)
+2026-11-09T07:57:42.2060929Z Updating files:  67% (11932/17722)
+2026-11-09T07:57:42.2375835Z Updating files:  68% (12051/17722)
+2026-11-09T07:57:42.2780467Z Updating files:  69% (12229/17722)
+2026-11-09T07:57:42.3298180Z Updating files:  70% (12406/17722)
+2026-11-09T07:57:42.3964134Z Updating files:  71% (12583/17722)
+2026-11-09T07:57:42.4374206Z Updating files:  72% (12760/17722)
+2026-11-09T07:57:42.4787080Z Updating files:  73% (12938/17722)
+2026-11-09T07:57:42.5156478Z Updating files:  74% (13115/17722)
+2026-11-09T07:57:43.0540880Z Updating files:  75% (13292/17722)
+2026-11-09T07:57:43.0577948Z Updating files:  75% (13464/17722)
+2026-11-09T07:57:44.0424468Z Updating files:  76% (13469/17722)
+2026-11-09T07:57:45.1308495Z Updating files:  76% (13533/17722)
+2026-11-09T07:57:45.3389926Z Updating files:  76% (13569/17722)
+2026-11-09T07:57:45.3801644Z Updating files:  77% (13646/17722)
+2026-11-09T07:57:45.4183984Z Updating files:  78% (13824/17722)
+2026-11-09T07:57:45.4792579Z Updating files:  79% (14001/17722)
+2026-11-09T07:57:45.4977401Z Updating files:  80% (14178/17722)
+2026-11-09T07:57:46.7451975Z Updating files:  81% (14355/17722)
+2026-11-09T07:57:46.8939256Z Updating files:  81% (14517/17722)
+2026-11-09T07:57:47.5433762Z Updating files:  82% (14533/17722)
+2026-11-09T07:57:48.1571284Z Updating files:  82% (14540/17722)
+2026-11-09T07:57:49.1230651Z Updating files:  82% (14596/17722)
+2026-11-09T07:57:50.1133040Z Updating files:  82% (14627/17722)
+2026-11-09T07:57:50.4562343Z Updating files:  82% (14693/17722)
+2026-11-09T07:57:51.1871228Z Updating files:  83% (14710/17722)
+2026-11-09T07:57:52.1907672Z Updating files:  83% (14720/17722)
+2026-11-09T07:57:54.1533071Z Updating files:  83% (14729/17722)
+2026-11-09T07:57:55.5169322Z Updating files:  83% (14736/17722)
+2026-11-09T07:57:56.4271687Z Updating files:  83% (14744/17722)
+2026-11-09T07:57:57.4596012Z Updating files:  83% (14752/17722)
+2026-11-09T07:57:58.1519720Z Updating files:  83% (14760/17722)
+2026-11-09T07:57:59.2220090Z Updating files:  83% (14802/17722)
+2026-11-09T07:57:59.4330665Z Updating files:  83% (14854/17722)
+2026-11-09T07:58:00.5263490Z Updating files:  84% (14887/17722)
+2026-11-09T07:58:01.6846949Z Updating files:  84% (15008/17722)
+2026-11-09T07:58:02.0272749Z Updating files:  84% (15035/17722)
+2026-11-09T07:58:02.1596956Z Updating files:  85% (15064/17722)
+2026-11-09T07:58:02.1839963Z Updating files:  86% (15241/17722)
+2026-11-09T07:58:02.1886505Z Updating files:  86% (15390/17722)
+2026-11-09T07:58:02.2521451Z Updating files:  87% (15419/17722)
+2026-11-09T07:58:02.2860036Z Updating files:  88% (15596/17722)
+2026-11-09T07:58:02.3176348Z Updating files:  89% (15773/17722)
+2026-11-09T07:58:03.5118422Z Updating files:  90% (15950/17722)
+2026-11-09T07:58:04.6520059Z Updating files:  90% (15976/17722)
+2026-11-09T07:58:04.6769962Z Updating files:  90% (15996/17722)
+2026-11-09T07:58:04.7147574Z Updating files:  91% (16128/17722)
+2026-11-09T07:58:04.7676525Z Updating files:  92% (16305/17722)
+2026-11-09T07:58:04.8022900Z Updating files:  93% (16482/17722)
+2026-11-09T07:58:04.8399106Z Updating files:  94% (16659/17722)
+2026-11-09T07:58:04.8751847Z Updating files:  95% (16836/17722)
+2026-11-09T07:58:04.9102238Z Updating files:  96% (17014/17722)
+2026-11-09T07:58:04.9445107Z Updating files:  97% (17191/17722)
+2026-11-09T07:58:04.9799513Z Updating files:  98% (17368/17722)
+2026-11-09T07:58:05.0260013Z Updating files:  99% (17545/17722)
+2026-11-09T07:58:05.0260676Z Updating files: 100% (17722/17722)
+2026-11-09T07:58:05.0261317Z Updating files: 100% (17722/17722), done.
+2026-11-09T07:58:05.1846137Z Switched to a new branch 'codex/b15-t01-windows-runtime'
+2026-11-09T07:58:05.1873679Z branch 'codex/b15-t01-windows-runtime' set up to track 'origin/codex/b15-t01-windows-runtime'.
+2026-11-09T07:58:05.3684161Z ##[endgroup]
+2026-11-09T07:58:05.4136595Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-11-09T07:58:05.4442842Z 9643ec441085ff95cf4dba92b1abd45e47866cf3
+2026-11-09T07:58:06.2408904Z ##[group]Run New-Item -ItemType Directory -Force $env:TASK_EVIDENCE_DIR | Out-Null
+2026-11-09T07:58:06.2409694Z [36;1mNew-Item -ItemType Directory -Force $env:TASK_EVIDENCE_DIR | Out-Null[0m
+2026-11-09T07:58:06.3243597Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T07:58:06.3243954Z env:
+2026-11-09T07:58:06.3244250Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T07:58:06.3244569Z ##[endgroup]
+2026-11-09T07:58:08.5301359Z Prepare all required actions
+2026-11-09T07:58:08.5302104Z Getting action download info
+2026-11-09T07:58:08.7809778Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-09T07:58:08.9641466Z ##[group]Run ./.github/actions/windows-setup
+2026-11-09T07:58:08.9641749Z with:
+2026-11-09T07:58:08.9641998Z   evidence-dir: .artifacts/windows-validation/python-soak
+2026-11-09T07:58:08.9642316Z   target-profile: debug
+2026-11-09T07:58:08.9642540Z   cache-task: python-soak
+2026-11-09T07:58:08.9642929Z env:
+2026-11-09T07:58:08.9643171Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T07:58:08.9643477Z ##[endgroup]
+2026-11-09T07:58:08.9696676Z ##[start-action display=Restore immutable Cargo downloads;id=setup.registry]
+2026-11-09T07:58:09.2978659Z ##[group]Run actions/cache/restore@v4
+2026-11-09T07:58:09.2978866Z with:
+2026-11-09T07:58:09.2979267Z   key: windows-2025-rust-1.98.1-registry-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173
+2026-11-09T07:58:09.2979673Z   path: ~/.cargo/registry
+~/.cargo/git
+
+2026-11-09T07:58:09.2979883Z   enableCrossOsArchive: false
+2026-11-09T07:58:09.2980122Z   fail-on-cache-miss: false
+2026-11-09T07:58:09.2980286Z   lookup-only: false
+2026-11-09T07:58:09.2980430Z env:
+2026-11-09T07:58:09.2980625Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T07:58:09.2980870Z ##[endgroup]
+2026-11-09T07:58:09.4534278Z (node:8240) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T07:58:09.4535174Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T07:58:09.9554045Z Cache hit for: windows-2025-rust-1.98.1-registry-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173
+2026-11-09T07:58:09.9665343Z (node:8240) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-09T07:58:11.1946124Z Received 62914560 of 102580504 (61.3%), 59.5 MBs/sec
+2026-11-09T07:58:12.1301449Z Received 102580504 of 102580504 (100.0%), 50.3 MBs/sec
+2026-11-09T07:58:12.1314076Z Cache Size: ~98 MB (102580504 B)
+2026-11-09T07:58:12.1403815Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/2c5edb4c-c957-4216-ad57-8ae2c25e9170/cache.tzst -P -C D:/a/Noetome/Noetome --force-local --use-compress-program "zstd -d"
+2026-11-09T07:58:36.7291388Z Cache restored successfully
+2026-11-09T07:58:36.7733919Z Cache restored from key: windows-2025-rust-1.98.1-registry-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173
+2026-11-09T07:58:36.7853990Z ##[end-action id=setup.registry;outcome=success;conclusion=success;duration_ms=27815]
+2026-11-09T07:58:36.7856543Z ##[start-action display=Restore compiled Cargo profile;id=setup.target]
+2026-11-09T07:58:37.0677679Z ##[group]Run actions/cache/restore@v4
+2026-11-09T07:58:37.0678073Z with:
+2026-11-09T07:58:37.0678973Z   key: windows-2025-rust-1.98.1-debug-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-python-soak-9643ec441085ff95cf4dba92b1abd45e47866cf3
+2026-11-09T07:58:37.0680935Z   restore-keys: windows-2025-rust-1.98.1-debug-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-python-soak-
+windows-2025-rust-1.98.1-debug-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-
+
+2026-11-09T07:58:37.0681988Z   path: target/debug
+2026-11-09T07:58:37.0682187Z   enableCrossOsArchive: false
+2026-11-09T07:58:37.0682382Z   fail-on-cache-miss: false
+2026-11-09T07:58:37.0682561Z   lookup-only: false
+2026-11-09T07:58:37.0682726Z env:
+2026-11-09T07:58:37.0682927Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T07:58:37.0683187Z ##[endgroup]
+2026-11-09T07:58:37.1932207Z (node:3744) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T07:58:37.1977094Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T07:58:37.4940829Z Cache hit for restore-key: windows-2025-rust-1.98.1-debug-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-rust-c584cfddd4b435a0b78660e12874ed3a6e1aa910
+2026-11-09T07:58:37.5033352Z (node:3744) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-09T07:58:38.7202589Z Received 58720256 of 2252512660 (2.6%), 55.9 MBs/sec
+2026-11-09T07:58:39.9713373Z Received 134217728 of 2252512660 (6.0%), 57.2 MBs/sec
+2026-11-09T07:58:41.7931833Z Received 268435456 of 2252512660 (11.9%), 62.9 MBs/sec
+2026-11-09T07:58:43.4834004Z Received 402653184 of 2252512660 (17.9%), 66.7 MBs/sec
+2026-11-09T07:58:44.4874242Z Received 532676608 of 2252512660 (23.6%), 75.1 MBs/sec
+2026-11-09T07:58:45.4899270Z Received 536870912 of 2252512660 (23.8%), 65.9 MBs/sec
+2026-11-09T07:58:47.0398075Z Received 671088640 of 2252512660 (29.8%), 68.7 MBs/sec
+2026-11-09T07:58:48.6854907Z Received 805306368 of 2252512660 (35.8%), 70.1 MBs/sec
+2026-11-09T07:58:50.3014491Z Received 939524096 of 2252512660 (41.7%), 71.2 MBs/sec
+2026-11-09T07:58:51.9361327Z Received 1073741824 of 2252512660 (47.7%), 72.1 MBs/sec
+2026-11-09T07:58:53.9272308Z Received 1207959552 of 2252512660 (53.6%), 72.2 MBs/sec
+2026-11-09T07:58:55.4265404Z Received 1342177280 of 2252512660 (59.6%), 72.3 MBs/sec
+2026-11-09T07:58:58.0544356Z Received 1476395008 of 2252512660 (65.5%), 72.5 MBs/sec
+2026-11-09T07:58:58.8068907Z Received 1610612736 of 2252512660 (71.5%), 72.8 MBs/sec
+2026-11-09T07:59:00.4603032Z Received 1744830464 of 2252512660 (77.5%), 73.2 MBs/sec
+2026-11-09T07:59:02.1221092Z Received 1879048192 of 2252512660 (83.4%), 73.5 MBs/sec
+2026-11-09T07:59:04.0534019Z Received 2013265920 of 2252512660 (89.4%), 72.9 MBs/sec
+2026-11-09T07:59:05.7347249Z Received 2147483648 of 2252512660 (95.3%), 73.1 MBs/sec
+2026-11-09T07:59:07.0676108Z Received 2252512660 of 2252512660 (100.0%), 73.2 MBs/sec
+2026-11-09T07:59:07.0680409Z Cache Size: ~2148 MB (2252512660 B)
+2026-11-09T07:59:07.0800128Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/b62447af-7cc5-408d-a0d8-8a2d5610e932/cache.tzst -P -C D:/a/Noetome/Noetome --force-local --use-compress-program "zstd -d"
+2026-11-09T08:00:32.4940998Z Cache restored successfully
+2026-11-09T08:00:32.6056007Z Cache restored from key: windows-2025-rust-1.98.1-debug-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-rust-c584cfddd4b435a0b78660e12874ed3a6e1aa910
+2026-11-09T08:00:32.6219033Z ##[end-action id=setup.target;outcome=success;conclusion=success;duration_ms=115834]
+2026-11-09T08:00:32.6222536Z ##[start-action display=Install locked Rust toolchain;id=setup.__run]
+2026-11-09T08:00:32.7625577Z ##[group]Run $ErrorActionPreference = 'Stop'
+2026-11-09T08:00:32.7626079Z [36;1m$ErrorActionPreference = 'Stop'[0m
+2026-11-09T08:00:32.7626724Z [36;1mrustup toolchain install 1.98.1 --profile minimal --component rustfmt *>&1 | Tee-Object '.artifacts/windows-validation/python-soak/rust-setup.log'[0m
+2026-11-09T08:00:32.7627348Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-09T08:00:32.7628003Z [36;1mrustup show *>&1 | Tee-Object '.artifacts/windows-validation/python-soak/rust-identity.log'[0m
+2026-11-09T08:00:32.7628670Z [36;1mexit $LASTEXITCODE[0m
+2026-11-09T08:00:32.7860108Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T08:00:32.7860502Z env:
+2026-11-09T08:00:32.7860789Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T08:00:32.7861138Z ##[endgroup]
+2026-11-09T08:00:37.0705089Z [31;1minfo: syncing channel updates for 1.98.1-x86_64-pc-windows-msvc[0m
+2026-11-09T08:00:37.5210514Z [31;1minfo: latest update on 2026-09-03 for version 1.98.1 (48a229cea 2026-09-01)[0m
+2026-11-09T08:00:37.5359122Z [31;1minfo: downloading 4 components[0m
+2026-11-09T08:00:47.3562618Z 
+2026-11-09T08:00:47.3860150Z   1.98.1-x86_64-pc-windows-msvc installed - rustc 1.98.1 (48a229cea 2026-09-01)
+2026-11-09T08:00:47.3861545Z 
+2026-11-09T08:00:47.4896308Z Default host: x86_64-pc-windows-msvc
+2026-11-09T08:00:47.4897182Z rustup home:  C:\Users\runneradmin\.rustup
+2026-11-09T08:00:47.4897700Z 
+2026-11-09T08:00:47.5089241Z installed toolchains
+2026-11-09T08:00:47.5089993Z --------------------
+2026-11-09T08:00:47.5449316Z stable-x86_64-pc-windows-msvc (default)
+2026-11-09T08:00:47.5450344Z 1.98.1-x86_64-pc-windows-msvc (active)
+2026-11-09T08:00:47.5450602Z 
+2026-11-09T08:00:47.5450725Z active toolchain
+2026-11-09T08:00:47.5450972Z ----------------
+2026-11-09T08:00:47.5451214Z name: 1.98.1-x86_64-pc-windows-msvc
+2026-11-09T08:00:47.5451590Z active because: overridden by 'D:\a\Noetome\Noetome\rust-toolchain.toml'
+2026-11-09T08:00:47.5451942Z installed targets:
+2026-11-09T08:00:47.5452168Z   x86_64-pc-windows-msvc
+2026-11-09T08:00:47.5763627Z ##[end-action id=setup.__run;outcome=success;conclusion=success;duration_ms=14953]
+2026-11-09T08:00:47.5767041Z ##[start-action display=Run actions/setup-node@v4;id=setup.__actions_setup-node]
+2026-11-09T08:00:47.7715870Z ##[group]Run actions/setup-node@v4
+2026-11-09T08:00:47.7716151Z with:
+2026-11-09T08:00:47.7716397Z   node-version: 26.10.0
+2026-11-09T08:00:47.7716629Z   cache: npm
+2026-11-09T08:00:47.7716838Z   always-auth: false
+2026-11-09T08:00:47.7717092Z   check-latest: false
+2026-11-09T08:00:47.7719001Z   token: ***
+2026-11-09T08:00:47.7719236Z env:
+2026-11-09T08:00:47.7719506Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T08:00:47.7719855Z ##[endgroup]
+2026-11-09T08:00:47.9556230Z Attempting to download 26.10.0...
+2026-11-09T08:00:47.9686358Z (node:8728) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T08:00:47.9698368Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T08:00:49.0277597Z Acquiring 26.10.0 - x64 from https://github.com/actions/node-versions/releases/download/26.10.0-35737674515/node-26.10.0-win32-x64.7z
+2026-11-09T08:01:00.2792167Z Unexpected HTTP response: 504
+2026-11-09T08:01:00.2792739Z Waiting 18 seconds before trying again
+2026-11-09T08:01:29.5956778Z Unexpected HTTP response: 504
+2026-11-09T08:01:29.5957200Z Waiting 11 seconds before trying again
+2026-11-09T08:01:51.1603233Z Extracting ...
+2026-11-09T08:01:53.4847989Z Adding to the cache ...
+2026-11-09T08:01:57.2389788Z ##[group]Environment details
+2026-11-09T08:01:58.0079671Z node: v26.10.0
+2026-11-09T08:01:58.0080340Z npm: 11.19.1
+2026-11-09T08:01:58.0080681Z yarn: 1.22.22
+2026-11-09T08:01:58.0081453Z ##[endgroup]
+2026-11-09T08:01:58.0705758Z [command]C:\Windows\system32\cmd.exe /D /S /C "C:\hostedtoolcache\windows\node\26.10.0\x64\npm.cmd config get cache"
+2026-11-09T08:01:58.3226970Z C:\npm\cache
+2026-11-09T08:01:59.1181910Z Cache hit for: node-cache-Windows-x64-npm-8ebc8294a2c12b631137b92e2a4e72617f23dd1f65a6220e6695cadba1cf1f36
+2026-11-09T08:01:59.1273751Z (node:8728) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-09T08:02:00.3198921Z Received 39343635 of 39343635 (100.0%), 37.9 MBs/sec
+2026-11-09T08:02:00.3202236Z Cache Size: ~38 MB (39343635 B)
+2026-11-09T08:02:00.3228664Z [command]"C:\Program Files\Git\usr\bin\tar.exe" -xf D:/a/_temp/b7857960-5267-42e6-966a-e76c705ee0f4/cache.tzst -P -C D:/a/Noetome/Noetome --force-local --use-compress-program "zstd -d"
+2026-11-09T08:02:00.5527118Z Cache restored successfully
+2026-11-09T08:02:00.5575936Z Cache restored from key: node-cache-Windows-x64-npm-8ebc8294a2c12b631137b92e2a4e72617f23dd1f65a6220e6695cadba1cf1f36
+2026-11-09T08:02:00.5847689Z ##[end-action id=setup.__actions_setup-node;outcome=success;conclusion=success;duration_ms=73006]
+2026-11-09T08:02:00.5850237Z ##[start-action display=Install locked frontend dependencies;id=setup.__run_2]
+2026-11-09T08:02:00.6030911Z ##[group]Run npm ci --ignore-scripts *>&1 | Tee-Object '.artifacts/windows-validation/python-soak/npm-setup.log'
+2026-11-09T08:02:00.6031544Z [36;1mnpm ci --ignore-scripts *>&1 | Tee-Object '.artifacts/windows-validation/python-soak/npm-setup.log'[0m
+2026-11-09T08:02:00.6031927Z [36;1mexit $LASTEXITCODE[0m
+2026-11-09T08:02:00.6096702Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T08:02:00.6097278Z env:
+2026-11-09T08:02:00.6097576Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T08:02:00.6097904Z ##[endgroup]
+2026-11-09T08:02:11.7894163Z 
+2026-11-09T08:02:11.7917062Z added 30 packages, and audited 31 packages in 11s
+2026-11-09T08:02:11.7917391Z 
+2026-11-09T08:02:11.7917582Z 10 packages are looking for funding
+2026-11-09T08:02:11.7917910Z   run `npm fund` for details
+2026-11-09T08:02:11.7918120Z 
+2026-11-09T08:02:11.7918265Z found 0 vulnerabilities
+2026-11-09T08:02:13.6257523Z ##[end-action id=setup.__run_2;outcome=success;conclusion=success;duration_ms=13040]
+2026-11-09T08:02:13.6260388Z ##[start-action display=Prepare locked portable PDF Python;id=setup.__run_3]
+2026-11-09T08:02:13.6427559Z ##[group]Run $ErrorActionPreference = 'Stop'
+2026-11-09T08:02:13.6428033Z [36;1m$ErrorActionPreference = 'Stop'[0m
+2026-11-09T08:02:13.6428798Z [36;1m& ./scripts/prepare_windows_runtime.ps1 *>&1 | Tee-Object '.artifacts/windows-validation/python-soak/python-setup.log'[0m
+2026-11-09T08:02:13.6429797Z [36;1m$taskPython = Join-Path $env:GITHUB_WORKSPACE 'target/windows-runtime/python/python.exe'[0m
+2026-11-09T08:02:13.6430483Z [36;1m"NOETOME_PDF_PYTHON=$taskPython" >> $env:GITHUB_ENV[0m
+2026-11-09T08:02:13.6430988Z [36;1m"NOETOME_TEST_PYTHON=$taskPython" >> $env:GITHUB_ENV[0m
+2026-11-09T08:02:13.6431576Z [36;1m# unittest starts child interpreters without inheriting the parent's[0m
+2026-11-09T08:02:13.6432261Z [36;1m# -X utf8 flag. Match the application's explicit UTF-8 protocol there.[0m
+2026-11-09T08:02:13.6432776Z [36;1m"PYTHONUTF8=1" >> $env:GITHUB_ENV[0m
+2026-11-09T08:02:13.6433223Z [36;1m(Split-Path $taskPython -Parent) >> $env:GITHUB_PATH[0m
+2026-11-09T08:02:13.6433980Z [36;1mCopy-Item target/windows-runtime/runtime-receipt.json '.artifacts/windows-validation/python-soak/'[0m
+2026-11-09T08:02:13.6510302Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T08:02:13.6510757Z env:
+2026-11-09T08:02:13.6511134Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T08:02:13.6511572Z ##[endgroup]
+2026-11-09T08:02:14.6241531Z Downloading byte-pinned CPython 3.12.14 Windows x64 into D:\a\Noetome\Noetome\target\windows-runtime
+2026-11-09T08:02:26.4477655Z [33;1mWARNING: Portable Python download attempt 1/4 failed (HTTP 504): Response status code does not indicate success: 504 (Gateway Time-out).[0m
+2026-11-09T08:02:26.4504072Z Retrying the same byte-pinned archive in 2 seconds.
+2026-11-09T08:02:28.6194632Z [33;1mWARNING: Portable Python download attempt 2/4 failed (HTTP 504): Response status code does not indicate success: 504 (Gateway Time-out).[0m
+2026-11-09T08:02:28.6198893Z Retrying the same byte-pinned archive in 4 seconds.
+2026-11-09T08:02:32.7892531Z [33;1mWARNING: Portable Python download attempt 3/4 failed (HTTP 504): Response status code does not indicate success: 504 (Gateway Time-out).[0m
+2026-11-09T08:02:32.7896609Z Retrying the same byte-pinned archive in 6 seconds.
+2026-11-09T08:02:53.8035357Z Collecting pdfplumber==0.11.9 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 3))
+2026-11-09T08:02:53.8513612Z   Downloading pdfplumber-0.11.9-py3-none-any.whl (60 kB)
+2026-11-09T08:02:53.9210233Z Collecting pdfminer.six==20251230 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 4))
+2026-11-09T08:02:53.9334074Z   Downloading pdfminer_six-20251230-py3-none-any.whl (6.6 MB)
+2026-11-09T08:02:54.0338016Z      ---------------------------------------- 6.6/6.6 MB 100.5 MB/s  0:00:00
+2026-11-09T08:02:54.1533800Z Collecting pypdfium2==5.14.0 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 5))
+2026-11-09T08:02:54.1645237Z   Downloading pypdfium2-5.14.0-py3-none-win_amd64.whl (3.9 MB)
+2026-11-09T08:02:54.2121517Z      ---------------------------------------- 3.9/3.9 MB 80.1 MB/s  0:00:00
+2026-11-09T08:02:54.4484692Z Collecting Pillow==12.3.0 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 6))
+2026-11-09T08:02:54.4593006Z   Downloading pillow-12.3.0-cp312-cp312-win_amd64.whl (7.2 MB)
+2026-11-09T08:02:54.5296650Z      ---------------------------------------- 7.2/7.2 MB 88.2 MB/s  0:00:00
+2026-11-09T08:02:54.6675327Z Collecting charset-normalizer==3.5.2 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 7))
+2026-11-09T08:02:54.6795171Z   Downloading charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl (207 kB)
+2026-11-09T08:02:54.9309902Z Collecting cryptography==50.0.2 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 8))
+2026-11-09T08:02:54.9421365Z   Downloading cryptography-50.0.2-cp311-abi3-win_amd64.whl (3.8 MB)
+2026-11-09T08:02:54.9961108Z      ---------------------------------------- 3.8/3.8 MB 75.8 MB/s  0:00:00
+2026-11-09T08:02:55.1086257Z Collecting cffi==2.1.1 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 9))
+2026-11-09T08:02:55.1216164Z   Downloading cffi-2.1.1-cp312-cp312-win_amd64.whl (185 kB)
+2026-11-09T08:02:55.1966019Z Collecting pycparser==3.11 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 10))
+2026-11-09T08:02:55.2090631Z   Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+2026-11-09T08:02:55.3129222Z Installing collected packages: pypdfium2, pycparser, Pillow, charset-normalizer, cffi, cryptography, pdfminer.six, pdfplumber
+2026-11-09T08:02:55.5314396Z [31;1m  WARNING: The script pypdfium2.exe is installed in 'D:\a\Noetome\Noetome\target\windows-runtime\python\Scripts' which is not on PATH.[0m
+2026-11-09T08:02:55.5316496Z [31;1m  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.[0m
+2026-11-09T08:02:56.2508302Z [31;1m  WARNING: The script normalizer.exe is installed in 'D:\a\Noetome\Noetome\target\windows-runtime\python\Scripts' which is not on PATH.[0m
+2026-11-09T08:02:56.2537148Z [31;1m  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.[0m
+2026-11-09T08:02:56.3881438Z [31;1m  WARNING: The script cffi-gen-src.exe is installed in 'D:\a\Noetome\Noetome\target\windows-runtime\python\Scripts' which is not on PATH.[0m
+2026-11-09T08:02:56.3915495Z [31;1m  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.[0m
+2026-11-09T08:02:57.0314190Z [31;1m  WARNING: The script pdfplumber.exe is installed in 'D:\a\Noetome\Noetome\target\windows-runtime\python\Scripts' which is not on PATH.[0m
+2026-11-09T08:02:57.0316240Z [31;1m  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.[0m
+2026-11-09T08:02:57.0341638Z 
+2026-11-09T08:02:57.0354957Z Successfully installed Pillow-12.3.0 cffi-2.1.1 charset-normalizer-3.5.2 cryptography-50.0.2 pdfminer.six-20251230 pdfplumber-0.11.9 pycparser-3.11 pypdfium2-5.14.0
+2026-11-09T08:02:58.1938985Z No broken requirements found.
+2026-11-09T08:02:58.7369091Z Locked PDF runtime verified: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:02:58.7718371Z ##[end-action id=setup.__run_3;outcome=success;conclusion=success;duration_ms=45145]
+2026-11-09T08:02:58.8136573Z ##[group]Run cargo build -p noetome-cli --locked *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/cli-build.log"
+2026-11-09T08:02:58.8137695Z [36;1mcargo build -p noetome-cli --locked *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/cli-build.log"[0m
+2026-11-09T08:02:58.8138136Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-09T08:02:58.8138543Z [36;1m"NOETOME_TEST_BINARY=$env:GITHUB_WORKSPACE/target/debug/noetome.exe" >> $env:GITHUB_ENV[0m
+2026-11-09T08:02:58.8200508Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T08:02:58.8200830Z env:
+2026-11-09T08:02:58.8201072Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T08:02:58.8201477Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:02:58.8202720Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:02:58.8203046Z   PYTHONUTF8: 1
+2026-11-09T08:02:58.8203397Z ##[endgroup]
+2026-11-09T08:03:09.2235918Z [31;1m   Compiling proc-macro2 v1.0.107[0m
+2026-11-09T08:03:09.2239317Z [31;1m   Compiling windows-sys v0.61.2[0m
+2026-11-09T08:03:13.1355833Z [31;1m   Compiling quote v1.0.47[0m
+2026-11-09T08:03:13.6670092Z [31;1m   Compiling syn v3.0.9[0m
+2026-11-09T08:03:18.8719156Z [31;1m   Compiling synstructure v0.14.0[0m
+2026-11-09T08:03:18.9064962Z [31;1m   Compiling syn v2.0.119[0m
+2026-11-09T08:03:19.5277060Z [31;1m   Compiling zerofrom-derive v0.1.8[0m
+2026-11-09T08:03:20.8052971Z [31;1m   Compiling zerofrom v0.1.8[0m
+2026-11-09T08:03:25.1909562Z [31;1m   Compiling yoke-derive v0.8.4[0m
+2026-11-09T08:03:25.1911321Z [31;1m   Compiling yoke v0.8.4[0m
+2026-11-09T08:03:25.1911931Z [31;1m   Compiling zerovec-derive v0.11.7[0m
+2026-11-09T08:03:25.1912479Z [31;1m   Compiling zerovec v0.11.9[0m
+2026-11-09T08:03:25.1913009Z [31;1m   Compiling windows-interface v0.59.3[0m
+2026-11-09T08:03:25.1913556Z [31;1m   Compiling windows-implement v0.60.2[0m
+2026-11-09T08:03:25.6345985Z [31;1m   Compiling displaydoc v0.2.7[0m
+2026-11-09T08:03:25.7817238Z [31;1m   Compiling potential_utf v0.1.6[0m
+2026-11-09T08:03:26.0409654Z [31;1m   Compiling mio v1.2.4[0m
+2026-11-09T08:03:26.6441297Z [31;1m   Compiling tinystr v0.8.5[0m
+2026-11-09T08:03:26.9583733Z [31;1m   Compiling icu_locale_core v2.4.0[0m
+2026-11-09T08:03:27.4831418Z [31;1m   Compiling zerotrie v0.2.5[0m
+2026-11-09T08:03:27.9110481Z [31;1m   Compiling socket2 v0.6.5[0m
+2026-11-09T08:03:28.7380063Z [31;1m   Compiling icu_provider v2.4.0[0m
+2026-11-09T08:03:29.0957662Z [31;1m   Compiling tokio v1.54.1[0m
+2026-11-09T08:03:29.2528141Z [31;1m   Compiling icu_collections v2.4.0[0m
+2026-11-09T08:03:30.0981752Z [31;1m   Compiling windows-core v0.62.2[0m
+2026-11-09T08:03:30.7964273Z [31;1m   Compiling windows-core v0.61.2[0m
+2026-11-09T08:03:31.5293426Z [31;1m   Compiling icu_normalizer v2.4.0[0m
+2026-11-09T08:03:32.6433092Z [31;1m   Compiling icu_properties v2.4.0[0m
+2026-11-09T08:03:36.0200455Z [31;1m   Compiling idna_adapter v1.2.2[0m
+2026-11-09T08:03:36.2513617Z [31;1m   Compiling schannel v0.1.30[0m
+2026-11-09T08:03:37.1965907Z [31;1m   Compiling serde_core v1.0.229[0m
+2026-11-09T08:03:37.2570216Z [31;1m   Compiling bitflags v2.13.2[0m
+2026-11-09T08:03:37.6508784Z [31;1m   Compiling hyper v1.12.0[0m
+2026-11-09T08:03:37.7029353Z [31;1m   Compiling native-tls v0.2.18[0m
+2026-11-09T08:03:38.1078134Z [31;1m   Compiling idna v1.1.0[0m
+2026-11-09T08:03:39.5978908Z [31;1m   Compiling hyper-util v0.1.21[0m
+2026-11-09T08:03:40.0131343Z [31;1m   Compiling tower v0.5.3[0m
+2026-11-09T08:03:40.7143636Z [31;1m   Compiling windows-future v0.3.2[0m
+2026-11-09T08:03:41.7002699Z [31;1m   Compiling windows-future v0.2.1[0m
+2026-11-09T08:03:41.9588532Z [31;1m   Compiling url v2.5.8[0m
+2026-11-09T08:03:42.1074680Z [31;1m   Compiling tokio-native-tls v0.3.1[0m
+2026-11-09T08:03:43.3107642Z [31;1m   Compiling windows-collections v0.2.0[0m
+2026-11-09T08:03:43.6222186Z [31;1m   Compiling windows-numerics v0.2.0[0m
+2026-11-09T08:03:44.0123144Z [31;1m   Compiling windows-numerics v0.3.1[0m
+2026-11-09T08:03:44.2407578Z [31;1m   Compiling windows-collections v0.3.2[0m
+2026-11-09T08:03:45.4856440Z [31;1m   Compiling thiserror-impl v1.0.69[0m
+2026-11-09T08:03:46.3095322Z [31;1m   Compiling serde v1.0.229[0m
+2026-11-09T08:03:46.7155020Z [31;1m   Compiling serde_json v1.0.154[0m
+2026-11-09T08:03:47.1191843Z [31;1m   Compiling hyper-tls v0.6.0[0m
+2026-11-09T08:03:47.2972823Z [31;1m   Compiling thiserror v1.0.69[0m
+2026-11-09T08:03:47.4290403Z [31;1m   Compiling windows v0.62.2[0m
+2026-11-09T08:03:47.4342692Z [31;1m   Compiling windows v0.61.3[0m
+2026-11-09T08:03:51.4712695Z [31;1m   Compiling tower-http v0.6.11[0m
+2026-11-09T08:03:51.5722126Z [31;1m   Compiling noetome-cli v0.1.0 (D:\a\Noetome\Noetome\crates\noetome-cli)[0m
+2026-11-09T08:03:52.1183266Z [31;1m   Compiling serde_derive v1.0.229[0m
+2026-11-09T08:03:52.3364368Z [31;1m   Compiling winapi-util v0.1.11[0m
+2026-11-09T08:03:52.7250631Z [31;1m   Compiling memchr v2.8.3[0m
+2026-11-09T08:03:54.0693019Z [31;1m   Compiling time v0.3.55[0m
+2026-11-09T08:03:57.4473742Z [31;1m   Compiling rusqlite v0.41.1[0m
+2026-11-09T08:03:58.0461701Z [31;1m   Compiling reqwest v0.13.5[0m
+2026-11-09T08:04:04.9235938Z [31;1m   Compiling same-file v1.0.6[0m
+2026-11-09T08:04:04.9917652Z [31;1m   Compiling png v0.18.1[0m
+2026-11-09T08:04:05.3430967Z [31;1m   Compiling uuid v1.29.0[0m
+2026-11-09T08:04:07.5350827Z [31;1m   Compiling win32job v2.0.3[0m
+2026-11-09T08:04:08.7075873Z [31;1m   Compiling process-wrap v10.0.1[0m
+2026-11-09T08:04:13.4017354Z [31;1mwarning: unused import: `BTreeMap`[0m
+2026-11-09T08:04:13.4018427Z [31;1m  --> crates\noetome-cli\src\change_model.rs:18:24[0m
+2026-11-09T08:04:13.4020155Z [31;1m   |[0m
+2026-11-09T08:04:13.4032395Z [31;1m18 | use std::collections::{BTreeMap, BTreeSet};[0m
+2026-11-09T08:04:13.4032944Z [31;1m   |                        ^^^^^^^^[0m
+2026-11-09T08:04:13.4033270Z [31;1m   |[0m
+2026-11-09T08:04:13.4033795Z [31;1m   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default[0m
+2026-11-09T08:04:13.4034240Z [31;1m[0m
+2026-11-09T08:04:47.3074628Z [31;1mwarning: constant `STAGES` is never used[0m
+2026-11-09T08:04:47.3106920Z [31;1m  --> crates\noetome-cli\src\bench_model.rs:44:18[0m
+2026-11-09T08:04:47.3131870Z [31;1m   |[0m
+2026-11-09T08:04:47.3135026Z [31;1m44 | pub(crate) const STAGES: [&str; 4] = [STAGE_SCAN, STAGE_DETECT, STAGE_PLAN, STAGE_PAGE];[0m
+2026-11-09T08:04:47.3148755Z [31;1m   |                  ^^^^^^[0m
+2026-11-09T08:04:47.3156947Z [31;1m   |[0m
+2026-11-09T08:04:47.3283363Z [31;1m   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default[0m
+2026-11-09T08:04:47.3296501Z [31;1m[0m
+2026-11-09T08:04:47.3297309Z [31;1mwarning: field `edited` is never read[0m
+2026-11-09T08:04:47.3301917Z [31;1m   --> crates\noetome-cli\src\bench_model.rs:148:9[0m
+2026-11-09T08:04:47.3303402Z [31;1m    |[0m
+2026-11-09T08:04:47.3304094Z [31;1m141 | pub(crate) struct Note {[0m
+2026-11-09T08:04:47.3305700Z [31;1m    |                   ---- field in this struct[0m
+2026-11-09T08:04:47.3307324Z [31;1m...[0m
+2026-11-09T08:04:47.3307923Z [31;1m148 |     pub edited: bool,[0m
+2026-11-09T08:04:47.3315971Z [31;1m    |         ^^^^^^[0m
+2026-11-09T08:04:47.3320488Z [31;1m    |[0m
+2026-11-09T08:04:47.3323119Z [31;1m    = note: `Note` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis[0m
+2026-11-09T08:04:47.3444045Z [31;1m[0m
+2026-11-09T08:04:47.3445191Z [31;1mwarning: function `paths` is never used[0m
+2026-11-09T08:04:47.3446000Z [31;1m   --> crates\noetome-cli\src\bench_store.rs:238:15[0m
+2026-11-09T08:04:47.3446736Z [31;1m    |[0m
+2026-11-09T08:04:47.3447525Z [31;1m238 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {[0m
+2026-11-09T08:04:47.3449386Z [31;1m    |               ^^^^^[0m
+2026-11-09T08:04:47.3450185Z [31;1m[0m
+2026-11-09T08:04:47.3450830Z [31;1mwarning: function `resolve` is never used[0m
+2026-11-09T08:04:47.3451645Z [31;1m   --> crates\noetome-cli\src\change_store.rs:104:4[0m
+2026-11-09T08:04:47.3452361Z [31;1m    |[0m
+2026-11-09T08:04:47.3453249Z [31;1m104 | fn resolve(root: &Path, relative: &str) -> Result<PathBuf, ProjectError> {[0m
+2026-11-09T08:04:47.3454037Z [31;1m    |    ^^^^^^^[0m
+2026-11-09T08:04:47.3454518Z [31;1m[0m
+2026-11-09T08:04:47.3455161Z [31;1mwarning: function `create_parent` is never used[0m
+2026-11-09T08:04:47.3455941Z [31;1m   --> crates\noetome-cli\src\change_store.rs:146:4[0m
+2026-11-09T08:04:47.3460869Z [31;1m    |[0m
+2026-11-09T08:04:47.3461633Z [31;1m146 | fn create_parent(path: &Path, label: &str) -> Result<(), ProjectError> {[0m
+2026-11-09T08:04:47.3462582Z [31;1m    |    ^^^^^^^^^^^^^[0m
+2026-11-09T08:04:47.3462948Z [31;1m[0m
+2026-11-09T08:04:47.3463419Z [31;1mwarning: method `task` is never used[0m
+2026-11-09T08:04:47.3464053Z [31;1m   --> crates\noetome-cli\src\journal_model.rs:509:8[0m
+2026-11-09T08:04:47.3464553Z [31;1m    |[0m
+2026-11-09T08:04:47.3464886Z [31;1m245 | impl Declaration {[0m
+2026-11-09T08:04:47.3465466Z [31;1m    | ---------------- method in this implementation[0m
+2026-11-09T08:04:47.3465951Z [31;1m...[0m
+2026-11-09T08:04:47.3466462Z [31;1m509 |     fn task(&self, id: &str) -> Option<&TaskSpec> {[0m
+2026-11-09T08:04:47.3466955Z [31;1m    |        ^^^^[0m
+2026-11-09T08:04:47.3467299Z [31;1m[0m
+2026-11-09T08:04:47.3467745Z [31;1mwarning: field `inputs` is never read[0m
+2026-11-09T08:04:47.3468352Z [31;1m   --> crates\noetome-cli\src\plan_store.rs:249:16[0m
+2026-11-09T08:04:47.3468850Z [31;1m    |[0m
+2026-11-09T08:04:47.3469303Z [31;1m246 | pub(crate) struct Frozen {[0m
+2026-11-09T08:04:47.3469832Z [31;1m    |                   ------ field in this struct[0m
+2026-11-09T08:04:47.3470301Z [31;1m...[0m
+2026-11-09T08:04:47.3470730Z [31;1m249 |     pub(crate) inputs: Inputs,[0m
+2026-11-09T08:04:47.3471251Z [31;1m    |                ^^^^^^[0m
+2026-11-09T08:04:47.3471647Z [31;1m[0m
+2026-11-09T08:04:47.3472376Z [31;1mwarning: methods `authority_matches`, `reserve`, `mark_may_send`, and `schedule_retry` are never used[0m
+2026-11-09T08:04:47.3473307Z [31;1m    --> crates\noetome-cli\src\request_budget_store.rs:788:19[0m
+2026-11-09T08:04:47.3473812Z [31;1m     |[0m
+2026-11-09T08:04:47.3474243Z [31;1m 682 | impl BudgetStore {[0m
+2026-11-09T08:04:47.3474829Z [31;1m     | ---------------- methods in this implementation[0m
+2026-11-09T08:04:47.3475321Z [31;1m...[0m
+2026-11-09T08:04:47.3476048Z [31;1m 788 |     pub(crate) fn authority_matches(&self, expected: &AuthoritySpec) -> Result<(), ProjectError> {[0m
+2026-11-09T08:04:47.3476740Z [31;1m     |                   ^^^^^^^^^^^^^^^^^[0m
+2026-11-09T08:04:47.3477440Z [31;1m...[0m
+2026-11-09T08:04:47.3477887Z [31;1m 982 |     pub(crate) fn reserve([0m
+2026-11-09T08:04:47.3483757Z [31;1m     |                   ^^^^^^^[0m
+2026-11-09T08:04:47.3484651Z [31;1m...[0m
+2026-11-09T08:04:47.3485321Z [31;1m1019 |     pub(crate) fn mark_may_send([0m
+2026-11-09T08:04:47.3486098Z [31;1m     |                   ^^^^^^^^^^^^^[0m
+2026-11-09T08:04:47.3486750Z [31;1m...[0m
+2026-11-09T08:04:47.3487358Z [31;1m1185 |     pub(crate) fn schedule_retry([0m
+2026-11-09T08:04:47.3488037Z [31;1m     |                   ^^^^^^^^^^^^^^[0m
+2026-11-09T08:04:47.3488614Z [31;1m[0m
+2026-11-09T08:04:47.3489286Z [31;1mwarning: constant `MAX_BYTES` is never used[0m
+2026-11-09T08:04:47.3490098Z [31;1m  --> crates\noetome-cli\src\research_model.rs:19:18[0m
+2026-11-09T08:04:47.3490791Z [31;1m   |[0m
+2026-11-09T08:04:47.3491545Z [31;1m19 | pub(crate) const MAX_BYTES: u64 = 4 * 1024 * 1024;[0m
+2026-11-09T08:04:47.3492302Z [31;1m   |                  ^^^^^^^^^[0m
+2026-11-09T08:04:47.3492919Z [31;1m[0m
+2026-11-09T08:04:47.3493792Z [31;1mwarning: field `owner` is never read[0m
+2026-11-09T08:04:47.3494618Z [31;1m   --> crates\noetome-cli\src\research_store.rs:100:16[0m
+2026-11-09T08:04:47.3495323Z [31;1m    |[0m
+2026-11-09T08:04:47.3495934Z [31;1m 98 | pub(crate) struct ResearchStore {[0m
+2026-11-09T08:04:47.3496656Z [31;1m    |                   ------------- field in this struct[0m
+2026-11-09T08:04:47.3497625Z [31;1m 99 |     pub(crate) root: PathBuf,[0m
+2026-11-09T08:04:47.3498271Z [31;1m100 |     pub(crate) owner: Owner,[0m
+2026-11-09T08:04:47.3498850Z [31;1m    |                ^^^^^[0m
+2026-11-09T08:04:47.3499349Z [31;1m[0m
+2026-11-09T08:04:47.3499919Z [31;1mwarning: function `unsafe_path` is never used[0m
+2026-11-09T08:04:47.3500675Z [31;1m  --> crates\noetome-cli\src\scale_model.rs:46:15[0m
+2026-11-09T08:04:47.3501250Z [31;1m   |[0m
+2026-11-09T08:04:47.3502176Z [31;1m46 | pub(crate) fn unsafe_path(message: impl Into<String>) -> ProjectError {[0m
+2026-11-09T08:04:47.3502949Z [31;1m   |               ^^^^^^^^^^^[0m
+2026-11-09T08:04:47.3503472Z [31;1m[0m
+2026-11-09T08:04:47.3504014Z [31;1mwarning: type alias `Measured` is never used[0m
+2026-11-09T08:04:47.3504765Z [31;1m   --> crates\noetome-cli\src\scale_store.rs:219:17[0m
+2026-11-09T08:04:47.3505363Z [31;1m    |[0m
+2026-11-09T08:04:47.3505969Z [31;1m219 | pub(crate) type Measured = (Structure, Timings);[0m
+2026-11-09T08:04:47.3506620Z [31;1m    |                 ^^^^^^^^[0m
+2026-11-09T08:04:47.3507045Z [31;1m[0m
+2026-11-09T08:04:47.3507559Z [31;1mwarning: function `paths` is never used[0m
+2026-11-09T08:04:47.3508248Z [31;1m   --> crates\noetome-cli\src\scale_store.rs:222:15[0m
+2026-11-09T08:04:47.3508768Z [31;1m    |[0m
+2026-11-09T08:04:47.3509385Z [31;1m222 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {[0m
+2026-11-09T08:04:47.3510040Z [31;1m    |               ^^^^^[0m
+2026-11-09T08:04:47.3510477Z [31;1m[0m
+2026-11-09T08:04:47.3511521Z [31;1mwarning: constant `REF_LINKED` is never used[0m
+2026-11-09T08:04:47.3512213Z [31;1m  --> crates\noetome-cli\src\structure_model.rs:45:18[0m
+2026-11-09T08:04:47.3512756Z [31;1m   |[0m
+2026-11-09T08:04:47.3513711Z [31;1m45 | pub(crate) const REF_LINKED: &str = "linked";[0m
+2026-11-09T08:04:47.3514285Z [31;1m   |                  ^^^^^^^^^^[0m
+2026-11-09T08:04:47.3514721Z [31;1m[0m
+2026-11-09T08:04:47.3515184Z [31;1mwarning: constant `REF_EXTERNAL` is never used[0m
+2026-11-09T08:04:47.3515862Z [31;1m  --> crates\noetome-cli\src\structure_model.rs:46:18[0m
+2026-11-09T08:04:47.3516362Z [31;1m   |[0m
+2026-11-09T08:04:47.3516905Z [31;1m46 | pub(crate) const REF_EXTERNAL: &str = "external";[0m
+2026-11-09T08:04:47.3517785Z [31;1m   |                  ^^^^^^^^^^^^[0m
+2026-11-09T08:04:47.3518250Z [31;1m[0m
+2026-11-09T08:04:47.3518720Z [31;1mwarning: method `term_of` is never used[0m
+2026-11-09T08:04:47.3519349Z [31;1m   --> crates\noetome-cli\src\structure_model.rs:195:8[0m
+2026-11-09T08:04:47.3519815Z [31;1m    |[0m
+2026-11-09T08:04:47.3520252Z [31;1m156 | impl ConceptFile {[0m
+2026-11-09T08:04:47.3520864Z [31;1m    | ---------------- method in this implementation[0m
+2026-11-09T08:04:47.3521377Z [31;1m...[0m
+2026-11-09T08:04:47.3521950Z [31;1m195 |     fn term_of(&self, concept_id: &str) -> Option<&str> {[0m
+2026-11-09T08:04:47.3522513Z [31;1m    |        ^^^^^^^[0m
+2026-11-09T08:04:47.3522897Z [31;1m[0m
+2026-11-09T08:04:47.3523437Z [31;1mwarning: constant `FINDING_EMPTY` is never used[0m
+2026-11-09T08:04:47.3524077Z [31;1m  --> crates\noetome-cli\src\template_model.rs:48:18[0m
+2026-11-09T08:04:47.3524572Z [31;1m   |[0m
+2026-11-09T08:04:47.3525130Z [31;1m48 | pub(crate) const FINDING_EMPTY: &str = "empty_section";[0m
+2026-11-09T08:04:47.3525767Z [31;1m   |                  ^^^^^^^^^^^^^[0m
+2026-11-09T08:04:47.3526174Z [31;1m[0m
+2026-11-09T08:04:47.3526733Z [31;1mwarning: constant `FINDING_UNREASONED` is never used[0m
+2026-11-09T08:04:47.3527423Z [31;1m  --> crates\noetome-cli\src\template_model.rs:49:18[0m
+2026-11-09T08:04:47.3528122Z [31;1m   |[0m
+2026-11-09T08:04:47.3528783Z [31;1m49 | pub(crate) const FINDING_UNREASONED: &str = "unreasoned_structure";[0m
+2026-11-09T08:04:47.3529482Z [31;1m   |                  ^^^^^^^^^^^^^^^^^^[0m
+2026-11-09T08:04:47.3529921Z [31;1m[0m
+2026-11-09T08:04:47.3530363Z [31;1mwarning: method `goal` is never used[0m
+2026-11-09T08:04:47.3531010Z [31;1m   --> crates\noetome-cli\src\template_model.rs:427:19[0m
+2026-11-09T08:04:47.3531495Z [31;1m    |[0m
+2026-11-09T08:04:47.3531908Z [31;1m245 | impl Plan {[0m
+2026-11-09T08:04:47.3532461Z [31;1m    | --------- method in this implementation[0m
+2026-11-09T08:04:47.3532926Z [31;1m...[0m
+2026-11-09T08:04:47.3533612Z [31;1m427 |     pub(crate) fn goal(&self, goal_id: &str) -> Option<(&TopicSpec, &GoalSpec)> {[0m
+2026-11-09T08:04:47.3534470Z [31;1m    |                   ^^^^[0m
+2026-11-09T08:04:47.3534896Z [31;1m[0m
+2026-11-09T08:04:47.3535340Z [31;1mwarning: field `inputs` is never read[0m
+2026-11-09T08:04:47.3535974Z [31;1m   --> crates\noetome-cli\src\template_store.rs:258:16[0m
+2026-11-09T08:04:47.3536472Z [31;1m    |[0m
+2026-11-09T08:04:47.3536893Z [31;1m255 | pub(crate) struct Frozen {[0m
+2026-11-09T08:04:47.3537475Z [31;1m    |                   ------ field in this struct[0m
+2026-11-09T08:04:47.3538278Z [31;1m...[0m
+2026-11-09T08:04:47.3538722Z [31;1m258 |     pub(crate) inputs: Inputs,[0m
+2026-11-09T08:04:47.3539226Z [31;1m    |                ^^^^^^[0m
+2026-11-09T08:04:47.3539618Z [31;1m[0m
+2026-11-09T08:04:47.3540131Z [31;1mwarning: constant `IMPACT_CATEGORIES` is never used[0m
+2026-11-09T08:04:47.3540835Z [31;1m  --> crates\noetome-cli\src\vault_model.rs:25:11[0m
+2026-11-09T08:04:47.3541301Z [31;1m   |[0m
+2026-11-09T08:04:47.3541796Z [31;1m25 | pub const IMPACT_CATEGORIES: [&str; 6] = [[0m
+2026-11-09T08:04:47.3542360Z [31;1m   |           ^^^^^^^^^^^^^^^^^[0m
+2026-11-09T08:04:47.3542783Z [31;1m[0m
+2026-11-09T08:04:47.3543262Z [31;1mwarning: field `final_bytes` is never read[0m
+2026-11-09T08:04:47.3543924Z [31;1m   --> crates\noetome-cli\src\vault_model.rs:348:9[0m
+2026-11-09T08:04:47.3544393Z [31;1m    |[0m
+2026-11-09T08:04:47.3544801Z [31;1m342 | pub struct Analysis {[0m
+2026-11-09T08:04:47.3545367Z [31;1m    |            -------- field in this struct[0m
+2026-11-09T08:04:47.3545836Z [31;1m...[0m
+2026-11-09T08:04:47.3546380Z [31;1m348 |     pub final_bytes: BTreeMap<String, Option<Vec<u8>>>,[0m
+2026-11-09T08:04:47.3546969Z [31;1m    |         ^^^^^^^^^^^[0m
+2026-11-09T08:04:47.3547389Z [31;1m    |[0m
+2026-11-09T08:04:47.3548365Z [31;1m    = note: `Analysis` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis[0m
+2026-11-09T08:04:47.3549170Z [31;1m[0m
+2026-11-09T08:06:20.9598368Z [31;1mwarning: `noetome-cli` (lib) generated 23 warnings (run `cargo fix --lib -p noetome-cli` to apply 1 suggestion)[0m
+2026-11-09T08:06:26.1566010Z [31;1m    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3m 26s[0m
+2026-11-09T08:06:26.3761325Z ##[group]Run & $env:NOETOME_TEST_PYTHON -B -X utf8 -m unittest discover -s tests -p 'test_verify_soak_harness.py' -v *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/python-soak-tests.log"
+2026-11-09T08:06:26.3762440Z [36;1m& $env:NOETOME_TEST_PYTHON -B -X utf8 -m unittest discover -s tests -p 'test_verify_soak_harness.py' -v *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/python-soak-tests.log"[0m
+2026-11-09T08:06:26.3764861Z [36;1mexit $LASTEXITCODE[0m
+2026-11-09T08:06:26.3839526Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T08:06:26.3841817Z env:
+2026-11-09T08:06:26.3843897Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T08:06:26.3845924Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:06:26.3850258Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:06:26.3850652Z   PYTHONUTF8: 1
+2026-11-09T08:06:26.3853751Z   NOETOME_TEST_BINARY: D:\a\Noetome\Noetome/target/debug/noetome.exe
+2026-11-09T08:06:26.3854154Z ##[endgroup]
+2026-11-09T08:06:28.5683738Z [31;1mtest_a_mirrored_root_passes_every_check (test_verify_soak_harness.CleanRootTests.test_a_mirrored_root_passes_every_check) ... ok[0m
+2026-11-09T08:06:28.5708936Z [31;1mtest_a_paused_root_also_passes (test_verify_soak_harness.CleanRootTests.test_a_paused_root_also_passes) ... ok[0m
+2026-11-09T08:06:28.5720352Z [31;1mtest_the_package_alone_passes (test_verify_soak_harness.CleanRootTests.test_the_package_alone_passes) ... ok[0m
+2026-11-09T08:06:28.5767452Z [31;1mtest_a_broken_root_exits_one (test_verify_soak_harness.CommandLineTests.test_a_broken_root_exits_one) ... ok[0m
+2026-11-09T08:06:28.6045600Z [31;1mtest_freeze_without_a_package_is_a_usage_error (test_verify_soak_harness.CommandLineTests.test_freeze_without_a_package_is_a_usage_error) ... ok[0m
+2026-11-09T08:06:28.6057507Z [31;1mtest_json_output_is_structured (test_verify_soak_harness.CommandLineTests.test_json_output_is_structured) ... ok[0m
+2026-11-09T08:06:28.6069276Z [31;1mtest_no_arguments_is_a_usage_error (test_verify_soak_harness.CommandLineTests.test_no_arguments_is_a_usage_error) ... ok[0m
+2026-11-09T08:06:28.6076598Z [31;1mtest_package_mode_succeeds (test_verify_soak_harness.CommandLineTests.test_package_mode_succeeds) ... ok[0m
+2026-11-09T08:06:28.6084072Z [31;1mtest_root_and_package_together_succeed (test_verify_soak_harness.CommandLineTests.test_root_and_package_together_succeed) ... ok[0m
+2026-11-09T08:06:28.6088982Z [31;1mtest_a_missing_file_is_reported (test_verify_soak_harness.LayoutTests.test_a_missing_file_is_reported) ... ok[0m
+2026-11-09T08:06:28.6095217Z [31;1mtest_a_symlink_is_reported (test_verify_soak_harness.LayoutTests.test_a_symlink_is_reported) ... ok[0m
+2026-11-09T08:06:28.6167173Z [31;1mtest_an_extra_entry_is_reported (test_verify_soak_harness.LayoutTests.test_an_extra_entry_is_reported) ... ok[0m
+2026-11-09T08:06:28.6169046Z [31;1mtest_a_missing_manifest_is_reported (test_verify_soak_harness.ManifestTests.test_a_missing_manifest_is_reported) ... ok[0m
+2026-11-09T08:06:28.6170796Z [31;1mtest_a_reading_in_the_manifest_is_reported (test_verify_soak_harness.ManifestTests.test_a_reading_in_the_manifest_is_reported) ... ok[0m
+2026-11-09T08:06:28.6172893Z [31;1mtest_a_wrong_producer_is_reported (test_verify_soak_harness.ManifestTests.test_a_wrong_producer_is_reported) ... ok[0m
+2026-11-09T08:06:28.6179464Z [31;1mtest_a_wrong_structure_digest_is_reported (test_verify_soak_harness.ManifestTests.test_a_wrong_structure_digest_is_reported) ... ok[0m
+2026-11-09T08:06:28.6181408Z [31;1mtest_the_declared_manifest_fields_carry_no_readings (test_verify_soak_harness.ManifestTests.test_the_declared_manifest_fields_carry_no_readings) ... ok[0m
+2026-11-09T08:06:28.6186560Z [31;1mtest_a_measured_decrease_with_positive_readings_passes (test_verify_soak_harness.MemoryReadingsTests.test_a_measured_decrease_with_positive_readings_passes) ... ok[0m
+2026-11-09T08:06:28.6191030Z [31;1mtest_a_peak_below_first_or_last_is_rejected (test_verify_soak_harness.MemoryReadingsTests.test_a_peak_below_first_or_last_is_rejected) ... ok[0m
+2026-11-09T08:06:28.6195131Z [31;1mtest_missing_round_rss_key_is_rejected_in_both_reading_states (test_verify_soak_harness.MemoryReadingsTests.test_missing_round_rss_key_is_rejected_in_both_reading_states) ... ok[0m
+2026-11-09T08:06:28.6570466Z [31;1mtest_missing_summary_rss_keys_are_rejected_in_both_reading_states (test_verify_soak_harness.MemoryReadingsTests.test_missing_summary_rss_keys_are_rejected_in_both_reading_states) ... ok[0m
+2026-11-09T08:06:28.7934514Z [31;1mtest_noninteger_summary_readings_are_rejected (test_verify_soak_harness.MemoryReadingsTests.test_noninteger_summary_readings_are_rejected) ... ok[0m
+2026-11-09T08:06:28.8089064Z [31;1mtest_numeric_summary_requires_every_scheduled_round_reading (test_verify_soak_harness.MemoryReadingsTests.test_numeric_summary_requires_every_scheduled_round_reading) ... ok[0m
+2026-11-09T08:06:28.8448095Z [31;1mtest_partial_summary_readings_are_rejected (test_verify_soak_harness.MemoryReadingsTests.test_partial_summary_readings_are_rejected) ... ok[0m
+2026-11-09T08:06:28.8592607Z [31;1mtest_refused_rounds_cannot_carry_a_memory_reading (test_verify_soak_harness.MemoryReadingsTests.test_refused_rounds_cannot_carry_a_memory_reading) ... ok[0m
+2026-11-09T08:06:28.9233322Z [31;1mtest_scheduled_round_rss_must_be_a_positive_integer (test_verify_soak_harness.MemoryReadingsTests.test_scheduled_round_rss_must_be_a_positive_integer) ... ok[0m
+2026-11-09T08:06:28.9325016Z [31;1mtest_unavailable_memory_is_visible_in_text_and_json_cli_results (test_verify_soak_harness.MemoryReadingsTests.test_unavailable_memory_is_visible_in_text_and_json_cli_results) ... ok[0m
+2026-11-09T08:06:28.9397324Z [31;1mtest_unavailable_memory_passes_without_claiming_a_growth_measurement (test_verify_soak_harness.MemoryReadingsTests.test_unavailable_memory_passes_without_claiming_a_growth_measurement) ... ok[0m
+2026-11-09T08:06:28.9719179Z [31;1mtest_unavailable_summary_cannot_mix_with_any_round_reading (test_verify_soak_harness.MemoryReadingsTests.test_unavailable_summary_cannot_mix_with_any_round_reading) ... ok[0m
+2026-11-09T08:06:28.9779353Z [31;1mtest_zero_growth_with_positive_readings_passes (test_verify_soak_harness.MemoryReadingsTests.test_zero_growth_with_positive_readings_passes) ... ok[0m
+2026-11-09T08:06:29.0456895Z [31;1mtest_zero_or_negative_summary_rss_is_rejected (test_verify_soak_harness.MemoryReadingsTests.test_zero_or_negative_summary_rss_is_rejected) ... ok[0m
+2026-11-09T08:06:29.0727383Z [31;1mtest_zeroes_cannot_impersonate_unavailable_or_measured_memory (test_verify_soak_harness.MemoryReadingsTests.test_zeroes_cannot_impersonate_unavailable_or_measured_memory) ... ok[0m
+2026-11-09T08:06:29.0831127Z [31;1mtest_a_claim_that_nfr09_met_is_reported (test_verify_soak_harness.PackageTests.test_a_claim_that_nfr09_met_is_reported) ... ok[0m
+2026-11-09T08:06:29.0915714Z [31;1mtest_a_drifted_case_sequence_is_reported (test_verify_soak_harness.PackageTests.test_a_drifted_case_sequence_is_reported) ... ok[0m
+2026-11-09T08:06:29.0993139Z [31;1mtest_a_drifted_prior_summary_is_reported (test_verify_soak_harness.PackageTests.test_a_drifted_prior_summary_is_reported) ... ok[0m
+2026-11-09T08:06:29.1084803Z [31;1mtest_a_frozen_digest_drift_is_reported (test_verify_soak_harness.PackageTests.test_a_frozen_digest_drift_is_reported) ... ok[0m
+2026-11-09T08:06:29.1170543Z [31;1mtest_a_missing_frozen_list_is_reported (test_verify_soak_harness.PackageTests.test_a_missing_frozen_list_is_reported) ... ok[0m
+2026-11-09T08:06:29.1172303Z [31;1mtest_the_prior_matches_the_declaration (test_verify_soak_harness.PackageTests.test_the_prior_matches_the_declaration) ... ok[0m
+2026-11-09T08:06:29.1252208Z [31;1mtest_a_missing_boundary_section_is_reported (test_verify_soak_harness.ReportTests.test_a_missing_boundary_section_is_reported) ... ok[0m
+2026-11-09T08:06:29.1325227Z [31;1mtest_a_missing_report_is_reported (test_verify_soak_harness.ReportTests.test_a_missing_report_is_reported) ... ok[0m
+2026-11-09T08:06:29.1380898Z [31;1mtest_a_reading_in_the_report_is_reported (test_verify_soak_harness.ReportTests.test_a_reading_in_the_report_is_reported) ... ok[0m
+2026-11-09T08:06:29.1474443Z [31;1mtest_the_constant_threshold_is_allowed (test_verify_soak_harness.ReportTests.test_the_constant_threshold_is_allowed) ... ok[0m
+2026-11-09T08:06:29.1550188Z [31;1mtest_a_missing_pause_bound_is_reported (test_verify_soak_harness.StructureTests.test_a_missing_pause_bound_is_reported) ... ok[0m
+2026-11-09T08:06:29.2183070Z [31;1mtest_a_model_call_is_reported (test_verify_soak_harness.StructureTests.test_a_model_call_is_reported) ... ok[0m
+2026-11-09T08:06:29.2242736Z [31;1mtest_a_wrong_planned_floor_is_reported (test_verify_soak_harness.StructureTests.test_a_wrong_planned_floor_is_reported) ... ok[0m
+2026-11-09T08:06:29.2307425Z [31;1mtest_a_wrong_policy_is_reported (test_verify_soak_harness.StructureTests.test_a_wrong_policy_is_reported) ... ok[0m
+2026-11-09T08:06:29.2395297Z [31;1mtest_a_wrong_reproduce_command_is_reported (test_verify_soak_harness.StructureTests.test_a_wrong_reproduce_command_is_reported) ... ok[0m
+2026-11-09T08:06:29.2489840Z [31;1mtest_an_unknown_field_is_reported (test_verify_soak_harness.StructureTests.test_an_unknown_field_is_reported) ... ok[0m
+2026-11-09T08:06:29.2567488Z [31;1mtest_an_unmet_requirement_claimed_as_met_is_reported (test_verify_soak_harness.StructureTests.test_an_unmet_requirement_claimed_as_met_is_reported) ... ok[0m
+2026-11-09T08:06:29.2645053Z [31;1mtest_a_late_elapsed_time_is_reported (test_verify_soak_harness.TimingsTests.test_a_late_elapsed_time_is_reported) ... ok[0m
+2026-11-09T08:06:29.2723968Z [31;1mtest_a_negative_growth_is_reported (test_verify_soak_harness.TimingsTests.test_a_negative_growth_is_reported) ... ok[0m
+2026-11-09T08:06:29.2802172Z [31;1mtest_a_nonzero_scheduled_after_pause_is_reported (test_verify_soak_harness.TimingsTests.test_a_nonzero_scheduled_after_pause_is_reported) ... ok[0m
+2026-11-09T08:06:29.2882173Z [31;1mtest_a_round_with_an_error_code_is_reported (test_verify_soak_harness.TimingsTests.test_a_round_with_an_error_code_is_reported) ... ok[0m
+2026-11-09T08:06:29.2947760Z [31;1mtest_a_scheduled_round_after_the_gate_is_reported (test_verify_soak_harness.TimingsTests.test_a_scheduled_round_after_the_gate_is_reported) ... ok[0m
+2026-11-09T08:06:29.3066069Z [31;1mtest_missing_readings_with_no_scheduled_rounds_is_fine (test_verify_soak_harness.TimingsTests.test_missing_readings_with_no_scheduled_rounds_is_fine) ... ok[0m
+2026-11-09T08:06:29.3067214Z [31;1m[0m
+2026-11-09T08:06:29.3067895Z [31;1m----------------------------------------------------------------------[0m
+2026-11-09T08:06:29.3068630Z [31;1mRan 55 tests in 0.860s[0m
+2026-11-09T08:06:29.3069105Z [31;1m[0m
+2026-11-09T08:06:29.3069493Z [31;1mOK[0m
+2026-11-09T08:06:29.5147487Z ##[group]Run & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/verify_soak_runtime.py "$env:TASK_EVIDENCE_DIR/soak-behaviors" --binary $env:NOETOME_TEST_BINARY *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/soak-behaviors.log"
+2026-11-09T08:06:29.5149391Z [36;1m& $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/verify_soak_runtime.py "$env:TASK_EVIDENCE_DIR/soak-behaviors" --binary $env:NOETOME_TEST_BINARY *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/soak-behaviors.log"[0m
+2026-11-09T08:06:29.5150465Z [36;1mexit $LASTEXITCODE[0m
+2026-11-09T08:06:29.5211348Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T08:06:29.5211641Z env:
+2026-11-09T08:06:29.5211883Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T08:06:29.5212264Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:06:29.5212697Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:06:29.5213042Z   PYTHONUTF8: 1
+2026-11-09T08:06:29.5213285Z   NOETOME_TEST_BINARY: D:\a\Noetome\Noetome/target/debug/noetome.exe
+2026-11-09T08:06:29.5213563Z ##[endgroup]
+2026-11-09T08:06:30.8321038Z Targeted soak: 3 actual CLI runs and independent audits; passed.
+2026-11-09T08:06:30.8322971Z D:\a\Noetome\Noetome\.artifacts\windows-validation\python-soak\soak-behaviors\summary.json
+2026-11-09T08:06:30.8922242Z ##[group]Run $taskFacts = [ordered]@{
+2026-11-09T08:06:30.8922597Z [36;1m$taskFacts = [ordered]@{[0m
+2026-11-09T08:06:30.8922924Z [36;1m  source_commit = $env:GITHUB_SHA[0m
+2026-11-09T08:06:30.8923155Z [36;1m  source_ref = $env:GITHUB_REF[0m
+2026-11-09T08:06:30.8923371Z [36;1m  run_id = $env:GITHUB_RUN_ID[0m
+2026-11-09T08:06:30.8923595Z [36;1m  run_attempt = $env:GITHUB_RUN_ATTEMPT[0m
+2026-11-09T08:06:30.8923838Z [36;1m  job = 'python-soak'[0m
+2026-11-09T08:06:30.8924057Z [36;1m  scope = 'targeted_soak'[0m
+2026-11-09T08:06:30.8924303Z [36;1m  os = [Environment]::OSVersion.VersionString[0m
+2026-11-09T08:06:30.8924545Z [36;1m  node = (& node --version)[0m
+2026-11-09T08:06:30.8924753Z [36;1m  rust = (& rustc --version)[0m
+2026-11-09T08:06:30.8924968Z [36;1m  python = $env:NOETOME_TEST_PYTHON[0m
+2026-11-09T08:06:30.8925183Z [36;1m}[0m
+2026-11-09T08:06:30.8925531Z [36;1m$taskFacts | ConvertTo-Json | Set-Content "$env:TASK_EVIDENCE_DIR/environment.json" -Encoding utf8[0m
+2026-11-09T08:06:30.8925998Z [36;1mgit diff --check *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/git-diff-check.log"[0m
+2026-11-09T08:06:30.8926304Z [36;1mexit $LASTEXITCODE[0m
+2026-11-09T08:06:30.8982367Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T08:06:30.8982644Z env:
+2026-11-09T08:06:30.8982864Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T08:06:30.8983395Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:06:30.8984553Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:06:30.8984875Z   PYTHONUTF8: 1
+2026-11-09T08:06:30.8985110Z   NOETOME_TEST_BINARY: D:\a\Noetome\Noetome/target/debug/noetome.exe
+2026-11-09T08:06:30.8985394Z ##[endgroup]
+2026-11-09T08:06:32.7025187Z ##[group]Run actions/upload-artifact@v4
+2026-11-09T08:06:32.7025506Z with:
+2026-11-09T08:06:32.7025690Z   name: windows-python-soak-42582409416-1
+2026-11-09T08:06:32.7025965Z   path: .artifacts/windows-validation/python-soak/
+2026-11-09T08:06:32.7026227Z   include-hidden-files: true
+2026-11-09T08:06:32.7026430Z   if-no-files-found: error
+2026-11-09T08:06:32.7026619Z   retention-days: 30
+2026-11-09T08:06:32.7026799Z   compression-level: 6
+2026-11-09T08:06:32.7026977Z   overwrite: false
+2026-11-09T08:06:32.7027142Z env:
+2026-11-09T08:06:32.7027351Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/python-soak
+2026-11-09T08:06:32.7027728Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:06:32.7028158Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T08:06:32.7028465Z   PYTHONUTF8: 1
+2026-11-09T08:06:32.7028731Z   NOETOME_TEST_BINARY: D:\a\Noetome\Noetome/target/debug/noetome.exe
+2026-11-09T08:06:32.7028998Z ##[endgroup]
+2026-11-09T08:06:33.8931045Z (node:7428) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T08:06:33.8932298Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T08:06:33.9145264Z With the provided path, there will be 46 files uploaded
+2026-11-09T08:06:33.9150341Z Artifact name is valid!
+2026-11-09T08:06:33.9151448Z Root directory input is valid!
+2026-11-09T08:06:34.3812407Z Beginning upload of artifact content to blob storage
+2026-11-09T08:06:34.4683516Z (node:7428) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-09T08:06:34.7714115Z Uploaded bytes 42819
+2026-11-09T08:06:34.8372723Z Finished uploading artifact content to blob storage!
+2026-11-09T08:06:34.8374076Z SHA256 digest of uploaded artifact zip is fe9c489fc32ee858a6ce9e774d3173be5c11b782ce9af5c1da4a4a6e2fe4f4c4
+2026-11-09T08:06:34.8376596Z Finalizing artifact upload
+2026-11-09T08:06:35.2651058Z Artifact windows-python-soak-42582409416-1.zip successfully finalized. Artifact ID 13658356871
+2026-11-09T08:06:35.2652715Z Artifact windows-python-soak-42582409416-1 has been successfully uploaded! Final size is 42819 bytes. Artifact ID is 13658356871
+2026-11-09T08:06:35.2683919Z Artifact download URL: https://github.com/dieWehmut/Noetome/actions/runs/42582409416/artifacts/13658356871
+2026-11-09T08:06:35.9817649Z Post job cleanup.
+2026-11-09T08:06:35.9833516Z ##[start-action display=Run actions/setup-node@v4;id=__b0b2bf75-eb66-4a0e-8984-321a15e987a1.__actions_setup-node]
+2026-11-09T08:06:35.9998908Z Post job cleanup.
+2026-11-09T08:06:36.1470836Z (node:6960) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T08:06:36.1472152Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T08:06:36.1476694Z Cache hit occurred on the primary key node-cache-Windows-x64-npm-8ebc8294a2c12b631137b92e2a4e72617f23dd1f65a6220e6695cadba1cf1f36, not saving cache.
+2026-11-09T08:06:36.1571390Z ##[end-action id=__b0b2bf75-eb66-4a0e-8984-321a15e987a1.__actions_setup-node;outcome=success;conclusion=success;duration_ms=173]
+2026-11-09T08:06:36.2026075Z Post job cleanup.
+2026-11-09T08:06:36.3739565Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-09T08:06:36.4062812Z git version 2.56.0.windows.4
+2026-11-09T08:06:36.4134110Z Temporarily overriding HOME='D:\a\_temp\27e64b98-059c-4fa0-a48c-96b38c70e134' before making global git config changes
+2026-11-09T08:06:36.4148481Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-09T08:06:36.4149640Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Noetome\Noetome
+2026-11-09T08:06:36.4494437Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-09T08:06:36.4846644Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-09T08:06:37.3271620Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-09T08:06:37.3577945Z http.https://github.com/.extraheader
+2026-11-09T08:06:37.3625350Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-11-09T08:06:37.3977393Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-09T08:06:37.9736371Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-09T08:06:38.0058964Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-09T08:06:38.5476114Z Cleaning up orphan processes
+2026-11-09T08:06:38.6544945Z Terminate orphan process: pid (2752) (vctip)
+2026-11-09T08:06:38.8051191Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache/restore@v4, actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

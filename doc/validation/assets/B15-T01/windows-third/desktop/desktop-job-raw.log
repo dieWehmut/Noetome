@@ -1,0 +1,1785 @@
+﻿2026-11-09T06:14:23.9104830Z Current runner version: '2.338.2'
+2026-11-09T06:14:23.9137964Z ##[group]Runner Image Provisioner
+2026-11-09T06:14:23.9139041Z Hosted Compute Agent
+2026-11-09T06:14:23.9139781Z Version: 20261103.629
+2026-11-09T06:14:23.9140646Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+2026-11-09T06:14:23.9141568Z Build Date: 2026-11-03T17:26:59Z
+2026-11-09T06:14:23.9142483Z Worker ID: {c3e70d93-8cd1-4345-8397-fa8298f8ea62}
+2026-11-09T06:14:23.9143391Z Region: centralus
+2026-11-09T06:14:23.9144122Z Cloud: Azure
+2026-11-09T06:14:23.9144771Z ##[endgroup]
+2026-11-09T06:14:23.9146731Z ##[group]Operating System
+2026-11-09T06:14:23.9147653Z Microsoft Windows Server 2025
+2026-11-09T06:14:23.9148478Z 10.0.26100
+2026-11-09T06:14:23.9149105Z Datacenter
+2026-11-09T06:14:23.9149863Z ##[endgroup]
+2026-11-09T06:14:23.9150604Z ##[group]Runner Image
+2026-11-09T06:14:23.9151348Z Image: windows-2025-vs2026
+2026-11-09T06:14:23.9152096Z Version: 20261103.298.1
+2026-11-09T06:14:23.9154090Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261103.298/images/windows/Windows2025-VS2026-Readme.md
+2026-11-09T06:14:23.9156894Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261103.298
+2026-11-09T06:14:23.9158258Z ##[endgroup]
+2026-11-09T06:14:23.9159663Z ##[group]GITHUB_TOKEN Permissions
+2026-11-09T06:14:23.9163589Z Contents: read
+2026-11-09T06:14:23.9164398Z Metadata: read
+2026-11-09T06:14:23.9165095Z ##[endgroup]
+2026-11-09T06:14:23.9167808Z Secret source: Actions
+2026-11-09T06:14:23.9168991Z Cache mode: write
+2026-11-09T06:14:23.9169898Z Prepare workflow directory
+2026-11-09T06:14:23.9919005Z Prepare all required actions
+2026-11-09T06:14:23.9989284Z Getting action download info
+2026-11-09T06:14:24.2452503Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-09T06:14:24.3929452Z Download action repository 'actions/cache@v4' (SHA:0057852bfaa89a56745cba8c7296529d2fc39830)
+2026-11-09T06:14:24.5622298Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-09T06:14:25.1149281Z Complete job name: Windows desktop
+2026-11-09T06:14:25.2814421Z ##[group]Run actions/checkout@v4
+2026-11-09T06:14:25.2816545Z with:
+2026-11-09T06:14:25.2817662Z   repository: dieWehmut/Noetome
+2026-11-09T06:14:25.2826710Z   token: ***
+2026-11-09T06:14:25.2827768Z   ssh-strict: true
+2026-11-09T06:14:25.2828778Z   ssh-user: git
+2026-11-09T06:14:25.2829959Z   persist-credentials: true
+2026-11-09T06:14:25.2831105Z   clean: true
+2026-11-09T06:14:25.2832203Z   sparse-checkout-cone-mode: true
+2026-11-09T06:14:25.2833513Z   fetch-depth: 1
+2026-11-09T06:14:25.2834499Z   fetch-tags: false
+2026-11-09T06:14:25.2835570Z   show-progress: true
+2026-11-09T06:14:25.2836629Z   lfs: false
+2026-11-09T06:14:25.2837559Z   submodules: false
+2026-11-09T06:14:25.2838600Z   set-safe-directory: true
+2026-11-09T06:14:25.2839779Z   allow-unsafe-pr-checkout: false
+2026-11-09T06:14:25.2841386Z env:
+2026-11-09T06:14:25.2842517Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:14:25.2843928Z   GIT_CONFIG_COUNT: 1
+2026-11-09T06:14:25.2845362Z   GIT_CONFIG_KEY_0: core.longpaths
+2026-11-09T06:14:25.2846616Z   GIT_CONFIG_VALUE_0: true
+2026-11-09T06:14:25.2847767Z ##[endgroup]
+2026-11-09T06:14:27.2503497Z Syncing repository: dieWehmut/Noetome
+2026-11-09T06:14:27.2506210Z ##[group]Getting Git version info
+2026-11-09T06:14:27.2507063Z Working directory is 'D:\a\Noetome\Noetome'
+2026-11-09T06:14:27.2508523Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-09T06:14:27.2509247Z git version 2.56.0.windows.4
+2026-11-09T06:14:27.2511871Z ##[endgroup]
+2026-11-09T06:14:27.2519060Z Temporarily overriding HOME='D:\a\_temp\c5866227-98c4-4aa1-b191-ab23991b8341' before making global git config changes
+2026-11-09T06:14:27.2520685Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-09T06:14:27.2521945Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Noetome\Noetome
+2026-11-09T06:14:27.2526585Z Deleting the contents of 'D:\a\Noetome\Noetome'
+2026-11-09T06:14:27.2527492Z ##[group]Initializing the repository
+2026-11-09T06:14:27.2528111Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\Noetome\Noetome
+2026-11-09T06:14:27.2529298Z Initialized empty Git repository in D:/a/Noetome/Noetome/.git/
+2026-11-09T06:14:27.2530338Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/dieWehmut/Noetome
+2026-11-09T06:14:27.2531320Z ##[endgroup]
+2026-11-09T06:14:27.2531823Z ##[group]Disabling automatic garbage collection
+2026-11-09T06:14:27.2532313Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-11-09T06:14:27.2533503Z ##[endgroup]
+2026-11-09T06:14:27.2533905Z ##[group]Setting up auth
+2026-11-09T06:14:27.2534419Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-09T06:14:27.2535635Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-09T06:14:27.9716996Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-09T06:14:28.0094059Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-09T06:14:28.6091454Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-09T06:14:28.6211490Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-09T06:14:29.1676312Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-11-09T06:14:29.2053941Z ##[endgroup]
+2026-11-09T06:14:29.2057449Z ##[group]Fetching the repository
+2026-11-09T06:14:29.2069102Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +42032bd4c1cb19fd0abacb69601904071eaf7898:refs/remotes/origin/codex/b15-t01-windows-runtime
+2026-11-09T06:16:04.6053908Z From https://github.com/dieWehmut/Noetome
+2026-11-09T06:16:04.6058784Z  * [new ref]         42032bd4c1cb19fd0abacb69601904071eaf7898 -> origin/codex/b15-t01-windows-runtime
+2026-11-09T06:16:04.6101483Z ##[endgroup]
+2026-11-09T06:16:04.6132104Z ##[group]Determining the checkout info
+2026-11-09T06:16:04.6155462Z ##[endgroup]
+2026-11-09T06:16:04.6159904Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-11-09T06:16:04.6674874Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-11-09T06:16:05.7187205Z ##[group]Checking out the ref
+2026-11-09T06:16:05.7200902Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B codex/b15-t01-windows-runtime refs/remotes/origin/codex/b15-t01-windows-runtime
+2026-11-09T06:16:06.0786808Z Updating files:   6% (1159/17721)
+2026-11-09T06:16:06.1148971Z Updating files:   7% (1241/17721)
+2026-11-09T06:16:06.2231090Z Updating files:   8% (1418/17721)
+2026-11-09T06:16:06.4045804Z Updating files:   9% (1595/17721)
+2026-11-09T06:16:06.5569978Z Updating files:  10% (1773/17721)
+2026-11-09T06:16:06.6012581Z Updating files:  11% (1950/17721)
+2026-11-09T06:16:06.7416523Z Updating files:  12% (2127/17721)
+2026-11-09T06:16:06.8593692Z Updating files:  13% (2304/17721)
+2026-11-09T06:16:07.1887047Z Updating files:  13% (2307/17721)
+2026-11-09T06:16:07.2266485Z Updating files:  14% (2481/17721)
+2026-11-09T06:16:07.2636737Z Updating files:  15% (2659/17721)
+2026-11-09T06:16:07.3006759Z Updating files:  16% (2836/17721)
+2026-11-09T06:16:07.3350241Z Updating files:  17% (3013/17721)
+2026-11-09T06:16:07.3774402Z Updating files:  18% (3190/17721)
+2026-11-09T06:16:07.4125563Z Updating files:  19% (3367/17721)
+2026-11-09T06:16:07.4580120Z Updating files:  20% (3545/17721)
+2026-11-09T06:16:07.4906915Z Updating files:  21% (3722/17721)
+2026-11-09T06:16:07.5282939Z Updating files:  22% (3899/17721)
+2026-11-09T06:16:07.5625879Z Updating files:  23% (4076/17721)
+2026-11-09T06:16:07.5974554Z Updating files:  24% (4254/17721)
+2026-11-09T06:16:07.6313180Z Updating files:  25% (4431/17721)
+2026-11-09T06:16:07.6647325Z Updating files:  26% (4608/17721)
+2026-11-09T06:16:07.6984184Z Updating files:  27% (4785/17721)
+2026-11-09T06:16:07.7325176Z Updating files:  28% (4962/17721)
+2026-11-09T06:16:07.7690840Z Updating files:  29% (5140/17721)
+2026-11-09T06:16:07.8026495Z Updating files:  30% (5317/17721)
+2026-11-09T06:16:07.8362232Z Updating files:  31% (5494/17721)
+2026-11-09T06:16:07.8434778Z Updating files:  32% (5671/17721)
+2026-11-09T06:16:07.8698118Z Updating files:  32% (5706/17721)
+2026-11-09T06:16:07.9072382Z Updating files:  33% (5848/17721)
+2026-11-09T06:16:07.9428352Z Updating files:  34% (6026/17721)
+2026-11-09T06:16:07.9797417Z Updating files:  35% (6203/17721)
+2026-11-09T06:16:08.0358325Z Updating files:  36% (6380/17721)
+2026-11-09T06:16:08.0584261Z Updating files:  37% (6557/17721)
+2026-11-09T06:16:08.2267340Z Updating files:  38% (6734/17721)
+2026-11-09T06:16:08.2530749Z Updating files:  39% (6912/17721)
+2026-11-09T06:16:08.4285429Z Updating files:  40% (7089/17721)
+2026-11-09T06:16:08.4542207Z Updating files:  41% (7266/17721)
+2026-11-09T06:16:08.4812260Z Updating files:  42% (7443/17721)
+2026-11-09T06:16:08.5058391Z Updating files:  43% (7621/17721)
+2026-11-09T06:16:08.5309328Z Updating files:  44% (7798/17721)
+2026-11-09T06:16:08.5810285Z Updating files:  45% (7975/17721)
+2026-11-09T06:16:08.5925261Z Updating files:  46% (8152/17721)
+2026-11-09T06:16:08.6177212Z Updating files:  47% (8329/17721)
+2026-11-09T06:16:08.6441291Z Updating files:  48% (8507/17721)
+2026-11-09T06:16:08.6722877Z Updating files:  49% (8684/17721)
+2026-11-09T06:16:08.6966796Z Updating files:  50% (8861/17721)
+2026-11-09T06:16:08.7212163Z Updating files:  51% (9038/17721)
+2026-11-09T06:16:08.7464369Z Updating files:  52% (9215/17721)
+2026-11-09T06:16:08.7742888Z Updating files:  53% (9393/17721)
+2026-11-09T06:16:08.8004178Z Updating files:  54% (9570/17721)
+2026-11-09T06:16:08.8278108Z Updating files:  55% (9747/17721)
+2026-11-09T06:16:08.8441248Z Updating files:  56% (9924/17721)
+2026-11-09T06:16:08.8539899Z Updating files:  56% (10033/17721)
+2026-11-09T06:16:08.8804246Z Updating files:  57% (10101/17721)
+2026-11-09T06:16:08.9045436Z Updating files:  58% (10279/17721)
+2026-11-09T06:16:08.9302763Z Updating files:  59% (10456/17721)
+2026-11-09T06:16:08.9579029Z Updating files:  60% (10633/17721)
+2026-11-09T06:16:08.9835923Z Updating files:  61% (10810/17721)
+2026-11-09T06:16:09.0092290Z Updating files:  62% (10988/17721)
+2026-11-09T06:16:09.0352338Z Updating files:  63% (11165/17721)
+2026-11-09T06:16:09.0612970Z Updating files:  64% (11342/17721)
+2026-11-09T06:16:09.0866363Z Updating files:  65% (11519/17721)
+2026-11-09T06:16:09.1396012Z Updating files:  66% (11696/17721)
+2026-11-09T06:16:09.2954613Z Updating files:  67% (11874/17721)
+2026-11-09T06:16:09.3300671Z Updating files:  68% (12051/17721)
+2026-11-09T06:16:09.3648353Z Updating files:  69% (12228/17721)
+2026-11-09T06:16:09.4070686Z Updating files:  70% (12405/17721)
+2026-11-09T06:16:09.6010583Z Updating files:  71% (12582/17721)
+2026-11-09T06:16:09.6627555Z Updating files:  72% (12760/17721)
+2026-11-09T06:16:09.6892157Z Updating files:  73% (12937/17721)
+2026-11-09T06:16:09.7259069Z Updating files:  74% (13114/17721)
+2026-11-09T06:16:09.9229895Z Updating files:  75% (13291/17721)
+2026-11-09T06:16:10.4899200Z Updating files:  75% (13427/17721)
+2026-11-09T06:16:11.1131583Z Updating files:  76% (13468/17721)
+2026-11-09T06:16:12.2318871Z Updating files:  76% (13522/17721)
+2026-11-09T06:16:12.9312459Z Updating files:  76% (13545/17721)
+2026-11-09T06:16:13.2263671Z Updating files:  76% (13559/17721)
+2026-11-09T06:16:14.3330578Z Updating files:  77% (13646/17721)
+2026-11-09T06:16:14.9726305Z Updating files:  77% (13699/17721)
+2026-11-09T06:16:14.9925396Z Updating files:  77% (13724/17721)
+2026-11-09T06:16:15.0321268Z Updating files:  78% (13823/17721)
+2026-11-09T06:16:15.0645203Z Updating files:  79% (14000/17721)
+2026-11-09T06:16:15.0954144Z Updating files:  80% (14177/17721)
+2026-11-09T06:16:15.8918993Z Updating files:  81% (14355/17721)
+2026-11-09T06:16:15.9183362Z Updating files:  81% (14526/17721)
+2026-11-09T06:16:17.0408035Z Updating files:  82% (14532/17721)
+2026-11-09T06:16:18.5147569Z Updating files:  82% (14596/17721)
+2026-11-09T06:16:18.9103324Z Updating files:  82% (14695/17721)
+2026-11-09T06:16:18.9526593Z Updating files:  82% (14701/17721)
+2026-11-09T06:16:20.1691237Z Updating files:  83% (14709/17721)
+2026-11-09T06:16:21.0315923Z Updating files:  83% (14736/17721)
+2026-11-09T06:16:24.1430726Z Updating files:  83% (14744/17721)
+2026-11-09T06:16:25.2282295Z Updating files:  83% (14752/17721)
+2026-11-09T06:16:26.0057859Z Updating files:  83% (14760/17721)
+2026-11-09T06:16:27.2179644Z Updating files:  83% (14766/17721)
+2026-11-09T06:16:27.9642150Z Updating files:  83% (14790/17721)
+2026-11-09T06:16:28.9698575Z Updating files:  83% (14847/17721)
+2026-11-09T06:16:29.0139326Z Updating files:  83% (14860/17721)
+2026-11-09T06:16:30.9111213Z Updating files:  84% (14886/17721)
+2026-11-09T06:16:30.9825866Z Updating files:  84% (15018/17721)
+2026-11-09T06:16:31.5530334Z Updating files:  84% (15019/17721)
+2026-11-09T06:16:31.8044314Z Updating files:  85% (15063/17721)
+2026-11-09T06:16:31.8277335Z Updating files:  86% (15241/17721)
+2026-11-09T06:16:32.0861291Z Updating files:  87% (15418/17721)
+2026-11-09T06:16:33.2308273Z Updating files:  87% (15421/17721)
+2026-11-09T06:16:33.4071718Z Updating files:  87% (15440/17721)
+2026-11-09T06:16:33.4340209Z Updating files:  88% (15595/17721)
+2026-11-09T06:16:33.4566558Z Updating files:  89% (15772/17721)
+2026-11-09T06:16:33.4847545Z Updating files:  90% (15949/17721)
+2026-11-09T06:16:33.5166399Z Updating files:  91% (16127/17721)
+2026-11-09T06:16:33.5611082Z Updating files:  92% (16304/17721)
+2026-11-09T06:16:33.5885480Z Updating files:  93% (16481/17721)
+2026-11-09T06:16:33.6201856Z Updating files:  94% (16658/17721)
+2026-11-09T06:16:33.6492071Z Updating files:  95% (16835/17721)
+2026-11-09T06:16:33.6783216Z Updating files:  96% (17013/17721)
+2026-11-09T06:16:33.7063614Z Updating files:  97% (17190/17721)
+2026-11-09T06:16:33.7334272Z Updating files:  98% (17367/17721)
+2026-11-09T06:16:33.7789216Z Updating files:  99% (17544/17721)
+2026-11-09T06:16:33.7790108Z Updating files: 100% (17721/17721)
+2026-11-09T06:16:33.7790547Z Updating files: 100% (17721/17721), done.
+2026-11-09T06:16:33.8120472Z Switched to a new branch 'codex/b15-t01-windows-runtime'
+2026-11-09T06:16:33.8134792Z branch 'codex/b15-t01-windows-runtime' set up to track 'origin/codex/b15-t01-windows-runtime'.
+2026-11-09T06:16:34.0552703Z ##[endgroup]
+2026-11-09T06:16:34.1000436Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-11-09T06:16:34.1309130Z 42032bd4c1cb19fd0abacb69601904071eaf7898
+2026-11-09T06:16:34.3431918Z ##[group]Run New-Item -ItemType Directory -Force $env:TASK_EVIDENCE_DIR | Out-Null
+2026-11-09T06:16:34.3432943Z [36;1mNew-Item -ItemType Directory -Force $env:TASK_EVIDENCE_DIR | Out-Null[0m
+2026-11-09T06:16:34.4311002Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T06:16:34.4311521Z env:
+2026-11-09T06:16:34.4311980Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:16:34.4312448Z ##[endgroup]
+2026-11-09T06:16:36.3058777Z Prepare all required actions
+2026-11-09T06:16:36.3059826Z Getting action download info
+2026-11-09T06:16:36.5085880Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-11-09T06:16:36.6716484Z ##[group]Run ./.github/actions/windows-setup
+2026-11-09T06:16:36.6716847Z with:
+2026-11-09T06:16:36.6717262Z   evidence-dir: .artifacts/windows-validation/desktop
+2026-11-09T06:16:36.6717666Z   target-profile: release
+2026-11-09T06:16:36.6717968Z   cache-task: desktop
+2026-11-09T06:16:36.6718277Z env:
+2026-11-09T06:16:36.6718617Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:16:36.6718985Z ##[endgroup]
+2026-11-09T06:16:36.6785714Z ##[start-action display=Restore immutable Cargo downloads;id=setup.registry]
+2026-11-09T06:16:36.8859655Z ##[group]Run actions/cache/restore@v4
+2026-11-09T06:16:36.8860059Z with:
+2026-11-09T06:16:36.8860810Z   key: windows-2025-rust-1.98.1-registry-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173
+2026-11-09T06:16:36.8861418Z   path: ~/.cargo/registry
+~/.cargo/git
+
+2026-11-09T06:16:36.8861808Z   enableCrossOsArchive: false
+2026-11-09T06:16:36.8862157Z   fail-on-cache-miss: false
+2026-11-09T06:16:36.8862479Z   lookup-only: false
+2026-11-09T06:16:36.8862762Z env:
+2026-11-09T06:16:36.8863092Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:16:36.8863433Z ##[endgroup]
+2026-11-09T06:16:37.0306425Z (node:6100) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T06:16:37.0308352Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T06:16:37.4516467Z Cache not found for input keys: windows-2025-rust-1.98.1-registry-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173
+2026-11-09T06:16:37.4632906Z ##[end-action id=setup.registry;outcome=success;conclusion=success;duration_ms=784]
+2026-11-09T06:16:37.4636473Z ##[start-action display=Restore compiled Cargo profile;id=setup.target]
+2026-11-09T06:16:37.7941466Z ##[group]Run actions/cache/restore@v4
+2026-11-09T06:16:37.7941987Z with:
+2026-11-09T06:16:37.7943096Z   key: windows-2025-rust-1.98.1-release-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-desktop-42032bd4c1cb19fd0abacb69601904071eaf7898
+2026-11-09T06:16:37.7945285Z   restore-keys: windows-2025-rust-1.98.1-release-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-desktop-
+windows-2025-rust-1.98.1-release-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-
+
+2026-11-09T06:16:37.7946861Z   path: target/release
+2026-11-09T06:16:37.7947324Z   enableCrossOsArchive: false
+2026-11-09T06:16:37.7947788Z   fail-on-cache-miss: false
+2026-11-09T06:16:37.7948261Z   lookup-only: false
+2026-11-09T06:16:37.7948652Z env:
+2026-11-09T06:16:37.7949100Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:16:37.7949701Z ##[endgroup]
+2026-11-09T06:16:37.9843747Z (node:5228) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T06:16:37.9867159Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T06:16:38.2381785Z Cache not found for input keys: windows-2025-rust-1.98.1-release-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-desktop-42032bd4c1cb19fd0abacb69601904071eaf7898, windows-2025-rust-1.98.1-release-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-desktop-, windows-2025-rust-1.98.1-release-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-
+2026-11-09T06:16:38.2497521Z ##[end-action id=setup.target;outcome=success;conclusion=success;duration_ms=786]
+2026-11-09T06:16:38.2501855Z ##[start-action display=Install locked Rust toolchain;id=setup.__run]
+2026-11-09T06:16:38.2652079Z ##[group]Run $ErrorActionPreference = 'Stop'
+2026-11-09T06:16:38.2652759Z [36;1m$ErrorActionPreference = 'Stop'[0m
+2026-11-09T06:16:38.2656848Z [36;1mrustup toolchain install 1.98.1 --profile minimal --component rustfmt *>&1 | Tee-Object '.artifacts/windows-validation/desktop/rust-setup.log'[0m
+2026-11-09T06:16:38.2658073Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-09T06:16:38.2659581Z [36;1mrustup show *>&1 | Tee-Object '.artifacts/windows-validation/desktop/rust-identity.log'[0m
+2026-11-09T06:16:38.2660277Z [36;1mexit $LASTEXITCODE[0m
+2026-11-09T06:16:38.2735762Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T06:16:38.2736129Z env:
+2026-11-09T06:16:38.2736415Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:16:38.2736835Z ##[endgroup]
+2026-11-09T06:16:39.8038293Z [31;1minfo: syncing channel updates for 1.98.1-x86_64-pc-windows-msvc[0m
+2026-11-09T06:16:40.0757163Z [31;1minfo: latest update on 2026-09-03 for version 1.98.1 (48a229cea 2026-09-01)[0m
+2026-11-09T06:16:40.0901045Z [31;1minfo: downloading 4 components[0m
+2026-11-09T06:16:49.9404649Z 
+2026-11-09T06:16:49.9405483Z   1.98.1-x86_64-pc-windows-msvc installed - rustc 1.98.1 (48a229cea 2026-09-01)
+2026-11-09T06:16:49.9406067Z 
+2026-11-09T06:16:49.9406254Z Default host: x86_64-pc-windows-msvc
+2026-11-09T06:16:49.9406738Z rustup home:  C:\Users\runneradmin\.rustup
+2026-11-09T06:16:49.9407089Z 
+2026-11-09T06:16:49.9407282Z installed toolchains
+2026-11-09T06:16:49.9407669Z --------------------
+2026-11-09T06:16:49.9415059Z stable-x86_64-pc-windows-msvc (default)
+2026-11-09T06:16:49.9415562Z 1.98.1-x86_64-pc-windows-msvc (active)
+2026-11-09T06:16:49.9415804Z 
+2026-11-09T06:16:49.9415974Z active toolchain
+2026-11-09T06:16:49.9416291Z ----------------
+2026-11-09T06:16:49.9416667Z name: 1.98.1-x86_64-pc-windows-msvc
+2026-11-09T06:16:49.9417206Z active because: overridden by 'D:\a\Noetome\Noetome\rust-toolchain.toml'
+2026-11-09T06:16:49.9417757Z installed targets:
+2026-11-09T06:16:49.9418195Z   x86_64-pc-windows-msvc
+2026-11-09T06:16:49.9867932Z ##[end-action id=setup.__run;outcome=success;conclusion=success;duration_ms=11737]
+2026-11-09T06:16:49.9872313Z ##[start-action display=Run actions/setup-node@v4;id=setup.__actions_setup-node]
+2026-11-09T06:16:50.0055793Z ##[group]Run actions/setup-node@v4
+2026-11-09T06:16:50.0056233Z with:
+2026-11-09T06:16:50.0056562Z   node-version: 26.10.0
+2026-11-09T06:16:50.0056953Z   cache: npm
+2026-11-09T06:16:50.0057283Z   always-auth: false
+2026-11-09T06:16:50.0057659Z   check-latest: false
+2026-11-09T06:16:50.0061057Z   token: ***
+2026-11-09T06:16:50.0061352Z env:
+2026-11-09T06:16:50.0061756Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:16:50.0062229Z ##[endgroup]
+2026-11-09T06:16:50.2227567Z (node:7340) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T06:16:50.2228525Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T06:16:50.9631939Z Attempting to download 26.10.0...
+2026-11-09T06:16:51.0013640Z Acquiring 26.10.0 - x64 from https://github.com/actions/node-versions/releases/download/26.10.0-35737674515/node-26.10.0-win32-x64.7z
+2026-11-09T06:17:02.1487288Z Unexpected HTTP response: 504
+2026-11-09T06:17:02.1488124Z Waiting 16 seconds before trying again
+2026-11-09T06:17:28.4372169Z Extracting ...
+2026-11-09T06:17:31.0052563Z Adding to the cache ...
+2026-11-09T06:17:34.3106626Z ##[group]Environment details
+2026-11-09T06:17:35.4079321Z node: v26.10.0
+2026-11-09T06:17:35.4080201Z npm: 11.19.1
+2026-11-09T06:17:35.4080804Z yarn: 1.22.22
+2026-11-09T06:17:35.4081901Z ##[endgroup]
+2026-11-09T06:17:35.4682957Z [command]C:\Windows\system32\cmd.exe /D /S /C "C:\hostedtoolcache\windows\node\26.10.0\x64\npm.cmd config get cache"
+2026-11-09T06:17:35.7929700Z C:\npm\cache
+2026-11-09T06:17:36.0029367Z npm cache is not found
+2026-11-09T06:17:36.0422233Z ##[end-action id=setup.__actions_setup-node;outcome=success;conclusion=success;duration_ms=46056]
+2026-11-09T06:17:36.0426032Z ##[start-action display=Install locked frontend dependencies;id=setup.__run_2]
+2026-11-09T06:17:36.0560545Z ##[group]Run npm ci --ignore-scripts *>&1 | Tee-Object '.artifacts/windows-validation/desktop/npm-setup.log'
+2026-11-09T06:17:36.0561248Z [36;1mnpm ci --ignore-scripts *>&1 | Tee-Object '.artifacts/windows-validation/desktop/npm-setup.log'[0m
+2026-11-09T06:17:36.0561914Z [36;1mexit $LASTEXITCODE[0m
+2026-11-09T06:17:36.0632460Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T06:17:36.0632858Z env:
+2026-11-09T06:17:36.0633184Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:17:36.0633573Z ##[endgroup]
+2026-11-09T06:17:48.6054227Z 
+2026-11-09T06:17:48.6077466Z added 30 packages, and audited 31 packages in 12s
+2026-11-09T06:17:48.6082704Z 
+2026-11-09T06:17:48.6084579Z 10 packages are looking for funding
+2026-11-09T06:17:48.6085538Z   run `npm fund` for details
+2026-11-09T06:17:48.6086089Z 
+2026-11-09T06:17:48.6086917Z found 0 vulnerabilities
+2026-11-09T06:17:50.5215227Z ##[end-action id=setup.__run_2;outcome=success;conclusion=success;duration_ms=14479]
+2026-11-09T06:17:50.5217968Z ##[start-action display=Prepare locked portable PDF Python;id=setup.__run_3]
+2026-11-09T06:17:50.5364792Z ##[group]Run $ErrorActionPreference = 'Stop'
+2026-11-09T06:17:50.5365448Z [36;1m$ErrorActionPreference = 'Stop'[0m
+2026-11-09T06:17:50.5366357Z [36;1m& ./scripts/prepare_windows_runtime.ps1 *>&1 | Tee-Object '.artifacts/windows-validation/desktop/python-setup.log'[0m
+2026-11-09T06:17:50.5367540Z [36;1m$taskPython = Join-Path $env:GITHUB_WORKSPACE 'target/windows-runtime/python/python.exe'[0m
+2026-11-09T06:17:50.5368397Z [36;1m"NOETOME_PDF_PYTHON=$taskPython" >> $env:GITHUB_ENV[0m
+2026-11-09T06:17:50.5369043Z [36;1m"NOETOME_TEST_PYTHON=$taskPython" >> $env:GITHUB_ENV[0m
+2026-11-09T06:17:50.5370289Z [36;1m# unittest starts child interpreters without inheriting the parent's[0m
+2026-11-09T06:17:50.5371598Z [36;1m# -X utf8 flag. Match the application's explicit UTF-8 protocol there.[0m
+2026-11-09T06:17:50.5372263Z [36;1m"PYTHONUTF8=1" >> $env:GITHUB_ENV[0m
+2026-11-09T06:17:50.5372897Z [36;1m(Split-Path $taskPython -Parent) >> $env:GITHUB_PATH[0m
+2026-11-09T06:17:50.5373862Z [36;1mCopy-Item target/windows-runtime/runtime-receipt.json '.artifacts/windows-validation/desktop/'[0m
+2026-11-09T06:17:50.5450097Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T06:17:50.5450688Z env:
+2026-11-09T06:17:50.5451243Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:17:50.5451855Z ##[endgroup]
+2026-11-09T06:17:51.0259564Z Downloading byte-pinned CPython 3.12.14 Windows x64 into D:\a\Noetome\Noetome\target\windows-runtime
+2026-11-09T06:18:06.1614401Z Collecting pdfplumber==0.11.9 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 3))
+2026-11-09T06:18:06.2271910Z   Downloading pdfplumber-0.11.9-py3-none-any.whl (60 kB)
+2026-11-09T06:18:06.3146440Z Collecting pdfminer.six==20251230 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 4))
+2026-11-09T06:18:06.3329776Z   Downloading pdfminer_six-20251230-py3-none-any.whl (6.6 MB)
+2026-11-09T06:18:06.4612905Z      ---------------------------------------- 6.6/6.6 MB 58.1 MB/s  0:00:00
+2026-11-09T06:18:06.6074379Z Collecting pypdfium2==5.14.0 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 5))
+2026-11-09T06:18:06.6298217Z   Downloading pypdfium2-5.14.0-py3-none-win_amd64.whl (3.9 MB)
+2026-11-09T06:18:06.6952958Z      ---------------------------------------- 3.9/3.9 MB 78.4 MB/s  0:00:00
+2026-11-09T06:18:06.8956417Z Collecting Pillow==12.3.0 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 6))
+2026-11-09T06:18:06.9163219Z   Downloading pillow-12.3.0-cp312-cp312-win_amd64.whl (7.2 MB)
+2026-11-09T06:18:07.0022414Z      ---------------------------------------- 7.2/7.2 MB 88.2 MB/s  0:00:00
+2026-11-09T06:18:07.1738971Z Collecting charset-normalizer==3.5.2 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 7))
+2026-11-09T06:18:07.1957330Z   Downloading charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl (207 kB)
+2026-11-09T06:18:07.5291940Z Collecting cryptography==50.0.2 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 8))
+2026-11-09T06:18:07.5526872Z   Downloading cryptography-50.0.2-cp311-abi3-win_amd64.whl (3.8 MB)
+2026-11-09T06:18:07.6561198Z      ---------------------------------------- 3.8/3.8 MB 45.7 MB/s  0:00:00
+2026-11-09T06:18:07.7647243Z Collecting cffi==2.1.1 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 9))
+2026-11-09T06:18:07.7839550Z   Downloading cffi-2.1.1-cp312-cp312-win_amd64.whl (185 kB)
+2026-11-09T06:18:07.8738668Z Collecting pycparser==3.11 (from -r D:\a\Noetome\Noetome\sidecars\pdf_parser\requirements-lock.txt (line 10))
+2026-11-09T06:18:07.8915784Z   Downloading pycparser-3.11-py3-none-any.whl (51 kB)
+2026-11-09T06:18:08.0053876Z Installing collected packages: pypdfium2, pycparser, Pillow, charset-normalizer, cffi, cryptography, pdfminer.six, pdfplumber
+2026-11-09T06:18:08.2435995Z [31;1m  WARNING: The script pypdfium2.exe is installed in 'D:\a\Noetome\Noetome\target\windows-runtime\python\Scripts' which is not on PATH.[0m
+2026-11-09T06:18:08.2462103Z [31;1m  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.[0m
+2026-11-09T06:18:08.8636760Z [31;1m  WARNING: The script normalizer.exe is installed in 'D:\a\Noetome\Noetome\target\windows-runtime\python\Scripts' which is not on PATH.[0m
+2026-11-09T06:18:08.8653555Z [31;1m  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.[0m
+2026-11-09T06:18:09.0029105Z [31;1m  WARNING: The script cffi-gen-src.exe is installed in 'D:\a\Noetome\Noetome\target\windows-runtime\python\Scripts' which is not on PATH.[0m
+2026-11-09T06:18:09.0031433Z [31;1m  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.[0m
+2026-11-09T06:18:09.9161485Z [31;1m  WARNING: The script pdfplumber.exe is installed in 'D:\a\Noetome\Noetome\target\windows-runtime\python\Scripts' which is not on PATH.[0m
+2026-11-09T06:18:09.9164136Z [31;1m  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.[0m
+2026-11-09T06:18:09.9187281Z 
+2026-11-09T06:18:09.9209962Z Successfully installed Pillow-12.3.0 cffi-2.1.1 charset-normalizer-3.5.2 cryptography-50.0.2 pdfminer.six-20251230 pdfplumber-0.11.9 pycparser-3.11 pypdfium2-5.14.0
+2026-11-09T06:18:11.1786171Z No broken requirements found.
+2026-11-09T06:18:11.6868467Z Locked PDF runtime verified: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:18:11.7283745Z ##[end-action id=setup.__run_3;outcome=success;conclusion=success;duration_ms=21207]
+2026-11-09T06:18:11.7534559Z ##[group]Run npm run web:build *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/web-build.log"
+2026-11-09T06:18:11.7535287Z [36;1mnpm run web:build *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/web-build.log"[0m
+2026-11-09T06:18:11.7535740Z [36;1mexit $LASTEXITCODE[0m
+2026-11-09T06:18:11.7597185Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T06:18:11.7597592Z env:
+2026-11-09T06:18:11.7597896Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:18:11.7598385Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:18:11.7598904Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:18:11.7599365Z   PYTHONUTF8: 1
+2026-11-09T06:18:11.7599606Z ##[endgroup]
+2026-11-09T06:18:13.7461625Z 
+2026-11-09T06:18:13.7462814Z > noetome@0.1.0 web:build
+2026-11-09T06:18:13.9848738Z > npm run web:check && vite build --config apps/desktop/vite.config.ts
+2026-11-09T06:18:13.9850026Z 
+2026-11-09T06:18:13.9856351Z 
+2026-11-09T06:18:13.9857640Z > noetome@0.1.0 web:check
+2026-11-09T06:18:13.9858740Z > tsc --project apps/desktop/tsconfig.json --noEmit
+2026-11-09T06:18:13.9860280Z 
+2026-11-09T06:18:13.9861170Z [36mvite v8.3.5 [32mbuilding client environment for production...[36m[39m
+2026-11-09T06:18:13.9862330Z transforming...
+2026-11-09T06:18:13.9862996Z ✓ 64 modules transformed.
+2026-11-09T06:18:13.9863577Z rendering chunks...
+2026-11-09T06:18:13.9864149Z computing gzip size...
+2026-11-09T06:18:13.9865034Z apps/desktop/dist/index.html                   0.50 kB │ gzip:  0.31 kB
+2026-11-09T06:18:13.9865972Z apps/desktop/dist/assets/index-C1_5kHW4.css   19.94 kB │ gzip:  4.56 kB
+2026-11-09T06:18:13.9866905Z apps/desktop/dist/assets/index-CD7Cb9Kv.js   323.63 kB │ gzip: 95.72 kB
+2026-11-09T06:18:13.9867451Z 
+2026-11-09T06:18:13.9882833Z [32m✓ built in 217ms[39m
+2026-11-09T06:18:14.0162342Z ##[group]Run npm run desktop:build -- --no-bundle *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/desktop-build.log"
+2026-11-09T06:18:14.0163392Z [36;1mnpm run desktop:build -- --no-bundle *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/desktop-build.log"[0m
+2026-11-09T06:18:14.0163873Z [36;1mexit $LASTEXITCODE[0m
+2026-11-09T06:18:14.0233809Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T06:18:14.0234228Z env:
+2026-11-09T06:18:14.0234570Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:18:14.0235050Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:18:14.0235564Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:18:14.0236008Z   PYTHONUTF8: 1
+2026-11-09T06:18:14.0236272Z ##[endgroup]
+2026-11-09T06:18:14.8047467Z 
+2026-11-09T06:18:14.8052072Z > noetome@0.1.0 desktop:build
+2026-11-09T06:18:14.8053207Z > tauri build --config crates/noetome-desktop/tauri.conf.json --no-bundle
+2026-11-09T06:18:14.8053856Z 
+2026-11-09T06:18:15.7959658Z [31;1m        Info Looking up installed tauri packages to check mismatched versions...[0m
+2026-11-09T06:18:16.6683467Z [31;1m     Running beforeBuildCommand `npm run web:build`[0m
+2026-11-09T06:18:16.9879778Z 
+2026-11-09T06:18:16.9913047Z > noetome@0.1.0 web:build
+2026-11-09T06:18:16.9935649Z > npm run web:check && vite build --config apps/desktop/vite.config.ts
+2026-11-09T06:18:16.9963862Z 
+2026-11-09T06:18:17.3548531Z 
+2026-11-09T06:18:17.3559859Z > noetome@0.1.0 web:check
+2026-11-09T06:18:17.3582011Z > tsc --project apps/desktop/tsconfig.json --noEmit
+2026-11-09T06:18:17.3603104Z 
+2026-11-09T06:18:18.2115679Z [36mvite v8.3.5 [32mbuilding client environment for production...[36m[39m
+2026-11-09T06:18:18.2345231Z transforming...
+2026-11-09T06:18:18.3460022Z ✓ 64 modules transformed.
+2026-11-09T06:18:18.3743645Z rendering chunks...
+2026-11-09T06:18:18.4391727Z computing gzip size...
+2026-11-09T06:18:18.4447060Z apps/desktop/dist/index.html                   0.50 kB │ gzip:  0.31 kB
+2026-11-09T06:18:18.4481267Z apps/desktop/dist/assets/index-C1_5kHW4.css   19.94 kB │ gzip:  4.56 kB
+2026-11-09T06:18:18.4522582Z apps/desktop/dist/assets/index-CD7Cb9Kv.js   323.63 kB │ gzip: 95.72 kB
+2026-11-09T06:18:18.4546355Z 
+2026-11-09T06:18:18.4560944Z [32m✓ built in 229ms[39m
+2026-11-09T06:18:18.9073081Z [31;1m    Updating crates.io index[0m
+2026-11-09T06:18:20.8488660Z [31;1m Downloading crates ...[0m
+2026-11-09T06:18:21.1281135Z [31;1m  Downloaded byteorder v1.5.0[0m
+2026-11-09T06:18:21.2471686Z [31;1m  Downloaded idna_adapter v1.2.2[0m
+2026-11-09T06:18:21.2655891Z [31;1m  Downloaded static_vcruntime v3.0.0[0m
+2026-11-09T06:18:21.2916512Z [31;1m  Downloaded bit-vec v0.8.0[0m
+2026-11-09T06:18:21.3103873Z [31;1m  Downloaded block-buffer v0.10.4[0m
+2026-11-09T06:18:21.3289566Z [31;1m  Downloaded itoa v1.0.18[0m
+2026-11-09T06:18:21.9496345Z [31;1m  Downloaded jiff-tzdb-platform v0.1.3[0m
+2026-11-09T06:18:21.9582250Z [31;1m  Downloaded bit-set v0.8.0[0m
+2026-11-09T06:18:21.9688243Z [31;1m  Downloaded adler2 v2.0.1[0m
+2026-11-09T06:18:21.9793354Z [31;1m  Downloaded same-file v1.0.6[0m
+2026-11-09T06:18:21.9943916Z [31;1m  Downloaded siphasher v1.0.4[0m
+2026-11-09T06:18:22.0102304Z [31;1m  Downloaded strsim v0.11.1[0m
+2026-11-09T06:18:22.0248276Z [31;1m  Downloaded crypto-common v0.1.7[0m
+2026-11-09T06:18:22.0374133Z [31;1m  Downloaded potential_utf v0.1.6[0m
+2026-11-09T06:18:22.0476200Z [31;1m  Downloaded mime v0.3.17[0m
+2026-11-09T06:18:22.0644806Z [31;1m  Downloaded defmt-parser v1.1.0[0m
+2026-11-09T06:18:22.0826171Z [31;1m  Downloaded rustc-hash v2.1.3[0m
+2026-11-09T06:18:22.0954969Z [31;1m  Downloaded precomputed-hash v0.1.1[0m
+2026-11-09T06:18:22.1064940Z [31;1m  Downloaded serialize-to-javascript-impl v0.1.2[0m
+2026-11-09T06:18:22.1193746Z [31;1m  Downloaded cargo-platform v0.1.9[0m
+2026-11-09T06:18:22.1314035Z [31;1m  Downloaded num-conv v0.2.2[0m
+2026-11-09T06:18:22.1382984Z [31;1m  Downloaded bitflags v1.3.2[0m
+2026-11-09T06:18:22.1739077Z [31;1m  Downloaded cssparser-macros v0.7.1[0m
+2026-11-09T06:18:22.1795549Z [31;1m  Downloaded futures-io v0.3.34[0m
+2026-11-09T06:18:22.1874038Z [31;1m  Downloaded phf_generator v0.13.1[0m
+2026-11-09T06:18:22.1963974Z [31;1m  Downloaded string_cache_codegen v0.6.1[0m
+2026-11-09T06:18:22.2039113Z [31;1m  Downloaded phf_codegen v0.13.1[0m
+2026-11-09T06:18:22.2115334Z [31;1m  Downloaded phf_shared v0.13.1[0m
+2026-11-09T06:18:22.2195248Z [31;1m  Downloaded ref-cast-impl v1.0.27[0m
+2026-11-09T06:18:22.2580536Z [31;1m  Downloaded rustc_version v0.4.1[0m
+2026-11-09T06:18:22.3082910Z [31;1m  Downloaded scopeguard v1.2.0[0m
+2026-11-09T06:18:22.3156293Z [31;1m  Downloaded serialize-to-javascript v0.1.2[0m
+2026-11-09T06:18:22.3187631Z [31;1m  Downloaded serde_spanned v1.1.2[0m
+2026-11-09T06:18:22.3190468Z [31;1m  Downloaded serde_repr v0.1.21[0m
+2026-11-09T06:18:22.3420050Z [31;1m  Downloaded stable_deref_trait v1.2.1[0m
+2026-11-09T06:18:22.3501299Z [31;1m  Downloaded dunce v1.0.5[0m
+2026-11-09T06:18:22.3578261Z [31;1m  Downloaded new_debug_unreachable v1.0.6[0m
+2026-11-09T06:18:22.3709992Z [31;1m  Downloaded powerfmt v0.2.1[0m
+2026-11-09T06:18:22.4601889Z [31;1m  Downloaded json-patch v4.2.0[0m
+2026-11-09T06:18:22.4705990Z [31;1m  Downloaded lock_api v0.4.14[0m
+2026-11-09T06:18:22.4803430Z [31;1m  Downloaded markup5ever v0.39.0[0m
+2026-11-09T06:18:22.4888169Z [31;1m  Downloaded cpufeatures v0.2.17[0m
+2026-11-09T06:18:22.5088082Z [31;1m  Downloaded dyn-clone v1.0.20[0m
+2026-11-09T06:18:22.5204943Z [31;1m  Downloaded cfg-if v1.0.5[0m
+2026-11-09T06:18:22.5350336Z [31;1m  Downloaded option-ext v0.2.0[0m
+2026-11-09T06:18:22.5423841Z [31;1m  Downloaded phf v0.13.1[0m
+2026-11-09T06:18:22.5528717Z [31;1m  Downloaded phf_macros v0.13.1[0m
+2026-11-09T06:18:22.5599703Z [31;1m  Downloaded pkg-config v0.3.34[0m
+2026-11-09T06:18:22.5786842Z [31;1m  Downloaded ref-cast v1.0.27[0m
+2026-11-09T06:18:22.6121020Z [31;1m  Downloaded schemars_derive v0.8.22[0m
+2026-11-09T06:18:22.6316245Z [31;1m  Downloaded hex v0.4.3[0m
+2026-11-09T06:18:22.6456331Z [31;1m  Downloaded native-tls v0.2.18[0m
+2026-11-09T06:18:22.6563129Z [31;1m  Downloaded percent-encoding v2.3.2[0m
+2026-11-09T06:18:22.6675810Z [31;1m  Downloaded pin-project-lite v0.2.17[0m
+2026-11-09T06:18:22.7336356Z [31;1m  Downloaded raw-window-handle v0.6.2[0m
+2026-11-09T06:18:22.7539723Z [31;1m  Downloaded servo_arc v0.4.3[0m
+2026-11-09T06:18:22.7607085Z [31;1m  Downloaded slab v0.4.12[0m
+2026-11-09T06:18:22.7740437Z [31;1m  Downloaded string_cache v0.9.0[0m
+2026-11-09T06:18:22.7926204Z [31;1m  Downloaded futures-macro v0.3.34[0m
+2026-11-09T06:18:22.8022703Z [31;1m  Downloaded hyper-tls v0.6.0[0m
+2026-11-09T06:18:22.8141595Z [31;1m  Downloaded darling_macro v0.24.1[0m
+2026-11-09T06:18:22.8209359Z [31;1m  Downloaded futures-sink v0.3.34[0m
+2026-11-09T06:18:22.8316080Z [31;1m  Downloaded dpi v0.1.2[0m
+2026-11-09T06:18:22.8398650Z [31;1m  Downloaded futures-core v0.3.34[0m
+2026-11-09T06:18:22.8508300Z [31;1m  Downloaded quote v1.0.47[0m
+2026-11-09T06:18:22.8782345Z [31;1m  Downloaded serde-untagged v0.1.9[0m
+2026-11-09T06:18:22.8907060Z [31;1m  Downloaded serde_derive_internals v0.29.1[0m
+2026-11-09T06:18:22.9075436Z [31;1m  Downloaded shlex v2.0.1[0m
+2026-11-09T06:18:22.9196897Z [31;1m  Downloaded infer v0.22.0[0m
+2026-11-09T06:18:22.9406863Z [31;1m  Downloaded ipnet v2.12.2[0m
+2026-11-09T06:18:22.9580662Z [31;1m  Downloaded simd-adler32 v0.3.10[0m
+2026-11-09T06:18:22.9770897Z [31;1m  Downloaded thiserror v1.0.69[0m
+2026-11-09T06:18:23.0426974Z [31;1m  Downloaded semver v1.0.28[0m
+2026-11-09T06:18:23.0599337Z [31;1m  Downloaded litemap v0.8.3[0m
+2026-11-09T06:18:23.0834334Z [31;1m  Downloaded once_cell v1.21.4[0m
+2026-11-09T06:18:23.1016921Z [31;1m  Downloaded parking_lot_core v0.9.12[0m
+2026-11-09T06:18:23.1208254Z [31;1m  Downloaded schannel v0.1.30[0m
+2026-11-09T06:18:23.1338738Z [31;1m  Downloaded serde_with_macros v3.24.0[0m
+2026-11-09T06:18:23.1476178Z [31;1m  Downloaded sha2 v0.10.9[0m
+2026-11-09T06:18:23.1711066Z [31;1m  Downloaded log v0.4.35[0m
+2026-11-09T06:18:23.1871979Z [31;1m  Downloaded parking_lot v0.12.5[0m
+2026-11-09T06:18:23.2041481Z [31;1m  Downloaded proc-macro2 v1.0.107[0m
+2026-11-09T06:18:23.2326859Z [31;1m  Downloaded web_atoms v0.2.6[0m
+2026-11-09T06:18:23.2413828Z [31;1m  Downloaded dirs v7.0.0[0m
+2026-11-09T06:18:23.2538416Z [31;1m  Downloaded dtoa-short v0.3.5[0m
+2026-11-09T06:18:23.2667301Z [31;1m  Downloaded equivalent v1.0.3[0m
+2026-11-09T06:18:23.2738535Z [31;1m  Downloaded fnv v1.0.7[0m
+2026-11-09T06:18:23.2820039Z [31;1m  Downloaded futures-task v0.3.34[0m
+2026-11-09T06:18:23.2996175Z [31;1m  Downloaded heck v0.5.0[0m
+2026-11-09T06:18:23.3138251Z [31;1m  Downloaded ident_case v1.0.1[0m
+2026-11-09T06:18:23.3238089Z [31;1m  Downloaded indexmap v1.9.3[0m
+2026-11-09T06:18:23.3490077Z [31;1m  Downloaded jiff-tzdb v0.1.9[0m
+2026-11-09T06:18:23.3607024Z [31;1m  Downloaded jsonptr v0.7.1[0m
+2026-11-09T06:18:23.3867048Z [31;1m  Downloaded num-traits v0.2.19[0m
+2026-11-09T06:18:23.4166778Z [31;1m  Downloaded plist v1.10.3[0m
+2026-11-09T06:18:23.4577812Z [31;1m  Downloaded rustls-pki-types v1.15.1[0m
+2026-11-09T06:18:23.4768636Z [31;1m  Downloaded schemars v0.8.22[0m
+2026-11-09T06:18:23.6041712Z [31;1m  Downloaded smallvec v1.16.4[0m
+2026-11-09T06:18:23.6205260Z [31;1m  Downloaded softbuffer v0.4.8[0m
+2026-11-09T06:18:23.6341966Z [31;1m  Downloaded tinyvec v1.13.3[0m
+2026-11-09T06:18:23.6634170Z [31;1m  Downloaded windows-core v0.62.2[0m
+2026-11-09T06:18:23.6953875Z [31;1m  Downloaded windows-numerics v0.3.1[0m
+2026-11-09T06:18:23.7079658Z [31;1m  Downloaded zerofrom-derive v0.1.8[0m
+2026-11-09T06:18:23.7204282Z [31;1m  Downloaded dirs-sys v0.5.0[0m
+2026-11-09T06:18:23.7289813Z [31;1m  Downloaded generic-array v0.14.7[0m
+2026-11-09T06:18:24.1815373Z [31;1m  Downloaded http-body v1.1.0[0m
+2026-11-09T06:18:24.1883516Z [31;1m  Downloaded rfd v0.17.2[0m
+2026-11-09T06:18:24.2247870Z [31;1m  Downloaded bs58 v0.5.1[0m
+2026-11-09T06:18:24.2400595Z [31;1m  Downloaded try-lock v0.2.5[0m
+2026-11-09T06:18:24.2503762Z [31;1m  Downloaded windows-interface v0.59.3[0m
+2026-11-09T06:18:24.2616849Z [31;1m  Downloaded deranged v0.5.9[0m
+2026-11-09T06:18:24.2720845Z [31;1m  Downloaded digest v0.10.7[0m
+2026-11-09T06:18:24.2915920Z [31;1m  Downloaded win32job v2.0.3[0m
+2026-11-09T06:18:24.3100170Z [31;1m  Downloaded form_urlencoded v1.2.2[0m
+2026-11-09T06:18:24.3178407Z [31;1m  Downloaded displaydoc v0.2.7[0m
+2026-11-09T06:18:24.3408107Z [31;1m  Downloaded dtoa v1.0.11[0m
+2026-11-09T06:18:24.3515190Z [31;1m  Downloaded foldhash v0.2.0[0m
+2026-11-09T06:18:24.3656811Z [31;1m  Downloaded miniz_oxide v0.8.9[0m
+2026-11-09T06:18:24.3892054Z [31;1m  Downloaded miniz_oxide v0.9.1[0m
+2026-11-09T06:18:24.4119743Z [31;1m  Downloaded selectors v0.38.0[0m
+2026-11-09T06:18:24.4286786Z [31;1m  Downloaded serde_core v1.0.229[0m
+2026-11-09T06:18:24.4521961Z [31;1m  Downloaded serde_derive v1.0.229[0m
+2026-11-09T06:18:24.4840736Z [31;1m  Downloaded socket2 v0.6.5[0m
+2026-11-09T06:18:24.4987904Z [31;1m  Downloaded uuid v1.29.0[0m
+2026-11-09T06:18:24.5164907Z [31;1m  Downloaded windows-strings v0.5.1[0m
+2026-11-09T06:18:24.5289943Z [31;1m  Downloaded indexmap v2.14.2[0m
+2026-11-09T06:18:24.5547688Z [31;1m  Downloaded keyboard-types v0.8.3[0m
+2026-11-09T06:18:24.5754407Z [31;1m  Downloaded mio v1.2.4[0m
+2026-11-09T06:18:24.6170456Z [31;1m  Downloaded schemars v1.2.3[0m
+2026-11-09T06:18:24.8012002Z [31;1m  Downloaded serde v1.0.229[0m
+2026-11-09T06:18:24.8312183Z [31;1m  Downloaded fastrand v2.5.0[0m
+2026-11-09T06:18:24.8432057Z [31;1m  Downloaded fdeflate v0.3.7[0m
+2026-11-09T06:18:24.8617717Z [31;1m  Downloaded fallible-streaming-iterator v0.1.9[0m
+2026-11-09T06:18:24.8696457Z [31;1m  Downloaded find-msvc-tools v0.1.15[0m
+2026-11-09T06:18:24.8859229Z [31;1m  Downloaded http-body-util v0.1.5[0m
+2026-11-09T06:18:24.9087849Z [31;1m  Downloaded schemars v0.9.0[0m
+2026-11-09T06:18:25.0700499Z [31;1m  Downloaded cargo_toml v1.0.1[0m
+2026-11-09T06:18:25.0836306Z [31;1m  Downloaded defmt-macros v1.2.0[0m
+2026-11-09T06:18:25.1861065Z [31;1m  Downloaded embed-resource v3.0.12[0m
+2026-11-09T06:18:25.6439558Z [31;1m  Downloaded synstructure v0.14.0[0m
+2026-11-09T06:18:25.6500007Z [31;1m  Downloaded cargo_metadata v0.19.2[0m
+2026-11-09T06:18:25.6695881Z [31;1m  Downloaded zerofrom v0.1.8[0m
+2026-11-09T06:18:25.6760001Z [31;1m  Downloaded alloc-no-stdlib v3.0.0[0m
+2026-11-09T06:18:25.6891037Z [31;1m  Downloaded camino v1.2.6[0m
+2026-11-09T06:18:25.6992618Z [31;1m  Downloaded cookie v0.18.2[0m
+2026-11-09T06:18:25.7187464Z [31;1m  Downloaded defmt v1.2.0[0m
+2026-11-09T06:18:25.7602540Z [31;1m  Downloaded fallible-iterator v0.3.0[0m
+2026-11-09T06:18:25.7699362Z [31;1m  Downloaded memchr v2.8.3[0m
+2026-11-09T06:18:25.8115803Z [31;1m  Downloaded tauri-runtime v2.12.2[0m
+2026-11-09T06:18:25.8269672Z [31;1m  Downloaded tokio-native-tls v0.3.1[0m
+2026-11-09T06:18:25.8399442Z [31;1m  Downloaded vswhom v0.1.0[0m
+2026-11-09T06:18:25.8501187Z [31;1m  Downloaded windows-implement v0.60.2[0m
+2026-11-09T06:18:25.8590688Z [31;1m  Downloaded glob v0.3.4[0m
+2026-11-09T06:18:25.8667571Z [31;1m  Downloaded sync_wrapper v1.0.2[0m
+2026-11-09T06:18:25.8726261Z [31;1m  Downloaded futures-channel v0.3.34[0m
+2026-11-09T06:18:25.8854598Z [31;1m  Downloaded hashlink v0.12.2[0m
+2026-11-09T06:18:25.8997277Z [31;1m  Downloaded erased-serde v0.4.11[0m
+2026-11-09T06:18:25.9154249Z [31;1m  Downloaded httparse v1.10.1[0m
+2026-11-09T06:18:25.9314015Z [31;1m  Downloaded tauri-macros v2.7.4[0m
+2026-11-09T06:18:25.9414236Z [31;1m  Downloaded toml_datetime v1.1.2+spec-1.1.0[0m
+2026-11-09T06:18:25.9491581Z [31;1m  Downloaded url v2.5.8[0m
+2026-11-09T06:18:25.9645106Z [31;1m  Downloaded windows-result v0.3.4[0m
+2026-11-09T06:18:25.9768009Z [31;1m  Downloaded zerovec-derive v0.11.7[0m
+2026-11-09T06:18:25.9914892Z [31;1m  Downloaded autocfg v1.5.1[0m
+2026-11-09T06:18:26.0040565Z [31;1m  Downloaded bitflags v2.13.2[0m
+2026-11-09T06:18:26.0390349Z [31;1m  Downloaded tauri-build v2.7.4[0m
+2026-11-09T06:18:26.0494398Z [31;1m  Downloaded windows-link v0.2.1[0m
+2026-11-09T06:18:26.0552884Z [31;1m  Downloaded crossbeam-utils v0.8.23[0m
+2026-11-09T06:18:26.0835584Z [31;1m  Downloaded cssparser v0.37.0[0m
+2026-11-09T06:18:26.0999581Z [31;1m  Downloaded ctor v1.0.13[0m
+2026-11-09T06:18:26.1198474Z [31;1m  Downloaded darling v0.24.1[0m
+2026-11-09T06:18:26.1858849Z [31;1m  Downloaded getrandom v0.3.4[0m
+2026-11-09T06:18:26.2198714Z [31;1m  Downloaded getrandom v0.4.3[0m
+2026-11-09T06:18:26.2457897Z [31;1m  Downloaded tauri-codegen v2.7.4[0m
+2026-11-09T06:18:26.2548006Z [31;1m  Downloaded tower-service v0.3.3[0m
+2026-11-09T06:18:26.2616551Z [31;1m  Downloaded typeid v1.0.3[0m
+2026-11-09T06:18:26.2716408Z [31;1m  Downloaded windows-threading v0.1.0[0m
+2026-11-09T06:18:26.2785432Z [31;1m  Downloaded winreg v0.56.0[0m
+2026-11-09T06:18:26.3013956Z [31;1m  Downloaded bytes v1.12.1[0m
+2026-11-09T06:18:26.3280635Z [31;1m  Downloaded icu_provider v2.4.0[0m
+2026-11-09T06:18:26.3500407Z [31;1m  Downloaded crc32fast v1.5.3[0m
+2026-11-09T06:18:26.3632660Z [31;1m  Downloaded windows-link v0.1.3[0m
+2026-11-09T06:18:26.3694259Z [31;1m  Downloaded yoke-derive v0.8.4[0m
+2026-11-09T06:18:26.3776460Z [31;1m  Downloaded tower-layer v0.3.3[0m
+2026-11-09T06:18:26.3831369Z [31;1m  Downloaded windows-numerics v0.2.0[0m
+2026-11-09T06:18:26.3951711Z [31;1m  Downloaded jiff-core v0.1.1[0m
+2026-11-09T06:18:26.4144048Z [31;1m  Downloaded tendril v0.5.1[0m
+2026-11-09T06:18:26.4288635Z [31;1m  Downloaded thiserror v2.0.21[0m
+2026-11-09T06:18:26.8682668Z [31;1m  Downloaded toml_writer v1.1.3+spec-1.1.0[0m
+2026-11-09T06:18:26.8792930Z [31;1m  Downloaded windows-future v0.2.1[0m
+2026-11-09T06:18:26.8932007Z [31;1m  Downloaded windows-strings v0.4.2[0m
+2026-11-09T06:18:26.9061056Z [31;1m  Downloaded zeroize v1.9.0[0m
+2026-11-09T06:18:26.9161196Z [31;1m  Downloaded html5ever v0.39.0[0m
+2026-11-09T06:18:26.9397824Z [31;1m  Downloaded ico v0.6.0[0m
+2026-11-09T06:18:26.9588059Z [31;1m  Downloaded icu_normalizer_data v2.4.0[0m
+2026-11-09T06:18:26.9717381Z [31;1m  Downloaded png v0.18.1[0m
+2026-11-09T06:18:26.9975992Z [31;1m  Downloaded tauri-winres v0.3.7[0m
+2026-11-09T06:18:27.0118277Z [31;1m  Downloaded thiserror-impl v2.0.21[0m
+2026-11-09T06:18:27.0237538Z [31;1m  Downloaded version_check v0.9.5[0m
+2026-11-09T06:18:27.0326915Z [31;1m  Downloaded vswhom-sys v0.1.3[0m
+2026-11-09T06:18:27.0425600Z [31;1m  Downloaded webview2-com-macros v0.8.1[0m
+2026-11-09T06:18:27.0483643Z [31;1m  Downloaded windows-result v0.4.1[0m
+2026-11-09T06:18:27.0591967Z [31;1m  Downloaded windows-version v0.1.7[0m
+2026-11-09T06:18:27.0659834Z [31;1m  Downloaded alloc-stdlib v0.3.0[0m
+2026-11-09T06:18:27.0759333Z [31;1m  Downloaded cfb v0.14.0[0m
+2026-11-09T06:18:27.1057512Z [31;1m  Downloaded crossbeam-channel v0.5.17[0m
+2026-11-09T06:18:27.1342824Z [31;1m  Downloaded darling_core v0.24.1[0m
+2026-11-09T06:18:27.1851132Z [31;1m  Downloaded derive_more v2.1.1[0m
+2026-11-09T06:18:27.3014445Z [31;1m  Downloaded icu_locale_core v2.4.0[0m
+2026-11-09T06:18:27.3549596Z [31;1m  Downloaded muda v0.20.0[0m
+2026-11-09T06:18:27.3872550Z [31;1m  Downloaded tauri-runtime-wry v2.12.3[0m
+2026-11-09T06:18:27.4053118Z [31;1m  Downloaded thiserror-impl v1.0.69[0m
+2026-11-09T06:18:27.4163837Z [31;1m  Downloaded tinystr v0.8.5[0m
+2026-11-09T06:18:27.4353055Z [31;1m  Downloaded unicode-ident v1.0.27[0m
+2026-11-09T06:18:27.4587819Z [31;1m  Downloaded windows-future v0.3.2[0m
+2026-11-09T06:18:27.4714654Z [31;1m  Downloaded atomic-waker v1.1.2[0m
+2026-11-09T06:18:27.4783598Z [31;1m  Downloaded derive_more-impl v2.1.1[0m
+2026-11-09T06:18:27.5121809Z [31;1m  Downloaded dom_query v0.28.0[0m
+2026-11-09T06:18:27.5505624Z [31;1m  Downloaded flate2 v1.1.10[0m
+2026-11-09T06:18:27.5863107Z [31;1m  Downloaded hashbrown v0.12.3[0m
+2026-11-09T06:18:27.6092789Z [31;1m  Downloaded http v1.5.0[0m
+2026-11-09T06:18:27.6313492Z [31;1m  Downloaded icu_collections v2.4.0[0m
+2026-11-09T06:18:27.6815244Z [31;1m  Downloaded idna v1.1.0[0m
+2026-11-09T06:18:27.6975546Z [31;1m  Downloaded toml_parser v1.1.5+spec-1.1.0[0m
+2026-11-09T06:18:27.7163137Z [31;1m  Downloaded utf_types v1.0.0[0m
+2026-11-09T06:18:27.7253560Z [31;1m  Downloaded winapi-util v0.1.11[0m
+2026-11-09T06:18:27.7364227Z [31;1m  Downloaded windows-collections v0.2.0[0m
+2026-11-09T06:18:27.7447992Z [31;1m  Downloaded windows-core v0.61.2[0m
+2026-11-09T06:18:27.7687608Z [31;1m  Downloaded regex v1.13.1[0m
+2026-11-09T06:18:27.8083446Z [31;1m  Downloaded serde_json v1.0.154[0m
+2026-11-09T06:18:28.3176297Z [31;1m  Downloaded time-core v0.1.9[0m
+2026-11-09T06:18:28.3244072Z [31;1m  Downloaded time-macros v0.2.32[0m
+2026-11-09T06:18:28.3432252Z [31;1m  Downloaded toml v1.1.8+spec-1.1.0[0m
+2026-11-09T06:18:28.3728580Z [31;1m  Downloaded tray-icon v0.25.1[0m
+2026-11-09T06:18:28.3892275Z [31;1m  Downloaded web-time v1.1.0[0m
+2026-11-09T06:18:28.3993072Z [31;1m  Downloaded windows-collections v0.3.2[0m
+2026-11-09T06:18:28.4074304Z [31;1m  Downloaded zerotrie v0.2.5[0m
+2026-11-09T06:18:28.4381152Z [31;1m  Downloaded icu_properties v2.4.0[0m
+2026-11-09T06:18:28.4560008Z [31;1m  Downloaded reqwest v0.13.5[0m
+2026-11-09T06:18:28.4911354Z [31;1m  Downloaded rusqlite v0.41.1[0m
+2026-11-09T06:18:28.5446164Z [31;1m  Downloaded tower v0.5.3[0m
+2026-11-09T06:18:28.6186835Z [31;1m  Downloaded tracing-core v0.1.36[0m
+2026-11-09T06:18:29.3763583Z [31;1m  Downloaded urlpattern v0.6.0[0m
+2026-11-09T06:18:29.7359667Z [31;1m  Downloaded utf8_iter v1.1.0[0m
+2026-11-09T06:18:29.7360247Z [31;1m  Downloaded windows-threading v0.2.1[0m
+2026-11-09T06:18:29.7361481Z [31;1m  Downloaded writeable v0.6.4[0m
+2026-11-09T06:18:29.7361968Z [31;1m  Downloaded zmij v1.0.23[0m
+2026-11-09T06:18:29.7378726Z [31;1m  Downloaded hyper-util v0.1.21[0m
+2026-11-09T06:18:29.7379927Z [31;1m  Downloaded process-wrap v10.0.1[0m
+2026-11-09T06:18:29.7380536Z [31;1m  Downloaded typenum v1.20.1[0m
+2026-11-09T06:18:29.7381029Z [31;1m  Downloaded want v0.3.2[0m
+2026-11-09T06:18:29.7385617Z [31;1m  Downloaded webview2-com v0.39.1[0m
+2026-11-09T06:18:29.7386584Z [31;1m  Downloaded cc v1.10.0[0m
+2026-11-09T06:18:29.7387539Z [31;1m  Downloaded futures-util v0.3.34[0m
+2026-11-09T06:18:29.7391508Z [31;1m  Downloaded hashbrown v0.17.1[0m
+2026-11-09T06:18:29.7392287Z [31;1m  Downloaded hyper v1.12.0[0m
+2026-11-09T06:18:29.7393688Z [31;1m  Downloaded walkdir v2.5.0[0m
+2026-11-09T06:18:29.7394273Z [31;1m  Downloaded anyhow v1.0.104[0m
+2026-11-09T06:18:29.7395184Z [31;1m  Downloaded icu_properties_data v2.4.0[0m
+2026-11-09T06:18:29.7395905Z [31;1m  Downloaded quick-xml v0.42.0[0m
+2026-11-09T06:18:29.7676153Z [31;1m  Downloaded serde_with v3.24.0[0m
+2026-11-09T06:18:29.8739975Z [31;1m  Downloaded yoke v0.8.4[0m
+2026-11-09T06:18:29.8864025Z [31;1m  Downloaded tauri-utils v2.10.2[0m
+2026-11-09T06:18:29.9141680Z [31;1m  Downloaded base64 v0.23.1[0m
+2026-11-09T06:18:29.9424784Z [31;1m  Downloaded tokio-util v0.7.20[0m
+2026-11-09T06:18:30.0015401Z [31;1m  Downloaded tower-http v0.6.11[0m
+2026-11-09T06:18:30.0857499Z [31;1m  Downloaded vcpkg v0.2.15[0m
+2026-11-09T06:18:30.5557123Z [31;1m  Downloaded aho-corasick v1.1.5[0m
+2026-11-09T06:18:30.8616257Z [31;1m  Downloaded chrono v0.4.45[0m
+2026-11-09T06:18:30.9057588Z [31;1m  Downloaded winnow v1.0.4[0m
+2026-11-09T06:18:30.9798837Z [31;1m  Downloaded brotli-decompressor v6.2.0[0m
+2026-11-09T06:18:31.0200375Z [31;1m  Downloaded time v0.3.55[0m
+2026-11-09T06:18:31.1331915Z [31;1m  Downloaded unicode-segmentation v1.13.3[0m
+2026-11-09T06:18:31.1461722Z [31;1m  Downloaded zlib-rs v0.6.8[0m
+2026-11-09T06:18:31.1854754Z [31;1m  Downloaded syn v2.0.119[0m
+2026-11-09T06:18:31.6466287Z [31;1m  Downloaded syn v3.0.9[0m
+2026-11-09T06:18:31.7104311Z [31;1m  Downloaded tao v0.37.2[0m
+2026-11-09T06:18:31.7874808Z [31;1m  Downloaded zerovec v0.11.9[0m
+2026-11-09T06:18:31.8324968Z [31;1m  Downloaded regex-syntax v0.8.11[0m
+2026-11-09T06:18:31.8672291Z [31;1m  Downloaded tauri v2.12.5[0m
+2026-11-09T06:18:32.2812647Z [31;1m  Downloaded wry v0.57.1[0m
+2026-11-09T06:18:32.3370230Z [31;1m  Downloaded tracing v0.1.44[0m
+2026-11-09T06:18:32.4044818Z [31;1m  Downloaded icu_normalizer v2.4.0[0m
+2026-11-09T06:18:32.4610592Z [31;1m  Downloaded regex-automata v0.4.18[0m
+2026-11-09T06:18:32.5298755Z [31;1m  Downloaded jiff v0.2.38[0m
+2026-11-09T06:18:32.6059005Z [31;1m  Downloaded brotli v9.1.1[0m
+2026-11-09T06:18:32.6706326Z [31;1m  Downloaded libc v0.2.191[0m
+2026-11-09T06:18:33.0003829Z [31;1m  Downloaded tokio v1.54.1[0m
+2026-11-09T06:18:33.8486521Z [31;1m  Downloaded window-vibrancy v0.8.1[0m
+2026-11-09T06:18:33.8797986Z [31;1m  Downloaded windows-sys v0.61.2[0m
+2026-11-09T06:18:34.1544368Z [31;1m  Downloaded libsqlite3-sys v0.39.1[0m
+2026-11-09T06:18:34.2079301Z [31;1m  Downloaded webview2-com-sys v0.39.1[0m
+2026-11-09T06:18:34.3056169Z [31;1m  Downloaded windows v0.62.2[0m
+2026-11-09T06:18:35.9779470Z [31;1m  Downloaded windows v0.61.3[0m
+2026-11-09T06:18:38.3811040Z [31;1m   Compiling proc-macro2 v1.0.107[0m
+2026-11-09T06:18:38.3813491Z [31;1m   Compiling quote v1.0.47[0m
+2026-11-09T06:18:40.9732872Z [31;1m   Compiling unicode-ident v1.0.27[0m
+2026-11-09T06:18:45.2609748Z [31;1m   Compiling windows-link v0.2.1[0m
+2026-11-09T06:18:49.5236093Z [31;1m   Compiling serde_core v1.0.229[0m
+2026-11-09T06:18:49.5237049Z [31;1m   Compiling syn v3.0.9[0m
+2026-11-09T06:18:49.5237735Z [31;1m   Compiling syn v2.0.119[0m
+2026-11-09T06:18:50.2714984Z [31;1m   Compiling synstructure v0.14.0[0m
+2026-11-09T06:18:50.9968079Z [31;1m   Compiling zerofrom-derive v0.1.8[0m
+2026-11-09T06:18:51.6664420Z [31;1m   Compiling yoke-derive v0.8.4[0m
+2026-11-09T06:18:52.8460528Z [31;1m   Compiling zerovec-derive v0.11.7[0m
+2026-11-09T06:18:53.1875755Z [31;1m   Compiling serde_derive v1.0.229[0m
+2026-11-09T06:18:54.3974329Z [31;1m   Compiling displaydoc v0.2.7[0m
+2026-11-09T06:18:57.4860913Z [31;1m   Compiling cfg-if v1.0.5[0m
+2026-11-09T06:18:57.5360518Z [31;1m   Compiling icu_properties_data v2.4.0[0m
+2026-11-09T06:18:57.7891161Z [31;1m   Compiling icu_normalizer_data v2.4.0[0m
+2026-11-09T06:18:58.0037953Z [31;1m   Compiling siphasher v1.0.4[0m
+2026-11-09T06:18:58.2150925Z [31;1m   Compiling phf_shared v0.13.1[0m
+2026-11-09T06:18:58.5154720Z [31;1m   Compiling fastrand v2.5.0[0m
+2026-11-09T06:18:58.6934189Z [31;1m   Compiling phf_generator v0.13.1[0m
+2026-11-09T06:18:58.8883977Z [31;1m   Compiling windows-sys v0.61.2[0m
+2026-11-09T06:19:03.0357119Z [31;1m   Compiling stable_deref_trait v1.2.1[0m
+2026-11-09T06:19:03.0357912Z [31;1m   Compiling zmij v1.0.23[0m
+2026-11-09T06:19:03.0358496Z [31;1m   Compiling thiserror v2.0.21[0m
+2026-11-09T06:19:03.0359210Z [31;1m   Compiling version_check v0.9.5[0m
+2026-11-09T06:19:03.0359795Z [31;1m   Compiling zerofrom v0.1.8[0m
+2026-11-09T06:19:03.0360405Z [31;1m   Compiling thiserror-impl v2.0.21[0m
+2026-11-09T06:19:03.0361026Z [31;1m   Compiling smallvec v1.16.4[0m
+2026-11-09T06:19:03.0361624Z [31;1m   Compiling getrandom v0.4.3[0m
+2026-11-09T06:19:03.0362198Z [31;1m   Compiling yoke v0.8.4[0m
+2026-11-09T06:19:03.1240288Z [31;1m   Compiling parking_lot_core v0.9.12[0m
+2026-11-09T06:19:03.6525844Z [31;1m   Compiling zerovec v0.11.9[0m
+2026-11-09T06:19:04.4075361Z [31;1m   Compiling serde v1.0.229[0m
+2026-11-09T06:19:08.8465299Z [31;1m   Compiling phf_macros v0.13.1[0m
+2026-11-09T06:19:08.8466127Z [31;1m   Compiling windows-interface v0.59.3[0m
+2026-11-09T06:19:08.8466809Z [31;1m   Compiling windows-implement v0.60.2[0m
+2026-11-09T06:19:08.8467458Z [31;1m   Compiling typeid v1.0.3[0m
+2026-11-09T06:19:08.8468068Z [31;1m   Compiling libc v0.2.191[0m
+2026-11-09T06:19:09.0925533Z [31;1m   Compiling time-core v0.1.9[0m
+2026-11-09T06:19:09.3797455Z [31;1m   Compiling num-conv v0.2.2[0m
+2026-11-09T06:19:09.5320579Z [31;1m   Compiling memchr v2.8.3[0m
+2026-11-09T06:19:12.3530419Z [31;1m   Compiling tinystr v0.8.5[0m
+2026-11-09T06:19:12.4410523Z [31;1m   Compiling generic-array v0.14.7[0m
+2026-11-09T06:19:12.5920576Z [31;1m   Compiling phf_codegen v0.13.1[0m
+2026-11-09T06:19:12.6801880Z [31;1m   Compiling ident_case v1.0.1[0m
+2026-11-09T06:19:12.7149224Z [31;1m   Compiling erased-serde v0.4.11[0m
+2026-11-09T06:19:12.7704741Z [31;1m   Compiling utf_types v1.0.0[0m
+2026-11-09T06:19:12.9840243Z [31;1m   Compiling writeable v0.6.4[0m
+2026-11-09T06:19:13.0471410Z [31;1m   Compiling itoa v1.0.18[0m
+2026-11-09T06:19:13.2480999Z [31;1m   Compiling strsim v0.11.1[0m
+2026-11-09T06:19:13.2800861Z [31;1m   Compiling shlex v2.0.1[0m
+2026-11-09T06:19:13.4757978Z [31;1m   Compiling litemap v0.8.3[0m
+2026-11-09T06:19:13.6256437Z [31;1m   Compiling find-msvc-tools v0.1.15[0m
+2026-11-09T06:19:14.0422040Z [31;1m   Compiling icu_locale_core v2.4.0[0m
+2026-11-09T06:19:14.7913956Z [31;1m   Compiling cc v1.10.0[0m
+2026-11-09T06:19:15.5980856Z [31;1m   Compiling darling_core v0.24.1[0m
+2026-11-09T06:19:17.1570450Z [31;1m   Compiling utf8_iter v1.1.0[0m
+2026-11-09T06:19:17.3211683Z [31;1m   Compiling potential_utf v0.1.6[0m
+2026-11-09T06:19:17.4704693Z [31;1m   Compiling zerotrie v0.2.5[0m
+2026-11-09T06:19:20.1052080Z [31;1m   Compiling bytes v1.12.1[0m
+2026-11-09T06:19:21.5952183Z [31;1m   Compiling darling_macro v0.24.1[0m
+2026-11-09T06:19:22.0988769Z [31;1m   Compiling icu_provider v2.4.0[0m
+2026-11-09T06:19:22.5153809Z [31;1m   Compiling icu_collections v2.4.0[0m
+2026-11-09T06:19:23.4889169Z [31;1m   Compiling anyhow v1.0.104[0m
+2026-11-09T06:19:23.8440108Z [31;1m   Compiling scopeguard v1.2.0[0m
+2026-11-09T06:19:24.2387978Z [31;1m   Compiling new_debug_unreachable v1.0.6[0m
+2026-11-09T06:19:24.9015849Z [31;1m   Compiling lock_api v0.4.14[0m
+2026-11-09T06:19:25.7024863Z [31;1m   Compiling darling v0.24.1[0m
+2026-11-09T06:19:25.9652051Z [31;1m   Compiling phf v0.13.1[0m
+2026-11-09T06:19:26.8342082Z [31;1m   Compiling string_cache_codegen v0.6.1[0m
+2026-11-09T06:19:29.5495194Z [31;1m   Compiling precomputed-hash v0.1.1[0m
+2026-11-09T06:19:29.6140962Z [31;1m   Compiling serde_json v1.0.154[0m
+2026-11-09T06:19:29.8860543Z [31;1m   Compiling pin-project-lite v0.2.17[0m
+2026-11-09T06:19:29.9865206Z [31;1m   Compiling web_atoms v0.2.6[0m
+2026-11-09T06:19:31.2596645Z [31;1m   Compiling serde_with_macros v3.24.0[0m
+2026-11-09T06:19:31.9129880Z [31;1m   Compiling parking_lot v0.12.5[0m
+2026-11-09T06:19:32.4104616Z [31;1m   Compiling icu_normalizer v2.4.0[0m
+2026-11-09T06:19:32.7556624Z [31;1m   Compiling icu_properties v2.4.0[0m
+2026-11-09T06:19:33.1514151Z [31;1m   Compiling semver v1.0.28[0m
+2026-11-09T06:19:33.5524540Z [31;1m   Compiling windows-result v0.4.1[0m
+2026-11-09T06:19:34.0672104Z [31;1m   Compiling windows-strings v0.5.1[0m
+2026-11-09T06:19:34.6168191Z [31;1m   Compiling winnow v1.0.4[0m
+2026-11-09T06:19:34.9473374Z [31;1m   Compiling windows-core v0.62.2[0m
+2026-11-09T06:19:35.0618579Z [31;1m   Compiling toml_parser v1.1.5+spec-1.1.0[0m
+2026-11-09T06:19:35.9768684Z [31;1m   Compiling idna_adapter v1.2.2[0m
+2026-11-09T06:19:36.2366046Z [31;1m   Compiling string_cache v0.9.0[0m
+2026-11-09T06:19:36.7195447Z [31;1m   Compiling http v1.5.0[0m
+2026-11-09T06:19:37.9519264Z [31;1m   Compiling serde_spanned v1.1.2[0m
+2026-11-09T06:19:38.0895424Z [31;1m   Compiling toml_datetime v1.1.2+spec-1.1.0[0m
+2026-11-09T06:19:38.4225677Z [31;1m   Compiling bitflags v2.13.2[0m
+2026-11-09T06:19:38.6501732Z [31;1m   Compiling dtoa v1.0.11[0m
+2026-11-09T06:19:38.7980069Z [31;1m   Compiling toml_writer v1.1.3+spec-1.1.0[0m
+2026-11-09T06:19:39.0428821Z [31;1m   Compiling log v0.4.35[0m
+2026-11-09T06:19:39.2329467Z [31;1m   Compiling percent-encoding v2.3.2[0m
+2026-11-09T06:19:39.7822731Z [31;1m   Compiling crc32fast v1.5.3[0m
+2026-11-09T06:19:40.0740278Z [31;1m   Compiling autocfg v1.5.1[0m
+2026-11-09T06:19:40.1837157Z [31;1m   Compiling form_urlencoded v1.2.2[0m
+2026-11-09T06:19:40.3459863Z [31;1m   Compiling toml v1.1.8+spec-1.1.0[0m
+2026-11-09T06:19:40.5863322Z [31;1m   Compiling indexmap v1.9.3[0m
+2026-11-09T06:19:40.8567692Z [31;1m   Compiling dtoa-short v0.3.5[0m
+2026-11-09T06:19:41.9458867Z [31;1m   Compiling uuid v1.29.0[0m
+2026-11-09T06:19:44.3044823Z [31;1m   Compiling idna v1.1.0[0m
+2026-11-09T06:19:45.1469011Z [31;1m   Compiling tendril v0.5.1[0m
+2026-11-09T06:19:45.4597659Z [31;1m   Compiling selectors v0.38.0[0m
+2026-11-09T06:19:45.4915337Z [31;1m   Compiling aho-corasick v1.1.5[0m
+2026-11-09T06:19:45.9678682Z [31;1m   Compiling derive_more-impl v2.1.1[0m
+2026-11-09T06:19:50.9046728Z [31;1m   Compiling cssparser-macros v0.7.1[0m
+2026-11-09T06:19:50.9047361Z [31;1m   Compiling camino v1.2.6[0m
+2026-11-09T06:19:50.9047914Z [31;1m   Compiling alloc-no-stdlib v3.0.0[0m
+2026-11-09T06:19:50.9048476Z [31;1m   Compiling regex-syntax v0.8.11[0m
+2026-11-09T06:19:50.9049018Z [31;1m   Compiling alloc-stdlib v0.3.0[0m
+2026-11-09T06:19:50.9049539Z [31;1m   Compiling cssparser v0.37.0[0m
+2026-11-09T06:19:50.9050426Z [31;1m   Compiling derive_more v2.1.1[0m
+2026-11-09T06:19:50.9050944Z [31;1m   Compiling markup5ever v0.39.0[0m
+2026-11-09T06:19:50.9051434Z [31;1m   Compiling url v2.5.8[0m
+2026-11-09T06:19:50.9391938Z [31;1m   Compiling regex-automata v0.4.18[0m
+2026-11-09T06:19:51.7785051Z [31;1m   Compiling winapi-util v0.1.11[0m
+2026-11-09T06:19:52.0289958Z [31;1m   Compiling vswhom-sys v0.1.3[0m
+2026-11-09T06:19:52.5829187Z [31;1m   Compiling servo_arc v0.4.3[0m
+2026-11-09T06:19:57.2511229Z [31;1m   Compiling serde_derive_internals v0.29.1[0m
+2026-11-09T06:19:57.2512154Z [31;1m   Compiling windows-threading v0.2.1[0m
+2026-11-09T06:19:57.2512646Z [31;1m   Compiling web-time v1.1.0[0m
+2026-11-09T06:19:57.2513115Z [31;1m   Compiling once_cell v1.21.4[0m
+2026-11-09T06:19:57.2513565Z [31;1m   Compiling hashbrown v0.12.3[0m
+2026-11-09T06:19:57.2513996Z [31;1m   Compiling equivalent v1.0.3[0m
+2026-11-09T06:19:57.2514432Z [31;1m   Compiling rustc-hash v2.1.3[0m
+2026-11-09T06:19:57.2514867Z [31;1m   Compiling foldhash v0.2.0[0m
+2026-11-09T06:19:57.2515269Z [31;1m   Compiling typenum v1.20.1[0m
+2026-11-09T06:19:57.2515700Z [31;1m   Compiling bit-vec v0.8.0[0m
+2026-11-09T06:19:57.2516138Z [31;1m   Compiling powerfmt v0.2.1[0m
+2026-11-09T06:19:57.2516562Z [31;1m   Compiling deranged v0.5.9[0m
+2026-11-09T06:19:57.2516987Z [31;1m   Compiling futures-core v0.3.34[0m
+2026-11-09T06:19:57.2517419Z [31;1m   Compiling hashbrown v0.17.1[0m
+2026-11-09T06:19:57.5862637Z [31;1m   Compiling fnv v1.0.7[0m
+2026-11-09T06:19:57.6590615Z [31;1m   Compiling schemars v0.8.22[0m
+2026-11-09T06:19:57.8781969Z [31;1m   Compiling time v0.3.55[0m
+2026-11-09T06:19:57.9451393Z [31;1m   Compiling cfb v0.14.0[0m
+2026-11-09T06:19:58.9199199Z [31;1m   Compiling indexmap v2.14.2[0m
+2026-11-09T06:20:00.5644201Z [31;1m   Compiling bit-set v0.8.0[0m
+2026-11-09T06:20:01.7861888Z [31;1m   Compiling windows-future v0.3.2[0m
+2026-11-09T06:20:02.7758517Z [31;1m   Compiling schemars_derive v0.8.22[0m
+2026-11-09T06:20:03.0426331Z [31;1m   Compiling regex v1.13.1[0m
+2026-11-09T06:20:04.4965467Z [31;1m   Compiling same-file v1.0.6[0m
+2026-11-09T06:20:07.4852725Z [31;1m   Compiling html5ever v0.39.0[0m
+2026-11-09T06:20:08.3303232Z [31;1m   Compiling brotli-decompressor v6.2.0[0m
+2026-11-09T06:20:10.1800375Z [31;1m   Compiling jsonptr v0.7.1[0m
+2026-11-09T06:20:10.6628853Z [31;1m   Compiling windows-numerics v0.3.1[0m
+2026-11-09T06:20:10.7642450Z [31;1m   Compiling windows-collections v0.3.2[0m
+2026-11-09T06:20:11.0666075Z [31;1m   Compiling cargo-platform v0.1.9[0m
+2026-11-09T06:20:11.3370749Z [31;1m   Compiling socket2 v0.6.5[0m
+2026-11-09T06:20:11.4691229Z [31;1m   Compiling mio v1.2.4[0m
+2026-11-09T06:20:12.8013139Z [31;1m   Compiling quick-xml v0.42.0[0m
+2026-11-09T06:20:14.2195709Z [31;1m   Compiling dunce v1.0.5[0m
+2026-11-09T06:20:14.3853041Z [31;1m   Compiling base64 v0.23.1[0m
+2026-11-09T06:20:14.4645892Z [31;1m   Compiling windows-link v0.1.3[0m
+2026-11-09T06:20:14.9299089Z [31;1m   Compiling dyn-clone v1.0.20[0m
+2026-11-09T06:20:15.2451796Z [31;1m   Compiling tauri-utils v2.10.2[0m
+2026-11-09T06:20:15.4952108Z [31;1m   Compiling dom_query v0.28.0[0m
+2026-11-09T06:20:17.7161422Z [31;1m   Compiling plist v1.10.3[0m
+2026-11-09T06:20:18.9273994Z [31;1m   Compiling tokio v1.54.1[0m
+2026-11-09T06:20:19.3975066Z [31;1m   Compiling windows v0.62.2[0m
+2026-11-09T06:20:42.9678766Z [31;1m   Compiling cargo_metadata v0.19.2[0m
+2026-11-09T06:20:47.6431244Z [31;1m   Compiling json-patch v4.2.0[0m
+2026-11-09T06:20:53.6776182Z [31;1m   Compiling brotli v9.1.1[0m
+2026-11-09T06:20:58.5047602Z [31;1m   Compiling walkdir v2.5.0[0m
+2026-11-09T06:20:58.9269106Z [31;1m   Compiling serde-untagged v0.1.9[0m
+2026-11-09T06:20:59.2125538Z [31;1m   Compiling urlpattern v0.6.0[0m
+2026-11-09T06:21:00.4433088Z [31;1m   Compiling infer v0.22.0[0m
+2026-11-09T06:21:01.2393362Z [31;1m   Compiling serde_with v3.24.0[0m
+2026-11-09T06:21:04.0101260Z [31;1m   Compiling time-macros v0.2.32[0m
+2026-11-09T06:21:06.4948506Z [31;1m   Compiling glob v0.3.4[0m
+2026-11-09T06:21:06.9352307Z [31;1m   Compiling ctor v1.0.13[0m
+2026-11-09T06:21:09.1212746Z [31;1m   Compiling simd-adler32 v0.3.10[0m
+2026-11-09T06:21:27.8141380Z [31;1m   Compiling vswhom v0.1.0[0m
+2026-11-09T06:21:33.1663290Z [31;1m   Compiling crypto-common v0.1.7[0m
+2026-11-09T06:21:33.2790840Z [31;1m   Compiling block-buffer v0.10.4[0m
+2026-11-09T06:21:33.4474095Z [31;1m   Compiling tracing-core v0.1.36[0m
+2026-11-09T06:21:35.0810155Z [31;1m   Compiling rustc_version v0.4.1[0m
+2026-11-09T06:21:35.4100196Z [31;1m   Compiling winreg v0.56.0[0m
+2026-11-09T06:21:35.8516637Z [31;1m   Compiling raw-window-handle v0.6.2[0m
+2026-11-09T06:21:36.2400249Z [31;1m   Compiling crossbeam-utils v0.8.23[0m
+2026-11-09T06:21:36.9243329Z [31;1m   Compiling adler2 v2.0.1[0m
+2026-11-09T06:21:37.0306353Z [31;1m   Compiling option-ext v0.2.0[0m
+2026-11-09T06:21:37.0968664Z [31;1m   Compiling dirs-sys v0.5.0[0m
+2026-11-09T06:21:38.7412332Z [31;1m   Compiling embed-resource v3.0.12[0m
+2026-11-09T06:21:39.0929793Z [31;1m   Compiling tracing v0.1.44[0m
+2026-11-09T06:21:39.3856171Z [31;1m   Compiling digest v0.10.7[0m
+2026-11-09T06:21:39.6086472Z [31;1m   Compiling windows-result v0.3.4[0m
+2026-11-09T06:21:40.4446363Z [31;1m   Compiling windows-strings v0.4.2[0m
+2026-11-09T06:21:40.5469677Z [31;1m   Compiling http-body v1.1.0[0m
+2026-11-09T06:21:41.3378879Z [31;1m   Compiling webview2-com-sys v0.39.1[0m
+2026-11-09T06:21:41.6596176Z [31;1m   Compiling dpi v0.1.2[0m
+2026-11-09T06:21:42.5583255Z [31;1m   Compiling cpufeatures v0.2.17[0m
+2026-11-09T06:21:42.6136918Z [31;1m   Compiling httparse v1.10.1[0m
+2026-11-09T06:21:43.0363974Z [31;1m   Compiling futures-task v0.3.34[0m
+2026-11-09T06:21:43.2539481Z [31;1m   Compiling heck v0.5.0[0m
+2026-11-09T06:21:43.5094884Z [31;1m   Compiling slab v0.4.12[0m
+2026-11-09T06:21:58.5212440Z [31;1m   Compiling futures-util v0.3.34[0m
+2026-11-09T06:22:05.7345652Z [31;1m   Compiling sha2 v0.10.9[0m
+2026-11-09T06:22:05.7346374Z [31;1m   Compiling windows-core v0.61.2[0m
+2026-11-09T06:22:05.7347015Z [31;1m   Compiling tauri-winres v0.3.7[0m
+2026-11-09T06:22:05.7347621Z [31;1m   Compiling dirs v7.0.0[0m
+2026-11-09T06:22:05.7348199Z [31;1m   Compiling miniz_oxide v0.9.1[0m
+2026-11-09T06:22:06.1342872Z [31;1m   Compiling cargo_toml v1.0.1[0m
+2026-11-09T06:22:13.0482689Z [31;1m   Compiling cookie v0.18.2[0m
+2026-11-09T06:22:17.3531136Z [31;1m   Compiling tower-service v0.3.3[0m
+2026-11-09T06:22:17.3531813Z [31;1m   Compiling native-tls v0.2.18[0m
+2026-11-09T06:22:17.3532425Z [31;1m   Compiling try-lock v0.2.5[0m
+2026-11-09T06:22:17.3533017Z [31;1m   Compiling static_vcruntime v3.0.0[0m
+2026-11-09T06:22:17.3533606Z [31;1m   Compiling tauri-build v2.7.4[0m
+2026-11-09T06:22:17.3534164Z [31;1m   Compiling want v0.3.2[0m
+2026-11-09T06:22:18.5238242Z [31;1m   Compiling flate2 v1.1.10[0m
+2026-11-09T06:22:19.0821586Z [31;1m   Compiling crossbeam-channel v0.5.17[0m
+2026-11-09T06:22:29.3115241Z [31;1m   Compiling miniz_oxide v0.8.9[0m
+2026-11-09T06:22:32.0355013Z [31;1m   Compiling fdeflate v0.3.7[0m
+2026-11-09T06:22:32.9539202Z [31;1m   Compiling schannel v0.1.30[0m
+2026-11-09T06:22:35.3449403Z [31;1m   Compiling webview2-com-macros v0.8.1[0m
+2026-11-09T06:22:35.9497028Z [31;1m   Compiling windows-version v0.1.7[0m
+2026-11-09T06:22:36.7551295Z [31;1m   Compiling pkg-config v0.3.34[0m
+2026-11-09T06:22:37.4459166Z [31;1m   Compiling atomic-waker v1.1.2[0m
+2026-11-09T06:22:37.4625995Z [31;1m   Compiling vcpkg v0.2.15[0m
+2026-11-09T06:22:37.5661419Z [31;1m   Compiling hyper v1.12.0[0m
+2026-11-09T06:22:38.3907865Z [31;1m   Compiling libsqlite3-sys v0.39.1[0m
+2026-11-09T06:22:43.6418380Z [31;1m   Compiling webview2-com v0.39.1[0m
+2026-11-09T06:22:52.6530057Z [31;1m   Compiling png v0.18.1[0m
+2026-11-09T06:23:08.5534511Z [31;1m   Compiling windows-threading v0.1.0[0m
+2026-11-09T06:23:08.6844355Z [31;1m   Compiling futures-channel v0.3.34[0m
+2026-11-09T06:23:08.7225561Z [31;1m   Compiling sync_wrapper v1.0.2[0m
+2026-11-09T06:23:08.9794200Z [31;1m   Compiling byteorder v1.5.0[0m
+2026-11-09T06:23:09.4300669Z [31;1m   Compiling thiserror v1.0.69[0m
+2026-11-09T06:23:09.7561728Z [31;1m   Compiling ipnet v2.12.2[0m
+2026-11-09T06:23:12.1513366Z [31;1m   Compiling muda v0.20.0[0m
+2026-11-09T06:23:12.4576811Z [31;1m   Compiling tauri-runtime v2.12.2[0m
+2026-11-09T06:23:12.7730066Z [31;1m   Compiling tower-layer v0.3.3[0m
+2026-11-09T06:23:12.9985470Z [31;1m   Compiling wry v0.57.1[0m
+2026-11-09T06:23:14.4562994Z [31;1m   Compiling tower v0.5.3[0m
+2026-11-09T06:23:15.3001021Z [31;1m   Compiling hyper-util v0.1.21[0m
+2026-11-09T06:23:20.5990875Z [31;1m   Compiling ico v0.6.0[0m
+2026-11-09T06:23:21.8423385Z [31;1m   Compiling windows-future v0.2.1[0m
+2026-11-09T06:23:22.4201622Z [31;1m   Compiling tokio-native-tls v0.3.1[0m
+2026-11-09T06:24:48.9095332Z [31;1m   Compiling tauri v2.12.5[0m
+2026-11-09T06:24:50.7995940Z [31;1m   Compiling windows-numerics v0.2.0[0m
+2026-11-09T06:24:51.1709976Z [31;1m   Compiling windows-collections v0.2.0[0m
+2026-11-09T06:24:51.5725976Z [31;1m   Compiling http-body-util v0.1.5[0m
+2026-11-09T06:24:52.1177084Z [31;1m   Compiling keyboard-types v0.8.3[0m
+2026-11-09T06:24:54.8593044Z [31;1m   Compiling thiserror-impl v1.0.69[0m
+2026-11-09T06:24:56.7268325Z [31;1m   Compiling unicode-segmentation v1.13.3[0m
+2026-11-09T06:24:57.7600925Z [31;1m   Compiling tray-icon v0.25.1[0m
+2026-11-09T06:24:58.1046631Z [31;1m   Compiling tauri-runtime-wry v2.12.3[0m
+2026-11-09T06:24:58.3477456Z [31;1m   Compiling getrandom v0.3.4[0m
+2026-11-09T06:24:58.7481591Z [31;1m   Compiling zeroize v1.9.0[0m
+2026-11-09T06:24:59.0738032Z [31;1m   Compiling rustls-pki-types v1.15.1[0m
+2026-11-09T06:25:01.2336988Z [31;1m   Compiling tao v0.37.2[0m
+2026-11-09T06:25:22.4427764Z [31;1m   Compiling hyper-tls v0.6.0[0m
+2026-11-09T06:25:22.8058054Z [31;1m   Compiling windows v0.61.3[0m
+2026-11-09T06:25:28.4856057Z [31;1m   Compiling tauri-codegen v2.7.4[0m
+2026-11-09T06:25:28.5180140Z [31;1m   Compiling tower-http v0.6.11[0m
+2026-11-09T06:25:34.4206196Z [31;1m   Compiling noetome-cli v0.1.0 (D:\a\Noetome\Noetome\crates\noetome-cli)[0m
+2026-11-09T06:25:34.9337412Z [31;1m   Compiling softbuffer v0.4.8[0m
+2026-11-09T06:25:35.4474713Z [31;1m   Compiling hashlink v0.12.2[0m
+2026-11-09T06:25:35.9978355Z [31;1m   Compiling serialize-to-javascript-impl v0.1.2[0m
+2026-11-09T06:25:36.4880076Z [31;1m   Compiling rfd v0.17.2[0m
+2026-11-09T06:25:36.7312160Z [31;1m   Compiling fallible-streaming-iterator v0.1.9[0m
+2026-11-09T06:25:36.9977181Z [31;1m   Compiling fallible-iterator v0.3.0[0m
+2026-11-09T06:25:37.5340854Z [31;1m   Compiling rusqlite v0.41.1[0m
+2026-11-09T06:25:41.4164823Z [31;1m   Compiling serialize-to-javascript v0.1.2[0m
+2026-11-09T06:25:45.3976182Z [31;1m   Compiling tauri-macros v2.7.4[0m
+2026-11-09T06:25:47.6758951Z [31;1m   Compiling reqwest v0.13.5[0m
+2026-11-09T06:25:47.7391660Z [31;1m   Compiling win32job v2.0.3[0m
+2026-11-09T06:25:50.7902912Z [31;1m   Compiling window-vibrancy v0.8.1[0m
+2026-11-09T06:25:51.1232752Z [31;1m   Compiling noetome-desktop v0.1.0 (D:\a\Noetome\Noetome\crates\noetome-desktop)[0m
+2026-11-09T06:25:52.6535016Z [31;1m   Compiling process-wrap v10.0.1[0m
+2026-11-09T06:25:54.0169119Z [31;1m   Compiling serde_repr v0.1.21[0m
+2026-11-09T06:25:54.6057936Z [31;1m   Compiling mime v0.3.17[0m
+2026-11-09T06:26:18.8467496Z [31;1mwarning: unused import: `BTreeMap`[0m
+2026-11-09T06:26:18.8741229Z [31;1m  --> crates\noetome-cli\src\change_model.rs:18:24[0m
+2026-11-09T06:26:18.8789918Z [31;1m   |[0m
+2026-11-09T06:26:18.9083151Z [31;1m18 | use std::collections::{BTreeMap, BTreeSet};[0m
+2026-11-09T06:26:18.9084073Z [31;1m   |                        ^^^^^^^^[0m
+2026-11-09T06:26:18.9118203Z [31;1m   |[0m
+2026-11-09T06:26:18.9413646Z [31;1m   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default[0m
+2026-11-09T06:26:18.9446821Z [31;1m[0m
+2026-11-09T06:26:53.1263060Z [31;1mwarning: constant `STAGES` is never used[0m
+2026-11-09T06:26:53.1264158Z [31;1m  --> crates\noetome-cli\src\bench_model.rs:44:18[0m
+2026-11-09T06:26:53.1267640Z [31;1m   |[0m
+2026-11-09T06:26:53.1383681Z [31;1m44 | pub(crate) const STAGES: [&str; 4] = [STAGE_SCAN, STAGE_DETECT, STAGE_PLAN, STAGE_PAGE];[0m
+2026-11-09T06:26:53.1384489Z [31;1m   |                  ^^^^^^[0m
+2026-11-09T06:26:53.1393021Z [31;1m   |[0m
+2026-11-09T06:26:53.1425244Z [31;1m   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default[0m
+2026-11-09T06:26:53.1436625Z [31;1m[0m
+2026-11-09T06:26:53.1509342Z [31;1mwarning: field `edited` is never read[0m
+2026-11-09T06:26:53.1515361Z [31;1m   --> crates\noetome-cli\src\bench_model.rs:148:9[0m
+2026-11-09T06:26:53.1522137Z [31;1m    |[0m
+2026-11-09T06:26:53.1523058Z [31;1m141 | pub(crate) struct Note {[0m
+2026-11-09T06:26:53.1670788Z [31;1m    |                   ---- field in this struct[0m
+2026-11-09T06:26:53.1671771Z [31;1m...[0m
+2026-11-09T06:26:53.1672601Z [31;1m148 |     pub edited: bool,[0m
+2026-11-09T06:26:53.1673320Z [31;1m    |         ^^^^^^[0m
+2026-11-09T06:26:53.1674273Z [31;1m    |[0m
+2026-11-09T06:26:53.1675585Z [31;1m    = note: `Note` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis[0m
+2026-11-09T06:26:53.1676672Z [31;1m[0m
+2026-11-09T06:26:53.1677450Z [31;1mwarning: function `paths` is never used[0m
+2026-11-09T06:26:53.1678392Z [31;1m   --> crates\noetome-cli\src\bench_store.rs:238:15[0m
+2026-11-09T06:26:53.1679074Z [31;1m    |[0m
+2026-11-09T06:26:53.1680002Z [31;1m238 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {[0m
+2026-11-09T06:26:53.1680872Z [31;1m    |               ^^^^^[0m
+2026-11-09T06:26:53.1681418Z [31;1m[0m
+2026-11-09T06:26:53.1682085Z [31;1mwarning: function `resolve` is never used[0m
+2026-11-09T06:26:53.1682972Z [31;1m   --> crates\noetome-cli\src\change_store.rs:104:4[0m
+2026-11-09T06:26:53.1683626Z [31;1m    |[0m
+2026-11-09T06:26:53.1684582Z [31;1m104 | fn resolve(root: &Path, relative: &str) -> Result<PathBuf, ProjectError> {[0m
+2026-11-09T06:26:53.1685474Z [31;1m    |    ^^^^^^^[0m
+2026-11-09T06:26:53.1685999Z [31;1m[0m
+2026-11-09T06:26:53.1686665Z [31;1mwarning: function `create_parent` is never used[0m
+2026-11-09T06:26:53.1687581Z [31;1m   --> crates\noetome-cli\src\change_store.rs:146:4[0m
+2026-11-09T06:26:53.1714804Z [31;1m    |[0m
+2026-11-09T06:26:53.1721305Z [31;1m146 | fn create_parent(path: &Path, label: &str) -> Result<(), ProjectError> {[0m
+2026-11-09T06:26:53.1722206Z [31;1m    |    ^^^^^^^^^^^^^[0m
+2026-11-09T06:26:53.1722763Z [31;1m[0m
+2026-11-09T06:26:53.1723365Z [31;1mwarning: method `task` is never used[0m
+2026-11-09T06:26:53.1724128Z [31;1m   --> crates\noetome-cli\src\journal_model.rs:509:8[0m
+2026-11-09T06:26:53.1724799Z [31;1m    |[0m
+2026-11-09T06:26:53.1725344Z [31;1m245 | impl Declaration {[0m
+2026-11-09T06:26:53.1730338Z [31;1m    | ---------------- method in this implementation[0m
+2026-11-09T06:26:53.1789356Z [31;1m...[0m
+2026-11-09T06:26:53.1790173Z [31;1m509 |     fn task(&self, id: &str) -> Option<&TaskSpec> {[0m
+2026-11-09T06:26:53.1790869Z [31;1m    |        ^^^^[0m
+2026-11-09T06:26:53.1791373Z [31;1m[0m
+2026-11-09T06:26:53.1791976Z [31;1mwarning: field `inputs` is never read[0m
+2026-11-09T06:26:53.1792887Z [31;1m   --> crates\noetome-cli\src\plan_store.rs:248:16[0m
+2026-11-09T06:26:53.1800599Z [31;1m    |[0m
+2026-11-09T06:26:53.1801094Z [31;1m245 | pub(crate) struct Frozen {[0m
+2026-11-09T06:26:53.1801805Z [31;1m    |                   ------ field in this struct[0m
+2026-11-09T06:26:53.1802338Z [31;1m...[0m
+2026-11-09T06:26:53.1802925Z [31;1m248 |     pub(crate) inputs: Inputs,[0m
+2026-11-09T06:26:53.1803481Z [31;1m    |                ^^^^^^[0m
+2026-11-09T06:26:53.1804303Z [31;1m[0m
+2026-11-09T06:26:53.1805147Z [31;1mwarning: methods `authority_matches`, `reserve`, `mark_may_send`, and `schedule_retry` are never used[0m
+2026-11-09T06:26:53.1806174Z [31;1m    --> crates\noetome-cli\src\request_budget_store.rs:788:19[0m
+2026-11-09T06:26:53.1806885Z [31;1m     |[0m
+2026-11-09T06:26:53.1807377Z [31;1m 682 | impl BudgetStore {[0m
+2026-11-09T06:26:53.1808045Z [31;1m     | ---------------- methods in this implementation[0m
+2026-11-09T06:26:53.1808611Z [31;1m...[0m
+2026-11-09T06:26:53.1809721Z [31;1m 788 |     pub(crate) fn authority_matches(&self, expected: &AuthoritySpec) -> Result<(), ProjectError> {[0m
+2026-11-09T06:26:53.1810648Z [31;1m     |                   ^^^^^^^^^^^^^^^^^[0m
+2026-11-09T06:26:53.1811153Z [31;1m...[0m
+2026-11-09T06:26:53.1811631Z [31;1m 982 |     pub(crate) fn reserve([0m
+2026-11-09T06:26:53.1812256Z [31;1m     |                   ^^^^^^^[0m
+2026-11-09T06:26:53.1812798Z [31;1m...[0m
+2026-11-09T06:26:53.1813734Z [31;1m1019 |     pub(crate) fn mark_may_send([0m
+2026-11-09T06:26:53.1814352Z [31;1m     |                   ^^^^^^^^^^^^^[0m
+2026-11-09T06:26:53.1814830Z [31;1m...[0m
+2026-11-09T06:26:53.1815332Z [31;1m1185 |     pub(crate) fn schedule_retry([0m
+2026-11-09T06:26:53.1815988Z [31;1m     |                   ^^^^^^^^^^^^^^[0m
+2026-11-09T06:26:53.1816482Z [31;1m[0m
+2026-11-09T06:26:53.1817040Z [31;1mwarning: constant `MAX_BYTES` is never used[0m
+2026-11-09T06:26:53.1817759Z [31;1m  --> crates\noetome-cli\src\research_model.rs:19:18[0m
+2026-11-09T06:26:53.1818322Z [31;1m   |[0m
+2026-11-09T06:26:53.1818966Z [31;1m19 | pub(crate) const MAX_BYTES: u64 = 4 * 1024 * 1024;[0m
+2026-11-09T06:26:53.1819652Z [31;1m   |                  ^^^^^^^^^[0m
+2026-11-09T06:26:53.1820153Z [31;1m[0m
+2026-11-09T06:26:53.1820653Z [31;1mwarning: field `owner` is never read[0m
+2026-11-09T06:26:53.1821335Z [31;1m   --> crates\noetome-cli\src\research_store.rs:100:16[0m
+2026-11-09T06:26:53.1821935Z [31;1m    |[0m
+2026-11-09T06:26:53.1826954Z [31;1m 98 | pub(crate) struct ResearchStore {[0m
+2026-11-09T06:26:53.1827616Z [31;1m    |                   ------------- field in this struct[0m
+2026-11-09T06:26:53.1831927Z [31;1m 99 |     pub(crate) root: PathBuf,[0m
+2026-11-09T06:26:53.1836525Z [31;1m100 |     pub(crate) owner: Owner,[0m
+2026-11-09T06:26:53.1837367Z [31;1m    |                ^^^^^[0m
+2026-11-09T06:26:53.1837848Z [31;1m[0m
+2026-11-09T06:26:53.1841925Z [31;1mwarning: function `unsafe_path` is never used[0m
+2026-11-09T06:26:53.1842633Z [31;1m  --> crates\noetome-cli\src\scale_model.rs:46:15[0m
+2026-11-09T06:26:53.1847087Z [31;1m   |[0m
+2026-11-09T06:26:53.1847860Z [31;1m46 | pub(crate) fn unsafe_path(message: impl Into<String>) -> ProjectError {[0m
+2026-11-09T06:26:53.1851822Z [31;1m   |               ^^^^^^^^^^^[0m
+2026-11-09T06:26:53.1852491Z [31;1m[0m
+2026-11-09T06:26:53.1853035Z [31;1mwarning: type alias `Measured` is never used[0m
+2026-11-09T06:26:53.1857397Z [31;1m   --> crates\noetome-cli\src\scale_store.rs:219:17[0m
+2026-11-09T06:26:53.1861775Z [31;1m    |[0m
+2026-11-09T06:26:53.1862426Z [31;1m219 | pub(crate) type Measured = (Structure, Timings);[0m
+2026-11-09T06:26:53.1866822Z [31;1m    |                 ^^^^^^^^[0m
+2026-11-09T06:26:53.1867534Z [31;1m[0m
+2026-11-09T06:26:53.1868080Z [31;1mwarning: function `paths` is never used[0m
+2026-11-09T06:26:53.1876145Z [31;1m   --> crates\noetome-cli\src\scale_store.rs:222:15[0m
+2026-11-09T06:26:53.1876938Z [31;1m    |[0m
+2026-11-09T06:26:53.1881491Z [31;1m222 | pub(crate) fn paths(output: &Path) -> [PathBuf; 4] {[0m
+2026-11-09T06:26:53.1882153Z [31;1m    |               ^^^^^[0m
+2026-11-09T06:26:53.1884827Z [31;1m[0m
+2026-11-09T06:26:53.1890114Z [31;1mwarning: constant `REF_LINKED` is never used[0m
+2026-11-09T06:26:53.1891072Z [31;1m  --> crates\noetome-cli\src\structure_model.rs:45:18[0m
+2026-11-09T06:26:53.1892210Z [31;1m   |[0m
+2026-11-09T06:26:53.1900235Z [31;1m45 | pub(crate) const REF_LINKED: &str = "linked";[0m
+2026-11-09T06:26:53.1900894Z [31;1m   |                  ^^^^^^^^^^[0m
+2026-11-09T06:26:53.1905321Z [31;1m[0m
+2026-11-09T06:26:53.1906097Z [31;1mwarning: constant `REF_EXTERNAL` is never used[0m
+2026-11-09T06:26:53.1906860Z [31;1m  --> crates\noetome-cli\src\structure_model.rs:46:18[0m
+2026-11-09T06:26:53.1911119Z [31;1m   |[0m
+2026-11-09T06:26:53.1911742Z [31;1m46 | pub(crate) const REF_EXTERNAL: &str = "external";[0m
+2026-11-09T06:26:53.1914994Z [31;1m   |                  ^^^^^^^^^^^^[0m
+2026-11-09T06:26:53.1918119Z [31;1m[0m
+2026-11-09T06:26:53.1918671Z [31;1mwarning: method `term_of` is never used[0m
+2026-11-09T06:26:53.1922012Z [31;1m   --> crates\noetome-cli\src\structure_model.rs:195:8[0m
+2026-11-09T06:26:53.1922759Z [31;1m    |[0m
+2026-11-09T06:26:53.1926963Z [31;1m156 | impl ConceptFile {[0m
+2026-11-09T06:26:53.1927833Z [31;1m    | ---------------- method in this implementation[0m
+2026-11-09T06:26:53.1928442Z [31;1m...[0m
+2026-11-09T06:26:53.1932238Z [31;1m195 |     fn term_of(&self, concept_id: &str) -> Option<&str> {[0m
+2026-11-09T06:26:53.1933148Z [31;1m    |        ^^^^^^^[0m
+2026-11-09T06:26:53.1937073Z [31;1m[0m
+2026-11-09T06:26:53.1937843Z [31;1mwarning: constant `FINDING_EMPTY` is never used[0m
+2026-11-09T06:26:53.1938563Z [31;1m  --> crates\noetome-cli\src\template_model.rs:48:18[0m
+2026-11-09T06:26:53.1942534Z [31;1m   |[0m
+2026-11-09T06:26:53.1946665Z [31;1m48 | pub(crate) const FINDING_EMPTY: &str = "empty_section";[0m
+2026-11-09T06:26:53.1947355Z [31;1m   |                  ^^^^^^^^^^^^^[0m
+2026-11-09T06:26:53.1951103Z [31;1m[0m
+2026-11-09T06:26:53.1955294Z [31;1mwarning: constant `FINDING_UNREASONED` is never used[0m
+2026-11-09T06:26:53.1956049Z [31;1m  --> crates\noetome-cli\src\template_model.rs:49:18[0m
+2026-11-09T06:26:53.1960332Z [31;1m   |[0m
+2026-11-09T06:26:53.1964280Z [31;1m49 | pub(crate) const FINDING_UNREASONED: &str = "unreasoned_structure";[0m
+2026-11-09T06:26:53.1965154Z [31;1m   |                  ^^^^^^^^^^^^^^^^^^[0m
+2026-11-09T06:26:53.1969395Z [31;1m[0m
+2026-11-09T06:26:53.1969888Z [31;1mwarning: method `goal` is never used[0m
+2026-11-09T06:26:53.1973706Z [31;1m   --> crates\noetome-cli\src\template_model.rs:427:19[0m
+2026-11-09T06:26:53.1974529Z [31;1m    |[0m
+2026-11-09T06:26:53.1975001Z [31;1m245 | impl Plan {[0m
+2026-11-09T06:26:53.1978952Z [31;1m    | --------- method in this implementation[0m
+2026-11-09T06:26:53.1979467Z [31;1m...[0m
+2026-11-09T06:26:53.1984320Z [31;1m427 |     pub(crate) fn goal(&self, goal_id: &str) -> Option<(&TopicSpec, &GoalSpec)> {[0m
+2026-11-09T06:26:53.1985152Z [31;1m    |                   ^^^^[0m
+2026-11-09T06:26:53.1988075Z [31;1m[0m
+2026-11-09T06:26:53.1992078Z [31;1mwarning: field `inputs` is never read[0m
+2026-11-09T06:26:53.1993239Z [31;1m   --> crates\noetome-cli\src\template_store.rs:257:16[0m
+2026-11-09T06:26:53.1993824Z [31;1m    |[0m
+2026-11-09T06:26:53.1998303Z [31;1m254 | pub(crate) struct Frozen {[0m
+2026-11-09T06:26:53.1998970Z [31;1m    |                   ------ field in this struct[0m
+2026-11-09T06:26:53.2002997Z [31;1m...[0m
+2026-11-09T06:26:53.2003657Z [31;1m257 |     pub(crate) inputs: Inputs,[0m
+2026-11-09T06:26:53.2004221Z [31;1m    |                ^^^^^^[0m
+2026-11-09T06:26:53.2008096Z [31;1m[0m
+2026-11-09T06:26:53.2008698Z [31;1mwarning: constant `IMPACT_CATEGORIES` is never used[0m
+2026-11-09T06:26:53.2013155Z [31;1m  --> crates\noetome-cli\src\vault_model.rs:25:11[0m
+2026-11-09T06:26:53.2013858Z [31;1m   |[0m
+2026-11-09T06:26:53.2014407Z [31;1m25 | pub const IMPACT_CATEGORIES: [&str; 6] = [[0m
+2026-11-09T06:26:53.2018897Z [31;1m   |           ^^^^^^^^^^^^^^^^^[0m
+2026-11-09T06:26:53.2022964Z [31;1m[0m
+2026-11-09T06:26:53.2023706Z [31;1mwarning: field `final_bytes` is never read[0m
+2026-11-09T06:26:53.2028663Z [31;1m   --> crates\noetome-cli\src\vault_model.rs:348:9[0m
+2026-11-09T06:26:53.2029604Z [31;1m    |[0m
+2026-11-09T06:26:53.2033486Z [31;1m342 | pub struct Analysis {[0m
+2026-11-09T06:26:53.2040458Z [31;1m    |            -------- field in this struct[0m
+2026-11-09T06:26:53.2044222Z [31;1m...[0m
+2026-11-09T06:26:53.2047800Z [31;1m348 |     pub final_bytes: BTreeMap<String, Option<Vec<u8>>>,[0m
+2026-11-09T06:26:53.2051596Z [31;1m    |         ^^^^^^^^^^^[0m
+2026-11-09T06:26:53.2056123Z [31;1m    |[0m
+2026-11-09T06:26:53.2057631Z [31;1m    = note: `Analysis` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis[0m
+2026-11-09T06:26:53.2058582Z [31;1m[0m
+2026-11-09T06:31:40.9722416Z [31;1mwarning: `noetome-cli` (lib) generated 23 warnings (run `cargo fix --lib -p noetome-cli` to apply 1 suggestion)[0m
+2026-11-09T06:33:06.7346843Z [31;1m    Finished `release` profile [optimized] target(s) in 14m 47s[0m
+2026-11-09T06:33:07.8731611Z [31;1m       Built application at: D:\a\Noetome\Noetome\target\release\noetome-desktop.exe[0m
+2026-11-09T06:33:08.7596582Z ##[group]Run & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/verify_desktop_package.py --json *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/package-audit.json"
+2026-11-09T06:33:08.7598392Z [36;1m& $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/verify_desktop_package.py --json *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/package-audit.json"[0m
+2026-11-09T06:33:08.7605587Z [36;1mif ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }[0m
+2026-11-09T06:33:08.7611398Z [36;1m$taskAudit = Get-Content -Raw -LiteralPath "$env:TASK_EVIDENCE_DIR/package-audit.json" | ConvertFrom-Json[0m
+2026-11-09T06:33:08.7624221Z [36;1mif ($taskAudit.failures -ne 0 -or $taskAudit.warnings -ne 0) {[0m
+2026-11-09T06:33:08.7641402Z [36;1m  throw 'Desktop packaging audit requires zero failures and zero warnings. See package-audit.json.'[0m
+2026-11-09T06:33:08.7660775Z [36;1m}[0m
+2026-11-09T06:33:08.7923244Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T06:33:08.7926526Z env:
+2026-11-09T06:33:08.7930230Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:33:08.7930721Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:33:08.7937085Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:33:08.7937509Z   PYTHONUTF8: 1
+2026-11-09T06:33:08.7937759Z ##[endgroup]
+2026-11-09T06:33:10.1530927Z {
+2026-11-09T06:33:10.1540786Z   "total": 72,
+2026-11-09T06:33:10.1541568Z   "failures": 0,
+2026-11-09T06:33:10.1545652Z   "warnings": 0,
+2026-11-09T06:33:10.1565958Z   "items": [
+2026-11-09T06:33:10.1576567Z     {
+2026-11-09T06:33:10.1595541Z       "name": "config-keys",
+2026-11-09T06:33:10.1601156Z       "ok": true,
+2026-11-09T06:33:10.1602232Z       "detail": "字段集合与冻结预期一致",
+2026-11-09T06:33:10.1602685Z       "warn": false
+2026-11-09T06:33:10.1607273Z     },
+2026-11-09T06:33:10.1632553Z     {
+2026-11-09T06:33:10.1633164Z       "name": "config-product-name",
+2026-11-09T06:33:10.1636684Z       "ok": true,
+2026-11-09T06:33:10.1641114Z       "detail": "Noetome",
+2026-11-09T06:33:10.1654343Z       "warn": false
+2026-11-09T06:33:10.1671570Z     },
+2026-11-09T06:33:10.1705456Z     {
+2026-11-09T06:33:10.1717225Z       "name": "config-identifier",
+2026-11-09T06:33:10.1723697Z       "ok": true,
+2026-11-09T06:33:10.1724110Z       "detail": "com.noetome.desktop",
+2026-11-09T06:33:10.1727776Z       "warn": false
+2026-11-09T06:33:10.1738342Z     },
+2026-11-09T06:33:10.1744194Z     {
+2026-11-09T06:33:10.1744626Z       "name": "config-version",
+2026-11-09T06:33:10.1750098Z       "ok": true,
+2026-11-09T06:33:10.1750496Z       "detail": "0.1.0",
+2026-11-09T06:33:10.1754227Z       "warn": false
+2026-11-09T06:33:10.1754711Z     },
+2026-11-09T06:33:10.1755044Z     {
+2026-11-09T06:33:10.1758664Z       "name": "build-keys",
+2026-11-09T06:33:10.1759127Z       "ok": true,
+2026-11-09T06:33:10.1763594Z       "detail": "字段集合与冻结预期一致",
+2026-11-09T06:33:10.1764482Z       "warn": false
+2026-11-09T06:33:10.1768438Z     },
+2026-11-09T06:33:10.1771957Z     {
+2026-11-09T06:33:10.1772434Z       "name": "build-frontend-dist",
+2026-11-09T06:33:10.1772912Z       "ok": true,
+2026-11-09T06:33:10.1777637Z       "detail": "../../apps/desktop/dist",
+2026-11-09T06:33:10.1778112Z       "warn": false
+2026-11-09T06:33:10.1781592Z     },
+2026-11-09T06:33:10.1788466Z     {
+2026-11-09T06:33:10.1795534Z       "name": "build-before-build",
+2026-11-09T06:33:10.1800035Z       "ok": true,
+2026-11-09T06:33:10.1815604Z       "detail": "npm run web:build",
+2026-11-09T06:33:10.1823894Z       "warn": false
+2026-11-09T06:33:10.1827425Z     },
+2026-11-09T06:33:10.1836435Z     {
+2026-11-09T06:33:10.1836854Z       "name": "app-keys",
+2026-11-09T06:33:10.1837324Z       "ok": true,
+2026-11-09T06:33:10.1842064Z       "detail": "字段集合与冻结预期一致",
+2026-11-09T06:33:10.1845698Z       "warn": false
+2026-11-09T06:33:10.1846144Z     },
+2026-11-09T06:33:10.1846494Z     {
+2026-11-09T06:33:10.1854339Z       "name": "window-keys",
+2026-11-09T06:33:10.1854829Z       "ok": true,
+2026-11-09T06:33:10.1858032Z       "detail": "字段集合与冻结预期一致",
+2026-11-09T06:33:10.1858492Z       "warn": false
+2026-11-09T06:33:10.1858859Z     },
+2026-11-09T06:33:10.1862041Z     {
+2026-11-09T06:33:10.1862352Z       "name": "window-label",
+2026-11-09T06:33:10.1865404Z       "ok": true,
+2026-11-09T06:33:10.1865786Z       "detail": "main",
+2026-11-09T06:33:10.1866165Z       "warn": false
+2026-11-09T06:33:10.1869394Z     },
+2026-11-09T06:33:10.1873211Z     {
+2026-11-09T06:33:10.1873622Z       "name": "window-minimum",
+2026-11-09T06:33:10.1873977Z       "ok": true,
+2026-11-09T06:33:10.1877709Z       "detail": "640x600",
+2026-11-09T06:33:10.1878316Z       "warn": false
+2026-11-09T06:33:10.1881699Z     },
+2026-11-09T06:33:10.1885649Z     {
+2026-11-09T06:33:10.1886062Z       "name": "window-decorations",
+2026-11-09T06:33:10.1894126Z       "ok": true,
+2026-11-09T06:33:10.1894820Z       "detail": "无系统标题栏（由前端自绘）",
+2026-11-09T06:33:10.1900578Z       "warn": false
+2026-11-09T06:33:10.1909035Z     },
+2026-11-09T06:33:10.1909419Z     {
+2026-11-09T06:33:10.1909776Z       "name": "security-keys",
+2026-11-09T06:33:10.1928080Z       "ok": true,
+2026-11-09T06:33:10.1928735Z       "detail": "字段集合与冻结预期一致",
+2026-11-09T06:33:10.1944131Z       "warn": false
+2026-11-09T06:33:10.1960728Z     },
+2026-11-09T06:33:10.1973893Z     {
+2026-11-09T06:33:10.1974368Z       "name": "security-csp-default",
+2026-11-09T06:33:10.1980935Z       "ok": true,
+2026-11-09T06:33:10.1987601Z       "detail": "CSP 限制 default-src 为 'self'",
+2026-11-09T06:33:10.1991797Z       "warn": false
+2026-11-09T06:33:10.2020816Z     },
+2026-11-09T06:33:10.2032916Z     {
+2026-11-09T06:33:10.2036544Z       "name": "security-csp-ipc",
+2026-11-09T06:33:10.2039672Z       "ok": true,
+2026-11-09T06:33:10.2046222Z       "detail": "CSP 只开放 ipc 通道",
+2026-11-09T06:33:10.2092822Z       "warn": false
+2026-11-09T06:33:10.2096530Z     },
+2026-11-09T06:33:10.2100022Z     {
+2026-11-09T06:33:10.2100498Z       "name": "security-csp-remote",
+2026-11-09T06:33:10.2100931Z       "ok": true,
+2026-11-09T06:33:10.2104006Z       "detail": "CSP 不含远程 http(s) 来源",
+2026-11-09T06:33:10.2104442Z       "warn": false
+2026-11-09T06:33:10.2107922Z     },
+2026-11-09T06:33:10.2108336Z     {
+2026-11-09T06:33:10.2108678Z       "name": "bundle-keys",
+2026-11-09T06:33:10.2113390Z       "ok": true,
+2026-11-09T06:33:10.2113928Z       "detail": "字段集合与冻结预期一致",
+2026-11-09T06:33:10.2117562Z       "warn": false
+2026-11-09T06:33:10.2117957Z     },
+2026-11-09T06:33:10.2118311Z     {
+2026-11-09T06:33:10.2124732Z       "name": "bundle-active",
+2026-11-09T06:33:10.2125130Z       "ok": true,
+2026-11-09T06:33:10.2130088Z       "detail": "bundle 已启用",
+2026-11-09T06:33:10.2130521Z       "warn": false
+2026-11-09T06:33:10.2130845Z     },
+2026-11-09T06:33:10.2134446Z     {
+2026-11-09T06:33:10.2134856Z       "name": "bundle-targets",
+2026-11-09T06:33:10.2138016Z       "ok": true,
+2026-11-09T06:33:10.2138870Z       "detail": "targets 为 nsis",
+2026-11-09T06:33:10.2139288Z       "warn": false
+2026-11-09T06:33:10.2142964Z     },
+2026-11-09T06:33:10.2143283Z     {
+2026-11-09T06:33:10.2146875Z       "name": "bundle-icons",
+2026-11-09T06:33:10.2154420Z       "ok": true,
+2026-11-09T06:33:10.2155118Z       "detail": "4 个图标条目",
+2026-11-09T06:33:10.2158515Z       "warn": false
+2026-11-09T06:33:10.2162979Z     },
+2026-11-09T06:33:10.2163267Z     {
+2026-11-09T06:33:10.2166584Z       "name": "nsis-keys",
+2026-11-09T06:33:10.2166986Z       "ok": true,
+2026-11-09T06:33:10.2171656Z       "detail": "字段集合与冻结预期一致",
+2026-11-09T06:33:10.2172135Z       "warn": false
+2026-11-09T06:33:10.2172464Z     },
+2026-11-09T06:33:10.2176495Z     {
+2026-11-09T06:33:10.2176867Z       "name": "nsis-install-mode",
+2026-11-09T06:33:10.2179064Z       "ok": true,
+2026-11-09T06:33:10.2182245Z       "detail": "currentUser",
+2026-11-09T06:33:10.2182615Z       "warn": false
+2026-11-09T06:33:10.2182958Z     },
+2026-11-09T06:33:10.2189735Z     {
+2026-11-09T06:33:10.2190945Z       "name": "nsis-languages",
+2026-11-09T06:33:10.2197369Z       "ok": true,
+2026-11-09T06:33:10.2204097Z       "detail": "SimpChinese、English",
+2026-11-09T06:33:10.2207755Z       "warn": false
+2026-11-09T06:33:10.2222900Z     },
+2026-11-09T06:33:10.2230686Z     {
+2026-11-09T06:33:10.2237719Z       "name": "nsis-language-selector",
+2026-11-09T06:33:10.2244088Z       "ok": true,
+2026-11-09T06:33:10.2248126Z       "detail": "不显示语言选择器（按安装器语言自动选择）",
+2026-11-09T06:33:10.2248590Z       "warn": false
+2026-11-09T06:33:10.2253399Z     },
+2026-11-09T06:33:10.2253775Z     {
+2026-11-09T06:33:10.2254134Z       "name": "nsis-installerIcon",
+2026-11-09T06:33:10.2258059Z       "ok": true,
+2026-11-09T06:33:10.2258426Z       "detail": "icons/icon.ico",
+2026-11-09T06:33:10.2262261Z       "warn": false
+2026-11-09T06:33:10.2262631Z     },
+2026-11-09T06:33:10.2262921Z     {
+2026-11-09T06:33:10.2266389Z       "name": "nsis-uninstallerIcon",
+2026-11-09T06:33:10.2269856Z       "ok": true,
+2026-11-09T06:33:10.2280637Z       "detail": "icons/icon.ico",
+2026-11-09T06:33:10.2287893Z       "warn": false
+2026-11-09T06:33:10.2301220Z     },
+2026-11-09T06:33:10.2301607Z     {
+2026-11-09T06:33:10.2308033Z       "name": "icon-file",
+2026-11-09T06:33:10.2308483Z       "ok": true,
+2026-11-09T06:33:10.2318133Z       "detail": "crates/noetome-desktop/icons/32x32.png（2509 字节，41fb49cab5e27ba9）",
+2026-11-09T06:33:10.2318797Z       "warn": false
+2026-11-09T06:33:10.2322370Z     },
+2026-11-09T06:33:10.2322703Z     {
+2026-11-09T06:33:10.2323015Z       "name": "icon-file",
+2026-11-09T06:33:10.2326812Z       "ok": true,
+2026-11-09T06:33:10.2330826Z       "detail": "crates/noetome-desktop/icons/128x128.png（31517 字节，eed8545da5efe618）",
+2026-11-09T06:33:10.2337457Z       "warn": false
+2026-11-09T06:33:10.2337830Z     },
+2026-11-09T06:33:10.2356198Z     {
+2026-11-09T06:33:10.2392958Z       "name": "icon-file",
+2026-11-09T06:33:10.2410490Z       "ok": true,
+2026-11-09T06:33:10.2411447Z       "detail": "crates/noetome-desktop/icons/128x128@2x.png（113380 字节，11176c935522d2b0）",
+2026-11-09T06:33:10.2412068Z       "warn": false
+2026-11-09T06:33:10.2423043Z     },
+2026-11-09T06:33:10.2423453Z     {
+2026-11-09T06:33:10.2423795Z       "name": "icon-file",
+2026-11-09T06:33:10.2428385Z       "ok": true,
+2026-11-09T06:33:10.2429114Z       "detail": "crates/noetome-desktop/icons/icon.ico（164432 字节，c073cd32ec5fbaaa）",
+2026-11-09T06:33:10.2429728Z       "warn": false
+2026-11-09T06:33:10.2439995Z     },
+2026-11-09T06:33:10.2440293Z     {
+2026-11-09T06:33:10.2444900Z       "name": "icon-file",
+2026-11-09T06:33:10.2445370Z       "ok": true,
+2026-11-09T06:33:10.2449827Z       "detail": "apps/desktop/public/app-icon.png（113380 字节，11176c935522d2b0）",
+2026-11-09T06:33:10.2450588Z       "warn": false
+2026-11-09T06:33:10.2454544Z     },
+2026-11-09T06:33:10.2454922Z     {
+2026-11-09T06:33:10.2455309Z       "name": "icon-manifest-paths",
+2026-11-09T06:33:10.2459616Z       "ok": true,
+2026-11-09T06:33:10.2460333Z       "detail": "5 个资产路径与冻结清单一致",
+2026-11-09T06:33:10.2464007Z       "warn": false
+2026-11-09T06:33:10.2478210Z     },
+2026-11-09T06:33:10.2483158Z     {
+2026-11-09T06:33:10.2483658Z       "name": "icon-digest",
+2026-11-09T06:33:10.2488939Z       "ok": true,
+2026-11-09T06:33:10.2495070Z       "detail": "apps/desktop/public/app-icon.png 摘要一致",
+2026-11-09T06:33:10.2497627Z       "warn": false
+2026-11-09T06:33:10.2504758Z     },
+2026-11-09T06:33:10.2515804Z     {
+2026-11-09T06:33:10.2521392Z       "name": "icon-digest",
+2026-11-09T06:33:10.2553244Z       "ok": true,
+2026-11-09T06:33:10.2558376Z       "detail": "crates/noetome-desktop/icons/128x128.png 摘要一致",
+2026-11-09T06:33:10.2567095Z       "warn": false
+2026-11-09T06:33:10.2570824Z     },
+2026-11-09T06:33:10.2578353Z     {
+2026-11-09T06:33:10.2586479Z       "name": "icon-digest",
+2026-11-09T06:33:10.2587012Z       "ok": true,
+2026-11-09T06:33:10.2587676Z       "detail": "crates/noetome-desktop/icons/128x128@2x.png 摘要一致",
+2026-11-09T06:33:10.2592448Z       "warn": false
+2026-11-09T06:33:10.2592789Z     },
+2026-11-09T06:33:10.2598957Z     {
+2026-11-09T06:33:10.2599439Z       "name": "icon-digest",
+2026-11-09T06:33:10.2599842Z       "ok": true,
+2026-11-09T06:33:10.2603850Z       "detail": "crates/noetome-desktop/icons/32x32.png 摘要一致",
+2026-11-09T06:33:10.2604324Z       "warn": false
+2026-11-09T06:33:10.2604607Z     },
+2026-11-09T06:33:10.2608702Z     {
+2026-11-09T06:33:10.2616878Z       "name": "icon-digest",
+2026-11-09T06:33:10.2619721Z       "ok": true,
+2026-11-09T06:33:10.2624033Z       "detail": "crates/noetome-desktop/icons/icon.ico 摘要一致",
+2026-11-09T06:33:10.2629091Z       "warn": false
+2026-11-09T06:33:10.2629431Z     },
+2026-11-09T06:33:10.2629627Z     {
+2026-11-09T06:33:10.2635761Z       "name": "icon-source-digest",
+2026-11-09T06:33:10.2636020Z       "ok": true,
+2026-11-09T06:33:10.2647044Z       "detail": "记录了图标源文件摘要（源文件本身不入库）",
+2026-11-09T06:33:10.2656751Z       "warn": false
+2026-11-09T06:33:10.2661064Z     },
+2026-11-09T06:33:10.2670857Z     {
+2026-11-09T06:33:10.2682828Z       "name": "capabilities-windows",
+2026-11-09T06:33:10.2695219Z       "ok": true,
+2026-11-09T06:33:10.2698871Z       "detail": "只对主窗口生效",
+2026-11-09T06:33:10.2704953Z       "warn": false
+2026-11-09T06:33:10.2705335Z     },
+2026-11-09T06:33:10.2708962Z     {
+2026-11-09T06:33:10.2709469Z       "name": "capabilities-permissions",
+2026-11-09T06:33:10.2709853Z       "ok": true,
+2026-11-09T06:33:10.2714088Z       "detail": "7 条权限",
+2026-11-09T06:33:10.2720238Z       "warn": false
+2026-11-09T06:33:10.2720593Z     },
+2026-11-09T06:33:10.2724471Z     {
+2026-11-09T06:33:10.2724936Z       "name": "capabilities-forbidden",
+2026-11-09T06:33:10.2725347Z       "ok": true,
+2026-11-09T06:33:10.2729530Z       "detail": "无文件、网络或进程插件权限",
+2026-11-09T06:33:10.2729924Z       "warn": false
+2026-11-09T06:33:10.2734137Z     },
+2026-11-09T06:33:10.2734447Z     {
+2026-11-09T06:33:10.2734698Z       "name": "capabilities-namespace",
+2026-11-09T06:33:10.2739654Z       "ok": true,
+2026-11-09T06:33:10.2740253Z       "detail": "全部权限位于 core:window / core:event",
+2026-11-09T06:33:10.2745397Z       "warn": false
+2026-11-09T06:33:10.2745877Z     },
+2026-11-09T06:33:10.2746167Z     {
+2026-11-09T06:33:10.2750181Z       "name": "package-script-web:check",
+2026-11-09T06:33:10.2750641Z       "ok": true,
+2026-11-09T06:33:10.2754451Z       "detail": "tsc --project apps/desktop/tsconfig.json --noEmit",
+2026-11-09T06:33:10.2755081Z       "warn": false
+2026-11-09T06:33:10.2761745Z     },
+2026-11-09T06:33:10.2762115Z     {
+2026-11-09T06:33:10.2762517Z       "name": "package-script-desktop:build",
+2026-11-09T06:33:10.2779983Z       "ok": true,
+2026-11-09T06:33:10.2784281Z       "detail": "tauri build --config crates/noetome-desktop/tauri.conf.json",
+2026-11-09T06:33:10.2787054Z       "warn": false
+2026-11-09T06:33:10.2804506Z     },
+2026-11-09T06:33:10.2821217Z     {
+2026-11-09T06:33:10.2834979Z       "name": "package-engines-node",
+2026-11-09T06:33:10.2838761Z       "ok": true,
+2026-11-09T06:33:10.2839153Z       "detail": ">=22.12.0",
+2026-11-09T06:33:10.2839541Z       "warn": false
+2026-11-09T06:33:10.2842944Z     },
+2026-11-09T06:33:10.2843302Z     {
+2026-11-09T06:33:10.2843710Z       "name": "dist-index-assets",
+2026-11-09T06:33:10.2847689Z       "ok": true,
+2026-11-09T06:33:10.2848339Z       "detail": "入口引用了构建产物",
+2026-11-09T06:33:10.2852754Z       "warn": false
+2026-11-09T06:33:10.2853159Z     },
+2026-11-09T06:33:10.2853483Z     {
+2026-11-09T06:33:10.2857145Z       "name": "dist-assets",
+2026-11-09T06:33:10.2857563Z       "ok": true,
+2026-11-09T06:33:10.2861634Z       "detail": "index-C1_5kHW4.css、index-CD7Cb9Kv.js",
+2026-11-09T06:33:10.2862190Z       "warn": false
+2026-11-09T06:33:10.2868098Z     },
+2026-11-09T06:33:10.2868453Z     {
+2026-11-09T06:33:10.2868845Z       "name": "main-rs-command",
+2026-11-09T06:33:10.2875941Z       "ok": true,
+2026-11-09T06:33:10.2879699Z       "detail": "runtime_info",
+2026-11-09T06:33:10.2880361Z       "warn": false
+2026-11-09T06:33:10.2883935Z     },
+2026-11-09T06:33:10.2884264Z     {
+2026-11-09T06:33:10.2884609Z       "name": "main-rs-command",
+2026-11-09T06:33:10.2888005Z       "ok": true,
+2026-11-09T06:33:10.2888420Z       "detail": "cli_preview",
+2026-11-09T06:33:10.2894681Z       "warn": false
+2026-11-09T06:33:10.2895067Z     },
+2026-11-09T06:33:10.2895388Z     {
+2026-11-09T06:33:10.2898466Z       "name": "main-rs-command",
+2026-11-09T06:33:10.2898900Z       "ok": true,
+2026-11-09T06:33:10.2902306Z       "detail": "pick_directory",
+2026-11-09T06:33:10.2908605Z       "warn": false
+2026-11-09T06:33:10.2908990Z     },
+2026-11-09T06:33:10.2912220Z     {
+2026-11-09T06:33:10.2915824Z       "name": "main-rs-command",
+2026-11-09T06:33:10.2927463Z       "ok": true,
+2026-11-09T06:33:10.2927880Z       "detail": "project_create",
+2026-11-09T06:33:10.2928333Z       "warn": false
+2026-11-09T06:33:10.2933066Z     },
+2026-11-09T06:33:10.2933419Z     {
+2026-11-09T06:33:10.2935667Z       "name": "main-rs-command",
+2026-11-09T06:33:10.2945639Z       "ok": true,
+2026-11-09T06:33:10.2955719Z       "detail": "project_open",
+2026-11-09T06:33:10.2956151Z       "warn": false
+2026-11-09T06:33:10.2956534Z     },
+2026-11-09T06:33:10.2959876Z     {
+2026-11-09T06:33:10.2960243Z       "name": "main-rs-handler",
+2026-11-09T06:33:10.2963512Z       "ok": true,
+2026-11-09T06:33:10.2969998Z       "detail": "已注册 generate_handler",
+2026-11-09T06:33:10.2970423Z       "warn": false
+2026-11-09T06:33:10.2973621Z     },
+2026-11-09T06:33:10.2973947Z     {
+2026-11-09T06:33:10.2974313Z       "name": "acceptance-section",
+2026-11-09T06:33:10.2977906Z       "ok": true,
+2026-11-09T06:33:10.2978382Z       "detail": "安装与首次启动",
+2026-11-09T06:33:10.2978761Z       "warn": false
+2026-11-09T06:33:10.2982402Z     },
+2026-11-09T06:33:10.2982772Z     {
+2026-11-09T06:33:10.2986084Z       "name": "acceptance-section",
+2026-11-09T06:33:10.2992188Z       "ok": true,
+2026-11-09T06:33:10.2992699Z       "detail": "窗口与导航",
+2026-11-09T06:33:10.2995406Z       "warn": false
+2026-11-09T06:33:10.2995777Z     },
+2026-11-09T06:33:10.2998165Z     {
+2026-11-09T06:33:10.3001759Z       "name": "acceptance-section",
+2026-11-09T06:33:10.3002244Z       "ok": true,
+2026-11-09T06:33:10.3002747Z       "detail": "Rust 组件通信",
+2026-11-09T06:33:10.3013535Z       "warn": false
+2026-11-09T06:33:10.3021206Z     },
+2026-11-09T06:33:10.3023195Z     {
+2026-11-09T06:33:10.3038240Z       "name": "acceptance-section",
+2026-11-09T06:33:10.3041469Z       "ok": true,
+2026-11-09T06:33:10.3047311Z       "detail": "项目入口",
+2026-11-09T06:33:10.3056022Z       "warn": false
+2026-11-09T06:33:10.3066573Z     },
+2026-11-09T06:33:10.3073677Z     {
+2026-11-09T06:33:10.3081948Z       "name": "acceptance-section",
+2026-11-09T06:33:10.3087576Z       "ok": true,
+2026-11-09T06:33:10.3094321Z       "detail": "任务中心",
+2026-11-09T06:33:10.3098317Z       "warn": false
+2026-11-09T06:33:10.3099123Z     },
+2026-11-09T06:33:10.3100069Z     {
+2026-11-09T06:33:10.3111315Z       "name": "acceptance-section",
+2026-11-09T06:33:10.3111781Z       "ok": true,
+2026-11-09T06:33:10.3112288Z       "detail": "关闭行为、托盘与重启",
+2026-11-09T06:33:10.3115489Z       "warn": false
+2026-11-09T06:33:10.3115822Z     },
+2026-11-09T06:33:10.3116103Z     {
+2026-11-09T06:33:10.3119661Z       "name": "acceptance-section",
+2026-11-09T06:33:10.3120071Z       "ok": true,
+2026-11-09T06:33:10.3123405Z       "detail": "卸载",
+2026-11-09T06:33:10.3123761Z       "warn": false
+2026-11-09T06:33:10.3124069Z     },
+2026-11-09T06:33:10.3127720Z     {
+2026-11-09T06:33:10.3128022Z       "name": "acceptance-section",
+2026-11-09T06:33:10.3134802Z       "ok": true,
+2026-11-09T06:33:10.3135265Z       "detail": "判定规则",
+2026-11-09T06:33:10.3135560Z       "warn": false
+2026-11-09T06:33:10.3139389Z     },
+2026-11-09T06:33:10.3139694Z     {
+2026-11-09T06:33:10.3140045Z       "name": "acceptance-disclaimer",
+2026-11-09T06:33:10.3143266Z       "ok": true,
+2026-11-09T06:33:10.3144737Z       "detail": "明确声明静态检查不能替代安装后测试",
+2026-11-09T06:33:10.3149377Z       "warn": false
+2026-11-09T06:33:10.3149733Z     },
+2026-11-09T06:33:10.3150007Z     {
+2026-11-09T06:33:10.3153430Z       "name": "frozen-digest",
+2026-11-09T06:33:10.3156976Z       "ok": true,
+2026-11-09T06:33:10.3157390Z       "detail": "apps/desktop/public/app-icon.png",
+2026-11-09T06:33:10.3159871Z       "warn": false
+2026-11-09T06:33:10.3163978Z     },
+2026-11-09T06:33:10.3164270Z     {
+2026-11-09T06:33:10.3170621Z       "name": "frozen-digest",
+2026-11-09T06:33:10.3170996Z       "ok": true,
+2026-11-09T06:33:10.3174437Z       "detail": "crates/noetome-desktop/capabilities/main.json",
+2026-11-09T06:33:10.3174997Z       "warn": false
+2026-11-09T06:33:10.3175361Z     },
+2026-11-09T06:33:10.3178615Z     {
+2026-11-09T06:33:10.3178909Z       "name": "frozen-digest",
+2026-11-09T06:33:10.3182430Z       "ok": true,
+2026-11-09T06:33:10.3182905Z       "detail": "crates/noetome-desktop/icons/128x128.png",
+2026-11-09T06:33:10.3183362Z       "warn": false
+2026-11-09T06:33:10.3186962Z     },
+2026-11-09T06:33:10.3187237Z     {
+2026-11-09T06:33:10.3190599Z       "name": "frozen-digest",
+2026-11-09T06:33:10.3194161Z       "ok": true,
+2026-11-09T06:33:10.3194582Z       "detail": "crates/noetome-desktop/icons/128x128@2x.png",
+2026-11-09T06:33:10.3198381Z       "warn": false
+2026-11-09T06:33:10.3198700Z     },
+2026-11-09T06:33:10.3198982Z     {
+2026-11-09T06:33:10.3202025Z       "name": "frozen-digest",
+2026-11-09T06:33:10.3202370Z       "ok": true,
+2026-11-09T06:33:10.3206016Z       "detail": "crates/noetome-desktop/icons/32x32.png",
+2026-11-09T06:33:10.3206512Z       "warn": false
+2026-11-09T06:33:10.3206790Z     },
+2026-11-09T06:33:10.3210468Z     {
+2026-11-09T06:33:10.3210839Z       "name": "frozen-digest",
+2026-11-09T06:33:10.3214282Z       "ok": true,
+2026-11-09T06:33:10.3214742Z       "detail": "crates/noetome-desktop/icons/icon.ico",
+2026-11-09T06:33:10.3215160Z       "warn": false
+2026-11-09T06:33:10.3218357Z     },
+2026-11-09T06:33:10.3224590Z     {
+2026-11-09T06:33:10.3224923Z       "name": "frozen-digest",
+2026-11-09T06:33:10.3225258Z       "ok": true,
+2026-11-09T06:33:10.3228904Z       "detail": "crates/noetome-desktop/icons/manifest.json",
+2026-11-09T06:33:10.3229892Z       "warn": false
+2026-11-09T06:33:10.3237342Z     },
+2026-11-09T06:33:10.3241801Z     {
+2026-11-09T06:33:10.3242156Z       "name": "frozen-digest",
+2026-11-09T06:33:10.3246008Z       "ok": true,
+2026-11-09T06:33:10.3246463Z       "detail": "crates/noetome-desktop/tauri.conf.json",
+2026-11-09T06:33:10.3246921Z       "warn": false
+2026-11-09T06:33:10.3250439Z     },
+2026-11-09T06:33:10.3250710Z     {
+2026-11-09T06:33:10.3254006Z       "name": "frozen-digest",
+2026-11-09T06:33:10.3260957Z       "ok": true,
+2026-11-09T06:33:10.3261340Z       "detail": "doc/standards/DESKTOP_ACCEPTANCE.md",
+2026-11-09T06:33:10.3265733Z       "warn": false
+2026-11-09T06:33:10.3266051Z     },
+2026-11-09T06:33:10.3266320Z     {
+2026-11-09T06:33:10.3270066Z       "name": "frozen-digest",
+2026-11-09T06:33:10.3276797Z       "ok": true,
+2026-11-09T06:33:10.3277187Z       "detail": "package.json",
+2026-11-09T06:33:10.3280881Z       "warn": false
+2026-11-09T06:33:10.3281245Z     }
+2026-11-09T06:33:10.3281549Z   ]
+2026-11-09T06:33:10.3283750Z }
+2026-11-09T06:33:10.3733785Z ##[group]Run $taskFacts = [ordered]@{
+2026-11-09T06:33:10.3740291Z [36;1m$taskFacts = [ordered]@{[0m
+2026-11-09T06:33:10.3743297Z [36;1m  source_commit = $env:GITHUB_SHA[0m
+2026-11-09T06:33:10.3746463Z [36;1m  source_ref = $env:GITHUB_REF[0m
+2026-11-09T06:33:10.3746719Z [36;1m  run_id = $env:GITHUB_RUN_ID[0m
+2026-11-09T06:33:10.3758297Z [36;1m  run_attempt = $env:GITHUB_RUN_ATTEMPT[0m
+2026-11-09T06:33:10.3758586Z [36;1m  job = 'desktop'[0m
+2026-11-09T06:33:10.3764552Z [36;1m  os = [Environment]::OSVersion.VersionString[0m
+2026-11-09T06:33:10.3764854Z [36;1m  node = (& node --version)[0m
+2026-11-09T06:33:10.3765106Z [36;1m  rust = (& rustc --version)[0m
+2026-11-09T06:33:10.3768458Z [36;1m  python = $env:NOETOME_TEST_PYTHON[0m
+2026-11-09T06:33:10.3768709Z [36;1m}[0m
+2026-11-09T06:33:10.3771306Z [36;1m$taskFacts | ConvertTo-Json | Set-Content "$env:TASK_EVIDENCE_DIR/environment.json" -Encoding utf8[0m
+2026-11-09T06:33:10.3771905Z [36;1mgit diff --check *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/git-diff-check.log"[0m
+2026-11-09T06:33:10.3774695Z [36;1mexit $LASTEXITCODE[0m
+2026-11-09T06:33:10.3839246Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-11-09T06:33:10.3846870Z env:
+2026-11-09T06:33:10.3847190Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:33:10.3850529Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:33:10.3850995Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:33:10.3851345Z   PYTHONUTF8: 1
+2026-11-09T06:33:10.3854502Z ##[endgroup]
+2026-11-09T06:33:12.0820156Z ##[group]Run actions/cache/save@v4
+2026-11-09T06:33:12.0823878Z with:
+2026-11-09T06:33:12.0824406Z   key: windows-2025-rust-1.98.1-registry-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173
+2026-11-09T06:33:12.0824941Z   path: ~/.cargo/registry
+~/.cargo/git
+
+2026-11-09T06:33:12.0828684Z   enableCrossOsArchive: false
+2026-11-09T06:33:12.0828940Z env:
+2026-11-09T06:33:12.0832180Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:33:12.0832650Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:33:12.0837720Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:33:12.0838115Z   PYTHONUTF8: 1
+2026-11-09T06:33:12.0838333Z ##[endgroup]
+2026-11-09T06:33:12.6557900Z (node:4196) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T06:33:12.6562849Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T06:33:12.7545934Z [command]"C:\Program Files\Git\usr\bin\tar.exe" --posix -cf cache.tzst --exclude cache.tzst -P -C D:/a/Noetome/Noetome --files-from manifest.txt --force-local --use-compress-program "zstd -T0"
+2026-11-09T06:34:26.6706890Z (node:4196) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-09T06:34:27.6661651Z Sent 52559872 of 102580504 (51.2%), 50.1 MBs/sec
+2026-11-09T06:34:28.6603599Z Sent 102580504 of 102580504 (100.0%), 48.8 MBs/sec
+2026-11-09T06:34:29.1139057Z Cache saved with key: windows-2025-rust-1.98.1-registry-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173
+2026-11-09T06:34:29.1682518Z ##[group]Run actions/cache/save@v4
+2026-11-09T06:34:29.1683077Z with:
+2026-11-09T06:34:29.1687031Z   key: windows-2025-rust-1.98.1-release-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-desktop-42032bd4c1cb19fd0abacb69601904071eaf7898
+2026-11-09T06:34:29.1690960Z   path: target/release
+2026-11-09T06:34:29.1691213Z   enableCrossOsArchive: false
+2026-11-09T06:34:29.1695162Z env:
+2026-11-09T06:34:29.1695440Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:34:29.1695885Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:34:29.1699437Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:34:29.1699788Z   PYTHONUTF8: 1
+2026-11-09T06:34:29.1703278Z ##[endgroup]
+2026-11-09T06:34:29.3428936Z (node:4656) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T06:34:29.3430206Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T06:34:29.4142558Z [command]"C:\Program Files\Git\usr\bin\tar.exe" --posix -cf cache.tzst --exclude cache.tzst -P -C D:/a/Noetome/Noetome --files-from manifest.txt --force-local --use-compress-program "zstd -T0"
+2026-11-09T06:34:44.2145834Z (node:4656) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-09T06:34:45.1896838Z Sent 0 of 379161655 (0.0%), 0.0 MBs/sec
+2026-11-09T06:34:46.0903066Z Sent 379161655 of 379161655 (100.0%), 190.2 MBs/sec
+2026-11-09T06:34:46.2238070Z Cache saved with key: windows-2025-rust-1.98.1-release-0d9680d376e092f1aa0f9b641e375830ae3e9720b5ae9b84bdea0ab7c65ca173-desktop-42032bd4c1cb19fd0abacb69601904071eaf7898
+2026-11-09T06:34:46.2742522Z ##[group]Run actions/upload-artifact@v4
+2026-11-09T06:34:46.2746131Z with:
+2026-11-09T06:34:46.2749369Z   name: windows-desktop-42571815332-1
+2026-11-09T06:34:46.2749735Z   path: .artifacts/windows-validation/desktop/
+2026-11-09T06:34:46.2752755Z   include-hidden-files: true
+2026-11-09T06:34:46.2754797Z   if-no-files-found: error
+2026-11-09T06:34:46.2758553Z   retention-days: 30
+2026-11-09T06:34:46.2762280Z   compression-level: 6
+2026-11-09T06:34:46.2767040Z   overwrite: false
+2026-11-09T06:34:46.2771714Z env:
+2026-11-09T06:34:46.2775278Z   TASK_EVIDENCE_DIR: .artifacts/windows-validation/desktop
+2026-11-09T06:34:46.2782362Z   NOETOME_PDF_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:34:46.2782872Z   NOETOME_TEST_PYTHON: D:\a\Noetome\Noetome\target\windows-runtime\python\python.exe
+2026-11-09T06:34:46.2788373Z   PYTHONUTF8: 1
+2026-11-09T06:34:46.2788591Z ##[endgroup]
+2026-11-09T06:34:46.5066821Z (node:816) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T06:34:46.5077706Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T06:34:46.5183457Z With the provided path, there will be 9 files uploaded
+2026-11-09T06:34:46.5186134Z Artifact name is valid!
+2026-11-09T06:34:46.5198889Z Root directory input is valid!
+2026-11-09T06:34:46.8314191Z Beginning upload of artifact content to blob storage
+2026-11-09T06:34:46.8719345Z (node:816) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-09T06:34:47.0018780Z Uploaded bytes 11364
+2026-11-09T06:34:47.0414755Z Finished uploading artifact content to blob storage!
+2026-11-09T06:34:47.0425462Z SHA256 digest of uploaded artifact zip is add2b924fb78465424283e9c4a6a570f9c53b200d6b992a1170643b246c50c63
+2026-11-09T06:34:47.0426170Z Finalizing artifact upload
+2026-11-09T06:34:47.5655556Z Artifact windows-desktop-42571815332-1.zip successfully finalized. Artifact ID 13654511011
+2026-11-09T06:34:47.5663082Z Artifact windows-desktop-42571815332-1 has been successfully uploaded! Final size is 11364 bytes. Artifact ID is 13654511011
+2026-11-09T06:34:47.5667781Z Artifact download URL: https://github.com/dieWehmut/Noetome/actions/runs/42571815332/artifacts/13654511011
+2026-11-09T06:34:47.6371413Z Post job cleanup.
+2026-11-09T06:34:47.6413374Z ##[start-action display=Run actions/setup-node@v4;id=__9e0ca433-f581-476d-a662-7cf50b514b8e.__actions_setup-node]
+2026-11-09T06:34:47.6766703Z Post job cleanup.
+2026-11-09T06:34:47.8525160Z (node:8984) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-09T06:34:47.8552770Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-09T06:34:47.9373215Z [command]"C:\Program Files\Git\usr\bin\tar.exe" --posix -cf cache.tzst --exclude cache.tzst -P -C D:/a/Noetome/Noetome --files-from manifest.txt --force-local --use-compress-program "zstd -T0"
+2026-11-09T06:34:50.3906271Z (node:8984) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-09T06:34:51.3830445Z Sent 39343635 of 39343635 (100.0%), 37.4 MBs/sec
+2026-11-09T06:34:51.9338892Z Cache saved with the key: node-cache-Windows-x64-npm-8ebc8294a2c12b631137b92e2a4e72617f23dd1f65a6220e6695cadba1cf1f36
+2026-11-09T06:34:51.9552495Z ##[end-action id=__9e0ca433-f581-476d-a662-7cf50b514b8e.__actions_setup-node;outcome=success;conclusion=success;duration_ms=4313]
+2026-11-09T06:34:51.9993003Z Post job cleanup.
+2026-11-09T06:34:52.1914408Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-11-09T06:34:52.2252003Z git version 2.56.0.windows.4
+2026-11-09T06:34:52.2333291Z Temporarily overriding HOME='D:\a\_temp\0f2a1f0c-57a4-4a69-b0ab-e1595b8e2410' before making global git config changes
+2026-11-09T06:34:52.2338308Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-09T06:34:52.2342995Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\Noetome\Noetome
+2026-11-09T06:34:52.2692627Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-11-09T06:34:52.3056235Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-11-09T06:34:52.9014042Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-09T06:34:52.9317487Z http.https://github.com/.extraheader
+2026-11-09T06:34:52.9493005Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-11-09T06:34:52.9717944Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-11-09T06:34:53.5378774Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-09T06:34:53.5741408Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-11-09T06:34:54.1566218Z Cleaning up orphan processes
+2026-11-09T06:34:54.4215009Z Terminate orphan process: pid (7880) (vctip)
+2026-11-09T06:34:54.4938790Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/cache/restore@v4, actions/cache/save@v4, actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

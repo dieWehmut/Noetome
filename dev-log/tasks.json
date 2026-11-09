@@ -4871,7 +4871,7 @@
       "id": "B15-T01",
       "title": "Windows锁定运行环境与实际回归门禁",
       "batch": "B15",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B14-T03"
       ],
@@ -4893,6 +4893,42 @@
           "note": "建立原生Windows锁定回归环境，复测既有失败并修复实际缺陷；本轮不写用户生产Vault",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-09T08:18:41Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "Windows锁定环境与实际回归验收完成；修复路径、字节、句柄交接与真实测试边界，安装交付继续B15-T02/T03",
+          "validation": [
+            "Windows Rust fmt/check及42targets全量1284通过0失败1崩溃worker入口ignored，源c584；Windows Python1381项0失败0错误2跳过及14真实PDF24页29CLI通过，源9f4；Windows桌面release与72项audit0失败0提示，源d155；最终Windows55项soak模块与3CLI/3独立审计共200检查通过，源04ce；Linux1296 Python0失败0错误25跳过、所改Rust行为和源码反例通过；devlog/diff检查通过，全部原始来源分别归档"
+          ],
+          "artifacts": [
+            {
+              "path": ".github/workflows/windows-validation.yml",
+              "sha256": "5ccd9977fd8b22c37f4fd01b62f5ca8ca2cbb511f0c4cd7dc5ae601be8d7fec7"
+            },
+            {
+              "path": "scripts/prepare_windows_runtime.ps1",
+              "sha256": "1803ac6f91e6623f05d4d78e079e58008c532c3f16692833961cebc05801a1b1"
+            },
+            {
+              "path": "scripts/verify_soak_runtime.py",
+              "sha256": "cb95cb36596999de2491170b957d81b25037327ac26a3cafc9352a254009d097"
+            },
+            {
+              "path": "crates/noetome-cli/src/compile_identity.rs",
+              "sha256": "1ef5ef37ee11fe69bf075bd6fa9cf20a4ad9b675c2831b3889cd63d080763948"
+            },
+            {
+              "path": "crates/noetome-desktop/src/project_entry.rs",
+              "sha256": "4a2ac81c928721226d73c4368ffb9415c868a1e7421c8231e01622f4f20faec3"
+            },
+            {
+              "path": "doc/validation/B15-T01.md",
+              "sha256": "ed7917596ac76b32f1663feb9ed2503d65dc2d27681286a7c19755c5a18d692b"
+            }
+          ]
         }
       ]
     },

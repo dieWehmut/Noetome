@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "scope": "targeted_soak",
+  "started_at_utc": "2026-11-09T07:59:11.227296+00:00",
+  "completed_at_utc": "2026-11-09T07:59:11.613764+00:00",
+  "source_commit": null,
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "python": "3.12.14",
+  "binary": {
+    "path": "/home/lyinn/project/Noetome/target/debug/noetome",
+    "sha256": "fbd72d7b6ad05f94c01b8714e7ad52f0098cd9159ff20273a4529a488c468a5b",
+    "byte_length": 222854608
+  },
+  "result": "failed",
+  "actual_cli_runs": 3,
+  "independent_audits": 3,
+  "cases": [
+    {
+      "case": "10-rounds",
+      "rounds": 10,
+      "pause_after_ms": null,
+      "result": "failed",
+      "cli_exit_code": 0,
+      "audit_exit_code": 0,
+      "audit_checks": 69,
+      "audit_failures": 0,
+      "memory_readings": {
+        "first_rss_bytes": 15953920,
+        "last_rss_bytes": 16101376,
+        "peak_rss_bytes": 16101376,
+        "rss_growth_bytes": 147456
+      },
+      "payloads": {
+        "manifest.json": {
+          "sha256": "0c8442274685558d43d1d5f8a2d67fdb439d1014ea47e9a09953179f2a76dea0",
+          "byte_length": 1003
+        },
+        "structure.json": {
+          "sha256": "7aa25e2c36fdf8e3d7e58f8cf8fb29ba44be33c02126afd79c2bea785ab2cf35",
+          "byte_length": 1397
+        },
+        "timings.json": {
+          "sha256": "24d6794ff96db4d8532623c76e333cc89e90879a28af2946f7ae2e625e8603fb",
+          "byte_length": 1960
+        }
+      },
+      "issues": [
+        "Cannot read actual CLI payload report.md: Injected read denial for failure-evidence verification"
+      ]
+    },
+    {
+      "case": "300-rounds",
+      "rounds": 300,
+      "pause_after_ms": null,
+      "result": "failed",
+      "cli_exit_code": 0,
+      "audit_exit_code": 0,
+      "audit_checks": 69,
+      "audit_failures": 0,
+      "memory_readings": {
+        "first_rss_bytes": 16482304,
+        "last_rss_bytes": 16609280,
+        "peak_rss_bytes": 16609280,
+        "rss_growth_bytes": 126976
+      },
+      "payloads": {
+        "manifest.json": {
+          "sha256": "62fbab2debfd6f6353a20df7605b469761e38fb6b52924f4912e51185d934c4c",
+          "byte_length": 1004
+        },
+        "structure.json": {
+          "sha256": "0b1006078bf66e03871a75a579ee995c52e6f26e6440db4dcf1a2b8d8b26418e",
+          "byte_length": 1399
+        },
+        "timings.json": {
+          "sha256": "7cdec51f4e454ab3e83d03ac0cffb7d59bf0f484ff092aaadaec882b8da29e4a",
+          "byte_length": 38263
+        }
+      },
+      "issues": [
+        "Cannot read actual CLI payload report.md: Injected read denial for failure-evidence verification"
+      ]
+    },
+    {
+      "case": "paused",
+      "rounds": 10,
+      "pause_after_ms": 0,
+      "result": "failed",
+      "cli_exit_code": 0,
+      "audit_exit_code": 0,
+      "audit_checks": 68,
+      "audit_failures": 0,
+      "memory_readings": {
+        "first_rss_bytes": null,
+        "last_rss_bytes": null,
+        "peak_rss_bytes": null,
+        "rss_growth_bytes": null
+      },
+      "payloads": {
+        "manifest.json": {
+          "sha256": "af9b569e78b43be1f630ef135317d8a8053a13ff6ba2eaae2910817743be422a",
+          "byte_length": 1000
+        },
+        "structure.json": {
+          "sha256": "557d7cb4851bff1679d3c57344c1c0c213f88c6540baf87beb65e773cf4a3a1c",
+          "byte_length": 1391
+        },
+        "timings.json": {
+          "sha256": "901921a77409d52b45c85b8b4b92a321f566d5e140f3aecfea6a8f146b03d3af",
+          "byte_length": 1876
+        }
+      },
+      "issues": [
+        "Cannot read actual CLI payload report.md: Injected read denial for failure-evidence verification"
+      ]
+    }
+  ]
+}

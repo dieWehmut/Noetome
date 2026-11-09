@@ -1,0 +1,351 @@
+{
+  "checks": [
+    {
+      "name": "layout-entries",
+      "ok": true,
+      "detail": "['manifest.json', 'report.md', 'structure.json', 'timings.json']"
+    },
+    {
+      "name": "layout-no-symlinks",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "structure-strict",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "structure-policy",
+      "ok": true,
+      "detail": "soak-harness-v1"
+    },
+    {
+      "name": "structure-schema",
+      "ok": true,
+      "detail": "1"
+    },
+    {
+      "name": "structure-case",
+      "ok": true,
+      "detail": "soak-synthetic-v1"
+    },
+    {
+      "name": "structure-spec-fields",
+      "ok": true,
+      "detail": "['interval_ms', 'max_rss_growth_bytes', 'pause_after_ms', 'rounds']"
+    },
+    {
+      "name": "structure-zero-calls",
+      "ok": true,
+      "detail": "0/0"
+    },
+    {
+      "name": "structure-enforcement-fields",
+      "ok": true,
+      "detail": "['note', 'pause_bound_millis', 'planned_floor_millis', 'required_millis', 'unit']"
+    },
+    {
+      "name": "structure-enforcement",
+      "ok": true,
+      "detail": "{'pause_bound_millis': 2000, 'required_millis': 86400000, 'unit': '每轮的工作单元是对一页合成文本跑一次只读分析并核对摘要；不写文件、不联网、不调用模型。', 'planned_floor_millis': 0, 'note': '结构产物只记录规格与规则常量：任何一次运行的读数写进来，同一参数两次运行就不再相同。'} != {'pause_bound_millis': 2000, 'required_millis': 86400000, 'unit': '每轮的工作单元是对一页合成文本跑一次只读分析并核对摘要；不写文件、不联网、不调用模型。', 'planned_floor_millis': 0, 'note': '结构产物只记录规格与规则常量：任何一次运行的读数写进来，同一参数两次运行就不再相同。'}"
+    },
+    {
+      "name": "structure-planned-floor",
+      "ok": true,
+      "detail": "0 != 0"
+    },
+    {
+      "name": "structure-pause-bound",
+      "ok": true,
+      "detail": "2000"
+    },
+    {
+      "name": "structure-required",
+      "ok": true,
+      "detail": "86400000"
+    },
+    {
+      "name": "structure-reproduce",
+      "ok": true,
+      "detail": "noetome soak run --rounds 10 --interval-ms 0 --pause-after-ms none --max-rss-growth-bytes 1073741824 --output <输出根>"
+    },
+    {
+      "name": "structure-coverage",
+      "ok": true,
+      "detail": "覆盖率条目与独立复算不一致"
+    },
+    {
+      "name": "structure-coverage-set",
+      "ok": true,
+      "detail": "['NFR-09', 'NFR-13']"
+    },
+    {
+      "name": "structure-coverage-honest",
+      "ok": true,
+      "detail": "短时运行不得声称 NFR-09 达标：['not_met', 'partially_measured']"
+    },
+    {
+      "name": "structure-coverage-fields:0",
+      "ok": true,
+      "detail": "['detail', 'requirement', 'status']"
+    },
+    {
+      "name": "structure-coverage-fields:1",
+      "ok": true,
+      "detail": "['detail', 'requirement', 'status']"
+    },
+    {
+      "name": "timings-strict",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "timings-policy",
+      "ok": true,
+      "detail": "soak-harness-v1"
+    },
+    {
+      "name": "timings-case",
+      "ok": true,
+      "detail": "soak-synthetic-v1"
+    },
+    {
+      "name": "timings-summary-fields",
+      "ok": true,
+      "detail": "{'rounds': 10, 'scheduled': 10, 'refused': 0, 'units': 10, 'errors': 0, 'scheduled_after_pause': 0, 'total_millis': 0, 'max_work_millis': 0, 'median_work_millis': 0, 'first_rss_bytes': 16850944, 'last_rss_bytes': 16998400, 'peak_rss_bytes': 16998400, 'rss_growth_bytes': 147456}"
+    },
+    {
+      "name": "timings-pause-fields",
+      "ok": true,
+      "detail": "{'after_ms': None, 'effective_round': None, 'latency_millis': None, 'bound_millis': 2000, 'within_bound': None, 'scheduled_after_pause': 0, 'note': '闸门关闭后不再调度新请求：关闭后调度的轮数是 0，必须为 0。延迟是关闭那一轮开始时的毫秒数减去暂停时点。'}"
+    },
+    {
+      "name": "timings-note",
+      "ok": true,
+      "detail": "读数来自本次运行，不参与确定性比较；结构产物只由参数决定。"
+    },
+    {
+      "name": "timings-states",
+      "ok": true,
+      "detail": "0 轮的状态不是 scheduled/refused"
+    },
+    {
+      "name": "timings-summary-rounds",
+      "ok": true,
+      "detail": "10 != 10"
+    },
+    {
+      "name": "timings-summary-scheduled",
+      "ok": true,
+      "detail": "10 != 10"
+    },
+    {
+      "name": "timings-summary-refused",
+      "ok": true,
+      "detail": "0 != 0"
+    },
+    {
+      "name": "timings-summary-units",
+      "ok": true,
+      "detail": "10 != 10"
+    },
+    {
+      "name": "timings-errors",
+      "ok": true,
+      "detail": "0 个单元失败"
+    },
+    {
+      "name": "timings-no-error-codes",
+      "ok": true,
+      "detail": "有轮次记下了错误码"
+    },
+    {
+      "name": "timings-gate-pause",
+      "ok": true,
+      "detail": "本次不暂停"
+    },
+    {
+      "name": "timings-gate-states",
+      "ok": true,
+      "detail": "不暂停时所有轮次都应当被调度"
+    },
+    {
+      "name": "timings-gate-count",
+      "ok": true,
+      "detail": "0 轮在闸门关闭后仍被调度"
+    },
+    {
+      "name": "timings-gate-summary-count",
+      "ok": true,
+      "detail": "0 轮在闸门关闭后仍被调度"
+    },
+    {
+      "name": "timings-gate-bound",
+      "ok": true,
+      "detail": "2000"
+    },
+    {
+      "name": "timings-gate-within",
+      "ok": true,
+      "detail": "None"
+    },
+    {
+      "name": "timings-rounds-monotone",
+      "ok": true,
+      "detail": "有轮次的 total 小于 work"
+    },
+    {
+      "name": "timings-rounds-ordered",
+      "ok": true,
+      "detail": "轮次编号必须从 1 连续递增"
+    },
+    {
+      "name": "timings-rss-present",
+      "ok": true,
+      "detail": "首末峰值必须为正整数字节，增长必须为整数（允许 0）"
+    },
+    {
+      "name": "timings-rss-rounds",
+      "ok": true,
+      "detail": "已调度轮次必须有正整数 RSS，拒绝轮次必须为 null"
+    },
+    {
+      "name": "timings-rss-peak",
+      "ok": true,
+      "detail": "峰值 16998400 低于首末 16850944/16998400"
+    },
+    {
+      "name": "timings-rss-growth",
+      "ok": true,
+      "detail": "147456 != 147456"
+    },
+    {
+      "name": "timings-structure-spec",
+      "ok": true,
+      "detail": "计时产物与结构产物的 policy 不一致"
+    },
+    {
+      "name": "manifest-strict",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "manifest-policy",
+      "ok": true,
+      "detail": "soak-harness-v1"
+    },
+    {
+      "name": "manifest-producer",
+      "ok": true,
+      "detail": "soak_harness_output"
+    },
+    {
+      "name": "manifest-case",
+      "ok": true,
+      "detail": "soak-synthetic-v1"
+    },
+    {
+      "name": "manifest-spec-fields",
+      "ok": true,
+      "detail": "['interval_ms', 'max_rss_growth_bytes', 'pause_after_ms', 'rounds']"
+    },
+    {
+      "name": "manifest-no-readings",
+      "ok": true,
+      "detail": "清单不得包含任何本次运行的读数"
+    },
+    {
+      "name": "manifest-structure-digest",
+      "ok": true,
+      "detail": "7aa25e2c36fdf8e3d7e58f8cf8fb29ba44be33c02126afd79c2bea785ab2cf35"
+    },
+    {
+      "name": "manifest-coverage",
+      "ok": true,
+      "detail": "清单的覆盖率条目与结构产物不一致"
+    },
+    {
+      "name": "manifest-spec",
+      "ok": true,
+      "detail": "清单的参数与结构产物不一致"
+    },
+    {
+      "name": "report-present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "report-needle:NFR-09",
+      "ok": true,
+      "detail": "报告缺少这条说明"
+    },
+    {
+      "name": "report-needle:not_met",
+      "ok": true,
+      "detail": "报告缺少这条说明"
+    },
+    {
+      "name": "report-needle:NFR-13",
+      "ok": true,
+      "detail": "报告缺少这条说明"
+    },
+    {
+      "name": "report-needle:partially_measured",
+      "ok": true,
+      "detail": "报告缺少这条说明"
+    },
+    {
+      "name": "report-needle:## 覆盖范围与未达标项",
+      "ok": true,
+      "detail": "报告缺少这条说明"
+    },
+    {
+      "name": "report-needle:## 边界",
+      "ok": true,
+      "detail": "报告缺少这条说明"
+    },
+    {
+      "name": "report-needle:2000",
+      "ok": true,
+      "detail": "报告缺少这条说明"
+    },
+    {
+      "name": "report-needle:86400000",
+      "ok": true,
+      "detail": "报告缺少这条说明"
+    },
+    {
+      "name": "report-synthetic",
+      "ok": true,
+      "detail": "报告必须写明这是合成负载"
+    },
+    {
+      "name": "report-no-readings",
+      "ok": true,
+      "detail": "报告里出现了疑似读数：[]"
+    },
+    {
+      "name": "report-reproduce",
+      "ok": true,
+      "detail": "报告必须写出复现命令"
+    },
+    {
+      "name": "manifest-structure-digest-value",
+      "ok": true,
+      "detail": "结构产物摘要不符"
+    },
+    {
+      "name": "manifest-structure-length",
+      "ok": true,
+      "detail": "结构产物字节数不符"
+    },
+    {
+      "name": "output-no-extra-entries",
+      "ok": true,
+      "detail": "输出根只有四个文件"
+    }
+  ],
+  "total": 69,
+  "failures": 0
+}

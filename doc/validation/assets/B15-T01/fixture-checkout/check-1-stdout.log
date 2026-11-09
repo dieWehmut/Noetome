@@ -1,0 +1,159 @@
+{
+  "checks": 30,
+  "failures": 0,
+  "warnings": 0,
+  "failure_detail": [],
+  "warning_detail": [],
+  "items": [
+    {
+      "check": "replay",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "expected-present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "expected-policy",
+      "ok": true,
+      "detail": "policy=structure-navigation-v1 case=str-glycolysis-v1"
+    },
+    {
+      "check": "expected-counts",
+      "ok": true,
+      "detail": "{'sections': {'notes': 3, 'skeleton': 5, 'sections': 13, 'matched': 10, 'misordered': 1, 'extra': 1, 'missing_required': 1, 'omitted_optional': 2, 'empty': 1, 'consistent_notes': 1}, 'links': {'source_links': 6, 'source_resolved': 4, 'source_target_missing': 2, 'source_heading_missing': 0, 'source_ambiguous': 0, 'generated_links': 9, 'generated_broken': 0, 'external_references': 1}} vs {'sections': {'notes': 3, 'skeleton': 5, 'sections': 13, 'matched': 10, 'misordered': 1, 'extra': 1, 'missing_required': 1, 'omitted_optional': 2, 'empty': 1, 'consistent_notes': 1}, 'links': {'source_links': 6, 'source_resolved': 4, 'source_target_missing': 2, 'source_heading_missing': 0, 'source_ambiguous': 0, 'generated_links': 9, 'generated_broken': 0, 'external_references': 1}}"
+    },
+    {
+      "check": "expected-note-note-glycolysis",
+      "ok": true,
+      "detail": "{'note_id': 'note-glycolysis', 'path': '笔记/糖酵解.md', 'title': '糖酵解', 'headings': [{'line': 1, 'level': 1, 'title': '糖酵解', 'body_lines': 0, 'empty': True}, {'line': 3, 'level': 2, 'title': '定义', 'body_lines': 1, 'empty': False}, {'line': 6, 'level': 2, 'title': '核心机制', 'body_lines': 2, 'empty': False}, {'line': 10, 'level': 2, 'title': '条件与例外', 'body_lines': 1, 'empty': False}, {'line': 13, 'level': 2, 'title': '易混对照', 'body_lines': 1, 'empty': False}, {'line': 16, 'level': 2, 'title': '记忆提示', 'body_lines': 1, 'empty': False}, {'line': 19, 'level': 3, 'title': '补充说明', 'body_lines': 1, 'empty': False}], 'heading_count': 7, 'sections': ['定义', '核心机制', '条件与例外', '易混对照', '记忆提示'], 'skeleton': [{'key': 'definition', 'title': '定义', 'requirement': 'required', 'status': 'matched', 'position': 0}, {'key': 'mechanism', 'title': '核心机制', 'requirement': 'required', 'status': 'matched', 'position': 1}, {'key': 'conditions', 'title': '条件与例外', 'requirement': 'required', 'status': 'matched', 'position': 2}, {'key': 'contrast', 'title': '易混对照', 'requirement': 'optional', 'status': 'matched', 'position': 3}, {'key': 'memory', 'title': '记忆提示', 'requirement': 'optional', 'status': 'matched', 'position': 4}], 'extra_titles': [], 'matched': 5, 'misordered': 0, 'extra': 0, 'missing_required': 0, 'omitted_optional': 0, 'empty': 0, 'consistent': True} vs {'note_id': 'note-glycolysis', 'path': '笔记/糖酵解.md', 'title': '糖酵解', 'sections': ['定义', '核心机制', '条件与例外', '易混对照', '记忆提示'], 'matched': 5, 'misordered': 0, 'extra': 0, 'missing_required': 0, 'omitted_optional': 0, 'empty': 0, 'consistent': True, 'heading_count': 7}"
+    },
+    {
+      "check": "expected-note-note-gluconeogenesis",
+      "ok": true,
+      "detail": "{'note_id': 'note-gluconeogenesis', 'path': '笔记/糖异生.md', 'title': '糖异生', 'headings': [{'line': 1, 'level': 1, 'title': '糖异生', 'body_lines': 0, 'empty': True}, {'line': 3, 'level': 2, 'title': '定义', 'body_lines': 1, 'empty': False}, {'line': 6, 'level': 2, 'title': '条件与例外', 'body_lines': 1, 'empty': False}, {'line': 9, 'level': 2, 'title': '核心机制', 'body_lines': 1, 'empty': False}, {'line': 12, 'level': 3, 'title': '四步绕行', 'body_lines': 1, 'empty': False}, {'line': 15, 'level': 2, 'title': '易混对照', 'body_lines': 1, 'empty': False}], 'heading_count': 6, 'sections': ['定义', '条件与例外', '核心机制', '易混对照'], 'skeleton': [{'key': 'definition', 'title': '定义', 'requirement': 'required', 'status': 'matched', 'position': 0}, {'key': 'mechanism', 'title': '核心机制', 'requirement': 'required', 'status': 'matched', 'position': 2}, {'key': 'conditions', 'title': '条件与例外', 'requirement': 'required', 'status': 'misordered', 'position': 1}, {'key': 'contrast', 'title': '易混对照', 'requirement': 'optional', 'status': 'matched', 'position': 3}, {'key': 'memory', 'title': '记忆提示', 'requirement': 'optional', 'status': 'missing', 'position': None}], 'extra_titles': [], 'matched': 3, 'misordered': 1, 'extra': 0, 'missing_required': 0, 'omitted_optional': 1, 'empty': 0, 'consistent': False} vs {'note_id': 'note-gluconeogenesis', 'path': '笔记/糖异生.md', 'title': '糖异生', 'sections': ['定义', '条件与例外', '核心机制', '易混对照'], 'matched': 3, 'misordered': 1, 'extra': 0, 'missing_required': 0, 'omitted_optional': 1, 'empty': 0, 'consistent': False, 'heading_count': 6}"
+    },
+    {
+      "check": "expected-note-note-ppp",
+      "ok": true,
+      "detail": "{'note_id': 'note-ppp', 'path': '笔记/磷酸戊糖途径.md', 'title': '磷酸戊糖途径', 'headings': [{'line': 1, 'level': 1, 'title': '磷酸戊糖途径', 'body_lines': 0, 'empty': True}, {'line': 3, 'level': 2, 'title': '定义', 'body_lines': 1, 'empty': False}, {'line': 6, 'level': 2, 'title': '核心机制', 'body_lines': 4, 'empty': False}, {'line': 13, 'level': 2, 'title': '记忆提示', 'body_lines': 0, 'empty': True}, {'line': 15, 'level': 2, 'title': '延伸阅读', 'body_lines': 1, 'empty': False}, {'line': 18, 'level': 3, 'title': '补充说明', 'body_lines': 1, 'empty': False}], 'heading_count': 6, 'sections': ['定义', '核心机制', '记忆提示', '延伸阅读'], 'skeleton': [{'key': 'definition', 'title': '定义', 'requirement': 'required', 'status': 'matched', 'position': 0}, {'key': 'mechanism', 'title': '核心机制', 'requirement': 'required', 'status': 'matched', 'position': 1}, {'key': 'conditions', 'title': '条件与例外', 'requirement': 'required', 'status': 'missing', 'position': None}, {'key': 'contrast', 'title': '易混对照', 'requirement': 'optional', 'status': 'missing', 'position': None}, {'key': 'memory', 'title': '记忆提示', 'requirement': 'optional', 'status': 'empty', 'position': 2}], 'extra_titles': ['延伸阅读'], 'matched': 2, 'misordered': 0, 'extra': 1, 'missing_required': 1, 'omitted_optional': 1, 'empty': 1, 'consistent': False} vs {'note_id': 'note-ppp', 'path': '笔记/磷酸戊糖途径.md', 'title': '磷酸戊糖途径', 'sections': ['定义', '核心机制', '记忆提示', '延伸阅读'], 'matched': 2, 'misordered': 0, 'extra': 1, 'missing_required': 1, 'omitted_optional': 1, 'empty': 1, 'consistent': False, 'heading_count': 6}"
+    },
+    {
+      "check": "expected-source-links",
+      "ok": true,
+      "detail": "正文链接逐条不符"
+    },
+    {
+      "check": "expected-generated",
+      "ok": true,
+      "detail": "{'navigation': 6, 'concept': 3, 'broken': 0} vs {'source_links': 6, 'source_resolved': 4, 'source_target_missing': 2, 'source_heading_missing': 0, 'source_ambiguous': 0, 'generated_links': 9, 'generated_broken': 0, 'external_references': 1}"
+    },
+    {
+      "check": "expected-navigation-links",
+      "ok": true,
+      "detail": "同族导航链接不符"
+    },
+    {
+      "check": "expected-concepts",
+      "ok": true,
+      "detail": "概念位置表不符"
+    },
+    {
+      "check": "expected-no-model",
+      "ok": true,
+      "detail": "先验必须声明零模型零网络"
+    },
+    {
+      "check": "expected-boundaries",
+      "ok": true,
+      "detail": "先验边界声明缺失"
+    },
+    {
+      "check": "rejection-unescaped-alias-in-table",
+      "ok": true,
+      "detail": "期望 STRUCT_LINK_UNESCAPED_ALIAS（exit 3），实际 STRUCT_LINK_UNESCAPED_ALIAS：笔记 variants/未转义表格.md 第 11 行在表格单元里写了未转义的别名竖线。"
+    },
+    {
+      "check": "rejection-duplicate-explanation",
+      "ok": true,
+      "detail": "期望 STRUCT_DUPLICATE_EXPLANATION（exit 3），实际 STRUCT_DUPLICATE_EXPLANATION：概念 concept-g6p 被多处完整解释：note-glycolysis、note-gluconeogenesis。"
+    },
+    {
+      "check": "rejection-unknown-concept",
+      "ok": true,
+      "detail": "期望 STRUCT_UNKNOWN_CONCEPT（exit 3），实际 STRUCT_UNKNOWN_CONCEPT：笔记 note-ppp 用的概念 concept-unknown 不在概念表里。"
+    },
+    {
+      "check": "frozen-present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "frozen-members",
+      "ok": true,
+      "detail": "['README.md', 'cases.json', 'concepts.json', 'expected.json', 'family-duplicate.json', 'family-unescaped.json', 'family-unknown-concept.json', 'family.json', 'variants/未转义表格.md', '笔记/磷酸戊糖途径.md', '笔记/糖异生.md', '笔记/糖酵解.md'] vs ['README.md', 'cases.json', 'concepts.json', 'expected.json', 'family-duplicate.json', 'family-unescaped.json', 'family-unknown-concept.json', 'family.json', 'variants/未转义表格.md', '笔记/磷酸戊糖途径.md', '笔记/糖异生.md', '笔记/糖酵解.md']"
+    },
+    {
+      "check": "frozen-README.md",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-cases.json",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-concepts.json",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-expected.json",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-family-duplicate.json",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-family-unescaped.json",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-family-unknown-concept.json",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-family.json",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-variants/未转义表格.md",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-笔记/磷酸戊糖途径.md",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-笔记/糖异生.md",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    },
+    {
+      "check": "frozen-笔记/糖酵解.md",
+      "ok": true,
+      "detail": "冻结摘要或字节数不符"
+    }
+  ]
+}

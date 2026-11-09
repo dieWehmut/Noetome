@@ -1,0 +1,48 @@
+{
+  "python": "3.12.14 (main, Sep 29 2026, 15:01:18) [Clang 22.1.3 ]",
+  "scope": "Linux targeted checker module; synthetic unknown output, not native Windows",
+  "runs": [
+    {
+      "name": "green",
+      "command": [
+        "/home/lyinn/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/bin/python3.12",
+        "/home/lyinn/project/Noetome/scripts/verify_soak_harness.py",
+        "/home/lyinn/project/Noetome/.artifacts/B15-T01/soak-unknown/unknown-output",
+        "--json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.03082698001526296
+    },
+    {
+      "name": "green-text",
+      "command": [
+        "/home/lyinn/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/bin/python3.12",
+        "/home/lyinn/project/Noetome/scripts/verify_soak_harness.py",
+        "/home/lyinn/project/Noetome/.artifacts/B15-T01/soak-unknown/unknown-output"
+      ],
+      "exit_code": 0,
+      "seconds": 0.02993477397831157
+    },
+    {
+      "name": "module-tests",
+      "command": [
+        "/home/lyinn/.local/share/uv/python/cpython-3.12.14-linux-x86_64-gnu/bin/python3.12",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_verify_soak_harness.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.19780212600016966
+    }
+  ],
+  "source_sha256": {
+    "scripts/verify_soak_harness.py": "345eab97c7c57ce4de8028ddca35dea6ff6259e5404757a6ceb4856430683f17",
+    "tests/test_verify_soak_harness.py": "b35295a31b68d46e61f30074fe6dc633c2e0c2c3b98c99c720585b7971375c95",
+    "doc/technical/SOAK_HARNESS_CONTRACT.md": "03d000152cece61f17debe2440d070be9d2d5ce2a793e6580e95274d1d51b408"
+  }
+}

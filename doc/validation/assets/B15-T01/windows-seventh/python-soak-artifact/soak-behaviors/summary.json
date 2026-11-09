@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "scope": "targeted_soak",
+  "started_at_utc": "2026-11-09T08:06:30.086239+00:00",
+  "completed_at_utc": "2026-11-09T08:06:30.708304+00:00",
+  "source_commit": "9643ec441085ff95cf4dba92b1abd45e47866cf3",
+  "platform": "Windows-2025Server-10.0.26100-SP0",
+  "python": "3.12.14",
+  "binary": {
+    "path": "D:\\a\\Noetome\\Noetome\\target\\debug\\noetome.exe",
+    "sha256": "269d0f87f3f04ee4998bf4ad7cd26011824c3c1a41cdc3967044870302cbc993",
+    "byte_length": 41660416
+  },
+  "result": "passed",
+  "actual_cli_runs": 3,
+  "independent_audits": 3,
+  "cases": [
+    {
+      "case": "10-rounds",
+      "rounds": 10,
+      "pause_after_ms": null,
+      "result": "passed",
+      "cli_exit_code": 0,
+      "audit_exit_code": 0,
+      "audit_checks": 66,
+      "audit_failures": 0,
+      "memory_readings": {
+        "first_rss_bytes": null,
+        "last_rss_bytes": null,
+        "peak_rss_bytes": null,
+        "rss_growth_bytes": null
+      },
+      "payloads": {
+        "manifest.json": {
+          "sha256": "0c8442274685558d43d1d5f8a2d67fdb439d1014ea47e9a09953179f2a76dea0",
+          "byte_length": 1003
+        },
+        "report.md": {
+          "sha256": "32e8538d53219e47a57a98cc62d941ca5780d77fa369d77821b51a9a273869dc",
+          "byte_length": 1923
+        },
+        "structure.json": {
+          "sha256": "7aa25e2c36fdf8e3d7e58f8cf8fb29ba44be33c02126afd79c2bea785ab2cf35",
+          "byte_length": 1397
+        },
+        "timings.json": {
+          "sha256": "5ca3ab7a789c5556393ebcba78be61b479ceeb6004cee13aef5b795a78605d88",
+          "byte_length": 1906
+        }
+      },
+      "issues": []
+    },
+    {
+      "case": "300-rounds",
+      "rounds": 300,
+      "pause_after_ms": null,
+      "result": "passed",
+      "cli_exit_code": 0,
+      "audit_exit_code": 0,
+      "audit_checks": 66,
+      "audit_failures": 0,
+      "memory_readings": {
+        "first_rss_bytes": null,
+        "last_rss_bytes": null,
+        "peak_rss_bytes": null,
+        "rss_growth_bytes": null
+      },
+      "payloads": {
+        "manifest.json": {
+          "sha256": "62fbab2debfd6f6353a20df7605b469761e38fb6b52924f4912e51185d934c4c",
+          "byte_length": 1004
+        },
+        "report.md": {
+          "sha256": "6bed156ccd7639f86c350bc3aeaaf43fc53609829083b7287f3b5a01fe779ca3",
+          "byte_length": 1925
+        },
+        "structure.json": {
+          "sha256": "0b1006078bf66e03871a75a579ee995c52e6f26e6440db4dcf1a2b8d8b26418e",
+          "byte_length": 1399
+        },
+        "timings.json": {
+          "sha256": "5a0431d1e425c0229ba3e3c3c4711482a664d46f2fefdcaa7f8c846b8cc5cb76",
+          "byte_length": 37104
+        }
+      },
+      "issues": []
+    },
+    {
+      "case": "paused",
+      "rounds": 10,
+      "pause_after_ms": 0,
+      "result": "passed",
+      "cli_exit_code": 0,
+      "audit_exit_code": 0,
+      "audit_checks": 68,
+      "audit_failures": 0,
+      "memory_readings": {
+        "first_rss_bytes": null,
+        "last_rss_bytes": null,
+        "peak_rss_bytes": null,
+        "rss_growth_bytes": null
+      },
+      "payloads": {
+        "manifest.json": {
+          "sha256": "af9b569e78b43be1f630ef135317d8a8053a13ff6ba2eaae2910817743be422a",
+          "byte_length": 1000
+        },
+        "report.md": {
+          "sha256": "6996d0d910b34758d662d272cf4197c7c4370f84a056632c2538a6ec48b25304",
+          "byte_length": 1919
+        },
+        "structure.json": {
+          "sha256": "557d7cb4851bff1679d3c57344c1c0c213f88c6540baf87beb65e773cf4a3a1c",
+          "byte_length": 1391
+        },
+        "timings.json": {
+          "sha256": "901921a77409d52b45c85b8b4b92a321f566d5e140f3aecfea6a8f146b03d3af",
+          "byte_length": 1876
+        }
+      },
+      "issues": []
+    }
+  ]
+}
