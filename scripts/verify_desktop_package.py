@@ -38,6 +38,14 @@ DIST_INDEX = "apps/desktop/dist/index.html"
 PACKAGE_JSON = "package.json"
 ACCEPTANCE = "doc/standards/DESKTOP_ACCEPTANCE.md"
 FROZEN = "crates/noetome-desktop/packaging-frozen.json"
+INSTALL_CONFIG = "crates/noetome-desktop/tauri.install.conf.json"
+INSTALLER_SURFACE = (
+    INSTALL_CONFIG,
+    "scripts/prepare_windows_installer_payload.ps1",
+    "scripts/record_windows_webview_installer.ps1",
+    "doc/technical/WINDOWS_INSTALLER_CONTRACT.md",
+    "doc/windows/QUICKSTART.zh-CN.md",
+)
 
 CONFIG_KEYS = {
     "$schema",
@@ -505,8 +513,41 @@ def audit(root: Path) -> Report:
     check_dist(root, report)
     check_main_rs(root, report)
     check_acceptance(root, report)
+    check_installer_overlay(root, report)
     check_frozen(root, report)
     return report
+
+
+def check_installer_overlay(root: Path, report: Report) -> None:
+    overlay = load_json(root / INSTALL_CONFIG, "installer-config", report)
+    if overlay is None:
+        return
+    if not isinstance(overlay, dict) or not isinstance(overlay.get("bundle"), dict):
+        report.fail("installer-shape", "安装覆盖配置和 bundle 必须是对象")
+        return
+    if set(overlay) - {"$schema", "bundle"}:
+        report.fail("installer-scope", "安装覆盖配置只能调整 bundle")
+    else:
+        report.ok("installer-scope", "显式安装配置，不修改窗口、标识或权限")
+    bundle = overlay.get("bundle", {})
+    if bundle.get("resources") == {"../../target/windows-installer-payload/": ""}:
+        report.ok("installer-resource-layout", "目录映射保留完整运行时层级")
+    else:
+        report.fail("installer-resource-layout", "完整payload必须用目录映射，不能用会扁平化的glob")
+    windows = bundle.get("windows")
+    if isinstance(windows, dict) and windows.get("webviewInstallMode") == {"type": "offlineInstaller", "silent": True}:
+        report.ok("installer-webview", "随包离线WebView2安装器")
+    else:
+        report.fail("installer-webview", "安装版须内置离线WebView2安装器")
+    if (root / "crates/noetome-desktop/tauri.windows.conf.json").exists():
+        report.fail("installer-opt-in", "安装资源覆盖不应自动影响普通Rust与无bundle构建")
+    else:
+        report.ok("installer-opt-in", "通过显式 --config 启用完整安装资源")
+    for relative in INSTALLER_SURFACE[1:]:
+        if (root / relative).is_file():
+            report.ok("installer-source-present", relative)
+        else:
+            report.fail("installer-source-present", f"缺少 {relative}")
 
 
 def check_frozen(root: Path, report: Report) -> None:
@@ -537,7 +578,7 @@ def freeze(root: Path) -> None:
     config = json.loads((root / CONFIG).read_text(encoding="utf-8"))
     version = config.get("version", "0.0.0")
     files: dict[str, dict] = {}
-    for relative in (CONFIG, CAPABILITIES, ICON_MANIFEST, *ICON_FILES, PACKAGE_JSON, ACCEPTANCE):
+    for relative in (CONFIG, CAPABILITIES, ICON_MANIFEST, *ICON_FILES, PACKAGE_JSON, ACCEPTANCE, *INSTALLER_SURFACE):
         path = root / relative
         if not path.is_file():
             raise SystemExit(f"冻结失败：缺少 {relative}")

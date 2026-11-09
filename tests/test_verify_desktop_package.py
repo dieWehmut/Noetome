@@ -33,6 +33,7 @@ COPIED = [
     V.ACCEPTANCE,
     V.MAIN_RS,
     V.FROZEN,
+    *V.INSTALLER_SURFACE,
 ]
 
 
@@ -110,10 +111,37 @@ class PackagingTest(unittest.TestCase):
             *V.ICON_FILES,
             V.PACKAGE_JSON,
             V.ACCEPTANCE,
+            *V.INSTALLER_SURFACE,
         }
         self.assertEqual(set(frozen["files"]), expected)
         self.assertEqual(frozen["producer"], "independent_packaging_freeze")
         self.assertEqual(frozen["workflow_id"], "noetome-desktop-personal-edition")
+
+    def test_installer_glob_mapping_cannot_flatten_python_layout(self) -> None:
+        overlay = self.load(V.INSTALL_CONFIG)
+        overlay["bundle"]["resources"] = {"../../target/windows-installer-payload/**/*": ""}
+        self.store(V.INSTALL_CONFIG, overlay)
+        self.assert_fails("installer-resource-layout")
+
+    def test_installer_bootstrapper_cannot_replace_offline_runtime(self) -> None:
+        overlay = self.load(V.INSTALL_CONFIG)
+        overlay["bundle"]["windows"]["webviewInstallMode"] = {"type": "downloadBootstrapper", "silent": True}
+        self.store(V.INSTALL_CONFIG, overlay)
+        self.assert_fails("installer-webview")
+
+    def test_installer_overlay_cannot_expand_application_scope(self) -> None:
+        overlay = self.load(V.INSTALL_CONFIG)
+        overlay["app"] = {"security": {"csp": None}}
+        self.store(V.INSTALL_CONFIG, overlay)
+        self.assert_fails("installer-scope")
+
+    def test_installer_resources_must_be_explicitly_selected(self) -> None:
+        (self.root / "crates/noetome-desktop/tauri.windows.conf.json").write_text("{}", encoding="utf-8")
+        self.assert_fails("installer-opt-in")
+
+    def test_installer_malformed_object_reports_failure(self) -> None:
+        self.store(V.INSTALL_CONFIG, {"bundle": []})
+        self.assert_fails("installer-shape")
 
     # configuration -------------------------------------------------------
     def test_installer_target_drift_is_detected(self) -> None:

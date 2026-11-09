@@ -36,6 +36,7 @@ runs:
       uses: actions/cache/restore@v4
       with:
         key: windows-2025-rust-1.98.1-registry-${{ hashFiles('Cargo.lock') }}
+        restore-keys: windows-2025-rust-1.98.1-registry-
         path: |
           ~/.cargo/registry
           ~/.cargo/git
@@ -47,6 +48,7 @@ runs:
         restore-keys: |
           windows-2025-rust-1.98.1-${{ inputs.target-profile }}-${{ hashFiles('Cargo.lock') }}-${{ inputs.cache-task }}-
           windows-2025-rust-1.98.1-${{ inputs.target-profile }}-${{ hashFiles('Cargo.lock') }}-
+          windows-2025-rust-1.98.1-${{ inputs.target-profile }}-
         path: target/${{ inputs.target-profile }}
     - name: Install locked Rust toolchain
       shell: pwsh

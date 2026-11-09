@@ -5,6 +5,14 @@ param(
     [string]$OutputDir
 )
 
+function Get-NoetomeShortcutPaths([string]$Programs, [string]$Desktop) {
+    @((Join-Path $Programs 'Noetome.lnk'),
+      (Join-Path $Programs 'Noetome\Noetome.lnk'),
+      (Join-Path $Desktop 'Noetome.lnk')) | Where-Object {
+        Test-Path -LiteralPath $_ -PathType Leaf
+    }
+}
+
 $ErrorActionPreference = 'Stop'
 $taskRepoRoot = Split-Path $PSScriptRoot -Parent
 $InstallDir = [IO.Path]::GetFullPath($InstallDir)
@@ -69,9 +77,7 @@ if ($taskInstalledHash -and $taskInstalledHash -eq $taskBuiltHash) { $taskMatchM
 elseif ($taskInstalledHash -and $taskExpectedNsisHash -and $taskInstalledHash -eq $taskExpectedNsisHash) { $taskMatchMode = 'current_build_with_tauri_nsis_marker' }
 
 $taskPrograms = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs'
-$taskShortcuts = @(Get-ChildItem -LiteralPath $taskPrograms -Filter 'Noetome.lnk' -Recurse | ForEach-Object { $_.FullName })
-$taskDesktopShortcut = Join-Path ([Environment]::GetFolderPath('Desktop')) 'Noetome.lnk'
-if (Test-Path -LiteralPath $taskDesktopShortcut -PathType Leaf) { $taskShortcuts += $taskDesktopShortcut }
+$taskShortcuts = @(Get-NoetomeShortcutPaths -Programs $taskPrograms -Desktop ([Environment]::GetFolderPath('Desktop')))
 $taskShortcutEvidence = @()
 $taskShell = New-Object -ComObject WScript.Shell
 try {

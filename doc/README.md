@@ -66,6 +66,8 @@
 
 状态不在这些文件中重复手工维护。[任务账本](../dev-log/tasks.json) 是事实来源，[已完成事项](../dev-log/DONE.md) 和其他日志视图由工具生成。计划里的“预期结果”不等于已实现能力。
 
+Windows 11 x64 安装实测见[快速开始](windows/QUICKSTART.zh-CN.md)和[安装资源契约](technical/WINDOWS_INSTALLER_CONTRACT.md)。安装产物的源提交、字节摘要、实际体积与原生检查由本次构建记录；开发机依赖与旧版本截图不作为新安装验收。
+
 当前有界来源核对的真实CLI、独立校验、完整回归与保存输入保护见[B04-T03验证](validation/B04-T03.md)；用户追加的移除系统标题行、单行菜单与实际安装窗口操作见[窗口验证](validation/B04-T03-ui-single-row.md)。验证记录保留实际结果和收束状态，不替代任务账本。
 
 B04R收束提交已普通推送并核对远端，执行卡归档于[B04R步骤](execution/B04R_STEPS.md)。[B05归档步骤](execution/B05_STEPS.md)规定重复/互补、条件/历史和冲突/证据不足三项；用户本轮优先追加侧栏、分类设置及默认main，执行入口见[近期步骤](execution/NEXT_STEPS.md)。当前协调实施依据见[B05-T01计划](execution/B05-T01_COORDINATION_PLAN.md)，状态仍由账本生成，计划中的命令和预期不算验收证据。
