@@ -40,13 +40,13 @@ def write_json(path: Path, value, trailing_newline: bool = True) -> None:
     if trailing_newline:
         text += "\n"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
 
 
 def write_canonical(path: Path, value) -> None:
     """The product writes canonical JSON plus one trailing newline."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(V.canonical(value) + "\n", encoding="utf-8")
+    path.write_text(V.canonical(value) + "\n", encoding="utf-8", newline="\n")
 
 
 def package_run() -> dict:
@@ -223,7 +223,7 @@ def build_root(directory: Path, structure: dict | None = None, timings: dict | N
     directory.mkdir(parents=True, exist_ok=True)
     write_canonical(directory / V.STRUCTURE, structure)
     write_canonical(directory / V.TIMINGS, timings)
-    (directory / V.REPORT).write_text(report_markdown(structure), encoding="utf-8")
+    (directory / V.REPORT).write_text(report_markdown(structure), encoding="utf-8", newline="\n")
     write_canonical(directory / V.MANIFEST, manifest_for(directory, structure))
     return structure
 
@@ -319,7 +319,7 @@ class LayoutTests(unittest.TestCase):
     def test_an_extra_entry_is_reported(self):
         with Sandbox("layout") as sandbox:
             build_root(sandbox / "a")
-            (sandbox / "a" / "note.txt").write_text("x", encoding="utf-8")
+            (sandbox / "a" / "note.txt").write_text("x", encoding="utf-8", newline="\n")
             self.assertIn("layout-entries", failed(audit(sandbox / "a", None)))
 
     def test_a_missing_entry_is_reported(self):
@@ -412,7 +412,7 @@ class StructureTests(unittest.TestCase):
             structure = structure_for(package_run())
             build_root(sandbox / "a")
             (sandbox / "a" / V.STRUCTURE).write_text(
-                json.dumps(structure, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+                json.dumps(structure, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
             )
             self.assertIn("structure-strict", failed(audit(sandbox / "a", None)))
 
@@ -524,7 +524,7 @@ class ReportTests(unittest.TestCase):
             build_root(sandbox / "a")
             path = sandbox / "a" / V.REPORT
             text = path.read_text(encoding="utf-8")
-            path.write_text(text.replace("不证明真实笔记库", "证明真实笔记库"), encoding="utf-8")
+            path.write_text(text.replace("不证明真实笔记库", "证明真实笔记库"), encoding="utf-8", newline="\n")
             self.assertIn("report-boundary", failed(audit(sandbox / "a", None)))
 
     def test_the_gui_gap_must_be_written_down(self):
@@ -534,7 +534,7 @@ class ReportTests(unittest.TestCase):
             text = path.read_text(encoding="utf-8")
             path.write_text(
                 text.replace("没有界面，因此「不因全量渲染冻结界面」没有被验证。", ""),
-                encoding="utf-8",
+                encoding="utf-8", newline="\n",
             )
             self.assertIn("report-gui-gap", failed(audit(sandbox / "a", None)))
 
@@ -547,7 +547,7 @@ class ReportTests(unittest.TestCase):
             timings = json.loads((sandbox / "a" / V.TIMINGS).read_text(encoding="utf-8"))
             reading = timings["stages"][0]["p95_millis"]
             self.assertNotEqual(reading, 2000)
-            path.write_text(text + f"\n- scan 用了 {reading} ms\n", encoding="utf-8")
+            path.write_text(text + f"\n- scan 用了 {reading} ms\n", encoding="utf-8", newline="\n")
             failures = failed(audit(sandbox / "a", None))
             self.assertIn("report-ms-threshold-only", failures)
             self.assertIn("report-no-stage-numbers", failures)
@@ -566,7 +566,7 @@ class ReportTests(unittest.TestCase):
             path = sandbox / "a" / V.REPORT
             text = path.read_text(encoding="utf-8")
             path.write_text(
-                text.replace("暂停语义属于 B13-T03。", "暂停语义未测。"), encoding="utf-8"
+                text.replace("暂停语义属于 B13-T03。", "暂停语义未测。"), encoding="utf-8", newline="\n"
             )
             self.assertIn("report-coverage-detail", failed(audit(sandbox / "a", None)))
 
@@ -581,14 +581,14 @@ class PackageTests(unittest.TestCase):
             package = sandbox / "package"
             shutil.copytree(PACKAGE, package)
             path = package / "expected.json"
-            path.write_text(path.read_text(encoding="utf-8") + " ", encoding="utf-8")
+            path.write_text(path.read_text(encoding="utf-8") + " ", encoding="utf-8", newline="\n")
             self.assertIn("frozen-digest:expected.json", failed(audit(None, package)))
 
     def test_an_extra_member_is_reported(self):
         with Sandbox("package-extra") as sandbox:
             package = sandbox / "package"
             shutil.copytree(PACKAGE, package)
-            (package / "notes.md").write_text("x", encoding="utf-8")
+            (package / "notes.md").write_text("x", encoding="utf-8", newline="\n")
             self.assertIn("frozen-members", failed(audit(None, package)))
 
     def test_refreezing_is_byte_stable(self):
@@ -679,7 +679,7 @@ class CommandLineTests(unittest.TestCase):
     def test_a_tampered_root_exits_one(self):
         with Sandbox("cli") as sandbox:
             build_root(sandbox / "a")
-            (sandbox / "a" / "extra.txt").write_text("x", encoding="utf-8")
+            (sandbox / "a" / "extra.txt").write_text("x", encoding="utf-8", newline="\n")
             code, out, _ = run_cli([str(sandbox / "a")])
             self.assertEqual(code, 1)
             self.assertIn("layout-entries", out)

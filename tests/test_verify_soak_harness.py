@@ -41,7 +41,7 @@ def write_json(path: Path, value, trailing_newline: bool = True) -> None:
     text = canonical(value)
     if trailing_newline:
         text += "\n"
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
 
 
 def write_canonical(path: Path, value) -> None:
@@ -211,7 +211,7 @@ def build_root(directory: Path, spec: dict | None = None, *, structure=None,
     write_canonical(directory / "structure.json", structure)
     write_canonical(directory / "timings.json", timings)
     write_canonical(directory / "manifest.json", manifest)
-    (directory / "report.md").write_text(report, encoding="utf-8")
+    (directory / "report.md").write_text(report, encoding="utf-8", newline="\n")
     return directory
 
 
@@ -272,7 +272,7 @@ class LayoutTests(unittest.TestCase):
     def test_an_extra_entry_is_reported(self) -> None:
         with Sandbox() as path:
             root = build_root(path / "run")
-            (root / "notes.txt").write_text("x", encoding="utf-8")
+            (root / "notes.txt").write_text("x", encoding="utf-8", newline="\n")
             report = audit(root)
             self.assertIn("layout-entries", failed(report))
 
@@ -542,7 +542,7 @@ class PackageTests(unittest.TestCase):
         with Sandbox() as path:
             package = path / "package"
             shutil.copytree(PACKAGE, package)
-            (package / "README.md").write_text("changed", encoding="utf-8")
+            (package / "README.md").write_text("changed", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_frozen(package, report)
             self.assertIn("frozen-digest:README.md", failed(report))
@@ -600,7 +600,7 @@ class CommandLineTests(unittest.TestCase):
     def test_a_broken_root_exits_one(self) -> None:
         with Sandbox() as path:
             root = build_root(path / "run")
-            (root / "structure.json").write_text("{}", encoding="utf-8")
+            (root / "structure.json").write_text("{}", encoding="utf-8", newline="\n")
             code, out, _ = self.run_cli([str(root)])
             self.assertEqual(code, 1)
             self.assertIn("structure-strict", out)

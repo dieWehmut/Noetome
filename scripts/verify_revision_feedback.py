@@ -1083,7 +1083,7 @@ def freeze(package: Path) -> None:
         "files": files,
     }
     (package / "frozen-sha256.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     print(f"已冻结 {len(files)} 个成员（case_count={manifest['case_count']}）")
 

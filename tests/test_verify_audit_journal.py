@@ -39,11 +39,11 @@ def read_json(path: Path):
 
 def write_json(path: Path, value, trailing_newline: bool = True) -> None:
     text = json.dumps(value, ensure_ascii=False, indent=2)
-    path.write_text(text + ("\n" if trailing_newline else ""), encoding="utf-8")
+    path.write_text(text + ("\n" if trailing_newline else ""), encoding="utf-8", newline="\n")
 
 
 def write_canonical(path: Path, value) -> None:
-    path.write_text(V.canonical(value) + "\n", encoding="utf-8")
+    path.write_text(V.canonical(value) + "\n", encoding="utf-8", newline="\n")
 
 
 def fake_identity(index: int) -> dict:
@@ -205,7 +205,7 @@ class FrozenPackageTests(unittest.TestCase):
             package = directory / "package"
             shutil.copytree(PACKAGE, package)
             target = package / "project.json"
-            target.write_text(target.read_text(encoding="utf-8") + " ", encoding="utf-8")
+            target.write_text(target.read_text(encoding="utf-8") + " ", encoding="utf-8", newline="\n")
             report = audit(package=package)
             self.assertIn("frozen-digest:project.json", failed(report))
 
@@ -213,7 +213,7 @@ class FrozenPackageTests(unittest.TestCase):
         with Sandbox() as directory:
             package = directory / "package"
             shutil.copytree(PACKAGE, package)
-            (package / "extra.json").write_text("{}", encoding="utf-8")
+            (package / "extra.json").write_text("{}", encoding="utf-8", newline="\n")
             report = audit(package=package)
             self.assertIn("frozen-members", failed(report))
 
@@ -260,13 +260,13 @@ class LayoutTests(unittest.TestCase):
     def test_an_extra_top_level_entry_is_reported(self):
         with Sandbox() as directory:
             root = build_root(directory)
-            (root / "note.txt").write_text("x", encoding="utf-8")
+            (root / "note.txt").write_text("x", encoding="utf-8", newline="\n")
             self.assertIn("layout-root-entries", failed(audit(root=root)))
 
     def test_an_extra_control_entry_is_reported(self):
         with Sandbox() as directory:
             root = build_root(directory)
-            (root / "control" / "extra.json").write_text("{}", encoding="utf-8")
+            (root / "control" / "extra.json").write_text("{}", encoding="utf-8", newline="\n")
             self.assertIn("layout-control-entries", failed(audit(root=root)))
 
     def test_a_symlink_is_reported(self):
@@ -540,7 +540,7 @@ class OutputTests(unittest.TestCase):
         with Sandbox() as directory:
             root = build_root(directory)
             output, _ = build_output(directory)
-            (output / "extra.json").write_text("{}", encoding="utf-8")
+            (output / "extra.json").write_text("{}", encoding="utf-8", newline="\n")
             self.assertIn("output-entries", failed(audit(root=root, output=output)))
 
     def test_a_missing_output_file_is_reported(self):
@@ -564,7 +564,7 @@ class OutputTests(unittest.TestCase):
         with Sandbox() as directory:
             root = build_root(directory)
             output, _ = build_output(directory)
-            (output / "report.md").write_text("# 别的东西\n", encoding="utf-8")
+            (output / "report.md").write_text("# 别的东西\n", encoding="utf-8", newline="\n")
             self.assertIn("output-markdown", failed(audit(root=root, output=output)))
 
     def test_an_output_manifest_with_a_timestamp_is_reported(self):

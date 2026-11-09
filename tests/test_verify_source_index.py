@@ -341,7 +341,7 @@ class ManifestTests(SandboxCase):
         path = self.root / V.CONTROL / V.MANIFEST
         value = json.loads(path.read_text(encoding="utf-8"))
         path.write_text(
-            json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+            json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
         )
         report = audit(self.root)
         self.assertIn("manifest-strict", failed(report))

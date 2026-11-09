@@ -726,7 +726,7 @@ def freeze(package: Path) -> int:
         "case_count": len(files),
         "files": files,
     }
-    (package / FROZEN).write_text(canonical(payload) + "\n", encoding="utf-8")
+    (package / FROZEN).write_text(canonical(payload) + "\n", encoding="utf-8", newline="\n")
     print(f"已冻结 {len(files)} 个成员")
     return 0
 

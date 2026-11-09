@@ -40,12 +40,12 @@ def write_json(path: Path, value, trailing_newline: bool = True) -> None:
     text = json.dumps(value, ensure_ascii=False, indent=2)
     if trailing_newline:
         text += "\n"
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
 
 
 def write_canonical(path: Path, value) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(V.canonical(value) + "\n", encoding="utf-8")
+    path.write_text(V.canonical(value) + "\n", encoding="utf-8", newline="\n")
 
 
 def package_spec() -> dict:
@@ -114,7 +114,7 @@ def build_output(directory: Path, structure: dict) -> Path:
         "note": "耗时与峰值内存来自本次真实运行，不参与确定性比较；结构产物只由参数决定。",
     }
     write_canonical(output / "timings.json", timings)
-    (output / "report.md").write_text(report_markdown(structure), encoding="utf-8")
+    (output / "report.md").write_text(report_markdown(structure), encoding="utf-8", newline="\n")
     manifest = {
         "policy": structure["policy"],
         "producer": V.OUTPUT_PRODUCER,
@@ -193,7 +193,7 @@ class PackageTests(unittest.TestCase):
             shutil.copytree(PACKAGE, package)
             target = package / "expected.json"
             target.write_text(target.read_text(encoding="utf-8").replace("80", "81", 1),
-                              encoding="utf-8")
+                              encoding="utf-8", newline="\n")
             report = audit(None, package)
             self.assertIn("frozen-digest:expected.json", failed(report))
 
@@ -201,7 +201,7 @@ class PackageTests(unittest.TestCase):
         with Sandbox() as directory:
             package = directory / "package"
             shutil.copytree(PACKAGE, package)
-            (package / "extra.json").write_text("{}", encoding="utf-8")
+            (package / "extra.json").write_text("{}", encoding="utf-8", newline="\n")
             self.assertIn("frozen-members", failed(audit(None, package)))
 
     def test_a_drifted_prior_count_is_detected(self):
@@ -312,7 +312,7 @@ class LayoutTests(unittest.TestCase):
     def test_an_extra_entry_is_detected(self):
         with Sandbox() as directory:
             output = build_output(directory, structure_of(directory))
-            (output / "extra.txt").write_text("x", encoding="utf-8")
+            (output / "extra.txt").write_text("x", encoding="utf-8", newline="\n")
             self.assertIn("layout-entries", failed(audit(output)))
 
     def test_a_missing_entry_is_detected(self):
@@ -439,14 +439,14 @@ class ReportTests(unittest.TestCase):
             output = build_output(directory, structure_of(directory))
             text = (output / "report.md").read_text(encoding="utf-8")
             (output / "report.md").write_text(text.replace("合成语料", "真实语料"),
-                                              encoding="utf-8")
+                                              encoding="utf-8", newline="\n")
             self.assertIn("report-synthetic", failed(audit(output)))
 
     def test_a_report_hiding_the_unmet_limit_is_detected(self):
         with Sandbox() as directory:
             output = build_output(directory, structure_of(directory))
             text = (output / "report.md").read_text(encoding="utf-8")
-            (output / "report.md").write_text(text.replace("未达标项", "已完成"), encoding="utf-8")
+            (output / "report.md").write_text(text.replace("未达标项", "已完成"), encoding="utf-8", newline="\n")
             self.assertIn("report-unmet", failed(audit(output)))
 
     def test_a_report_copying_a_wall_clock_reading_is_detected(self):
@@ -454,7 +454,7 @@ class ReportTests(unittest.TestCase):
             output = build_output(directory, structure_of(directory))
             text = (output / "report.md").read_text(encoding="utf-8")
             (output / "report.md").write_text(
-                text.replace("## 实测", "## 实测\n\n- 分析 306 ms"), encoding="utf-8"
+                text.replace("## 实测", "## 实测\n\n- 分析 306 ms"), encoding="utf-8", newline="\n"
             )
             self.assertIn("report-no-wall-clock", failed(audit(output)))
 
@@ -513,7 +513,7 @@ class CommandLineTests(unittest.TestCase):
     def test_a_corrupted_root_exits_one_with_json(self):
         with Sandbox() as directory:
             output = build_output(directory, structure_of(directory))
-            (output / "structure.json").write_text("{}", encoding="utf-8")
+            (output / "structure.json").write_text("{}", encoding="utf-8", newline="\n")
             code, out, _ = self.run_cli([str(output), "--json"])
             self.assertEqual(code, 1)
             payload = json.loads(out)

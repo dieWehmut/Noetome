@@ -11,107 +11,116 @@ permissions:
 
 jobs:
   windows:
+    name: Windows ${{ matrix.target }}
     runs-on: windows-2025
     timeout-minutes: 90
+    strategy:
+      # Each job publishes its logs independently. One failure must not cancel
+      # the other native regression or build evidence.
+      fail-fast: false
+      matrix:
+        include:
+          - target: rust
+            profile: debug
+          - target: python
+            profile: debug
+          - target: desktop
+            profile: release
     defaults:
       run:
         shell: pwsh
+    env:
+      TASK_EVIDENCE_DIR: .artifacts/windows-validation/${{ matrix.target }}
     steps:
       - uses: actions/checkout@v4
         id: checkout
         env:
-          # Historical evidence has paths longer than MAX_PATH. Scope this to
-          # the checkout process rather than changing the runner's Git config.
+          # Scope long-path support to checkout; preserve historical evidence.
           GIT_CONFIG_COUNT: '1'
           GIT_CONFIG_KEY_0: core.longpaths
           GIT_CONFIG_VALUE_0: 'true'
-      - uses: actions/setup-node@v4
-        id: node
-        with:
-          node-version: '26.10.0'
-          cache: npm
       - name: Create evidence directory
         id: evidence
         if: always()
-        run: New-Item -ItemType Directory -Force .artifacts/windows-validation | Out-Null
-      - name: Install locked Rust toolchain
-        id: rust
+        run: New-Item -ItemType Directory -Force $env:TASK_EVIDENCE_DIR | Out-Null
+      - name: Prepare common locked Windows tools and caches
+        id: setup
         if: always() && steps.checkout.outcome == 'success' && steps.evidence.outcome == 'success'
-        run: |
-          $ErrorActionPreference = 'Stop'
-          rustup toolchain install 1.98.1 --profile minimal --component rustfmt *>&1 | Tee-Object .artifacts/windows-validation/rust-setup.log
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          rustup show *>&1 | Tee-Object .artifacts/windows-validation/rust-identity.log
-          exit $LASTEXITCODE
-      - name: Prepare locked portable PDF Python
-        id: runtime
-        if: always() && steps.checkout.outcome == 'success' && steps.evidence.outcome == 'success'
-        run: |
-          $ErrorActionPreference = 'Stop'
-          & ./scripts/prepare_windows_runtime.ps1 *>&1 | Tee-Object .artifacts/windows-validation/python-setup.log
-          $taskPython = Join-Path $env:GITHUB_WORKSPACE 'target/windows-runtime/python/python.exe'
-          "NOETOME_PDF_PYTHON=$taskPython" >> $env:GITHUB_ENV
-          "NOETOME_TEST_PYTHON=$taskPython" >> $env:GITHUB_ENV
-          (Split-Path $taskPython -Parent) >> $env:GITHUB_PATH
-          Copy-Item target/windows-runtime/runtime-receipt.json .artifacts/windows-validation/
-      - name: Install locked frontend dependencies
-        id: npm
-        if: always() && steps.checkout.outcome == 'success' && steps.node.outcome == 'success' && steps.evidence.outcome == 'success'
-        run: |
-          npm ci --ignore-scripts *>&1 | Tee-Object .artifacts/windows-validation/npm-setup.log
-          exit $LASTEXITCODE
+        uses: ./.github/actions/windows-setup
+        with:
+          evidence-dir: ${{ env.TASK_EVIDENCE_DIR }}
+          target-profile: ${{ matrix.profile }}
+          cache-task: ${{ matrix.target }}
       - name: Rust format
-        if: always() && steps.rust.outcome == 'success'
+        if: always() && matrix.target == 'rust' && steps.setup.outcome == 'success'
         run: |
-          cargo fmt --all --check *>&1 | Tee-Object .artifacts/windows-validation/rust-fmt.log
+          cargo fmt --all --check *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/rust-fmt.log"
           exit $LASTEXITCODE
       - name: Rust workspace check
-        if: always() && steps.rust.outcome == 'success'
+        id: rust_check
+        if: always() && matrix.target == 'rust' && steps.setup.outcome == 'success'
         run: |
-          cargo check --workspace --locked *>&1 | Tee-Object .artifacts/windows-validation/rust-check.log
+          cargo check --workspace --locked *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/rust-check.log"
           exit $LASTEXITCODE
-      - name: Rust workspace tests
-        if: always() && steps.rust.outcome == 'success' && steps.runtime.outcome == 'success'
+      - name: Rust workspace tests, all targets even on failure
+        if: always() && matrix.target == 'rust' && steps.setup.outcome == 'success'
         run: |
-          cargo test --workspace --locked *>&1 | Tee-Object .artifacts/windows-validation/rust-tests.log
+          cargo test --workspace --locked --no-fail-fast *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/rust-tests.log"
           exit $LASTEXITCODE
       - name: Build ordinary debug CLI for independent Python behaviors
         id: cli
-        if: always() && steps.rust.outcome == 'success'
+        if: always() && matrix.target == 'python' && steps.setup.outcome == 'success'
         run: |
-          cargo build -p noetome-cli --locked *>&1 | Tee-Object .artifacts/windows-validation/cli-build.log
+          cargo build -p noetome-cli --locked *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/cli-build.log"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           "NOETOME_TEST_BINARY=$env:GITHUB_WORKSPACE/target/debug/noetome.exe" >> $env:GITHUB_ENV
-      - name: Python full regression
-        if: always() && steps.runtime.outcome == 'success' && steps.cli.outcome == 'success'
+      - name: Build actual frontend assets required by packaging regression
+        id: python_web
+        if: always() && matrix.target == 'python' && steps.setup.outcome == 'success'
         run: |
-          & $env:NOETOME_TEST_PYTHON -B -X utf8 -m unittest discover -s tests -p 'test_*.py' -v *>&1 | Tee-Object .artifacts/windows-validation/python-tests.log
+          npm run web:build *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/python-web-build.log"
+          exit $LASTEXITCODE
+      - name: Python full regression
+        if: always() && matrix.target == 'python' && steps.setup.outcome == 'success' && steps.cli.outcome == 'success' && steps.python_web.outcome == 'success'
+        run: |
+          & $env:NOETOME_TEST_PYTHON -B -X utf8 -m unittest discover -s tests -p 'test_*.py' -v *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/python-tests.log"
+          exit $LASTEXITCODE
+      - name: Independent real PDF parse and read-only inspection
+        if: always() && matrix.target == 'python' && steps.setup.outcome == 'success' && steps.cli.outcome == 'success'
+        run: |
+          & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/verify_pdf_parse.py "$env:TASK_EVIDENCE_DIR/pdf-behaviors" --binary $env:NOETOME_TEST_BINARY *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/pdf-behaviors.log"
           exit $LASTEXITCODE
       - name: PDF payload byte binding
-        if: always() && steps.runtime.outcome == 'success'
+        if: always() && matrix.target == 'python' && steps.setup.outcome == 'success'
         run: |
-          & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/build_pdf_sidecar.py --check *>&1 | Tee-Object .artifacts/windows-validation/pdf-payload.log
-          exit $LASTEXITCODE
-      - name: Frontend typecheck and production build
-        if: always() && steps.npm.outcome == 'success'
-        run: |
-          npm run web:build *>&1 | Tee-Object .artifacts/windows-validation/web-build.log
-          exit $LASTEXITCODE
-      - name: Desktop release executable
-        if: always() && steps.rust.outcome == 'success' && steps.npm.outcome == 'success'
-        run: |
-          npm run desktop:build -- --no-bundle *>&1 | Tee-Object .artifacts/windows-validation/desktop-build.log
-          exit $LASTEXITCODE
-      - name: Packaging contract audit
-        if: always() && steps.runtime.outcome == 'success' && steps.npm.outcome == 'success'
-        run: |
-          & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/verify_desktop_package.py --json *>&1 | Tee-Object .artifacts/windows-validation/package-audit.json
+          & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/build_pdf_sidecar.py --check *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/pdf-payload.log"
           exit $LASTEXITCODE
       - name: Development ledger check
-        if: always() && steps.runtime.outcome == 'success'
+        if: always() && matrix.target == 'python' && steps.setup.outcome == 'success'
         run: |
-          & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/devlog.py check *>&1 | Tee-Object .artifacts/windows-validation/devlog-check.log
+          & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/devlog.py check *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/devlog-check.log"
           exit $LASTEXITCODE
+      - name: Frontend typecheck and production build
+        id: web
+        if: always() && matrix.target == 'desktop' && steps.setup.outcome == 'success'
+        run: |
+          npm run web:build *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/web-build.log"
+          exit $LASTEXITCODE
+      - name: Desktop release executable
+        id: desktop
+        if: always() && matrix.target == 'desktop' && steps.setup.outcome == 'success'
+        run: |
+          npm run desktop:build -- --no-bundle *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/desktop-build.log"
+          exit $LASTEXITCODE
+      - name: Packaging contract audit
+        if: always() && matrix.target == 'desktop' && steps.setup.outcome == 'success' && steps.web.outcome == 'success'
+        run: |
+          & $env:NOETOME_TEST_PYTHON -B -X utf8 scripts/verify_desktop_package.py --json *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/package-audit.json"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $taskAudit = Get-Content -Raw -LiteralPath "$env:TASK_EVIDENCE_DIR/package-audit.json" | ConvertFrom-Json
+          if ($taskAudit.failures -ne 0 -or $taskAudit.warnings -ne 0) {
+            throw 'Desktop packaging audit requires zero failures and zero warnings. See package-audit.json.'
+          }
       - name: Record source and environment identity
         if: always() && steps.evidence.outcome == 'success'
         run: |
@@ -120,20 +129,35 @@ jobs:
             source_ref = $env:GITHUB_REF
             run_id = $env:GITHUB_RUN_ID
             run_attempt = $env:GITHUB_RUN_ATTEMPT
+            job = '${{ matrix.target }}'
             os = [Environment]::OSVersion.VersionString
             node = (& node --version)
             rust = (& rustc --version)
             python = $env:NOETOME_TEST_PYTHON
           }
-          $taskFacts | ConvertTo-Json | Set-Content .artifacts/windows-validation/environment.json -Encoding utf8
-          git diff --check *>&1 | Tee-Object .artifacts/windows-validation/git-diff-check.log
+          $taskFacts | ConvertTo-Json | Set-Content "$env:TASK_EVIDENCE_DIR/environment.json" -Encoding utf8
+          git diff --check *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/git-diff-check.log"
           exit $LASTEXITCODE
+      - name: Save immutable Cargo dependency cache, even after test failure
+        if: always() && steps.setup.outcome == 'success' && steps.setup.outputs.registry-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ steps.setup.outputs.registry-key }}
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+      - name: Save compiled artifacts after an actual successful check or build
+        if: always() && steps.setup.outcome == 'success' && steps.setup.outputs.target-hit != 'true' && (steps.rust_check.outcome == 'success' || steps.cli.outcome == 'success' || steps.desktop.outcome == 'success')
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ steps.setup.outputs.target-key }}
+          path: ${{ steps.setup.outputs.target-path }}
       - name: Upload raw Windows evidence, including failures
         if: always() && steps.evidence.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: windows-validation-${{ github.run_id }}-${{ github.run_attempt }}
-          path: .artifacts/windows-validation/
+          name: windows-${{ matrix.target }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.TASK_EVIDENCE_DIR }}/
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 30

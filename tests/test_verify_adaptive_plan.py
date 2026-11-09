@@ -46,7 +46,7 @@ def write_json(path: Path, value, trailing_newline: bool = True) -> None:
     if trailing_newline:
         text += "\n"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
 
 
 def fake_identity(index: int) -> dict:
@@ -144,7 +144,7 @@ def build_output(directory: Path, replay_result: dict) -> Path:
     markdown = report_markdown(replay_result)
     write_json(output / "plan.json", plan)
     write_json(output / "report.json", report)
-    (output / "report.md").write_text(markdown, encoding="utf-8")
+    (output / "report.md").write_text(markdown, encoding="utf-8", newline="\n")
     manifest = {
         "policy": V.POLICY,
         "producer": V.OUTPUT_PRODUCER,
@@ -206,7 +206,7 @@ class FrozenPackageTests(unittest.TestCase):
         with Sandbox() as sandbox:
             package = sandbox / "package"
             shutil.copytree(PACKAGE, package)
-            (package / "expected.json").write_text("{}\n", encoding="utf-8")
+            (package / "expected.json").write_text("{}\n", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_frozen(package, report)
             self.assertIn("frozen-digest:expected.json", failed(report))
@@ -215,7 +215,7 @@ class FrozenPackageTests(unittest.TestCase):
         with Sandbox() as sandbox:
             package = sandbox / "package"
             shutil.copytree(PACKAGE, package)
-            (package / "extra.json").write_text("{}\n", encoding="utf-8")
+            (package / "extra.json").write_text("{}\n", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_frozen(package, report)
             self.assertIn("frozen-members", failed(report))
@@ -256,7 +256,7 @@ class LayoutTests(unittest.TestCase):
     def test_an_extra_control_entry_is_reported(self):
         with Sandbox() as sandbox:
             root = build_root(sandbox)
-            (root / "control" / "plan.json").write_text("{}", encoding="utf-8")
+            (root / "control" / "plan.json").write_text("{}", encoding="utf-8", newline="\n")
             report = audit(root, None, None)
             self.assertIn("layout-control-entries", failed(report))
 
@@ -286,7 +286,7 @@ class ManifestTests(unittest.TestCase):
             root = build_root(sandbox)
             path = root / "control" / "manifest.json"
             value = json.loads(path.read_text(encoding="utf-8"))
-            path.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding="utf-8")
+            path.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_manifest(root, report)
             self.assertIn("manifest-strict", failed(report))
@@ -305,7 +305,7 @@ class ManifestTests(unittest.TestCase):
     def test_a_changed_declaration_digest_is_reported(self):
         with Sandbox() as sandbox:
             root = build_root(sandbox)
-            (root / "control" / "project.json").write_text("{}\n", encoding="utf-8")
+            (root / "control" / "project.json").write_text("{}\n", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_manifest(root, report)
             self.assertIn("manifest-project-digest", failed(report))
@@ -549,7 +549,7 @@ class OutputTests(unittest.TestCase):
         with Sandbox() as sandbox:
             root = build_root(sandbox)
             output = build_output(sandbox, replay_or_fail())
-            (output / "report.md").write_text("# 空\n", encoding="utf-8")
+            (output / "report.md").write_text("# 空\n", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_output(output, replay_or_fail(), report)
             self.assertIn("markdown-section:## 教学顺序", failed(report))
@@ -580,7 +580,7 @@ class CommandLineTests(unittest.TestCase):
     def test_a_tampered_root_exits_one(self):
         with Sandbox() as sandbox:
             root = build_root(sandbox)
-            (root / "control" / "inputs.json").write_text("{}", encoding="utf-8")
+            (root / "control" / "inputs.json").write_text("{}", encoding="utf-8", newline="\n")
             code, stdout, _stderr = self.run_cli(str(root))
             self.assertEqual(code, 1)
             self.assertIn("inputs-strict", stdout)

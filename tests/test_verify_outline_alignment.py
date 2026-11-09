@@ -386,7 +386,7 @@ class ManifestTests(unittest.TestCase):
             write_json(self.manifest_path, value)
         else:
             self.manifest_path.write_text(
-                json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+                json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
             )
 
     def test_unknown_field_is_rejected(self) -> None:

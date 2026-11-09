@@ -514,7 +514,7 @@ class ManifestTests(SandboxCase):
     def test_pretty_json_is_detected(self) -> None:
         path = self.root / V.MANIFEST
         value = self.read(path)
-        path.write_text(json.dumps(value, ensure_ascii=False, indent=2))
+        path.write_text(json.dumps(value, ensure_ascii=False, indent=2), newline="\n")
         self.assertIn("manifest-strict", failed(self.audit(output=False)))
 
     def test_a_drifted_root_is_detected(self) -> None:
@@ -644,13 +644,13 @@ class OutputTests(SandboxCase):
     def test_a_missing_markdown_section_is_detected(self) -> None:
         path = self.out / V.MARKDOWN
         lines = path.read_text(encoding="utf-8").split("\n")
-        path.write_text("\n".join(line for line in lines if line.strip() != "## 知识对象身份"), encoding="utf-8")
+        path.write_text("\n".join(line for line in lines if line.strip() != "## 知识对象身份"), encoding="utf-8", newline="\n")
         self.assertIn("markdown-知识对象身份", failed(self.audit()))
 
     def test_a_missing_markdown_boundary_is_detected(self) -> None:
         path = self.out / V.MARKDOWN
         text = path.read_text(encoding="utf-8")
-        path.write_text(text.replace("不判断内容质量与科学正确性", "（略）"), encoding="utf-8")
+        path.write_text(text.replace("不判断内容质量与科学正确性", "（略）"), encoding="utf-8", newline="\n")
         self.assertIn("markdown-boundary", failed(self.audit()))
 
     def test_a_created_at_in_the_output_manifest_is_detected(self) -> None:

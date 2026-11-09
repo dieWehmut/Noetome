@@ -429,7 +429,7 @@ class ManifestTests(SandboxCase):
     def test_pretty_printed_manifest_is_refused(self) -> None:
         path = self.root / "control" / "manifest.json"
         value = self.read(path)
-        path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
         self.assertIn("manifest-strict", failed(self.audit(output=False)))
 
     def test_root_path_drift_is_detected(self) -> None:
@@ -543,7 +543,7 @@ class OutputFilterTests(SandboxCase):
     def test_a_pretty_printed_filter_is_detected(self) -> None:
         path = self.out / V.FILTER
         value = self.read(path)
-        path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        path.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
         self.assertIn("filter-strict", failed(self.audit()))
 
 
@@ -605,7 +605,7 @@ class ReportAndMarkdownTests(SandboxCase):
         path = self.out / V.MARKDOWN
         path.write_text(
             path.read_text(encoding="utf-8").replace("## 排除明细", "## 明细"),
-            encoding="utf-8",
+            encoding="utf-8", newline="\n",
         )
         self.assertIn("markdown-sections", failed(self.audit()))
 
@@ -616,7 +616,7 @@ class ReportAndMarkdownTests(SandboxCase):
             for line in path.read_text(encoding="utf-8").splitlines(keepends=True)
             if "decoration" not in line
         ]
-        path.write_text("".join(kept), encoding="utf-8")
+        path.write_text("".join(kept), encoding="utf-8", newline="\n")
         self.assertIn("markdown-reasons", failed(self.audit()))
 
 

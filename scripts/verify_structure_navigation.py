@@ -831,7 +831,7 @@ def check_rejections(package: Path, report: Report) -> None:
                 (scratch_dir / name).write_bytes(read_bytes(package / name))
             variant_doc = json.loads(read_bytes(variant).decode("utf-8"))
             (scratch_dir / "family.json").write_text(
-                json.dumps(variant_doc, ensure_ascii=False), encoding="utf-8"
+                json.dumps(variant_doc, ensure_ascii=False), encoding="utf-8", newline="\n"
             )
             for note in variant_doc["notes"]:
                 source = package / note["path"]
@@ -1021,7 +1021,7 @@ def freeze(package: Path) -> None:
         "case_count": len(files),
         "files": files,
     }
-    (package / FROZEN).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (package / FROZEN).write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     sys.stdout.write(f"已冻结 {len(files)} 个成员\n")
 
 

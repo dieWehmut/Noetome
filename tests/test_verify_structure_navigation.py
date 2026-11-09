@@ -358,7 +358,7 @@ class PackagePriorTests(unittest.TestCase):
         expected = json.loads((copy / "expected.json").read_text())
         expected["counts"]["sections"]["matched"] += 1
         (copy / "expected.json").write_text(
-            json.dumps(expected, ensure_ascii=False), encoding="utf-8"
+            json.dumps(expected, ensure_ascii=False), encoding="utf-8", newline="\n"
         )
         report = V.Report()
         V.check_expected(copy, replay_or_fail(), report)
@@ -372,7 +372,7 @@ class PackagePriorTests(unittest.TestCase):
         expected = json.loads((copy / "expected.json").read_text())
         expected["notes"][1]["consistent"] = True
         (copy / "expected.json").write_text(
-            json.dumps(expected, ensure_ascii=False), encoding="utf-8"
+            json.dumps(expected, ensure_ascii=False), encoding="utf-8", newline="\n"
         )
         report = V.Report()
         V.check_expected(copy, replay_or_fail(), report)
@@ -386,7 +386,7 @@ class PackagePriorTests(unittest.TestCase):
         expected = json.loads((copy / "expected.json").read_text())
         expected["source_links"][0]["line"] += 1
         (copy / "expected.json").write_text(
-            json.dumps(expected, ensure_ascii=False), encoding="utf-8"
+            json.dumps(expected, ensure_ascii=False), encoding="utf-8", newline="\n"
         )
         report = V.Report()
         V.check_expected(copy, replay_or_fail(), report)
@@ -400,7 +400,7 @@ class PackagePriorTests(unittest.TestCase):
         expected = json.loads((copy / "expected.json").read_text())
         expected["generated"]["concept"] += 1
         (copy / "expected.json").write_text(
-            json.dumps(expected, ensure_ascii=False), encoding="utf-8"
+            json.dumps(expected, ensure_ascii=False), encoding="utf-8", newline="\n"
         )
         report = V.Report()
         V.check_expected(copy, replay_or_fail(), report)
@@ -414,7 +414,7 @@ class PackagePriorTests(unittest.TestCase):
         expected = json.loads((copy / "expected.json").read_text())
         expected["concepts"][-1]["canonical"] = "note-ppp"
         (copy / "expected.json").write_text(
-            json.dumps(expected, ensure_ascii=False), encoding="utf-8"
+            json.dumps(expected, ensure_ascii=False), encoding="utf-8", newline="\n"
         )
         report = V.Report()
         V.check_expected(copy, replay_or_fail(), report)
@@ -488,7 +488,7 @@ class ManifestTests(SandboxCase):
     def test_a_pretty_printed_record_is_detected(self) -> None:
         manifest = self.read(self.root / "control/manifest.json")
         (self.root / "control/manifest.json").write_text(
-            json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+            json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n"
         )
         self.assertIn("manifest-strict", failed(self.audit()))
 
@@ -600,7 +600,7 @@ class OutputTests(SandboxCase):
     def test_a_missing_deviation_section_is_detected(self) -> None:
         markdown = (self.out / "report.md").read_text(encoding="utf-8")
         (self.out / "report.md").write_text(
-            markdown.replace("## 结构偏离明细", "## 其它"), encoding="utf-8"
+            markdown.replace("## 结构偏离明细", "## 其它"), encoding="utf-8", newline="\n"
         )
         self.assertIn("markdown-结构偏离明细", failed(self.audit()))
 
@@ -608,14 +608,14 @@ class OutputTests(SandboxCase):
         markdown = (self.out / "report.md").read_text(encoding="utf-8")
         (self.out / "report.md").write_text(
             "\n".join(line for line in markdown.split("\n") if "延伸阅读" not in line),
-            encoding="utf-8",
+            encoding="utf-8", newline="\n",
         )
         self.assertIn("markdown-extra-note-ppp-延伸阅读", failed(self.audit()))
 
     def test_a_navigation_without_the_boundary_is_detected(self) -> None:
         navigation = (self.out / "navigation.md").read_text(encoding="utf-8")
         (self.out / "navigation.md").write_text(
-            navigation.replace("不虚构考试频次", "重点"), encoding="utf-8"
+            navigation.replace("不虚构考试频次", "重点"), encoding="utf-8", newline="\n"
         )
         self.assertIn("navigation-no-exam-guess", failed(self.audit()))
 

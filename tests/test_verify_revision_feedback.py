@@ -109,7 +109,7 @@ def build_root(directory: Path) -> Path:
                 text,
             ),
         )
-        (render_dir / f"{rid}.md").write_text(text, encoding="utf-8")
+        (render_dir / f"{rid}.md").write_text(text, encoding="utf-8", newline="\n")
 
     for record in replay.versions:
         payload = {
@@ -173,7 +173,7 @@ class FrozenPackageTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             package = Path(directory) / "package"
             shutil.copytree(PACKAGE, package)
-            (package / "unexpected.md").write_text("x", encoding="utf-8")
+            (package / "unexpected.md").write_text("x", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_frozen(package, report)
             self.assertIn("frozen-file-set", failed(report))

@@ -41,12 +41,12 @@ def write_json(path: Path, value, trailing_newline: bool = True) -> None:
     text = json.dumps(value, ensure_ascii=False, indent=2)
     if trailing_newline:
         text += "\n"
-    path.write_text(text, encoding="utf-8")
+    path.write_text(text, encoding="utf-8", newline="\n")
 
 
 def write_canonical_json(path: Path, value) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(V.canonical(value) + "\n", encoding="utf-8")
+    path.write_text(V.canonical(value) + "\n", encoding="utf-8", newline="\n")
 
 
 def fake_identity(index: int):
@@ -180,7 +180,7 @@ class FrozenPackageTests(unittest.TestCase):
         with Sandbox() as sandbox:
             package = sandbox / "pkg"
             shutil.copytree(PACKAGE, package)
-            (package / "cases.json").write_text("{}\n", encoding="utf-8")
+            (package / "cases.json").write_text("{}\n", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_frozen(package, report)
             self.assertIn("frozen-digest:cases.json", failed(report))
@@ -189,7 +189,7 @@ class FrozenPackageTests(unittest.TestCase):
         with Sandbox() as sandbox:
             package = sandbox / "pkg"
             shutil.copytree(PACKAGE, package)
-            (package / "extra.json").write_text("{}\n", encoding="utf-8")
+            (package / "extra.json").write_text("{}\n", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_frozen(package, report)
             self.assertIn("frozen-members", failed(report))
@@ -235,7 +235,7 @@ class LayoutTests(unittest.TestCase):
     def test_an_extra_top_level_entry_is_refused(self):
         with Sandbox() as sandbox:
             root = build_root(sandbox)
-            (root / "notes.md").write_text("x", encoding="utf-8")
+            (root / "notes.md").write_text("x", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_layout(root, report)
             self.assertIn("layout-root-entries", failed(report))
@@ -243,7 +243,7 @@ class LayoutTests(unittest.TestCase):
     def test_an_extra_control_entry_is_refused(self):
         with Sandbox() as sandbox:
             root = build_root(sandbox)
-            (root / V.CONTROL / "extra.json").write_text("{}", encoding="utf-8")
+            (root / V.CONTROL / "extra.json").write_text("{}", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_layout(root, report)
             self.assertIn("layout-control-entries", failed(report))
@@ -486,7 +486,7 @@ class OutputTests(unittest.TestCase):
         with Sandbox() as sandbox:
             replay_value = replay_or_fail(package_declaration())
             output = build_output(sandbox, replay_value)
-            (output / "extra.md").write_text("x", encoding="utf-8")
+            (output / "extra.md").write_text("x", encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_output(output, replay_value, report)
             self.assertIn("output-entries", failed(report))
@@ -549,7 +549,7 @@ class OutputTests(unittest.TestCase):
             replay_value = replay_or_fail(package_declaration())
             output = build_output(sandbox, replay_value)
             text = (output / V.MARKDOWN).read_text(encoding="utf-8")
-            (output / V.MARKDOWN).write_text(text.replace("## 缺口", "## 别的"), encoding="utf-8")
+            (output / V.MARKDOWN).write_text(text.replace("## 缺口", "## 别的"), encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_output(output, replay_value, report)
             self.assertIn("markdown-section:## 缺口", failed(report))
@@ -559,7 +559,7 @@ class OutputTests(unittest.TestCase):
             replay_value = replay_or_fail(package_declaration())
             output = build_output(sandbox, replay_value)
             text = (output / V.MARKDOWN).read_text(encoding="utf-8")
-            (output / V.MARKDOWN).write_text(text.replace("不判断内容质量与科学正确性", "略"), encoding="utf-8")
+            (output / V.MARKDOWN).write_text(text.replace("不判断内容质量与科学正确性", "略"), encoding="utf-8", newline="\n")
             report = V.Report()
             V.check_output(output, replay_value, report)
             self.assertIn("markdown-boundary", failed(report))
@@ -590,7 +590,7 @@ class CommandLineTests(unittest.TestCase):
     def test_a_tampered_root_exits_one(self):
         with Sandbox() as sandbox:
             root = build_root(sandbox)
-            (root / V.CONTROL / V.PROJECT).write_text("{}", encoding="utf-8")
+            (root / V.CONTROL / V.PROJECT).write_text("{}", encoding="utf-8", newline="\n")
             code, out, _err = self.run_cli([str(root)])
             self.assertEqual(code, 1)
             self.assertIn("manifest-digest:project.json", out)

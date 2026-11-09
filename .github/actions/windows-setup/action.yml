@@ -1,0 +1,80 @@
+name: Locked Windows tools
+description: Prepare the shared native Rust, Node, and portable PDF Python environment.
+
+inputs:
+  evidence-dir:
+    description: Existing job-specific directory for raw setup logs.
+    required: true
+  target-profile:
+    description: Cargo profile directory to restore; excludes runtime and test roots.
+    required: true
+  cache-task:
+    description: Job identity prevents concurrent Rust/Python cache key collisions.
+    required: true
+outputs:
+  registry-key:
+    description: Exact immutable Cargo dependency cache key.
+    value: ${{ steps.registry.outputs.cache-primary-key }}
+  registry-hit:
+    description: Whether the dependency key was an exact cache hit.
+    value: ${{ steps.registry.outputs.cache-hit }}
+  target-key:
+    description: Source-bound compiled artifact cache key.
+    value: ${{ steps.target.outputs.cache-primary-key }}
+  target-hit:
+    description: Whether compiled artifacts were an exact cache hit.
+    value: ${{ steps.target.outputs.cache-hit }}
+  target-path:
+    description: Selected Cargo profile only.
+    value: target/${{ inputs.target-profile }}
+
+runs:
+  using: composite
+  steps:
+    - name: Restore immutable Cargo downloads
+      id: registry
+      uses: actions/cache/restore@v4
+      with:
+        key: windows-2025-rust-1.98.1-registry-${{ hashFiles('Cargo.lock') }}
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+    - name: Restore compiled Cargo profile
+      id: target
+      uses: actions/cache/restore@v4
+      with:
+        key: windows-2025-rust-1.98.1-${{ inputs.target-profile }}-${{ hashFiles('Cargo.lock') }}-${{ inputs.cache-task }}-${{ github.sha }}
+        restore-keys: |
+          windows-2025-rust-1.98.1-${{ inputs.target-profile }}-${{ hashFiles('Cargo.lock') }}-${{ inputs.cache-task }}-
+          windows-2025-rust-1.98.1-${{ inputs.target-profile }}-${{ hashFiles('Cargo.lock') }}-
+        path: target/${{ inputs.target-profile }}
+    - name: Install locked Rust toolchain
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        rustup toolchain install 1.98.1 --profile minimal --component rustfmt *>&1 | Tee-Object '${{ inputs.evidence-dir }}/rust-setup.log'
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+        rustup show *>&1 | Tee-Object '${{ inputs.evidence-dir }}/rust-identity.log'
+        exit $LASTEXITCODE
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '26.10.0'
+        cache: npm
+    - name: Install locked frontend dependencies
+      shell: pwsh
+      run: |
+        npm ci --ignore-scripts *>&1 | Tee-Object '${{ inputs.evidence-dir }}/npm-setup.log'
+        exit $LASTEXITCODE
+    - name: Prepare locked portable PDF Python
+      shell: pwsh
+      run: |
+        $ErrorActionPreference = 'Stop'
+        & ./scripts/prepare_windows_runtime.ps1 *>&1 | Tee-Object '${{ inputs.evidence-dir }}/python-setup.log'
+        $taskPython = Join-Path $env:GITHUB_WORKSPACE 'target/windows-runtime/python/python.exe'
+        "NOETOME_PDF_PYTHON=$taskPython" >> $env:GITHUB_ENV
+        "NOETOME_TEST_PYTHON=$taskPython" >> $env:GITHUB_ENV
+        # unittest starts child interpreters without inheriting the parent's
+        # -X utf8 flag. Match the application's explicit UTF-8 protocol there.
+        "PYTHONUTF8=1" >> $env:GITHUB_ENV
+        (Split-Path $taskPython -Parent) >> $env:GITHUB_PATH
+        Copy-Item target/windows-runtime/runtime-receipt.json '${{ inputs.evidence-dir }}/'

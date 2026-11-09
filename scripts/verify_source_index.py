@@ -1098,7 +1098,7 @@ def freeze(package: Path) -> int:
         "files": files,
     }
     (package / FROZEN).write_text(
-        json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     print(f"已冻结 {len(files)} 个成员")
     return 0
