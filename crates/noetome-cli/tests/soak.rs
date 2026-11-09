@@ -328,7 +328,20 @@ fn two_runs_with_the_same_parameters_are_byte_identical_apart_from_the_timings()
     for name in ["structure.json", "manifest.json", "report.md"] {
         assert_eq!(left[name], right[name], "{name} 应当字节相同");
     }
-    assert_ne!(left["timings.json"], right["timings.json"], "读数应当不同");
+    // Millisecond quantization and unavailable RSS can give two real runs the
+    // same readings. Validate each measurement without requiring randomness.
+    for bytes in [&left["timings.json"], &right["timings.json"]] {
+        let readings: Value = serde_json::from_slice(bytes).expect("合法计时JSON");
+        let rounds = readings["rounds"].as_array().expect("逐轮真实读数");
+        assert_eq!(rounds.len(), 8);
+        for (index, round) in rounds.iter().enumerate() {
+            assert_eq!(round["round"].as_u64(), Some(index as u64 + 1));
+            for field in ["elapsed_millis", "work_millis", "total_millis"] {
+                assert!(round[field].as_u64().is_some(), "{field} 必须是非负读数");
+            }
+            assert!(round["rss_bytes"].is_null() || round["rss_bytes"].as_u64().is_some());
+        }
+    }
 
     // 清单只描述参数与结论：不能带任何一次运行的读数摘要。
     let manifest = json(&sandbox.join("a/manifest.json"));
