@@ -494,9 +494,14 @@ impl SavedApi {
                 .ok_or_else(invalid)?;
             strict(content.as_bytes())?
         };
-        if input["request_id"] != id
-            || input["binding"] != request["binding"]
-            || input["units"] != json!(source.units)
+        // Selected DeepSeek strategies wrap the exact request alongside task
+        // instructions and response_schema; OpenAI strict sends it directly.
+        // The full body is independently rebuilt below, so accepting this
+        // location cannot accept an altered wrapper or response schema.
+        let transmitted = input.get("request").unwrap_or(&input);
+        if transmitted["request_id"] != id
+            || transmitted["binding"] != request["binding"]
+            || transmitted["units"] != json!(source.units)
             || body_value["model"] != request["configured_model"]
         {
             return Err(invalid());

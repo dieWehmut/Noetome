@@ -737,3 +737,95 @@ fn unknown_measurement_keeps_null_value_and_unit_and_explicit_conditions() {
     assert!(audit["payload"]["atoms"][0]["measurement"]["unit"].is_null());
     example.unchanged();
 }
+#[test]
+fn saved_chat_candidates_export_after_one_http_request_without_repeating_model_call() {
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    listener.set_nonblocking(true).unwrap();
+    let endpoint = format!(
+        "http://{}/v1/chat/completions",
+        listener.local_addr().unwrap()
+    );
+    let server = thread::spawn(move || {
+        let deadline = Instant::now() + Duration::from_secs(10);
+        let mut stream = loop {
+            if let Ok((stream, _)) = listener.accept() {
+                break stream;
+            }
+            assert!(Instant::now() < deadline, "no Chat request observed");
+            thread::sleep(Duration::from_millis(5));
+        };
+        let body: Value =
+            serde_json::from_slice(&read_body_path(&mut stream, "/v1/chat/completions")).unwrap();
+        let input: Value = serde_json::from_str(
+            body["messages"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|m| m["role"] == "user")
+                .unwrap()["content"]
+                .as_str()
+                .unwrap(),
+        )
+        .unwrap();
+        let request = &input["request"];
+        assert!(request["units"][0]["text"].is_string());
+        assert!(input["response_schema"].is_object());
+        let mut candidates: Value = serde_json::from_slice(
+            &fs::read(repo().join("fixtures/extraction-gateway-v1/response.json")).unwrap(),
+        )
+        .unwrap();
+        candidates.as_object_mut().unwrap().remove("producer");
+        candidates["request_id"] = request["request_id"].clone();
+        candidates["binding"] = request["binding"].clone();
+        let response=serde_json::to_vec(&json!({"id":"chatcmpl-preview-test","object":"chat.completion","model":"noetome-test-model","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","content":serde_json::to_string(&candidates).unwrap(),"refusal":null}}],"usage":{"prompt_tokens":100,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens":600,"completion_tokens_details":{"reasoning_tokens":0},"total_tokens":700}})).unwrap();
+        write!(stream,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",response.len()).unwrap();
+        stream.write_all(&response).unwrap();
+        drop(stream);
+        // Finish the only server before export. Any extra HTTP has no responder.
+        assert!(matches!(listener.accept(),Err(e) if e.kind()==std::io::ErrorKind::WouldBlock));
+    });
+    let example = Example::new(&endpoint, 1);
+    let mut config: Value = serde_json::from_slice(&fs::read(&example.config).unwrap()).unwrap();
+    config["provider"] = json!("openai_chat_completions");
+    config["limits"]["timeout_ms"] = json!(10000);
+    fs::write(&example.config, serde_json::to_vec_pretty(&config).unwrap()).unwrap();
+    let run = example.run();
+    server.join().unwrap();
+    assert!(
+        run.status.success(),
+        "{}",
+        String::from_utf8_lossy(&run.stderr)
+    );
+    let report: Value = serde_json::from_slice(&run.stdout).unwrap();
+    assert_eq!(report["status"], "candidates_validated");
+    assert_eq!(
+        report["request_strategy"],
+        "tangmao-deepseek-chat-positive-revision-v6"
+    );
+    assert_eq!(report["usage"]["network_attempts"], 1);
+    let before = snapshot_tree(&example.output);
+    let destination = example.root.join("chat saved preview");
+    let run = preview(&example, &destination);
+    assert!(
+        run.status.success(),
+        "{}",
+        String::from_utf8_lossy(&run.stderr)
+    );
+    let exported: Value = serde_json::from_slice(&run.stdout).unwrap();
+    assert_eq!(
+        exported["counts"],
+        json!({"concepts":1,"atoms":1,"evidence":1})
+    );
+    assert_eq!(exported["status"], "pending");
+    assert_eq!(snapshot_tree(&example.output), before);
+    example.unchanged();
+    let repeated = example.root.join("chat recovered again");
+    let run = preview(&example, &repeated);
+    assert!(
+        run.status.success(),
+        "{}",
+        String::from_utf8_lossy(&run.stderr)
+    );
+    assert_eq!(snapshot_tree(&example.output), before);
+    example.unchanged();
+}
