@@ -102,11 +102,15 @@ impl Artifact {
         Ok(value)
     }
     fn create(path: &Path, bytes: &[u8]) -> Result<Self, ProjectError> {
-        if bytes.len() > FILE_LIMIT {
+        Self::create_bounded(path, bytes, FILE_LIMIT)
+    }
+
+    fn create_bounded(path: &Path, bytes: &[u8], limit: usize) -> Result<Self, ProjectError> {
+        if bytes.len() > limit {
             return Err(ProjectError::new(
                 "EXTRACT_SAVE_LIMIT",
                 3,
-                "单份审计文件超过8 MiB本地边界。",
+                "单份输出文件超过本地字节边界。",
             ));
         }
         project::check_components(path)?;
@@ -159,7 +163,7 @@ impl Artifact {
         reader.seek(SeekFrom::Start(0)).map_err(|_| changed())?;
         let mut bytes = Vec::new();
         reader
-            .take(FILE_LIMIT as u64 + 1)
+            .take(self.fingerprint.byte_length + 1)
             .read_to_end(&mut bytes)
             .map_err(|_| changed())?;
         let metadata = self.file.metadata().map_err(|_| changed())?;
@@ -212,6 +216,8 @@ pub(crate) struct OutputRoot {
     directory: Directory,
     ancestors: Vec<Directory>,
     files: BTreeMap<String, Artifact>,
+    preview_directories: BTreeMap<String, Directory>,
+    preview: bool,
 }
 
 impl OutputRoot {
@@ -303,6 +309,8 @@ impl OutputRoot {
             directory,
             ancestors,
             files,
+            preview_directories: BTreeMap::new(),
+            preview: false,
         };
         value.verify()?;
         let expected_owner = serde_json::json!({"schema_version":1,"producer":"api","request_id":attempt.plan.key.request_id,"purpose":"unpublished_extraction_test","transport_mode":mode});
@@ -526,7 +534,10 @@ impl OutputRoot {
             directory,
             ancestors,
             files: BTreeMap::new(),
+            preview_directories: BTreeMap::new(),
+            preview: mode == Some("extraction_preview"),
         };
+        let preview = mode == Some("extraction_preview");
         let coordination = mode == Some("knowledge_coordination");
         let review = mode == Some("source_review");
         let presentation = mode == Some("knowledge_presentation");
@@ -535,9 +546,10 @@ impl OutputRoot {
         let formula = mode == Some("knowledge_formula");
         let image = mode == Some("knowledge_image");
         let scan = mode == Some("knowledge_scan_formula");
-        let mut owner = serde_json::json!({"schema_version":1,"producer":if scan {"knowledge_scan_formula"} else if image {"knowledge_image"} else if formula {"knowledge_formula"} else if flow {"knowledge_flow"} else if process {"process_source_review"} else if presentation {"knowledge_presentation"} else if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if scan {"unpublished_scan_formula"} else if image {"unpublished_image"} else if formula {"unpublished_formula"} else if flow {"unpublished_flow"} else if process {"unpublished_process_source_review"} else if presentation {"unpublished_presentation"} else if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
+        let mut owner = serde_json::json!({"schema_version":1,"producer":if preview {"extraction_preview"} else if scan {"knowledge_scan_formula"} else if image {"knowledge_image"} else if formula {"knowledge_formula"} else if flow {"knowledge_flow"} else if process {"process_source_review"} else if presentation {"knowledge_presentation"} else if coordination {"knowledge_coordination"} else if review {"source_review"} else if mode.is_some() {"api"} else {"fake"},"request_id":request_id,"purpose":if preview {"unpublished_extraction_preview"} else if scan {"unpublished_scan_formula"} else if image {"unpublished_image"} else if formula {"unpublished_formula"} else if flow {"unpublished_flow"} else if process {"unpublished_process_source_review"} else if presentation {"unpublished_presentation"} else if coordination {"unpublished_coordination"} else if review {"unpublished_source_review"} else {"unpublished_extraction_test"}});
         if let Some(mode) = mode.filter(|_| {
-            !review
+            !preview
+                && !review
                 && !coordination
                 && !presentation
                 && !process
@@ -553,9 +565,79 @@ impl OutputRoot {
         Ok(value)
     }
 
+    /// A dedicated unpublished preview layout; ordinary extraction stays flat.
+    pub(crate) fn create_preview(path: &Path, request_id: &str) -> Result<Self, ProjectError> {
+        let mut value = Self::create_owned(path, request_id, Some("extraction_preview"))?;
+        for name in ["vault", "vault/attachments", "reports"] {
+            value.verify()?;
+            fs::create_dir(value.root.join(name))
+                .map_err(|e| ProjectError::io(&value.root.join(name), e))?;
+            let directory = Directory::capture(&value.root.join(name), "EXTRACT_OUTPUT_CHANGED")
+                .map_err(|_| changed())?;
+            value.preview_directories.insert(name.into(), directory);
+            value.verify()?;
+        }
+        Ok(value)
+    }
+
+    pub(crate) fn add_preview_attachment(
+        &mut self,
+        name: &str,
+        bytes: &[u8],
+    ) -> Result<(), ProjectError> {
+        if !self.preview
+            || !matches!(
+                name,
+                "vault/attachments/source-0001.pdf"
+                    | "vault/attachments/source-0001.md"
+                    | "vault/attachments/source-0001.txt"
+            )
+            || self.files.contains_key(name)
+        {
+            return Err(changed());
+        }
+        self.verify()?;
+        let limit = if name.ends_with(".pdf") {
+            16 * 1024 * 1024
+        } else {
+            64 * 1024 * 1024
+        };
+        let artifact = Artifact::create_bounded(&self.root.join(name), bytes, limit)?;
+        self.files.insert(name.into(), artifact);
+        self.verify()
+    }
+
+    pub(crate) fn discard_preview_result(&mut self) -> Result<(), ProjectError> {
+        let names: Vec<String> = self
+            .files
+            .keys()
+            .filter(|n| n.as_str() != ".owner.json")
+            .cloned()
+            .collect();
+        let mut first = None;
+        for name in names {
+            if let Err(error) = self.discard_names_inner(&[&name], true) {
+                first.get_or_insert(error);
+            }
+        }
+        match first {
+            Some(error) => Err(error),
+            None => Ok(()),
+        }
+    }
+
     pub(crate) fn add(&mut self, name: &str, bytes: &[u8]) -> Result<(), ProjectError> {
         if !crate::fixture_input::valid_relative_path(name)
-            || name.contains('/')
+            || (!self.preview && name.contains('/'))
+            || (self.preview
+                && Path::new(name)
+                    .parent()
+                    .filter(|p| !p.as_os_str().is_empty())
+                    .is_some_and(|p| {
+                        !self
+                            .preview_directories
+                            .contains_key(p.to_str().unwrap_or(""))
+                    }))
             || self.files.contains_key(name)
         {
             return Err(changed());
@@ -582,18 +664,31 @@ impl OutputRoot {
         self.directory
             .verify("EXTRACT_OUTPUT_CHANGED")
             .map_err(|_| changed())?;
-        let actual = fs::read_dir(&self.root)
-            .map_err(|_| changed())?
-            .map(|e| e.map(|e| e.file_name()))
-            .collect::<Result<BTreeSet<_>, _>>()
-            .map_err(|_| changed())?;
-        let expected = self
-            .files
-            .keys()
-            .map(std::ffi::OsString::from)
-            .collect::<BTreeSet<_>>();
-        if actual != expected {
-            return Err(changed());
+        for (relative, directory) in std::iter::once(("", &self.directory)).chain(
+            self.preview_directories
+                .iter()
+                .map(|(name, held)| (name.as_str(), held)),
+        ) {
+            directory
+                .verify("EXTRACT_OUTPUT_CHANGED")
+                .map_err(|_| changed())?;
+            let actual = fs::read_dir(self.root.join(relative))
+                .map_err(|_| changed())?
+                .map(|e| e.map(|e| e.file_name()))
+                .collect::<Result<BTreeSet<_>, _>>()
+                .map_err(|_| changed())?;
+            let expected = self
+                .files
+                .keys()
+                .chain(self.preview_directories.keys())
+                .filter(|name| {
+                    Path::new(name).parent().unwrap_or(Path::new("")) == Path::new(relative)
+                })
+                .map(|name| Path::new(name).file_name().unwrap().to_os_string())
+                .collect::<BTreeSet<_>>();
+            if actual != expected {
+                return Err(changed());
+            }
         }
         for file in self.files.values() {
             file.verify()?;
@@ -638,6 +733,11 @@ impl OutputRoot {
         self.directory
             .verify("EXTRACT_OUTPUT_CHANGED")
             .map_err(|_| changed())?;
+        for directory in self.preview_directories.values() {
+            directory
+                .verify("EXTRACT_OUTPUT_CHANGED")
+                .map_err(|_| changed())?;
+        }
         // Remove only captured result artifacts. Never enumerate/delegate a
         // deletion of unknown files, and never recursively clean a failed run.
         for name in names {
@@ -818,5 +918,53 @@ mod budget_output_tests {
         );
         drop(output);
         fs::remove_dir_all(base).unwrap();
+    }
+}
+
+#[cfg(test)]
+mod preview_tests {
+    use super::*;
+    #[test]
+    fn preview_layout_rejects_unknown_members_and_cleans_only_owned_files() {
+        let path =
+            std::env::temp_dir().join(format!("noetome-preview-guard-{}", uuid::Uuid::new_v4()));
+        let mut output =
+            OutputRoot::create_preview(&path, &uuid::Uuid::new_v4().to_string()).unwrap();
+        output
+            .add("vault/concept-0001.md", b"pending note")
+            .unwrap();
+        output
+            .add("reports/preview.json", b"pending report")
+            .unwrap();
+        let unknown = path.join("reports/manual.txt");
+        fs::write(&unknown, b"manual bytes").unwrap();
+        assert!(output.verify().is_err());
+        output.discard_preview_result().unwrap();
+        assert_eq!(fs::read(unknown).unwrap(), b"manual bytes");
+        assert!(!path.join("reports/preview.json").exists());
+        assert!(!path.join("vault/concept-0001.md").exists());
+        assert!(path.join(".owner.json").exists());
+    }
+    #[cfg(unix)]
+    #[test]
+    fn preview_directory_replacement_preserves_replacement_bytes() {
+        let path =
+            std::env::temp_dir().join(format!("noetome-preview-replaced-{}", uuid::Uuid::new_v4()));
+        let mut output =
+            OutputRoot::create_preview(&path, &uuid::Uuid::new_v4().to_string()).unwrap();
+        output.add("vault/concept-0001.md", b"original").unwrap();
+        fs::rename(path.join("vault"), path.join("old-vault")).unwrap();
+        fs::create_dir(path.join("vault")).unwrap();
+        fs::write(path.join("vault/concept-0001.md"), b"replacement manual").unwrap();
+        assert!(output.verify().is_err());
+        assert!(output.discard_preview_result().is_err());
+        assert_eq!(
+            fs::read(path.join("vault/concept-0001.md")).unwrap(),
+            b"replacement manual"
+        );
+        assert_eq!(
+            fs::read(path.join("old-vault/concept-0001.md")).unwrap(),
+            b"original"
+        );
     }
 }

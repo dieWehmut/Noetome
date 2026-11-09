@@ -22,6 +22,7 @@ mod extraction_api_wire;
 mod extraction_fake;
 mod extraction_model;
 mod extraction_output;
+pub mod extraction_preview;
 mod extraction_review;
 mod extraction_review_model;
 mod extraction_source;
@@ -138,6 +139,9 @@ pub const HELP: &str = "Noetome — 个人学科学习知识编译器
       noetome extract fake <项目路径> <import-id> <fake目录> <尚不存在的测试输出根>
       noetome extract api <项目路径> <import-id> <config.json> <尚不存在的测试输出根>
       noetome extract verify <项目路径> <import-id> <review目录> <尚不存在的测试输出根>
+      noetome preview choices <项目路径> <import-id>
+      noetome preview units <项目路径> <import-id> <选择.json>
+      noetome preview export <项目路径> <import-id> <成功API审计根> <尚不存在的新输出根>
       noetome knowledge coordinate <项目路径> <coordination-case> <尚不存在的测试输出根>
       noetome knowledge present <项目路径> <coordination-case> <协调输出根> <尚不存在的测试Vault>
       noetome knowledge formula <formula-case> <profile.json> <尚不存在的测试Vault>
@@ -339,6 +343,18 @@ compile只使用父目录已存在的新测试根，已有目标、输入输出�
 以 - 开头的路径可在动词后加 -- 分隔符，包含空格的路径作为单独参数。
 ";
 
+pub const PREVIEW_HELP: &str = "Noetome 待核验模型笔记
+
+用法：
+  noetome preview choices <项目目录> <import-id>
+  noetome preview units <项目目录> <import-id> <选择.json>
+  noetome preview export <项目目录> <import-id> <成功API审计根> <新输出根>
+
+选择.json 是严格数组：文本 {kind: text, ordinal: N}，PDF {kind: pdf, page_index: N, region_id: 真实区域ID}。
+最多64个单位、64 KiB正文。export 复核已保存的成功 API 请求及原始响应，输出新根/vault 和 reports；知识保持 pending，科学质量 not_run，published false。
+只向已有 Obsidian Vault 外的新测试目录导出。
+";
+
 pub const EXTRACTION_HELP: &str = "Noetome 有界知识候选验证
 
 用法：noetome extract fake <项目路径> <import-id> <fake目录> <尚不存在的测试输出根> [--cancel-file <取消信号路径>]
@@ -460,6 +476,22 @@ pub enum CliCommand {
         output: PathBuf,
     },
     SourceInspectPdf(PathBuf),
+    PreviewHelp,
+    PreviewChoices {
+        project: PathBuf,
+        import_id: String,
+    },
+    PreviewUnits {
+        project: PathBuf,
+        import_id: String,
+        selection: PathBuf,
+    },
+    PreviewExport {
+        project: PathBuf,
+        import_id: String,
+        api_root: PathBuf,
+        output: PathBuf,
+    },
     ExtractionHelp,
     ExtractFake {
         project: PathBuf,
@@ -800,6 +832,9 @@ pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
     }
     if args.first().is_some_and(|arg| arg == "source") {
         return source_command(&args[1..]);
+    }
+    if args.first().is_some_and(|arg| arg == "preview") {
+        return preview_command(&args[1..]);
     }
     if args.first().is_some_and(|arg| arg == "extract") {
         return extraction_command(&args[1..]);
@@ -1635,6 +1670,60 @@ fn api_run_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
         [budget, output] if verb == "status" && valid(budget) && valid(output) => {
             Ok(CliCommand::ApiRunStatus {
                 budget: budget.into(),
+                output: output.into(),
+            })
+        }
+        _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+fn preview_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.is_empty()
+        || matches!(args,[help] if help == "--help" || help == "-h")
+        || matches!(args,[verb,help] if (verb == "choices" || verb == "units" || verb == "export") && (help == "--help" || help == "-h"))
+    {
+        return Ok(CliCommand::PreviewHelp);
+    }
+    let (verb, tail) = args.split_first().ok_or(INVALID_ARGUMENT)?;
+    let (tail, separator) = if tail.first().is_some_and(|arg| arg == "--") {
+        (&tail[1..], true)
+    } else {
+        (tail, false)
+    };
+    let valid = |value: &OsString| {
+        !value.is_empty() && (separator || value.as_encoded_bytes().first() != Some(&b'-'))
+    };
+    match tail {
+        [project, id] if verb == "choices" && valid(project) => Ok(CliCommand::PreviewChoices {
+            project: project.into(),
+            import_id: id
+                .to_str()
+                .filter(|s| !s.is_empty())
+                .ok_or(INVALID_ARGUMENT)?
+                .into(),
+        }),
+        [project, id, selection] if verb == "units" && valid(project) && valid(selection) => {
+            Ok(CliCommand::PreviewUnits {
+                project: project.into(),
+                import_id: id
+                    .to_str()
+                    .filter(|s| !s.is_empty())
+                    .ok_or(INVALID_ARGUMENT)?
+                    .into(),
+                selection: selection.into(),
+            })
+        }
+        [project, id, api_root, output]
+            if verb == "export" && valid(project) && valid(api_root) && valid(output) =>
+        {
+            Ok(CliCommand::PreviewExport {
+                project: project.into(),
+                import_id: id
+                    .to_str()
+                    .filter(|s| !s.is_empty())
+                    .ok_or(INVALID_ARGUMENT)?
+                    .into(),
+                api_root: api_root.into(),
                 output: output.into(),
             })
         }
@@ -2552,5 +2641,73 @@ fn retention_command(args: &[OsString]) -> Result<CliCommand, &'static str> {
             root: PathBuf::from(&rest[0]),
         }),
         _ => Err(INVALID_ARGUMENT),
+    }
+}
+
+#[cfg(test)]
+mod preview_cli_tests {
+    use super::*;
+    fn args(items: &[&str]) -> Vec<OsString> {
+        items.iter().map(OsString::from).collect()
+    }
+    #[test]
+    fn preview_help_navigation_and_subcommands_are_pure_parsing() {
+        for items in [
+            &["preview"][..],
+            &["preview", "--help"],
+            &["preview", "units", "--help"],
+            &["preview", "choices", "-h"],
+            &["preview", "export", "--help"],
+        ] {
+            assert!(matches!(
+                parse(&args(items)).unwrap(),
+                CliCommand::PreviewHelp
+            ));
+        }
+        for verb in ["choices", "units", "export"] {
+            assert!(HELP.contains(&format!("noetome preview {verb}")));
+            assert!(PREVIEW_HELP.contains(&format!("noetome preview {verb}")));
+        }
+        assert!(
+            matches!(parse(&args(&["preview","choices","中文项目","id"])).unwrap(),CliCommand::PreviewChoices{project,import_id} if project==PathBuf::from("中文项目") && import_id=="id")
+        );
+        assert!(
+            matches!(parse(&args(&["preview","units","--","-项目","id","-选择.json"])).unwrap(),CliCommand::PreviewUnits{project,import_id,selection} if project==PathBuf::from("-项目") && import_id=="id" && selection==PathBuf::from("-选择.json"))
+        );
+        assert!(
+            matches!(parse(&args(&["preview","export","项目","id","api","new"])).unwrap(),CliCommand::PreviewExport{api_root,output,..} if api_root==PathBuf::from("api") && output==PathBuf::from("new"))
+        );
+    }
+    #[test]
+    fn preview_rejects_unknown_missing_extra_or_ambiguous_arguments() {
+        for items in [
+            &["preview", "publish"][..],
+            &["preview", "units", "p", "i"],
+            &["preview", "choices", "p", "i", "extra"],
+            &["preview", "export", "p", "i", "api"],
+            &["preview", "choices", "-p", "i"],
+            &["preview", "units", "p", "i", "-selection"],
+            &["preview", "choices", "p", ""],
+            &["preview", "units", "p", "i", ""],
+        ] {
+            assert!(parse(&args(items)).is_err(), "{items:?}");
+        }
+    }
+    #[cfg(unix)]
+    #[test]
+    fn preview_paths_remain_native_but_non_unicode_ids_are_refused() {
+        use std::os::unix::ffi::OsStringExt;
+        let native = OsString::from_vec(vec![0xff]);
+        let parsed = parse(&[
+            "preview".into(),
+            "choices".into(),
+            native.clone(),
+            "id".into(),
+        ])
+        .unwrap();
+        assert!(
+            matches!(parsed,CliCommand::PreviewChoices{project,..} if project==PathBuf::from(&native))
+        );
+        assert!(parse(&["preview".into(), "choices".into(), "p".into(), native]).is_err());
     }
 }

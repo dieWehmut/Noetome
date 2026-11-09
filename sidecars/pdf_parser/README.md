@@ -2,7 +2,7 @@
 
 使用 [pdfplumber v0.11.9 官方接口](https://github.com/jsvine/pdfplumber/tree/v0.11.9)：从其 pdfminer.six 字符清单取得正文与布局包络，按固定 CropBox/旋转与行规则交付 [PDF 沙盒契约](../../doc/technical/PDF_PARSE_CONTRACT.md)。只有这个文本解析 adapter；pdfminer 是它的依赖，pypdfium2/Pillow 是上游所需依赖，不代表 Noetome 增加第二个文本解析后端。图片/表格/公式/扫描仍需复核。
 
-可读 `adapter.py` 经 `scripts/build_pdf_sidecar.py` 生成字节绑定的 `adapter.zlib` 与 SHA 元数据，Rust `include_bytes!` 嵌入 payload。调用者只选定可信解释器 `NOETOME_PDF_PYTHON`；普通 CLI 没有 adapter/fake 参数。原生 argv 使用 Python `-I -B -X utf8 -c` 和标准库 zlib/compile/exec 运行可信代码，忽略用户 Python path、禁止字节码写入；PDF 只从已确认完整原始字节的 BytesIO 解析。资料不决定可执行文件、代码、输出文件名或网络操作。
+可读 `adapter.py` 经 `scripts/build_pdf_sidecar.py` 生成字节绑定的 `adapter.zlib` 与 SHA 元数据，Rust `include_bytes!` 嵌入 payload。开发者可明确选定可信解释器 `NOETOME_PDF_PYTHON`；未设置时 Windows 使用当前程序相邻的 `pdf-python/python.exe`，两者均检查绝对路径、路径组件和普通文件。明确无效的覆盖值不会回退，不搜索 PATH 或资料目录；普通 CLI 没有 adapter/fake 参数。原生 argv 使用 Python `-I -B -X utf8 -c` 和标准库 zlib/compile/exec 运行可信代码，忽略用户 Python path、禁止字节码写入；PDF 只从已确认完整原始字节的 BytesIO 解析。资料不决定可执行文件、代码、输出文件名或网络操作。
 
 原始可读源码的 Windows `-c` 命令行曾实测超出 CreateProcess 限额而失败；压缩 wrapper 留出路径/参数空间，不要求源码难以审阅。修改 adapter 后先 `python scripts/build_pdf_sidecar.py`，提交前 `python scripts/build_pdf_sidecar.py --check`；生成代码解压必须与源码完全一致。普通 Rust 编译/fake 回归不启动 Python 或 PDF 库，只消费已提交 payload。
 

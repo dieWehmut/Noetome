@@ -9,7 +9,7 @@ use crate::{
 };
 use std::{
     ffi::OsString,
-    path::Path,
+    path::{Path, PathBuf},
     sync::{Arc, atomic::AtomicBool},
     time::Instant,
 };
@@ -36,11 +36,23 @@ struct JobSession {
 // compressed payload keeps native argv short without temporary driver files.
 const ADAPTER_PAYLOAD: &[u8] = include_bytes!("../../../sidecars/pdf_parser/adapter.zlib");
 
-fn configured_runtime() -> Result<std::path::PathBuf, SidecarError> {
-    std::env::var_os("NOETOME_PDF_PYTHON").filter(|value|!value.is_empty()).map(Into::into)
-        .ok_or_else(||SidecarError::new("PDF_RUNTIME","set NOETOME_PDF_PYTHON to the absolute locked Python interpreter; see sidecars/pdf_parser/README.md"))
+fn selected_runtime(
+    explicit: Option<OsString>,
+    executable: Option<PathBuf>,
+    windows: bool,
+) -> Result<PathBuf, SidecarError> {
+    if let Some(explicit) = explicit {
+        return Ok(explicit.into());
+    }
+    if windows && let Some(parent) = executable.as_ref().and_then(|path| path.parent()) {
+        return Ok(parent.join("pdf-python").join("python.exe"));
+    }
+    Err(SidecarError::new(
+        "PDF_RUNTIME",
+        "set NOETOME_PDF_PYTHON to the absolute locked Python interpreter; Windows installations require pdf-python/python.exe beside the executable",
+    ))
 }
-fn command(runtime: &Path) -> Result<ParserCommand, SidecarError> {
+fn checked_runtime(runtime: &Path) -> Result<PathBuf, SidecarError> {
     if !runtime.is_absolute() {
         return Err(SidecarError::new(
             "PDF_RUNTIME",
@@ -50,6 +62,20 @@ fn command(runtime: &Path) -> Result<ParserCommand, SidecarError> {
     let runtime =
         project::check_components(runtime).map_err(|e| SidecarError::new("PDF_RUNTIME", e))?;
     project::checked_file(&runtime).map_err(|e| SidecarError::new("PDF_RUNTIME", e))?;
+    Ok(runtime)
+}
+/// Only an explicit trusted override or the installed executable's sibling
+/// runtime is considered. Neither PATH nor the document's directory is searched.
+pub fn runtime_path() -> Result<PathBuf, SidecarError> {
+    let runtime = selected_runtime(
+        std::env::var_os("NOETOME_PDF_PYTHON"),
+        std::env::current_exe().ok(),
+        cfg!(windows),
+    )?;
+    checked_runtime(&runtime)
+}
+fn command(runtime: &Path) -> Result<ParserCommand, SidecarError> {
+    let runtime = checked_runtime(runtime)?;
     let hex: String = ADAPTER_PAYLOAD
         .iter()
         .map(|byte| format!("{byte:02x}"))
@@ -71,7 +97,7 @@ pub fn parse(input: &Path, output: &Path) -> Result<PdfOutput, SidecarError> {
     parse_with(
         input,
         output,
-        &configured_runtime()?,
+        &runtime_path()?,
         Limits::default(),
         Arc::new(AtomicBool::new(false)),
     )
@@ -101,7 +127,7 @@ fn parse_command(
 /// Source registration uses the same parser and Core checks, with a byte and
 /// capability receipt instead of an Err whose directory owners have expired.
 pub(crate) fn parse_owned(input: &Path, output: &Path) -> Result<CapturedPdf, SidecarError> {
-    let configured = configured_runtime().and_then(|runtime| command(&runtime));
+    let configured = runtime_path().and_then(|runtime| command(&runtime));
     parse_command_owned(
         input,
         output,

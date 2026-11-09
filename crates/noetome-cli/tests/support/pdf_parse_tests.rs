@@ -45,7 +45,68 @@ impl Drop for Scratch {
     }
 }
 fn runtime() -> PathBuf {
-    configured_runtime().expect("real PDF boundary tests need absolute NOETOME_PDF_PYTHON")
+    runtime_path().expect("real PDF boundary tests need a trusted locked Python interpreter")
+}
+
+#[test]
+fn runtime_selection_is_only_beside_the_installed_executable() {
+    let executable = std::env::temp_dir()
+        .join("中文 安装目录")
+        .join("Noetome.exe");
+    assert_eq!(
+        selected_runtime(None, Some(executable.clone()), true).unwrap(),
+        executable.parent().unwrap().join("pdf-python/python.exe")
+    );
+    assert_eq!(
+        selected_runtime(None, Some(executable), false)
+            .unwrap_err()
+            .code,
+        "PDF_RUNTIME"
+    );
+    assert_eq!(
+        selected_runtime(None, None, true).unwrap_err().code,
+        "PDF_RUNTIME"
+    );
+}
+
+#[test]
+fn runtime_explicit_invalid_override_never_falls_back() {
+    for value in [OsString::new(), OsString::from("relative/python.exe")] {
+        let chosen = selected_runtime(
+            Some(value.clone()),
+            Some(std::env::current_exe().unwrap()),
+            true,
+        )
+        .unwrap();
+        assert_eq!(chosen, PathBuf::from(value));
+        assert_eq!(checked_runtime(&chosen).unwrap_err().code, "PDF_RUNTIME");
+    }
+}
+
+#[test]
+fn runtime_requires_an_existing_ordinary_file() {
+    let scratch = Scratch::new();
+    let missing = scratch.0.join("python.exe");
+    assert_eq!(checked_runtime(&missing).unwrap_err().code, "PDF_RUNTIME");
+    assert_eq!(checked_runtime(&scratch.0).unwrap_err().code, "PDF_RUNTIME");
+    fs::write(&missing, b"test-only interpreter path receipt").unwrap();
+    assert_eq!(
+        checked_runtime(&missing).unwrap(),
+        project::check_components(&missing).unwrap()
+    );
+    let selected = selected_runtime(Some(missing.as_os_str().to_owned()), None, false).unwrap();
+    assert_eq!(selected, missing);
+}
+
+#[cfg(unix)]
+#[test]
+fn runtime_rejects_a_symlink_even_when_it_points_to_an_ordinary_file() {
+    let scratch = Scratch::new();
+    let actual = scratch.0.join("actual-python");
+    let linked = scratch.0.join("python.exe");
+    fs::write(&actual, b"test-only interpreter").unwrap();
+    std::os::unix::fs::symlink(&actual, &linked).unwrap();
+    assert_eq!(checked_runtime(&linked).unwrap_err().code, "PDF_RUNTIME");
 }
 fn helper(code: &str) -> ParserCommand {
     ParserCommand {

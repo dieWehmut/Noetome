@@ -22,7 +22,7 @@ config.json 只读、最多 64 KiB，严格拒绝重复/额外/缺字段和未�
 
 live 的Responses只允许上述精确官方端点和糖猫云 `/v1/responses`；Chat只允许糖猫云 `https://ai.1343263.xyz/v1/chat/completions`。糖猫云两种策略只认已选deepseek-flash，不额外允许其他模型、端口、用户信息、查询串、fragment、重定向或代理继承。provider与路径须匹配。local_http_test 只允许数字环回 127.0.0.1/::1、明确端口、HTTP及按provider匹配的/v1/responses或/v1/chat/completions，模型和凭据值必须以noetome-test-开头；该模式只发本地假服务请求，真实模型/收费调用为0，不作为T02真实验收。
 
-required_input=vision 或缺少 text/structured_output 在请求前拒绝；不发图片或猜测 OCR。selection 明确选择已登记文本 Span 或 PDF 的已确认文本区域，最多 4 单位。limits 沿用字段，API 本项限定 max_units=1..4、max_input_bytes=1..64 KiB、max_response_bytes=1..1 MiB、max_output_tokens=16..8192、timeout_ms=1..60000；实际序列化 HTTP 请求最多 256 KiB。budget.max_requests=0..1，max_total_tokens 为明确总预算，max_cost_usd 必须出现，可空；金额为正有限十进制文本。
+required_input=vision 或缺少 text/structured_output 在请求前拒绝；不发图片或猜测 OCR。selection 明确选择已登记文本 Span 或 PDF 的已确认文本区域，最多 64 单位。B15-T02 为实际 PDF 逐行区域选择把 max_units 从 1..4 扩至 1..64，与来源读取会话既有上限一致；不把多个区域伪造成整页 locator。max_input_bytes=1..64 KiB、max_response_bytes=1..1 MiB、max_output_tokens=16..8192、timeout_ms=1..60000 保持不变；实际序列化 HTTP 请求最多 256 KiB。budget.max_requests=0..1，max_total_tokens 为明确总预算，max_cost_usd 必须出现，可空；金额为正有限十进制文本。单位增加不表示无限资料、自动连续调用或提高累计服务预算。
 
 配置文件位于来源项目和输出之外，持有读取句柄及身份/mtime/SHA，最终重验。不扫描其父目录的私人正文。输出与整个来源项目不相交，取消信号位于来源/输出之外并不能替代 config.json；存在信号时不调用。只用明确选取的新测试来源，不写生产 Vault。
 

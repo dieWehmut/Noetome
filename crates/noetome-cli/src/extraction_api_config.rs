@@ -87,6 +87,42 @@ mod tests {
             );
         }
     }
+    #[test]
+    fn sixty_four_units_keep_input_response_tokens_time_and_one_call_limits() {
+        let mut value = config_value();
+        value["limits"]["max_units"] = serde_json::json!(64);
+        value["limits"]["max_input_bytes"] = serde_json::json!(65536);
+        value["selection"] = serde_json::json!(
+            (0..64)
+                .map(|ordinal| serde_json::json!({"kind":"text","ordinal":ordinal}))
+                .collect::<Vec<_>>()
+        );
+        super::validate(&serde_json::from_value(value.clone()).unwrap()).unwrap();
+        for (field, cap) in [
+            ("max_units", 65),
+            ("max_input_bytes", 65537),
+            ("max_response_bytes", 1048577),
+            ("max_output_tokens", 8193),
+            ("timeout_ms", 60001),
+        ] {
+            let mut bad = value.clone();
+            bad["limits"][field] = serde_json::json!(cap);
+            assert_eq!(
+                super::validate(&serde_json::from_value(bad).unwrap())
+                    .unwrap_err()
+                    .code(),
+                "EXTRACT_API_CONFIG",
+                "{field}"
+            );
+        }
+        value["budget"]["max_requests"] = serde_json::json!(2);
+        assert_eq!(
+            super::validate(&serde_json::from_value(value).unwrap())
+                .unwrap_err()
+                .code(),
+            "EXTRACT_API_CONFIG"
+        );
+    }
     fn config_value() -> serde_json::Value {
         serde_json::json!({"schema_version":1,"provider":"openai_responses","transport_mode":"local_http_test",
             "endpoint":"http://127.0.0.1:1234/v1/responses","model":"noetome-test-model","credential_env":"NOETOME_TEST_CREDENTIAL",
@@ -331,7 +367,7 @@ fn validate(config: &ApiConfig) -> Result<(), ProjectError> {
         || !name
             .bytes()
             .all(|b| b.is_ascii_uppercase() || b.is_ascii_digit() || b == b'_')
-        || !(1..=4).contains(&l.max_units)
+        || !(1..=64).contains(&l.max_units)
         || config.selection.is_empty()
         || config.selection.len() > l.max_units
         || !(1..=65536).contains(&l.max_input_bytes)

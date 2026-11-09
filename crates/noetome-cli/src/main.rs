@@ -236,6 +236,30 @@ fn main() -> ExitCode {
         CliCommand::Help => noetome_cli::HELP.to_owned(),
         CliCommand::ProjectHelp => noetome_cli::PROJECT_HELP.to_owned(),
         CliCommand::SourceHelp => noetome_cli::SOURCE_HELP.to_owned(),
+        CliCommand::PreviewHelp => noetome_cli::PREVIEW_HELP.to_owned(),
+        CliCommand::PreviewChoices { project, import_id } => preview_result(
+            noetome_cli::extraction_preview::choices(&project, &import_id),
+            &mut result_code,
+        ),
+        CliCommand::PreviewUnits {
+            project,
+            import_id,
+            selection,
+        } => preview_result(
+            noetome_cli::extraction_preview::selected_units_from_file(
+                &project, &import_id, &selection,
+            ),
+            &mut result_code,
+        ),
+        CliCommand::PreviewExport {
+            project,
+            import_id,
+            api_root,
+            output,
+        } => preview_result(
+            noetome_cli::extraction_preview::export(&project, &import_id, &api_root, &output),
+            &mut result_code,
+        ),
         CliCommand::ExtractionHelp => noetome_cli::EXTRACTION_HELP.to_owned(),
         CliCommand::ExtractVerify {
             project,
@@ -765,4 +789,18 @@ fn project_summary(result: &str, path: &std::path::Path, info: &project::Project
         path.join("project.json").display(),
         path.join(&info.database).display(),
     )
+}
+
+fn preview_result(
+    result: Result<serde_json::Value, project::ProjectError>,
+    code: &mut u8,
+) -> String {
+    match result {
+        Ok(value) => serde_json::to_string_pretty(&value).expect("JSON Value is serializable"),
+        Err(error) => {
+            *code = error.exit_code();
+            let _ = writeln!(io::stderr().lock(), "{error}");
+            String::new()
+        }
+    }
 }

@@ -4,7 +4,9 @@
 
 ## 入口与布局
 
-`source parse-pdf <明确PDF> <尚不存在的测试根>` 使用调用者提供的 `NOETOME_PDF_PYTHON` 绝对路径。Python adapter 随 CLI 嵌入，依赖锁定，isolated/no-bytecode 原生 argv，不使用 shell，不下载依赖。Windows 原始代码 `-c` 实际触发过 CreateProcess 长度上限，现以标准库 zlib 解压可信嵌入 payload 再 compile/exec；生成工具核对 payload 解压结果、源码与 SHA，不改变文档数据边界，不写临时 driver。`source inspect-pdf <测试根>` 只读重查已保存字节，不依赖原文件仍存在。
+`source parse-pdf <明确PDF> <尚不存在的测试根>` 优先使用调用者明确提供的 `NOETOME_PDF_PYTHON` 绝对路径；该变量未设置时，Windows 只选择当前可执行文件相邻的 `pdf-python/python.exe`。不搜索 PATH、工作目录或 PDF 目录。明确提供但为空、相对、不存在或含链接的路径拒绝，不静默回退；非 Windows 仍须明确提供可信解释器。桌面与 CLI 共用 `pdf_parse::runtime_path` 的选择及普通文件检查。安装包是否实际包含完整锁定环境由 B15-T03 的原生安装验收证明。
+
+Python adapter 随 CLI 嵌入，依赖锁定，isolated/no-bytecode 原生 argv，不使用 shell，不下载依赖。Windows 原始代码 `-c` 实际触发过 CreateProcess 长度上限，现以标准库 zlib 解压可信嵌入 payload 再 compile/exec；生成工具核对 payload 解压结果、源码与 SHA，不改变文档数据边界，不写临时 driver。`source inspect-pdf <测试根>` 只读重查已保存字节，不依赖原文件仍存在。
 
 ```text
 new-test-root/
