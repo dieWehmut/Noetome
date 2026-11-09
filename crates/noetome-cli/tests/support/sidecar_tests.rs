@@ -367,6 +367,71 @@ fn junction_rejected_with_external_sentinel_unchanged() {
     assert_eq!(fs::read(sentinel).unwrap(), b"outside sentinel");
 }
 #[cfg(windows)]
+struct HeldTreeProbe {
+    child: std::process::Child,
+    input: std::process::ChildStdin,
+    snapshots: std::sync::mpsc::Receiver<Result<String, String>>,
+    reader: Option<std::thread::JoinHandle<()>>,
+}
+#[cfg(windows)]
+impl HeldTreeProbe {
+    fn open(pids: &[u32]) -> (Self, serde_json::Value) {
+        use std::io::BufRead;
+        let mut cmd = command("probe_hold");
+        cmd.args
+            .extend(pids.iter().map(|v| OsString::from(v.to_string())));
+        let mut child = Command::new(cmd.program)
+            .args(cmd.args)
+            .stdin(std::process::Stdio::piped())
+            .stdout(std::process::Stdio::piped())
+            .spawn()
+            .unwrap();
+        let input = child.stdin.take().unwrap();
+        let output = child.stdout.take().unwrap();
+        let (sender, snapshots) = std::sync::mpsc::channel();
+        let reader = std::thread::spawn(move || {
+            for line in std::io::BufReader::new(output).lines() {
+                if sender.send(line.map_err(|e| e.to_string())).is_err() {
+                    break;
+                }
+            }
+        });
+        let probe = Self {
+            child,
+            input,
+            snapshots,
+            reader: Some(reader),
+        };
+        let initial = probe.receive();
+        (probe, initial)
+    }
+    fn receive(&self) -> serde_json::Value {
+        let line = self
+            .snapshots
+            .recv_timeout(Duration::from_secs(2))
+            .expect("independent held-process observer must respond")
+            .expect("held-process observer stdout must be readable");
+        serde_json::from_str(&line).expect("held-process observer snapshot must be JSON")
+    }
+    fn sample(&mut self) -> serde_json::Value {
+        use std::io::Write;
+        self.input.write_all(b"sample\n").unwrap();
+        self.input.flush().unwrap();
+        self.receive()
+    }
+}
+#[cfg(windows)]
+impl Drop for HeldTreeProbe {
+    fn drop(&mut self) {
+        // This observer has no descendants and is outside the parser's Job.
+        let _ = self.child.kill();
+        let _ = self.child.wait();
+        if let Some(reader) = self.reader.take() {
+            let _ = reader.join();
+        }
+    }
+}
+#[cfg(windows)]
 fn tree(mode: &str, want: Option<&str>) {
     tree_with_fault(mode, want, false);
 }
@@ -400,20 +465,14 @@ fn tree_with_fault(mode: &str, want: Option<&str>, primary_failure: bool) {
     }
     let pids: Vec<u32> = serde_json::from_slice(&fs::read(&handshake).unwrap()).unwrap();
     assert_eq!(pids.len(), 3);
-    let probe = |pids: &[u32]| {
-        let mut cmd = command("probe");
-        cmd.args
-            .extend(pids.iter().map(|v| OsString::from(v.to_string())));
-        let out = Command::new(cmd.program).args(cmd.args).output().unwrap();
-        assert!(out.status.success());
-        serde_json::from_slice::<Vec<u32>>(&out.stdout).unwrap()
-    };
+    let (mut probe, live) = HeldTreeProbe::open(&pids);
+    assert_eq!(live["pids"], serde_json::json!(pids));
     assert_eq!(
-        probe(&pids),
-        pids,
+        live["wait_codes"],
+        serde_json::json!([258, 258, 258]),
         "root/child/grandchild must be alive before termination"
     );
-    println!("tree_mode={mode} live_pids={pids:?}");
+    println!("tree_mode={mode} held_live_processes={live}");
     let stop_at = Instant::now();
     if mode == "tree_cancel" || primary_failure {
         cancelled.store(true, Ordering::SeqCst);
@@ -430,8 +489,12 @@ fn tree_with_fault(mode: &str, want: Option<&str>, primary_failure: bool) {
     } else {
         result.unwrap();
     }
-    assert!(
-        probe(&pids).is_empty(),
+    let stopped = probe.sample();
+    println!("tree_mode={mode} held_stopped_processes={stopped}");
+    assert_eq!(stopped["creation_times"], live["creation_times"]);
+    assert_eq!(
+        stopped["wait_codes"],
+        serde_json::json!([0, 0, 0]),
         "all descendants must exit before host returns"
     );
     assert_eq!(fs::read(sentinel).unwrap(), b"outside sentinel");
@@ -759,16 +822,10 @@ fn review_broken_pipe_notifies_controller_and_reaps_live_tree() {
         std::thread::sleep(Duration::from_millis(5));
     }
     let pids: Vec<u32> = serde_json::from_slice(&fs::read(&handshake).unwrap()).unwrap();
-    let probe = |pids: &[u32]| {
-        let mut cmd = command("probe");
-        cmd.args
-            .extend(pids.iter().map(|p| OsString::from(p.to_string())));
-        let out = Command::new(cmd.program).args(cmd.args).output().unwrap();
-        assert!(out.status.success());
-        serde_json::from_slice::<Vec<u32>>(&out.stdout).unwrap()
-    };
-    assert_eq!(probe(&pids), pids);
-    println!("broken_pipe_live_pids={pids:?}");
+    let (mut probe, live) = HeldTreeProbe::open(&pids);
+    assert_eq!(live["pids"], serde_json::json!(pids));
+    assert_eq!(live["wait_codes"], serde_json::json!([258, 258, 258]));
+    println!("broken_pipe_held_live_processes={live}");
     let trigger = Instant::now();
     fs::write(handshake.with_extension("json.go"), b"go").unwrap();
     let error = thread.join().unwrap().unwrap_err();
@@ -777,7 +834,14 @@ fn review_broken_pipe_notifies_controller_and_reaps_live_tree() {
         "broken_pipe_latency_ms={} error={error}",
         latency.as_millis()
     );
-    assert!(probe(&pids).is_empty(), "IO failure must reclaim the tree");
+    let stopped = probe.sample();
+    println!("broken_pipe_held_stopped_processes={stopped}");
+    assert_eq!(stopped["creation_times"], live["creation_times"]);
+    assert_eq!(
+        stopped["wait_codes"],
+        serde_json::json!([0, 0, 0]),
+        "IO failure must reclaim the tree"
+    );
     assert_eq!(error.code, "SIDECAR_IO");
     assert!(
         latency < Duration::from_millis(500),

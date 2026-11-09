@@ -15,6 +15,45 @@ def ready(path, text):
     os.replace(pending,path)
 
 mode = sys.argv[1]
+if mode == 'probe_hold':
+    from ctypes import wintypes
+    # An independent test observer retains the exact live process objects.
+    # Reopening a numeric PID after termination can observe an unrelated reuse.
+    kernel = ctypes.WinDLL('kernel32', use_last_error=True)
+    kernel.OpenProcess.argtypes = (wintypes.DWORD, wintypes.BOOL, wintypes.DWORD)
+    kernel.OpenProcess.restype = wintypes.HANDLE
+    kernel.WaitForSingleObject.argtypes = (wintypes.HANDLE, wintypes.DWORD)
+    kernel.WaitForSingleObject.restype = wintypes.DWORD
+    kernel.GetProcessTimes.argtypes = (wintypes.HANDLE,) + (ctypes.POINTER(wintypes.FILETIME),) * 4
+    kernel.GetProcessTimes.restype = wintypes.BOOL
+    kernel.CloseHandle.argtypes = (wintypes.HANDLE,)
+    kernel.CloseHandle.restype = wintypes.BOOL
+    pids = list(map(int, sys.argv[2:]))
+    handles = []
+    def sample():
+        times = []
+        states = []
+        for handle in handles:
+            created, exited, system, user = (wintypes.FILETIME() for _ in range(4))
+            if not kernel.GetProcessTimes(handle, ctypes.byref(created), ctypes.byref(exited), ctypes.byref(system), ctypes.byref(user)):
+                raise ctypes.WinError(ctypes.get_last_error())
+            times.append((created.dwHighDateTime << 32) | created.dwLowDateTime)
+            states.append(kernel.WaitForSingleObject(handle, 0))
+        print(json.dumps({'pids': pids, 'creation_times': times, 'wait_codes': states}), flush=True)
+    try:
+        for pid in pids:
+            handle = kernel.OpenProcess(0x1000 | 0x100000, False, pid)
+            if not handle:
+                raise ctypes.WinError(ctypes.get_last_error())
+            handles.append(handle)
+        sample()
+        for line in sys.stdin:
+            if line.strip() == 'sample': sample()
+            elif line.strip() == 'quit': break
+            else: raise RuntimeError('invalid held-probe command')
+    finally:
+        for handle in handles: kernel.CloseHandle(handle)
+    sys.exit(0)
 if mode == 'probe':
     kernel = ctypes.windll.kernel32
     kernel.OpenProcess.restype = ctypes.c_void_p
