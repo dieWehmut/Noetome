@@ -3698,13 +3698,20 @@ mod tests {
             .schedule_retry_after(&q.key, "EXTRACT_API_HTTP_SERVER")
             .unwrap();
         let q2 = f.plan("second", 2);
+        // Disk preparation may outlast this fixture's 200 ms backoff. Verify
+        // the persisted decision at both exact boundaries, then exercise the
+        // real reservation after its actual wall-clock deadline.
+        let view = s.view().unwrap();
+        let persisted = attempt(&view, &q.key).unwrap().retry.as_ref().unwrap();
+        assert_eq!(persisted.retry_at_utc, due.retry_at_utc);
+        let before_due = (utc(&due.retry_at_utc).unwrap() - time::Duration::nanoseconds(1))
+            .format(&Rfc3339)
+            .unwrap();
         assert!(matches!(
-            s.reserve(&q2).unwrap(),
-            ReservationDecision::Denied {
-                scope: DenialScope::RetryNotDue,
-                ..
-            }
+            admission(&view, &q2, &before_due).unwrap(),
+            Some((DenialScope::RetryNotDue, _))
         ));
+        assert!(admission(&view, &q2, &due.retry_at_utc).unwrap().is_none());
         while OffsetDateTime::now_utc() < utc(&due.retry_at_utc).unwrap() {
             thread::sleep(Duration::from_millis(2));
         }

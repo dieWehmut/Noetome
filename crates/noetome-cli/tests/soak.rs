@@ -1,7 +1,7 @@
 //! Black-box tests for the soak harness verb.
 //!
 //! Every test runs the real binary and reads only files on disk. The clock and
-//! memory readings are asserted to exist and to be internally consistent; they are
+//! memory readings are checked for platform support and internal consistency; they are
 //! never compared across runs, because `timings.json` is the one output allowed to
 //! differ. The determinism test compares the other three files byte for byte.
 
@@ -375,14 +375,19 @@ fn the_timings_are_internally_consistent() {
     let units = summary["units"].as_u64().expect("units") as usize;
     assert_eq!(units, scheduled, "每个被调度的轮次都应当跑成一个单元");
     assert_eq!(summary["rounds"].as_u64().expect("rounds"), 10);
-    let peak = summary["peak_rss_bytes"].as_u64().expect("peak");
-    let first = summary["first_rss_bytes"].as_u64().expect("first");
-    let last = summary["last_rss_bytes"].as_u64().expect("last");
-    assert!(peak >= first && peak >= last, "峰值不得低于首末读数");
-    assert_eq!(
-        summary["rss_growth_bytes"].as_i64().expect("growth"),
-        last as i64 - first as i64
-    );
+    #[cfg(target_os = "linux")]
+    {
+        let peak = summary["peak_rss_bytes"].as_u64().expect("peak");
+        let first = summary["first_rss_bytes"].as_u64().expect("first");
+        let last = summary["last_rss_bytes"].as_u64().expect("last");
+        assert!(peak >= first && peak >= last, "峰值不得低于首末读数");
+        assert_eq!(
+            summary["rss_growth_bytes"].as_i64().expect("growth"),
+            last as i64 - first as i64
+        );
+    }
+    #[cfg(not(target_os = "linux"))]
+    assert_memory_unavailable(&timings);
     // 每一轮的 work 读数都不得为负，且 total 不小于 work。
     for round in rounds {
         let work = round["work_millis"].as_u64().expect("work");
@@ -541,6 +546,30 @@ fn text_of(output: &Output) -> String {
     text(output)
 }
 
+#[cfg(not(target_os = "linux"))]
+fn assert_memory_unavailable(timings: &Value) {
+    // The current sampler reads /proc/self/status only. Unsupported hosts
+    // must preserve unknown, including per-round readings, rather than zero.
+    for field in [
+        "peak_rss_bytes",
+        "first_rss_bytes",
+        "last_rss_bytes",
+        "rss_growth_bytes",
+    ] {
+        assert_eq!(
+            timings["summary"].get(field).expect("memory summary field"),
+            &Value::Null,
+            "{field}"
+        );
+    }
+    for round in timings["rounds"].as_array().expect("rounds") {
+        assert_eq!(
+            round.get("rss_bytes").expect("round memory field"),
+            &Value::Null
+        );
+    }
+}
+
 #[test]
 fn a_long_run_keeps_recording_rounds_without_unbounded_growth() {
     let sandbox = sandbox("long");
@@ -552,12 +581,17 @@ fn a_long_run_keeps_recording_rounds_without_unbounded_growth() {
     let summary = &timings["summary"];
     assert_eq!(summary["units"].as_u64().expect("units"), 300);
     assert_eq!(summary["errors"].as_u64().expect("errors"), 0);
-    let growth = summary["rss_growth_bytes"].as_i64().expect("growth");
-    // 只是一次短时观察：这里断言的是「没有出现无界增长」，不是 NFR-09 达标。
-    assert!(
-        growth < 256 * 1024 * 1024,
-        "内存增长 {growth} 字节，看起来不是有界行为"
-    );
+    #[cfg(target_os = "linux")]
+    {
+        let growth = summary["rss_growth_bytes"].as_i64().expect("growth");
+        // 只是一次短时观察，不表示 NFR-09 达标。
+        assert!(
+            growth < 256 * 1024 * 1024,
+            "内存增长 {growth} 字节，看起来不是有界行为"
+        );
+    }
+    #[cfg(not(target_os = "linux"))]
+    assert_memory_unavailable(&timings);
     // 结构产物必须仍然说 NFR-09 未达标，短跑不能变成通过。
     let structure = json(&sandbox.join("run/structure.json"));
     assert_eq!(structure["coverage"][0]["status"], "not_met");

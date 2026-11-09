@@ -2,7 +2,8 @@
 //!
 //! This module is a thin projection. Every decision about paths, ownership,
 //! contents and refusal codes belongs to `noetome_cli::project`; the desktop
-//! layer only forwards the call and copies the returned fields. It never
+//! layer rejects dot components in the original selection before any Windows
+//! path normalization, then forwards the call and copies the returned fields. It never
 //! creates directories of its own, never repairs a damaged root, never writes
 //! into a root that already exists, and never substitutes its own error code.
 
@@ -44,11 +45,33 @@ fn summarise(path: &Path, info: noetome_cli::project::ProjectInfo) -> ProjectSum
     }
 }
 
+fn validate_selected_path(path: &Path) -> Result<(), String> {
+    // `Path::components` drops interior `.` and pushing onto a Windows
+    // verbatim path can collapse `..`. Inspect the caller's original spelling
+    // before the Core turns the selection into an absolute path or walks it.
+    let valid = path.to_str().is_some_and(|selected| {
+        !selected.is_empty()
+            && !selected.contains('\0')
+            && !selected
+                .split(|character| character == '/' || (cfg!(windows) && character == '\\'))
+                .any(|component| matches!(component, "." | ".."))
+    });
+    if valid {
+        Ok(())
+    } else {
+        Err(format!(
+            "PROJECT_UNSAFE_PATH：项目路径不能含路径跳转或不安全原始拼写：{}",
+            path.display()
+        ))
+    }
+}
+
 /// Create a project at a directory that must not exist yet.
 ///
 /// Refusals (`PROJECT_PATH_EXISTS`, `PROJECT_INCOMPLETE`, `PROJECT_UNSAFE_PATH`,
 /// `PROJECT_IO_ERROR`, …) are returned as the CLI's own `CODE：message` text.
 pub fn create(path: &Path) -> Result<ProjectSummary, String> {
+    validate_selected_path(path)?;
     let info = noetome_cli::project::initialize(path).map_err(|error| error.to_string())?;
     Ok(summarise(path, info))
 }
@@ -76,6 +99,7 @@ pub fn pick_directory() -> Result<Option<String>, String> {
 
 /// Read an existing project without modifying it.
 pub fn open(path: &Path) -> Result<ProjectSummary, String> {
+    validate_selected_path(path)?;
     let info = noetome_cli::project::inspect(path).map_err(|error| error.to_string())?;
     Ok(summarise(path, info))
 }
@@ -193,11 +217,50 @@ mod tests {
     #[test]
     fn create_refuses_path_traversal_without_writing_anything() {
         with_test_directory("traversal", |root| {
+            let guard = sentinel(root);
+            let existing = root.join("已有项目 with spaces");
+            create(&existing).unwrap();
             let before = snapshot(root);
-            let error = create(&root.join("..").join("escaped-project")).unwrap_err();
-            assert!(error.starts_with("PROJECT_UNSAFE_PATH"), "{error}");
-            assert_eq!(snapshot(root), before);
+            // Preserve the selected spelling. A `join("..")` on the canonical
+            // Windows verbatim root would erase the traversal before `create`.
+            let separator = std::path::MAIN_SEPARATOR;
+            let selections = [
+                format!(".{separator}已有项目 with spaces"),
+                format!("..{separator}escaped-project"),
+                format!("已有项目 with spaces{separator}.{separator}new-project"),
+                format!("已有项目 with spaces{separator}..{separator}new-project"),
+                format!("已有项目 with spaces{separator}."),
+                format!("已有项目 with spaces{separator}.."),
+                format!(".{separator}..{separator}escaped-project"),
+            ];
+            for selection in selections {
+                let mut original = root.as_os_str().to_owned();
+                original.push(separator.to_string());
+                original.push(selection);
+                let target = Path::new(&original);
+                for operation in [create, open] {
+                    let error = operation(target).unwrap_err();
+                    assert!(error.starts_with("PROJECT_UNSAFE_PATH"), "{error}");
+                    assert_eq!(snapshot(root), before);
+                    assert_eq!(fs::read(&guard).unwrap(), before["outside-sentinel.txt"]);
+                }
+            }
         });
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn original_windows_mixed_separators_are_refused_before_io() {
+        for selected in [
+            r"C:\\project/../escaped",
+            r"\\?\C:\project\.\nested",
+            r"\\?\UNC\server\share\project\..\escaped",
+        ] {
+            for operation in [create, open] {
+                let error = operation(Path::new(selected)).unwrap_err();
+                assert!(error.starts_with("PROJECT_UNSAFE_PATH"), "{error}");
+            }
+        }
     }
 
     #[test]
