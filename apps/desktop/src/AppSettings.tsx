@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { invoke, isTauri } from "@tauri-apps/api/core";
 import AppIcon from "./AppIcon";
 import type { Page, SettingsSection, Theme } from "./appTypes";
+import AppModel from "./AppModel";
+import type { Workbench } from "./useWorkbench";
 
 type CloseBehavior = "hide_to_tray" | "exit";
 type SettingsPhase = "loading" | "ready" | "saving" | "saved" | "error";
@@ -105,9 +107,10 @@ function WindowBehaviorSettings() {
   );
 }
 
-const sections: { id: SettingsSection; label: string; icon: "sun" | "window" | "info" }[] = [
+const sections: { id: SettingsSection; label: string; icon: "sun" | "window" | "settings" | "info" }[] = [
   { id: "appearance", label: "外观", icon: "sun" },
   { id: "window", label: "窗口行为", icon: "window" },
+  { id: "model", label: "模型与预算", icon: "settings" },
   { id: "about", label: "关于 Noetome", icon: "info" },
 ];
 
@@ -118,9 +121,10 @@ interface AppSettingsProps {
   version?: string;
   onThemeChange: (theme: Theme) => void;
   onNavigate: (page: Page) => void;
+  workbench: Workbench;
 }
 
-export default function AppSettings({ section, theme, themeSaved, version, onThemeChange, onNavigate }: AppSettingsProps) {
+export default function AppSettings({ section, theme, themeSaved, version, onThemeChange, onNavigate, workbench }: AppSettingsProps) {
   return (
     <div className="settings-page">
       <div className="settings-page-heading"><AppIcon name="settings" /><h1>设置</h1></div>
@@ -139,12 +143,13 @@ export default function AppSettings({ section, theme, themeSaved, version, onThe
             <p className="settings-status" role="status" aria-live="polite">{themeSaved ? "主题已保存，下次打开时继续使用。" : `当前主题：${theme === "light" ? "亮色" : "暗色"}。`}</p>
           </section>}
           {section === "window" && <WindowBehaviorSettings />}
+          {section === "model" && <AppModel workbench={workbench} />}
           {section === "about" && <section className="settings-section settings-about" aria-labelledby="about-settings-title">
             <h2 id="about-settings-title" tabIndex={-1}>关于 Noetome</h2>
             <p className="settings-description">个人学科学习知识编译器</p>
             <div className="settings-about-brand"><img src="/app-icon.png" alt="Noetome 应用图标" /><div><h3>Noetome</h3><p>从电子资料到可追溯的 Obsidian 知识库。</p></div></div>
             <div className="settings-row"><div className="settings-row-copy"><h3>应用版本</h3><p>{version ?? "尚未读取版本"}</p></div><button className="button button-secondary" onClick={() => onNavigate("runtime")}>查看运行信息</button></div>
-            <div className="settings-about-note"><p>界面、字体与图标随安装包提供。窗口设置由本地组件管理，主题保存在本机。</p><p>当前桌面提供帮助、版本与连接检查。项目和资料操作暂通过 CLI 使用。</p></div>
+            <div className="settings-about-note"><p>界面、字体与图标随安装包提供。窗口设置由本地组件管理，主题保存在本机。</p><p>桌面支持项目、资料选择、模型候选与 Obsidian 待核验笔记导出；知识仍需人工核验。</p></div>
           </section>}
         </div>
       </div>

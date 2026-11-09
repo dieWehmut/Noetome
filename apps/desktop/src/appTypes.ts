@@ -1,3 +1,3 @@
-export type SettingsSection = "appearance" | "window" | "about";
-export type Page = "workspace" | "project" | "tasks" | "runtime" | SettingsSection;
+export type SettingsSection = "appearance" | "window" | "model" | "about";
+export type Page = "workspace" | "project" | "sources" | "tasks" | "runtime" | SettingsSection;
 export type Theme = "light" | "dark";

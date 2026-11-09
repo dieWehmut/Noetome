@@ -4,11 +4,13 @@ import AppMenuBar from "./AppMenuBar";
 import type { AppMenu } from "./AppMenuBar";
 import AppSidebar from "./AppSidebar";
 import AppProject from "./AppProject";
+import AppSources from "./AppSources";
 import AppTasks from "./AppTasks";
 import AppSettings from "./AppSettings";
 import Icon from "./AppIcon";
 import useThemePreference from "./useThemePreference";
 import type { Page } from "./appTypes";
+import useWorkbench from "./useWorkbench";
 
 type Phase = "idle" | "running" | "success" | "error";
 type PreviewOption = "help" | "version";
@@ -32,6 +34,7 @@ interface Preview {
 const pages: { id: Page; label: string; icon: "home" | "folder" | "queue" | "pulse" | "info" | "settings" }[] = [
   { id: "workspace", label: "工作台", icon: "home" },
   { id: "project", label: "项目", icon: "folder" },
+  { id: "sources", label: "资料", icon: "folder" },
   { id: "tasks", label: "任务中心", icon: "queue" },
   { id: "runtime", label: "运行检查", icon: "pulse" },
   { id: "appearance", label: "设置", icon: "settings" },
@@ -52,7 +55,8 @@ function StateBadge({ phase }: { phase: Phase }) {
 export default function App() {
   const [history, setHistory] = useState<{ entries: Page[]; index: number }>({ entries: ["workspace"], index: 0 });
   const page = history.entries[history.index];
-  const inSettings = page === "appearance" || page === "window" || page === "about";
+  const inSettings = page === "appearance" || page === "window" || page === "model" || page === "about";
+  const workbench = useWorkbench();
   const theme = useThemePreference();
   const recentPages = [...new Set(history.entries.slice(0, history.index + 1).reverse())].slice(0, 5);
   const [sidebarVisible, setSidebarVisible] = useState(() => !window.matchMedia(sidebarOverlayQuery).matches);
@@ -190,10 +194,12 @@ export default function App() {
     { label: "File", actions: [
       { id: "workspace", label: "工作台", onSelect: () => navigate("workspace") },
       { id: "project", label: "项目", onSelect: () => navigate("project") },
+      { id: "sources", label: "资料", onSelect: () => navigate("sources") },
       { id: "tasks", label: "任务中心", onSelect: () => navigate("tasks") },
       { id: "runtime", label: "运行检查", onSelect: () => navigate("runtime") },
       { id: "appearance", label: "设置", onSelect: () => navigate("appearance") },
       { id: "settings", label: "窗口设置", onSelect: () => navigate("window", "window-settings-title") },
+      { id: "model", label: "模型与预算", onSelect: () => navigate("model", "model-settings-title") },
     ] },
     { label: "Edit", actions: [
       { id: "select-all", label: "全选", onSelect: selectAllContent },
@@ -214,7 +220,7 @@ export default function App() {
     <div className="app-layout">
       <AppMenuBar canGoBack={history.index > 0} canGoForward={history.index < history.entries.length - 1} sidebarVisible={showSidebar} sidebarDisabled={inSettings} onBack={() => moveHistory(-1)} onForward={() => moveHistory(1)} onToggleSidebar={toggleSidebar} menus={menus} />
       <div className="app-body">
-      <AppSidebar page={page} visible={showSidebar} recentPages={recentPages} theme={theme.theme} onNavigate={navigate} onToggleTheme={() => theme.setTheme(theme.theme === "light" ? "dark" : "light")} />
+      <AppSidebar page={page} visible={showSidebar} recentPages={recentPages} theme={theme.theme} project={workbench.project} onNavigate={navigate} onToggleTheme={() => theme.setTheme(theme.theme === "light" ? "dark" : "light")} />
 
       <div className="main-layout">
         <main id="main-content" className="main-content" tabIndex={-1} ref={mainRef}>
@@ -232,15 +238,16 @@ export default function App() {
               <div className="section-title-row"><h2>当前可以做什么</h2><span>从小而可靠的能力开始</span></div>
               <div className="capability-grid">
                 <section className="capability-card"><div className="card-icon"><Icon name="terminal" /></div><span className="small-badge available">已接入</span><h3>查看帮助与版本</h3><p>通过本地组件查看 CLI 用法与版本，确认桌面应用连接状态。</p><button className="text-button" onClick={() => navigate("runtime")}>打开运行检查<Icon name="arrow" /></button></section>
-                <section className="capability-card"><div className="card-icon"><Icon name="folder" /></div><span className="small-badge available">已接入</span><h3>建立学习项目</h3><p>新建一个项目根，或只读检查已有项目；字段直接来自本地 Rust 组件。资料导入与知识生成尚未接入。</p><button className="text-button" onClick={() => navigate("project")}>新建或打开项目<Icon name="arrow" /></button></section>
+                <section className="capability-card"><div className="card-icon"><Icon name="folder" /></div><span className="small-badge available">已接入</span><h3>自己的资料与笔记</h3><p>选择 PDF、MD 或 TXT，核对原文后生成模型候选，导出 Obsidian 待核验笔记。</p><button className="text-button" onClick={() => navigate(workbench.project ? "sources" : "project")}>开始整理资料<Icon name="arrow" /></button></section>
                 <section className="capability-card"><div className="card-icon"><Icon name="queue" /></div><span className="small-badge available">已接入</span><h3>查看任务状态</h3><p>只读投影六单元运行、研究队列、有界检索与写作反馈修订四类账本；四维状态与错误码原样显示。</p><button className="text-button" onClick={() => navigate("tasks")}>打开任务中心<Icon name="arrow" /></button></section>
               </div>
 
-              <section className="scope-note"><span className="scope-marker" aria-hidden="true" /><p>桌面已接入项目新建、只读检查与任务状态投影；启动运行、资料导入、审批与发布仍通过 CLI 使用。</p></section>
+              <section className="command-card" aria-labelledby="selftest-title"><div className="command-heading"><div><h2 id="selftest-title">离线安装自检</h2><p>使用随应用提供的作者样例，零网络、零模型调用；与自己的资料整理分别保存。</p></div><button className="button button-secondary" disabled={workbench.sourceBusy !== null} onClick={() => void workbench.runSelfTest()}>{workbench.sourceBusy === "selftest" ? "正在自检…" : "运行离线样例"}</button></div>{workbench.selfTest && <div className="preview-result"><p role="status">{workbench.selfTest.failure ? "离线自检失败" : "离线作者样例自检完成"}</p><p className="workflow-path">{workbench.selfTest.output_root}</p>{workbench.selfTest.vault_path && <p className="workflow-path">样例 Vault：{workbench.selfTest.vault_path}</p>}<details className="workflow-record"><summary>完整离线记录</summary><pre>{JSON.stringify(workbench.selfTest.record, null, 2)}</pre></details></div>}{workbench.selfTestError && <p className="error-message" role="alert">{workbench.selfTestError}</p>}</section>
             </>
           )}
 
-          {page === "project" && <AppProject />}
+          {page === "project" && <AppProject workbench={workbench} onSources={() => navigate("sources")} />}
+          {page === "sources" && <AppSources workbench={workbench} onProject={() => navigate("project")} onModel={() => navigate("model", "model-settings-title")} />}
 
           {page === "tasks" && <AppTasks />}
 
@@ -268,7 +275,7 @@ export default function App() {
             </>
           )}
 
-          {(page === "appearance" || page === "window" || page === "about") && <AppSettings section={page} theme={theme.theme} themeSaved={theme.saved} version={runtimeInfo?.app_version} onThemeChange={theme.setTheme} onNavigate={navigate} />}
+          {inSettings && <AppSettings section={page as "appearance" | "window" | "model" | "about"} theme={theme.theme} themeSaved={theme.saved} version={runtimeInfo?.app_version} workbench={workbench} onThemeChange={theme.setTheme} onNavigate={navigate} />}
 
         </main>
 
