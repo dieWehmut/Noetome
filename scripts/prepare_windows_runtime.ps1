@@ -25,7 +25,24 @@ $taskLock = Join-Path $taskRepoRoot 'sidecars\pdf_parser\runtime-lock.json'
 $taskRequirements = Join-Path $taskRepoRoot 'sidecars\pdf_parser\requirements-lock.txt'
 
 Write-Host "Downloading byte-pinned CPython 3.12.14 Windows x64 into $OutputDir"
-Invoke-WebRequest -Uri $taskArchiveUrl -OutFile $taskArchive
+# A temporary CDN/proxy outage is separate from a byte-identity failure. Bound
+# transport to four 30-second attempts and 2/4/6-second delays; retain each
+# failure in the setup log. SHA mismatch below is never retried or accepted.
+for ($taskAttempt = 1; $taskAttempt -le 4; $taskAttempt++) {
+    try {
+        Invoke-WebRequest -Uri $taskArchiveUrl -OutFile $taskArchive -TimeoutSec 30
+        break
+    } catch {
+        $taskStatus = $null
+        if ($_.Exception.Response) { $taskStatus = [int]$_.Exception.Response.StatusCode }
+        $taskTransient = ($null -eq $taskStatus) -or $taskStatus -in @(408, 429) -or ($taskStatus -ge 500 -and $taskStatus -le 599)
+        Write-Warning "Portable Python download attempt $taskAttempt/4 failed (HTTP $taskStatus): $($_.Exception.Message)"
+        if (-not $taskTransient -or $taskAttempt -eq 4) { throw }
+        $taskDelaySeconds = 2 * $taskAttempt
+        Write-Host "Retrying the same byte-pinned archive in $taskDelaySeconds seconds."
+        Start-Sleep -Seconds $taskDelaySeconds
+    }
+}
 $taskActualHash = (Get-FileHash -LiteralPath $taskArchive -Algorithm SHA256).Hash.ToLowerInvariant()
 if ($taskActualHash -ne $taskArchiveHash) { throw 'Portable Python archive SHA256 differs from the pinned release asset.' }
 & tar -xzf $taskArchive -C $OutputDir
