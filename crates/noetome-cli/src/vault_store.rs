@@ -1612,11 +1612,14 @@ mod tests {
         let base = scratch("caller-path");
         fs::create_dir_all(&base).unwrap();
         let package = fixture();
-        let dotted = package
-            .join(".")
-            .join("基线占位")
-            .join("..")
-            .join("author.json");
+        // PathBuf::push normalizes `..` immediately for Windows verbatim paths.
+        // Construct the caller's raw spelling before asking our resolver to fold it.
+        let mut dotted = package.as_os_str().to_os_string();
+        for component in [".", "基线占位", "..", "author.json"] {
+            dotted.push(std::path::MAIN_SEPARATOR.to_string());
+            dotted.push(component);
+        }
+        let dotted = PathBuf::from(dotted);
         assert!(dotted.to_string_lossy().contains(".."), "用例必须真的带 ..");
         let root = base.join("根");
         let summary = adopt(&dotted, &root).expect("带 .. 的调用方路径应当可用");
@@ -1671,7 +1674,8 @@ mod tests {
         fs::create_dir_all(base.join("a")).unwrap();
         fs::create_dir_all(base.join("b")).unwrap();
         assert_eq!(
-            resolve_caller_path(&base.join("a").join("..").join("b")).unwrap(),
+            fs::canonicalize(resolve_caller_path(&base.join("a").join("..").join("b")).unwrap())
+                .unwrap(),
             fs::canonicalize(&base).unwrap().join("b")
         );
     }
@@ -1802,6 +1806,7 @@ mod tests {
             store.baseline_bytes().unwrap_err().code(),
             "VAULT_NO_BASELINE"
         );
+        drop(store); // Release SQLite before removing its files on Windows.
         fs::remove_dir_all(&base).unwrap();
     }
 

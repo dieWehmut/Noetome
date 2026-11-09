@@ -1392,15 +1392,21 @@ fn compute_final_state(
 }
 
 fn write_vault_file(store: &VaultStore, relative: &str, bytes: &[u8]) -> Result<(), ProjectError> {
+    // Reject unsafe spellings before PathBuf::push can normalize them on
+    // Windows verbatim roots. The persisted contract always uses `/`.
+    if relative.is_empty()
+        || relative.contains('\\')
+        || relative
+            .split('/')
+            .any(|part| part.is_empty() || part == "." || part == "..")
+    {
+        return Err(argument(format!(
+            "路径必须是托管根内的规范相对路径：{relative}；vault 未写入任何字节。"
+        )));
+    }
     let vault = store.root().join(VAULT);
-    let text = vault
-        .to_str()
-        .ok_or_else(|| argument("托管根不是合法 UTF-8；vault 未写入任何字节。"))?;
     let safe = project::check_components(&store.vault_path(relative))?;
-    let target = safe
-        .to_str()
-        .ok_or_else(|| argument(format!("路径不是合法 UTF-8：{relative}")))?;
-    if !target.starts_with(&format!("{text}/")) {
+    if safe == vault || !safe.starts_with(&vault) {
         return Err(argument(format!(
             "路径 {relative} 逃出了托管根；vault 未写入任何字节。"
         )));
@@ -1591,6 +1597,32 @@ mod tests {
                 }
                 other => panic!("未知判定 {other}"),
             }
+        }
+    }
+
+    #[test]
+    fn unsafe_write_spellings_leave_the_entire_managed_root_unchanged() {
+        let (_base, root) = fresh("write-spellings");
+        let store = VaultStore::open(&root).unwrap();
+        let before = snapshot(&root);
+        for relative in [
+            "",
+            "../outside.md",
+            "/outside.md",
+            "笔记/../../outside.md",
+            "笔记//力学.md",
+            "笔记/./力学.md",
+            "笔记\\..\\outside.md",
+        ] {
+            assert!(
+                write_vault_file(&store, relative, b"must not land").is_err(),
+                "{relative}"
+            );
+            assert_eq!(
+                snapshot(&root),
+                before,
+                "unsafe spelling wrote bytes: {relative}"
+            );
         }
     }
 

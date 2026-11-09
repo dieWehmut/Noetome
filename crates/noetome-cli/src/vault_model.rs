@@ -904,7 +904,7 @@ mod tests {
                         .unwrap()
                         .to_str()
                         .unwrap()
-                        .to_owned();
+                        .replace('\\', "/");
                     files.insert(relative, std::fs::read(&path).unwrap());
                 }
             }

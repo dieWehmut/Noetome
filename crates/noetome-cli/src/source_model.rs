@@ -18,6 +18,14 @@ use crate::sidecar_process::Control;
 use crate::sidecar_workspace::{Directory, GuardedFile};
 use crate::text::{ParseStatus, SpanKind};
 
+#[cfg(all(test, windows))]
+thread_local! {
+    // Tests observe the real held read handle, then attempt native writes and
+    // replacement. The observer itself does not simulate or supply protection.
+    pub(crate) static SNAPSHOT_READ_OBSERVER: std::cell::RefCell<Option<Box<dyn Fn(&Path)>>> =
+        const { std::cell::RefCell::new(None) };
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub(crate) struct SourceFailure {
@@ -995,6 +1003,12 @@ fn read_snapshot(
         return Err(invalid_snapshot("快照文件超出受限读取长度"));
     }
     let guard = project::read_guard(path)?;
+    #[cfg(all(test, windows))]
+    SNAPSHOT_READ_OBSERVER.with(|observer| {
+        if let Some(observer) = observer.borrow().as_ref() {
+            observer(path);
+        }
+    });
     let opened_metadata = guard
         .metadata()
         .map_err(|error| ProjectError::io(path, error))?;
