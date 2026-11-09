@@ -191,6 +191,10 @@ def synthetic_body(config,crop):
 def synthetic_vault(vault,state='clear',profile_name='native',response_edit=None,config_edit=None):
     """Hand-built, explicitly artificial unit output tree; no CLI/network/model."""
     vault.mkdir(); case_root=FIXTURE/'cases'/state; profile_path=FIXTURE/'profiles'/(profile_name+'.json'); api_path=vault.parent/(vault.name+'-api.json')
+    # Match the canonical selected path saved by the synthetic Core request.
+    # Windows temporary parents may have an 8.3 spelling; do not make the
+    # invocation/budget receipts claim that spelling was the selected config.
+    api_path = api_path.resolve()
     config=V.artificial_config('http://127.0.0.1:8765/v1/chat/completions')
     if config_edit: config_edit(config)
     V.save(api_path,config); config_raw=V.read(api_path)
@@ -282,6 +286,11 @@ class ScanOutputAttackTests(unittest.TestCase):
     def sample(self,state='clear',profile='native',name='vault',**kwargs):
         vault=self.base/name; args=synthetic_vault(vault,state,profile,**kwargs); return vault,args
     def verify(self,vault,args): return V.verify_output(args[0],args[1],args[2],vault,args[3])
+    def test_synthetic_configuration_selection_matches_saved_canonical_path(self):
+        vault, args = self.sample()
+        request = V.strict_json(V.read(vault/'request.json'))
+        self.assertEqual(request['config']['path'], str(args[1]))
+        self.assertEqual(args[1], args[1].resolve())
     def test_valid_native_and_original_fallback_are_distinct(self):
         for name,profile,wanted in (('native','native','native_math'),('image','unverified','formula_image')):
             vault,args=self.sample(profile=profile,name=name); checked=self.verify(vault,args); self.assertEqual(checked['representation'],wanted); self.assertEqual(checked['real_model_calls'],0); self.assertEqual(checked['cumulative_budget_binding'],'not_run')

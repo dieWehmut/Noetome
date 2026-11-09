@@ -29,9 +29,6 @@ COPIED = [
     V.CAPABILITIES,
     V.ICON_MANIFEST,
     *V.ICON_FILES,
-    V.DIST_INDEX,
-    "apps/desktop/dist/assets/index-C1_5kHW4.css",
-    "apps/desktop/dist/assets/index-CD7Cb9Kv.js",
     V.PACKAGE_JSON,
     V.ACCEPTANCE,
     V.MAIN_RS,
@@ -45,6 +42,9 @@ def build_tree(directory: Path) -> Path:
         target = directory / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, target)
+    # Vite names assets by their current content. Copy this build's entry and
+    # complete output together so referenced files never come from an old hash.
+    shutil.copytree(ROOT / V.DIST, directory / V.DIST)
     return directory
 
 
@@ -81,6 +81,15 @@ class PackagingTest(unittest.TestCase):
     # clean tree ----------------------------------------------------------
     def test_frozen_tree_passes_every_check(self) -> None:
         self.assert_clean()
+
+    def test_fixture_preserves_all_current_built_dist_bytes(self) -> None:
+        source = ROOT / V.DIST
+        expected = {path.relative_to(source): path.read_bytes()
+                    for path in source.rglob("*") if path.is_file()}
+        copied = self.root / V.DIST
+        actual = {path.relative_to(copied): path.read_bytes()
+                  for path in copied.rglob("*") if path.is_file()}
+        self.assertEqual(actual, expected)
 
     def test_freeze_is_reproducible_and_excludes_itself(self) -> None:
         first = self.load(V.FROZEN)
