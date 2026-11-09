@@ -109,6 +109,7 @@ def repository_resources(repo):
             "fixtures/model-ledger/continuation-current-ledger.json": repo / PROOF,
             "samples/single-page.pdf": repo / "fixtures/pdf-text-v1/single-page.pdf",
             "QUICKSTART.zh-CN.md": repo / "doc/windows/QUICKSTART.zh-CN.md",
+            "licenses/winsafe-0.0.29-MIT.md": repo / "doc/licenses/winsafe-0.0.29-MIT.md",
             "runtime-lock.json": repo / "sidecars/pdf_parser/runtime-lock.json",
             "requirements-lock.txt": repo / "sidecars/pdf_parser/requirements-lock.txt",
         }

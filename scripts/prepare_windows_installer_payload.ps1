@@ -68,6 +68,7 @@ copy_file(repo/'doc/validation/assets/B06V-T02/recognition/vision-live-final/act
 copy_file(repo/'doc/validation/assets/B06V-T02/review/continuation-current-ledger.json','fixtures/model-ledger/continuation-current-ledger.json','repository/frozen-ledger-proof')
 for name in ('single-page.pdf','scanned-page.pdf'):copy_file(repo/'fixtures/pdf-text-v1'/name,'samples/'+name,'repository/fixtures/pdf-text-v1/'+name)
 copy_file(quick,'QUICKSTART.zh-CN.md','repository/doc/windows/QUICKSTART.zh-CN.md')
+copy_file(repo/'doc/licenses/winsafe-0.0.29-MIT.md','licenses/winsafe-0.0.29-MIT.md','repository/doc/licenses/winsafe-0.0.29-MIT.md')
 for name in ('runtime-lock.json','requirements-lock.txt'):copy_file(repo/'sidecars/pdf_parser'/name,name,'repository/sidecars/pdf_parser/'+name)
 copy_file(runtime/'runtime-receipt.json','runtime-receipt.json','runtime/runtime-receipt.json')
 readme='Noetome Windows 11 x64\n\nSee QUICKSTART.zh-CN.md for Chinese setup and hands-on steps.\nThe packaged fixtures and author PDF are engineering samples, not reviewed scientific knowledge.\nThe full locked PDF runtime and licenses are preserved in pdf-python. Model credentials and cumulative usage stay external to this payload.\n'
