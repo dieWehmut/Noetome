@@ -586,7 +586,7 @@ fn pipe(
     maximum: usize,
     overflow: Arc<AtomicBool>,
     send: mpsc::Sender<Result<Vec<u8>, String>>,
-) {
+) -> thread::JoinHandle<()> {
     thread::spawn(move || {
         let mut bytes = Vec::new();
         let mut buffer = [0; 8192];
@@ -604,7 +604,7 @@ fn pipe(
             }
         };
         let _ = send.send(result);
-    });
+    })
 }
 #[cfg(windows)]
 #[derive(Debug)]
@@ -650,7 +650,7 @@ fn run_bounded(
             .stderr(Stdio::piped());
     });
     #[cfg(windows)]
-    {
+    let (kill, census) = {
         let mut limits = win32job::ExtendedLimitInfo::new();
         limits.limit_kill_on_job_close();
         let kill = Arc::new(win32job::Job::create_with_limit_info(&limits).map_err(io_error)?);
@@ -658,14 +658,22 @@ fn run_bounded(
         let mut flags = CreationFlags(Default::default());
         flags.0.0 = 0x08000000;
         wrap.wrap(flags)
-            .wrap(JobObserver { kill, census })
+            .wrap(JobObserver {
+                kill: kill.clone(),
+                census: census.clone(),
+            })
             .wrap(JobObject);
-    }
+        (kill, census)
+    };
     let mut child = wrap.spawn().map_err(io_error)?;
+    #[cfg(windows)]
+    let root_process = noetome_cli::native_process::NativeProcess::open(child.id());
+    #[cfg(windows)]
+    let mut held_processes = noetome_cli::native_process::JobProcesses::new();
     let overflow = Arc::new(AtomicBool::new(false));
     let (outsend, outrecv) = mpsc::channel();
     let (errsend, errrecv) = mpsc::channel();
-    pipe(
+    let out_thread = pipe(
         child
             .stdout()
             .take()
@@ -674,7 +682,7 @@ fn run_bounded(
         overflow.clone(),
         outsend,
     );
-    pipe(
+    let err_thread = pipe(
         child
             .stderr()
             .take()
@@ -687,8 +695,24 @@ fn run_bounded(
     let mut cancelling = None;
     let mut failure = None;
     let status = loop {
-        if let Some(status) = child.inner_mut().try_wait().map_err(io_error)? {
-            break Some(status);
+        #[cfg(windows)]
+        if let Err(error) = held_processes.capture(&census) {
+            failure = Some(Failure {
+                code: "DESKTOP_CLEANUP".into(),
+                message: error,
+            });
+            break None;
+        }
+        match child.inner_mut().try_wait() {
+            Ok(Some(status)) => break Some(status),
+            Ok(None) => {}
+            Err(error) => {
+                failure = Some(Failure {
+                    code: "DESKTOP_IO".into(),
+                    message: error.to_string(),
+                });
+                break None;
+            }
         }
         if cancel.load(Ordering::SeqCst) {
             let cancelled_at = *cancelling.get_or_insert_with(|| {
@@ -720,19 +744,89 @@ fn run_bounded(
         }
         thread::sleep(Duration::from_millis(10));
     };
-    // JobObject started its root suspended and assigned before resuming. Terminate
-    // all descendants even after a normal root exit; dropping closes its kill job.
-    if status.is_none() || cfg!(windows) {
-        child.start_kill().map_err(io_error)?;
-    }
+    // A root exit and an empty Job census do not prove that Windows has completed
+    // descendant termination. Capture owned process identities before requesting it.
+    let cleanup_deadline = Instant::now() + Duration::from_secs(10);
+    #[cfg(windows)]
+    let captured = held_processes.capture(&census);
+    let kill_result = if status.is_none() || cfg!(windows) {
+        child.start_kill()
+    } else {
+        Ok(())
+    };
+    // Close every kill-on-close job handle before waiting, including the wrapper's
+    // independent fallback and process-wrap's child job. Keep the census and actual
+    // process handles alive; they cannot later resolve to reused PIDs.
     drop(child);
     drop(wrap);
+    #[cfg(windows)]
+    drop(kill);
+    #[cfg(windows)]
+    let mut identity_error = root_process.as_ref().err().cloned().or(captured.err());
+    #[cfg(windows)]
+    {
+        loop {
+            let root_exited = match &root_process {
+                Ok(root) => match root.has_exited() {
+                    Ok(exited) => exited,
+                    Err(error) => {
+                        identity_error = Some(error);
+                        false
+                    }
+                },
+                Err(_) => false,
+            };
+            let all_exited = match held_processes.all_exited() {
+                Ok(exited) => exited,
+                Err(error) => {
+                    identity_error = Some(error);
+                    false
+                }
+            };
+            let census_empty = match census.query_process_id_list() {
+                Ok(pids) => pids.is_empty(),
+                Err(error) => {
+                    identity_error = Some(error.to_string());
+                    false
+                }
+            };
+            if root_exited && all_exited && census_empty {
+                break;
+            }
+            if Instant::now() >= cleanup_deadline {
+                return Err(format!(
+                    "DESKTOP_CLEANUP：清理期限内未确认根进程和全部子进程结束。{}",
+                    identity_error.unwrap_or_default()
+                ));
+            }
+            thread::sleep(Duration::from_millis(2));
+        }
+    }
+    while !(out_thread.is_finished() && err_thread.is_finished()) {
+        if Instant::now() >= cleanup_deadline {
+            return Err("DESKTOP_CLEANUP：输出读取线程未在清理期限内结束。".into());
+        }
+        thread::sleep(Duration::from_millis(2));
+    }
+    out_thread
+        .join()
+        .map_err(|_| "DESKTOP_CLEANUP：stdout读取线程异常。".to_owned())?;
+    err_thread
+        .join()
+        .map_err(|_| "DESKTOP_CLEANUP：stderr读取线程异常。".to_owned())?;
     let stdout = outrecv
-        .recv_timeout(Duration::from_secs(3))
-        .map_err(io_error)??;
+        .recv_timeout(cleanup_deadline.saturating_duration_since(Instant::now()))
+        .map_err(|error| format!("DESKTOP_CLEANUP：stdout未在清理期限内结束：{error}"));
     let stderr = errrecv
-        .recv_timeout(Duration::from_secs(3))
-        .map_err(io_error)??;
+        .recv_timeout(cleanup_deadline.saturating_duration_since(Instant::now()))
+        .map_err(|error| format!("DESKTOP_CLEANUP：stderr未在清理期限内结束：{error}"));
+    #[cfg(windows)]
+    if let Some(error) = identity_error {
+        return Err(format!("DESKTOP_CLEANUP：进程身份确认失败：{error}"));
+    }
+    kill_result.map_err(|error| format!("DESKTOP_CLEANUP：终止请求失败：{error}"))?;
+    let stdout = stdout??;
+    let stderr = stderr??;
     Ok(ChildOutput {
         code: status.and_then(|status| status.code()),
         stdout,
@@ -975,44 +1069,230 @@ mod tests {
         );
     }
     #[cfg(windows)]
+    struct HeldTreeProbe {
+        child: std::process::Child,
+        input: std::process::ChildStdin,
+        snapshots: mpsc::Receiver<Result<String, String>>,
+        reader: Option<thread::JoinHandle<()>>,
+    }
+    #[cfg(windows)]
+    impl HeldTreeProbe {
+        fn open(root: &Path, pids: &[u32]) -> (Self, Value) {
+            use std::io::BufRead;
+            // Independent observer uses Win32 WaitForSingleObject over handles
+            // acquired while all three acknowledged processes are still alive.
+            let script = root.join("held-process-observer.ps1");
+            fs::write(&script, r#"
+$ErrorActionPreference='Stop'
+Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+public static class NoetomeHeldProcessProbe {
+  [StructLayout(LayoutKind.Sequential)] public struct FT { public uint lo; public uint hi; }
+  [DllImport("kernel32.dll", SetLastError=true)] public static extern IntPtr OpenProcess(uint rights, bool inherit, uint pid);
+  [DllImport("kernel32.dll", SetLastError=true)] public static extern uint WaitForSingleObject(IntPtr process, uint milliseconds);
+  [DllImport("kernel32.dll", SetLastError=true)] public static extern bool GetProcessTimes(IntPtr process, out FT creation, out FT exit, out FT kernel, out FT user);
+  [DllImport("kernel32.dll", SetLastError=true)] public static extern bool CloseHandle(IntPtr handle);
+  public static long[] Times(IntPtr process) {
+    FT creation, exit, kernel, user;
+    if (!GetProcessTimes(process, out creation, out exit, out kernel, out user)) throw new System.ComponentModel.Win32Exception();
+    return new long[] { ((long)creation.hi << 32) | creation.lo, ((long)exit.hi << 32) | exit.lo };
+  }
+}
+'@
+$pids=[Console]::ReadLine() | ConvertFrom-Json
+$handles=@($pids | ForEach-Object { $h=[NoetomeHeldProcessProbe]::OpenProcess(0x101000,$false,[uint32]$_); if($h -eq [IntPtr]::Zero){throw 'Owned test process handle unavailable'}; $h })
+function Snapshot {
+  $times=@($handles | ForEach-Object { ,([NoetomeHeldProcessProbe]::Times($_)) })
+  $v=[ordered]@{pids=@($pids | ForEach-Object { [uint32]$_ });creation_times=@($times | ForEach-Object { $_[0] });exit_times=@($times | ForEach-Object { $_[1] });wait_codes=@($handles | ForEach-Object { [NoetomeHeldProcessProbe]::WaitForSingleObject($_,0) })}
+  [Console]::Out.WriteLine(($v | ConvertTo-Json -Compress)); [Console]::Out.Flush()
+}
+try { Snapshot; while($null -ne [Console]::ReadLine()) { Snapshot } }
+finally { $handles | ForEach-Object { [void][NoetomeHeldProcessProbe]::CloseHandle($_) } }
+"#).unwrap();
+            let mut child = std::process::Command::new(powershell().unwrap())
+                .args(["-NoProfile", "-ExecutionPolicy", "Bypass", "-File"])
+                .arg(&script)
+                .stdin(Stdio::piped())
+                .stdout(Stdio::piped())
+                .spawn()
+                .unwrap();
+            let mut input = child.stdin.take().unwrap();
+            input
+                .write_all(format!("{}\n", serde_json::to_string(pids).unwrap()).as_bytes())
+                .unwrap();
+            input.flush().unwrap();
+            let output = child.stdout.take().unwrap();
+            let (send, snapshots) = mpsc::channel();
+            let reader = thread::spawn(move || {
+                for line in std::io::BufReader::new(output).lines() {
+                    if send.send(line.map_err(|error| error.to_string())).is_err() {
+                        break;
+                    }
+                }
+            });
+            let probe = Self {
+                child,
+                input,
+                snapshots,
+                reader: Some(reader),
+            };
+            let first = probe.receive();
+            (probe, first)
+        }
+        fn receive(&self) -> Value {
+            let line = self
+                .snapshots
+                .recv_timeout(Duration::from_secs(10))
+                .expect("independent held observer must respond")
+                .expect("held observer stdout must be readable");
+            serde_json::from_str(&line).expect("held observer snapshot must be JSON")
+        }
+        fn sample(&mut self) -> Value {
+            self.input.write_all(b"sample\n").unwrap();
+            self.input.flush().unwrap();
+            self.receive()
+        }
+    }
+    #[cfg(windows)]
+    impl Drop for HeldTreeProbe {
+        fn drop(&mut self) {
+            // Only the independently spawned observer, which has no descendants.
+            let _ = self.child.kill();
+            let _ = self.child.wait();
+            if let Some(reader) = self.reader.take() {
+                let _ = reader.join();
+            }
+        }
+    }
+    #[cfg(windows)]
+    fn native_tree_cleanup(mode: &str) {
+        let root = TestRoot::new();
+        let grand_script = root.0.join("grandchild.ps1");
+        let child_script = root.0.join("child.ps1");
+        let root_script = root.0.join("root.ps1");
+        let grand_pid = root.0.join("grandchild.pid");
+        let child_pid = root.0.join("child.pid");
+        let root_pid = root.0.join("root.pid");
+        let gate = root.0.join("continue.signal");
+        let shell = powershell().unwrap();
+        let quote = |path: &Path| path.display().to_string().replace('\'', "''");
+        let acknowledge = |path: &Path| {
+            format!(
+                "[IO.File]::WriteAllText('{}.tmp',[string]$PID);[IO.File]::Move('{}.tmp','{}');",
+                quote(path),
+                quote(path),
+                quote(path)
+            )
+        };
+        fs::write(
+            &grand_script,
+            format!("{}Start-Sleep -Seconds 180", acknowledge(&grand_pid)),
+        )
+        .unwrap();
+        let launch = |script: &Path| {
+            format!(
+                "$i=New-Object Diagnostics.ProcessStartInfo;$i.FileName='{}';$i.Arguments='-NoProfile -ExecutionPolicy Bypass -File \"{}\"';$i.UseShellExecute=$false;[void][Diagnostics.Process]::Start($i);",
+                quote(&shell),
+                quote(script)
+            )
+        };
+        fs::write(&child_script, format!(
+            "{}while(-not [IO.File]::Exists('{}')){{Start-Sleep -Milliseconds 10}};{}Start-Sleep -Seconds 180",
+            launch(&grand_script), quote(&grand_pid), acknowledge(&child_pid)
+        )).unwrap();
+        fs::write(&root_script, format!(
+            "{}while(-not [IO.File]::Exists('{}')){{Start-Sleep -Milliseconds 10}};{}while(-not [IO.File]::Exists('{}')){{Start-Sleep -Milliseconds 10}};{}",
+            launch(&child_script), quote(&child_pid), acknowledge(&root_pid), quote(&gate),
+            if mode == "normal" { "exit 0" } else { "Start-Sleep -Seconds 180" }
+        )).unwrap();
+        let flag = Arc::new(AtomicBool::new(false));
+        let worker_flag = flag.clone();
+        let script = root_script.clone();
+        let program = shell.clone();
+        let started = Instant::now();
+        let worker = thread::spawn(move || {
+            run_bounded(
+                &program,
+                &[
+                    "-NoProfile".into(),
+                    "-ExecutionPolicy".into(),
+                    "Bypass".into(),
+                    "-File".into(),
+                    script.into_os_string(),
+                ],
+                &worker_flag,
+                None,
+                20000,
+            )
+        });
+        while !root_pid.is_file() {
+            assert!(
+                started.elapsed() < Duration::from_secs(10),
+                "root/child/grandchild must acknowledge"
+            );
+            thread::sleep(Duration::from_millis(5));
+        }
+        let pids: Vec<u32> = [&root_pid, &child_pid, &grand_pid]
+            .iter()
+            .map(|path| fs::read_to_string(path).unwrap().parse().unwrap())
+            .collect();
+        let (mut probe, live) = HeldTreeProbe::open(&root.0, &pids);
+        assert_eq!(live["pids"], json!(pids));
+        assert_eq!(
+            live["wait_codes"],
+            json!([258, 258, 258]),
+            "all owned identities must be alive before stop"
+        );
+        println!("desktop_tree_mode={mode} held_live={live}");
+        if mode == "cancel" {
+            flag.store(true, Ordering::SeqCst);
+        }
+        fs::write(&gate, b"continue").unwrap();
+        let output = worker.join().unwrap().unwrap();
+        let stopped = probe.sample();
+        println!(
+            "desktop_tree_mode={mode} held_stopped={stopped} elapsed_ms={}",
+            started.elapsed().as_millis()
+        );
+        assert_eq!(
+            stopped["creation_times"], live["creation_times"],
+            "same actual held identities, never reopened PIDs"
+        );
+        assert_eq!(
+            stopped["wait_codes"],
+            json!([0, 0, 0]),
+            "all owned descendants must finish before run_bounded returns"
+        );
+        if mode == "normal" {
+            assert_eq!(output.code, Some(0));
+            assert!(output.failure.is_none());
+        } else {
+            assert_eq!(
+                output.failure.unwrap().code,
+                if mode == "cancel" {
+                    "DESKTOP_CANCELLED"
+                } else {
+                    "DESKTOP_TIMEOUT"
+                }
+            );
+        }
+        assert!(started.elapsed() < Duration::from_secs(30));
+    }
+    #[cfg(windows)]
     #[test]
     fn native_descendant_is_killed_after_the_root_exits_with_inherited_pipes() {
-        let root = TestRoot::new();
-        let marker = root.0.join("descendant.pid");
-        let child_script = root.0.join("child.ps1");
-        fs::write(
-            &child_script,
-            format!(
-                "[IO.File]::WriteAllText('{}',[string]$PID); Start-Sleep -Seconds 180",
-                marker.display().to_string().replace('\'', "''")
-            ),
-        )
-        .unwrap();
-        let powershell = powershell().unwrap();
-        let launcher = format!(
-            "$i=New-Object Diagnostics.ProcessStartInfo;$i.FileName='{}';$i.Arguments='-NoProfile -ExecutionPolicy Bypass -File \"{}\"';$i.UseShellExecute=$false;$p=[Diagnostics.Process]::Start($i);while(-not [IO.File]::Exists('{}')){{Start-Sleep -Milliseconds 10}};exit 0",
-            powershell.display().to_string().replace('\'', "''"),
-            child_script.display().to_string().replace('\'', "''"),
-            marker.display().to_string().replace('\'', "''")
-        );
-        let flag = Arc::new(AtomicBool::new(false));
-        let started = Instant::now();
-        let output = run_bounded(
-            &powershell,
-            &["-NoProfile".into(), "-Command".into(), launcher.into()],
-            &flag,
-            None,
-            15000,
-        )
-        .unwrap();
-        assert_eq!(output.code, Some(0));
-        assert!(started.elapsed() < Duration::from_secs(10));
-        let pid = fs::read_to_string(&marker).unwrap();
-        let probe = std::process::Command::new(&powershell).args(["-NoProfile", "-Command", &format!("try{{$p=[Diagnostics.Process]::GetProcessById({pid});if($p.WaitForExit(5000)){{exit 0}}else{{exit 1}}}}catch [ArgumentException]{{exit 0}}")]).status().unwrap();
-        assert!(
-            probe.success(),
-            "the acknowledged native descendant must have exited"
-        );
+        native_tree_cleanup("normal");
+    }
+    #[cfg(windows)]
+    #[test]
+    fn native_descendants_finish_before_cancellation_returns() {
+        native_tree_cleanup("cancel");
+    }
+    #[cfg(windows)]
+    #[test]
+    fn native_descendants_finish_before_timeout_returns() {
+        native_tree_cleanup("timeout");
     }
     #[test]
     fn prestart_cancellation_does_not_spawn_even_a_missing_binary() {
