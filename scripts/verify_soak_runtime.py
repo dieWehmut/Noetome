@@ -101,10 +101,13 @@ def run_case(binary: Path, checker: Path, root: Path, name: str,
     payloads = {}
     for filename in PAYLOAD_NAMES:
         path = output / filename
-        if path.is_file():
-            payloads[filename] = fingerprint(path)
-        else:
-            issues.append(f"Actual CLI payload is missing: {filename}")
+        try:
+            if path.is_file():
+                payloads[filename] = fingerprint(path)
+            else:
+                issues.append(f"Actual CLI payload is missing: {filename}")
+        except OSError as failure:
+            issues.append(f"Cannot read actual CLI payload {filename}: {failure}")
     memory = None
     try:
         timings = json.loads((output / "timings.json").read_bytes())
@@ -139,12 +142,18 @@ def main(argv: list[str]) -> int:
     started = utc_now()
     cases = [run_case(binary, checker, root, *case) for case in CASES]
     passed = all(case["result"] == "passed" for case in cases)
+    binary_receipt = {"path": str(binary)}
+    try:
+        binary_receipt.update(fingerprint(binary))
+    except OSError as failure:
+        binary_receipt["error"] = str(failure)
+        passed = False
     summary = {
         "schema_version": 1, "scope": "targeted_soak",
         "started_at_utc": started, "completed_at_utc": utc_now(),
         "source_commit": os.environ.get("GITHUB_SHA"),
         "platform": platform.platform(), "python": platform.python_version(),
-        "binary": {"path": str(binary), **fingerprint(binary)},
+        "binary": binary_receipt,
         "result": "passed" if passed else "failed", "actual_cli_runs": len(cases),
         "independent_audits": len(cases), "cases": cases,
     }
