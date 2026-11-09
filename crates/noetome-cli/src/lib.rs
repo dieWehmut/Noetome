@@ -64,6 +64,8 @@ mod knowledge_presentation_plan;
 mod knowledge_presentation_render;
 mod migrate_model;
 pub mod migrate_store;
+#[cfg(windows)]
+pub mod native_process;
 mod outline_model;
 pub mod outline_store;
 mod pdf_model;

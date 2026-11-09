@@ -398,7 +398,12 @@ fn transport(
         });
         let mut failure = None;
         let mut status = None;
+        let mut processes = crate::native_process::JobProcesses::new();
         loop {
+            if let Err(error) = processes.capture(&census) {
+                failure = Some(SidecarError::new("SIDECAR_CLEANUP", error));
+                break;
+            }
             if let Ok(error) = errors.try_recv() {
                 failure = Some(error);
                 break;
@@ -431,6 +436,9 @@ fn transport(
         }
         // Also terminate leftovers after a successful root exit. No descendants
         // from a single-request parser may outlive the operation.
+        if let Err(error) = processes.capture(&census) {
+            failure = Some(SidecarError::new("SIDECAR_CLEANUP", error));
+        }
         #[cfg(test)]
         let terminate_result = if FAIL_PRIMARY_TERMINATE.with(|flag| flag.get()) {
             Err(std::io::Error::other("injected primary terminate failure"))
@@ -457,16 +465,27 @@ fn transport(
                 }
             }
             match census.query_process_id_list() {
-                Ok(pids) => tree_empty = pids.is_empty(),
+                Ok(pids) => {
+                    tree_empty = pids.is_empty();
+                }
                 Err(e) => failure = Some(SidecarError::new("SIDECAR_CLEANUP", e)),
             }
-            if tree_empty && status.is_some() {
+            // Job membership can reach zero before original process objects are
+            // signaled. Held identities must also finish kernel exit/teardown.
+            let processes_exited = match processes.all_exited() {
+                Ok(exited) => exited,
+                Err(error) => {
+                    failure = Some(SidecarError::new("SIDECAR_CLEANUP", error));
+                    false
+                }
+            };
+            if tree_empty && status.is_some() && processes_exited {
                 break;
             }
             if cleanup_start.elapsed() >= Duration::from_secs(10) {
                 failure = Some(SidecarError::new(
                     "SIDECAR_CLEANUP",
-                    "root/job exit not confirmed within cleanup deadline",
+                    "root/job/process handle exit not confirmed within cleanup deadline",
                 ));
                 break;
             }

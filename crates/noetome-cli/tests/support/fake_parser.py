@@ -32,14 +32,16 @@ if mode == 'probe_hold':
     handles = []
     def sample():
         times = []
+        exit_times = []
         states = []
         for handle in handles:
             created, exited, system, user = (wintypes.FILETIME() for _ in range(4))
             if not kernel.GetProcessTimes(handle, ctypes.byref(created), ctypes.byref(exited), ctypes.byref(system), ctypes.byref(user)):
                 raise ctypes.WinError(ctypes.get_last_error())
             times.append((created.dwHighDateTime << 32) | created.dwLowDateTime)
+            exit_times.append((exited.dwHighDateTime << 32) | exited.dwLowDateTime)
             states.append(kernel.WaitForSingleObject(handle, 0))
-        print(json.dumps({'pids': pids, 'creation_times': times, 'wait_codes': states}), flush=True)
+        print(json.dumps({'pids': pids, 'creation_times': times, 'exit_times': exit_times, 'wait_codes': states}), flush=True)
     try:
         for pid in pids:
             handle = kernel.OpenProcess(0x1000 | 0x100000, False, pid)

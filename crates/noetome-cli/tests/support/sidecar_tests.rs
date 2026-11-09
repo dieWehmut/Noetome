@@ -491,6 +491,12 @@ fn tree_with_fault(mode: &str, want: Option<&str>, primary_failure: bool) {
     }
     let stopped = probe.sample();
     println!("tree_mode={mode} held_stopped_processes={stopped}");
+    if stopped["wait_codes"] != serde_json::json!([0, 0, 0]) {
+        println!(
+            "tree_mode={mode} held_followup_processes={}",
+            probe.sample()
+        );
+    }
     assert_eq!(stopped["creation_times"], live["creation_times"]);
     assert_eq!(
         stopped["wait_codes"],
