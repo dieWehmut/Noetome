@@ -18,6 +18,7 @@ process-wrap = { version = "=10.0.1", default-features = false, features = ["std
 tauri = { version = "=2.12.5", features = ["tray-icon"] }
 
 [target.'cfg(target_os = "windows")'.dependencies]
+winapi-util = "=0.1.11"
 rfd = { version = "=0.17.2", default-features = false }
 win32job = "=2.0.3"
 

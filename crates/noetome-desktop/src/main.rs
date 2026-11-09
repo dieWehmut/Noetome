@@ -11,6 +11,7 @@ use tauri::menu::{Menu, MenuItem};
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{Manager, WindowEvent};
 
+mod desktop_data;
 mod preferences;
 mod project_entry;
 mod tasks;
@@ -411,6 +412,18 @@ fn handle_window_event(window: &tauri::Window, event: &WindowEvent) {
 
 fn main() {
     let mut context = tauri::generate_context!();
+    let isolated_data = match desktop_data::prepare_from_environment() {
+        Ok(selected) => selected,
+        Err(error) => {
+            report_startup_error(&error, None);
+            std::process::exit(1);
+        }
+    };
+    if let Some(selected) = &isolated_data {
+        context.config_mut().app.app_directories_override = Some(
+            tauri::utils::config::AppDirectoriesOverride::Root(selected.root().to_path_buf()),
+        );
+    }
     let windows = context
         .config()
         .app

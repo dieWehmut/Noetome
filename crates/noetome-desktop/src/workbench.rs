@@ -489,6 +489,14 @@ fn cli_binary() -> Result<PathBuf, String> {
     resource(filename, &format!("target/debug/{filename}"), false)
 }
 fn profile_paths() -> Result<(PathBuf, PathBuf), String> {
+    if let Some(root) = crate::desktop_data::model_root_override()? {
+        noetome_cli::extraction_preview::ensure_outside_vault(&root)
+            .map_err(|error| error.to_string())?;
+        return Ok((
+            root.join("credentials/tangmao-deepseek.dpapi"),
+            root.join("model-services/tangmao-deepseek.usage.json"),
+        ));
+    }
     let root = std::env::var_os("LOCALAPPDATA")
         .filter(|value| !value.is_empty())
         .map(PathBuf::from)
@@ -982,7 +990,7 @@ mod tests {
         .unwrap();
         let powershell = powershell().unwrap();
         let launcher = format!(
-            "$i=New-Object Diagnostics.ProcessStartInfo;$i.FileName='{}';$i.Arguments='-NoProfile -File \"{}\"';$i.UseShellExecute=$false;$p=[Diagnostics.Process]::Start($i);while(-not [IO.File]::Exists('{}')){{Start-Sleep -Milliseconds 10}};exit 0",
+            "$i=New-Object Diagnostics.ProcessStartInfo;$i.FileName='{}';$i.Arguments='-NoProfile -ExecutionPolicy Bypass -File \"{}\"';$i.UseShellExecute=$false;$p=[Diagnostics.Process]::Start($i);while(-not [IO.File]::Exists('{}')){{Start-Sleep -Milliseconds 10}};exit 0",
             powershell.display().to_string().replace('\'', "''"),
             child_script.display().to_string().replace('\'', "''"),
             marker.display().to_string().replace('\'', "''")
