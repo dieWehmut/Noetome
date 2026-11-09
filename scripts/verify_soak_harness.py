@@ -742,7 +742,7 @@ def check_frozen(package: Path, report: Report) -> None:
 
 def freeze(package: Path) -> int:
     files = {}
-    for path in sorted(package.rglob("*")):
+    for path in sorted(package.rglob("*"), key=lambda path: path.relative_to(package).parts):
         if path.is_file() and path.name != FROZEN:
             files[path.relative_to(package).as_posix()] = {
                 "sha256": sha256(read_bytes(path)),

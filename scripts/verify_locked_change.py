@@ -469,7 +469,7 @@ def check_output(report, output: Path, declaration):
 
 def freeze(package: Path):
     files = {}
-    for item in sorted(package.rglob("*")):
+    for item in sorted(package.rglob("*"), key=lambda path: path.relative_to(package).parts):
         if item.is_file() and item.name != FROZEN:
             files[item.relative_to(package).as_posix()] = {
                 "sha256": sha256(item.read_bytes()), "byte_length": item.stat().st_size,

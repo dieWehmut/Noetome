@@ -1200,7 +1200,7 @@ def check_output_manifest(report: Report, output: Path, replayed: dict) -> None:
 
 def freeze(package: Path) -> int:
     files = {}
-    for item in sorted(package.rglob("*")):
+    for item in sorted(package.rglob("*"), key=lambda path: path.relative_to(package).parts):
         if not item.is_file():
             continue
         relative = item.relative_to(package).as_posix()

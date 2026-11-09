@@ -1082,7 +1082,7 @@ def check_output(report: Report, output: Path, replay: dict) -> None:
 
 def freeze(package: Path) -> int:
     files = {}
-    for item in sorted(package.rglob("*")):
+    for item in sorted(package.rglob("*"), key=lambda path: path.relative_to(package).parts):
         if not item.is_file() or item.is_symlink():
             continue
         relative = item.relative_to(package).as_posix()

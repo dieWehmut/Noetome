@@ -2,6 +2,12 @@ name: Windows validation
 
 on:
   workflow_dispatch:
+    inputs:
+      target:
+        description: Native checks to run; use one target when unrelated code is unchanged.
+        type: choice
+        options: [all, rust, python, desktop]
+        default: all
   push:
     branches:
       - 'codex/b15-*'
@@ -19,13 +25,10 @@ jobs:
       # the other native regression or build evidence.
       fail-fast: false
       matrix:
-        include:
-          - target: rust
-            profile: debug
-          - target: python
-            profile: debug
-          - target: desktop
-            profile: release
+        # The branch workflow may not exist on the default branch yet. Explicit
+        # push markers provide the same focused regression as dispatch inputs.
+        # Unmarked product changes continue to run every native target.
+        include: ${{ fromJSON((inputs.target == 'rust' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[windows:rust]'))) && '[{"target":"rust","profile":"debug"}]' || (inputs.target == 'python' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[windows:python]'))) && '[{"target":"python","profile":"debug"}]' || inputs.target == 'desktop' && '[{"target":"desktop","profile":"release"}]' || '[{"target":"rust","profile":"debug"},{"target":"python","profile":"debug"},{"target":"desktop","profile":"release"}]') }}
     defaults:
       run:
         shell: pwsh

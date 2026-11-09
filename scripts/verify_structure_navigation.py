@@ -1006,7 +1006,7 @@ def check_output(output: Path, replay: dict, report: Report) -> None:
 
 def freeze(package: Path) -> None:
     files: dict[str, dict[str, object]] = {}
-    for item in sorted(package.rglob("*")):
+    for item in sorted(package.rglob("*"), key=lambda path: path.relative_to(package).parts):
         if not item.is_file() or item.name == FROZEN:
             continue
         body = read_bytes(item)

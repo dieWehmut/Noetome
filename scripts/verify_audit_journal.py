@@ -934,7 +934,7 @@ def freeze(package: Path) -> int:
         print(f"{package} 不是目录。", file=sys.stderr)
         return 2
     files = {}
-    for member in sorted(package.rglob("*")):
+    for member in sorted(package.rglob("*"), key=lambda path: path.relative_to(package).parts):
         if not member.is_file() or member.name == FROZEN:
             continue
         relpath = member.relative_to(package).as_posix()

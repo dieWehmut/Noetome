@@ -714,7 +714,7 @@ def check_output(output: Path, replay_result: dict, report: Report) -> None:
 
 def freeze(package: Path) -> int:
     files = {}
-    for item in sorted(package.rglob("*")):
+    for item in sorted(package.rglob("*"), key=lambda path: path.relative_to(package).parts):
         if not item.is_file() or item.name == FROZEN:
             continue
         relation = item.relative_to(package).as_posix()
