@@ -110,6 +110,7 @@ fn write_new(path: &Path, bytes: &[u8], label: &str) -> Result<(), ProjectError>
         .map_err(|error| integrity(format!("写入{label}失败：{error}。")))?;
     file.sync_all()
         .map_err(|error| integrity(format!("同步{label}失败：{error}。")))?;
+    let _readback_guard = crate::compile_identity::read_after_write(path, file)?;
     let readback = read_file(path, bytes.len() as u64, label)?;
     if readback != bytes {
         return Err(integrity(format!("写入{label}后读回不一致。")));
@@ -357,6 +358,7 @@ fn adopt_into(input: AdoptInput<'_>) -> Result<Manifest, ProjectError> {
         .map_err(|error| integrity(format!("写入冻结清单失败：{error}。")))?;
     file.sync_all()
         .map_err(|error| integrity(format!("同步冻结清单失败：{error}。")))?;
+    let _readback_guard = crate::compile_identity::read_after_write(&manifest_path, file)?;
     let readback = read_file(&manifest_path, MAX_BYTES as u64, "冻结清单")?;
     if readback != bytes {
         return Err(integrity(

@@ -86,3 +86,132 @@ pub(crate) fn identity(path: &Path) -> Result<Identity, ProjectError> {
         "当前平台没有已确认的持久文件身份实现。",
     ))
 }
+
+/// Close a completed writer and retain the same file as a strict read capability.
+/// The independent, read-only identity receipt bridges the close/reopen interval.
+pub(crate) fn read_after_write(
+    path: &Path,
+    writer: std::fs::File,
+) -> Result<std::fs::File, ProjectError> {
+    read_after_write_inner(path, writer, || {})
+}
+
+fn read_after_write_inner(
+    path: &Path,
+    writer: std::fs::File,
+    after_close: impl FnOnce(),
+) -> Result<std::fs::File, ProjectError> {
+    let changed = || {
+        ProjectError::new(
+            "COMPILE_INTEGRITY",
+            3,
+            "写入后读回期间文件身份变化；已保留现场。",
+        )
+    };
+    project::check_components(path)?;
+    project::checked_file(path)?;
+    let receipt = same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))?;
+    let written =
+        same_file::Handle::from_file(writer.try_clone().map_err(|e| ProjectError::io(path, e))?)
+            .map_err(|e| ProjectError::io(path, e))?;
+    if written != receipt {
+        return Err(changed());
+    }
+    crate::sidecar_workspace::check_links(&writer, "COMPILE_INTEGRITY").map_err(|_| changed())?;
+    // A clone of the writer still holds WRITE access on Windows. Release both
+    // writing handles before opening the deny-write/deny-delete read guard.
+    drop(written);
+    drop(writer);
+    after_close();
+    let reader = project::read_guard(path)?;
+    let opened =
+        same_file::Handle::from_file(reader.try_clone().map_err(|e| ProjectError::io(path, e))?)
+            .map_err(|e| ProjectError::io(path, e))?;
+    let current = same_file::Handle::from_path(path).map_err(|e| ProjectError::io(path, e))?;
+    project::check_components(path)?;
+    project::checked_file(path)?;
+    crate::sidecar_workspace::check_links(&reader, "COMPILE_INTEGRITY").map_err(|_| changed())?;
+    if opened != receipt || current != receipt {
+        return Err(changed());
+    }
+    Ok(reader)
+}
+
+#[cfg(test)]
+mod write_read_tests {
+    use super::*;
+    use std::fs;
+    use std::io::Write;
+    use std::path::PathBuf;
+
+    struct Fixture(PathBuf);
+    impl Fixture {
+        fn new() -> Self {
+            let root =
+                std::env::temp_dir().join(format!("noetome-write-read-{}", uuid::Uuid::new_v4()));
+            fs::create_dir(&root).unwrap();
+            Self(root)
+        }
+        fn path(&self) -> PathBuf {
+            self.0.join("笔记 with spaces.md")
+        }
+        fn writer(&self) -> fs::File {
+            let mut writer = OpenOptions::new()
+                .write(true)
+                .create_new(true)
+                .open(self.path())
+                .unwrap();
+            writer.write_all(b"identical saved bytes\n").unwrap();
+            writer.sync_all().unwrap();
+            writer
+        }
+    }
+    impl Drop for Fixture {
+        fn drop(&mut self) {
+            let _ = fs::remove_dir_all(&self.0);
+        }
+    }
+
+    #[test]
+    fn completed_writer_transitions_to_the_same_strict_read_capability() {
+        let fixture = Fixture::new();
+        let writer = fixture.writer();
+        let path = fixture.path();
+        let reader = read_after_write(&path, writer).unwrap();
+        assert_eq!(fs::read(&path).unwrap(), b"identical saved bytes\n");
+        #[cfg(windows)]
+        {
+            assert_eq!(
+                OpenOptions::new()
+                    .write(true)
+                    .open(&path)
+                    .unwrap_err()
+                    .raw_os_error(),
+                Some(32)
+            );
+            assert_eq!(fs::remove_file(&path).unwrap_err().raw_os_error(), Some(32));
+        }
+        drop(reader);
+        OpenOptions::new().write(true).open(path).unwrap();
+    }
+
+    #[test]
+    fn identical_bytes_replaced_between_writer_close_and_reader_open_are_refused() {
+        let fixture = Fixture::new();
+        let writer = fixture.writer();
+        let path = fixture.path();
+        let replacement = fixture.0.join("replacement.md");
+        fs::write(&replacement, b"identical saved bytes\n").unwrap();
+        let error = read_after_write_inner(&path, writer, || {
+            fs::rename(&path, fixture.0.join("original.md")).unwrap();
+            fs::rename(&replacement, &path).unwrap();
+        })
+        .unwrap_err();
+        assert_eq!(error.code(), "COMPILE_INTEGRITY");
+        assert_eq!(fs::read(&path).unwrap(), b"identical saved bytes\n");
+        assert_eq!(
+            fs::read(fixture.0.join("original.md")).unwrap(),
+            b"identical saved bytes\n"
+        );
+    }
+}

@@ -100,6 +100,25 @@ fn adopt_freezes_the_declaration_and_only_writes_control() {
 }
 
 #[test]
+fn status_accepts_the_same_root_through_a_relative_path_without_writing() {
+    let (directory, root, code, text) = adopt("relative-root", "project.json");
+    assert_eq!(code, 0, "{text}");
+    let before = tree(&root);
+    let output = Command::new(env!("CARGO_BIN_EXE_noetome"))
+        .current_dir(&directory)
+        .args(["change", "status", "root"])
+        .output()
+        .expect("status relative root");
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert_eq!(tree(&root), before);
+    let _ = fs::remove_dir_all(directory);
+}
+
+#[test]
 fn adopt_refuses_an_existing_root_without_touching_it() {
     let (directory, root, code, _text) = adopt("adopt-existing", "project.json");
     assert_eq!(code, 0);

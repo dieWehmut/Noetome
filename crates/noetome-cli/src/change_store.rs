@@ -400,6 +400,10 @@ fn open(root: &Path) -> Result<Frozen, ProjectError> {
             root.display()
         )));
     }
+    let canonical_root = crate::project::check_components(root)?
+        .canonicalize()
+        .map_err(|error| change_model::integrity(format!("无法解析变更根：{error}")))?;
+    let root = canonical_root.as_path();
     let top = names(root);
     if !top.contains_key(CONTROL) {
         return Err(change_model::unknown_root(format!(
