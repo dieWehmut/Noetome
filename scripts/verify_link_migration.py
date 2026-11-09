@@ -995,7 +995,7 @@ def check_frozen(package: Path, report: Report) -> None:
         if not item.is_file() or item.name == FROZEN:
             continue
         body = read_bytes(item)
-        actual[str(item.relative_to(package))] = {"sha256": sha256(body), "byte_length": len(body)}
+        actual[item.relative_to(package).as_posix()] = {"sha256": sha256(body), "byte_length": len(body)}
     report.record(
         "frozen-members",
         sorted(actual) == sorted(frozen["files"]),
@@ -1132,7 +1132,7 @@ def freeze(package: Path) -> None:
         if not item.is_file() or item.name == FROZEN:
             continue
         body = read_bytes(item)
-        files[str(item.relative_to(package))] = {"sha256": sha256(body), "byte_length": len(body)}
+        files[item.relative_to(package).as_posix()] = {"sha256": sha256(body), "byte_length": len(body)}
     payload = {
         "schema_version": 1,
         "producer": "independent_fixture_author_freeze",

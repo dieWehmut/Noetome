@@ -610,7 +610,7 @@ def check_layout(root: Path, report: Report) -> None:
         return
     report.record("text-directory", True)
     linked = [
-        str(path.relative_to(root))
+        path.relative_to(root).as_posix()
         for path in root.rglob("*")
         if path.is_symlink()
     ]
@@ -855,7 +855,7 @@ def check_frozen(package: Path, report: Report) -> None:
     frozen = json.loads(read_bytes(path).decode("utf-8"))
     recorded = frozen["files"]
     present = {
-        str(item.relative_to(package))
+        item.relative_to(package).as_posix()
         for item in package.rglob("*")
         if item.is_file() and item.name != FROZEN
     }
@@ -1010,7 +1010,7 @@ def freeze(package: Path) -> None:
         if not item.is_file() or item.name == FROZEN:
             continue
         body = read_bytes(item)
-        files[str(item.relative_to(package))] = {
+        files[item.relative_to(package).as_posix()] = {
             "sha256": sha256(body),
             "byte_length": len(body),
         }
