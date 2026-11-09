@@ -367,7 +367,8 @@ class InstallationVerifierTests(unittest.TestCase):
     def test_native_winps_hash_uses_builtin_modules_despite_inherited_core_path(self):
         windows_root = os.environ.get("SystemRoot", "C:\\Windows")
         with patch.dict(os.environ, {"SystemRoot": windows_root}):
-            builtin_modules = SMOKE.clean_environment()["PSModulePath"]
+            outer_env = SMOKE.clean_environment()
+            builtin_modules = outer_env["PSModulePath"]
         # A new, deliberately unusable Core module fixture models a foreign
         # shell's module path. No module is installed into any host directory.
         command = r"""
@@ -414,6 +415,7 @@ $hash=Get-FileHash -LiteralPath $InputFile -Algorithm SHA256
         encoded = base64.b64encode(command.encode("utf-16le")).decode("ascii")
         result = subprocess.run(
             [SHELL, "-NoProfile", "-NonInteractive", "-EncodedCommand", encoded],
+            env=outer_env,
             capture_output=True,
             timeout=60,
         )
