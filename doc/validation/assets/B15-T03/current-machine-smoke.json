@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "scope": "exact CI installed CLI on current Windows11; bundled PDF and offline author fixture; no installer run",
+  "source_commit": "6fe4983e8886501374c71af73963ed927d109fd9",
+  "cli_sha256": "392a5a251f95a3baf281c4c224f2e2e97c2f2c172246324dca7964c5baa41a62",
+  "commands": [
+    {
+      "name": "version",
+      "args": [
+        "--version"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.083
+    },
+    {
+      "name": "text-pdf",
+      "args": [
+        "source",
+        "parse-pdf",
+        "C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-b15-ci-installed-9p_52w_x\\payload\\samples\\single-page.pdf",
+        "C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-test-release-check-7pbbvfae\\text-pdf"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.992
+    },
+    {
+      "name": "scan-review",
+      "args": [
+        "source",
+        "parse-pdf",
+        "C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-b15-ci-installed-9p_52w_x\\payload\\samples\\scanned-page.pdf",
+        "C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-test-release-check-7pbbvfae\\scan-pdf"
+      ],
+      "exit_code": 3,
+      "expected_exit_code": 3,
+      "seconds": 0.83
+    },
+    {
+      "name": "offline-vault",
+      "args": [
+        "run",
+        "start",
+        "C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-b15-ci-installed-9p_52w_x\\payload\\fixtures\\run-checkpoint-v1\\fixture",
+        "C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-test-release-check-7pbbvfae\\offline-run"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.801
+    }
+  ],
+  "offline_notes": 2,
+  "test_root": "C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-test-release-check-7pbbvfae",
+  "external_model_calls": 0
+}

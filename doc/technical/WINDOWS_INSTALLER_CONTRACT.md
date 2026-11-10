@@ -1,5 +1,7 @@
 # Windows 安装载荷契约
 
+2026-11-10 的 `v0.1.0-test.1` 按用户最新指令交付已验证的 `6fe4983` 安装包，允许当前电脑已有 VC 运行库；跨机器依赖独立部署和静态 VC 改造后续单独验收，不作为本次测试交付前置条件。范围见[已采纳决定](../requirements/DECISIONS.md)和[测试版说明](../windows/TEST_RELEASE.md)。
+
 目标为 Windows 11 x64、当前用户 NSIS 安装。安装构建显式追加 `--config crates/noetome-desktop/tauri.install.conf.json`；该文件不自动覆盖普通 Cargo、开发或 `--no-bundle` 构建。资源映射使用完整目录 `../../target/windows-installer-payload/` 到安装根空字符串，保留所有嵌套目录；禁止改用会按 basename 展平文件的 glob。
 
 `prepare_windows_installer_payload.ps1` 接受 `-CliBinary`、`-RuntimeDir`、`-SourceCommit`，可选 `-OutputDir`、`-Quickstart`、`-BuildProfile release|debug`（默认 release）、`-PassThru`。RuntimeDir 必须是 `prepare_windows_runtime.ps1` 的完整已验证输出。所有输出写入尚不存在的独立目录，既有目录拒绝覆盖，失败现场保留。CLI 使用普通复制形成单链接文件，完整 Python 环境与许可证保留；不安装或修改用户项目、凭据、预算、现有 Noetome。

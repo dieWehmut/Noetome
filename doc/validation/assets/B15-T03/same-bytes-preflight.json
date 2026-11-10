@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "scope": "local_ci_installed_payload_same_bytes_preflight",
+  "status": "passed",
+  "checks": [
+    {
+      "name": "downloaded installer matches trusted delivery SHA",
+      "passed": true
+    },
+    {
+      "name": "downloaded installed ZIP matches trusted CI SHA",
+      "passed": true
+    },
+    {
+      "name": "exact source and clean CI installation receipt",
+      "passed": true
+    },
+    {
+      "name": "delivery installer and installed ZIP receipts match downloaded bytes",
+      "passed": true
+    },
+    {
+      "name": "every ZIP member equals installed CI inventory",
+      "passed": true
+    },
+    {
+      "name": "entire extracted tree equals installed CI inventory",
+      "passed": true
+    },
+    {
+      "name": "installed manifest source and trusted stage anchor",
+      "passed": true
+    }
+  ],
+  "source_commit": "6fe4983e8886501374c71af73963ed927d109fd9",
+  "installer": {
+    "bytes": 259675053,
+    "sha256": "cf3cc5fdbe4446d8b5d2458931d1d7134983baad38e9e88d6fb1dd91164d12ea"
+  },
+  "installed_zip": {
+    "bytes": 61339826,
+    "sha256": "88660377299c3eba75bf31ee9c6130d65aca2d10b0243fc600970f8d62cd5f80"
+  },
+  "members": 4691,
+  "files": 4332,
+  "desktop": {
+    "bytes": 17028096,
+    "sha256": "84654ae87735fbb2e70fd468928e9bade9e9a8525e5bf86573f90384802fec23"
+  },
+  "cli": {
+    "bytes": 23296000,
+    "sha256": "392a5a251f95a3baf281c4c224f2e2e97c2f2c172246324dca7964c5baa41a62"
+  },
+  "local_install_actions": 0,
+  "payload_root": "C:\\Users\\Lyinn\\AppData\\Local\\Temp\\noetome-b15-ci-installed-9p_52w_x\\payload"
+}

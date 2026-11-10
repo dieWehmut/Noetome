@@ -8,7 +8,8 @@ Rust CLI提供空项目初始化、单份MD/TXT/PDF来源登记与只读重查�
 
 比较表、流程、公式、选定PNG图像及单个明确扫描公式的有界预览已保留来源和独立语义核对。Windows原生兼容实测涵盖最低Obsidian1.6.7与2026-11-06核验的稳定1.15.0、明暗主题共64个组合；公式分别使用MathJax3.2.2/4.1.3，当前流程使用实际Pele1.8.0。未知组合仍有据回退或阻断，精确策略见[视觉能力契约](doc/technical/VISUAL_COMPATIBILITY.md)及[实际矩阵](doc/validation/assets/B06V-T03/matrix.json)。这些工程预览不代表科学质量、通用OCR或生产Vault维护已验收。
 
-Windows 11 x64 首次实测按[中文安装指南](doc/windows/QUICKSTART.zh-CN.md)操作。本次 NSIS 包含 CLI、完整锁定 PDF 运行时、VC 运行库、离线 WebView2 安装器和作者样例；准确源提交、体积和摘要由实际构建的 delivery.json 记录。安装构建使用显式 tauri.install.conf.json 覆盖配置，普通 Rust 和无 bundle 构建不会要求预先存在安装资源。
+Windows 11 x64 首次实测请下载 [0.1.0 Windows 测试版](https://github.com/dieWehmut/Noetome/releases/tag/v0.1.0-test.1)，按[测试步骤](doc/windows/TEST_RELEASE.md)和[中文安装指南](doc/windows/QUICKSTART.zh-CN.md)操作。本次 NSIS 包含 CLI、完整锁定 PDF 运行时、VC 运行库、离线 WebView2 安装器和作者样例；准确源提交、体积和摘要由实际构建的 delivery.json 记录。安装构建使用显式 tauri.install.conf.json 覆盖配置，普通 Rust 和无 bundle 构建不会要求预先存在安装资源。
+
 
 ## 开始开发
 

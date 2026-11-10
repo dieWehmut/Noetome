@@ -5004,7 +5004,7 @@
       "id": "B15-T03",
       "title": "可直接实测的Windows安装包与完整测试材料",
       "batch": "B15",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B15-T02"
       ],
@@ -5014,10 +5014,10 @@
         "NFR-08"
       ],
       "acceptance": [
-        "Windows原生构建NSIS安装包，附CLI、可搬移锁定PDF环境、离线样例和中文快速开始，用户不需安装Rust Node或Python",
-        "安装后验证桌面和CLI当前构建指纹、快捷方式卸载登记、真实文本PDF与扫描需复核及离线Vault输出；验证卸载并保护新测试目录",
-        "将安装包及SHA256校验与原始结果交付可下载位置，记录准确源提交和安装体积；原生UI人工条目未执行须明确列出",
-        "同步打包契约冻结、实际验收记录和开发日志，完整相关检查通过后普通推送核对远端"
+        "Windows原生release构建NSIS，附CLI、锁定PDF环境、离线样例和中文快速开始；按2026-11-10用户指令优先供当前Windows11电脑亲自测试，允许现有VC运行库，暂缓跨机器依赖独立部署",
+        "复核已完成的同源原生安装、快捷方式卸载登记、真实文本PDF/扫描需复核及离线Vault验证；安装相同字节在当前电脑的桌面和Obsidian结果可追溯，未执行人工项明确列出",
+        "发布固定GitHub测试Release及可直接下载的安装器、SHA256和完整测试材料，当前电脑保留可运行安装包副本，记录准确源提交和体积",
+        "同步用户范围决定、实际验收记录和开发日志，复核既有回归与本次相关检查后普通提交推送；未提交依赖改动保留，不计入该Release"
       ],
       "history": [
         {
@@ -5028,6 +5028,44 @@
           "note": "为Windows11 x64生成包含CLI/锁定Python/PDF依赖/VC运行库/模型helper/离线样例和中文指南的NSIS；实际安装与原生UI实测后交付下载及SHA",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-10T02:18:03Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "按2026-11-10用户新范围交付当前电脑可手测的v0.1.0-test.1；复用6fe4983已验证安装包，GitHub Release六附件发布并逐字节摘要回读，本机副本就绪；VC独立部署改动保留未提交，后续处理。",
+          "validation": [
+            "本次原始交付9条SHA及本机安装器一致，完整安装ZIP/本机目录7项逐文件验证通过；当前Windows11 CLI版本、文字PDF、扫描需复核、离线Vault4命令退出码0/0/3/0，两篇笔记实际生成，0外部模型。",
+            "复核源6fe4983原生安装/卸载、14条命令及原件保护，原生Rust1330通过0失败1辅助入口ignored；同安装字节本机真实UI12/12、Obsidian1.15.0三篇笔记五次链接及保护通过；未执行人工条目和真实外部模型明确保留。",
+            "本次Python全量1387项0失败0错误25跳过263.702s、devlog12单测、209本地文档链接、devlog check与git diff --check通过；Release发布六附件的远端SHA256/体积及标签6fe4983回读一致，6个本机文件SHA一致。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/windows/TEST_RELEASE.md",
+              "sha256": "3afa8e8da5ca73fbfe899549defff4cfaf3112a9640f9682643f762411e57390"
+            },
+            {
+              "path": "doc/validation/B15-T03.md",
+              "sha256": "d02f19a6ba058e9c15b990a651896e507d354bc7dd8d4bbdb9da7cc72634a9de"
+            },
+            {
+              "path": "doc/validation/assets/B15-T03/release-publication.json",
+              "sha256": "70a4b267d1a1b65bfbe1bef271a03db774b1f13abb709b16d2d6e467f678e45b"
+            },
+            {
+              "path": "doc/validation/assets/B15-T03/release-delivery.json",
+              "sha256": "a50182c39524c33d1f1dfdaa41f218d947d690a6489b8a5ea4b80b94060b1fe7"
+            },
+            {
+              "path": "doc/validation/assets/B15-T03/current-machine-smoke.json",
+              "sha256": "4c542fef8a8bd6912cb1fcc4fdd31e08ae985f9bccaa843b698a6446defd4c36"
+            },
+            {
+              "path": "doc/validation/assets/B15-T03/python-regression.log",
+              "sha256": "f642165a31a61082cf3e30861acd48a52e6644a0fd5dc930c759f9392d5767e0"
+            }
+          ]
         }
       ]
     }
