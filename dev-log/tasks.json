@@ -5080,7 +5080,7 @@
       "id": "B16-T01",
       "title": "既有成果整合main、发布门禁与已知缺口清单",
       "batch": "B16",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B15-T03"
       ],
@@ -5103,6 +5103,38 @@
           "note": "独立worktree整合main，原17个改动/临时文件指纹保存；本项修正CI分支门禁、真实缺口与发布节奏，暂不启动PDF/OCR实现",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-12T07:47:35Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "main已合并并普通推送核对；发布门禁、44项缺口及版本路线、全目录诊断和证据归档完成，保留原工作区17文件",
+          "validation": [
+            "Linux Python全量1373项0失败0错误27跳过；Windows43targets首次24失败，完整lib复验722通过1ignored，其余42targets通过，修正同步后3专项通过；fmt/check/web build、actionlint、102项打包审计通过；远端main/task均1c919fe"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B16-T01.md",
+              "sha256": "667cc2488205fcdb2675b1ffd3e57827de758c5859e6450e558a83cc5f3eec22"
+            },
+            {
+              "path": ".github/workflows/windows-validation.yml",
+              "sha256": "68520ef8694686cdae3cdc55ea17e592d0754e50968942d99a83969a1b35333b"
+            },
+            {
+              "path": "doc/execution/KNOWN_GAPS.md",
+              "sha256": "17d3891942c36012bb44e418aee639370aecc01ab54e5cd98e3bbd4b7ee1165b"
+            },
+            {
+              "path": "doc/execution/RELEASE_ROADMAP.md",
+              "sha256": "1ea91c9f88a94038e45af4e4807b292f86dcfbcaee71efe505859cfc7b54d8fa"
+            },
+            {
+              "path": "doc/validation/assets/B16-T01/integration.json",
+              "sha256": "a5f09d41255366eea7185450af3b2a338442966a1e4514f6797b539f9dec137c"
+            }
+          ]
         }
       ]
     },
