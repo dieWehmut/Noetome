@@ -27,10 +27,12 @@ class KnowledgeVerifierTests(unittest.TestCase):
         fixture = REPO / "fixtures/extraction-review-v1"
         cls.gold_bytes = (fixture / "gold.json").read_bytes()
         cls.gold = json.loads(cls.gold_bytes)
-        cls.root = Path(tempfile.mkdtemp(prefix="knowledge-validator-", dir=REPO / "target/compiler-temp"))
+        temp_parent = REPO / "target/compiler-temp"
+        temp_parent.mkdir(parents=True, exist_ok=True)
+        cls.root = Path(tempfile.mkdtemp(prefix="knowledge-validator-", dir=temp_parent))
         cls.project, cls.case, cls.output = [cls.root / n for n in ("project", "case", "original-output")]
         cls.case.mkdir()
-        cls.binary = Path(os.environ.get("NOETOME_TEST_BINARY", REPO / "target/debug/noetome.exe"))
+        cls.binary = Path(os.environ.get("NOETOME_TEST_BINARY", REPO / "target/debug" / ("noetome.exe" if os.name == "nt" else "noetome")))
         cls.calls = []
 
         def call(args):

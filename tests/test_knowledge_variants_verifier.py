@@ -19,7 +19,9 @@ class VariantsVerifierTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.root = ROOT / "target" / ("python-variants-" + uuid.uuid4().hex)
-        cls.audit = VariantsAudit(ROOT / "target/debug/noetome.exe", cls.root)
+        cls.root.parent.mkdir(parents=True, exist_ok=True)
+        cli = Path(os.environ.get("NOETOME_TEST_BINARY", ROOT / "target/debug" / ("noetome.exe" if os.name == "nt" else "noetome")))
+        cls.audit = VariantsAudit(cli, cls.root)
         cls.prepared = {}
         for author in strict_json(cls.audit.authors["authors.json"])["cases"]:
             name = author["name"]

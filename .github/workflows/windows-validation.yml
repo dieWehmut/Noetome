@@ -10,7 +10,11 @@ on:
         default: all
   push:
     branches:
+      - main
       - 'codex/b15-*'
+      - 'codex/b16-*'
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: read
@@ -25,10 +29,10 @@ jobs:
       # the other native regression or build evidence.
       fail-fast: false
       matrix:
-        # The branch workflow may not exist on the default branch yet. Explicit
-        # push markers provide the same focused regression as dispatch inputs.
-        # Unmarked product changes continue to run every native target.
-        include: ${{ fromJSON((inputs.target == 'rust' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[windows:rust]'))) && '[{"target":"rust","profile":"debug"}]' || (inputs.target == 'python-soak' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[windows:python-soak]'))) && '[{"target":"python-soak","profile":"debug"}]' || (inputs.target == 'python' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[windows:python]'))) && '[{"target":"python","profile":"debug"}]' || inputs.target == 'desktop' && '[{"target":"desktop","profile":"release"}]' || '[{"target":"rust","profile":"debug"},{"target":"python","profile":"debug"},{"target":"desktop","profile":"release"}]') }}
+        # Main pushes and pull requests always run the complete matrix. Only
+        # development branch pushes may select a focused check by commit marker;
+        # manual dispatch retains its explicit target selection.
+        include: ${{ fromJSON((inputs.target == 'rust' || (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/codex/') && contains(github.event.head_commit.message, '[windows:rust]'))) && '[{"target":"rust","profile":"debug"}]' || (inputs.target == 'python-soak' || (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/codex/') && contains(github.event.head_commit.message, '[windows:python-soak]'))) && '[{"target":"python-soak","profile":"debug"}]' || (inputs.target == 'python' || (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/codex/') && contains(github.event.head_commit.message, '[windows:python]'))) && '[{"target":"python","profile":"debug"}]' || inputs.target == 'desktop' && '[{"target":"desktop","profile":"release"}]' || '[{"target":"rust","profile":"debug"},{"target":"python","profile":"debug"},{"target":"desktop","profile":"release"}]') }}
     defaults:
       run:
         shell: pwsh
@@ -37,6 +41,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         id: checkout
+        with:
+          persist-credentials: false
         env:
           # Scope long-path support to checkout; preserve historical evidence.
           GIT_CONFIG_COUNT: '1'

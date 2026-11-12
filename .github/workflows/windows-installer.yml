@@ -2,7 +2,8 @@ name: Windows 11 x64 installer
 
 on:
   push:
-    branches: ['codex/b15-t03-*']
+    branches: [main, 'codex/b15-t03-*']
+    tags: ['v*']
   workflow_dispatch:
 
 permissions:
@@ -19,6 +20,8 @@ jobs:
       TASK_EVIDENCE_DIR: .artifacts/B15-T03/ci
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
         env:
           GIT_CONFIG_COUNT: '1'
           GIT_CONFIG_KEY_0: core.longpaths
