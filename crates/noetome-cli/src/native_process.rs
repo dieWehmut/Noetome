@@ -167,7 +167,21 @@ mod tests {
         assert!(!processes.all_exited().unwrap());
         child.kill().unwrap();
         child.wait().unwrap();
-        assert!(job.query_process_id_list().unwrap().is_empty());
-        assert!(processes.all_exited().unwrap());
+        // Process signaling and Job accounting are separate observations. Keep
+        // the original handles while waiting for both, as the API does not
+        // promise that the Job list is updated when child.wait() returns.
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(10);
+        loop {
+            let remaining = job.query_process_id_list().unwrap();
+            let handles_exited = processes.all_exited().unwrap();
+            if remaining.is_empty() && handles_exited {
+                break;
+            }
+            assert!(
+                std::time::Instant::now() < deadline,
+                "Job cleanup did not converge: remaining={remaining:?}, handles_exited={handles_exited}"
+            );
+            std::thread::sleep(std::time::Duration::from_millis(5));
+        }
     }
 }

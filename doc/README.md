@@ -2,6 +2,8 @@
 
 本目录是 Noetome 的需求、技术、设计和执行标准入口。用户已经采纳原需求文档 D01 至 D15 的建议；按已定基线小步执行，不重复询问相同默认策略。
 
+当前开发入口为 [B16 近期步骤](execution/NEXT_STEPS.md)，完整目标和发布节奏见 [Release 路线](execution/RELEASE_ROADMAP.md)，已确认阻断及需求证据状态见 [真实缺口清单](execution/KNOWN_GAPS.md)。
+
 当前可亲自安装的版本见 [Noetome 0.1.0 Windows 测试版](windows/TEST_RELEASE.md)，包含固定 Release 下载、SHA256 和从离线自检到自己的 PDF 的操作步骤。按用户 2026-11-10 指令，本次以当前电脑运行实测为范围。
 
 2026-11-09 Windows 上手实测交付按 [B15 三步](execution/B15_STEPS.md)执行：锁定环境回归、桌面资料与离线流程、完整 NSIS 安装交付。验收记录与下载产物形成后分别链接到这里。

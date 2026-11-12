@@ -38,6 +38,9 @@ jobs:
         shell: pwsh
     env:
       TASK_EVIDENCE_DIR: .artifacts/windows-validation/${{ matrix.target }}
+      # Bound unrelated Python process startups during short protocol deadlines.
+      # Workload concurrency is exercised explicitly by the behavior tests.
+      RUST_TEST_THREADS: '2'
     steps:
       - uses: actions/checkout@v4
         id: checkout
