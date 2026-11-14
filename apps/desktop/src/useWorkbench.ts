@@ -13,6 +13,8 @@ const initialSource = () => ({
 });
 type SourceState = ReturnType<typeof initialSource>;
 type SourceOperation = "pick" | "import" | "choices" | "units" | "extract" | "export" | "selftest";
+const LAST_PROJECT = "noetome.last-project.v1";
+interface SavedSource { import_id: string; imported_at: string; filename: string; status: string; media_type: string | null }
 
 /** App owns this hook: changing pages never remounts project or workflow state. */
 export default function useWorkbench() {
@@ -34,6 +36,10 @@ export default function useWorkbench() {
   const [restoreConfirmed, setRestoreConfirmed] = useState(false);
   const [selfTest, setSelfTest] = useState<SelfTestResult | null>(null);
   const [selfTestError, setSelfTestError] = useState("");
+  const [savedSources, setSavedSources] = useState<SavedSource[]>([]);
+  const [savedSourcesBusy, setSavedSourcesBusy] = useState(false);
+  const [savedSourcesError, setSavedSourcesError] = useState("");
+  const savedSourcesLock = useRef<number | null>(null);
 
   function acceptProject(next: ProjectSummary) {
     const previous = projectRef.current;
@@ -43,7 +49,29 @@ export default function useWorkbench() {
     }
     projectRef.current = next;
     setProject(next);
+    try { localStorage.setItem(LAST_PROJECT, next.path); return true; }
+    catch { return false; }
   }
+  useEffect(() => {
+    if (!isTauri()) return;
+    let path: string | null = null;
+    try { path = localStorage.getItem(LAST_PROJECT); } catch { return; }
+    if (!path) return;
+    const savedPath = path;
+    let mounted = true;
+    projectLock.current = true; setProjectBusy(true);
+    setProjectForm((form) => ({ ...form, mode: "open", path: savedPath, notice: "正在恢复上次打开的项目…" }));
+    void invoke<ProjectSummary>("project_open", { path: savedPath }).then((next) => {
+      if (!mounted) return;
+      const remembered = acceptProject(next);
+      setProjectForm((form) => ({ ...form, path: next.path, notice: remembered ? "已恢复上次打开的项目，资料记录正在重新读取。" : "项目已恢复，但无法记住路径；下次启动请重新打开项目。" }));
+    }).catch((cause) => {
+      if (mounted) setProjectForm((form) => ({ ...form, error: `上次的项目暂时无法打开：${localError(cause)}`, notice: "请检查目录是否仍可用，或打开其他项目。" }));
+    }).finally(() => {
+      if (mounted) { projectLock.current = false; setProjectBusy(false); }
+    });
+    return () => { mounted = false; };
+  }, []);
   async function pickProjectDirectory() {
     if (projectLock.current) return;
     projectLock.current = true; setProjectBusy(true);
@@ -63,12 +91,32 @@ export default function useWorkbench() {
       const next = projectForm.mode === "create"
         ? await invoke<ProjectSummary>("project_create_in_parent", { parent: projectForm.parent, name: projectForm.name })
         : await invoke<ProjectSummary>("project_open", { path: projectForm.path });
-      acceptProject(next);
-      setProjectForm((form) => ({ ...form, path: next.path, notice: "当前项目已载入，可以前往资料页。" }));
+      const remembered = acceptProject(next);
+      setProjectForm((form) => ({ ...form, path: next.path, notice: remembered ? "当前项目已载入，可以前往资料页。" : "项目已载入，但无法记住路径；下次启动请重新打开项目。" }));
     } catch (cause) { setProjectForm((form) => ({ ...form, error: localError(cause) })); }
     finally { projectLock.current = false; setProjectBusy(false); }
   }
   function editSource(patch: Partial<SourceState>) { setSource((previous) => ({ ...previous, ...patch })); }
+  async function refreshSavedSources() {
+    const current = projectRef.current;
+    const generation = epoch.current;
+    if (!current || savedSourcesLock.current === generation) return;
+    savedSourcesLock.current = generation; setSavedSourcesBusy(true);
+    try {
+      const result = await invoke<{ project_id: string; sources: SavedSource[] }>("source_saved", { project: current.path });
+      if (epoch.current !== generation) return;
+      if (result.project_id !== current.project_id) throw new Error("DESKTOP_SOURCE_BINDING：资料列表与当前项目不符。");
+      setSavedSources(result.sources); setSavedSourcesError("");
+    } catch (cause) { if (epoch.current === generation) setSavedSourcesError(localError(cause)); }
+    finally {
+      if (savedSourcesLock.current === generation) savedSourcesLock.current = null;
+      if (epoch.current === generation) setSavedSourcesBusy(false);
+    }
+  }
+  useEffect(() => {
+    setSavedSources([]); setSavedSourcesError(""); setSavedSourcesBusy(false);
+    void refreshSavedSources();
+  }, [project?.project_id, project?.path]);
   function chooseSourcePath(path: string) {
     setSource((previous) => path === previous.path ? previous : { ...initialSource(), path, exportParent: previous.exportParent, exportName: previous.exportName });
   }
@@ -102,6 +150,7 @@ export default function useWorkbench() {
   function importSource() {
     const current = projectRef.current;
     if (!current || !source.path.trim()) return;
+    if (/\.pdf$/i.test(source.path.trim())) { editSource({ error: "新的 PDF 请使用整本 PDF 资料库进行预检和解析。" }); return; }
     return runSource("import", async (generation) => {
       editSource({ imported: null, choices: null, selection: [], units: null, consent: false, extracted: null, resultRoot: "", exported: null });
       const imported = await invoke<SourceImport>("source_import", { project: current.path, path: source.path });
@@ -111,6 +160,7 @@ export default function useWorkbench() {
         projectRef.current = imported.project; setProject(imported.project);
       }
       editSource({ imported });
+      void refreshSavedSources();
       if (imported.failure) { editSource({ error: failureText(imported.failure), importId: "" }); return; }
       const importId = recordText(imported.record, "import_id");
       if (!importId) throw new Error("DESKTOP_SOURCE_RECORD：返回记录缺少导入 ID，请查看完整记录。");
@@ -118,12 +168,12 @@ export default function useWorkbench() {
       await loadChoices(current.path, importId, generation);
     });
   }
-  function restoreSource() {
+  function restoreSource(importId: string) {
     const current = projectRef.current;
-    if (!current || !source.importId.trim()) return;
+    if (!current || !importId) return;
     return runSource("choices", async (generation) => {
       editSource({ choices: null, units: null, selection: [], consent: false, extracted: null, exported: null, imported: null });
-      await loadChoices(current.path, source.importId, generation);
+      await loadChoices(current.path, importId, generation);
     });
   }
   function toggleSelection(selection: Selection) {
@@ -241,6 +291,7 @@ export default function useWorkbench() {
   }
   return { project, projectForm, setProjectForm, projectBusy, openProject, pickProjectDirectory,
     source, sourceBusy, editSource, chooseSourcePath, pickSource, importSource, restoreSource, toggleSelection, selectAvailable, clearSelection, inspectUnits, extractSource, exportPreview, pickExportParent, cancelSource, cancelBusy,
+    savedSources, savedSourcesBusy, savedSourcesError, refreshSavedSources,
     model, modelBusy, modelError, refreshModel, modelCommand, restoreConfirmed, setRestoreConfirmed,
     selfTest, selfTestError, runSelfTest };
 }

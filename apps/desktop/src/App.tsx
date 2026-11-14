@@ -11,6 +11,7 @@ import Icon from "./AppIcon";
 import useThemePreference from "./useThemePreference";
 import type { Page } from "./appTypes";
 import useWorkbench from "./useWorkbench";
+import useCorpus from "./useCorpus";
 
 type Phase = "idle" | "running" | "success" | "error";
 type PreviewOption = "help" | "version";
@@ -57,6 +58,8 @@ export default function App() {
   const page = history.entries[history.index];
   const inSettings = page === "appearance" || page === "window" || page === "model" || page === "about";
   const workbench = useWorkbench();
+  const corpus = useCorpus(workbench.project);
+  const [sourceView, setSourceView] = useState<"pdf" | "legacy">("pdf");
   const theme = useThemePreference();
   const recentPages = [...new Set(history.entries.slice(0, history.index + 1).reverse())].slice(0, 5);
   const [sidebarVisible, setSidebarVisible] = useState(() => !window.matchMedia(sidebarOverlayQuery).matches);
@@ -238,7 +241,7 @@ export default function App() {
               <div className="section-title-row"><h2>当前可以做什么</h2><span>从小而可靠的能力开始</span></div>
               <div className="capability-grid">
                 <section className="capability-card"><div className="card-icon"><Icon name="terminal" /></div><span className="small-badge available">已接入</span><h3>查看帮助与版本</h3><p>通过本地组件查看 CLI 用法与版本，确认桌面应用连接状态。</p><button className="text-button" onClick={() => navigate("runtime")}>打开运行检查<Icon name="arrow" /></button></section>
-                <section className="capability-card"><div className="card-icon"><Icon name="folder" /></div><span className="small-badge available">已接入</span><h3>自己的资料与笔记</h3><p>选择 PDF、MD 或 TXT，核对原文后生成模型候选，导出 Obsidian 待核验笔记。</p><button className="text-button" onClick={() => navigate(workbench.project ? "sources" : "project")}>开始整理资料<Icon name="arrow" /></button></section>
+                <section className="capability-card"><div className="card-icon"><Icon name="folder" /></div><span className="small-badge available">已接入</span><h3>自己的资料与笔记</h3><p>整本 PDF 可逐页解析并恢复进度；文本与旧资料可生成模型候选和 Obsidian 待核验笔记。整书知识整理仍待接入。</p><button className="text-button" onClick={() => navigate(workbench.project ? "sources" : "project")}>开始整理资料<Icon name="arrow" /></button></section>
                 <section className="capability-card"><div className="card-icon"><Icon name="queue" /></div><span className="small-badge available">已接入</span><h3>查看任务状态</h3><p>只读投影六单元运行、研究队列、有界检索与写作反馈修订四类账本；四维状态与错误码原样显示。</p><button className="text-button" onClick={() => navigate("tasks")}>打开任务中心<Icon name="arrow" /></button></section>
               </div>
 
@@ -247,7 +250,7 @@ export default function App() {
           )}
 
           {page === "project" && <AppProject workbench={workbench} onSources={() => navigate("sources")} />}
-          {page === "sources" && <AppSources workbench={workbench} onProject={() => navigate("project")} onModel={() => navigate("model", "model-settings-title")} />}
+          {page === "sources" && <AppSources workbench={workbench} corpus={corpus} view={sourceView} onView={setSourceView} onProject={() => navigate("project")} onModel={() => navigate("model", "model-settings-title")} />}
 
           {page === "tasks" && <AppTasks />}
 

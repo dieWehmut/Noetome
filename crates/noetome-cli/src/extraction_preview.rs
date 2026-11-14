@@ -97,6 +97,75 @@ fn binding(
     }
 }
 
+/// List saved legacy import metadata without reading or hydrating whole source
+/// snapshots. Loading a selected record still revalidates it through `choices`.
+pub fn saved_sources(path: &Path) -> Result<Value, ProjectError> {
+    use rusqlite::{Connection, OpenFlags};
+    let root = project::check_components(path)?;
+    let info = project::inspect(&root)?;
+    let _config_guard = project::read_guard(&root.join(project::CONFIG))?;
+    let database_path = root.join(project::DATABASE);
+    let guard = project::read_guard(&database_path)?;
+    let before = guard
+        .metadata()
+        .map_err(|e| ProjectError::io(&database_path, e))?;
+    let identity = same_file::Handle::from_file(
+        guard
+            .try_clone()
+            .map_err(|e| ProjectError::io(&database_path, e))?,
+    )
+    .map_err(|e| ProjectError::io(&database_path, e))?;
+    if project::inspect(&root)? != info {
+        return Err(capture_error("资料列表读取前项目身份发生变化。"));
+    }
+    let canonical = database_path
+        .canonicalize()
+        .map_err(|e| ProjectError::io(&database_path, e))?;
+    let mut uri = url::Url::from_file_path(&canonical)
+        .map_err(|_| ProjectError::unsafe_path(&database_path))?;
+    uri.query_pairs_mut()
+        .append_pair("mode", "ro")
+        .append_pair("immutable", "1");
+    let connection = Connection::open_with_flags(
+        uri.as_str(),
+        OpenFlags::SQLITE_OPEN_READ_ONLY | OpenFlags::SQLITE_OPEN_URI,
+    )
+    .map_err(ProjectError::database)?;
+    let mut rows = vec![];
+    if info.schema_version >= 2 {
+        crate::source_schema::validate(&connection)?;
+        let mut sql = "SELECT i.import_id,i.imported_at,i.selected_path,i.status,v.display_name,v.media_type FROM source_imports i LEFT JOIN source_versions v ON v.version_id=i.version_id".to_owned();
+        if info.schema_version == 3 {
+            sql.push_str(" UNION ALL SELECT i.import_id,i.imported_at,i.selected_path,i.status,v.display_name,'application/pdf' FROM pdf_imports i LEFT JOIN source_versions v ON v.version_id=i.version_id");
+        }
+        sql.push_str(" ORDER BY imported_at DESC,import_id");
+        let mut statement = connection.prepare(&sql).map_err(ProjectError::database)?;
+        rows = statement.query_map([], |row| {
+            let selected: String = row.get(2)?;
+            let name: Option<String> = row.get(4)?;
+            let filename = name.unwrap_or_else(|| Path::new(&selected).file_name().unwrap_or_default().to_string_lossy().into_owned());
+            Ok(json!({"import_id":row.get::<_,String>(0)?,"imported_at":row.get::<_,String>(1)?,"filename":filename,"status":row.get::<_,String>(3)?,"media_type":row.get::<_,Option<String>>(5)?}))
+        }).map_err(ProjectError::database)?.collect::<rusqlite::Result<Vec<_>>>().map_err(ProjectError::database)?;
+    }
+    connection
+        .close()
+        .map_err(|(_, e)| ProjectError::database(e))?;
+    let after = guard
+        .metadata()
+        .map_err(|e| ProjectError::io(&database_path, e))?;
+    let current = same_file::Handle::from_path(&database_path)
+        .map_err(|e| ProjectError::io(&database_path, e))?;
+    project::reject_sidecars(&root)?;
+    if identity != current
+        || before.len() != after.len()
+        || before.modified().ok() != after.modified().ok()
+        || project::inspect(&root)? != info
+    {
+        return Err(capture_error("资料列表读取期间项目发生变化；请重试。"));
+    }
+    Ok(json!({"project_id":info.project_id,"sources":rows}))
+}
+
 /// Metadata choices retain actual Span ordinals and physical-page region IDs.
 pub fn choices(project: &Path, import_id: &str) -> Result<Value, ProjectError> {
     crate::source::invalid_id(import_id)?;
@@ -911,6 +980,64 @@ pub fn export(
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn saved_source_listing_is_read_only_metadata_and_selected_restore_revalidates() {
+        let parent =
+            Path::new(env!("CARGO_MANIFEST_DIR")).join("../../target/preview-source-list-tests");
+        fs::create_dir_all(&parent).unwrap();
+        let root = parent
+            .canonicalize()
+            .unwrap()
+            .join(uuid::Uuid::new_v4().to_string());
+        fs::create_dir(&root).unwrap();
+        let project_path = root.join("project");
+        project::initialize(&project_path).unwrap();
+        assert_eq!(saved_sources(&project_path).unwrap()["sources"], json!([]));
+        let source_path = root.join("保存文本.md");
+        fs::write(&source_path, "# 作者样例\n\n此测试不代表真实教材质量。\n").unwrap();
+        let imported = crate::source::import(&project_path, &source_path, None).unwrap();
+        let report: Value = serde_json::from_str(&imported.json).unwrap();
+        let config_before = fs::read(project_path.join(project::CONFIG)).unwrap();
+        let database_before = fs::read(project_path.join(project::DATABASE)).unwrap();
+        let listed = saved_sources(&project_path).unwrap();
+        assert_eq!(listed["sources"][0]["import_id"], report["import_id"]);
+        assert_eq!(listed["sources"][0]["filename"], "保存文本.md");
+        assert_eq!(listed["sources"][0]["status"], "ready");
+        assert_eq!(
+            fs::read(project_path.join(project::CONFIG)).unwrap(),
+            config_before
+        );
+        assert_eq!(
+            fs::read(project_path.join(project::DATABASE)).unwrap(),
+            database_before
+        );
+        assert!(!project_path.join("project.sqlite-wal").exists());
+        // Missing source bytes do not prevent metadata discovery. Selecting it
+        // invokes the existing stricter source verification and reports failure.
+        let snapshot = report["version"]["raw_snapshot"].as_str().unwrap();
+        fs::remove_file(project_path.join(snapshot)).unwrap();
+        assert_eq!(saved_sources(&project_path).unwrap(), listed);
+        assert!(choices(&project_path, report["import_id"].as_str().unwrap()).is_err());
+        // Schema 3 can also discover failed legacy PDF records with no version.
+        let info = project::inspect(&project_path).unwrap();
+        let mut connection =
+            rusqlite::Connection::open(project_path.join(project::DATABASE)).unwrap();
+        let updated = crate::source_schema::upgrade_pdf(&mut connection, &info).unwrap();
+        let pdf_id = uuid::Uuid::new_v4().to_string();
+        connection.execute("INSERT INTO pdf_imports(import_id,imported_at,selected_path,status,reused,parse_reused,acquisition_status,error_code,error_message) VALUES(?1,'2099-01-01T00:00:00Z',?2,'failed',0,0,'failed','PDF_TEST_FAILURE','author test record')",rusqlite::params![pdf_id,root.join("旧版失败.pdf").to_string_lossy()]).unwrap();
+        connection.close().unwrap();
+        fs::write(
+            project_path.join(project::CONFIG),
+            serde_json::to_vec(&updated).unwrap(),
+        )
+        .unwrap();
+        let schema3 = saved_sources(&project_path).unwrap();
+        assert_eq!(schema3["sources"].as_array().unwrap().len(), 2);
+        assert_eq!(schema3["sources"][0]["filename"], "旧版失败.pdf");
+        assert_eq!(schema3["sources"][0]["status"], "failed");
+        assert_eq!(schema3["sources"][0]["media_type"], "application/pdf");
+        fs::remove_dir_all(root).unwrap();
+    }
     #[test]
     fn arbitrary_source_text_cannot_create_active_markdown_links_or_html() {
         let text = "[[outside/path]] <script>bad</script> # title `code`";

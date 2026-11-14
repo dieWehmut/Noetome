@@ -839,12 +839,25 @@ fn run_bounded(
 pub fn source_pick() -> Result<Option<String>, String> {
     Ok(rfd::FileDialog::new()
         .set_title("选择一份资料")
-        .add_filter("资料", &["md", "txt", "pdf"])
+        .add_filter("文本资料", &["md", "txt"])
         .pick_file()
         .map(|path| path.display().to_string()))
 }
 #[cfg(not(windows))]
 pub fn source_pick() -> Result<Option<String>, String> {
+    Err("DESKTOP_SOURCE_DIALOG_UNAVAILABLE：当前系统没有原生文件选择器。".into())
+}
+
+#[cfg(windows)]
+pub fn corpus_pick() -> Result<Option<String>, String> {
+    Ok(rfd::FileDialog::new()
+        .set_title("选择整本 PDF")
+        .add_filter("PDF", &["pdf"])
+        .pick_file()
+        .map(|path| path.display().to_string()))
+}
+#[cfg(not(windows))]
+pub fn corpus_pick() -> Result<Option<String>, String> {
     Err("DESKTOP_SOURCE_DIALOG_UNAVAILABLE：当前系统没有原生文件选择器。".into())
 }
 

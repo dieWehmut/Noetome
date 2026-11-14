@@ -66,6 +66,12 @@ fn inventory(root: &Path, control: &Control) -> Result<BTreeMap<PathBuf, Entry>,
         if project::is_link(&meta) || (!meta.is_dir() && !meta.is_file()) {
             return Err(ProjectError::unsafe_path(&path));
         }
+        if relative == Path::new(".noetome-corpus") && meta.is_dir() {
+            // The production repository has its own mutable transactions and
+            // guards. Legacy extraction binds only its selected legacy caches;
+            // unrelated OCR progress must not invalidate that source snapshot.
+            continue;
+        }
         if meta.is_file() && cache_path(&relative) {
             cache_files += 1;
             cache_bytes = cache_bytes

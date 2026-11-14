@@ -86,6 +86,7 @@ jobs:
           cargo build -p noetome-cli --locked *>&1 | Tee-Object "$env:TASK_EVIDENCE_DIR/cli-build.log"
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           "NOETOME_TEST_BINARY=$env:GITHUB_WORKSPACE/target/debug/noetome.exe" >> $env:GITHUB_ENV
+          "NOETOME_CORPUS_CLI=$env:GITHUB_WORKSPACE/target/debug/noetome.exe" >> $env:GITHUB_ENV
       - name: Build actual frontend assets required by packaging regression
         id: python_web
         if: always() && matrix.target == 'python' && steps.setup.outcome == 'success'

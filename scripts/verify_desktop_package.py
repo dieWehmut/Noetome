@@ -101,6 +101,8 @@ EXPECTED_SHELL_COMMANDS = (
     "project_create_in_parent", "source_pick", "source_import", "source_choices",
     "source_units", "source_extract", "source_cancel", "source_preview_export",
     "model_status", "model_credential_store", "model_budget_restore", "desktop_self_test",
+    "source_saved", "corpus_pick", "corpus_preflight", "corpus_import", "corpus_list",
+    "corpus_status", "corpus_pages", "corpus_process", "corpus_retry", "corpus_pause",
 )
 MAIN_RS = "crates/noetome-desktop/src/main.rs"
 

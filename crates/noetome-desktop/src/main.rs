@@ -27,7 +27,7 @@ struct RuntimeInfo {
     app_version: &'static str,
     cli_version: &'static str,
     target: &'static str,
-    capabilities: [&'static str; 17],
+    capabilities: [&'static str; 27],
     cli_help: &'static str,
 }
 
@@ -55,6 +55,16 @@ fn runtime_info() -> RuntimeInfo {
             "model.budget_restore",
             "desktop.self_test",
             "source.cancel",
+            "source.saved",
+            "corpus.pick",
+            "corpus.preflight",
+            "corpus.import",
+            "corpus.list",
+            "corpus.status",
+            "corpus.pages",
+            "corpus.process",
+            "corpus.pause",
+            "corpus.retry",
         ],
         cli_help: noetome_cli::HELP,
     }
@@ -106,6 +116,110 @@ async fn workbench_blocking<T: Send + 'static>(
 #[tauri::command]
 async fn source_pick() -> Result<Option<String>, String> {
     workbench_blocking(workbench::source_pick).await
+}
+#[tauri::command]
+async fn source_saved(project: String) -> Result<serde_json::Value, String> {
+    workbench_blocking(move || {
+        noetome_cli::extraction_preview::saved_sources(Path::new(&project))
+            .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn corpus_pick() -> Result<Option<String>, String> {
+    workbench_blocking(workbench::corpus_pick).await
+}
+#[tauri::command]
+async fn corpus_preflight(path: String) -> Result<serde_json::Value, String> {
+    workbench_blocking(move || {
+        noetome_cli::corpus::preflight(Path::new(&path)).map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn corpus_import(
+    project: String,
+    path: String,
+) -> Result<noetome_cli::corpus::SourceSummary, String> {
+    workbench_blocking(move || {
+        noetome_cli::corpus::import(Path::new(&project), Path::new(&path))
+            .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn corpus_list(project: String) -> Result<Vec<noetome_cli::corpus::SourceSummary>, String> {
+    workbench_blocking(move || {
+        noetome_cli::corpus::list(Path::new(&project)).map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn corpus_status(
+    project: String,
+    source_id: String,
+) -> Result<noetome_cli::corpus::SourceSummary, String> {
+    workbench_blocking(move || {
+        noetome_cli::corpus::status(Path::new(&project), &source_id)
+            .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn corpus_pages(
+    project: String,
+    source_id: String,
+    offset: u32,
+    limit: u32,
+) -> Result<serde_json::Value, String> {
+    workbench_blocking(move || {
+        noetome_cli::corpus::pages(Path::new(&project), &source_id, offset, limit)
+            .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn corpus_process(
+    project: String,
+    source_id: String,
+) -> Result<noetome_cli::corpus::SourceSummary, String> {
+    // Whole-book work has no desktop timeout. The Core bounds each worker batch
+    // and commits pages durably; the UI polls progress independently.
+    workbench_blocking(move || {
+        noetome_cli::corpus::process(
+            Path::new(&project),
+            &source_id,
+            std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false)),
+        )
+        .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn corpus_pause(
+    project: String,
+    source_id: String,
+) -> Result<noetome_cli::corpus::SourceSummary, String> {
+    workbench_blocking(move || {
+        noetome_cli::corpus::pause(Path::new(&project), &source_id)
+            .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn corpus_retry(
+    project: String,
+    source_id: String,
+) -> Result<noetome_cli::corpus::SourceSummary, String> {
+    workbench_blocking(move || {
+        noetome_cli::corpus::retry(
+            Path::new(&project),
+            &source_id,
+            std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false)),
+        )
+        .map_err(|error| error.to_string())
+    })
+    .await
 }
 #[tauri::command]
 async fn project_create_in_parent(
@@ -451,7 +565,9 @@ fn main() {
             set_close_behavior,
             source_pick, project_create_in_parent, source_import, source_choices, source_units,
             source_extract, source_preview_export, model_status, model_credential_store,
-            model_budget_restore, desktop_self_test, source_cancel
+            model_budget_restore, desktop_self_test, source_cancel, source_saved,
+            corpus_pick, corpus_preflight, corpus_import, corpus_list, corpus_status,
+            corpus_pages, corpus_process, corpus_pause, corpus_retry
         ])
         .on_window_event(handle_window_event)
         .setup(move |app| {
@@ -567,6 +683,16 @@ mod tests {
                 "model.budget_restore",
                 "desktop.self_test",
                 "source.cancel",
+                "source.saved",
+                "corpus.pick",
+                "corpus.preflight",
+                "corpus.import",
+                "corpus.list",
+                "corpus.status",
+                "corpus.pages",
+                "corpus.process",
+                "corpus.pause",
+                "corpus.retry",
             ]
         );
         assert_eq!(info.cli_help, cli_preview("help").unwrap());
