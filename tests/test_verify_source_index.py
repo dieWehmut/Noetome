@@ -18,6 +18,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "scripts" / "verify_source_index.py"
 PACKAGE = ROOT / "fixtures" / "source-index-v1"
@@ -323,7 +325,7 @@ class LayoutTests(SandboxCase):
         self.assertIn("layout-control-entries", failed(report))
 
     def test_a_symlink_inside_the_root_is_refused(self) -> None:
-        (self.root / V.CONTROL / "link").symlink_to(self.root / V.CONTROL / V.PROJECT)
+        create_symlink_or_skip(self.root / V.CONTROL / "link", self.root / V.CONTROL / V.PROJECT)
         report = audit(self.root)
         self.assertIn("layout-no-symlinks", failed(report))
 

@@ -14,6 +14,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "scripts" / "verify_outline_alignment.py"
 PACKAGE = ROOT / "fixtures" / "outline-alignment-v1"
@@ -368,7 +370,7 @@ class LayoutTests(unittest.TestCase):
         self.addCleanup(sandbox.close)
         root, _ = build_root(sandbox.directory)
         link = sandbox.path("link")
-        link.symlink_to(root, target_is_directory=True)
+        create_symlink_or_skip(link, root, target_is_directory=True)
         report = audit(link)
         self.assertIn("layout-no-links", failed_names(report))
 

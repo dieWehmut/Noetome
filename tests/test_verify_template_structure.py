@@ -17,6 +17,8 @@ import contextlib
 import unittest
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parent.parent
 PACKAGE = ROOT / "fixtures" / "structure-template-v1"
 AUDITOR = ROOT / "scripts" / "verify_template_structure.py"
@@ -251,7 +253,7 @@ class LayoutTests(unittest.TestCase):
     def test_a_symlink_is_refused(self):
         with Sandbox() as sandbox:
             root = build_root(sandbox)
-            (root / "link.md").symlink_to(root / V.CONTROL / V.PROJECT)
+            create_symlink_or_skip(root / "link.md", root / V.CONTROL / V.PROJECT)
             report = V.Report()
             V.check_layout(root, report)
             self.assertIn("layout-no-links", failed(report))

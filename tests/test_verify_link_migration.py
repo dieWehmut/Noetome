@@ -17,6 +17,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "scripts" / "verify_link_migration.py"
 PACKAGE = ROOT / "fixtures" / "link-migration-v1"
@@ -499,7 +501,7 @@ class LayoutTests(SandboxCase):
 
     def test_a_symbolic_link_anywhere_in_the_root_is_detected(self) -> None:
         target = self.root / "control" / "plan-link.json"
-        target.symlink_to(self.root / "control" / "plan.json")
+        create_symlink_or_skip(target, self.root / "control" / "plan.json")
         self.assertIn("layout-no-links", failed(self.audit(output=False)))
 
 

@@ -17,6 +17,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "verify_retention_cleanup.py"
 PACKAGE = ROOT / "fixtures" / "retention-cleanup-v1"
@@ -287,7 +289,7 @@ class LayoutTests(unittest.TestCase):
     def test_a_symlink_is_detected(self):
         with Sandbox() as directory:
             root = build_root(directory)
-            (root / "control" / "link.json").symlink_to(root / "control" / "inputs.json")
+            create_symlink_or_skip(root / "control" / "link.json", root / "control" / "inputs.json")
             report = audit(root=root)
             self.assertIn("layout-no-symlinks", failed(report))
 

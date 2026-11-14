@@ -17,6 +17,8 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parents[1]
 AUDITOR = ROOT / "scripts" / "verify_library_audit.py"
 FIXTURE = ROOT / "fixtures" / "library-audit-v1"
@@ -323,7 +325,7 @@ class LayoutTests(unittest.TestCase):
     def test_a_symlink_inside_the_root_is_refused(self):
         with Sandbox() as directory:
             root = build_root(directory, replay_or_fail())
-            (root / "control" / "link.md").symlink_to(root / "control" / "project.json")
+            create_symlink_or_skip(root / "control" / "link.md", root / "control" / "project.json")
             self.assertIn("layout-symlinks", failed(audit(root)))
 
     def test_a_missing_control_directory_is_refused(self):

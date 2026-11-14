@@ -15,6 +15,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parents[1]
 AUDITOR = ROOT / "scripts" / "verify_scale_harness.py"
 PACKAGE = ROOT / "fixtures" / "scale-harness-v1"
@@ -326,7 +328,7 @@ class LayoutTests(unittest.TestCase):
     def test_a_symlink_is_detected(self):
         with Sandbox() as directory:
             output = build_output(directory, structure_of(directory))
-            (output / "link.json").symlink_to(output / "structure.json")
+            create_symlink_or_skip(output / "link.json", output / "structure.json")
             self.assertIn("layout-no-symlinks", failed(audit(output)))
 
 

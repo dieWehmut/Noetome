@@ -18,6 +18,8 @@ import shutil
 import tempfile
 import unittest
 from pathlib import Path
+
+from symlink_test_support import create_symlink_or_skip
 from types import ModuleType
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "verify_library_bench.py"
@@ -332,7 +334,7 @@ class LayoutTests(unittest.TestCase):
     def test_a_symlink_is_reported(self):
         with Sandbox("symlink") as sandbox:
             build_root(sandbox / "a")
-            (sandbox / "a" / "alias.md").symlink_to(sandbox / "a" / V.REPORT)
+            create_symlink_or_skip(sandbox / "a" / "alias.md", sandbox / "a" / V.REPORT)
             self.assertIn("layout-no-symlinks", failed(audit(sandbox / "a", None)))
 
 

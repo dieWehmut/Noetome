@@ -18,6 +18,8 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / "fixtures" / "adaptive-plan-v1"
 
@@ -263,7 +265,7 @@ class LayoutTests(unittest.TestCase):
     def test_a_symlink_is_reported(self):
         with Sandbox() as sandbox:
             root = build_root(sandbox)
-            (root / "control" / "link.json").symlink_to(root / "control" / "inputs.json")
+            create_symlink_or_skip(root / "control" / "link.json", root / "control" / "inputs.json")
             report = V.Report()
             V.check_layout(root, report)
             self.assertIn("layout-symlinks", failed(report))

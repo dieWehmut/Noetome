@@ -17,6 +17,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parents[1]
 AUDITOR = ROOT / "scripts" / "verify_soak_harness.py"
 PACKAGE = ROOT / "fixtures" / "soak-harness-v1"
@@ -286,7 +288,7 @@ class LayoutTests(unittest.TestCase):
     def test_a_symlink_is_reported(self) -> None:
         with Sandbox() as path:
             root = build_root(path / "run")
-            (root / "extra.json").symlink_to(root / "structure.json")
+            create_symlink_or_skip(root / "extra.json", root / "structure.json")
             report = audit(root)
             self.assertIn("layout-no-symlinks", failed(report))
 

@@ -17,6 +17,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "scripts" / "verify_relevance_filter.py"
 PACKAGE = ROOT / "fixtures" / "relevance-filter-v1"
@@ -411,7 +413,7 @@ class LayoutTests(SandboxCase):
         copy = self.root / "control" / "text" / "copy.md"
         copy.write_bytes(target.read_bytes())
         target.unlink()
-        target.symlink_to(copy.name)
+        create_symlink_or_skip(target, copy.name)
         self.assertIn("layout-no-links", failed(self.audit(output=False)))
 
 

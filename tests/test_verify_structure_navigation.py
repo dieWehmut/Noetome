@@ -17,6 +17,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from symlink_test_support import create_symlink_or_skip
+
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = ROOT / "scripts" / "verify_structure_navigation.py"
 PACKAGE = ROOT / "fixtures" / "structure-family-v1"
@@ -471,7 +473,7 @@ class LayoutTests(SandboxCase):
     def test_a_symlinked_file_is_detected(self) -> None:
         target = self.read_path = self.root / "control" / "family.json"
         link = self.root / "control" / "alias.json"
-        link.symlink_to(target)
+        create_symlink_or_skip(link, target)
         self.assertIn("no-symlinks", failed(self.audit()))
 
     def read_path(self, path: Path) -> bytes:
