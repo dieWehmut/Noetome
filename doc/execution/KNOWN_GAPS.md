@@ -1,8 +1,24 @@
 # 已知缺口与产品验收证据矩阵
 
-登记日期：2026-11-12。当前任务为 B16-T01；任务状态仍只由 [tasks.json](../../dev-log/tasks.json) 维护。本文件登记修复对象与证据，不另建任务状态源。当前批次仅有 B16-T01、B16-T02、B16-T03 三个详细任务；远期版本目标见 [Release 路线](RELEASE_ROADMAP.md)。
+首次登记日期：2026-11-12；来源层复核更新：2026-11-14。任务状态仍只由 [tasks.json](../../dev-log/tasks.json) 维护。本文件登记修复对象与证据，不另建任务状态源。当前批次仅有 B16-T01、B16-T02、B16-T03 三个详细任务；远期版本目标见 [Release 路线](RELEASE_ROADMAP.md)。
 
 本次审计以整合基线 `a9499d6` 的代码、历史验证原件及用户实际失败为依据。已发布 `v0.1.0-test.1` 的安装包来源是 `6fe4983e8886501374c71af73963ed927d109fd9`，不是每次审计的工作区 HEAD。下表是 B16 开始时的缺口快照；后续关闭缺口必须补充修复提交、精确程序版本、复现前后结果及原生操作证据。生成这份文档或历史任务标记 `done` 均不构成业务修复。
+
+## B16-T02 来源层复核更新
+
+以下更新适用于新 `noetome_cli::corpus` 和共用其 API 的桌面资料库。下文 E01–E11、GAP 与 FR/AC/NFR 表保留 B16 开始时的快照，不能据此把已复验的来源能力继续解释为未运行，也不能将来源层通过扩展为知识编译或安装版通过。当前已发布的 0.1 测试版仍保持原边界；B16-T03 负责安装版整条链。
+
+| 关联缺口 | 新增事实与证据 | 仍需完成 |
+| --- | --- | --- |
+| GAP-PDF-01/02/04/05、GAP-SCALE-01 | 原报错 1227 页、757,012,744 字节扫描本 710 页、3648 页文字本均完整获取并逐页登记。独立只读复核 5585 页、567600 个区域坐标、原件/副本 SHA、页 JSON SHA 与连续页号，数据库复核前后不变。[B16-T02](../validation/B16-T02.md)、[覆盖摘要](../validation/assets/B16-T02/coverage-summary.json)。 | 扫描本 710 页全书 OCR、科学内容与必要知识覆盖、整书笔记编译。文字层与物理页登记不计为 OCR 或知识完成。 |
+| GAP-PDF-03/07、GAP-UI-01/02/07 | 新资料页显示完整预检、实际批次限制、错误代码、待 OCR/复核/失败页，使用分页查询。真实 Windows 开发程序完成 1227 页预检、8 页暂停、退出重开与继续到 16 页；前 8 页的版本和全文摘要不变，10 项原生检查通过。[UI 记录](../validation/B16-T02-UI.md)、[最终同源原生摘要](../validation/assets/B16-T02/native-ui-final-summary.json)。 | 来源驱动的真实模型候选、生产 IR、安装后的选文件器及完整用户链。模拟 IPC 和开发程序原生 IPC 的结果分别保留。 |
+| GAP-PDF-06、GAP-QUERY-01 | 来源库、分页读取和 `export-source` 共用流式原件策略；722 MiB 原件导出和 710 页清单实际核对。新 OCR 资产的缺失/篡改拒绝；旧原始结构缺少固定摘要时报 `CORPUS_ASSET_UNPINNED`，来源包保留未完成标记。[大文件摘要](../validation/assets/B16-T02/large-source-summary.json)、[OCR 生命周期](../validation/assets/B16-T02/ocr-source-lifecycle-summary.json)。 | 真实 IR/模型来源选择、知识笔记与来源索引导出仍须在 B16-T03 走同一来源能力；旧有界 fixture 不改写成整书能力。 |
+| GAP-PDF-08 | 获取中断后保留旧未确认记录和部分原件，只读显示 `interrupted`，重新导入流式获取；处理阶段暂停持久化，确认页与历史版本保留。PDF/OCR 宿主共享 Windows kill-on-close Job。[来源契约](../technical/CORPUS_SOURCE_CONTRACT.md)与本项最终进程恢复记录。 | 获取阶段取消按钮和部分字节续传未实现；任意断电、睡眠和 24 小时运行不由短时进程复验推定通过。 |
+| GAP-PDF-09、GAP-VIS-01 | 现成 Windows OCR 已进入来源页版本和资产链。75 份原生预检为 71 可继续、1 密码、3 格式/页树失败；原件摘要与旧盘点一致，解析器差异保留。[预检摘要](../validation/assets/B16-T02/preflight-summary.json)。 | 32 页对照的具体识别质量和资源见本项 OCR 记录；密码输入、困难图示语义、全书 OCR 质量与独立科学基准继续保留。 |
+
+来源页的 `ready`、`needs_review`、`needs_ocr` 与知识 `pending` 必须同时按真实字段解释。以上更新没有关闭 GAP-IR、GAP-BUD、GAP-RUN 的生产编译缺口，也没有为 NFR-02/03 的科学质量门槛提供替代证据。
+
+相关实现提交分别为来源核心与路径别名保护 `f1bf195`、现成 OCR 运行时 `12eb4aa`、桌面与 CI 接入 `40d19a9`。最终原生桌面及源码的独立复核见[最终 UI 摘要](../validation/assets/B16-T02/native-ui-final-summary.json)；历史失败回执和最初 GAP 快照继续保留。
 
 ## 判定规则
 

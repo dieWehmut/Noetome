@@ -1,0 +1,479 @@
+{
+  "schema_version": 1,
+  "task_id": "B16-T02",
+  "date": "2026-11-13",
+  "scope": "Frozen Windows CLI lib recheck; unchanged source and thresholds",
+  "all_lib_tests_passed": false,
+  "source_snapshot_label": "b16-t02-guard-20261113",
+  "binary_filename": "noetome_cli-dbc7773ff32d1432.exe",
+  "binary_pin": {
+    "sha256": "f37c227dcb7f109e8e8628a9958812180a48e436c97967f6ba8be36ed0204ae3",
+    "byte_length": 45772800
+  },
+  "locked_python_pin": {
+    "sha256": "1326cf78aeef6a027dee9fc991cdf275b113a7360e6d7db3c3e196b49fad1b10",
+    "byte_length": 91648
+  },
+  "source_files_matching_mainline_and_frozen_ntfs": [
+    {
+      "path": "Cargo.lock",
+      "sha256": "1146900ef839afcceabffdcdb6a92a3c4b55d7126927e497f0c44494c175b468",
+      "byte_length": 115270
+    },
+    {
+      "path": "crates/noetome-cli/Cargo.toml",
+      "sha256": "21c9d4115d34100e2e5e9f4335b0b29872a1c03313f3ac9d26ae408b8927cb80",
+      "byte_length": 1229
+    },
+    {
+      "path": "crates/noetome-cli/src/sidecar_process.rs",
+      "sha256": "5a98001fdc2943404d2abffd7b29590af09222ee067499b4dbf5ad528893cbe7",
+      "byte_length": 24280
+    },
+    {
+      "path": "crates/noetome-cli/tests/support/sidecar_tests.rs",
+      "sha256": "cf34ef482a0a38634f9bcce3ad94e650dd97733dfcadad0908f75bfe01e215de",
+      "byte_length": 24303
+    },
+    {
+      "path": "crates/noetome-cli/tests/support/fake_parser.py",
+      "sha256": "984db0270d5b75f35b4e701ce6c2be1db3ba65dd23c5a1db6db919d3c2ee6c19",
+      "byte_length": 12186
+    }
+  ],
+  "first_workspace_run_preserved": {
+    "exit_code": 101,
+    "passed": 1349,
+    "failed": 2,
+    "ignored": 1,
+    "failed_tests": [
+      "early_parent_exit_reaps_noninherited_descendants",
+      "timeout_reaps_live_tree"
+    ],
+    "log_pin": {
+      "sha256": "37ef46520448d6eb632129d2e2729f2dbd2988d6f57aca801ea82604a4fee2d1",
+      "byte_length": 265620
+    }
+  },
+  "cargo_attempt": {
+    "command": [
+      "cargo",
+      "+1.98.1",
+      "test",
+      "-p",
+      "noetome-cli",
+      "--lib",
+      "--offline",
+      "--locked",
+      "--no-fail-fast"
+    ],
+    "jobs": 1,
+    "test_threads": 1,
+    "compilation_triggered": true,
+    "tests_executed": 0,
+    "monitor_file_sharing_error_preserved": true,
+    "own_cargo_tree_stop": {
+      "owned_cargo_pid": 94012,
+      "terminated_process_ids": [
+        94012,
+        84812,
+        92020
+      ],
+      "taskkill_exit_code": 0,
+      "tests_executed": 0,
+      "reason": "Cargo triggered compilation; monitor hit redirected-file sharing lock; own tree stopped explicitly"
+    }
+  },
+  "serial_runner_behavior": {
+    "test_threads": 1,
+    "cargo_invoked": false,
+    "completed_tests": 40,
+    "suite_result_available": false,
+    "terminated_exit_code": 1,
+    "seconds": 654.3600000000006,
+    "log_pin": {
+      "sha256": "461639cdd22d3329b15560597a2572fd9b1693d74f175325e50e7f44b3a0b3eb",
+      "byte_length": 3344
+    },
+    "cause": "Test-name prefix and marker share a line under one thread; parent exact marker match waits while child waits for stdin",
+    "is_product_regression": false,
+    "stop_receipt": {
+      "scope": "original owned serial lib parent/helper identities; held handles used for termination and wait",
+      "results": [
+        {
+          "pid": 95432,
+          "created": "2026-11-13T16:01:30.4194340+08:00",
+          "creation_and_executable_verified_before_action": true,
+          "terminated_through_held_handle": true,
+          "wait_code": 0
+        },
+        {
+          "pid": 94012,
+          "created": "2026-11-13T16:01:20.8522400+08:00",
+          "creation_and_executable_verified_before_action": true,
+          "terminated_through_held_handle": true,
+          "wait_code": 0
+        }
+      ]
+    },
+    "actual_marker_proof": [
+      {
+        "test_threads": 1,
+        "helper_exit_code": 0,
+        "marker_lines": [
+          "test compile_store::tests::hot_journal_child ... NOETOME_STORE_HOT_JOURNAL_READY"
+        ],
+        "exact_marker_matches": 0
+      },
+      {
+        "test_threads": 2,
+        "helper_exit_code": 0,
+        "marker_lines": [
+          "NOETOME_STORE_HOT_JOURNAL_READY"
+        ],
+        "exact_marker_matches": 1
+      }
+    ]
+  },
+  "exact_rechecks": [
+    {
+      "label": "lib-exact-early-parent-thread2",
+      "exit_code": 0,
+      "seconds": 1.3130000000019209,
+      "test_threads": 2,
+      "result_totals": [
+        {
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 743
+        }
+      ],
+      "log_pin": {
+        "sha256": "f6c9c33740223e7b0ee7e8e7f1a64b22160d15b6bec9fb45c83b220cdb3daeb7",
+        "byte_length": 199
+      }
+    },
+    {
+      "label": "lib-exact-timeout-thread2",
+      "exit_code": 101,
+      "seconds": 1.4059999999990396,
+      "test_threads": 2,
+      "result_totals": [
+        {
+          "passed": 0,
+          "failed": 1,
+          "ignored": 0,
+          "measured": 0,
+          "filtered_out": 743
+        }
+      ],
+      "log_pin": {
+        "sha256": "3ef2b7ec7c1455dd19336fdba87f8bfff0dcd9f96b1813c41cc3f3a939d14489",
+        "byte_length": 566
+      }
+    }
+  ],
+  "full_lib_recheck": {
+    "arguments": [
+      "--test-threads=2"
+    ],
+    "cargo_invoked": false,
+    "thresholds_changed": false,
+    "exit_code": 101,
+    "seconds": 422.09400000000096,
+    "totals": {
+      "passed": 739,
+      "failed": 4,
+      "ignored": 1,
+      "measured": 0,
+      "filtered_out": 0
+    },
+    "log_pin": {
+      "sha256": "49e6513fc0134fc7e2ca50e2942312a630e4b170fe359d0f85ab73e7e27b8aa0",
+      "byte_length": 70085
+    },
+    "corpus_windows_tests_passed": 20,
+    "failures": [
+      {
+        "test": "sidecar_process::tests::cancellation_reaps_live_tree",
+        "source_line": 463,
+        "category": "tree preparation handshake",
+        "deadline_ms": 1000,
+        "observed_ms": null,
+        "latency_upper_bound_ms": null,
+        "timeout_code_correct": null
+      },
+      {
+        "test": "sidecar_process::tests::overflow_reaps_live_tree",
+        "source_line": 463,
+        "category": "tree preparation handshake",
+        "deadline_ms": 1000,
+        "observed_ms": null,
+        "latency_upper_bound_ms": null,
+        "timeout_code_correct": null
+      },
+      {
+        "test": "sidecar_process::tests::review_large_resource_timeout_latency",
+        "source_line": 771,
+        "category": "resource timeout latency upper bound",
+        "deadline_ms": 1000,
+        "observed_ms": 1759,
+        "latency_upper_bound_ms": 1500,
+        "timeout_code_correct": true
+      },
+      {
+        "test": "sidecar_process::tests::timeout_reaps_live_tree",
+        "source_line": 463,
+        "category": "tree preparation handshake",
+        "deadline_ms": 1000,
+        "observed_ms": null,
+        "latency_upper_bound_ms": null,
+        "timeout_code_correct": null
+      }
+    ],
+    "original_early_parent_exit_reproduced": false,
+    "original_timeout_handshake_reproduced": true
+  },
+  "memory_environment": {
+    "before_full_lib": {
+      "api": "GlobalMemoryStatusEx",
+      "utc": "2026-11-13T08:14:54.716637+00:00",
+      "memory_load_percent": 96,
+      "total_phys_mib": 32599.3,
+      "avail_phys_mib": 1074.6,
+      "total_page_file_mib": 130903.3,
+      "avail_page_file_mib": 5547.3
+    },
+    "after_full_lib": {
+      "api": "GlobalMemoryStatusEx",
+      "utc": "2026-11-13T08:21:56.804446+00:00",
+      "memory_load_percent": 86,
+      "total_phys_mib": 32599.3,
+      "avail_phys_mib": 4310.2,
+      "total_page_file_mib": 130903.3,
+      "avail_page_file_mib": 13061.0
+    },
+    "before_serial_lib": {
+      "api": "GlobalMemoryStatusEx",
+      "utc": "2026-11-13T08:01:20.848030+00:00",
+      "memory_load_percent": 96,
+      "total_phys_mib": 32599.3,
+      "avail_phys_mib": 1235.2,
+      "total_page_file_mib": 130903.3,
+      "avail_page_file_mib": 5412.8
+    },
+    "after_serial_lib": {
+      "api": "GlobalMemoryStatusEx",
+      "utc": "2026-11-13T08:12:15.216277+00:00",
+      "memory_load_percent": 96,
+      "total_phys_mib": 32599.3,
+      "avail_phys_mib": 1072.5,
+      "total_page_file_mib": 130903.3,
+      "avail_page_file_mib": 5590.6
+    },
+    "note": "Measured system snapshots do not prove that resource pressure caused a particular failure"
+  },
+  "constraints": {
+    "source_changed": false,
+    "thresholds_changed": false,
+    "native_ui_products_or_evidence_changed": false,
+    "model_actions": 0,
+    "gpu_actions": 0,
+    "vault_writes": 0,
+    "ledger_changed": false,
+    "further_tests_started_after_parent_stop": false
+  },
+  "conclusion": "The original timeout handshake is reproducible; early parent exit passed in exact and full rechecks. The full unchanged lib suite still has four failed legacy sidecar tests. All twenty Windows corpus tests passed. The serial-mode helper mismatch is a separate runner behavior. Final exclusive workspace verification remains pending with the parent agent.",
+  "artifacts": [
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-exact-early-parent-thread2-result.json",
+      "sha256": "a72ba3482a6961ed92b9ddbdf29fd6833b0ecc23cfae65a721bd1300bb3284d4",
+      "byte_length": 773
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-exact-early-parent-thread2-start.json",
+      "sha256": "6aa2c5c2e3e878deb307c922d6909e1b85b92683c5fec6dd857e2c077f978abb",
+      "byte_length": 928
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-exact-early-parent-thread2.log",
+      "sha256": "f6c9c33740223e7b0ee7e8e7f1a64b22160d15b6bec9fb45c83b220cdb3daeb7",
+      "byte_length": 199
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-exact-timeout-thread2-result.json",
+      "sha256": "6b6c9435b4752b10fbe8f9f0b9de216851dc00f434c6df0c074db9a7ab03c140",
+      "byte_length": 845
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-exact-timeout-thread2-start.json",
+      "sha256": "8b1d51bfc57243284ac31c67a01a548d547855ac34e08037346365dbab874961",
+      "byte_length": 903
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-exact-timeout-thread2.log",
+      "sha256": "3ef2b7ec7c1455dd19336fdba87f8bfff0dcd9f96b1813c41cc3f3a939d14489",
+      "byte_length": 566
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-full-thread2-result.json",
+      "sha256": "05023d76984b68b01ae0763e598c950d7aa52fa5704f6ce31de62f4097221c62",
+      "byte_length": 1075
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-full-thread2-start.json",
+      "sha256": "ec74bfdd73e33c4105c7fa7f609f498deb3e57de0ce9140e9cdbf983cb58b4a2",
+      "byte_length": 831
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-full-thread2.log",
+      "sha256": "49e6513fc0134fc7e2ca50e2942312a630e4b170fe359d0f85ab73e7e27b8aa0",
+      "byte_length": 70085
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-isolated-binary-result.json",
+      "sha256": "0d1fc00a17511086f252ba0c399500bb735850d904eb015564d396b55248a93e",
+      "byte_length": 848
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-isolated-binary-start.json",
+      "sha256": "3ae263554446a0a3a80ededaf92c150afc848bb8d14cc00aed5304d3d3f7b0ea",
+      "byte_length": 831
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-isolated-start.json",
+      "sha256": "15bf88896e6b9e83f0c9b1c6fea1906551ff88e2006e69c601ca385f721bd9d2",
+      "byte_length": 936
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-isolated-thread1-stop.json",
+      "sha256": "c5ce285b7d04de3336e37d4e95b43092e7907fa97b7d0d1e1bb203604b759d01",
+      "byte_length": 582
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-isolated.log",
+      "sha256": "461639cdd22d3329b15560597a2572fd9b1693d74f175325e50e7f44b3a0b3eb",
+      "byte_length": 3344
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-isolated.stderr.log",
+      "sha256": "1a494243c70f8dc302152364ddc40b7a2cc183c1ed3d3f042d20d8d6d1bab320",
+      "byte_length": 5725
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-isolated.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-serial-marker-proof-canonical.json",
+      "sha256": "e3c726a505116c6742b89481de62f8a15c393a3daa3a71280e2a343b0ffdebc5",
+      "byte_length": 1148
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-serial-marker-proof.json",
+      "sha256": "2ff8ce9299c4dc1038599c019942357a30478f7d9527329789a9c821b5f8b106",
+      "byte_length": 1635
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/lib-thread2-results.json",
+      "sha256": "45b66dcee89877593bc44a5047b27348d9d89525476ad43d4a82f563e9ad5315",
+      "byte_length": 2901
+    },
+    {
+      "location": "local_windows_build_evidence",
+      "snapshot": "b16-t02-guard-20261113",
+      "relative_path": "b16-final-evidence/test.log",
+      "sha256": "37ef46520448d6eb632129d2e2729f2dbd2988d6f57aca801ea82604a4fee2d1",
+      "byte_length": 265620
+    },
+    {
+      "location": "ignored_workspace_evidence",
+      "relative_path": ".artifacts/B16-T02/review/lib-isolated-first-fail-pins.json",
+      "sha256": "6c39d8af1766ce4d25679e761586a34852408bee22f4240998620af17b8c7db9",
+      "byte_length": 4625
+    },
+    {
+      "location": "ignored_workspace_evidence",
+      "relative_path": ".artifacts/B16-T02/review/lib-isolated-source-pins.json",
+      "sha256": "d86059d151b0d856009cb21fb9c3133f4440b611b2703705ec9ca22a7ed32948",
+      "byte_length": 839
+    },
+    {
+      "location": "ignored_workspace_evidence",
+      "relative_path": ".artifacts/B16-T02/review/lib-isolated-memory-waiting.json",
+      "sha256": "0d2b883822aeb1e5faf55779d017912c53b829085dff176fc81d3e63789690d1",
+      "byte_length": 2596
+    },
+    {
+      "location": "ignored_workspace_evidence",
+      "relative_path": ".artifacts/B16-T02/review/lib-isolated-cargo-stop.json",
+      "sha256": "b060446150228c62b9f1dc46bb1b2103af6bedcc358a06d88b7a34a5f8fd37f6",
+      "byte_length": 223
+    },
+    {
+      "location": "ignored_workspace_evidence",
+      "relative_path": ".artifacts/B16-T02/review/lib-isolated-tree-snapshot.json",
+      "sha256": "3c6ecfed54a5c39e279a48d728fd91d9e00c852a24e4d09c544e556622ce4add",
+      "byte_length": 764
+    },
+    {
+      "location": "ignored_workspace_evidence",
+      "relative_path": ".artifacts/B16-T02/review/lib-isolated-launch.log",
+      "sha256": "fb73c786ef7c07ebd8ab113909771bc13b357c21fe2097c3d062a0983ebe1789",
+      "byte_length": 241
+    },
+    {
+      "location": "ignored_workspace_evidence",
+      "relative_path": ".artifacts/B16-T02/review/lib-isolated-binary-launch.log",
+      "sha256": "5575a5a2d51b5c230960b7b4b43e6040d770d7068ba28336773040252c11918b",
+      "byte_length": 773
+    },
+    {
+      "location": "ignored_workspace_evidence",
+      "relative_path": ".artifacts/B16-T02/review/lib-thread2-launch.log",
+      "sha256": "7d6e51fab772e031ee53061fea78f14492958606d9a001fe6a71b2bbc1735981",
+      "byte_length": 2369
+    }
+  ]
+}

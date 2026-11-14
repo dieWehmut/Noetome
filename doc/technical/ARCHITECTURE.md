@@ -4,13 +4,16 @@
 
 状态：工程基线。B01/B01A提供项目与桌面骨架，B02-T01实现CLI单份文本来源登记，B02-T02提供只读fixture知识/覆盖/计划及独立预期校验；B02-T03将有效fixture编译到全新测试输出根，重读有限Markdown、保存双报告并以独立SQLite事务登记发布。B03-T01提供内部有界parser sidecar宿主；B03-T02接入单一锁定文本PDF adapter，在全新项目外测试根保存原始、物理页、真实区域和逐页文本，Core重新核对并保存JSON/Markdown，独立inspect保持只读。B03-T03以显式Schema3将PDF原始版本、独立解析尝试和页/区域/资源索引纳入受保护的来源项目；验收见[B03-T03](../validation/B03-T03.md)。任务完成状态与完整验证证据以[任务账本](../../dev-log/tasks.json)为准，不能把本文件中的后续设计或工程样例当作已验收能力。第三方库及版本在引入时验证并锁定。
 
+
+2026-11-12 用户批准的真实教材闭环以[生产整书来源契约](CORPUS_SOURCE_CONTRACT.md)推进：CLI与桌面共用`corpus`来源Application，原件流式获取，页区在独立SQLite逐页持久化；现成Windows OCR作为适配器接入。旧fixture仍是隔离的工程回归样例，后续生产IR从这套真实来源库消费，避免把旧固定样例调度器作为整书任务。实际验收仍以任务记录为准。
+
 ## 1 当前决定
 
 | 领域 | 采用方向 | 当前边界 |
 | --- | --- | --- |
 | 核心与命令行 | Rust core 与 CLI | 先建立可单独执行和测试的核心，不依赖 GUI |
-| 资料解析 | Rust文本入口及单一pdfplumber adapter的有界sidecar | 来源项目登记明确选定的MD/TXT/PDF；PDF保存原始版本和独立解析尝试，扫描和复杂版面保守需复核 |
-| 持久化 | 本地 SQLite | 来源项目支持Schema1/2/3，PDF在Schema3保存页、区域、资源和真实导入顺序；fixture编译工作区另以Schema1保存Run、Coverage、Release和发布依据，有限运行control日志另用Schema1三表；数据库不放进阅读Vault |
+| 资料解析 | Rust文本入口、生产 `corpus` 分页 PDF worker 与独立 Windows OCR；旧有界 adapter 保留回归 | 完整原件流式获取，物理页和区域逐批确认；OCR 保留原始结构与资产摘要，扫描及复杂版面问题明确留待复核 |
+| 持久化 | 本地 SQLite | 来源项目保留Schema1/2/3；生产 `.noetome-corpus/corpus.sqlite` 独立绑定项目身份并保存当前页和历史版本，采用WAL/FULL逐页事务。fixture编译与控制库保留各自契约；数据库不放进阅读Vault |
 | 交换契约 | 带版本的 JSON | 显式校验输入、引用与结果；详见 [数据契约](DATA_CONTRACTS.md) |
 | 输出 | 有限Markdown、标题语义链接与比较表 | 当前只写尚不存在的新测试根中的Vault；完整Obsidian兼容及生产库维护需分别验收 |
 | 桌面端 | Tauri 与 React TypeScript | 按用户要求提前桌面骨架及安装实测；调用同一核心接口，完整用例逐项接入 |

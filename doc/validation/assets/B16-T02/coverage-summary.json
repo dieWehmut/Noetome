@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "producer": "independent-read-only-corpus-audit",
+  "scope": "Three selected real books; durable text/source inventory, excludes full-book OCR and knowledge extraction",
+  "database_unchanged": true,
+  "results": [
+    {
+      "book": "original-error-book",
+      "source_id": "55f1c717-b8d6-4628-9e57-68c333e0dbf5",
+      "source_sha256": "129405d0b3e7ade5f7da01a91b99dc738e3b1a9e1ed21bdee08265044c43c37b",
+      "byte_length": 55663426,
+      "expected_pages": 1227,
+      "actual_pages": 1227,
+      "states": {
+        "needs_ocr": 11,
+        "needs_review": 1215,
+        "blank": 1
+      },
+      "pages_with_text": 1215,
+      "regions": 409933,
+      "parser_engines": {
+        "pdfplumber": 1227
+      },
+      "issue_counts": {
+        "PDF_NO_TEXT_LAYER": 11,
+        "PDF_VISUAL_CONTENT": 1226,
+        "PDF_ANNOTATIONS": 710,
+        "PDF_COMPLEX_LAYOUT": 1211,
+        "PDF_TEXT_ORIENTATION": 167,
+        "PDF_FORMULA_TEXT": 970,
+        "PDF_TEXT_ENCODING": 331
+      },
+      "pages_with_explicit_revision": 0,
+      "page_chain_sha256": "ab7a62bc13fe54c80501ee8b36d729aa564ac1d60c85943f47e6ac3e08ebe12d",
+      "original_and_snapshot_match": true,
+      "missing_pages": 0,
+      "page_hash_mismatches": 0,
+      "geometry_bounds_valid": true,
+      "scientific_quality": "not_verified"
+    },
+    {
+      "book": "largest-scan",
+      "source_id": "67e3a396-c8c2-40e2-bea6-288a2bf3f9f2",
+      "source_sha256": "1e3d025f8cd007e6b85410462862aa80fca75bdef5ea02ad889919e11fe43835",
+      "byte_length": 757012744,
+      "expected_pages": 710,
+      "actual_pages": 710,
+      "states": {
+        "needs_ocr": 710
+      },
+      "pages_with_text": 0,
+      "regions": 710,
+      "parser_engines": {
+        "pdfplumber": 710
+      },
+      "issue_counts": {
+        "PDF_NO_TEXT_LAYER": 710,
+        "PDF_VISUAL_CONTENT": 710
+      },
+      "pages_with_explicit_revision": 0,
+      "page_chain_sha256": "cb474be13a59e2f7ef97639562610d850fa54df3474c222d9bd14f7e638835b9",
+      "original_and_snapshot_match": true,
+      "missing_pages": 0,
+      "page_hash_mismatches": 0,
+      "geometry_bounds_valid": true,
+      "scientific_quality": "not_verified"
+    },
+    {
+      "book": "longest-text",
+      "source_id": "3182fe97-ceb6-444c-bd86-dc9ced707f68",
+      "source_sha256": "8b4640c2768e51c9036f548568020ce5ff4fb7909c77f716eb9e5899fe43bd36",
+      "byte_length": 123921481,
+      "expected_pages": 3648,
+      "actual_pages": 3648,
+      "states": {
+        "needs_ocr": 7,
+        "needs_review": 3641
+      },
+      "pages_with_text": 3647,
+      "regions": 156957,
+      "parser_engines": {
+        "pdfplumber": 3648
+      },
+      "issue_counts": {
+        "PDF_NO_TEXT_LAYER": 1,
+        "PDF_VISUAL_CONTENT": 3648,
+        "PDF_ANNOTATIONS": 439,
+        "PDF_COMPLEX_LAYOUT": 2848,
+        "PDF_FORMULA_TEXT": 69,
+        "PDF_SPARSE_TEXT_LAYER": 6,
+        "PDF_CROP_TEXT": 934
+      },
+      "pages_with_explicit_revision": 0,
+      "page_chain_sha256": "aa3e6fb54ee6b6d1f285745e07fc617df8204f9acbecb20435de4aa731d40978",
+      "original_and_snapshot_match": true,
+      "missing_pages": 0,
+      "page_hash_mismatches": 0,
+      "geometry_bounds_valid": true,
+      "scientific_quality": "not_verified"
+    }
+  ],
+  "raw_receipt_fingerprint": {
+    "bytes": 3274,
+    "sha256": "cd7e853bc773b9aa5989b3bbe97746c8866549f9d95f9980e0f79f837de3a1d6"
+  }
+}

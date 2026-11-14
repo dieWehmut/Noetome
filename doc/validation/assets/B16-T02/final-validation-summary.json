@@ -1,0 +1,423 @@
+{
+  "schema_version": 1,
+  "task_id": "B16-T02",
+  "date": "2026-11-14",
+  "scope": "Real durable PDF source inventory, Windows existing OCR workers, desktop source recovery; excludes production knowledge compilation and installed 0.2 workflow",
+  "base_commit": "6ac9966d0f5e4fdeaf3f32ac6fa0f8239d2ca624",
+  "implementation_commits": [
+    "f1bf195",
+    "12eb4aa",
+    "40d19a9"
+  ],
+  "test_portability_commit": "0179550",
+  "source_snapshot": {
+    "label": "b16-t02-final-20261114",
+    "manifest": {
+      "path": ".artifacts/B16-T02/continuation/core/final-native-source.json",
+      "bytes": 639495,
+      "sha256": "10a74f40b40d34867b65d87d2a6425c2d55b32cd82bdb0cf31f0cd35f536c4bd"
+    },
+    "files": 3029,
+    "archive_sha256": "33b26b715ae0fa4d79400bbabead4a2f74af251b7ab18f244a3e13afc4b9d9ea",
+    "current_product_files_verified": 261,
+    "product_drift": [],
+    "tests_overlay": {
+      "manifest": {
+        "path": ".artifacts/B16-T02/continuation/core/final-native-test-source.json",
+        "bytes": 649026,
+        "sha256": "7e9a6580fb0050f42e10b3056204fbc078d5719797364208586651f17633cf39"
+      },
+      "materialization": {
+        "path": ".artifacts/B16-T02/continuation/core/final-python-capability/materialization.json",
+        "bytes": 1481,
+        "sha256": "97feb815c41acf1f0a4568e5a2dd9c6e799ec64347d873f6188149c89615a706"
+      },
+      "files_verified": 3031,
+      "changed_test_files": [
+        "tests/test_verify_adaptive_plan.py",
+        "tests/test_verify_audit_journal.py",
+        "tests/test_verify_diagnostics_export.py",
+        "tests/test_verify_library_audit.py",
+        "tests/test_verify_library_bench.py",
+        "tests/test_verify_link_migration.py",
+        "tests/test_verify_outline_alignment.py",
+        "tests/test_verify_relevance_filter.py",
+        "tests/test_verify_retention_cleanup.py",
+        "tests/test_verify_scale_harness.py",
+        "tests/test_verify_soak_harness.py",
+        "tests/test_verify_source_index.py",
+        "tests/test_verify_structure_navigation.py",
+        "tests/test_verify_template_structure.py",
+        "tests/symlink_test_support.py",
+        "tests/test_symlink_test_support.py"
+      ],
+      "product_changed": false
+    },
+    "cli": {
+      "byte_length": 42788864,
+      "sha256": "90f296c7776284cf39a3afe53aed53b5e2219f8512898a6a3a9ed198cbad35b3"
+    },
+    "desktop": {
+      "byte_length": 28221952,
+      "sha256": "1bb32055fa2e09b3f64eed423e1d7d0d76279943df6e9125b38013273f501280"
+    }
+  },
+  "checks": {
+    "windows_rust": {
+      "command": "cargo +1.98.1 test --workspace --offline --locked --no-fail-fast",
+      "exit_code": 0,
+      "targets": 43,
+      "passed": 1351,
+      "failed": 0,
+      "ignored": 1,
+      "seconds": 629.8600000000006,
+      "result": {
+        "path": ".artifacts/B16-T02/continuation/core/final/rust-full-result.json",
+        "bytes": 3712,
+        "sha256": "8747351c8705e24b79d61611b80ebd54e8a8b1098c76695a390b2fd32e00d371"
+      },
+      "log": {
+        "path": ".artifacts/B16-T02/continuation/core/final/rust-full.log",
+        "bytes": 129455,
+        "sha256": "57acfdcf21c335a3f68ffd4f2e3a882602e3d12986d2249d245fb0af1c7e8294"
+      }
+    },
+    "windows_python": {
+      "exit_code": 0,
+      "total": 1449,
+      "test_seconds": 526.857,
+      "process_seconds": 527.7960000000021,
+      "passed": 1426,
+      "skipped": 23,
+      "errors": 0,
+      "failures": 0,
+      "outcome": "OK (skipped=23)",
+      "result": {
+        "path": ".artifacts/B16-T02/continuation/core/final-python-capability/python-full-result.json",
+        "bytes": 6326,
+        "sha256": "b08e614fe1bc27238a31e1464c998cd4a1fd46533f12231130ca4bbc3ad059d8"
+      },
+      "log": {
+        "path": ".artifacts/B16-T02/continuation/core/final-python-capability/python-full.log",
+        "bytes": 222272,
+        "sha256": "7c03fc3e2e5e176dcec5644ca36e7e3eeade66601dd353456f1043b7697382d6"
+      },
+      "explicit_skipped_test_lines": [
+        "test_linked_original_receipt_is_refused (test_capture_scan_budget_originals.ScanBudgetCaptureTests.test_linked_original_receipt_is_refused) ... skipped 'symlink setup needs separate Windows privilege'",
+        "test_ancestor_links_rejected_before_source_read (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_ancestor_links_rejected_before_source_read) ... skipped 'ancestor symlinks require separate Windows reparse environment'",
+        "test_source_symlink_refused_without_reading_the_target (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_source_symlink_refused_without_reading_the_target) ... skipped 'symbolic links unavailable'",
+        "test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests.test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel) ... skipped 'host does not permit directory symlinks; native Windows reparse guards need separate capture'",
+        "test_a_symlink_is_reported (test_verify_adaptive_plan.LayoutTests.test_a_symlink_is_reported) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_a_symlink_is_reported (test_verify_audit_journal.LayoutTests.test_a_symlink_is_reported) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_a_symlink_is_detected (test_verify_diagnostics_export.LayoutTests.test_a_symlink_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_ancestor_link_is_rejected_before_any_read_or_resolution (test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution) ... skipped 'directory symbolic links unavailable'",
+        "test_a_symlink_inside_the_root_is_refused (test_verify_library_audit.LayoutTests.test_a_symlink_inside_the_root_is_refused) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_a_symlink_is_reported (test_verify_library_bench.LayoutTests.test_a_symlink_is_reported) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_a_symbolic_link_anywhere_in_the_root_is_detected (test_verify_link_migration.LayoutTests.test_a_symbolic_link_anywhere_in_the_root_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_symlinked_root_is_detected (test_verify_outline_alignment.LayoutTests.test_symlinked_root_is_detected) ... skipped 'Windows cannot create the directory symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_a_symlinked_text_file_is_detected (test_verify_relevance_filter.LayoutTests.test_a_symlinked_text_file_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_a_symlink_is_detected (test_verify_retention_cleanup.LayoutTests.test_a_symlink_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_symlink_ancestor_is_rejected_and_external_original_preserved (test_verify_run_checkpoint.OriginalEvidenceTests.test_symlink_ancestor_is_rejected_and_external_original_preserved) ... skipped 'ordinary symlink creation is unavailable'",
+        "test_a_symlink_is_detected (test_verify_scale_harness.LayoutTests.test_a_symlink_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_ancestor_link_refused_before_source_read (test_verify_scan_formula.ScanAuthorTests.test_ancestor_link_refused_before_source_read) ... skipped 'directory symbolic link unavailable on this host'",
+        "test_flat_inventory_rejects_linked_ancestor_before_listing (test_verify_scan_formula.ScanAuthorTests.test_flat_inventory_rejects_linked_ancestor_before_listing) ... skipped 'directory symbolic link unavailable on this host'",
+        "test_a_symlink_is_reported (test_verify_soak_harness.LayoutTests.test_a_symlink_is_reported) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_a_symlink_inside_the_root_is_refused (test_verify_source_index.LayoutTests.test_a_symlink_inside_the_root_is_refused) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_a_symlinked_file_is_detected (test_verify_structure_navigation.LayoutTests.test_a_symlinked_file_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_a_symlink_is_refused (test_verify_template_structure.LayoutTests.test_a_symlink_is_refused) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+        "test_hardlink_and_symlink_are_rejected_without_following (test_verify_windows_installer_payload.WindowsInstallerPayloadTests.test_hardlink_and_symlink_are_rejected_without_following) ... skipped 'Symlink creation unavailable on this host'"
+      ]
+    },
+    "linux_python_before_test_fixture_revision": {
+      "exit_code": 0,
+      "total": 1422,
+      "test_seconds": 312.923,
+      "process_seconds": 313.1654124879999,
+      "passed": 1398,
+      "skipped": 24,
+      "errors": 0,
+      "failures": 0,
+      "outcome": "OK (skipped=24)",
+      "result": {
+        "path": ".artifacts/B16-T02/continuation/linux-verified/python-full-result.json",
+        "bytes": 287,
+        "sha256": "9c5e5edbd4218045dbfd0b13c67751d37506de742a364f004421d91eb8744860"
+      },
+      "log": {
+        "path": ".artifacts/B16-T02/continuation/linux-verified/python-full.log",
+        "bytes": 215279,
+        "sha256": "c02dae9969e960b92ff104589e1b1da1dd89005403a85ab4088131f9a4295817"
+      },
+      "explicit_skipped_test_lines": [
+        "test_child_gets_explicit_environment_arguments_redaction_and_exit_code (test_api_credential_scripts.TestCredentialsUnavailable.test_child_gets_explicit_environment_arguments_redaction_and_exit_code) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_encrypts_and_roundtrips_without_plaintext (test_api_credential_scripts.TestCredentialsUnavailable.test_encrypts_and_roundtrips_without_plaintext) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_existing_file_never_overwritten (test_api_credential_scripts.TestCredentialsUnavailable.test_existing_file_never_overwritten) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_hardlinked_credential_rejected_before_child (test_api_credential_scripts.TestCredentialsUnavailable.test_hardlinked_credential_rejected_before_child) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_invalid_environment_and_corrupt_credential_stop_before_child (test_api_credential_scripts.TestCredentialsUnavailable.test_invalid_environment_and_corrupt_credential_stop_before_child) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_invalid_keys_never_create_file (test_api_credential_scripts.TestCredentialsUnavailable.test_invalid_keys_never_create_file) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_invoker_rejects_repository_credential_and_directory (test_api_credential_scripts.TestCredentialsUnavailable.test_invoker_rejects_repository_credential_and_directory) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_junction_ancestor_rejected_by_both_scripts (test_api_credential_scripts.TestCredentialsUnavailable.test_junction_ancestor_rejected_by_both_scripts) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_maximum_ascii_key_is_accepted (test_api_credential_scripts.TestCredentialsUnavailable.test_maximum_ascii_key_is_accepted) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_native_arguments_preserve_embedded_quotes_and_backslashes (test_api_credential_scripts.TestCredentialsUnavailable.test_native_arguments_preserve_embedded_quotes_and_backslashes) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_parent_environment_preserved_after_launch_failure (test_api_credential_scripts.TestCredentialsUnavailable.test_parent_environment_preserved_after_launch_failure) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_parent_environment_preserved_when_present_or_absent (test_api_credential_scripts.TestCredentialsUnavailable.test_parent_environment_preserved_when_present_or_absent) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_real_wpf_controls_load_without_showing_operator_dialog (test_api_credential_scripts.TestCredentialsUnavailable.test_real_wpf_controls_load_without_showing_operator_dialog) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_real_wpf_save_handler_rejects_empty_and_whitespace_without_showing (test_api_credential_scripts.TestCredentialsUnavailable.test_real_wpf_save_handler_rejects_empty_and_whitespace_without_showing) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_repository_relative_ads_and_missing_parent_paths_stop (test_api_credential_scripts.TestCredentialsUnavailable.test_repository_relative_ads_and_missing_parent_paths_stop) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_setter_rejects_non_origin_and_conflicting_inputs (test_api_credential_scripts.TestCredentialsUnavailable.test_setter_rejects_non_origin_and_conflicting_inputs) ... skipped 'Windows PowerShell and CurrentUser DPAPI are required'",
+        "test_sql_snapshot_releases_database_without_waiting_for_gc (test_extraction_audit.ExtractionAuditTests.test_sql_snapshot_releases_database_without_waiting_for_gc) ... skipped 'Windows file sharing boundary'",
+        "test_native_windows_created_then_delayed_write_hash_and_read (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_native_windows_created_then_delayed_write_hash_and_read) ... skipped 'native Windows creation/change time regression'",
+        "test_actual_windows_required (test_scan_api_credential.ScanCredentialsUnavailable.test_actual_windows_required) ... skipped 'Actual Windows DPAPI and file sharing are tested on the selected Windows runtime'",
+        "test_real_native_cli_dpapi_chat_and_preview_preserve_selected_source (test_text_api_native_cli.TextApiNativeCliTests.test_real_native_cli_dpapi_chat_and_preview_preserve_selected_source) ... skipped 'Current source native Windows CLI and DPAPI are unavailable'",
+        "test_real_native_no_request_budget_stops_before_loopback_http (test_text_api_native_cli.TextApiNativeCliTests.test_real_native_no_request_budget_stops_before_loopback_http) ... skipped 'Current source native Windows CLI and DPAPI are unavailable'",
+        "test_native_windows_verbatim_uri_actual_same_identity (test_verify_request_budget.WireAndLocalHttpTests.test_native_windows_verbatim_uri_actual_same_identity) ... skipped 'actual NTFS verbatim namespace requires native Windows'",
+        "test_actual_empty_locked_file_is_proved_and_copied_but_nonempty_lock_is_refused (test_verify_run_checkpoint.SQLiteNamespaceTests.test_actual_empty_locked_file_is_proved_and_copied_but_nonempty_lock_is_refused) ... skipped 'actual Windows mandatory empty/nonempty range locks require NTFS'",
+        "test_main_normal_windows_path_matches_actual_owned_canonical_run (test_verify_run_checkpoint.SQLiteNamespaceTests.test_main_normal_windows_path_matches_actual_owned_canonical_run) ... skipped 'actual Windows main/NTFS proof requires Windows'"
+      ]
+    },
+    "linux_changed_tests_after_fixture_revision": {
+      "passed": 19,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "real_symlink_assertions": 14,
+      "capability_classification_tests": 5,
+      "result": {
+        "path": ".artifacts/B16-T02/continuation/symlink-linux-replay-result.json",
+        "bytes": 1611,
+        "sha256": "f6cc34509c58ada394374566db7dc8e4c7a07657101691f42a9ec62a7939e0c1"
+      },
+      "log": {
+        "path": ".artifacts/B16-T02/continuation/symlink-linux-replay.log",
+        "bytes": 2576,
+        "sha256": "94140983e21b825815d53947bf23bab35fbe720210170c7a98567ebdc1fc41d3"
+      }
+    },
+    "windows_fmt_build_check": [
+      {
+        "name": "fmt",
+        "exit_code": 0,
+        "result": {
+          "path": ".artifacts/B16-T02/continuation/core/final/fmt-result.json",
+          "bytes": 423,
+          "sha256": "d864006d08384244dab76c71753785d677fafd5d945adee2cc9fdb8bcd3e8b6f"
+        }
+      },
+      {
+        "name": "build",
+        "exit_code": 0,
+        "result": {
+          "path": ".artifacts/B16-T02/continuation/core/final/build-result.json",
+          "bytes": 468,
+          "sha256": "4a2586079c1056e3e00a6766aa13fd965b278ed01100474d9d1a1cb231495d94"
+        }
+      },
+      {
+        "name": "check",
+        "exit_code": 0,
+        "result": {
+          "path": ".artifacts/B16-T02/continuation/core/final/check-result.json",
+          "bytes": 468,
+          "sha256": "4c3e037aafe403efd162a27b0469328781eda0f72e76d7fdd01a1b0a6b6a6ee9"
+        }
+      }
+    ],
+    "linux_builds": {
+      "results": {
+        "path": ".artifacts/B16-T02/continuation/build-results.json",
+        "bytes": 255,
+        "sha256": "45023907c8b82195cb5132990ca1d07d9f1901856b1a03c11ed65d346d4ba7d5"
+      },
+      "all_exit_zero": true
+    },
+    "frontend_package_ledger_checks": {
+      "results": {
+        "path": ".artifacts/B16-T02/continuation/final-check-results.json",
+        "bytes": 459,
+        "sha256": "e044ddc89e4558ac9cdc7309b65fad0dd41f3f6c9eece0d9b281aafb365d46fb"
+      },
+      "all_exit_zero": true
+    },
+    "frontend_build": {
+      "exit_code": 0,
+      "typescript_and_vite": true,
+      "log": {
+        "path": ".artifacts/B16-T02/continuation/web-final.log",
+        "bytes": 617,
+        "sha256": "c6d2ab022a2d69e6a2c21ad62ee4e932b4cab6df22fb8290dfa738ead74f9881"
+      }
+    },
+    "desktop_package_audit": {
+      "total": 112,
+      "failures": 0,
+      "warnings": 0,
+      "log": {
+        "path": ".artifacts/B16-T02/continuation/package-final.log",
+        "bytes": 14987,
+        "sha256": "34b0db106a8ec03ce062647c682bdf7f4a033f04d4baaa2629707d6231bb10d1"
+      }
+    }
+  },
+  "native_symlink_capability": {
+    "actual_creation": "WinError 1314",
+    "privilege_listed": false,
+    "developer_mode": null,
+    "native_product_symlink_assertions": "14 unsupported on this local token; actual Linux assertions passed",
+    "native_junction_rejection_checks": "Actual junction/reparse guards ran in Rust and Python; these remain distinct from symlink assertions",
+    "diagnosis": {
+      "path": ".artifacts/B16-T02/continuation/core/final/native-symlink-capability.json",
+      "bytes": 1129,
+      "sha256": "83d72d5728359e213107c8147a6d20aef2f84aae73a23fcd6439a46ead1178ea"
+    },
+    "raw_privileges": {
+      "path": ".artifacts/B16-T02/continuation/core/final/native-privileges.log",
+      "bytes": 273,
+      "sha256": "cd893aeabda957851be025f3862258b4696145b9fe56f0807334274c4f8534d3"
+    },
+    "wsl_lx_symlink_probe": {
+      "path": ".artifacts/B16-T02/continuation/core/final/link-probe-result.json",
+      "bytes": 904,
+      "sha256": "8fe84c0db045b9e91b1f75de3c6cb4ded0ec1fe92ec2448c7bb86505c55656e3"
+    }
+  },
+  "worker_root_only_kill_and_recovery": [
+    {
+      "mode": "pdf",
+      "synthetic_authored_pdf": true,
+      "interruption_boundary": "real PDF worker after at least one durable eight-page batch",
+      "worker_exit_seconds": 0.01600000000325963,
+      "confirmed_pages_before_kill": 8,
+      "resumed_processed_pages": 64,
+      "expected_physical_pages": 64,
+      "confirmed_prefix_unchanged": true,
+      "original_sha256_unchanged": true,
+      "sqlite_integrity": "ok",
+      "pending_ocr_after_recovery": 0,
+      "ocr_recognition_resumed": false,
+      "passed": true,
+      "receipt": {
+        "path": ".artifacts/B16-T02/review/continuation-pdf-rootkill-final.json",
+        "bytes": 3166,
+        "sha256": "53de18e96427de984ad84e8885f4799eada798c11ae543dc2350f734290c395c"
+      }
+    },
+    {
+      "mode": "ocr",
+      "synthetic_authored_pdf": true,
+      "interruption_boundary": "real MinerU VLM model initialization after page rendering",
+      "worker_exit_seconds": 0.7029999999940628,
+      "confirmed_pages_before_kill": 2,
+      "resumed_processed_pages": 2,
+      "expected_physical_pages": 2,
+      "confirmed_prefix_unchanged": true,
+      "original_sha256_unchanged": true,
+      "sqlite_integrity": "ok",
+      "pending_ocr_after_recovery": 1,
+      "ocr_recognition_resumed": false,
+      "passed": true,
+      "receipt": {
+        "path": ".artifacts/B16-T02/review/continuation-ocr-rootkill-final.json",
+        "bytes": 5292,
+        "sha256": "e2fe637630490935444d34fef75b53a0b11374e5917b1b411b6b4db4810301ea"
+      }
+    }
+  ],
+  "independent_core_continuation_audit": {
+    "path": ".artifacts/B16-T02/continuation/core/native-continuation-summary.json",
+    "bytes": 23641,
+    "sha256": "87cb9271f618cf5e5968084c457a60b91fba9d885567302214e64efbbf55459f"
+  },
+  "behavior_receipts": [
+    {
+      "path": "doc/validation/assets/B16-T02/coverage-summary.json",
+      "bytes": 3410,
+      "sha256": "761617df0288e59c33375560337fb47f62f41e88d019e808dadf3c11425944bf"
+    },
+    {
+      "path": "doc/validation/assets/B16-T02/preflight-summary.json",
+      "bytes": 81762,
+      "sha256": "ef50b20130818d324733ff949903ede7a9fcebcf8b976cda5a73ea94b482a383"
+    },
+    {
+      "path": "doc/validation/assets/B16-T02/large-source-summary.json",
+      "bytes": 922,
+      "sha256": "278ed74cfc216d6ef4b3cab8933bdc415ed9c5e653fef082dfb1b13d9d627239"
+    },
+    {
+      "path": "doc/validation/assets/B16-T02/ocr-source-lifecycle-summary.json",
+      "bytes": 1981,
+      "sha256": "d1499aa521d09d0c701806baa998761bf86bd4a9e51416c52baf3d295d97e8de"
+    },
+    {
+      "path": "doc/validation/assets/B16-T02/ocr-comparison-summary.json",
+      "bytes": 125173,
+      "sha256": "f9c8ebe1f1074ceb295c978a2954cbff015a434bf57805dbb3253779db4c2b94"
+    },
+    {
+      "path": "doc/validation/assets/B16-T02/native-ui-final-summary.json",
+      "bytes": 13334,
+      "sha256": "39b1348ea9189f76bff013f888c0fe6531e668fee6f7b4c2fa0d3acf90caa8c4"
+    },
+    {
+      "path": "doc/validation/assets/B16-T02/ocr-private-archive.json",
+      "bytes": 720,
+      "sha256": "4dc035b2ce592120009ad79968d13bab7ba4ac6da24fec439d31c84b8ac14fbc"
+    }
+  ],
+  "preserved_failures": {
+    "first_native_python_same_product": {
+      "exit_code": 1,
+      "total": 1444,
+      "test_seconds": 506.017,
+      "process_seconds": 507.18799999999464,
+      "passed": 1421,
+      "skipped": 9,
+      "errors": 14,
+      "failures": 0,
+      "outcome": "FAILED (errors=14, skipped=9)",
+      "result": {
+        "path": ".artifacts/B16-T02/continuation/core/final/python-full-result.json",
+        "bytes": 2394,
+        "sha256": "3ff5260c8e461105276df94ab7b9007616cc9d7a640ffd17ef8d21131592b868"
+      },
+      "log": {
+        "path": ".artifacts/B16-T02/continuation/core/final/python-full.log",
+        "bytes": 16333,
+        "sha256": "5bbe01e66c4f9d46e62306e60a81bdf4b2222db18690b9812143962f28366972"
+      },
+      "explicit_skipped_test_lines": []
+    },
+    "earlier_native_lib": {
+      "path": "doc/validation/assets/B16-T02/native-lib-recheck-summary.json",
+      "bytes": 16818,
+      "sha256": "43e8b0551cceeb30fc5a819f7adcb6942f1ed585e31060da7776acc02fe2a1ea"
+    },
+    "linux_wrong_native_environment_result": {
+      "path": ".artifacts/B16-T02/continuation/linux-final/python-full-result.json",
+      "bytes": 284,
+      "sha256": "c1743e63ed0f5fb5e9092527c5cf724eaa532c0d6732bc762e5772bac8ac9cfb"
+    },
+    "linux_older_baseline_interruption": {
+      "path": ".artifacts/B16-T02/continuation/python-baseline-stop.json",
+      "bytes": 992,
+      "sha256": "36ea0557ef747d059b3f268a540d86021871eb32523c68a2c848b11fb9f121ca"
+    },
+    "native_older_baseline_interruption": {
+      "path": ".artifacts/B16-T02/continuation/core/baseline-interruption.json",
+      "bytes": 3774,
+      "sha256": "85e3298d776170b76f26b4e76beb502ad5344a88517167d1db98c1333d77917f"
+    },
+    "source_alias_red_and_previous_worker_timeouts": "Raw evidence and original summaries retained in the private source archive; final runs stored separately",
+    "paddle_timeout_page_19": "One retained failure among 32 actual page attempts; 31 confirmed recognition results"
+  },
+  "limits": [
+    "Full 710-page scan OCR not run; all 710 source pages remain accounted for",
+    "Only first 4 OCR pages have 16 pre-capture source checks; later 28 use post-capture sparse anchors",
+    "OCR full-text recall and scientific correctness not measured; whole-device GPU samples are not process peak measurements",
+    "Password entry not implemented; one parser page-tree difference and two malformed PDFs retained",
+    "Acquisition interruption retains partial bytes; recovery reimports, without partial-byte resume or acquisition cancel button",
+    "Production IR, persistent dynamic knowledge compilation/budget, installed 0.2 workflow and Obsidian acceptance belong to B16-T03",
+    "Scientific 200 atoms/98%, 24-hour soak and production Vault acceptance not established by these checks"
+  ],
+  "privacy": "Private source PDFs, page PNG/OCR body, raw logs, model weights and binaries remain outside Git; raw archives are local only"
+}

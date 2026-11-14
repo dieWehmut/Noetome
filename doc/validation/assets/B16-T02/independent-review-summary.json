@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "producer": "B16-T02 independent source evidence review",
+  "at": "2026-11-14T01:10:06.086197+00:00",
+  "scope": "Existing selected sources and saved receipts read-only; new synthetic project path-boundary regression. No scientific or installed-app acceptance.",
+  "actual_evidence_rechecked": {
+    "books": 3,
+    "page_records": 5585,
+    "region_bounds": 567600,
+    "missing_pages": 0,
+    "page_hash_mismatches": 0,
+    "original_and_saved_source_sha_match": true,
+    "sqlite_integrity_and_foreign_keys": true,
+    "database_bytes_unchanged": true,
+    "results_equal_frozen_coverage": true,
+    "native_preflight_individual_receipts": 75,
+    "native_preflight_ready_pages": 34845,
+    "native_ui_checks_passed": 10,
+    "native_ui_raw_and_harness_pins_verified": 37,
+    "large_source_receipt_pin_verified": true,
+    "ocr_lifecycle_final_receipt_pin_verified": true,
+    "ocr_package_files_hashes_reread": 4,
+    "ocr_current_declared_assets_hash_and_bytes_reread": 2
+  },
+  "evidence_pins": [
+    {
+      "path": ".artifacts/B16-T02/real-books/coverage-audit.json",
+      "byte_length": 3274,
+      "sha256": "cd7e853bc773b9aa5989b3bbe97746c8866549f9d95f9980e0f79f837de3a1d6"
+    },
+    {
+      "location": "local_windows_build",
+      "snapshot": "b16-t02-complete-20261113",
+      "relative_path": "preflight-75-first/report.json",
+      "byte_length": 182075,
+      "sha256": "b7ddac5b5230c6137600addeea20b4f1ad08c343b4d14d921c1cfe3db3d4d70d"
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/native-ui-result.json",
+      "sha256": "9c5c1e7e8acb45f313c42a5da70fd97bb55625d2500d8d1d0063e5a4d9fe9cc5",
+      "byte_length": 35541
+    },
+    {
+      "location": "local_windows_build",
+      "snapshot": "b16-t02-complete-20261113",
+      "relative_path": "large-source-first/report.json",
+      "byte_length": 111280,
+      "sha256": "7bb5b2be9c60c110d229cb337f39297c7bc5b2f1061c8c913f41b902f6893504"
+    },
+    {
+      "location": "local_windows_build",
+      "snapshot": "b16-t02-complete-20261113",
+      "relative_path": "ocr-lifecycle-final/report.json",
+      "byte_length": 1889,
+      "sha256": "fb0b6ac9b1585da99974bdb4abb831d173bb63296552932e808f8cd1efe8b60a"
+    }
+  ],
+  "confirmed_path_bug": {
+    "native_cli_sha256": "ed4c2d13ada7983297fcec335da48b3d24d0f71ba18c0d7f11e70ef09bdbfddf",
+    "matching_case_internal_destination": {
+      "exit_code": 3,
+      "directory_created": false
+    },
+    "uppercase_alias_internal_destination": {
+      "exit_code": 0,
+      "directory_created": true
+    },
+    "red_receipt": {
+      "path": ".artifacts/B16-T02/review/audit-windows-export-path.log",
+      "byte_length": 638,
+      "sha256": "9307527b10bfd540ff6e9a32d5b5882c681af2512306b9a0790ab842f047637d"
+    },
+    "repair": "Existing ancestor filesystem identity supplements component-safe path checks for source export and internal raw import; paths are not lowercased."
+  },
+  "fresh_review_after_repair": {
+    "source_import_rejection_precedes_new_source_creation": true,
+    "export_overlap_rejection_precedes_destination_creation": true,
+    "link_and_reparse_component_checks_retained": true,
+    "case_sensitive_siblings_not_conflated": true,
+    "per_page_conditional_commits_and_history_retained": true,
+    "source_locks_cover_import_processing_and_export": true,
+    "page_and_asset_hashes_rechecked_on_read": true,
+    "exported_packages_keep_knowledge_pending": true,
+    "known_limit": "Source list returns all sources; only page queries paginate."
+  },
+  "focused_validation": {
+    "cargo_build_exit_code": 0,
+    "rust_corpus": {
+      "passed": 19,
+      "failed": 0,
+      "ignored": 0
+    },
+    "new_python_blackbox": {
+      "passed": 1,
+      "failed": 0,
+      "seconds": 0.333
+    },
+    "cargo_fmt_exit_code": 0,
+    "git_diff_check_exit_code": 0,
+    "python_compile_exit_code": 0,
+    "initial_test_assertion_failure": "Symlink rejection correctly used established PROJECT_UNSAFE_PATH exit2; initial test expected3. Corrected assertion only; failure log preserved."
+  },
+  "changed_source_pins": [
+    {
+      "path": "crates/noetome-cli/src/corpus/export.rs",
+      "byte_length": 11393,
+      "sha256": "f80306109355c778c12aeb3446c4d6118802727518e18df863b1a66c4e60d327"
+    },
+    {
+      "path": "crates/noetome-cli/src/corpus/mod.rs",
+      "byte_length": 12717,
+      "sha256": "177c5205396307396ab1f362dd028663d96c40999ff1b31a8ff04cf16c183039"
+    },
+    {
+      "path": "tests/test_corpus_production.py",
+      "byte_length": 29702,
+      "sha256": "a4df87f3bba2a93fd0f9761c27bc1e67ff380f1d5be9b7e49ddd5de025e6efea"
+    }
+  ],
+  "validation_pins": [
+    {
+      "path": ".artifacts/B16-T02/review/audit-path-build.log",
+      "byte_length": 7021,
+      "sha256": "21eca27fd69b0de8c69eb19f9a09db5a664dc75bee5dd13385f7124ea7ab401e"
+    },
+    {
+      "path": ".artifacts/B16-T02/review/audit-path-corpus-tests.log",
+      "byte_length": 9160,
+      "sha256": "0c6280f74ae8eac0d71287af7b6926498b626693cf3193359b841a73060d706e"
+    },
+    {
+      "path": ".artifacts/B16-T02/review/audit-path-focused-python.log",
+      "byte_length": 1390,
+      "sha256": "5c3f6e16974de4a5adce1d11c1c7f71fe872333a1440bc26bc65c32c0994af51"
+    },
+    {
+      "path": ".artifacts/B16-T02/review/audit-path-focused-python-fixed.log",
+      "byte_length": 303,
+      "sha256": "42cfefbabc4bc3e794c5a574d15db426ac0e119726f00dbfaa476f8de5bdd89a"
+    }
+  ],
+  "pending_final_verification": [
+    "New Windows source snapshot must run case and namespace alias regression after rebuild; older positive native evidence predates this repair.",
+    "Final full Linux and Windows regression runs owned by parent/core agents.",
+    "Earlier OCR root-only kill job-observation still failed its10-second exit assertion; final lifecycle verification remains with core agent."
+  ],
+  "not_run": [
+    "Scientific OCR correctness by this reviewer",
+    "Full-book OCR",
+    "Knowledge compilation",
+    "Installed application, PDF system picker or Obsidian acceptance"
+  ]
+}

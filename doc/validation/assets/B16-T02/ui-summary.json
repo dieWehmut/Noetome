@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "scope": "B16-T02 desktop browser mock; real parser/model/native installation not established",
+  "date": "2026-11-13",
+  "url": "http://127.0.0.1:1420/",
+  "title": "Noetome",
+  "browser_path": "Browser plugin browser skill not listed; provided Playwright (Local Linux)",
+  "checks": {
+    "typecheck_vite_build": "passed",
+    "page_identity": "passed",
+    "nonblank_content": "passed",
+    "no_framework_overlay": "passed",
+    "console_errors": 0,
+    "console_warnings": 0,
+    "complete_scan_continue_and_pause": "passed; one process and one pause request",
+    "retry_failed_page_scope": "passed; corpus_retry bound /qa/项目 A and corpus-a",
+    "ocr_page_timeout_visible": "passed; mock 1800 seconds, 150 DPI",
+    "failed_preflight_clears_readiness": "passed",
+    "last_physical_page": "passed; page710 in UI mock",
+    "page_revision_visible": "passed",
+    "cross_project_process_requests": 1,
+    "wrong_project_page_requests": 0,
+    "old_preflight_discarded": "passed; A to B to A",
+    "list_failure_preserves_old_source": "passed",
+    "model_requests": 0,
+    "git_diff_check": "passed",
+    "acquisition_interruption_final": {
+      "scope": "B16-T02 rendered browser mock for acquisition interruption; no native IPC or real acquisition/OCR claim",
+      "passed": 16,
+      "failed": 0,
+      "blocked_processing_requests": 0,
+      "confirmed_process_requests": 1,
+      "confirmed_retry_requests": 1,
+      "console_errors": 0,
+      "console_warnings": 0,
+      "checks": {
+        "pageIdentity": true,
+        "interruptedChineseLabel": true,
+        "interruptedHasNoContinueOrRetry": true,
+        "reselectOriginalInstruction": true,
+        "interruptedErrorPreserved": true,
+        "unconfirmedFailedHasNoContinueOrRetry": true,
+        "unconfirmedFailureErrorPreserved": true,
+        "interruptedWithPinHasNoContinueOrRetry": true,
+        "blockedSourcesNeverInvokedProcessing": true,
+        "confirmedTemporaryFailureCanContinue": true,
+        "confirmedTemporaryFailureCanRetry": true,
+        "confirmedTemporaryFailureErrorPreserved": true,
+        "confirmedFailureHasNoReimportInstruction": true,
+        "confirmedActionsBindProjectAndSource": true,
+        "noFrameworkOverlay": true,
+        "noConsoleErrorsOrWarnings": true
+      }
+    }
+  },
+  "layouts": [
+    {
+      "viewport": [
+        1200,
+        800
+      ],
+      "evidence": "recovery-preflight-fixed.png/recovery-progress-fixed.png"
+    },
+    {
+      "viewport": [
+        640,
+        800
+      ],
+      "body_width": 640,
+      "body_scroll_width": 640,
+      "main_width": 370,
+      "main_scroll_width": 370
+    },
+    {
+      "viewport": [
+        420,
+        800
+      ],
+      "body_width": 420,
+      "body_scroll_width": 420,
+      "main_width": 360,
+      "main_scroll_width": 360
+    }
+  ],
+  "not_run": [
+    "native installed application interaction in this UI subtask",
+    "new recovery-ui-qa.js full reproduction script (prepared after checks; not executed)",
+    "real PDF/OCR/model quality from mock states"
+  ],
+  "setup_failures": [
+    "initial mock omitted Tauri metadata.currentWindow, caused WindowControls TypeError; corrected mock metadata and fully reloaded",
+    "cross-project driver used label resolving region and textbox and later too-short exact paragraph; corrected selectors, rerun successful",
+    "interrupted check filename initially rejected because mainline is outside Playwright allowed file roots; same script then executed inline in a new isolated context, 16 assertions passed"
+  ],
+  "files": [
+    {
+      "path": ".artifacts/B16-T02/desktop/recovery-scan-before.png",
+      "sha256": "6a8094000d5042da7583a09e5f8a6f4e8a88cc309ed1bf86c80c263f8c2f5442",
+      "byte_length": 80229
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/recovery-scan-fixed.png",
+      "sha256": "e7de54a52360d2210d194b68903a0f5722f7a6bae2f8c58ccdeaa13ea61a0efa",
+      "byte_length": 71356
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/recovery-retry-limits.png",
+      "sha256": "b62b6480b04466b4733d352b3b5d00d1b18ff429d719f104461cf35b29167a5a",
+      "byte_length": 74593
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/recovery-narrow-fixed.png",
+      "sha256": "21241e7ead56b5b177a2fb0e7db5090ac3148a77ca7d1960213b87429db7b74a",
+      "byte_length": 59643
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/recovery-preflight-fixed.png",
+      "sha256": "f8b785857e3d69627fc3934cb14cfae14d6b7a89ec640032ca8c63102f69ea3c",
+      "byte_length": 83183
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/recovery-progress-fixed.png",
+      "sha256": "9ee9ad828aeb5605a7da587698acc09e7e6ca01e9317a869a16841219065ff08",
+      "byte_length": 81508
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/recovery-mobile-fixed.png",
+      "sha256": "33ae23166eea870c50c43ed7457abe251940d53a982cc8e173385de0aed95c18",
+      "byte_length": 43978
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/recovery-cross-project-result.json",
+      "sha256": "1055f65b2484093d46580c32a99214947d12a679a69d351bd540df3b2394e381",
+      "byte_length": 3327
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/recovery-console-result.json",
+      "sha256": "0225a6ddf8c797b1bbe5958ab3faf2dbd6c7230372314fd310f9a0190516e1be",
+      "byte_length": 174
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/web-build-recovery.log",
+      "sha256": "ecfce61878b71a70ccbea957690b1c2ba2a9ebfd87178b6ecbe7c486a6409453",
+      "byte_length": 617
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/web-build-recovery-fixed.log",
+      "sha256": "af9f11e33e93875182ed041188bad1a8d8ed092f59669043993f2314357a3ed3",
+      "byte_length": 617
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/recovery-ui-qa.js",
+      "sha256": "918588f54202107ec15d0258b89592d874fa927590964fd22f58aedec58066a9",
+      "byte_length": 13701
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/interrupted-ui-qa.js",
+      "sha256": "bbc47cf0f0d974dddee65db2f206bad90a9d2ac9201d75d70eebdaa0da98761a",
+      "byte_length": 7900
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/interrupted-browser-setup-result.json",
+      "sha256": "56664fbb6ff10a8a975d19a47e9b76b5282859a4f10992909751722d112f0082",
+      "byte_length": 329
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/interrupted-browser-result.json",
+      "sha256": "6838c37d463ff2ac9faf6a39c98723cbfd310dfd7950fb5d096551e2acae9272",
+      "byte_length": 9925
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/interrupted-checks.json",
+      "sha256": "2020517b641b91c24791d04941b5cd39d231aaba474b199c080ceffb44c6100d",
+      "byte_length": 1374
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/interrupted-final.png",
+      "sha256": "a8480035943172a492f37dfc22492ad4a13dc0ba551158af7aa46e595cdfa1ee",
+      "byte_length": 84496
+    },
+    {
+      "path": ".artifacts/B16-T02/desktop/web-build-interrupted-final.log",
+      "sha256": "86acf015b1f2528657b78d32e83a00d34a274dcdaece66cba4a540b4e3bdf28a",
+      "byte_length": 617
+    }
+  ],
+  "executed_scripts": [
+    "interrupted-ui-qa.js"
+  ]
+}

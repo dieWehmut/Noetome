@@ -1,0 +1,403 @@
+{
+  "schema_version": 1,
+  "task_id": "B16-T02",
+  "date": "2026-11-14",
+  "scope": "Final same-source Windows development desktop custom-protocol WebView2; real Tauri/Core IPC; installation not run",
+  "run_label": "noetome-b16-native-ui-41b3ab0917794c21ac5131b8754a0f88",
+  "passed": true,
+  "source_snapshot": {
+    "label": "b16-t02-final-20261114",
+    "manifest_pin": {
+      "byte_length": 639495,
+      "sha256": "10a74f40b40d34867b65d87d2a6425c2d55b32cd82bdb0cf31f0cd35f536c4bd"
+    },
+    "snapshot_files": 3029,
+    "selected_source_files_verified": 49,
+    "independent_selected_current_and_frozen_source_files_verified": 49
+  },
+  "build": {
+    "command": [
+      "cargo",
+      "+1.98.1",
+      "build",
+      "-p",
+      "noetome-desktop",
+      "--features",
+      "custom-protocol",
+      "--offline",
+      "--locked"
+    ],
+    "exit_code": 0,
+    "seconds": 213.58165359999998,
+    "reused": false,
+    "desktop_pin": {
+      "byte_length": 28221952,
+      "sha256": "1bb32055fa2e09b3f64eed423e1d7d0d76279943df6e9125b38013273f501280"
+    },
+    "cli_pin": {
+      "byte_length": 42788864,
+      "sha256": "90f296c7776284cf39a3afe53aed53b5e2219f8512898a6a3a9ed198cbad35b3"
+    },
+    "frontend_dist": [
+      {
+        "relative_path": "app-icon.png",
+        "byte_length": 113380,
+        "sha256": "11176c935522d2b0c79dd241dc05caeecd4b407255349378942737da0b2f1f3f"
+      },
+      {
+        "relative_path": "index.html",
+        "byte_length": 507,
+        "sha256": "a9cb914239625b67c4763c1104f9846fb13582b2102a16c0c90e7fe33ab14a82"
+      },
+      {
+        "relative_path": "phosphor-icons-LICENSE.txt",
+        "byte_length": 1071,
+        "sha256": "6918b72504641180600cbbd4a86b0dfa9dfccf788775694325b71b9a029f6eb4"
+      },
+      {
+        "relative_path": "assets/index-CF0KbC5r.js",
+        "byte_length": 374976,
+        "sha256": "475d2c6e981eb285b205371cded90123380b8018c580b3b57077c4f4725f0647"
+      },
+      {
+        "relative_path": "assets/index-Cg5LK3Iu.css",
+        "byte_length": 24389,
+        "sha256": "13b33a21567ba4eaddca7ee38cd39a2ddab7945cc1249f5153b5afa7c6741a51"
+      }
+    ]
+  },
+  "runtime": {
+    "url": "http://tauri.localhost/",
+    "title": "Noetome",
+    "target": "x86_64-pc-windows-msvc",
+    "capabilities_count": 27,
+    "viewport": {
+      "width": 1200,
+      "height": 800,
+      "devicePixelRatio": 2
+    },
+    "launches": [
+      {
+        "phase": "first",
+        "pid": 43976,
+        "started": "2026-11-14T01:14:42.629Z"
+      },
+      {
+        "phase": "reopened",
+        "pid": 58416,
+        "started": "2026-11-14T01:15:06.065Z"
+      }
+    ]
+  },
+  "selected_source": {
+    "sha256": "129405d0b3e7ade5f7da01a91b99dc738e3b1a9e1ed21bdee08265044c43c37b",
+    "byte_length": 55663426,
+    "page_count": 1227
+  },
+  "preflight": {
+    "page_count": 1227,
+    "byte_length": 55663426,
+    "limits": {
+      "batch_timeout_seconds": 180,
+      "default_batch_pages": 8,
+      "max_file_bytes": null,
+      "max_page_json_bytes": 16777216,
+      "max_pages": null,
+      "ocr_available": false,
+      "timeout_managed_by_host": true
+    }
+  },
+  "checks": [
+    {
+      "name": "selected source and executable fingerprints",
+      "passed": true
+    },
+    {
+      "name": "actual native page and registered corpus IPC",
+      "passed": true
+    },
+    {
+      "name": "open new test project through real native UI",
+      "passed": true
+    },
+    {
+      "name": "real selected PDF preflight displayed before import",
+      "passed": true
+    },
+    {
+      "name": "real IPC error clears earlier preflight readiness",
+      "passed": true
+    },
+    {
+      "name": "import and pause real multi-batch source work",
+      "passed": true
+    },
+    {
+      "name": "read real saved page and review issues in native UI",
+      "passed": true
+    },
+    {
+      "name": "actual application restart restores source and durable pause",
+      "passed": true
+    },
+    {
+      "name": "native continue preserves confirmed pages and pauses again",
+      "passed": true
+    },
+    {
+      "name": "originals, source inputs and isolated profile preserved",
+      "passed": true
+    }
+  ],
+  "recovery": {
+    "first_durable_status": "paused",
+    "first_confirmed_pages": 8,
+    "first_pause_observed_ms": 325,
+    "restart_status": "paused",
+    "restart_confirmed_pages": 8,
+    "final_durable_status": "paused",
+    "final_confirmed_pages": 16,
+    "entire_confirmed_prefix_verified": 8,
+    "prefix_unchanged_after_restart_and_continue": true
+  },
+  "actual_page_read": {
+    "physical_page": 2,
+    "text_sha256": "94494babfe04c52f1c9cf3da8d1ba213b512c569542733471a0132baa87a6196",
+    "page_revision": "e2ee73b1b677762967cad236f2ff7bfeb07c73b967643856adff4235a0be265c",
+    "issue_codes": [
+      "PDF_NO_TEXT_LAYER",
+      "PDF_VISUAL_CONTENT"
+    ],
+    "knowledge_status": "pending"
+  },
+  "isolation": {
+    "mocked_ipc": false,
+    "page_errors": 0,
+    "console_errors_or_warnings": 0,
+    "web_requests": 119,
+    "unexpected_external_requests": 0,
+    "model_actions": 0,
+    "vault_writes": 0,
+    "installer_actions": 0,
+    "ocr_actions": 0,
+    "ocr_profile": "absent file in new test root",
+    "credentials_or_budget_created": false,
+    "only_owned_desktop_trees_stopped": [
+      43976,
+      58416
+    ]
+  },
+  "launcher": {
+    "exit_code": 0,
+    "finished_utc": "2026-11-14T01:15:11.5702612Z"
+  },
+  "independent_read_only_recheck": {
+    "at": "2026-11-14T01:20:08.570795+00:00",
+    "scope": "Read-only independent verification of final existing native UI run; no new UI/test run",
+    "current_and_frozen_selected_source_files_verified": 49,
+    "frontend_dist_files_verified": 5,
+    "program_pins_verified": 2,
+    "source_manifest_pin_verified": true,
+    "original_selected_and_saved_raw_sha_match": true,
+    "sqlite_integrity_and_foreign_keys": true,
+    "sqlite_project_binding_verified": true,
+    "actual_registered_page_rows": 1227,
+    "actual_confirmed_page_rows": 16,
+    "confirmed_raw_page_hashes_and_source_page_status_verified": 16,
+    "database_bytes_unchanged": true,
+    "first_prefix_pages": 8,
+    "repeated_original_prefix_page_hashes_verified": 32,
+    "all_actual_checks_passed": 10,
+    "all119_network_requests_local": true
+  },
+  "not_run": [
+    "native system PDF picker",
+    "0.2 installer/installed application",
+    "real model compilation",
+    "whole-book OCR",
+    "Obsidian reading"
+  ],
+  "prior_native_evidence": "native-ui-summary.json retained for2026-11-13 source; no replacement",
+  "raw_archive": {
+    "path": ".artifacts/B16-T02/continuation/native-ui-final-raw",
+    "file_count": 35,
+    "original_private_pdf_and_project_profile_excluded": true,
+    "files": [
+      {
+        "relative_path": "desktop-build-result.json",
+        "byte_length": 17418,
+        "sha256": "23372d8450ed4a46451dd872c040e37a2764fc8522fb631a6b452dbd05998aac"
+      },
+      {
+        "relative_path": "desktop-build.log",
+        "byte_length": 15094,
+        "sha256": "815d6a75c0ff1af2824861ef8faa5a6f970ca93f63a66be65287d51252ff67f3"
+      },
+      {
+        "relative_path": "harness.log",
+        "byte_length": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "relative_path": "launcher-result.json",
+        "byte_length": 276,
+        "sha256": "37830305ef29971e29c82d89b9f6f94133d64dd6190dec03c99144e05e9aa363"
+      },
+      {
+        "relative_path": "project-init.log",
+        "byte_length": 1164,
+        "sha256": "5b178710f1ce456a2c9d7381add68770524c4c1272a19bb2c63b77944789c224"
+      },
+      {
+        "relative_path": "runtime-manifest.json",
+        "byte_length": 16760,
+        "sha256": "365336aa87cc95d73cec8c7b811750c7378fe1aa0a405938a2c57cd2e20dd670"
+      },
+      {
+        "relative_path": "evidence/actual-preflight-error.json",
+        "byte_length": 251,
+        "sha256": "29656a5ded79ebb21c5959f1313636cb0403131c78c35723937401e4990466d2"
+      },
+      {
+        "relative_path": "evidence/actual-preflight.json",
+        "byte_length": 560106,
+        "sha256": "cc4f27dc396187e6e1e51504799c6699b0d3dfb26fa54fe10a4f04799a79d2e7"
+      },
+      {
+        "relative_path": "evidence/actual-readonly-ipc.json",
+        "byte_length": 1632578,
+        "sha256": "115cca6a3bcd5960650c125589361a0b1a9624a5c0925c28a796cda525fbbe24"
+      },
+      {
+        "relative_path": "evidence/checks.json",
+        "byte_length": 18820,
+        "sha256": "8e81cb298fd0bcfd4a3102924b8390b8f0010317664d5f6e0c97163ef5ea8b3d"
+      },
+      {
+        "relative_path": "evidence/confirmed-prefix-first.json",
+        "byte_length": 1611,
+        "sha256": "cafad04cc5e8b76354c276103ccde18c31f59b4d0718233773ee11f226917df1"
+      },
+      {
+        "relative_path": "evidence/desktop-first.stderr.log",
+        "byte_length": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "relative_path": "evidence/desktop-first.stdout.log",
+        "byte_length": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "relative_path": "evidence/desktop-launches.json",
+        "byte_length": 518,
+        "sha256": "f4cd78bd7efa198072b3a85173f10300bce05f77c86beecb45f3be6ca753e4ad"
+      },
+      {
+        "relative_path": "evidence/desktop-reopened.stderr.log",
+        "byte_length": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "relative_path": "evidence/desktop-reopened.stdout.log",
+        "byte_length": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "relative_path": "evidence/manifest.json",
+        "byte_length": 10619,
+        "sha256": "5e99b415728916eaad841af09ab07fb3ad65e8334bee0e7b55e9d8867ec28bea"
+      },
+      {
+        "relative_path": "evidence/native-continued-and-paused.png",
+        "byte_length": 223622,
+        "sha256": "b00fb22bcd7a8b2791df99b65440b8e6d4f8433c4b6be0c8327c8ff0831860b0"
+      },
+      {
+        "relative_path": "evidence/native-first-home.png",
+        "byte_length": 366077,
+        "sha256": "67d2dba778037452663238e9744ef69021483eac1f81e4663339a501f42316b1"
+      },
+      {
+        "relative_path": "evidence/native-paused-first.png",
+        "byte_length": 224815,
+        "sha256": "79d6fdec68bbdb4958b7d756b6657a4a4691145b24cc0eeddc5b7ad3024ebb0b"
+      },
+      {
+        "relative_path": "evidence/native-preflight-error.png",
+        "byte_length": 265114,
+        "sha256": "4c2ea4358b737e7959dcb47547208945fa4cceaea67c91d0e2b2bd6a52cfc128"
+      },
+      {
+        "relative_path": "evidence/native-preflight.png",
+        "byte_length": 253403,
+        "sha256": "a762740a0cc166cc9e1c6fce14b0cefaea458c1ad65b864c1e7bf3ae5e1ffcf6"
+      },
+      {
+        "relative_path": "evidence/native-real-page.png",
+        "byte_length": 217883,
+        "sha256": "590536834b27cabc450ae6000a480cd50bca75450e388a119511c401eb1c3fd4"
+      },
+      {
+        "relative_path": "evidence/native-reopened-home.png",
+        "byte_length": 393511,
+        "sha256": "f7dad737db656745b22caab846f6bf9a36a2a5c5e02240a2661c41654ee594bd"
+      },
+      {
+        "relative_path": "evidence/native-reopened-source.png",
+        "byte_length": 247860,
+        "sha256": "23f1e03e7af11ef75bc5e3f8beae35eab5e82282d252d24ec0a5b8fc44b52868"
+      },
+      {
+        "relative_path": "evidence/native-ui-result.json",
+        "byte_length": 33671,
+        "sha256": "c8653abf8526c35b0368e0febea3f470597b03285a1c8f38e2d7812faa0b8f4c"
+      },
+      {
+        "relative_path": "evidence/paused-source-final.json",
+        "byte_length": 475,
+        "sha256": "b95f4dfffa6c2b625a7f39a37a66349afe17bb9118a47174eb598d245c04cf8f"
+      },
+      {
+        "relative_path": "evidence/paused-source-first.json",
+        "byte_length": 472,
+        "sha256": "8cb40dd7b483ca22ac8d2c3bacfbcb6a9d2131b030751cdc21ef3744e9a4b4fc"
+      },
+      {
+        "relative_path": "evidence/stop-owned-1.json",
+        "byte_length": 727,
+        "sha256": "dd9a595b39073d308f01f69db9cbfbe4411ce91493f682163ffaebc2cab7da80"
+      },
+      {
+        "relative_path": "evidence/stop-owned-2.json",
+        "byte_length": 727,
+        "sha256": "2e04ba4607ff6669eeb09322b774a0231eda06d08df7ffaeff43bf575f727ab1"
+      },
+      {
+        "relative_path": "harness/native-corpus-ui.cjs",
+        "byte_length": 18893,
+        "sha256": "e4e0a73f869205b92c2075271e655a2c9c4debb48f3c2a5d0400f44acca64031"
+      },
+      {
+        "relative_path": "harness/run-native-corpus-ui.ps1",
+        "byte_length": 8129,
+        "sha256": "bb13590991bc13c635b40bfb4b883847f85dfb8ff3ad73e9f9854807510adc81"
+      },
+      {
+        "relative_path": "provenance/inputs.json",
+        "byte_length": 1125,
+        "sha256": "62d7b46e0d972516a01145bdc7dca3d88253bd1e277e4d028cdcd5d7a42fe405"
+      },
+      {
+        "relative_path": "provenance/source-manifest.json",
+        "byte_length": 639495,
+        "sha256": "10a74f40b40d34867b65d87d2a6425c2d55b32cd82bdb0cf31f0cd35f536c4bd"
+      },
+      {
+        "relative_path": "independent-verification.json",
+        "byte_length": 790,
+        "sha256": "54403b0cb717129229b329de701c7e72484e51052ef1b3f825e9b5626b120363"
+      }
+    ]
+  }
+}

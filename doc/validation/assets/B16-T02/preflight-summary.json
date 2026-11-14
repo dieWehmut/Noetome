@@ -1,0 +1,3074 @@
+{
+  "schema_version": 1,
+  "scope": "All PDFs in user-selected directory, native ordinary CLI preflight only; not full parsing/OCR",
+  "binary_sha256": "087b0f48e9b7ed9477f0a5c7d052853c76c14e4a45ce12c10905711313e9f243",
+  "runtime": {
+    "python": "3.12.14",
+    "pdfplumber": "0.11.9",
+    "pdfminer.six": "20251230"
+  },
+  "parser": {
+    "adapter_sha256": "223c573c006f05b88715c4ab6bed0cd99899a2c41d08d0397edc4619ebb902d2",
+    "adapter_version": "noetome-corpus-pdf-v1",
+    "engine": "pdfplumber",
+    "engine_dependency": "pdfminer.six",
+    "engine_dependency_version": "20251230",
+    "engine_version": "0.11.9",
+    "python_version": "3.12.14"
+  },
+  "limits": {
+    "batch_timeout_seconds": 180,
+    "default_batch_pages": 8,
+    "max_file_bytes": null,
+    "max_page_json_bytes": 16777216,
+    "max_pages": null,
+    "ocr_available": true,
+    "timeout_managed_by_host": true
+  },
+  "ocr": {
+    "available": true,
+    "engine": "mineru",
+    "engine_version": "4.2.1",
+    "page_timeout_seconds": 600,
+    "quality_status": "needs_independent_review",
+    "render_dpi": 144
+  },
+  "elapsed_seconds": 202.26499999999942,
+  "summary": {
+    "files": 75,
+    "bytes": 4031600179,
+    "pages_in_ready_files": 34845,
+    "states": {
+      "ready": 71,
+      "password_required": 1,
+      "failed": 3
+    },
+    "source_hashes_match_prior_inventory": 75
+  },
+  "parser_differences": [
+    {
+      "filename": "基础生态学 孙儒泳.pdf",
+      "sha256": "69346bce3070ae42511aa24af083ff6f2fc4081050f2169e46b23100b9a737b2",
+      "pdfium_pages": 341,
+      "current_status": "failed",
+      "issue_codes": [
+        "PDF_PAGE_TREE"
+      ]
+    }
+  ],
+  "raw_receipt_fingerprint": {
+    "bytes": 182075,
+    "sha256": "b7ddac5b5230c6137600addeea20b4f1ad08c343b4d14d921c1cfe3db3d4d70d"
+  },
+  "files": [
+    {
+      "filename": "[植物学].张爱芹.文字版.pdf",
+      "sha256": "16b5118450c16b5942c74deb493782ffe8b44f1336fc05bf5cfe9bb95971728e",
+      "bytes": 43396294,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 299,
+      "seconds": 2.5,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 95,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 702,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 445,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 299
+    },
+    {
+      "filename": "[生理学原理].梅岩艾.王建军.王世强.扫描版.pdf",
+      "sha256": "df69caf1a147ee45f13c4f321d652376ba8ff51eea2495e66c8be5b7e4811448",
+      "bytes": 52086584,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 411,
+      "seconds": 2.9530000000013388,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 411
+    },
+    {
+      "filename": "Biochemistry (Berg, Tymoczko, Gatto & Stryer, Internet Archive).pdf",
+      "sha256": "129405d0b3e7ade5f7da01a91b99dc738e3b1a9e1ed21bdee08265044c43c37b",
+      "bytes": 55663426,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 1227,
+      "seconds": 8.235000000000582,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 106,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 1240,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 1227
+    },
+    {
+      "filename": "Biochemistry Free For All 1.3 (OER, Oregon State University).pdf",
+      "sha256": "8b4640c2768e51c9036f548568020ce5ff4fb7909c77f716eb9e5899fe43bd36",
+      "bytes": 123921481,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 3648,
+      "seconds": 9.359000000000378,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 916,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 1004,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 3648
+    },
+    {
+      "filename": "Lehninger Principles of Biochemistry 8th ed (Nelson & Cox 2021).pdf",
+      "sha256": "f2f2a8b536b2635a1c00cf85b01115e54745b0c23af33a4a91f396e35b6c68a4",
+      "bytes": 91344684,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 1252,
+      "seconds": 7.485000000000582,
+      "issues": [
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        },
+        {
+          "code": "PDF_OUTLINE_DESTINATION",
+          "message": "An outline destination could not be resolved."
+        }
+      ],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 117,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_PAGE_ROTATION",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 7,
+          "issue_codes": [
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 36,
+          "issue_codes": [
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 1252
+    },
+    {
+      "filename": "《普通动物学（第4版）》刘凌云，郑光美_2009.08(OCR).pdf",
+      "sha256": "e4ed8073b7c37f15e1fedb26bfcc18246941ee3ebebb7234c838f3c1c703e97c",
+      "bytes": 61166195,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 592,
+      "seconds": 3.2959999999984575,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 47,
+          "issue_codes": [
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 707,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 97,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 592
+    },
+    {
+      "filename": "《普通动物学（第4版）》刘凌云，郑光美_2009.08.pdf",
+      "sha256": "7095e1a4f1653ff7e9356aa600f47752fa583a678c5e37aa884fd25e3b15a115",
+      "bytes": 59649507,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 592,
+      "seconds": 2.875,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 592
+    },
+    {
+      "filename": "《进化生物学基础》李难.pdf",
+      "sha256": "7aa16af34eba6fa268a628c33b25b9e824ba25e860f0c016930a2bd3e3bee8e8",
+      "bytes": 37690043,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 325,
+      "seconds": 1.514999999999418,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 325
+    },
+    {
+      "filename": "人体及动物生理学(第三版) 王玢、左明雪主编.pdf",
+      "sha256": "4772838ae4a2e3a2252f8214d680fc5f41beb4a5636e16d82094388cab82da5b",
+      "bytes": 54289669,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 486,
+      "seconds": 1.7809999999990396,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 486
+    },
+    {
+      "filename": "分子生物学.pdf",
+      "sha256": "6a9836a8541450e15d4112cb9b82d7bc969060d83f05df1f31c8f4500289289d",
+      "bytes": 8649119,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 363,
+      "seconds": 1.1719999999986612,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 363
+    },
+    {
+      "filename": "分子生物学（特纳）.pdf",
+      "sha256": "6a9836a8541450e15d4112cb9b82d7bc969060d83f05df1f31c8f4500289289d",
+      "bytes": 8649119,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 363,
+      "seconds": 1.5,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 363
+    },
+    {
+      "filename": "分子遗传学(南京大学.孙乃恩).pdf",
+      "sha256": "4e1f3651d5877592856aa3878060b4277d6c83360532c13854d5efe89c6351b2",
+      "bytes": 20291918,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 530,
+      "seconds": 1.4540000000015425,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 530
+    },
+    {
+      "filename": "动物生态学原理 第三版 孙儒泳 2001.pdf",
+      "sha256": "18fc2efcc0420258fe280d1b73073846d5a6c339f9b099cb56e07cf8d07168cd",
+      "bytes": 53049522,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 673,
+      "seconds": 2.4530000000013388,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 673
+    },
+    {
+      "filename": "动物生理学（第二版_陈守良等编着）.pdf",
+      "sha256": "8a8c98c7e9f770e621a8d0e1a0dbbff3f63776d5b5823e5b7bc5d65fa976b679",
+      "bytes": 10626127,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 329,
+      "seconds": 1.75,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 36,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 329
+    },
+    {
+      "filename": "动物行为：动物生存的奥秘 尚玉昌等著.pdf",
+      "sha256": "5be091ca9c0fbc5cea8ff1423350ec112213b8001f1f2e7666c8f249104ac1a6",
+      "bytes": 8859815,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 256,
+      "seconds": 1.375,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 256
+    },
+    {
+      "filename": "周德庆微生物学课后习题答案.pdf",
+      "sha256": "eb814fe563a293c6719d58b6688d1db68b267a2c69dda2eefab1243eeca23e1e",
+      "bytes": 406557,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 33,
+      "seconds": 1.4540000000015425,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 1780,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 1331,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 1191,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 33
+    },
+    {
+      "filename": "基础生态学 孙儒泳.pdf",
+      "sha256": "69346bce3070ae42511aa24af083ff6f2fc4081050f2169e46b23100b9a737b2",
+      "bytes": 22078774,
+      "status": "failed",
+      "exit_code": 3,
+      "page_count": null,
+      "seconds": 1.9530000000013388,
+      "issues": [
+        {
+          "code": "PDF_PAGE_TREE",
+          "message": "PDF catalog has no page tree."
+        }
+      ],
+      "first_three_pages": [],
+      "prior_pdfium_pages": 341
+    },
+    {
+      "filename": "微生物学(101计划)(邓子新,陈峰,陈向东).pdf",
+      "sha256": "1e3d025f8cd007e6b85410462862aa80fca75bdef5ea02ad889919e11fe43835",
+      "bytes": 757012744,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 710,
+      "seconds": 2.186999999998079,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 710
+    },
+    {
+      "filename": "微生物学(沈萍）第二版.pdf",
+      "sha256": "6011234baade6f320ecb69d9b1ae4aedd5b2e6d75f947d409bc4ede548bdfc25",
+      "bytes": 115559117,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 530,
+      "seconds": 1.5929999999971187,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 530
+    },
+    {
+      "filename": "微生物学.pdf",
+      "sha256": "3d82644d6268163fd6ec281bd709a10b566e69ceb52d2e2c9a59e94a020085ee",
+      "bytes": 28817075,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 364,
+      "seconds": 2.0780000000013388,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 24,
+          "issue_codes": [
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 364
+    },
+    {
+      "filename": "微生物学教程（周德庆）.pdf",
+      "sha256": "456c466f7caf85fa4eb15949a1c84edf0966fe8ef476bff2811d65960f294bd3",
+      "bytes": 13106108,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 416,
+      "seconds": 1.9059999999990396,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 30,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 416
+    },
+    {
+      "filename": "无脊椎动物学任淑仙1.pdf",
+      "sha256": "3f96154ca9f54a6070d0eb5429cfa0035afbf4a2ef513acf4f0e7adb6b5bd0a1",
+      "bytes": 8433134,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 430,
+      "seconds": 1.625,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 430
+    },
+    {
+      "filename": "无脊椎动物学任淑仙2.pdf",
+      "sha256": "11578d2796b448f0bdd4877b515bf6b85833893f7179f1af31fb977fd1bf2a7b",
+      "bytes": 8026643,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 439,
+      "seconds": 1.3119999999980791,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 439
+    },
+    {
+      "filename": "无脊椎动物学（上册）.pdf",
+      "sha256": "8cbd1b297c84d7b2637254c697600e22f68d0741dbd2fe1240eb5e5de7b8c290",
+      "bytes": 492122,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 175,
+      "seconds": 2.2030000000013388,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "text_ready",
+          "text_characters": 5,
+          "issue_codes": []
+        },
+        {
+          "page_number": 3,
+          "status": "text_ready",
+          "text_characters": 5,
+          "issue_codes": []
+        }
+      ],
+      "prior_pdfium_pages": 175
+    },
+    {
+      "filename": "无脊椎动物学（下册）.pdf",
+      "sha256": "e681b2a733d3c3672d1bf10f1677712b03dfc8a15225d42b6283bff41d0fe5bd",
+      "bytes": 417683,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 132,
+      "seconds": 2.375,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "text_ready",
+          "text_characters": 6,
+          "issue_codes": []
+        },
+        {
+          "page_number": 3,
+          "status": "text_ready",
+          "text_characters": 1459,
+          "issue_codes": []
+        }
+      ],
+      "prior_pdfium_pages": 132
+    },
+    {
+      "filename": "无脊椎动物比较解剖学原理.pdf",
+      "sha256": "325fd41391bd3020353434cb90a62ee5d911007244ab686229415c92d161cad5",
+      "bytes": 140972407,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 577,
+      "seconds": 1.5470000000022992,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 577
+    },
+    {
+      "filename": "普通动物学.pdf",
+      "sha256": "c5e3d165f315bb5fe1dd48b8fc7437f5bbed64d2fd0b60072acb331ece8e2f5d",
+      "bytes": 30899289,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 670,
+      "seconds": 2.4219999999986612,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "text_ready",
+          "text_characters": 1614,
+          "issue_codes": []
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 115,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 730,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 670
+    },
+    {
+      "filename": "普通昆虫学 可搜索版.pdf",
+      "sha256": "338bfc560a3e14ca1631da6136dd442e6bf7de3f7dffa262f7a33b36a7f0c650",
+      "bytes": 16753953,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 522,
+      "seconds": 2.438000000001921,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 80,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 90,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 522
+    },
+    {
+      "filename": "普通生态学 (尚玉昌).pdf",
+      "sha256": "e4a4f9d3ecdb43dacc2a034178e9ce9e7763cfbec79af4ffd77bfc9a5c1d1521",
+      "bytes": 43771942,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 543,
+      "seconds": 1.6570000000028813,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 543
+    },
+    {
+      "filename": "普通生态学.pdf",
+      "sha256": "76278f9043be19b29fb23c265d1defda7583f00330bb8c503d2406ad97753934",
+      "bytes": 19254264,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 330,
+      "seconds": 1.5,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 330
+    },
+    {
+      "filename": "普通生物学--生命科学通论（陈阅增）.pdf",
+      "sha256": "324203e300d93f015972a30938244d28ccc7867dffe534c033008c0d16ab9798",
+      "bytes": 20574876,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 620,
+      "seconds": 1.8910000000032596,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 49,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 620
+    },
+    {
+      "filename": "普通生物学笔记（陈阅增）完整版.pdf",
+      "sha256": "b421d3fc1b933de06dd6cdef9b036318bc827a69b2c8d40efb2e326f320895a6",
+      "bytes": 386049,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 22,
+      "seconds": 1.610000000000582,
+      "issues": [
+        {
+          "code": "PDF_EXTRACTION_PERMISSION",
+          "message": "PDF metadata disallows extraction; text availability is not guaranteed."
+        }
+      ],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 1515,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 1528,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 1639,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 22
+    },
+    {
+      "filename": "普通遗传学.pdf",
+      "sha256": "cf59c5ef566d269392c13b85ee1b284d8154dd90387414dbee8075a0316912b7",
+      "bytes": 3499880,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 427,
+      "seconds": 3.202999999997701,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 20,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "blank",
+          "text_characters": 0,
+          "issue_codes": []
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 718,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 427
+    },
+    {
+      "filename": "李合生 现代植物生理学学习指南2007 .pdf",
+      "sha256": "b92fdec3de417427d8c618480301db16c7dadec7d5fb81c74e1f06b3658d202e",
+      "bytes": 17587807,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 258,
+      "seconds": 1.1409999999996217,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 101,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 101,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 101,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 258
+    },
+    {
+      "filename": "植物学 马炜梁主编(OCR).pdf",
+      "sha256": "ce7a975021b5e836c32d1404a16c9dcc6f4a319bc8497a2878921771f8e37660",
+      "bytes": 97915781,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 422,
+      "seconds": 2.3590000000003783,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 59,
+          "issue_codes": [
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 52,
+          "issue_codes": [
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 64,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 422
+    },
+    {
+      "filename": "植物学 马炜梁主编.pdf",
+      "sha256": "9e4dd7e47f376f75c29ab1fa62aaa83f4254b670656b53c5ed8d17858c249d99",
+      "bytes": 96790263,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 422,
+      "seconds": 1.639999999999418,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 422
+    },
+    {
+      "filename": "植物学(第二版)上册-陆时万-高等教育出版社.pdf",
+      "sha256": "a0646085695cedb86eeed8ae69855ec3b1af6840bc6230da8dc70bab92ed6238",
+      "bytes": 46822815,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 260,
+      "seconds": 2.125,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 45,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 251,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 733,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 260
+    },
+    {
+      "filename": "植物学(第二版)下册-吴国芳-高等教育出版社.pdf",
+      "sha256": "fb82451001df0e7a61b40e9b0e8da672ae6fa176939f4a1ac55b5728c2844377",
+      "bytes": 30033178,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 409,
+      "seconds": 2.202999999997701,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 67,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 249,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 773,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 409
+    },
+    {
+      "filename": "植物生物学.pdf",
+      "sha256": "74f1d82488f0a87cf8fff07d410f56e5dd04727ba3241c5d1749086fc4e437a7",
+      "bytes": 21263925,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 581,
+      "seconds": 2.063000000001921,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 581
+    },
+    {
+      "filename": "植物生理学.武维华.pdf",
+      "sha256": "c2fafc039eee6c73a6e93590d2f44691b04f51be419ceb0defeaf285930d71c2",
+      "bytes": 25041693,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 529,
+      "seconds": 1.6709999999984575,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 529
+    },
+    {
+      "filename": "植物生理学（第六版）潘瑞炽主编...pdf",
+      "sha256": "9afa46cdcfb2ed0b5b11f326b948214dfb9478ed5824f1255120c9886b368889",
+      "bytes": 98722947,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 344,
+      "seconds": 1.4530000000013388,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 344
+    },
+    {
+      "filename": "湿地生态学3b22.pdf",
+      "sha256": "04bfba81b6bf0827fbd549f4e4cfa3136664a88f1ccd914619917e5405a4f8de",
+      "bytes": 27364376,
+      "status": "password_required",
+      "exit_code": 3,
+      "page_count": null,
+      "seconds": 0.6879999999982829,
+      "issues": [
+        {
+          "code": "PDF_PASSWORD_REQUIRED",
+          "message": "PDF requires a password; password input is not supported by this worker."
+        }
+      ],
+      "first_three_pages": [],
+      "prior_pdfium_pages": null
+    },
+    {
+      "filename": "王镜岩生物化学（第三版）上册.pdf",
+      "sha256": "d566c68c9b16971e12b8b44c754866bcf677ef3cb23f2353cc8e14c5c4a3bf53",
+      "bytes": 20698344,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 641,
+      "seconds": 1.5620000000017171,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 641
+    },
+    {
+      "filename": "王镜岩生物化学（第三版）下册.pdf",
+      "sha256": "ed0ed4d5f9f1cd96a1d050cc09284698101ee015ef3fd4aa429cb04f87d4f346",
+      "bytes": 24488699,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 692,
+      "seconds": 1.5469999999986612,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 692
+    },
+    {
+      "filename": "现代分子生物学(第二版)朱玉贤.pdf",
+      "sha256": "3ffc5b54fe84c1ceb3a2d668a0a2de6c83ab08082877740c2094ced03e9ec23d",
+      "bytes": 10082841,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 428,
+      "seconds": 1.0940000000009604,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 428
+    },
+    {
+      "filename": "现代分子生物学第三版——课后答案.pdf",
+      "sha256": "e686400b4e5b938dd42ebad9dde32197c8cc40b730014e61a2d87ce33e7150a4",
+      "bytes": 16872183,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 75,
+      "seconds": 0.7659999999996217,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 149,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 75
+    },
+    {
+      "filename": "现代分子生物学（第三版）（朱玉贤  主编）.pdf",
+      "sha256": "db3402df079b385387268bb4f5b2f584ac4567aff149dfa5b0764c1814b3d441",
+      "bytes": 89283933,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 496,
+      "seconds": 1.4370000000017171,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 496
+    },
+    {
+      "filename": "现代植物生理学.李合生.扫描版.pdf",
+      "sha256": "b672c2dcdc376b77b570793d9d3e7a344c24ec8657dba03efc1bd268299ba17b",
+      "bytes": 14632330,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 524,
+      "seconds": 1.5310000000026776,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 524
+    },
+    {
+      "filename": "现代植物生理学实验指南（中国科学院上海植物生理研究所 上海市植物生理学会 编 科学出版社 1999年12月 第~.PDF",
+      "sha256": "d54e12cf6bee7344e3560dfb8d3684dd6de7f9cdf3e2532da3b543d202d7e78c",
+      "bytes": 33446634,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 428,
+      "seconds": 1.6869999999980791,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 101,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 101,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 101,
+          "issue_codes": [
+            "PDF_ANNOTATIONS",
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 428
+    },
+    {
+      "filename": "生态系统生态学3b22.pdf",
+      "sha256": "cba13747d1bc45e3b15e4221d8e85a3d9c7c0d898761cfef5e1eb6d8ccc79435",
+      "bytes": 1137,
+      "status": "failed",
+      "exit_code": 3,
+      "page_count": null,
+      "seconds": 1.0940000000009604,
+      "issues": [
+        {
+          "code": "PDF_DOCUMENT",
+          "message": "Unexpected EOF"
+        }
+      ],
+      "first_three_pages": [],
+      "prior_pdfium_pages": null
+    },
+    {
+      "filename": "生物信息学 孙啸.pdf",
+      "sha256": "e4f104363a16bf6a19cad11ae8f3b7a03e1fb7fdf0c0acc2fc031e7c5e8f33ba",
+      "bytes": 3705643,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 324,
+      "seconds": 1.8439999999973224,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 1838,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "text_ready",
+          "text_characters": 1986,
+          "issue_codes": []
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 1209,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 324
+    },
+    {
+      "filename": "生物化学.pdf",
+      "sha256": "0bf941f8ccd0ff1cb4c25dd8663c136bb179af67a8319505c0fbd21a4c297dde",
+      "bytes": 12269186,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 478,
+      "seconds": 2.0319999999992433,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 372,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 1029,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 1265,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 478
+    },
+    {
+      "filename": "生物化学与分子生物学实验技术.pdf",
+      "sha256": "d3701a52b74b1b6af563f6d2c9e256373ea75480192ded7db8bde50845fba418",
+      "bytes": 9558004,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 347,
+      "seconds": 1.75,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 347
+    },
+    {
+      "filename": "生物化学原理（第3版） (杨荣武) (Z-Library).pdf",
+      "sha256": "9280e3e5dbf9d9a1c206cabf08a96dea27356d9a806185df5f71cbf9c0008114",
+      "bytes": 205611763,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 746,
+      "seconds": 3.3280000000013388,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 746
+    },
+    {
+      "filename": "生物化学简明教程(第5版)张丽萍杨建雄2015[libgen].pdf",
+      "sha256": "e2e67bfd2b7f9bd36d814a2d6f61495dacf01e849e63a9f01421bad9581404c1",
+      "bytes": 191,
+      "status": "failed",
+      "exit_code": 3,
+      "page_count": null,
+      "seconds": 1.5630000000019209,
+      "issues": [
+        {
+          "code": "PDF_DOCUMENT",
+          "message": "No /Root object! - Is this really a PDF?"
+        }
+      ],
+      "first_three_pages": [],
+      "prior_pdfium_pages": null
+    },
+    {
+      "filename": "生物进化 张昀编著 1998.pdf",
+      "sha256": "3588c8b0128cc95f633aaaa94321105d0c6cb8f97f7d49185130d21237528ddf",
+      "bytes": 40509252,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 278,
+      "seconds": 2.5,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 278
+    },
+    {
+      "filename": "生理学-姚泰主编八年制第二版(OCR).pdf",
+      "sha256": "9d7c5f45f39c9644a1c449cd07a0c7a1d4f3ea007148bebe9bbe659822a94152",
+      "bytes": 110596590,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 674,
+      "seconds": 4.78099999999904,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 158,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 937,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 433,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 674
+    },
+    {
+      "filename": "生理学-姚泰主编八年制第二版.pdf",
+      "sha256": "b40a4873531d3c908aa918e914e83668c925ca82c603de9b23a57b9a91dff80c",
+      "bytes": 108687158,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 674,
+      "seconds": 3.327999999997701,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 674
+    },
+    {
+      "filename": "生理学第7版.pdf",
+      "sha256": "22716e903f7b689ed9b5e6f80efbee4f4b5947ce0f0809b6d1b646d0d2613915",
+      "bytes": 38599335,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 435,
+      "seconds": 2.6090000000003783,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 435
+    },
+    {
+      "filename": "竞赛选书指导（池编写20181007）.pdf",
+      "sha256": "93b739848abdc7d5cc6dbb5264930fb22cf2dbadb640d53e57372c4b164e708c",
+      "bytes": 227717,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 3,
+      "seconds": 1.5629999999982829,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_review",
+          "text_characters": 1068,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 903,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 828,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 3
+    },
+    {
+      "filename": "细胞生物学(高等教育出版社-翟中和等人编).pdf",
+      "sha256": "4eda165d08177c3dbe36e41884af8598d2520f35669208727091606fd5d51e72",
+      "bytes": 17747123,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 506,
+      "seconds": 3.4530000000013388,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 506
+    },
+    {
+      "filename": "翟中和细胞生物学(第四版) 版本一(OCR).pdf",
+      "sha256": "9a3a79bb1ccb861dc2d119d145c3b4c109c9ebecf706821f8e3e14269a6ec338",
+      "bytes": 64384373,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 398,
+      "seconds": 5.171999999998661,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 74,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 373,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_CROP_TEXT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 132,
+          "issue_codes": [
+            "PDF_COMPLEX_LAYOUT",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 398
+    },
+    {
+      "filename": "翟中和细胞生物学(第四版) 版本一.pdf",
+      "sha256": "935e80faa21b325e96fe6dda7bbc66d05322b51b171be7aea0a13e414235b8cb",
+      "bytes": 63064680,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 398,
+      "seconds": 2.875,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 398
+    },
+    {
+      "filename": "翟中和细胞生物学(第四版).pdf",
+      "sha256": "fbee8efeec44eb15c1cf0a36b5499b36c48009e9edf6fb14b1c60839e22eb16a",
+      "bytes": 75573905,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 404,
+      "seconds": 2.437000000001717,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 404
+    },
+    {
+      "filename": "脊椎动物学（第二版） (杨安峰) (z-library.sk, 1lib.sk, z-lib.sk).pdf",
+      "sha256": "93b17789d2bce48ddbbd28024932f0ff3c02d34efb7a20639ad80707751cb6da",
+      "bytes": 36020922,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 506,
+      "seconds": 2.625,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 506
+    },
+    {
+      "filename": "脊椎动物比较解剖学（第二版）杨安峰，程红，姚锦仙.北京大学出版社.2008(OCR).pdf",
+      "sha256": "d9391c9354dd0ef72f78f46d0a3351e9fda72a51e6dcad50bcf4fa3ea2047cbf",
+      "bytes": 41398178,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 326,
+      "seconds": 5.421999999998661,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 76,
+          "issue_codes": [
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 71,
+          "issue_codes": [
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 609,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 326
+    },
+    {
+      "filename": "脊椎动物比较解剖学（第二版）杨安峰，程红，姚锦仙.北京大学出版社.2008.pdf",
+      "sha256": "d09c3d276759829b699efbd1e6e208fedf5c1180649b0fe4daae973cdd8efde3",
+      "bytes": 40395968,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 326,
+      "seconds": 2.577999999997701,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 326
+    },
+    {
+      "filename": "进化生物学 沈银柱，黄占景主编 2008.pdf",
+      "sha256": "ddcdb8316fcfa7aa2fc0c8c84226cfff6c0762836d7bd7883cfdaf27d9b2c03f",
+      "bytes": 43030638,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 287,
+      "seconds": 1.9069999999992433,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 287
+    },
+    {
+      "filename": "遗传学+刘祖洞+（第二版）+上册.PDF",
+      "sha256": "66c223ac77d0a92e07fce63c4694ecc629321747229f3fff4f632184d8c60ecc",
+      "bytes": 5431374,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 309,
+      "seconds": 2.139999999999418,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 309
+    },
+    {
+      "filename": "遗传学+刘祖洞+（第二版）+下册.PDF",
+      "sha256": "2e29f6e97adf1993215dbfdbeecbc03da459d420a78c26e6fdbcd44fc65dabed",
+      "bytes": 7649374,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 402,
+      "seconds": 2.0469999999986612,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 402
+    },
+    {
+      "filename": "遗传学（第二版）戴灼华(OCR).pdf",
+      "sha256": "704e1206070acef3c0d3f939097a6ea0e9109333c91499bdc88b2c9303588f8b",
+      "bytes": 174792656,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 528,
+      "seconds": 5.625,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 57,
+          "issue_codes": [
+            "PDF_SPARSE_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_review",
+          "text_characters": 654,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_review",
+          "text_characters": 1560,
+          "issue_codes": [
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 528
+    },
+    {
+      "filename": "遗传学（第二版）戴灼华.pdf",
+      "sha256": "debf5f538faa3928a2852641b5c3315ed86f92c96f6e7411c69d87466f810348",
+      "bytes": 173427195,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 528,
+      "seconds": 2.0159999999996217,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 528
+    },
+    {
+      "filename": "野生动物行为学 张明海，刘丙万，高中信编著 2009.pdf",
+      "sha256": "028fc7f26219d4f60eca47d94cc29b244aedf657090d8954592672aef6b41224",
+      "bytes": 31556362,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 358,
+      "seconds": 2.7340000000003783,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 358
+    },
+    {
+      "filename": "陈阅增 普通生物学第3版.pdf",
+      "sha256": "7e3b77c93b610d12d34345496dcb17391cfecd379b21d80bf0fea3757b45b3ed",
+      "bytes": 32231037,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 531,
+      "seconds": 2.25,
+      "issues": [],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 531
+    },
+    {
+      "filename": "陈阅增 普通生物学辅导与习题集 第3版.pdf",
+      "sha256": "5738f7337bd44b3a9b67c0aa9d2f998224b187252df9c56458ee1c6e1731e771",
+      "bytes": 104286549,
+      "status": "ready",
+      "exit_code": 0,
+      "page_count": 284,
+      "seconds": 1.625,
+      "issues": [
+        {
+          "code": "PDF_EXTRACTION_PERMISSION",
+          "message": "PDF metadata disallows extraction; text availability is not guaranteed."
+        }
+      ],
+      "first_three_pages": [
+        {
+          "page_number": 1,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 2,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        },
+        {
+          "page_number": 3,
+          "status": "needs_ocr",
+          "text_characters": 0,
+          "issue_codes": [
+            "PDF_NO_TEXT_LAYER",
+            "PDF_VISUAL_CONTENT"
+          ]
+        }
+      ],
+      "prior_pdfium_pages": 284
+    }
+  ]
+}

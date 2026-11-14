@@ -4,6 +4,8 @@
 
 当前开发入口为 [B16 近期步骤](execution/NEXT_STEPS.md)，完整目标和发布节奏见 [Release 路线](execution/RELEASE_ROADMAP.md)，已确认阻断及需求证据状态见 [真实缺口清单](execution/KNOWN_GAPS.md)。
 
+B16-T02 的真实整书来源、75份预检、32页现成OCR对照和最终同源Windows桌面/恢复结果见[本项验证](validation/B16-T02.md)。来源层与后续真实IR、整书知识编译及0.2安装闭环的边界分别保留，不以来源登记完成推定知识全部核验。
+
 当前可亲自安装的版本见 [Noetome 0.1.0 Windows 测试版](windows/TEST_RELEASE.md)，包含固定 Release 下载、SHA256 和从离线自检到自己的 PDF 的操作步骤。按用户 2026-11-10 指令，本次以当前电脑运行实测为范围。
 
 2026-11-09 Windows 上手实测交付按 [B15 三步](execution/B15_STEPS.md)执行：锁定环境回归、桌面资料与离线流程、完整 NSIS 安装交付。验收记录与下载产物形成后分别链接到这里。
@@ -25,6 +27,7 @@
 | [架构规范](technical/ARCHITECTURE.md) | 模块边界、技术方向和阶段约束 | 跨模块接口或责任变化 |
 | [数据契约](technical/DATA_CONTRACTS.md) | 当前最小实体、身份、来源和版本语义 | 增加持久字段、Schema或接口 |
 | [Parser sidecar 协议](technical/SIDECAR_PROTOCOL.md) | 单请求 wire、资源能力、限额与进程宿主错误 | parser 协议或生命周期边界变化 |
+| [生产整书来源契约](technical/CORPUS_SOURCE_CONTRACT.md) | 真实PDF按页存储、流式获取、共享桌面/CLI、恢复及OCR适配 | B16生产资料入口或持久字段变化 |
 | [PDF 解析沙盒契约](technical/PDF_PARSE_CONTRACT.md) | 原始PDF、完整物理页、CropBox坐标、逐页UTF8及只读重查 | 文本PDF解析、定位或报告变化 |
 | [PDF 来源登记契约](technical/PDF_SOURCE_CONTRACT.md) | Schema3、原始版本、独立解析尝试、复用键及缓存保护 | PDF项目登记、迁移、重解析或持久报告变化 |
 | [知识抽取网关契约](technical/EXTRACTION_CONTRACT.md) | 严格候选、真实来源绑定、单请求预算、失败审计及离线fake边界 | 抽取请求、候选、provider或输出保护变化 |

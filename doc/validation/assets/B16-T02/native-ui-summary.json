@@ -1,0 +1,475 @@
+{
+  "schema_version": 1,
+  "task_id": "B16-T02",
+  "date": "2026-11-13",
+  "scope": "actual Windows same-source development desktop, custom protocol WebView2, unchanged real Tauri/Core IPC",
+  "passed": true,
+  "source_snapshot": {
+    "root_label": "b16-t02-guard-20261113",
+    "manifest_pin": {
+      "byte_length": 638374,
+      "sha256": "c9e4fa5704b647ec3a21a69c6173db728e49a2bea690594a03dad321ac21fae6"
+    },
+    "snapshot_files": 3023,
+    "selected_source_files_verified": 49
+  },
+  "build": {
+    "command": [
+      "cargo",
+      "+1.98.1",
+      "build",
+      "-p",
+      "noetome-desktop",
+      "--features",
+      "custom-protocol",
+      "--offline",
+      "--locked"
+    ],
+    "exit_code": 0,
+    "seconds": 265.7528829,
+    "reuse_for_ui": true,
+    "cargo_invoked_during_recheck": false,
+    "desktop_pin": {
+      "byte_length": 28218368,
+      "sha256": "8165ed6d9f274143e3195cb1c84a5c8f07af4ed36a3963e894d20847f99519da"
+    },
+    "cli_pin": {
+      "byte_length": 42784256,
+      "sha256": "ed4c2d13ada7983297fcec335da48b3d24d0f71ba18c0d7f11e70ef09bdbfddf"
+    },
+    "frontend_dist": [
+      {
+        "filename": "app-icon.png",
+        "byte_length": 113380,
+        "sha256": "11176c935522d2b0c79dd241dc05caeecd4b407255349378942737da0b2f1f3f"
+      },
+      {
+        "filename": "index.html",
+        "byte_length": 507,
+        "sha256": "a9cb914239625b67c4763c1104f9846fb13582b2102a16c0c90e7fe33ab14a82"
+      },
+      {
+        "filename": "phosphor-icons-LICENSE.txt",
+        "byte_length": 1071,
+        "sha256": "6918b72504641180600cbbd4a86b0dfa9dfccf788775694325b71b9a029f6eb4"
+      },
+      {
+        "filename": "index-CF0KbC5r.js",
+        "byte_length": 374976,
+        "sha256": "475d2c6e981eb285b205371cded90123380b8018c580b3b57077c4f4725f0647"
+      },
+      {
+        "filename": "index-Cg5LK3Iu.css",
+        "byte_length": 24389,
+        "sha256": "13b33a21567ba4eaddca7ee38cd39a2ddab7945cc1249f5153b5afa7c6741a51"
+      }
+    ]
+  },
+  "runtime": {
+    "url": "http://tauri.localhost/",
+    "target": "x86_64-pc-windows-msvc",
+    "capabilities_count": 27,
+    "viewport": {
+      "width": 1200,
+      "height": 800,
+      "devicePixelRatio": 1.5
+    },
+    "windows_node": "24.18.0",
+    "playwright": "1.65.0",
+    "launches": [
+      {
+        "phase": "first",
+        "pid": 84492,
+        "started": "2026-11-13T07:22:00.396Z"
+      },
+      {
+        "phase": "reopened",
+        "pid": 82460,
+        "started": "2026-11-13T07:22:53.395Z"
+      }
+    ]
+  },
+  "selected_source": {
+    "sha256": "129405d0b3e7ade5f7da01a91b99dc738e3b1a9e1ed21bdee08265044c43c37b",
+    "byte_length": 55663426,
+    "page_count": 1227,
+    "original_read_only": true
+  },
+  "preflight": {
+    "page_count": 1227,
+    "byte_length": 55663426,
+    "limits": {
+      "batch_timeout_seconds": 180,
+      "default_batch_pages": 8,
+      "max_file_bytes": null,
+      "max_page_json_bytes": 16777216,
+      "max_pages": null,
+      "ocr_available": false,
+      "timeout_managed_by_host": true
+    }
+  },
+  "checks": [
+    {
+      "name": "selected source and executable fingerprints",
+      "passed": true
+    },
+    {
+      "name": "actual native page and registered corpus IPC",
+      "passed": true
+    },
+    {
+      "name": "open new test project through real native UI",
+      "passed": true
+    },
+    {
+      "name": "real selected PDF preflight displayed before import",
+      "passed": true
+    },
+    {
+      "name": "real IPC error clears earlier preflight readiness",
+      "passed": true
+    },
+    {
+      "name": "import and pause real multi-batch source work",
+      "passed": true
+    },
+    {
+      "name": "read real saved page and review issues in native UI",
+      "passed": true
+    },
+    {
+      "name": "actual application restart restores source and durable pause",
+      "passed": true
+    },
+    {
+      "name": "native continue preserves confirmed pages and pauses again",
+      "passed": true
+    },
+    {
+      "name": "originals, source inputs and isolated profile preserved",
+      "passed": true
+    }
+  ],
+  "recovery": {
+    "first_durable_status": "paused",
+    "first_confirmed_pages": 8,
+    "first_pause_observed_ms": 946,
+    "restart_status": "paused",
+    "restart_confirmed_pages": 8,
+    "final_durable_status": "paused",
+    "final_confirmed_pages": 16,
+    "entire_confirmed_prefix_verified": 8,
+    "prefix_unchanged_after_restart_and_continue": true
+  },
+  "actual_page_read": {
+    "physical_page": 2,
+    "text_sha256": "94494babfe04c52f1c9cf3da8d1ba213b512c569542733471a0132baa87a6196",
+    "page_revision": "5e6550479b97ddd6a67c666e20c6d9b926bb6eaa90f8cf2b15d4c75d8e3c9b53",
+    "issue_codes": [
+      "PDF_NO_TEXT_LAYER",
+      "PDF_VISUAL_CONTENT"
+    ],
+    "knowledge_status": "pending"
+  },
+  "isolation": {
+    "mocked_ipc": false,
+    "page_errors": 0,
+    "console_errors_or_warnings": 0,
+    "unexpected_external_requests": 0,
+    "model_actions": 0,
+    "vault_writes": 0,
+    "installer_actions": 0,
+    "ocr_actions": 0,
+    "ocr_profile": "absent file in new test root",
+    "credentials_or_budget_created": false,
+    "source_and_executable_pins_unchanged": true,
+    "only_owned_desktop_process_trees_stopped": true
+  },
+  "launcher": {
+    "exit_code": 0,
+    "finished_utc": "2026-11-13T07:23:24.6281227Z"
+  },
+  "preserved_failures": [
+    {
+      "run": "noetome-b16-native-ui-d87ae18381b146dd800bf2b33771f464",
+      "kind": "test harness Windows namespace path assertion",
+      "native_project_open_succeeded": true,
+      "literal_path_comparison_failed": true,
+      "fix": "Both absolute paths compared through path.win32.toNamespacedPath; raw IPC retained",
+      "first_receipts": [
+        {
+          "location": "local_windows_temp",
+          "run": "noetome-b16-native-ui-d87ae18381b146dd800bf2b33771f464",
+          "relative_path": "evidence/fatal-error.json",
+          "sha256": "7dd0cba8d48da92a67cd8ce01872d12f487c0b7ff59266ed2549914a140ef157",
+          "byte_length": 840
+        },
+        {
+          "location": "local_windows_temp",
+          "run": "noetome-b16-native-ui-d87ae18381b146dd800bf2b33771f464",
+          "relative_path": "evidence/native-ui-result.json",
+          "sha256": "be3627116ea1a46243bcfae37c630f8238e142ab229acd63042d28b2a10f8159",
+          "byte_length": 18303
+        },
+        {
+          "location": "local_windows_temp",
+          "run": "noetome-b16-native-ui-d87ae18381b146dd800bf2b33771f464",
+          "relative_path": "runtime-manifest.json",
+          "sha256": "4dba2715d44eaa06399f6a975269e5cc82f95698f4f2badf240685c1aad2d600",
+          "byte_length": 16760
+        },
+        {
+          "location": "local_windows_temp",
+          "run": "noetome-b16-native-ui-d87ae18381b146dd800bf2b33771f464",
+          "relative_path": "desktop-build-result.json",
+          "sha256": "84bddad64beb30f6ea4c8b58dc581f3de00e853f8514c7b03591c6306200e64d",
+          "byte_length": 17411
+        }
+      ]
+    },
+    {
+      "kind": "initial reuse launch blocked by PowerShell unsigned UNC script execution policy",
+      "native_checks_executed": 0,
+      "log": ".artifacts/B16-T02/native-ui/native-reuse-launch.log",
+      "correction": "process-scoped ExecutionPolicy Bypass for reviewed local verification script; later real run separate"
+    }
+  ],
+  "not_run": [
+    "native system PDF picker",
+    "0.2 installer/installed application",
+    "real model compilation",
+    "whole-book OCR",
+    "Obsidian reading",
+    "whole-book completion in desktop UI; separate real CLI page coverage evidence required",
+    "new installer or installed-app operation",
+    "native interruption record UI; only final browser mock plus separate Core native interruption evidence"
+  ],
+  "private_evidence_policy": "Original paths, full source page text and screenshots remain ignored local evidence; this summary contains only measured fields and receipt fingerprints",
+  "artifacts": [
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "desktop-reuse-result.json",
+      "sha256": "45f22364edeff055c56deab205e9fb05a10fd15c7c2f51fe876381d6b143c520",
+      "byte_length": 3465
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "harness.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "launcher-result.json",
+      "sha256": "8a92c28ca5d17e6ebdec93d62784420112d256268e3beea923f22c4f7515df62",
+      "byte_length": 276
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "project-init.log",
+      "sha256": "6d046e666a0ae8e8d5c63ddf4cec32ca39c8c4b0d5dcfda116d359cfe33731a8",
+      "byte_length": 1164
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "runtime-manifest.json",
+      "sha256": "1f1b38b74a7935ed65e504ae569ba0019134b4f34a9cf54c910dc0c4d10e7924",
+      "byte_length": 16760
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/actual-preflight-error.json",
+      "sha256": "639b73125653cf88a496c8a26db12c173bd70bfc31fa83f4cc435d153a44c295",
+      "byte_length": 251
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/actual-preflight.json",
+      "sha256": "cc4f27dc396187e6e1e51504799c6699b0d3dfb26fa54fe10a4f04799a79d2e7",
+      "byte_length": 560106
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/actual-readonly-ipc.json",
+      "sha256": "7ece0f2c8e16d36f0a0f81ec3e5fad94d38749c0f7a48557161465b1e8fd80fa",
+      "byte_length": 1641312
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/checks.json",
+      "sha256": "5a8ed03baa69862b27953652c09b3f84dea4ee1ec74300d31761d77c78690c93",
+      "byte_length": 18822
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/confirmed-prefix-first.json",
+      "sha256": "664ca7b81cf6c629d1fe8f6fd7d163c82afa9b7f337bb409b1be830ebee41e30",
+      "byte_length": 1611
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/desktop-first.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/desktop-first.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/desktop-launches.json",
+      "sha256": "0677859c098d9e2d35cfee85382981143760e07180d84aa3495a6c894d953b8a",
+      "byte_length": 518
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/desktop-reopened.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/desktop-reopened.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "byte_length": 0
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/manifest.json",
+      "sha256": "d4686fa60ab0304d6f3b6ed7f8768331ece9bdb50de5a3960656de1c8e283b6f",
+      "byte_length": 10619
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/native-continued-and-paused.png",
+      "sha256": "e05e5f01f8dbe45ebb5d4c49c4096a53ebf6696e9f1e602c5eb23d06e2f9708d",
+      "byte_length": 122379
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/native-first-home.png",
+      "sha256": "19d60baf162f13985ce6e868b2071b3dcf8047807c8c836450dcd8ad3e9a46c8",
+      "byte_length": 214316
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/native-paused-first.png",
+      "sha256": "d91e7d121c68077ba45087be636dc5e88804c3939b714dbbe235a0df4feedb0c",
+      "byte_length": 123285
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/native-preflight-error.png",
+      "sha256": "e68f14a24d75d1392a6fb22ec12514ccbd735ada1d964cd85d47c7c6fb8d3b2f",
+      "byte_length": 144688
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/native-preflight.png",
+      "sha256": "18dc495e5b3117679d4a81c55d55a67dd36deeaf4a275ae33fd4faad01755853",
+      "byte_length": 142999
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/native-real-page.png",
+      "sha256": "5b681456ea3af506c2569f0e02e2fc73f7df1ce975d57cd9b48c98146115b815",
+      "byte_length": 121218
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/native-reopened-home.png",
+      "sha256": "13ec3c0128f5a4ea8e284b51556047d6315295adf2eec5d61aedb370f7e9ca21",
+      "byte_length": 235191
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/native-reopened-source.png",
+      "sha256": "76ea66961c4b18b649e00ca70d6ea6ed14407b9c5e32664cc74918e661293a52",
+      "byte_length": 136468
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/native-ui-result.json",
+      "sha256": "9c5c1e7e8acb45f313c42a5da70fd97bb55625d2500d8d1d0063e5a4d9fe9cc5",
+      "byte_length": 35541
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/paused-source-final.json",
+      "sha256": "84b6602ac72915c7e5f28e52f6e7530e436034693aac5818b47ce8af967ab4fd",
+      "byte_length": 475
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/paused-source-first.json",
+      "sha256": "56f2c2d479c1aa920b02284126ff287bc196d749d7db6645bfeddf011c3feba5",
+      "byte_length": 472
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/stop-owned-1.json",
+      "sha256": "caad686ddbb2b567f011ed33840e18a9ff83cd38c59e6de601a453d96c4bada3",
+      "byte_length": 727
+    },
+    {
+      "location": "local_windows_temp",
+      "run": "noetome-b16-native-ui-9c851283b5d84ee888b714bb7c063cf2",
+      "relative_path": "evidence/stop-owned-2.json",
+      "sha256": "1f0f1033d088c8569c90630227800d5ae6f317fae1df54bb4c75acdf23981030",
+      "byte_length": 727
+    }
+  ],
+  "harness_artifacts": [
+    {
+      "path": ".artifacts/B16-T02/native-ui/native-corpus-ui.cjs",
+      "sha256": "e4e0a73f869205b92c2075271e655a2c9c4debb48f3c2a5d0400f44acca64031",
+      "byte_length": 18893
+    },
+    {
+      "path": ".artifacts/B16-T02/native-ui/run-native-corpus-ui.ps1",
+      "sha256": "bb13590991bc13c635b40bfb4b883847f85dfb8ff3ad73e9f9854807510adc81",
+      "byte_length": 8129
+    },
+    {
+      "path": ".artifacts/B16-T02/native-ui/native-reuse-launch-2.log",
+      "sha256": "13e9375c8bc6d29ff469b73b290cbc1fe6bda28f07a104f567904553bebc08d3",
+      "byte_length": 102
+    },
+    {
+      "path": ".artifacts/B16-T02/native-ui/native-reuse-launch-2-result.json",
+      "sha256": "fdfe00d0453eabe33332c7d38122438ebb0f3f9a2592033533197de1afd3fc1c",
+      "byte_length": 146
+    }
+  ]
+}
