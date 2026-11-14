@@ -11,6 +11,7 @@ mod compile_identity;
 mod compile_model;
 mod compile_report;
 mod compile_store;
+pub mod corpus;
 mod diagnostics_model;
 pub mod diagnostics_store;
 pub mod extraction;
@@ -133,6 +134,7 @@ pub const INVALID_ARGUMENT: &str = "CLI_INVALID_ARGUMENT：参数无效或缺少
 pub const HELP: &str = "Noetome — 个人学科学习知识编译器
 
 用法：noetome [选项]
+      noetome corpus --help  （真实整书PDF资料库）
       noetome project <init|inspect> <路径>
       noetome source import <项目路径> <MD/TXT/PDF文件> [--source-id <既有ID>] [--reparse]
       noetome source inspect <项目路径> <import-id>
@@ -381,6 +383,7 @@ fake以UTF8字节计量，价格及真实模型用量未知，网络和付费调
 
 #[derive(Debug)]
 pub enum CliCommand {
+    Corpus(corpus::command::Command),
     Help,
     RunHelp,
     ApiRunInit {
@@ -823,6 +826,9 @@ pub enum CliCommand {
 
 /// Parse without touching the filesystem. Paths remain native OS arguments.
 pub fn parse(args: &[OsString]) -> Result<CliCommand, &'static str> {
+    if args.first().is_some_and(|arg| arg == "corpus") {
+        return corpus::command::parse(&args[1..]).map(CliCommand::Corpus);
+    }
     if args.first().is_some_and(|arg| arg == "run") {
         return run_command(&args[1..]);
     }

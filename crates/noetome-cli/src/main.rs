@@ -23,6 +23,29 @@ fn main() -> ExitCode {
 
     let mut result_code = 0;
     let output = match command {
+        CliCommand::Corpus(command) => {
+            let read_only = matches!(
+                &command,
+                noetome_cli::corpus::command::Command::Status(..)
+                    | noetome_cli::corpus::command::Command::List(..)
+                    | noetome_cli::corpus::command::Command::Pages(..)
+                    | noetome_cli::corpus::command::Command::Help
+            );
+            match noetome_cli::corpus::command::execute(command) {
+                Ok(value) => {
+                    if !read_only
+                        && (value["status"] == "failed" || value["status"] == "password_required")
+                    {
+                        result_code = 3;
+                    }
+                    serde_json::to_string_pretty(&value).expect("JSON value serializes") + "\n"
+                }
+                Err(error) => {
+                    let _ = writeln!(io::stderr().lock(), "{error}");
+                    return ExitCode::from(error.exit_code());
+                }
+            }
+        }
         CliCommand::RunHelp => noetome_cli::RUN_HELP.to_owned(),
         CliCommand::ApiRunInit { config, budget } => api_run_result(
             noetome_cli::request_run::init(&config, &budget),
