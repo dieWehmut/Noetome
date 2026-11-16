@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "task": "B16-T03",
+  "status": "engineering_regression_passed_install_model_reading_release_pending",
+  "captured_at_utc": "2026-11-16T09:14:54.460720+00:00",
+  "source_relation": {
+    "current_head": "b548dfee5a14a286f509c74b99488ec546562213",
+    "tested_linux_product_code_commit": "77955e9621fdc51513874d3d6992f950cbe0773e",
+    "changed_files": [
+      "crates/noetome-desktop/packaging-frozen.json",
+      "doc/windows/QUICKSTART.zh-CN.md"
+    ],
+    "product_source_unchanged": true,
+    "final_windows_source_and_artifact_guard": "passed"
+  },
+  "linux_matrix": {
+    "synthetic_only": true,
+    "scenarios_passed": 10,
+    "scenarios_failed": 0,
+    "scenario_checks": 464,
+    "global_binary_checks": 1,
+    "external_http_attempts": 0,
+    "binary_sha256_before_and_after": "cc31fc43f7db90920a2fd4ce85ce0e4bccfb5f8c0726423be6655754014577d1",
+    "physical_pages": 5,
+    "text_pages": 4,
+    "confirmed_units": 20,
+    "fake_does_not_prove_real_chinese_or_scientific_quality": true
+  },
+  "linux_full_python": {
+    "methods_run": 1433,
+    "addSuccess_methods": 1408,
+    "method_skips": 25,
+    "class_or_module_skips": 0,
+    "failures": 0,
+    "errors": 0,
+    "elapsed_seconds": 317.16776276199926,
+    "locked_pdf_runtime_explicitly_selected": true,
+    "compile_cli_explicitly_selected": true,
+    "windows_native_cli_explicitly_unselected": true,
+    "skip_details_ref": ".artifacts/B16-T03/linux-python-full-default-chinese-redacted-summary.json"
+  },
+  "focused_linux": {
+    "budget_passed": 16,
+    "store_passed": 17,
+    "transport_passed": 10,
+    "failed": 0,
+    "ignored": 0,
+    "windows_cfg_budget_count": 17,
+    "windows_cfg_store_count": 16
+  },
+  "historical_windows_cross_recovery": {
+    "source_commit": "792ea6be6ae07fcc1afb75a1173326a1a050ac13",
+    "directions_passed": 2,
+    "directions_failed": 0,
+    "checks_total": 126,
+    "external_http_attempts": 0,
+    "directions": [
+      {
+        "direction": "standalone_to_workspace",
+        "checks": 63,
+        "confirmed_units": 8,
+        "fake_http_requests": 8,
+        "accounted_tokens": 1300,
+        "pending_reserved_tokens": 0
+      },
+      {
+        "direction": "workspace_to_standalone",
+        "checks": 63,
+        "confirmed_units": 8,
+        "fake_http_requests": 8,
+        "accounted_tokens": 1300,
+        "pending_reserved_tokens": 0
+      }
+    ],
+    "separate_artificial_ledgers_do_not_add_to_real_usage": true
+  },
+  "historical_windows_full_792": {
+    "source_commit": "792ea6be6ae07fcc1afb75a1173326a1a050ac13",
+    "rust": {
+      "passed": 1397,
+      "failed": 0,
+      "ignored": 1,
+      "exit_code": 0
+    },
+    "python": {
+      "total": 1455,
+      "passed": 1432,
+      "skipped": 23,
+      "failed": 0,
+      "errors": 0,
+      "exit_code": 0
+    },
+    "final_driver_exit": 1,
+    "final_same_artifact_guard_passed": false,
+    "failure_scope": "standalone_pinned_cli_vs_workspace_feature_difference"
+  },
+  "historical_windows_080656": {
+    "source_commit": "77955e9621fdc51513874d3d6992f950cbe0773e",
+    "driver_exit": 125,
+    "reason": "guide_fix",
+    "workspace_build_exit": 0,
+    "store_passed": 16,
+    "store_exit": 0,
+    "running_check_killed": false,
+    "full_rust_started": false,
+    "full_python_started": false,
+    "budget_full_not_started": true
+  },
+  "final_windows_completed_rust_component": {
+    "source_commit": "b548dfee5a14a286f509c74b99488ec546562213",
+    "run_id": "b16-t03-final-20261116-082631Z",
+    "passed": 1397,
+    "failed": 0,
+    "ignored": 1,
+    "elapsed_seconds": 755.937,
+    "completed_at_utc": "2026-11-16T08:54:25Z",
+    "exit_code": 0,
+    "completed_log_bytes": 134652,
+    "completed_log_sha256": "869a9595943bb59d980f46c2a9563ccad9d8e2b97f7f0935f545d41c635f2436",
+    "independent_log_fingerprint_checked": true,
+    "independent_summed_rust_results_checked": true,
+    "overall_gate_pending": false
+  },
+  "frozen_small_gold": {
+    "atoms": 22,
+    "physical_pages": 8,
+    "utf8_anchors": 25,
+    "sha256": "5e7733f074dda3b66eab6486d2f6eb92c1165a90fa0738d90983334923033027",
+    "bytes": 52704,
+    "frozen_before_actual_model_output": true,
+    "modified_this_round": false,
+    "not_formal_200_atoms_98_percent_gate": true,
+    "model_blind_comparison": "pending_actual_output"
+  },
+  "not_passed": {
+    "installation": "not_passed",
+    "actual_model": "not_started",
+    "obsidian": "not_passed",
+    "release": "not_passed"
+  },
+  "counting_limits": [
+    "Full Python includes synthetic matrix: do not add it again to method totals.",
+    "Focused tests and historical reruns are not additive full-suite totals.",
+    "464 + 1 are assertions, not 465 Python test methods.",
+    "Cross-recovery uses independent fake ledgers.",
+    "Linux/Windows cfg-specific focused counts differ."
+  ],
+  "evidence_index": ".artifacts/B16-T03/validation-preparation/evidence-pins.json",
+  "final_windows_completed_python_component": {
+    "source_commit": "b548dfee5a14a286f509c74b99488ec546562213",
+    "run_id": "b16-t03-final-20261116-082631Z",
+    "total": 1455,
+    "passed": 1432,
+    "skipped": 23,
+    "failed": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "elapsed_seconds": 534.265,
+    "completed_at_utc": "2026-11-16T09:03:19Z",
+    "completed_log_bytes": 223978,
+    "completed_log_sha256": "cb539574ce540ab17400bb3f1eadeea4a09dc1decc3c451aa7cf77ea9ad706ce",
+    "overall_gate_pending": false
+  },
+  "final_windows_overall": {
+    "status": "all_required_checks_passed",
+    "completed_at_utc": "2026-11-16T09:03:33.937405+00:00",
+    "all_source_files_verified": 19770,
+    "source_manifest_pin": {
+      "bytes": 5130555,
+      "sha256": "c0813886b037057b030e14d073b15e1b3e264cfdfad0c62e65a03fbd4a9c07de"
+    },
+    "cli_snapshot_pin": {
+      "bytes": 44420096,
+      "sha256": "9eab3b4d46c6ad086cd013c2cf3f2448391245abf01b97e0e337b3cdbe482ce1"
+    },
+    "shared_target_cli_pin": {
+      "bytes": 44420096,
+      "sha256": "9eab3b4d46c6ad086cd013c2cf3f2448391245abf01b97e0e337b3cdbe482ce1"
+    },
+    "cli_bytes_same": true,
+    "run_result_pin": {
+      "bytes": 22336,
+      "sha256": "76f9df4a6982e86aa30638f8525480aeb6b540b2e7a5ae9514ad09db4da90b7b"
+    },
+    "source_after_pin": {
+      "bytes": 535,
+      "sha256": "4782d22e0c20d700c1e28ce73827b22dec7dff76bdd80f4a22c302d3c4fd2bd5"
+    },
+    "python_skips": [
+      "test_linked_original_receipt_is_refused (test_capture_scan_budget_originals.ScanBudgetCaptureTests.test_linked_original_receipt_is_refused) ... skipped 'symlink setup needs separate Windows privilege'",
+      "test_ancestor_links_rejected_before_source_read (test_knowledge_conflicts_verifier.ConflictsVerifierTests.test_ancestor_links_rejected_before_source_read) ... skipped 'ancestor symlinks require separate Windows reparse environment'",
+      "test_source_symlink_refused_without_reading_the_target (test_prepare_scan_obsidian.PrepareScanObsidianTests.test_source_symlink_refused_without_reading_the_target) ... skipped 'symbolic links unavailable'",
+      "test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel (test_prepare_visual_compatibility.VisualCompatibilityPreparationTests.test_existing_output_and_ancestor_alias_are_refused_without_touching_sentinel) ... skipped 'host does not permit directory symlinks; native Windows reparse guards need separate capture'",
+      "test_a_symlink_is_reported (test_verify_adaptive_plan.LayoutTests.test_a_symlink_is_reported) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_a_symlink_is_reported (test_verify_audit_journal.LayoutTests.test_a_symlink_is_reported) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_a_symlink_is_detected (test_verify_diagnostics_export.LayoutTests.test_a_symlink_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_ancestor_link_is_rejected_before_any_read_or_resolution (test_verify_knowledge_presentation.PresentationAuthorTests.test_ancestor_link_is_rejected_before_any_read_or_resolution) ... skipped 'directory symbolic links unavailable'",
+      "test_a_symlink_inside_the_root_is_refused (test_verify_library_audit.LayoutTests.test_a_symlink_inside_the_root_is_refused) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_a_symlink_is_reported (test_verify_library_bench.LayoutTests.test_a_symlink_is_reported) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_a_symbolic_link_anywhere_in_the_root_is_detected (test_verify_link_migration.LayoutTests.test_a_symbolic_link_anywhere_in_the_root_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_symlinked_root_is_detected (test_verify_outline_alignment.LayoutTests.test_symlinked_root_is_detected) ... skipped 'Windows cannot create the directory symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_a_symlinked_text_file_is_detected (test_verify_relevance_filter.LayoutTests.test_a_symlinked_text_file_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_a_symlink_is_detected (test_verify_retention_cleanup.LayoutTests.test_a_symlink_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_symlink_ancestor_is_rejected_and_external_original_preserved (test_verify_run_checkpoint.OriginalEvidenceTests.test_symlink_ancestor_is_rejected_and_external_original_preserved) ... skipped 'ordinary symlink creation is unavailable'",
+      "test_a_symlink_is_detected (test_verify_scale_harness.LayoutTests.test_a_symlink_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_ancestor_link_refused_before_source_read (test_verify_scan_formula.ScanAuthorTests.test_ancestor_link_refused_before_source_read) ... skipped 'directory symbolic link unavailable on this host'",
+      "test_flat_inventory_rejects_linked_ancestor_before_listing (test_verify_scan_formula.ScanAuthorTests.test_flat_inventory_rejects_linked_ancestor_before_listing) ... skipped 'directory symbolic link unavailable on this host'",
+      "test_a_symlink_is_reported (test_verify_soak_harness.LayoutTests.test_a_symlink_is_reported) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_a_symlink_inside_the_root_is_refused (test_verify_source_index.LayoutTests.test_a_symlink_inside_the_root_is_refused) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_a_symlinked_file_is_detected (test_verify_structure_navigation.LayoutTests.test_a_symlinked_file_is_detected) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_a_symlink_is_refused (test_verify_template_structure.LayoutTests.test_a_symlink_is_refused) ... skipped 'Windows cannot create the file symlink fixture: WinError 1314 (symbolic-link privilege unavailable)'",
+      "test_hardlink_and_symlink_are_rejected_without_following (test_verify_windows_installer_payload.WindowsInstallerPayloadTests.test_hardlink_and_symlink_are_rejected_without_following) ... skipped 'Symlink creation unavailable on this host'"
+    ],
+    "real_model_requests": 0
+  }
+}
