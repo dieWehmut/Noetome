@@ -96,6 +96,69 @@ fn no_request() -> BudgetSettlement {
 }
 
 #[test]
+fn identity_guards_preserve_another_connections_sqlite_transaction_lock() {
+    const MODE: &str = "NOETOME_TEST_BUDGET_LOCK_PROBE";
+    const PATH: &str = "NOETOME_TEST_BUDGET_LOCK_DATABASE";
+    if std::env::var(MODE).as_deref() == Ok("synthetic-child") {
+        let path = PathBuf::from(std::env::var_os(PATH).expect("selected synthetic database"));
+        let mut connection = Connection::open(&path).unwrap();
+        connection.busy_timeout(Duration::from_millis(50)).unwrap();
+        let attempt = connection.transaction_with_behavior(TransactionBehavior::Immediate);
+        assert!(
+            attempt.is_err(),
+            "another process acquired the writer lock while the original transaction remained active"
+        );
+        return;
+    }
+    let fixture = Fixture::new(1000, &[100], 0);
+    let mut writer = fixture.migrate();
+    let mut reader = BudgetAuthority::open(&fixture.ledger).unwrap();
+    let transaction = writer
+        .connection
+        .transaction_with_behavior(TransactionBehavior::Immediate)
+        .unwrap();
+    // This second authority shares our process but not our SQLite connection.
+    // Identity checks must not release the first connection's POSIX locks.
+    reader.guard().unwrap();
+    let result = std::process::Command::new(std::env::current_exe().unwrap())
+        .args(["--exact", "production_budget::tests::identity_guards_preserve_another_connections_sqlite_transaction_lock", "--nocapture"])
+        .env(MODE, "synthetic-child")
+        .env(PATH, &writer.database)
+        .output().unwrap();
+    drop(transaction);
+    assert!(
+        result.status.success(),
+        "independent process lock probe failed: {}{}",
+        String::from_utf8_lossy(&result.stdout),
+        String::from_utf8_lossy(&result.stderr)
+    );
+    fixture.assert_original();
+}
+
+#[test]
+fn linked_sqlite_journal_is_rejected_before_reserving_or_touching_its_target() {
+    let fixture = Fixture::new(1000, &[100], 0);
+    let mut authority = fixture.migrate();
+    let protected = fixture.root.join("protected-synthetic-file");
+    let original = b"ordinary synthetic target must stay unchanged";
+    fs::write(&protected, original).unwrap();
+    let mut journal_name = authority.database.as_os_str().to_os_string();
+    journal_name.push("-journal");
+    let journal = PathBuf::from(journal_name);
+    fs::hard_link(&protected, &journal).unwrap();
+    assert!(
+        authority
+            .reserve(&request("run", "linked-journal", 100))
+            .is_err()
+    );
+    assert!(BudgetAuthority::open(&fixture.ledger).is_err());
+    assert_eq!(fs::read(&protected).unwrap(), original);
+    fs::remove_file(journal).unwrap();
+    assert_eq!(authority.status().unwrap().attempt_count, 0);
+    fixture.assert_original();
+}
+
+#[test]
 fn complete_ten_record_baseline_is_preserved_without_new_quota() {
     let fixture = Fixture::new(
         10_000_000,

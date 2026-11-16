@@ -3,7 +3,7 @@
 //! bytes and complete history stay immutable; all new accounting is transactional.
 
 use crate::{
-    compile_identity::{Identity, identity},
+    compile_identity::{Identity, identity, sqlite_identity},
     project::{self, ProjectError},
     text::sha256,
 };
@@ -394,7 +394,22 @@ fn unique_json(bytes: &[u8]) -> Result<(), ProjectError> {
         .map_err(|_| invalid("原账本JSON尾部无效。"))
 }
 
+fn sqlite_sidecars(path: &Path) -> Result<(), ProjectError> {
+    for suffix in ["-journal", "-wal", "-shm"] {
+        let mut name = path.as_os_str().to_os_string();
+        name.push(suffix);
+        let sidecar = PathBuf::from(name);
+        project::check_components(&sidecar)?;
+        if project::exists(&sidecar)? {
+            sqlite_identity(&sidecar)?;
+        }
+    }
+    Ok(())
+}
+
 fn open_connection(path: &Path, writable: bool) -> Result<Connection, ProjectError> {
+    sqlite_identity(path)?;
+    sqlite_sidecars(path)?;
     let flags = if writable {
         OpenFlags::SQLITE_OPEN_READ_WRITE
     } else {
@@ -472,7 +487,7 @@ impl BudgetAuthority {
             baseline_readonly: true,
             ledger_identity: identity(&ledger)?,
             parent_identity: identity(ledger.parent().ok_or_else(|| invalid("原账本无父目录。"))?)?,
-            database_identity: identity(&database_path)?,
+            database_identity: sqlite_identity(&database_path)?,
             marker_identity: identity(&marker)?,
             approved_total_tokens: initial.approved_total_tokens,
             accounted_tokens: initial.accounted_tokens,
@@ -555,6 +570,9 @@ impl BudgetAuthority {
         {
             return Err(invalid("原累计账本字节不再匹配迁移基线。"));
         }
+        if sqlite_identity(&database_path)? != owner.database_identity {
+            return Err(invalid("生产预算数据库身份改变，未打开替换内容。"));
+        }
         let connection = open_connection(&database_path, true)?;
         let mut authority = Self {
             ledger,
@@ -570,6 +588,7 @@ impl BudgetAuthority {
     }
 
     fn guard(&mut self) -> Result<(), ProjectError> {
+        sqlite_sidecars(&self.database)?;
         if !fs::metadata(&self.ledger)
             .map_err(|e| ProjectError::io(&self.ledger, e))?
             .permissions()
@@ -585,7 +604,7 @@ impl BudgetAuthority {
                     .parent()
                     .ok_or_else(|| invalid("原账本无父目录。"))?,
             )? != self.owner.parent_identity
-            || identity(&self.database)? != self.owner.database_identity
+            || sqlite_identity(&self.database)? != self.owner.database_identity
             || identity(&self.marker)? != self.owner.marker_identity
         {
             return Err(invalid("生产额度owner文件身份改变；现场保留。"));

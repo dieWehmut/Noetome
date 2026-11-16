@@ -14,6 +14,35 @@ pub(crate) enum Identity {
     Windows { volume: u64, index: u64 },
 }
 
+/// Mutable SQLite files must not be opened/closed outside SQLite's VFS on Unix:
+/// POSIX close() can release this process's advisory locks on the same inode.
+pub(crate) fn sqlite_identity(path: &Path) -> Result<Identity, ProjectError> {
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::MetadataExt;
+        project::check_components(path)?;
+        let metadata = std::fs::symlink_metadata(path).map_err(|e| ProjectError::io(path, e))?;
+        if project::is_link(&metadata) || !metadata.is_file() {
+            return Err(ProjectError::unsafe_path(path));
+        }
+        if metadata.nlink() != 1 {
+            return Err(ProjectError::new(
+                "COMPILE_INTEGRITY",
+                3,
+                "SQLite拥有文件必须只有一个硬链接；已保留现场。",
+            ));
+        }
+        Ok(Identity::Unix {
+            device: metadata.dev(),
+            inode: metadata.ino(),
+        })
+    }
+    #[cfg(not(unix))]
+    {
+        identity(path)
+    }
+}
+
 pub(crate) fn identity(path: &Path) -> Result<Identity, ProjectError> {
     project::check_components(path)?;
     let before = std::fs::symlink_metadata(path).map_err(|e| ProjectError::io(path, e))?;
