@@ -37,6 +37,7 @@ namespace Noetome {
         [DllImport("kernel32.dll", SetLastError=true)] private static extern bool TerminateJobObject(IntPtr job, uint code);
         [DllImport("kernel32.dll")] private static extern bool CloseHandle(IntPtr handle);
         private IntPtr handle;
+        public IntPtr Handle { get { return handle; } }
         public TextInvokeJob() {
             handle=CreateJobObject(IntPtr.Zero,null);
             if (handle==IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
@@ -234,6 +235,10 @@ function Selected-Path([string]$Value, [switch]$External) {
 }
 function Open-Selected([string]$Value, [switch]$Write, [switch]$External) {
     $full=Selected-Path $Value -External:$External
+    if ($Write -and $External -and ((Test-Path -LiteralPath ($full+'.production-authority.json')) -or (Test-Path -LiteralPath ($full+'.production.sqlite')) -or (([IO.File]::GetAttributes($full) -band [IO.FileAttributes]::ReadOnly) -ne 0))) {
+        $script:diagnostic='production-authority-required'
+        throw 'production-authority-required'
+    }
     $access=if ($Write) { [IO.FileAccess]::ReadWrite } else { [IO.FileAccess]::Read }
     $stream=[IO.File]::Open($full,[IO.FileMode]::Open,$access,[IO.FileShare]::Read)
     try { if (-not [Noetome.TextInvokeNative]::Ordinary($stream.SafeFileHandle,$false)) { throw 'path-link' }; $guards.Add($stream); return $stream }
