@@ -97,7 +97,7 @@ class WindowsInstallerPayloadTests(unittest.TestCase):
             "source_commit": "a" * 40,
             "target": "x86_64-pc-windows-msvc",
             "build_profile": "debug",
-            "version": "0.1.0",
+            "version": json.loads((ROOT / "crates/noetome-desktop/tauri.conf.json").read_text(encoding="utf-8"))["version"],
             "source_inputs": {
                 "cli": {
                     "bytes": (self.root / "noetome.exe").stat().st_size,

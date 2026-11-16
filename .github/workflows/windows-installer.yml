@@ -88,7 +88,8 @@ jobs:
           New-Item -ItemType Directory -Path $taskDelivery | Out-Null
           $taskInstaller = @(Get-ChildItem -LiteralPath target/release/bundle/nsis -Filter '*-setup.exe' -File)
           if ($taskInstaller.Count -ne 1) { throw 'Exactly one installer required.' }
-          $taskName = "Noetome-0.1.0-B15-$($env:GITHUB_SHA.Substring(0,12))-windows11-x64-setup.exe"
+          $taskVersion = (Get-Content -LiteralPath crates/noetome-desktop/tauri.conf.json -Raw | ConvertFrom-Json).version
+          $taskName = "Noetome-$taskVersion-$($env:GITHUB_SHA.Substring(0,12))-windows11-x64-setup.exe"
           $taskOutput = Join-Path $taskDelivery $taskName
           Copy-Item -LiteralPath $taskInstaller[0].FullName -Destination $taskOutput
           Copy-Item doc/windows/QUICKSTART.zh-CN.md "$taskDelivery/QUICKSTART.zh-CN.md"
@@ -103,7 +104,7 @@ jobs:
           $taskFacts = [ordered]@{
             schema_version = 1
             producer = 'noetome-windows-installer-delivery'
-            product_version = '0.1.0'
+            product_version = $taskVersion
             target = 'Windows 11 x64'
             source_commit = $env:GITHUB_SHA
             run_id = $env:GITHUB_RUN_ID

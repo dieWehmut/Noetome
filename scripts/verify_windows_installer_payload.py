@@ -18,6 +18,7 @@ MANIFEST = "payload-manifest.json"
 CHECKSUM = "payload-manifest.sha256"
 HELPERS = (
     "invoke_text_api_credential.ps1",
+    "invoke_compile_credential.ps1",
     "text_api_support.ps1",
     "text_model_profile.ps1",
     "set_text_api_credential.ps1",

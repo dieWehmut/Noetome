@@ -42,6 +42,7 @@ INSTALL_CONFIG = "crates/noetome-desktop/tauri.install.conf.json"
 INSTALLER_SURFACE = (
     INSTALL_CONFIG,
     "scripts/prepare_windows_installer_payload.ps1",
+    "scripts/invoke_compile_credential.ps1",
     "scripts/record_windows_webview_installer.ps1",
     "doc/technical/WINDOWS_INSTALLER_CONTRACT.md",
     "doc/windows/QUICKSTART.zh-CN.md",
@@ -103,6 +104,8 @@ EXPECTED_SHELL_COMMANDS = (
     "model_status", "model_credential_store", "model_budget_restore", "desktop_self_test",
     "source_saved", "corpus_pick", "corpus_preflight", "corpus_import", "corpus_list",
     "corpus_status", "corpus_pages", "corpus_process", "corpus_retry", "corpus_pause",
+    "compile_create", "compile_run", "compile_list", "compile_status", "compile_control",
+    "compile_query", "compile_evidence", "compile_export",
 )
 MAIN_RS = "crates/noetome-desktop/src/main.rs"
 

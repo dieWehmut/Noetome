@@ -62,7 +62,7 @@ def copy_tree(source,prefix,origin):
 copy_file(cli,'noetome.exe','build/noetome.exe',True)
 copy_tree(runtime/'python','pdf-python','runtime/python')
 copy_file(runtime/'python/vcruntime140.dll','vcruntime140.dll','runtime/python/vcruntime140.dll')
-for name in ('invoke_text_api_credential.ps1','text_api_support.ps1','text_model_profile.ps1','set_text_api_credential.ps1'):copy_file(repo/'scripts'/name,'helpers/'+name,'repository/scripts/'+name)
+for name in ('invoke_text_api_credential.ps1','invoke_compile_credential.ps1','text_api_support.ps1','text_model_profile.ps1','set_text_api_credential.ps1'):copy_file(repo/'scripts'/name,'helpers/'+name,'repository/scripts/'+name)
 for tree in ('run-checkpoint-v1','text-compare-v1','pdf-text-v1'):copy_tree(repo/'fixtures'/tree,'fixtures/'+tree,'repository/fixtures/'+tree)
 copy_file(repo/'doc/validation/assets/B06V-T02/recognition/vision-live-final/actual-final-ledger.json','fixtures/model-ledger/actual-final-ledger.json','repository/frozen-full-ledger')
 copy_file(repo/'doc/validation/assets/B06V-T02/review/continuation-current-ledger.json','fixtures/model-ledger/continuation-current-ledger.json','repository/frozen-ledger-proof')

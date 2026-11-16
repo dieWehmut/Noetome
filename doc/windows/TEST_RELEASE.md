@@ -21,7 +21,7 @@ cf3cc5fdbe4446d8b5d2458931d1d7134983baad38e9e88d6fb1dd91164d12ea
 4. 导入自己的文字 PDF，先选择一页或一个小节。在设置中检查模型服务、凭据和预算，预览原文后生成候选。
 5. 将候选导出到尚不存在的新测试目录，在 Obsidian 中打开其中的 `vault` 文件夹，核对解释、原文、条件、单位和 PDF 链接。
 
-完整操作见[中文快速开始](QUICKSTART.zh-CN.md)。测试材料 ZIP 包含快速开始、两份作者 PDF、原始 delivery 与载荷清单、运行时凭据、安装/卸载与原生界面验收证据。安装包已经包含 CLI 和 PDF Python 环境，无需自行安装 Rust、Node 或 Python。
+完整操作见[0.1中文快速开始](QUICKSTART-0.1.zh-CN.md)。测试材料 ZIP 包含快速开始、两份作者 PDF、原始 delivery 与载荷清单、运行时凭据、安装/卸载与原生界面验收证据。安装包已经包含 CLI 和 PDF Python 环境，无需自行安装 Rust、Node 或 Python。
 
 ## 验证范围
 

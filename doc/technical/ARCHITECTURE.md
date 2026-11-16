@@ -7,6 +7,8 @@
 
 2026-11-12 用户批准的真实教材闭环以[生产整书来源契约](CORPUS_SOURCE_CONTRACT.md)推进：CLI与桌面共用`corpus`来源Application，原件流式获取，页区在独立SQLite逐页持久化；现成Windows OCR作为适配器接入。旧fixture仍是隔离的工程回归样例，后续生产IR从这套真实来源库消费，避免把旧固定样例调度器作为整书任务。实际验收仍以任务记录为准。
 
+B16-T03新增[生产持久编译](PRODUCTION_COMPILE_CONTRACT.md)：`domain`承载旧fixture与生产候选共用的纯领域规则，`production_compile`消费固定corpus页版本，在独立`.noetome-compile/compile.sqlite`保存全物理页范围、按需片段、attempt与UUID知识对象。CLI与桌面任务页使用同一Application，桌面DPAPI桥仅注入选定凭据并管理进程，累计额度由`production_budget`负责原子预留和结算。旧累计JSON完整只读迁移为外部SQLite权威，未知请求不退款。知识查询与导出分页读取IR，不以Markdown作为恢复依据；当前候选仍未核验，实际模型、安装及阅读验收各自记录。
+
 ## 1 当前决定
 
 | 领域 | 采用方向 | 当前边界 |

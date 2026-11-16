@@ -4,6 +4,8 @@
 
 实现状态以[任务账本](../../dev-log/tasks.json)和对应验证记录为准；本文件的字段清单本身不是能力验收记录。后续真实解析、模型与研究能力必须通过带版本的扩展进入，不能把缺失值编造成已有结果。
 
+B16生产动态任务使用独立的[持久编译v1契约](PRODUCTION_COMPILE_CONTRACT.md)。来源固定原PDF SHA、物理页号及页JSON原字节SHA，生产概念、原子和证据使用持久UUID与正整数修订；模型局部ID不成为全局身份。页范围查询包含全部物理页，尚未准备页的SHA为null，状态为unprepared；单位查询保留页版本、UTF-8区间及实际状态。响应经严格验证仍为unverified，scientific_quality=not_run。未知用量、失败页和科学未知分别表达，不被任务completed或成功导出提升为已核验。
+
 ## 1 公共约定
 
 - JSON 使用 UTF-8。JSON schema 及 Rust 类型定义由实现提交维护，并用同一组契约样例核对。

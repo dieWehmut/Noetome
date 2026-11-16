@@ -28,6 +28,7 @@ B16-T02 的真实整书来源、75份预检、32页现成OCR对照和最终同�
 | [数据契约](technical/DATA_CONTRACTS.md) | 当前最小实体、身份、来源和版本语义 | 增加持久字段、Schema或接口 |
 | [Parser sidecar 协议](technical/SIDECAR_PROTOCOL.md) | 单请求 wire、资源能力、限额与进程宿主错误 | parser 协议或生命周期边界变化 |
 | [生产整书来源契约](technical/CORPUS_SOURCE_CONTRACT.md) | 真实PDF按页存储、流式获取、共享桌面/CLI、恢复及OCR适配 | B16生产资料入口或持久字段变化 |
+| [生产持久编译契约](technical/PRODUCTION_COMPILE_CONTRACT.md) | 固定真实页、版本化知识、整书调度、累计预算与新Vault | B16生产IR、动态任务、预算恢复或知识导出变化 |
 | [PDF 解析沙盒契约](technical/PDF_PARSE_CONTRACT.md) | 原始PDF、完整物理页、CropBox坐标、逐页UTF8及只读重查 | 文本PDF解析、定位或报告变化 |
 | [PDF 来源登记契约](technical/PDF_SOURCE_CONTRACT.md) | Schema3、原始版本、独立解析尝试、复用键及缓存保护 | PDF项目登记、迁移、重解析或持久报告变化 |
 | [知识抽取网关契约](technical/EXTRACTION_CONTRACT.md) | 严格候选、真实来源绑定、单请求预算、失败审计及离线fake边界 | 抽取请求、候选、provider或输出保护变化 |
