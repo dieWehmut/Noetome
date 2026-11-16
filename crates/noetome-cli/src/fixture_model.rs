@@ -4,6 +4,14 @@ use serde::{Deserialize, Serialize};
 
 use crate::text::{ParseStatus, SpanKind};
 
+pub(crate) use crate::domain::{
+    AtomKind, Concept, EvidenceRelation, Issue, KnowledgeAtom, ValueStatus, Verification, is_id,
+    is_sha, nonempty,
+};
+// Retain this historical internal import path for existing DTO callers.
+#[allow(unused_imports)]
+pub(crate) use crate::domain::EvidenceLink;
+
 macro_rules! model {
     ($name:ident { $($(#[$attribute:meta])* $field:ident : $kind:ty),* $(,)? }) => {
         #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -23,25 +31,6 @@ macro_rules! enumeration {
 }
 
 enumeration!(Producer { Fixture });
-enumeration!(AtomKind {
-    Definition,
-    Statement,
-    ComparisonValue
-});
-enumeration!(Verification {
-    FixtureReviewed,
-    Unverified
-});
-enumeration!(ValueStatus {
-    Known,
-    Unknown,
-    NotApplicable
-});
-enumeration!(EvidenceRelation {
-    Supports,
-    Refutes,
-    Qualifies
-});
 enumeration!(CoverageDisposition {
     Pending,
     Included,
@@ -128,38 +117,12 @@ model!(IrSourceRef {
     normalized_sha256: String,
 });
 
-model!(Concept {
-    concept_id: String,
-    revision: u64,
-    canonical_name: String,
-    aliases: Vec<String>,
-    needs_full_explanation: bool,
-});
-
 model!(Evidence {
     evidence_id: String,
     source_span_id: String,
     excerpt_start_byte: usize,
     excerpt_end_byte: usize,
     excerpt_sha256: String,
-});
-
-model!(KnowledgeAtom {
-    atom_id: String,
-    revision: u64,
-    kind: AtomKind,
-    concept_ids: Vec<String>,
-    content: String,
-    qualifiers: Vec<String>,
-    evidence_links: Vec<EvidenceLink>,
-    required: bool,
-    verification: Verification,
-    value_status: ValueStatus,
-});
-
-model!(EvidenceLink {
-    evidence_id: String,
-    relation: EvidenceRelation,
 });
 
 model!(CoverageRecord {
@@ -321,18 +284,6 @@ model!(ExpectedLink {
 });
 model!(ExpectedTable { node_id: String, columns: Vec<TableColumn>, rows: Vec<TableRow> });
 
-model!(Issue { rule_id: String, object_refs: Vec<String>, message: String });
-
-impl Issue {
-    pub(crate) fn new(rule: &str, refs: Vec<String>, message: &str) -> Self {
-        Self {
-            rule_id: rule.into(),
-            object_refs: refs,
-            message: message.into(),
-        }
-    }
-}
-
 model!(ResolvedTarget {
     concept_id: String,
     note_id: String,
@@ -340,23 +291,3 @@ model!(ResolvedTarget {
     output_path: String,
     heading: String,
 });
-
-pub(crate) fn is_id(value: &str) -> bool {
-    !value.is_empty()
-        && value.len() <= 128
-        && value.as_bytes()[0].is_ascii_alphanumeric()
-        && value
-            .bytes()
-            .all(|byte| byte.is_ascii_alphanumeric() || byte == b'_' || byte == b'-')
-}
-
-pub(crate) fn is_sha(value: &str) -> bool {
-    value.len() == 64
-        && value
-            .bytes()
-            .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
-}
-
-pub(crate) fn nonempty(value: &str) -> bool {
-    !value.trim().is_empty() && !value.contains('\0')
-}

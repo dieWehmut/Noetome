@@ -14,6 +14,7 @@ mod compile_store;
 pub mod corpus;
 mod diagnostics_model;
 pub mod diagnostics_store;
+pub mod domain;
 pub mod extraction;
 pub mod extraction_api;
 mod extraction_api_config;

@@ -25,19 +25,6 @@ fn id_counts<'a>(ids: impl Iterator<Item = &'a str>) -> BTreeMap<&'a str, usize>
     counts
 }
 
-fn check_ids(counts: &BTreeMap<&str, usize>, issues: &mut Vec<Issue>) {
-    for (id, count) in counts {
-        if !is_id(id) || *count != 1 {
-            add(
-                issues,
-                "KNOWLEDGE_ID",
-                &[id],
-                "实体ID必须是有效fixture标识且在同类清单中唯一。",
-            );
-        }
-    }
-}
-
 fn excerpt<'a>(case: &'a LoadedCase, evidence: &Evidence) -> Option<&'a str> {
     if evidence.excerpt_start_byte >= evidence.excerpt_end_byte {
         return None;
@@ -86,103 +73,16 @@ fn valid_evidence<'a>(case: &'a LoadedCase) -> BTreeMap<&'a str, &'a Evidence> {
         .collect()
 }
 
-/// Shared identity, revision, plain-text and unique-reference rules only.
-/// Source evidence validity and producer-specific required/support policy stay
-/// with each caller; this helper grants no review or publication status.
+/// Preserve historical diagnostics while delegating structural rules to domain.
 pub(crate) fn validate_basics<'a>(
     concept_entries: &[crate::fixture_model::Concept],
     evidence_ids: impl Iterator<Item = &'a str>,
     atom_entries: &[&crate::fixture_model::KnowledgeAtom],
 ) -> Vec<Issue> {
-    let mut issues = Vec::new();
-    let concepts = id_counts(
-        concept_entries
-            .iter()
-            .map(|concept| concept.concept_id.as_str()),
-    );
-    let evidence = id_counts(evidence_ids);
-    let atoms = id_counts(atom_entries.iter().map(|atom| atom.atom_id.as_str()));
-    for counts in [&concepts, &evidence, &atoms] {
-        check_ids(counts, &mut issues);
-    }
-    for concept in concept_entries {
-        if concept.revision == 0 {
-            add(
-                &mut issues,
-                "KNOWLEDGE_REVISION",
-                &[&concept.concept_id],
-                "概念修订号必须为正整数。",
-            );
-        }
-        if !nonempty(&concept.canonical_name)
-            || !crate::fixture_plan::plain_text(&concept.canonical_name)
-            || concept
-                .aliases
-                .iter()
-                .any(|alias| !nonempty(alias) || !crate::fixture_plan::plain_text(alias))
-        {
-            add(
-                &mut issues,
-                "KNOWLEDGE_CONCEPT",
-                &[&concept.concept_id],
-                "概念名称和每个已声明别名必须为非空明文，链接须由结构化引用声明。",
-            );
-        }
-    }
-    for atom in atom_entries {
-        if atom.revision == 0 {
-            add(
-                &mut issues,
-                "KNOWLEDGE_REVISION",
-                &[&atom.atom_id],
-                "原子修订号必须为正整数。",
-            );
-        }
-        if !nonempty(&atom.content)
-            || !crate::fixture_plan::plain_text(&atom.content)
-            || atom.qualifiers.iter().any(|qualifier| {
-                !nonempty(qualifier) || !crate::fixture_plan::plain_text(qualifier)
-            })
-        {
-            add(
-                &mut issues,
-                "KNOWLEDGE_ATOM_CONTENT",
-                &[&atom.atom_id],
-                "原子正文和每个已声明条件、单位或例外必须为非空明文。",
-            );
-        }
-        let concept_refs: BTreeSet<_> = atom.concept_ids.iter().map(String::as_str).collect();
-        if concept_refs.is_empty()
-            || concept_refs.len() != atom.concept_ids.len()
-            || concept_refs
-                .iter()
-                .any(|id| !is_id(id) || concepts.get(id) != Some(&1))
-        {
-            add(
-                &mut issues,
-                "KNOWLEDGE_ATOM_REFERENCE",
-                &[&atom.atom_id],
-                "原子概念引用必须非空、不重复且唯一解析到已有概念ID。",
-            );
-        }
-        let mut link_refs = BTreeSet::new();
-        for link in &atom.evidence_links {
-            let relation = match link.relation {
-                EvidenceRelation::Supports => 0u8,
-                EvidenceRelation::Refutes => 1,
-                EvidenceRelation::Qualifies => 2,
-            };
-            if !is_id(&link.evidence_id)
-                || evidence.get(link.evidence_id.as_str()) != Some(&1)
-                || !link_refs.insert((link.evidence_id.as_str(), relation))
-            {
-                add(
-                    &mut issues,
-                    "KNOWLEDGE_ATOM_REFERENCE",
-                    &[&atom.atom_id, &link.evidence_id],
-                    "原子证据关系必须唯一引用已有证据，不得重复同一关系。",
-                );
-            }
+    let mut issues = crate::domain::validate_basics(concept_entries, evidence_ids, atom_entries);
+    for issue in &mut issues {
+        if issue.rule_id == "KNOWLEDGE_ID" {
+            issue.message = "实体ID必须是有效fixture标识且在同类清单中唯一。".into();
         }
     }
     issues

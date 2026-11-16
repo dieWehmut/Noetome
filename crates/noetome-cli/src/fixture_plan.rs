@@ -72,41 +72,8 @@ fn safe_heading(value: &str) -> bool {
             .any(|character| character.is_control() || "[]#|^".contains(character))
 }
 
-/// The deliberately small plain-text-v1 display contract, shared with IR checks.
-/// Single brackets and mathematical comparisons remain ordinary text. Link and
-/// hidden-content syntax must be represented by an explicit supported structure.
-pub(crate) fn plain_text(value: &str) -> bool {
-    if value
-        .chars()
-        .any(|character| character.is_control() && !matches!(character, '\n' | '\t'))
-        || value.contains("%%")
-        || value.contains("[[")
-        || value.contains("![")
-        || value.as_bytes().windows(2).any(|pair| {
-            pair[0] == b'<' && (pair[1].is_ascii_alphabetic() || b"/!?".contains(&pair[1]))
-        })
-    {
-        return false;
-    }
-    // Reject inline links, reference links and reference/comment definitions.
-    // No definition in any displayed field may register a shortcut reference.
-    if value.match_indices(']').any(|(offset, _)| {
-        value[offset + 1..]
-            .trim_start()
-            .starts_with(['(', '[', ':'])
-    }) {
-        return false;
-    }
-    // Numeric local parts are valid email autolinks even though they do not
-    // satisfy the ASCII-letter HTML/autolink prefix rule above.
-    !value.match_indices('<').any(|(offset, _)| {
-        value[offset + 1..]
-            .split_once('>')
-            .is_some_and(|(inside, _)| {
-                inside.contains('@') && !inside.chars().any(char::is_whitespace)
-            })
-    })
-}
+// Keep the historical internal path while sharing the plain-text-v1 rule.
+pub(crate) use crate::domain::plain_text;
 
 fn check_plain_text(value: &str, owner: &str, issues: &mut Vec<Issue>) -> bool {
     if plain_text(value) {

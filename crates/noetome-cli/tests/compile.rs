@@ -1527,6 +1527,7 @@ fn overlapping_input_output_roots_are_rejected_but_component_siblings_are_valid(
     assert_inventory(&root);
 }
 
+#[cfg(windows)]
 #[test]
 fn windows_path_controls_are_rejected_before_any_selected_root_is_created() {
     let sandbox = Sandbox::new();
@@ -1556,6 +1557,30 @@ fn windows_path_controls_are_rejected_before_any_selected_root_is_created() {
         );
         assert!(!target.exists());
     }
+    let target = sandbox.root.join("missing-parent/output");
+    input_rejection(
+        sandbox.compile_preserving(&fixture, &target, false),
+        &["PROJECT_IO_ERROR"],
+        "missing-output-parent",
+    );
+    assert!(!sandbox.root.join("missing-parent").exists());
+}
+
+#[test]
+fn parent_components_and_missing_parents_are_rejected_without_creating_outputs() {
+    let sandbox = Sandbox::new();
+    let fixture = sandbox.fixture("parent-path-case");
+    fs::create_dir(sandbox.root.join("ordinary")).unwrap();
+    let mut raw = sandbox.root.as_os_str().to_owned();
+    raw.push(std::path::MAIN_SEPARATOR_STR);
+    raw.push("ordinary/../escaped-target".replace('/', std::path::MAIN_SEPARATOR_STR));
+    let target = PathBuf::from(raw);
+    input_rejection(
+        sandbox.compile_preserving(&fixture, &target, false),
+        &["PROJECT_UNSAFE_PATH"],
+        "raw-parent-component",
+    );
+    assert!(!sandbox.root.join("escaped-target").exists());
     let target = sandbox.root.join("missing-parent/output");
     input_rejection(
         sandbox.compile_preserving(&fixture, &target, false),
