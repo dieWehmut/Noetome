@@ -49,7 +49,7 @@ function TextReader({ text }: { text: string }) {
   </>;
 }
 
-function PagePreview({ page }: { page: CorpusPage }) {
+export function PagePreview({ page, fixedSha }: { page: CorpusPage; fixedSha?: string }) {
   const [expanded, setExpanded] = useState(false);
   const [regionOffset, setRegionOffset] = useState(0);
   const limit = 20;
@@ -57,8 +57,8 @@ function PagePreview({ page }: { page: CorpusPage }) {
     <div className="command-heading"><div><h3>物理第 {page.page_number} 页</h3><p>{corpusPageStatusLabel[page.status] ?? page.status} · {page.regions.length.toLocaleString()} 个区域 · {page.width_pt == null || page.height_pt == null ? "页面尺寸尚未解析" : `${page.width_pt} × ${page.height_pt} pt · 旋转 ${page.rotation ?? 0}°`}</p></div><button className="button button-secondary" aria-expanded={expanded} onClick={() => setExpanded(!expanded)}>{expanded ? "收起原文" : "查看本页原文"}</button></div>
     <Issues issues={page.issues} />
     {expanded && <div className="corpus-page-content"><h4>页面文字</h4><TextReader text={page.text} />
-      {!page.page_revision && <p className="workflow-note">这是旧解析记录，尚未保存页面版本字段；原有文字和问题保留，不能据此确认新版本身份。</p>}
-      <details className="workflow-record"><summary>页面版本与解析记录</summary><pre tabIndex={0}>{JSON.stringify({ source_id: page.source_id, page_number: page.page_number, page_revision: page.page_revision, parser: page.parser, geometry: page.geometry }, null, 2)}</pre></details>
+      {!page.page_revision && <p className="workflow-note">{fixedSha ? "这是旧解析记录，没有逻辑页面版本字段；当前证据仍按数据库保存的原始页面 SHA256 校验。" : "这是旧解析记录，尚未保存页面版本字段；原有文字和问题保留，不能据此确认新版本身份。"}</p>}
+      <details className="workflow-record"><summary>页面版本与解析记录</summary><pre tabIndex={0}>{JSON.stringify({ source_id: page.source_id, page_number: page.page_number, page_revision: page.page_revision, page_sha256: fixedSha, parser: page.parser, geometry: page.geometry }, null, 2)}</pre></details>
       {page.regions.length > 0 && <><h4>来源区域与坐标</h4><p className="workflow-note">显示 {regionOffset + 1}–{Math.min(regionOffset + limit, page.regions.length)} / {page.regions.length.toLocaleString()} 个区域。</p>
         {page.regions.slice(regionOffset, regionOffset + limit).map((region) => <details className="workflow-record corpus-region" key={region.ordinal}><summary>区域 {region.ordinal + 1} · {region.kind} · 坐标 {region.bbox.join(", ")}</summary><TextReader text={region.text} /></details>)}
         {page.regions.length > limit && <div className="corpus-pagination" aria-label={`第 ${page.page_number} 页区域分页`}><button className="button button-secondary" disabled={regionOffset === 0} onClick={() => setRegionOffset(Math.max(0, regionOffset - limit))}>上一组区域</button><button className="button button-secondary" disabled={regionOffset + limit >= page.regions.length} onClick={() => setRegionOffset(regionOffset + limit)}>下一组区域</button></div>}
@@ -67,7 +67,7 @@ function PagePreview({ page }: { page: CorpusPage }) {
   </article>;
 }
 
-export default function AppCorpus({ corpus: c }: { corpus: CorpusWorkbench }) {
+export default function AppCorpus({ corpus: c, onCompile }: { corpus: CorpusWorkbench; onCompile?: (sourceIds: string[]) => void }) {
   const [jumpPage, setJumpPage] = useState("");
   const selected = c.selected;
   const originalConfirmed = !!selected?.content_sha256 && selected.status !== "interrupted";
@@ -93,7 +93,7 @@ export default function AppCorpus({ corpus: c }: { corpus: CorpusWorkbench }) {
     </section>
 
     {selected && <section className="command-card" aria-labelledby="corpus-progress-title">
-      <div className="command-heading"><div><h2 id="corpus-progress-title">{selected.display_name}</h2><p>{corpusStatusLabel[selected.status]} · 知识整理尚未开始</p></div><span className="small-badge">物理页覆盖</span></div>
+      <div className="command-heading"><div><h2 id="corpus-progress-title">{selected.display_name}</h2><p>{corpusStatusLabel[selected.status]} · 知识任务在任务中心查看</p></div><span className="small-badge">物理页覆盖</span></div>
       <div className="corpus-progress"><progress aria-label="已保存页面进度" value={selected.page_count === null ? undefined : selected.processed_pages} max={Math.max(1, selected.page_count ?? 1)} /><span>已记录 {selected.processed_pages.toLocaleString()} / {selected.page_count?.toLocaleString() ?? "尚未确定"} 页</span></div>
       <dl className="runtime-details model-details"><div><dt>文字页</dt><dd>{selected.text_pages.toLocaleString()}</dd></div><div><dt>OCR 页</dt><dd>{selected.ocr_pages.toLocaleString()}</dd></div><div><dt>待识别页</dt><dd>{selected.needs_ocr_pages.toLocaleString()}</dd></div><div><dt>空白页</dt><dd>{selected.blank_pages.toLocaleString()}</dd></div><div><dt>待复核页</dt><dd>{selected.review_pages.toLocaleString()}</dd></div><div><dt>失败页</dt><dd>{selected.failed_pages.toLocaleString()}</dd></div></dl>
       {selected.error && <p className="error-message" role="alert">{selected.error.code}：{selected.error.message}</p>}
@@ -101,11 +101,12 @@ export default function AppCorpus({ corpus: c }: { corpus: CorpusWorkbench }) {
       {originalConfirmed && selected.status === "running" && !active && <p className="workflow-note">上次解析尚未返回结果。可以检查并继续，已经保存的页面会保留；正在运行的解析不会重复启动。</p>}
       {(selected.review_pages > 0 || selected.failed_pages > 0) && <p className="workflow-note">存在待复核或失败页面，请在下面查看页号和具体问题。原文可读不代表图像、公式或科学内容已核验。</p>}
       <div className="runtime-actions">
+        {onCompile && <button className="button button-primary" disabled={!originalConfirmed || !selected.page_count || selected.status === "acquiring"} onClick={() => onCompile([selected.source_id])}>整理整本资料（全部 {selected.page_count?.toLocaleString() ?? "未知"} 页）</button>}
         {(active || selected.status === "running") && <button className="button button-secondary" disabled={pausing} onClick={() => void c.pauseSource(selected.source_id)}>{pausing ? "正在等待暂停…" : "暂停解析"}</button>}
         {originalConfirmed && !active && selected.status !== "acquiring" && selected.status !== "ready" && (selected.status !== "needs_review" || selected.processed_pages < (selected.page_count ?? 0) || selected.needs_ocr_pages > 0) && <button className="button button-primary" disabled={pausing} onClick={() => void c.processSource(selected.source_id)}>{selected.status === "running" ? "检查并继续" : selected.status === "queued" ? "开始解析" : selected.needs_ocr_pages > 0 && selected.processed_pages === selected.page_count ? "继续扫描识别" : "继续未处理页"}</button>}
         {originalConfirmed && !active && selected.failed_pages > 0 && <button className="button button-secondary" disabled={pausing} onClick={() => void c.processSource(selected.source_id, true)}>重试失败页（{selected.failed_pages} 页）</button>}
       </div>
-      <p className="workflow-note">已记录页数包含空白页、待复核页和失败页。暂停后可继续；整书知识抽取与笔记生成尚未接入此资料库。</p>
+      <p className="workflow-note">已记录页数包含空白页、待复核页和失败页。暂停后可继续；“整理整本资料”会保存全部物理页范围，在任务中心开始、暂停或恢复知识整理。</p>
       {originalConfirmed && selected.needs_ocr_pages > 0 && <p className="workflow-note">仍有 {selected.needs_ocr_pages.toLocaleString()} 页等待扫描识别。继续时会使用已配置并通过运行检查的本机 OCR；尚未配置时保留待识别页。</p>}
       {originalConfirmed && selected.failed_pages > 0 && <p className="workflow-note">重试只重新处理失败页，已经保存的成功页和历史页版本会保留。</p>}
       <details className="workflow-record"><summary>原件身份与保存记录</summary><dl className="runtime-details"><div><dt>原件 SHA256</dt><dd>{selected.content_sha256 ?? "原件尚未保存完成"}</dd></div><div><dt>登记时间</dt><dd>{selected.created_at}</dd></div><div><dt>资料 ID</dt><dd>{selected.source_id}</dd></div></dl></details>

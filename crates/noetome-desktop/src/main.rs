@@ -27,7 +27,7 @@ struct RuntimeInfo {
     app_version: &'static str,
     cli_version: &'static str,
     target: &'static str,
-    capabilities: [&'static str; 27],
+    capabilities: &'static [&'static str],
     cli_help: &'static str,
 }
 
@@ -37,7 +37,7 @@ fn runtime_info() -> RuntimeInfo {
         app_version: env!("CARGO_PKG_VERSION"),
         cli_version: noetome_cli::VERSION,
         target: env!("NOETOME_TARGET"),
-        capabilities: [
+        capabilities: &[
             "help",
             "version",
             "project.create",
@@ -65,6 +65,14 @@ fn runtime_info() -> RuntimeInfo {
             "corpus.process",
             "corpus.pause",
             "corpus.retry",
+            "compile.create",
+            "compile.run",
+            "compile.list",
+            "compile.status",
+            "compile.control",
+            "compile.query",
+            "compile.evidence",
+            "compile.export",
         ],
         cli_help: noetome_cli::HELP,
     }
@@ -111,6 +119,106 @@ async fn workbench_blocking<T: Send + 'static>(
     tauri::async_runtime::spawn_blocking(operation)
         .await
         .map_err(|error| format!("DESKTOP_WORKER_FAILED：后台操作失败：{error}"))?
+}
+
+#[tauri::command]
+async fn compile_create(
+    project: String,
+    source_ids: Vec<String>,
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<noetome_cli::production_compile::RunSummary, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || state.compile_create(Path::new(&project), &source_ids)).await
+}
+#[tauri::command]
+async fn compile_run(
+    project: String,
+    run_id: String,
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<noetome_cli::production_compile::RunSummary, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || state.compile_run(Path::new(&project), &run_id)).await
+}
+#[tauri::command]
+async fn compile_list(
+    project: String,
+) -> Result<Vec<noetome_cli::production_compile::RunSummary>, String> {
+    workbench_blocking(move || {
+        noetome_cli::production_compile::list(Path::new(&project))
+            .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn compile_status(
+    project: String,
+    run_id: String,
+) -> Result<noetome_cli::production_compile::RunSummary, String> {
+    workbench_blocking(move || {
+        noetome_cli::production_compile::status(Path::new(&project), &run_id)
+            .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn compile_control(
+    project: String,
+    run_id: String,
+    action: String,
+) -> Result<noetome_cli::production_compile::RunSummary, String> {
+    workbench_blocking(move || {
+        noetome_cli::production_compile::control(Path::new(&project), &run_id, &action)
+            .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn compile_query(
+    project: String,
+    run_id: String,
+    kind: String,
+    offset: u64,
+    limit: u32,
+    search: String,
+) -> Result<serde_json::Value, String> {
+    workbench_blocking(move || {
+        noetome_cli::production_compile::query(
+            Path::new(&project),
+            &run_id,
+            &kind,
+            offset,
+            limit,
+            &search,
+        )
+        .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn compile_evidence(
+    project: String,
+    run_id: String,
+    evidence_id: String,
+) -> Result<serde_json::Value, String> {
+    workbench_blocking(move || {
+        noetome_cli::production_compile::evidence(Path::new(&project), &run_id, &evidence_id)
+            .map_err(|error| error.to_string())
+    })
+    .await
+}
+#[tauri::command]
+async fn compile_export(
+    project: String,
+    run_id: String,
+    parent: String,
+    name: String,
+    state: tauri::State<'_, workbench::WorkbenchState>,
+) -> Result<serde_json::Value, String> {
+    let state = state.inner().clone();
+    workbench_blocking(move || {
+        state.compile_export(Path::new(&project), &run_id, Path::new(&parent), &name)
+    })
+    .await
 }
 
 #[tauri::command]
@@ -567,7 +675,9 @@ fn main() {
             source_extract, source_preview_export, model_status, model_credential_store,
             model_budget_restore, desktop_self_test, source_cancel, source_saved,
             corpus_pick, corpus_preflight, corpus_import, corpus_list, corpus_status,
-            corpus_pages, corpus_process, corpus_pause, corpus_retry
+            corpus_pages, corpus_process, corpus_pause, corpus_retry,
+            compile_create, compile_run, compile_list, compile_status, compile_control,
+            compile_query, compile_evidence, compile_export
         ])
         .on_window_event(handle_window_event)
         .setup(move |app| {
@@ -693,6 +803,14 @@ mod tests {
                 "corpus.process",
                 "corpus.pause",
                 "corpus.retry",
+                "compile.create",
+                "compile.run",
+                "compile.list",
+                "compile.status",
+                "compile.control",
+                "compile.query",
+                "compile.evidence",
+                "compile.export",
             ]
         );
         assert_eq!(info.cli_help, cli_preview("help").unwrap());

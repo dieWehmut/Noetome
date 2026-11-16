@@ -298,6 +298,90 @@ impl WorkbenchState {
             self.profile_operation("Status", false, &cancel)
         }
     }
+    pub fn compile_create(
+        &self,
+        project: &Path,
+        source_ids: &[String],
+    ) -> Result<noetome_cli::production_compile::RunSummary, String> {
+        let (_, ledger) = profile_paths()?;
+        noetome_cli::production_compile::create(project, source_ids, compile_config(ledger))
+            .map_err(|error| error.to_string())
+    }
+    pub fn compile_run(
+        &self,
+        project: &Path,
+        run_id: &str,
+    ) -> Result<noetome_cli::production_compile::RunSummary, String> {
+        #[cfg(not(windows))]
+        {
+            let _ = (project, run_id);
+            Err("DESKTOP_MODEL_UNAVAILABLE：生产模型调用需要Windows CurrentUser DPAPI。".into())
+        }
+        #[cfg(windows)]
+        {
+            // Validate the persisted run before starting the narrow credential bridge.
+            noetome_cli::production_compile::status(project, run_id)
+                .map_err(|error| error.to_string())?;
+            let (credential, _) = profile_paths()?;
+            let args = vec![
+                "-NoProfile".into(),
+                "-ExecutionPolicy".into(),
+                "Bypass".into(),
+                "-File".into(),
+                resource(
+                    "helpers/invoke_compile_credential.ps1",
+                    "scripts/invoke_compile_credential.ps1",
+                    false,
+                )?
+                .into_os_string(),
+                "-Binary".into(),
+                cli_binary()?.into_os_string(),
+                "-Project".into(),
+                project.as_os_str().to_owned(),
+                "-RunId".into(),
+                run_id.into(),
+                "-CredentialFile".into(),
+                credential.into_os_string(),
+            ];
+            // One book can take hours. Individual requests have Rust deadlines;
+            // output remains bounded and the launcher/worker remain in native Jobs.
+            let output = run_bounded(
+                &powershell()?,
+                &args,
+                &Arc::new(AtomicBool::new(false)),
+                None,
+                0,
+            )?;
+            if let Some(failure) = output.failure {
+                return Err(format!("{}：{}", failure.code, failure.message));
+            }
+            if output.code != Some(0) {
+                return Err("DESKTOP_COMPILE_WORKER_REFUSED：整理worker未正常返回，请查看持久任务的错误与预算状态。".into());
+            }
+            let summary: noetome_cli::production_compile::RunSummary =
+                serde_json::from_slice(&output.stdout).map_err(|_| {
+                    "DESKTOP_COMPILE_WORKER_INVALID：worker返回无效任务记录。".to_owned()
+                })?;
+            if summary.run_id != run_id {
+                return Err("DESKTOP_COMPILE_BINDING：worker返回了其他任务。".into());
+            }
+            Ok(summary)
+        }
+    }
+    pub fn compile_export(
+        &self,
+        project: &Path,
+        run_id: &str,
+        parent: &Path,
+        name: &str,
+    ) -> Result<Value, String> {
+        project_entry::validate_name(name)?;
+        if !parent.is_dir() {
+            return Err("COMPILE_PARENT_MISSING：请选择已存在的导出父目录。".into());
+        }
+        noetome_cli::production_compile::export(project, run_id, &parent.join(name))
+            .map_err(|error| error.to_string())
+    }
     pub fn store_credential(&self) -> Result<ModelStatus, String> {
         let operation = self.begin()?;
         self.profile_operation("Store", false, &operation.cancel)
@@ -333,7 +417,7 @@ impl WorkbenchState {
             "-CredentialFile".into(),
             credential.into_os_string(),
             "-UsageLedgerFile".into(),
-            ledger.into_os_string(),
+            ledger.clone().into_os_string(),
         ];
         if mode == "Store" {
             args.extend([
@@ -364,8 +448,9 @@ impl WorkbenchState {
                 "DESKTOP_MODEL_PROFILE_REFUSED：凭据或账本操作被拒绝，既有文件保持。".into(),
             );
         }
-        serde_json::from_slice(&output.stdout)
-            .map_err(|_| "DESKTOP_MODEL_PROFILE_INVALID：状态报告无效。".into())
+        let status = serde_json::from_slice(&output.stdout)
+            .map_err(|_| "DESKTOP_MODEL_PROFILE_INVALID：状态报告无效。".to_owned())?;
+        production_model_status(status, &ledger)
     }
     pub fn self_test(&self) -> Result<SelfTestResult, String> {
         let operation = self.begin()?;
@@ -511,6 +596,58 @@ fn profile_paths() -> Result<(PathBuf, PathBuf), String> {
         root.join("credentials/tangmao-deepseek.dpapi"),
         root.join("model-services/tangmao-deepseek.usage.json"),
     ))
+}
+fn compile_config(ledger: PathBuf) -> noetome_cli::production_compile::CompileConfig {
+    noetome_cli::production_compile::CompileConfig {
+        schema_version: 1,
+        endpoint: ENDPOINT.into(),
+        model: MODEL.into(),
+        credential_env: "NOETOME_TANGMAO_API_KEY".into(),
+        transport_mode: "live".into(),
+        usage_ledger: ledger,
+        max_chunk_bytes: 6000,
+        max_output_tokens: 8192,
+        request_timeout_ms: 60000,
+    }
+}
+fn production_model_status(mut status: ModelStatus, ledger: &Path) -> Result<ModelStatus, String> {
+    let marker = noetome_cli::production_budget::authority_marker_path(ledger);
+    let database = noetome_cli::production_budget::default_database_path(ledger);
+    // A partial/invalid authority never falls back to the historical JSON balance.
+    let absent = |path: &Path| matches!(fs::symlink_metadata(path), Err(error) if error.kind() == std::io::ErrorKind::NotFound);
+    if absent(&marker) && absent(&database) {
+        return Ok(status);
+    }
+    match noetome_cli::production_budget::BudgetAuthority::open(ledger)
+        .and_then(|mut authority| authority.status())
+    {
+        Ok(budget) => {
+            status.ledger_state = "production_ready".into();
+            status.accounted_tokens = Some(budget.accounted_tokens);
+            status.pending_reserved_tokens = Some(budget.pending_reserved_tokens);
+            status.remaining_tokens = Some(budget.remaining_tokens);
+            status.model_attempts = Some(budget.model_attempts);
+            status.ready = status.credential_state == "ready"
+                && !budget.stopped
+                && budget.remaining_tokens > 0;
+            status.message = if status.ready {
+                "生产整理使用当前累计预算；待核算预留已经计入余额。"
+            } else {
+                "生产凭据或预算不可用；待核算预留保留，请查看状态。"
+            }
+            .into();
+        }
+        Err(_) => {
+            status.ready = false;
+            status.ledger_state = "production_invalid".into();
+            status.accounted_tokens = None;
+            status.pending_reserved_tokens = None;
+            status.remaining_tokens = None;
+            status.model_attempts = None;
+            status.message = "生产预算权威记录未通过验证，历史JSON余额不能作为当前余额。".into();
+        }
+    }
+    Ok(status)
 }
 fn powershell() -> Result<PathBuf, String> {
     #[cfg(windows)]
@@ -729,7 +866,8 @@ fn run_bounded(
                 break None;
             }
         }
-        if started.elapsed().as_millis() > u128::from(timeout_ms) || overflow.load(Ordering::SeqCst)
+        if (timeout_ms != 0 && started.elapsed().as_millis() > u128::from(timeout_ms))
+            || overflow.load(Ordering::SeqCst)
         {
             failure = Some(Failure {
                 code: if overflow.load(Ordering::SeqCst) {
@@ -864,6 +1002,89 @@ pub fn corpus_pick() -> Result<Option<String>, String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn production_balance_replaces_historical_status_and_keeps_unknown_reservations() {
+        use noetome_cli::production_budget::{BudgetAttemptKey, BudgetAuthority, BudgetRequest};
+        let root = TestRoot::new();
+        let ledger = root.0.join("synthetic.usage.json");
+        fs::write(&ledger, serde_json::to_vec(&serde_json::json!({
+            "schema_version":1,"approved_total_tokens":100000,"accounted_tokens":33185,
+            "pending_reserved_tokens":0,"remaining_tokens":66815,"model_attempts":1,
+            "records":[{"invocation_id":"historical-request","reservation_tokens":50000,
+                "confirmed_total_tokens":33185,"network_attempts":1,"status":"settled_valid_usage_text"}],
+            "updated_at":"2026-11-16T00:00:00Z"
+        })).unwrap()).unwrap();
+        let original = fs::read(&ledger).unwrap();
+        let mut authority = BudgetAuthority::migrate(&ledger).unwrap();
+        authority
+            .reserve(&BudgetRequest {
+                key: BudgetAttemptKey {
+                    run_id: "synthetic-run".into(),
+                    unit_id: "synthetic-unit".into(),
+                    attempt_no: 1,
+                    request_id: "synthetic-request".into(),
+                },
+                request_sha256: noetome_cli::text::sha256(b"synthetic request"),
+                reserved_tokens: 9000,
+            })
+            .unwrap();
+        drop(authority);
+        let old = ModelStatus {
+            ready: true,
+            endpoint: ENDPOINT.into(),
+            model: MODEL.into(),
+            credential_state: "ready".into(),
+            ledger_state: "ready".into(),
+            accounted_tokens: Some(1),
+            pending_reserved_tokens: Some(0),
+            remaining_tokens: Some(99999),
+            model_attempts: Some(0),
+            message: "historical".into(),
+        };
+        let current = production_model_status(old, &ledger).unwrap();
+        assert!(current.ready);
+        assert_eq!(current.ledger_state, "production_ready");
+        assert_eq!(current.accounted_tokens, Some(33185));
+        assert_eq!(current.pending_reserved_tokens, Some(9000));
+        assert_eq!(current.remaining_tokens, Some(57815));
+        assert_eq!(fs::read(&ledger).unwrap(), original);
+        #[cfg(windows)]
+        {
+            let mut permission = fs::metadata(&ledger).unwrap().permissions();
+            permission.set_readonly(false);
+            fs::set_permissions(&ledger, permission).unwrap();
+        }
+    }
+    #[test]
+    fn partial_production_authority_hides_old_balance_instead_of_falling_back() {
+        let root = TestRoot::new();
+        let ledger = root.0.join("synthetic.usage.json");
+        fs::write(
+            noetome_cli::production_budget::authority_marker_path(&ledger),
+            b"{}",
+        )
+        .unwrap();
+        let old = ModelStatus {
+            ready: true,
+            endpoint: ENDPOINT.into(),
+            model: MODEL.into(),
+            credential_state: "ready".into(),
+            ledger_state: "ready".into(),
+            accounted_tokens: Some(33185),
+            pending_reserved_tokens: Some(0),
+            remaining_tokens: Some(9966815),
+            model_attempts: Some(10),
+            message: "historical".into(),
+        };
+        let current = production_model_status(old, &ledger).unwrap();
+        assert!(!current.ready);
+        assert_eq!(current.credential_state, "ready");
+        assert_eq!(current.ledger_state, "production_invalid");
+        assert_eq!(current.accounted_tokens, None);
+        assert_eq!(current.pending_reserved_tokens, None);
+        assert_eq!(current.remaining_tokens, None);
+        assert_eq!(current.model_attempts, None);
+    }
     struct TestRoot(PathBuf);
     impl TestRoot {
         fn new() -> Self {
