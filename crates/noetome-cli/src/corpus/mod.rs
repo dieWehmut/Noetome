@@ -189,6 +189,54 @@ pub fn pages(project: &Path, id: &str, offset: u32, limit: u32) -> Result<Value,
     )
 }
 
+/// Read exactly the saved page bytes named by an evidence digest. A newer OCR
+/// revision does not replace this input, and legacy JSON is never rewritten to
+/// add a revision field. The digest is the stored JSON SHA, not page_revision.
+pub fn page_revision(
+    project: &Path,
+    id: &str,
+    page_number: u32,
+    page_sha256: &str,
+) -> Result<Value, ProjectError> {
+    Repository::required(project)?.page_revision(id, page_number, page_sha256)
+}
+
+/// Return the current confirmed page with its original stored-byte digest.
+/// Re-encoding the decoded page cannot recover a legacy JSON byte fingerprint.
+pub fn page_snapshot(project: &Path, id: &str, page_number: u32) -> Result<Value, ProjectError> {
+    Repository::required(project)?.page_snapshot(id, page_number)
+}
+
+/// Verify the immutable saved original using bounded streaming reads. This is
+/// a read operation: failed verification does not change source or page state.
+pub fn verify_source(project: &Path, id: &str) -> Result<SourceSummary, ProjectError> {
+    let repo = Repository::required(project)?;
+    let summary = repo.summary(id)?;
+    let expected = summary
+        .content_sha256
+        .as_deref()
+        .ok_or_else(|| error("CORPUS_NOT_ACQUIRED", "原件尚未确认，不能核对来源。"))?;
+    let raw = repo.source_directory(id)?.join("raw.pdf");
+    let guard = project::read_guard(&raw)?;
+    let before = guard.metadata().map_err(|e| io(&raw, e))?;
+    let identity = same_file::Handle::from_file(guard.try_clone().map_err(|e| io(&raw, e))?)
+        .map_err(|e| io(&raw, e))?;
+    let actual = hash_file(&raw, || Ok(false))?;
+    let after = guard.metadata().map_err(|e| io(&raw, e))?;
+    if actual.as_deref() != Some(expected)
+        || before.len() != summary.byte_length
+        || before.len() != after.len()
+        || before.modified().ok() != after.modified().ok()
+        || identity != same_file::Handle::from_path(&raw).map_err(|e| io(&raw, e))?
+    {
+        return Err(error(
+            "CORPUS_SOURCE_CHANGED",
+            "保存原件的身份、字节数或SHA256不匹配；未修改来源记录。",
+        ));
+    }
+    Ok(summary)
+}
+
 pub fn process(
     project: &Path,
     id: &str,

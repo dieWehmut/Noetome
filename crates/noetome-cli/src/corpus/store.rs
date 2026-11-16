@@ -288,6 +288,158 @@ impl Repository {
         }
         Ok(pages)
     }
+    fn check_page_number(&self, id: &str, number: u32) -> Result<(), ProjectError> {
+        crate::source::invalid_id(id)?;
+        let count: Option<Option<u32>> = self
+            .connection
+            .query_row(
+                "SELECT page_count FROM sources WHERE source_id=?1",
+                [id],
+                |r| r.get(0),
+            )
+            .optional()
+            .map_err(ProjectError::database)?;
+        let count = count.ok_or_else(|| error("CORPUS_NOT_FOUND", "资料身份不在当前项目中。"))?;
+        if number == 0 || count.is_none_or(|count| number > count) {
+            return Err(error("CORPUS_PAGE_QUERY", "物理页号不在已登记来源范围内。"));
+        }
+        Ok(())
+    }
+
+    fn checked_page(
+        &self,
+        id: &str,
+        number: u32,
+        raw: &str,
+        sha: &str,
+    ) -> Result<Value, ProjectError> {
+        if raw.len() as u64 > MAX_PAGE_BYTES {
+            return Err(error(
+                "CORPUS_PAGE_LIMIT",
+                "保存页结构超过16MiB，未截断读取。",
+            ));
+        }
+        if crate::text::sha256(raw.as_bytes()) != sha {
+            return Err(error("CORPUS_PAGE_CHANGED", "保存页的字节摘要不匹配。"));
+        }
+        let page: Value =
+            serde_json::from_str(raw).map_err(|e| error("CORPUS_PAGE_INVALID", e.to_string()))?;
+        if page["page_number"].as_u64() != Some(u64::from(number))
+            || page
+                .get("source_id")
+                .is_some_and(|value| value.as_str() != Some(id))
+            || !page["text"].is_string()
+            || !page["regions"].is_array()
+        {
+            return Err(error(
+                "CORPUS_PAGE_INVALID",
+                "保存页身份或正文结构与来源不符。",
+            ));
+        }
+        let state = page["status"].as_str().unwrap_or_default();
+        if !matches!(
+            state,
+            "text_ready" | "needs_ocr" | "needs_review" | "ocr_ready" | "failed" | "blank"
+        ) {
+            return Err(error(
+                "CORPUS_PAGE_INVALID",
+                "固定页必须是已确认的页面状态。",
+            ));
+        }
+        let width = page["width_pt"].as_f64().unwrap_or(0.0);
+        let height = page["height_pt"].as_f64().unwrap_or(0.0);
+        if state != "failed" && (width <= 0.0 || height <= 0.0 || !page["geometry"].is_object()) {
+            return Err(error(
+                "CORPUS_PAGE_INVALID",
+                "保存页缺少有效尺寸或坐标变换。",
+            ));
+        }
+        for (ordinal, region) in page["regions"].as_array().unwrap().iter().enumerate() {
+            let bounds = region["bbox"]
+                .as_array()
+                .filter(|bounds| bounds.len() == 4)
+                .and_then(|bounds| {
+                    bounds
+                        .iter()
+                        .map(|value| value.as_f64().filter(|value| value.is_finite()))
+                        .collect::<Option<Vec<_>>>()
+                })
+                .ok_or_else(|| error("CORPUS_PAGE_INVALID", "保存区域缺少有限四元坐标。"))?;
+            if width <= 0.0
+                || height <= 0.0
+                || bounds[0] < -0.01
+                || bounds[1] < -0.01
+                || bounds[2] < bounds[0]
+                || bounds[3] < bounds[1]
+                || bounds[2] > width + 0.01
+                || bounds[3] > height + 0.01
+                || region["ordinal"].as_u64() != Some(ordinal as u64)
+                || !region["text"].is_string()
+            {
+                return Err(error(
+                    "CORPUS_PAGE_INVALID",
+                    "保存区域坐标越界或顺序、正文无效。",
+                ));
+            }
+        }
+        self.assets(id, &page)?;
+        Ok(page)
+    }
+
+    pub fn page_snapshot(&self, id: &str, number: u32) -> Result<Value, ProjectError> {
+        self.check_page_number(id, number)?;
+        let record: Option<(Option<String>, Option<String>)> = self
+            .connection
+            .query_row(
+                "SELECT page_json,page_sha256 FROM pages WHERE source_id=?1 AND page_number=?2",
+                params![id, number],
+                |r| Ok((r.get(0)?, r.get(1)?)),
+            )
+            .optional()
+            .map_err(ProjectError::database)?;
+        let (Some(raw), Some(sha)) = record.unwrap_or((None, None)) else {
+            return Err(error(
+                "CORPUS_PAGE_NOT_CONFIRMED",
+                "本页尚无已确认的正文与摘要。",
+            ));
+        };
+        let page = self.checked_page(id, number, &raw, &sha)?;
+        Ok(json!({"page_number":number,"page_sha256":sha,"page":page}))
+    }
+
+    pub fn page_revision(&self, id: &str, number: u32, sha: &str) -> Result<Value, ProjectError> {
+        self.check_page_number(id, number)?;
+        if sha.len() != 64
+            || !sha
+                .bytes()
+                .all(|c| c.is_ascii_digit() || (b'a'..=b'f').contains(&c))
+        {
+            return Err(error("CORPUS_PAGE_QUERY", "固定页摘要必须是小写SHA256。"));
+        }
+        // A current page can also appear in history. Validate every matching
+        // record so a corrupt duplicate cannot be hidden by a valid one.
+        let mut query = self.connection.prepare(
+            "SELECT page_json FROM pages WHERE source_id=?1 AND page_number=?2 AND page_sha256=?3 UNION ALL SELECT page_json FROM page_revisions WHERE source_id=?1 AND page_number=?2 AND page_sha256=?3",
+        ).map_err(ProjectError::database)?;
+        let rows = query
+            .query_map(params![id, number, sha], |r| r.get::<_, Option<String>>(0))
+            .map_err(ProjectError::database)?;
+        let mut result = None;
+        for row in rows {
+            let raw = row
+                .map_err(ProjectError::database)?
+                .ok_or_else(|| error("CORPUS_PAGE_CHANGED", "固定页摘要缺少保存正文。"))?;
+            let page = self.checked_page(id, number, &raw, sha)?;
+            result = Some(page);
+        }
+        result.ok_or_else(|| {
+            error(
+                "CORPUS_PAGE_REVISION_NOT_FOUND",
+                "固定摘要的页版本不存在；没有改用当前版本。",
+            )
+        })
+    }
+
     pub fn request_pause(&self, id: &str) -> Result<(), ProjectError> {
         self.summary(id)?;
         self.connection

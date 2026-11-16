@@ -402,3 +402,276 @@ fn legacy_unpinned_raw_ocr_structure_remains_readable_but_cannot_export_complete
     );
     fs::remove_dir_all(destination).unwrap();
 }
+
+#[test]
+fn fixed_page_digests_read_current_and_original_after_ocr_without_fallback() {
+    let p = TestProject::new();
+    let (repo, id) = p.source(2);
+    repo.commit_page(&id, page(1, "needs_ocr")).unwrap();
+    let original = page_snapshot(&p.0, &id, 1).unwrap();
+    let original_sha = original["page_sha256"].as_str().unwrap();
+    assert_eq!(
+        page_revision(&p.0, &id, 1, original_sha).unwrap(),
+        original["page"]
+    );
+    // The parser identity and the fingerprint of complete JSON are different.
+    assert_ne!(original["page"]["page_revision"], original["page_sha256"]);
+    let mut recognized = page(1, "ocr_ready");
+    recognized["text"] = json!("New recognized text");
+    recognized["regions"][0]["text"] = recognized["text"].clone();
+    recognized["parser"] = json!({"engine":"mineru"});
+    repo.commit_ocr_page(&id, recognized).unwrap();
+    let current = page_snapshot(&p.0, &id, 1).unwrap();
+    assert_ne!(current["page_sha256"], original["page_sha256"]);
+    assert_eq!(
+        page_revision(&p.0, &id, 1, original_sha).unwrap(),
+        original["page"]
+    );
+    assert_eq!(
+        page_revision(&p.0, &id, 1, current["page_sha256"].as_str().unwrap()).unwrap(),
+        current["page"]
+    );
+    for sha in [
+        &"0".repeat(64),
+        original["page"]["page_revision"].as_str().unwrap(),
+    ] {
+        assert_eq!(
+            page_revision(&p.0, &id, 1, sha).unwrap_err().code(),
+            "CORPUS_PAGE_REVISION_NOT_FOUND"
+        );
+    }
+    assert_eq!(
+        page_revision(&p.0, &id, 2, original_sha)
+            .unwrap_err()
+            .code(),
+        "CORPUS_PAGE_REVISION_NOT_FOUND"
+    );
+    assert_eq!(
+        page_snapshot(&p.0, &id, 2).unwrap_err().code(),
+        "CORPUS_PAGE_NOT_CONFIRMED"
+    );
+    for number in [0, 3] {
+        assert_eq!(
+            page_revision(&p.0, &id, number, original_sha)
+                .unwrap_err()
+                .code(),
+            "CORPUS_PAGE_QUERY"
+        );
+        assert_eq!(
+            page_snapshot(&p.0, &id, number).unwrap_err().code(),
+            "CORPUS_PAGE_QUERY"
+        );
+    }
+    for sha in ["short", &"A".repeat(64), &"g".repeat(64)] {
+        assert_eq!(
+            page_revision(&p.0, &id, 1, sha).unwrap_err().code(),
+            "CORPUS_PAGE_QUERY"
+        );
+    }
+    assert_eq!(
+        page_revision(&p.0, &Uuid::new_v4().to_string(), 1, original_sha)
+            .unwrap_err()
+            .code(),
+        "CORPUS_NOT_FOUND"
+    );
+}
+
+#[test]
+fn legacy_page_snapshot_keeps_original_json_fingerprint_and_missing_revision() {
+    let p = TestProject::new();
+    let (repo, id) = p.source(1);
+    repo.commit_page(&id, page(1, "needs_ocr")).unwrap();
+    let mut legacy = repo.pages(&id, 0, 1).unwrap()[0].clone();
+    legacy.as_object_mut().unwrap().remove("page_revision");
+    let raw = format!("{}\n", serde_json::to_string_pretty(&legacy).unwrap());
+    let sha = crate::text::sha256(raw.as_bytes());
+    assert_ne!(sha, crate::text::sha256(legacy.to_string().as_bytes()));
+    let db = rusqlite::Connection::open(p.0.join(".noetome-corpus/corpus.sqlite")).unwrap();
+    db.execute(
+        "UPDATE pages SET page_json=?2,page_sha256=?3 WHERE source_id=?1",
+        rusqlite::params![id, raw, sha],
+    )
+    .unwrap();
+    let snapshot = page_snapshot(&p.0, &id, 1).unwrap();
+    assert_eq!(snapshot["page_sha256"], sha);
+    assert_eq!(snapshot["page"], legacy);
+    assert!(snapshot["page"].get("page_revision").is_none());
+    assert_eq!(page_revision(&p.0, &id, 1, &sha).unwrap(), legacy);
+    repo.commit_ocr_page(&id, page(1, "ocr_ready")).unwrap();
+    assert_eq!(page_revision(&p.0, &id, 1, &sha).unwrap(), legacy);
+    let saved: String = db.query_row("SELECT page_json FROM page_revisions WHERE source_id=?1 AND page_number=1 AND page_sha256=?2", rusqlite::params![id, sha], |r| r.get(0)).unwrap();
+    assert_eq!(saved, raw);
+}
+
+#[test]
+fn corrupt_current_or_history_cannot_hide_behind_another_matching_digest() {
+    let p = TestProject::new();
+    let (repo, id) = p.source(1);
+    repo.commit_page(&id, page(1, "needs_ocr")).unwrap();
+    let old = repo.page_snapshot(&id, 1).unwrap();
+    repo.commit_ocr_page(&id, page(1, "ocr_ready")).unwrap();
+    let new = repo.page_snapshot(&id, 1).unwrap();
+    let db = rusqlite::Connection::open(p.0.join(".noetome-corpus/corpus.sqlite")).unwrap();
+    db.execute(
+        "UPDATE page_revisions SET page_json='{}' WHERE source_id=?1 AND page_sha256=?2",
+        rusqlite::params![id, old["page_sha256"].as_str().unwrap()],
+    )
+    .unwrap();
+    assert_eq!(
+        page_revision(&p.0, &id, 1, old["page_sha256"].as_str().unwrap())
+            .unwrap_err()
+            .code(),
+        "CORPUS_PAGE_CHANGED"
+    );
+    assert_eq!(
+        page_revision(&p.0, &id, 1, new["page_sha256"].as_str().unwrap()).unwrap(),
+        new["page"]
+    );
+    // The untouched history copy of the current page must not conceal damage
+    // in its current copy, or permit a snapshot to invent a new digest.
+    db.execute("UPDATE pages SET page_json='{}' WHERE source_id=?1", [&id])
+        .unwrap();
+    assert_eq!(
+        page_revision(&p.0, &id, 1, new["page_sha256"].as_str().unwrap())
+            .unwrap_err()
+            .code(),
+        "CORPUS_PAGE_CHANGED"
+    );
+    assert_eq!(
+        page_snapshot(&p.0, &id, 1).unwrap_err().code(),
+        "CORPUS_PAGE_CHANGED"
+    );
+}
+
+#[test]
+fn fixed_history_rechecks_declared_assets_even_after_a_new_page_is_saved() {
+    let p = TestProject::new();
+    let (repo, id) = p.source(1);
+    let output = repo
+        .source_directory(&id)
+        .unwrap()
+        .join("ocr/pinned/output");
+    fs::create_dir_all(output.join("raw")).unwrap();
+    let asset = output.join("page.png");
+    let raw_asset = output.join("raw/structure.json");
+    fs::write(&asset, b"historical synthetic raster").unwrap();
+    fs::write(&raw_asset, b"historical synthetic structure").unwrap();
+    let mut original = page(1, "needs_ocr");
+    original["artifact_root"] = json!(output);
+    original["raw_output"] = json!("raw/structure.json");
+    original["assets"] =
+        json!([{"path":"page.png","sha256":crate::text::sha256(b"historical synthetic raster")}]);
+    repo.commit_page(&id, original).unwrap();
+    let old = repo.page_snapshot(&id, 1).unwrap();
+    let sha = old["page_sha256"].as_str().unwrap();
+    repo.commit_ocr_page(&id, page(1, "ocr_ready")).unwrap();
+    assert_eq!(page_revision(&p.0, &id, 1, sha).unwrap(), old["page"]);
+    fs::write(&raw_asset, b"changed structure").unwrap();
+    assert_eq!(
+        page_revision(&p.0, &id, 1, sha).unwrap_err().code(),
+        "CORPUS_ASSET_CHANGED"
+    );
+    fs::write(&raw_asset, b"historical synthetic structure").unwrap();
+    fs::remove_file(&asset).unwrap();
+    assert_eq!(
+        page_revision(&p.0, &id, 1, sha).unwrap_err().code(),
+        "CORPUS_ASSET_CHANGED"
+    );
+    fs::write(&asset, b"historical synthetic raster").unwrap();
+    assert!(page_revision(&p.0, &id, 1, sha).is_ok());
+    assert!(page_snapshot(&p.0, &id, 1).is_ok());
+}
+
+#[test]
+fn fixed_page_rejects_wrong_page_source_and_escaping_asset_even_with_consistent_json_hash() {
+    let p = TestProject::new();
+    let (repo, id) = p.source(1);
+    repo.commit_page(&id, page(1, "text_ready")).unwrap();
+    let original = repo.pages(&id, 0, 1).unwrap()[0].clone();
+    let db = rusqlite::Connection::open(p.0.join(".noetome-corpus/corpus.sqlite")).unwrap();
+    for field in ["page_number", "source_id"] {
+        let mut changed = original.clone();
+        changed[field] = if field == "page_number" {
+            json!(2)
+        } else {
+            json!(Uuid::new_v4().to_string())
+        };
+        let raw = changed.to_string();
+        let sha = crate::text::sha256(raw.as_bytes());
+        db.execute(
+            "INSERT INTO page_revisions VALUES(?1,1,?2,?3)",
+            rusqlite::params![id, sha, raw],
+        )
+        .unwrap();
+        assert_eq!(
+            page_revision(&p.0, &id, 1, &sha).unwrap_err().code(),
+            "CORPUS_PAGE_INVALID"
+        );
+    }
+    let mut changed = original.clone();
+    changed["regions"][0]["bbox"][2] = json!(900);
+    let raw = changed.to_string();
+    let sha = crate::text::sha256(raw.as_bytes());
+    db.execute(
+        "INSERT INTO page_revisions VALUES(?1,1,?2,?3)",
+        rusqlite::params![id, sha, raw],
+    )
+    .unwrap();
+    assert_eq!(
+        page_revision(&p.0, &id, 1, &sha).unwrap_err().code(),
+        "CORPUS_PAGE_INVALID"
+    );
+    let mut changed = original.clone();
+    changed["artifact_root"] = json!(".noetome-corpus/../outside");
+    changed["assets"] = json!([{"path":"page.png","sha256":"a".repeat(64)}]);
+    let raw = changed.to_string();
+    let sha = crate::text::sha256(raw.as_bytes());
+    db.execute(
+        "INSERT INTO page_revisions VALUES(?1,1,?2,?3)",
+        rusqlite::params![id, sha, raw],
+    )
+    .unwrap();
+    assert_eq!(
+        page_revision(&p.0, &id, 1, &sha).unwrap_err().code(),
+        "CORPUS_ASSET_PATH"
+    );
+    assert_eq!(page_snapshot(&p.0, &id, 1).unwrap()["page"], original);
+}
+
+#[test]
+fn source_verification_streams_saved_original_and_preserves_state_on_failure() {
+    let p = TestProject::new();
+    let (repo, id) = p.source(1);
+    repo.commit_page(&id, page(1, "text_ready")).unwrap();
+    let raw = repo.source_directory(&id).unwrap().join("raw.pdf");
+    let bytes = vec![b's'; 3 * 1024 * 1024 + 17];
+    fs::write(&raw, &bytes).unwrap();
+    repo.acquired(&id, &crate::text::sha256(&bytes), bytes.len() as u64)
+        .unwrap();
+    let before = serde_json::to_value(repo.summary(&id).unwrap()).unwrap();
+    assert_eq!(
+        serde_json::to_value(verify_source(&p.0, &id).unwrap()).unwrap(),
+        before
+    );
+    let mut changed = bytes.clone();
+    changed[1024 * 1024 + 3] = b'x';
+    fs::write(&raw, &changed).unwrap();
+    assert_eq!(
+        verify_source(&p.0, &id).unwrap_err().code(),
+        "CORPUS_SOURCE_CHANGED"
+    );
+    assert_eq!(
+        serde_json::to_value(repo.summary(&id).unwrap()).unwrap(),
+        before
+    );
+    // Intact page evidence does not make a corrupt original pass verification.
+    assert!(page_snapshot(&p.0, &id, 1).is_ok());
+    fs::remove_file(&raw).unwrap();
+    assert!(verify_source(&p.0, &id).is_err());
+    assert_eq!(
+        serde_json::to_value(repo.summary(&id).unwrap()).unwrap(),
+        before
+    );
+    fs::write(&raw, bytes).unwrap();
+    assert!(verify_source(&p.0, &id).is_ok());
+}
