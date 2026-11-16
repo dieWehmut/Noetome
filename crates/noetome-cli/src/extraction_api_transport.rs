@@ -214,6 +214,137 @@ mod tests {
         worker.join().unwrap();
         result.unwrap()
     }
+    fn server_without_response() -> (
+        String,
+        thread::JoinHandle<()>,
+        std::sync::mpsc::Receiver<()>,
+        std::sync::mpsc::Sender<()>,
+    ) {
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        listener.set_nonblocking(true).unwrap();
+        let endpoint = format!("http://{}/v1/responses", listener.local_addr().unwrap());
+        let (accepted, received) = std::sync::mpsc::channel();
+        let (release, held) = std::sync::mpsc::channel();
+        let worker = thread::spawn(move || {
+            let until = Instant::now() + Duration::from_secs(3);
+            let mut stream = loop {
+                if let Ok((stream, _)) = listener.accept() {
+                    break stream;
+                }
+                assert!(Instant::now() < until, "no request reached the server");
+                thread::sleep(Duration::from_millis(2));
+            };
+            stream.set_nonblocking(false).unwrap();
+            stream
+                .set_read_timeout(Some(Duration::from_secs(2)))
+                .unwrap();
+            let mut receipt = Vec::new();
+            let header_end = loop {
+                if let Some(index) = receipt.windows(4).position(|bytes| bytes == b"\r\n\r\n") {
+                    break index + 4;
+                }
+                let mut bytes = [0; 4096];
+                let count = stream.read(&mut bytes).unwrap();
+                assert!(count > 0);
+                receipt.extend_from_slice(&bytes[..count]);
+                assert!(receipt.len() < 16 * 1024);
+            };
+            let headers = std::str::from_utf8(&receipt[..header_end]).unwrap();
+            assert!(headers.starts_with("POST /v1/responses HTTP/1.1\r\n"));
+            let length = headers
+                .lines()
+                .filter_map(|line| line.split_once(':'))
+                .find(|(name, _)| name.eq_ignore_ascii_case("content-length"))
+                .unwrap()
+                .1
+                .trim()
+                .parse::<usize>()
+                .unwrap();
+            while receipt.len() < header_end + length {
+                let mut bytes = [0; 4096];
+                let count = stream.read(&mut bytes).unwrap();
+                assert!(count > 0);
+                receipt.extend_from_slice(&bytes[..count]);
+            }
+            assert_eq!(&receipt[header_end..header_end + length], b"{}");
+            accepted.send(()).unwrap();
+            // No headers, body, or network event after the request handshake.
+            // The fallback close bounds a regression without supplying a wake
+            // until well after either test's cancellation/deadline requirement.
+            let _ = held.recv_timeout(Duration::from_secs(3));
+            drop(stream);
+            assert!(listener.accept().is_err(), "the request was retried");
+        });
+        (endpoint, worker, received, release)
+    }
+    #[test]
+    fn cancel_after_request_body_without_response_headers_is_prompt() {
+        let (endpoint, worker, accepted, release) = server_without_response();
+        let cancelled = Arc::new(AtomicBool::new(false));
+        let cancel_signal = cancelled.clone();
+        let controller = thread::spawn(move || {
+            accepted.recv_timeout(Duration::from_secs(2)).unwrap();
+            // Let the client's network future park before changing control.
+            thread::sleep(Duration::from_millis(50));
+            cancel_signal.store(true, Ordering::SeqCst);
+        });
+        let start = Instant::now();
+        let result = send(
+            &endpoint,
+            "noetome-test-key",
+            b"{}",
+            Duration::from_secs(30),
+            100,
+            &|| {
+                if cancelled.load(Ordering::SeqCst) {
+                    Err(ProjectError::new("EXTRACT_CANCELLED", 3, "cancelled"))
+                } else {
+                    Ok(())
+                }
+            },
+        );
+        let elapsed = start.elapsed();
+        let released = release.send(());
+        controller.join().unwrap();
+        worker.join().unwrap();
+        let result = result.unwrap();
+        assert_eq!(result.failure.unwrap().code(), "EXTRACT_CANCELLED");
+        assert!(elapsed < Duration::from_secs(1), "cancel took {elapsed:?}");
+        assert!(released.is_ok(), "the server supplied the wake by closing");
+        assert_eq!(result.attempts, 1);
+        assert_eq!(result.status, None);
+        assert_eq!(result.request_id, None);
+        assert!(result.body.is_empty());
+        assert!(!result.complete);
+    }
+    #[test]
+    fn deadline_without_response_headers_is_prompt() {
+        let (endpoint, worker, accepted, release) = server_without_response();
+        let start = Instant::now();
+        let result = send(
+            &endpoint,
+            "noetome-test-key",
+            b"{}",
+            Duration::from_secs(1),
+            100,
+            &|| Ok(()),
+        );
+        let elapsed = start.elapsed();
+        let released = release.send(());
+        worker.join().unwrap();
+        accepted.recv_timeout(Duration::from_secs(1)).unwrap();
+        let result = result.unwrap();
+        assert_eq!(result.failure.unwrap().code(), "EXTRACT_TIMEOUT");
+        assert!(
+            elapsed < Duration::from_secs(2),
+            "deadline took {elapsed:?}"
+        );
+        assert!(released.is_ok(), "the server supplied the wake by closing");
+        assert_eq!(result.attempts, 1);
+        assert_eq!(result.status, None);
+        assert!(result.body.is_empty());
+        assert!(!result.complete);
+    }
     #[test]
     fn one_http1_post_preserves_complete_receipt() {
         let result = run(

@@ -23,6 +23,28 @@ fn main() -> ExitCode {
 
     let mut result_code = 0;
     let output = match command {
+        CliCommand::Compile(command) => {
+            let running = matches!(
+                &command,
+                noetome_cli::production_compile::command::Command::Run(..)
+            );
+            match noetome_cli::production_compile::command::execute(command) {
+                Ok(output) => {
+                    if running {
+                        let value: serde_json::Value =
+                            serde_json::from_str(&output).expect("compile result serializes");
+                        if value["status"] == "failed" || value["status"] == "budget_stop" {
+                            result_code = 3;
+                        }
+                    }
+                    output
+                }
+                Err(error) => {
+                    let _ = writeln!(io::stderr().lock(), "{error}");
+                    return ExitCode::from(error.exit_code());
+                }
+            }
+        }
         CliCommand::Corpus(command) => {
             let read_only = matches!(
                 &command,

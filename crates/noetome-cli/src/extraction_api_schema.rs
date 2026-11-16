@@ -90,7 +90,7 @@ fn array(items: Value) -> Value {
 fn nullable(value: Value) -> Value {
     json!({"anyOf":[value,{"type":"null"}]})
 }
-fn candidate_schema() -> Value {
+pub(crate) fn candidate_schema() -> Value {
     let string = json!({"type":"string"});
     let integer = json!({"type":"integer"});
     let boolean = json!({"type":"boolean"});
