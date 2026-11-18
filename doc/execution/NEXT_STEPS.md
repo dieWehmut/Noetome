@@ -2,7 +2,7 @@
 
 真实状态以[任务账本](../../dev-log/tasks.json)和[当前状态](../../dev-log/STATUS.md)为准。
 
-当前批次：**B17**（2026-11-18 起），见文末[2026-11-18 B17 批次](#2026-11-18-b17-批次当前)；B16 收尾证据见[B16-T03 验证](../validation/B16-T03.md)。
+当前批次：**B17**（2026-11-18 起，已完成），见文末[2026-11-18 B17 批次](#2026-11-18-b17-批次已完成)；B16 收尾证据见[B16-T03 验证](../validation/B16-T03.md)。
 
 2026-11-12 用户批准继续执行：整合 main、清理阻断主链的技术债、用明确选定的真实教材反复验收，并按[版本路线](RELEASE_ROADMAP.md)推进。当前批次 B16 最多三项，依赖顺序如下；一次只有一项进行中。用户已授权连续完成，不在项间重复请求许可。
 
@@ -32,11 +32,11 @@ B15及此前说明保存在[历史快照](B15_NEXT_STEPS_HISTORY.md)和各批次
 
 2026-11-14 B16-T02 的范围内证据已收齐，见[整书来源验证](../validation/B16-T02.md)、[OCR对照](../validation/B16-T02-OCR.md)和[最终同源桌面验证](../validation/B16-T02-UI.md)。三本来源共5585页完整对账，75份原生预检均有回执；最终Windows Rust为1351通过/1 ignored，Python为1426通过/23明确跳过。失败、权限不足与未执行范围继续保留，实际任务状态由账本工具记录。
 
-下一项仍为B16-T03。本轮停在来源层验收与推送，不自动启动后续任务；后续应先提取共享领域规则与版本化生产IR，复用现有累计模型预算，再完成安装版真实整书编译、恢复与笔记阅读。710页扫描本尚未全书OCR，来源登记和本轮32页对照不能替代该知识编译链的验收。
+B16-T03 的收尾证据已归入[B16-T03 验证](../validation/B16-T03.md)；0.2 编号弃用，安装版闭环验收并入 B17-T03。710 页扫描本尚未全书 OCR，来源登记和本轮 32 页对照不能替代该知识编译链的验收。
 
 2026-11-16已按用户接续指令启动B16-T03。当前实现与恢复规则见[生产持久编译契约](../technical/PRODUCTION_COMPILE_CONTRACT.md)，真实状态由账本维护。完成公共领域/来源版本/持久IR与人工账本行为检查后，依次执行严格环回CLI、同源Windows原生回归、安装版真实整书模型任务及新Vault阅读，再附源码与安装器摘要交付0.2；任何尚未执行项保持未验收。
 
-## 2026-11-18 B17 批次（当前）
+## 2026-11-18 B17 批次（已完成）
 
 用户要求：定好目标与任务、多智能体协同修复安装版编译缺陷、完成本地模型适配，且不再使用 0.2 版本号。台账见[决策](../requirements/DECISIONS.md)。当前批次最多三项，同时只有一项 in_progress。
 
@@ -51,5 +51,13 @@ B15及此前说明保存在[历史快照](B15_NEXT_STEPS_HISTORY.md)和各批次
 1. B17-T01 先修 `workbench.rs` 与 `useCompile.ts` 的路径归一化，再把 helper 的 stderr/退出码做成结构化错误；修完后重跑 B/C 档取证。
 2. B17-T02 打开配置白名单，加本地 provider 的独立账本、超时与输出上限参数，用真实页单元做量化判定（本地不达标也要写明可用范围）。
 3. B17-T03 统一版本号为 0.3.0，重打包安装版，跑真实整书 bounded 闭环与 Obsidian 阅读，再出 Release 附件。
+
+### 完成结果
+
+- B17-T01 已完成（commit 866649a）：`crates/noetome-desktop/src/external_path.rs` 归一化 verbatim/UNC 路径，`workbench.rs` 返回结构化 worker 失败；`cargo test -p noetome-desktop external_path` 2 passed。见[B17-T01 验证](../validation/B17-T01.md)。
+- B17-T02 已完成（commit 47cc00e、862a3a9）：`local_openai` provider 白名单、独立 `local-openai.usage.json` 账本与 `LOCAL_PROVIDER_*` 错误码落地；LM Studio 真实链路可用但 24 个真实单元仅 9 个有效候选，quote 逐字保真 7/24、中位 23.8s、最长 84.8s，仅适合小规模草稿与链路验证，不替代云端验收。见[B17-T02 验证](../validation/B17-T02.md)。
+- B17-T03 已完成：0.3.0 统一版本，run5 真实整书 bounded 闭环 7/7，重启后继续 5/5，安装版 UI 导出 31 个文件、18 篇知识笔记可查询，Obsidian 阅读截图留证；安装器 `Noetome_0.3.0-test.1_x64-setup.exe` 260,774,310 B、SHA256 `eade797d…`，Release 说明与 `SHA256SUMS.txt` 在 `D:/Noetome/.artifacts/b17-app-20261118/release/`。bounded 只确认 2 个单元，1226 页未处理、4626 条 issue 保留，整书完成和正式安装器重装仍未验收。见[B17-T03 验证](../validation/B17-T03.md)。
+
+B17 批次不自动启动下一项；下一步需用户确认是否补整书处理、正式安装器重装验证或发布 GitHub Release。
 
 B16 收尾：A 档（安装版快捷方式零模型）与 B 档（原生整书导入 1227 页）实测通过；C 档在“开始整理”被阻断，根因为 verbatim 路径与 `Selected-Path` 白名单冲突；0.2 编号弃用，安装版闭环验收项并入 B17-T03。详见[B16-T03 验证](../validation/B16-T03.md)。

@@ -5305,7 +5305,7 @@
       "id": "B17-T01",
       "title": "安装版编译链路缺陷修复与结构化错误回归",
       "batch": "B17",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [],
       "requirements": [
         "FR-07",
@@ -5329,6 +5329,22 @@
           "note": "先修桌面端路径归一化与编译凭据helper白名单冲突，并把worker失败做成结构化错误，再重跑B/C档取证",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-18T03:12:51Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "verbatim/UNC 路径归一化与 worker 结构化错误；安装版真实点击开始整理已进入真实模型执行",
+          "validation": [
+            "cargo fmt --all --check 退出0；cargo test -p noetome-desktop external_path 2 passed；安装版run4 run_id 265b6ccd-582b-4104-93ed-696d8369a2f2 进入 preparing→extracting 并产生真实请求；修复前四组对照见 doc/validation/B17-T01.md"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B17-T01.md",
+              "sha256": "bb8b4941cc720793283cd2abf0ac3d730baa816b88df7600eb1cf7c790cbfa30"
+            }
+          ]
         }
       ]
     },
@@ -5336,7 +5352,7 @@
       "id": "B17-T02",
       "title": "本地模型作为可选 provider 的生产编译适配与实测判定",
       "batch": "B17",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B17-T01"
       ],
@@ -5355,13 +5371,39 @@
         "用 20–30 个真实页单元跑本地 provider，报告成功/失败、quote 逐字保真率、单请求耗时分布并给出可用范围结论",
         "云端 deepseek-flash 路径回归通过，行为与账本口径不变"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-18T03:14:04Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "本地 OpenAI 兼容 provider、独立账本与实测判定",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-18T03:14:04Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "本地 local_openai provider 与独立账本/错误码完成；24 个真实页单元实测并判定仅适合小规模草稿，云端 deepseek-flash 仍为验收基线",
+          "validation": [
+            "local_config_matrix 1 passed；local_openai_fake_http_smoke 通过；本地 CLI run 7bed1dde… 与 4661fc6e… 的传输/账本打通但严格契约 0/3；probe3 24 单元 parsed 9、quote_exact 7、median 23789ms、max 84831ms、reasoning 0；云端安装版 run5 确认 2 单元/247225 tokens"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B17-T02.md",
+              "sha256": "193413f8393501341d3e5830b26f0a6513eb9aa999af19b9f3ccdb059a5a98ca"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "B17-T03",
       "title": "0.3.0 重标、安装版整书 bounded 闭环与阅读验证",
       "batch": "B17",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B17-T01",
         "B17-T02"
@@ -5383,7 +5425,33 @@
         "导出与 Obsidian 阅读在安装版实测完成并留证",
         "发布 0.3.0-test.1 附件：源码 SHA、安装器 SHA、验证记录与未闭合清单"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-18T03:33:21Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "0.3.0 重标、安装版整书 bounded 闭环、导出与 Obsidian 阅读、Release 附件",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-18T03:33:49Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "0.3.0 统一版本、安装版整书 bounded 闭环、重启后继续、UI 导出与 Obsidian 阅读、0.3.0-test.1 发布附件",
+          "validation": [
+            "noetome.exe --version=noetome 0.3.0；安装器 ProductVersion/FileVersion=0.3.0、260,774,310 B、SHA256 eade797d…；run5 checks 7/7（confirmed 2、accounted 247225、authority 不变）；resume checks 5/5（attempts 24→25、model_attempts 87→88、confirmed 2 保持）；export checks 4/5（产品导出成功，唯一失败为 harness stop-owned 空值）；Obsidian 索引/笔记截图 SHA256 e2252660…/4627bb59…；compile query concepts 18 atoms 19 evidence 2 issues 4626 pages 1227 units 1298；makensis exit=0；devlog check 与 git diff --check 通过"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B17-T03.md",
+              "sha256": "20347b0913494f8bfff38988b5766c7860a2305d21f4de96e73095bcf4e14577"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
