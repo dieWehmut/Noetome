@@ -56,7 +56,7 @@ B16-T03 的收尾证据已归入[B16-T03 验证](../validation/B16-T03.md)；0.2
 
 - B17-T01 已完成（commit 866649a）：`crates/noetome-desktop/src/external_path.rs` 归一化 verbatim/UNC 路径，`workbench.rs` 返回结构化 worker 失败；`cargo test -p noetome-desktop external_path` 2 passed。见[B17-T01 验证](../validation/B17-T01.md)。
 - B17-T02 已完成（commit 47cc00e、862a3a9）：`local_openai` provider 白名单、独立 `local-openai.usage.json` 账本与 `LOCAL_PROVIDER_*` 错误码落地；LM Studio 真实链路可用但 24 个真实单元仅 9 个有效候选，quote 逐字保真 7/24、中位 23.8s、最长 84.8s，仅适合小规模草稿与链路验证，不替代云端验收。见[B17-T02 验证](../validation/B17-T02.md)。
-- B17-T03 已完成：0.3.0 统一版本，run5 真实整书 bounded 闭环 7/7，重启后继续 5/5，安装版 UI 导出 31 个文件、18 篇知识笔记可查询，Obsidian 阅读截图留证；安装器 `Noetome_0.3.0-test.1_x64-setup.exe` 260,774,310 B、SHA256 `eade797d…`，Release 说明与 `SHA256SUMS.txt` 在 `D:/Noetome/.artifacts/b17-app-20261118/release/`。bounded 只确认 2 个单元，1226 页未处理、4626 条 issue 保留，整书完成和正式安装器重装仍未验收。见[B17-T03 验证](../validation/B17-T03.md)。
+- B17-T03 已完成：0.3.0 统一版本，run5 真实整书 bounded 闭环 7/7，重启后继续 5/5，安装版 UI 导出 31 个文件、18 篇知识笔记可查询，Obsidian 阅读截图留证；安装器 `Noetome_0.3.0-test.1_x64-setup.exe` 260,774,310 B、SHA256 `eade797d…`，Release 说明与 `SHA256SUMS.txt` 在 `D:/Noetome/.artifacts/b17-app-20261118/release/`，已发布为 GitHub Pre-release：https://github.com/dieWehmut/Noetome/releases/tag/v0.3.0-test.1。bounded 只确认 2 个单元，1226 页未处理、4626 条 issue 保留，整书完成和正式安装器重装仍未验收。见[B17-T03 验证](../validation/B17-T03.md)。
 
 B17 批次不自动启动下一项；下一步需用户确认是否补整书处理、正式安装器重装验证或发布 GitHub Release。
 
