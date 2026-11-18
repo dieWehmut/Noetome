@@ -31,3 +31,13 @@ B16-T03从已验收的`corpus`消费真实页版本，新增`production_compile`
 查询按概念/原子/证据/问题及全部页范围/片段分页，并可回到固定原文页；未准备页保留unprepared与null页SHA，已准备但未确认或失败片段计入未解决页，分母不因暂停缩小。输出仅写不存在的新测试Vault，保留清单、来源索引、知识状态和未处理问题。页与片段NDJSON完整列出未处理位置；export-manifest.json记录除自身外全部导出文件的实读摘要和字节数，成功前保留incomplete标记。导出后重读所有声明文件，已有目的地拒绝且不改原件。原件打包属于明确选择，不自动复制私人整书。安装版须用本次程序与安装器字节完成真实原生按钮、选文件器、暂停/重开、导出与Obsidian阅读；开发程序或fake不能替代。
 
 科学200原子/98%、复杂图示全语义、任意断电与24小时门槛保持各自验收范围。0.2测试版必须列出本次实际完成和未知范围。
+
+### B17 本地 OpenAI 可选 provider
+
+云端 `live` 的 deepseek-flash 白名单及 60000ms / 8192 tokens 上限保持。
+显式 `transport_mode=local_openai` 接受带端口的 HTTP 127.0.0.1 或 localhost，路径固定 `/v1/chat/completions`，拒绝用户信息、查询及 fragment；模型名非空。
+本地必须 `credential_mode=none`、`credential_env=""`，请求不带 Authorization。旧云端配置省略 credential_mode 仍兼容 env；显式值仅接受 env。
+本地 timeout 为 1..=300000ms，输出为 1..=32768 tokens；建议初测 180000ms、4096 tokens、2048 bytes，属于测量起点而非性能验收。
+本地账本文件名固定 `local-openai.usage.json`，使用独立目录中的已有授权 JSON 基线；派生 `.production.sqlite` 与 authority marker 由现有预算机制创建，绝不创建 JSON 余额。不得把云端历史复制为本地额度。缺失基线报 `LOCAL_PROVIDER_LEDGER_MISSING`，名称不符报 `LOCAL_PROVIDER_LEDGER`，内容损坏仍返回生产预算完整性错误。
+`reasoning_effort` 可选 none/low/medium/high，请求同时保留 thinking disabled。服务是否遵守需实测。标准 completion_tokens 已包含 reasoning_tokens；校验细分不超过 completion 后，按 total_tokens 结算，不重复累加。缺少或不合法 usage 保留未决预留。
+独立诊断 `scripts/measure_local_provider.py` 仅消费显式选定 UTF-8 页文件，输出 JSONL 耗时、quote_exact 与 usage；不操作生产预算或证明生产 schema/科学质量。生产 fake HTTP 回归另行覆盖持久编译结算。
