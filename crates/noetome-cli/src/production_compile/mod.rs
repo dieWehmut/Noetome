@@ -342,11 +342,16 @@ pub fn run(
     }
     let config = store.config(run_id)?;
     provider::validate_config(&config)?;
-    let credential = std::env::var(&config.credential_env)
-        .map_err(|_| error("COMPILE_CREDENTIAL", "所选凭据未注入，未发送模型请求。"))?;
-    if credential.is_empty()
-        || credential.len() > 8192
-        || !credential.bytes().all(|b| (33..=126).contains(&b))
+    let credential = if config.transport_mode == "local_openai" {
+        String::new()
+    } else {
+        std::env::var(&config.credential_env)
+            .map_err(|_| error("COMPILE_CREDENTIAL", "所选凭据未注入，未发送模型请求。"))?
+    };
+    if config.transport_mode != "local_openai"
+        && (credential.is_empty()
+            || credential.len() > 8192
+            || !credential.bytes().all(|b| (33..=126).contains(&b)))
     {
         return Err(error(
             "COMPILE_CREDENTIAL",
@@ -516,7 +521,9 @@ fn execute(
             config,
             &context,
         )?;
-        if crate::extraction_api::credential_echo(&prepared.body, credential) {
+        if !credential.is_empty()
+            && crate::extraction_api::credential_echo(&prepared.body, credential)
+        {
             return Err(error("COMPILE_CREDENTIAL_ECHO", "请求含外部凭据，未发送。"));
         }
         let request_sha = sha256(&prepared.body);
@@ -544,7 +551,9 @@ fn execute(
             1024 * 1024,
             &|| check_stop(store, run_id, cancel),
         )?;
-        if crate::extraction_api::credential_echo(&transport.body, credential) {
+        if !credential.is_empty()
+            && crate::extraction_api::credential_echo(&transport.body, credential)
+        {
             store.mark_unit_failed(
                 run_id,
                 &unit.unit_id,
@@ -624,7 +633,7 @@ fn finish(
             .receipt_sha256
             .as_ref()
             .is_some_and(|s| s != &sha256(&receipt_bytes))
-        || crate::extraction_api::credential_echo(&response, credential)
+        || !credential.is_empty() && crate::extraction_api::credential_echo(&response, credential)
     {
         return Err(error("COMPILE_RECEIPT", "请求/响应/回执原件不一致。"));
     }

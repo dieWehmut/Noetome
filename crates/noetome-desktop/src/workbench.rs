@@ -602,6 +602,8 @@ fn compile_config(ledger: PathBuf) -> noetome_cli::production_compile::CompileCo
         schema_version: 1,
         endpoint: ENDPOINT.into(),
         model: MODEL.into(),
+        credential_mode: None,
+        reasoning_effort: None,
         credential_env: "NOETOME_TANGMAO_API_KEY".into(),
         transport_mode: "live".into(),
         usage_ledger: ledger,
