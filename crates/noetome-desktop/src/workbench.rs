@@ -603,7 +603,9 @@ fn compile_config(ledger: PathBuf) -> noetome_cli::production_compile::CompileCo
         endpoint: ENDPOINT.into(),
         model: MODEL.into(),
         credential_mode: None,
-        reasoning_effort: None,
+        // deepseek-flash otherwise spends the whole 8192-token budget on hidden
+        // reasoning and never emits the candidate JSON for content pages.
+        reasoning_effort: Some("none".into()),
         credential_env: "NOETOME_TANGMAO_API_KEY".into(),
         transport_mode: "live".into(),
         usage_ledger: ledger,
