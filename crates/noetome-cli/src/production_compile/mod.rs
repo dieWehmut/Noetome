@@ -391,6 +391,15 @@ pub fn run(
     status(project, run_id)
 }
 
+const MAX_CONSECUTIVE_UNIT_FAILURES: usize = 5;
+
+fn unit_scoped_failure(e: &ProjectError) -> bool {
+    matches!(
+        e.code(),
+        "COMPILE_REQUEST_FAILED" | "COMPILE_CANDIDATE_FAILED"
+    )
+}
+
 fn execute(
     project: &Path,
     run_id: &str,
@@ -493,6 +502,7 @@ fn execute(
             }
         }
     }
+    let mut consecutive_failures = 0usize;
     while let Some(unit) = store.next_unit(run_id)? {
         check_stop(store, run_id, cancel)?;
         let current_page = corpus::page_revision(
@@ -584,9 +594,21 @@ fn execute(
         attempt.response_sha256 = Some(receipt.response_sha256);
         attempt.receipt_sha256 = Some(sha256(&bytes));
         store.update_attempt(run_id, &attempt)?;
-        finish(
+        match finish(
             project, run_id, store, config, budget, &unit, &attempt, credential,
-        )?;
+        ) {
+            Ok(()) => consecutive_failures = 0,
+            Err(e) if unit_scoped_failure(&e) => {
+                consecutive_failures += 1;
+                if consecutive_failures >= MAX_CONSECUTIVE_UNIT_FAILURES {
+                    return Err(error(
+                        "COMPILE_UNIT_FAILURES",
+                        format!("连续 {consecutive_failures} 个片段失败，停止新批次：{e}"),
+                    ));
+                }
+            }
+            Err(e) => return Err(e),
+        }
     }
     let summary = store.summary(run_id)?;
     store.set_status(

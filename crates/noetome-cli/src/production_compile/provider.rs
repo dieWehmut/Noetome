@@ -200,6 +200,12 @@ pub(super) fn prepare(
     if let Some(effort) = &config.reasoning_effort {
         payload["reasoning_effort"] = json!(effort);
     }
+    if config.transport_mode == "live" {
+        // deepseek-flash on the live relay silently ignores reasoning_effort for
+        // some pages and spends the whole max_tokens budget on hidden reasoning,
+        // so the candidate JSON is truncated. This switch is honored.
+        payload["enable_thinking"] = json!(false);
+    }
     let body =
         serde_json::to_vec(&payload).map_err(|_| error("COMPILE_ENCODING", "请求编码失败。"))?;
     if body.len() > 256 * 1024 {
