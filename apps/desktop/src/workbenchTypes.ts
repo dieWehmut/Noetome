@@ -65,6 +65,14 @@ export function recordText(record: unknown, field: string): string {
   return typeof value === "string" ? value : "";
 }
 export function localError(cause: unknown): string {
+  if (typeof cause === "string" && cause.startsWith("{")) {
+    try {
+      const detail = JSON.parse(cause);
+      if (typeof detail.code === "string" && typeof detail.message === "string") {
+        return `${detail.code}：${detail.message}（退出码：${detail.exit_code ?? "未知"}）\n${detail.stderr ?? ""}`;
+      }
+    } catch { /* Preserve existing handling for ordinary errors. */ }
+  }
   return typeof cause === "string" ? cause : cause instanceof Error ? cause.message : "本地组件未返回可用结果。";
 }
 export function failureText(failure: Failure): string { return `${failure.code}：${failure.message}`; }

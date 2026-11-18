@@ -122,6 +122,7 @@ try {
     $selectedProject=Selected-Path $Project
     $guards.Add([Noetome.TextInvokeNative]::DirectoryGuard($selectedProject))
     $diagnostic='credential-unavailable'
+    if (-not (Test-Path -LiteralPath $CredentialFile)) { $diagnostic='credential-missing'; throw 'stop' }
     $credentialGuard=Open-Selected $CredentialFile -External
     $secure=(Read-Selected $credentialGuard 65536) | ConvertTo-SecureString
     if ($secure.Length -lt 1 -or $secure.Length -gt 8192) { throw 'stop' }
