@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B16",
+  "current_batch": "B17",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -169,6 +169,13 @@
       "from_batch": "B15",
       "to_batch": "B16",
       "note": "按2026-11-12用户批准计划继续：先整合主干与门禁，再真实整书来源/OCR，最后统一生产编译及0.2安装闭环；仅展开三项，保留后续版本目标"
+    },
+    {
+      "at": "2026-11-18T00:12:06Z",
+      "action": "batch",
+      "from_batch": "B16",
+      "to_batch": "B17",
+      "note": "B16收尾后进入B17：修复安装版编译链路缺陷、本地模型可选provider适配、0.3.0重标与安装版整书bounded闭环（用户要求不再使用0.2版本号）"
     }
   ],
   "tasks": [
@@ -5246,7 +5253,7 @@
       "id": "B16-T03",
       "title": "真实来源驱动的持久编译任务与安装版整书闭环",
       "batch": "B16",
-      "status": "in_progress",
+      "status": "done",
       "depends_on": [
         "B16-T02"
       ],
@@ -5264,7 +5271,7 @@
         "提取公共领域规则，真实PDF/OCR进入版本化生产IR，稳定概念/原子/证据身份和分页查询，保留旧fixture独立预期",
         "CLI和桌面共用持久动态任务与预算服务，整本自动拆批且不截断，暂停/退出/恢复不丢确认产物与累计额度，未知费用不退款",
         "从真实IR生成可读详细风格笔记、来源索引与问题报告；来源和结果重启可恢复，查询与跳转可用，所有未处理范围明确",
-        "安装后原生按钮与选文件器完成真实单书多批编译、恢复、导出及Obsidian阅读；发布0.2测试版附源码SHA/安装器SHA/实际验证和未闭合清单"
+        "安装后原生按钮与选文件器完成真实单书多批编译、恢复、导出及Obsidian阅读；发布测试版附源码SHA/安装器SHA/实际验证和未闭合清单（2026-11-18 复核：安装版实测被 DESKTOP_COMPILE_WORKER_REFUSED 阻断，0.2 编号弃用，该项验收并入 B17-T03 以 0.3.0-test.1 交付）"
       ],
       "history": [
         {
@@ -5275,8 +5282,108 @@
           "note": "接续已验收corpus来源：公共领域校验、版本化生产IR、持久整书批次和累计预算，CLI/桌面共用恢复查询导出，完成真实模型与0.2安装闭环",
           "validation": [],
           "artifacts": []
+        },
+        {
+          "at": "2026-11-18T00:12:05Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "收尾：A档安装版快捷方式零模型（7.0s，passed:true，0真实模型请求）与B档安装版原生整书导入（5/5，1227页分母保留）实测通过；C档真实“开始整理”被DESKTOP_COMPILE_WORKER_REFUSED阻断，根因为verbatim路径与Selected-Path白名单冲突（4组对照实验定位）；本地模型基准8单元判定当前不可用于整书编译；0.2编号弃用，安装版闭环验收并入B17-T03",
+          "validation": [
+            "B16-T03安装版实测：A档 exit 0 7.0s passed:true 0模型请求；B档 5/5通过；C档 compile.create成功(run_id 197e3bc3)后开始整理报DESKTOP_COMPILE_WORKER_REFUSED，prepared_pages=0，账本未消耗(33185 tokens/10 attempts)；4组对照：普通路径COMPILE_NOT_FOUND(3)/verbatim scope-invalid(2)/缺凭据credential-unavailable(2)/非v4 run id COMPILE_INTEGRITY(3)；本地基准 probe2 8单元 parsed_ok 8/8、benchmedian 73.7s、max 134.1s、quote_exact 2/8；python -m unittest 与 devlog check 见本轮记录"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B16-T03.md",
+              "sha256": "d7e6b12df87803673b04b040f7edbda657cf7212ffa598af7d12892af7b0e9bf"
+            }
+          ]
         }
       ]
+    },
+    {
+      "id": "B17-T01",
+      "title": "安装版编译链路缺陷修复与结构化错误回归",
+      "batch": "B17",
+      "status": "in_progress",
+      "depends_on": [],
+      "requirements": [
+        "FR-07",
+        "FR-09",
+        "FR-15",
+        "FR-26",
+        "FR-38"
+      ],
+      "acceptance": [
+        "桌面端在调用编译凭据辅助脚本前把项目路径归一化为盘符形式（去 verbatim 前缀，非法路径显式报错），Selected-Path 不再因 `${B}${B}?${B}` 前缀失败",
+        "worker 启动失败时返回结构化错误码与 helper 原始 stderr/退出码，桌面日志可见，不再只回落到通用文案",
+        "四组对照（普通路径/verbatim/缺凭据/非 v4 run id）在修复后自动化复现，verbatim 路径不再返回 scope-invalid",
+        "安装版真实整书点击“开始整理”能进入 prepare/executing 并产生真实模型请求（bounded_stop 或真实运行均可），本轮不要求整本完成"
+      ],
+      "history": [
+        {
+          "at": "2026-11-18T00:12:07Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "先修桌面端路径归一化与编译凭据helper白名单冲突，并把worker失败做成结构化错误，再重跑B/C档取证",
+          "validation": [],
+          "artifacts": []
+        }
+      ]
+    },
+    {
+      "id": "B17-T02",
+      "title": "本地模型作为可选 provider 的生产编译适配与实测判定",
+      "batch": "B17",
+      "status": "todo",
+      "depends_on": [
+        "B17-T01"
+      ],
+      "requirements": [
+        "FR-07",
+        "FR-09",
+        "FR-15",
+        "FR-26",
+        "FR-27",
+        "FR-38"
+      ],
+      "acceptance": [
+        "生产编译配置支持显式的本地 OpenAI 兼容 provider（环回端点），不再受 live 白名单限制；本地 provider 不需要云端凭据",
+        "本地 provider 使用独立账本与独立预算权威，缺失时按契约显式报错而非自动创建余额；错误码能区分端点/账本/凭据问题",
+        "超时与输出上限可按 provider 配置，本地参数默认值有实测依据；thinking 关闭或 reasoning token 计入账本",
+        "用 20–30 个真实页单元跑本地 provider，报告成功/失败、quote 逐字保真率、单请求耗时分布并给出可用范围结论",
+        "云端 deepseek-flash 路径回归通过，行为与账本口径不变"
+      ],
+      "history": []
+    },
+    {
+      "id": "B17-T03",
+      "title": "0.3.0 重标、安装版整书 bounded 闭环与阅读验证",
+      "batch": "B17",
+      "status": "todo",
+      "depends_on": [
+        "B17-T01",
+        "B17-T02"
+      ],
+      "requirements": [
+        "FR-07",
+        "FR-09",
+        "FR-15",
+        "FR-26",
+        "FR-27",
+        "FR-35",
+        "FR-37",
+        "FR-38"
+      ],
+      "acceptance": [
+        "版本号在 package.json、Cargo.toml、tauri.conf.json 与安装产物中统一为 0.3.0，发行物不再出现 0.2 编号",
+        "安装版原生按钮完成真实整书：开始整理→若干单元真实编译成功→暂停/退出→重启恢复→继续，累计预算与已确认产物不丢",
+        "从真实 IR 生成可读笔记、来源索引与问题报告并可查询；bounded_stop 明确标出未处理范围",
+        "导出与 Obsidian 阅读在安装版实测完成并留证",
+        "发布 0.3.0-test.1 附件：源码 SHA、安装器 SHA、验证记录与未闭合清单"
+      ],
+      "history": []
     }
   ]
 }
