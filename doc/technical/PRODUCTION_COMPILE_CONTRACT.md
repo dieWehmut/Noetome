@@ -39,5 +39,6 @@ B16-T03从已验收的`corpus`消费真实页版本，新增`production_compile`
 本地必须 `credential_mode=none`、`credential_env=""`，请求不带 Authorization。旧云端配置省略 credential_mode 仍兼容 env；显式值仅接受 env。
 本地 timeout 为 1..=300000ms，输出为 1..=32768 tokens；建议初测 180000ms、4096 tokens、2048 bytes，属于测量起点而非性能验收。
 本地账本文件名固定 `local-openai.usage.json`，使用独立目录中的已有授权 JSON 基线；派生 `.production.sqlite` 与 authority marker 由现有预算机制创建，绝不创建 JSON 余额。不得把云端历史复制为本地额度。缺失基线报 `LOCAL_PROVIDER_LEDGER_MISSING`，名称不符报 `LOCAL_PROVIDER_LEDGER`，内容损坏仍返回生产预算完整性错误。
-`reasoning_effort` 可选 none/low/medium/high，请求同时保留 thinking disabled。服务是否遵守需实测。标准 completion_tokens 已包含 reasoning_tokens；校验细分不超过 completion 后，按 total_tokens 结算，不重复累加。缺少或不合法 usage 保留未决预留。
+`reasoning_effort` 可选 none/low/medium/high，请求同时保留 thinking disabled。服务是否遵守需实测。标准 completion_tokens 已包含 reasoning_tokens；校验细分不超过 completion 后，按 total_tokens 结算，不重复累加。缺少或不合法 usage 保留未决预留。LM Studio 实测只接受 on/off，其它值回退为开启思考并打 WARN。
+本地 `response_format` 必须发 strict `json_schema`（名称 `noetome_candidates_v1`）；云端 live 继续 `json_object`。2026-11-18 实测 LM Studio 对 `json_object` 直接返回 HTTP 400，故 `local_openai` 分支单独构造。
 独立诊断 `scripts/measure_local_provider.py` 仅消费显式选定 UTF-8 页文件，输出 JSONL 耗时、quote_exact 与 usage；不操作生产预算或证明生产 schema/科学质量。生产 fake HTTP 回归另行覆盖持久编译结算。
