@@ -169,8 +169,8 @@ impl WorkbenchState {
             &[
                 "source".into(),
                 "import".into(),
-                project.as_os_str().into(),
-                source.as_os_str().into(),
+                crate::external_path::argument(project)?,
+                crate::external_path::argument(source)?,
             ],
             &operation.cancel,
             None,
@@ -226,7 +226,7 @@ impl WorkbenchState {
             "-Binary".into(),
             cli_binary()?.into_os_string(),
             "-Project".into(),
-            project.as_os_str().into(),
+            crate::external_path::argument(project)?,
             "-ImportId".into(),
             import_id.into(),
             "-Config".into(),
@@ -337,7 +337,7 @@ impl WorkbenchState {
                 "-Binary".into(),
                 cli_binary()?.into_os_string(),
                 "-Project".into(),
-                project.as_os_str().to_owned(),
+                crate::external_path::argument(project)?,
                 "-RunId".into(),
                 run_id.into(),
                 "-CredentialFile".into(),
@@ -356,7 +356,7 @@ impl WorkbenchState {
                 return Err(format!("{}：{}", failure.code, failure.message));
             }
             if output.code != Some(0) {
-                return Err("DESKTOP_COMPILE_WORKER_REFUSED：整理worker未正常返回，请查看持久任务的错误与预算状态。".into());
+                return Err(compile_worker_failure(output.code, &output.stderr));
             }
             let summary: noetome_cli::production_compile::RunSummary =
                 serde_json::from_slice(&output.stdout).map_err(|_| {
@@ -1585,6 +1585,45 @@ finally { $handles | ForEach-Object { [void][NoetomeHeldProcessProbe]::CloseHand
             let pid = fs::read_to_string(&marker).unwrap();
             let probe = std::process::Command::new(&program).args(["-NoProfile", "-Command", &format!("try{{$p=[Diagnostics.Process]::GetProcessById({pid});if($p.WaitForExit(5000)){{exit 0}}else{{exit 1}}}}catch [ArgumentException]{{exit 0}}")]).status().unwrap();
             assert!(probe.success(), "acknowledged native root must have exited");
+        }
+    }
+}
+
+// Helper output has already passed its credential redactor; retain a bounded diagnostic.
+fn compile_worker_failure(exit_code: Option<i32>, stderr: &[u8]) -> String {
+    let stderr: String = String::from_utf8_lossy(stderr).chars().take(4096).collect();
+    let code = if stderr.contains("compile-credential-invoke: scope-invalid") {
+        "DESKTOP_COMPILE_CREDENTIAL_SCOPE"
+    } else if stderr.contains("compile-credential-invoke: credential-missing") {
+        "DESKTOP_COMPILE_CREDENTIAL_MISSING"
+    } else if stderr.contains("compile-credential-invoke: credential-unavailable") {
+        "DESKTOP_COMPILE_CREDENTIAL_UNAVAILABLE"
+    } else {
+        "DESKTOP_COMPILE_WORKER_REFUSED"
+    };
+    json!({"code":code,"message":"整理worker失败，请检查凭据与持久任务状态。",
+        "exit_code":exit_code,"stderr":stderr})
+    .to_string()
+}
+#[cfg(test)]
+mod compile_failure_tests {
+    #[test]
+    fn preserves_diagnostics_and_exit_code() {
+        for (diagnostic, suffix) in [
+            ("scope-invalid", "SCOPE"),
+            ("credential-missing", "MISSING"),
+            ("credential-unavailable", "UNAVAILABLE"),
+        ] {
+            let raw = format!("compile-credential-invoke: {diagnostic}\n");
+            let value: serde_json::Value =
+                serde_json::from_str(&super::compile_worker_failure(Some(2), raw.as_bytes()))
+                    .unwrap();
+            assert_eq!(
+                value["code"],
+                format!("DESKTOP_COMPILE_CREDENTIAL_{suffix}")
+            );
+            assert_eq!(value["stderr"], raw);
+            assert_eq!(value["exit_code"], 2);
         }
     }
 }

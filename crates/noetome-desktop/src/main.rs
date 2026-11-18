@@ -12,6 +12,7 @@ use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent}
 use tauri::{Manager, WindowEvent};
 
 mod desktop_data;
+mod external_path;
 mod preferences;
 mod project_entry;
 mod tasks;
