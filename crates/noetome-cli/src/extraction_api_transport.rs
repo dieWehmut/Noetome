@@ -43,9 +43,13 @@ pub(crate) fn send(
         .build()
         .map_err(|_| failure("EXTRACT_API_TRANSPORT"))?;
     // Build before counting an attempt; invalid headers/URI never reach the network.
-    let request = client
-        .post(endpoint)
-        .bearer_auth(bearer)
+    let builder = client.post(endpoint);
+    let builder = if bearer.is_empty() {
+        builder
+    } else {
+        builder.bearer_auth(bearer)
+    };
+    let request = builder
         .header(reqwest::header::CONTENT_TYPE, "application/json")
         .body(body.to_vec())
         .build()

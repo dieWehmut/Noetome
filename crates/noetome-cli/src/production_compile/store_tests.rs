@@ -69,6 +69,8 @@ impl Fixture {
             schema_version: 1,
             endpoint: "http://127.0.0.1:1/v1/chat/completions".into(),
             model: "noetome-test-store".into(),
+            credential_mode: None,
+            reasoning_effort: None,
             credential_env: "NOETOME_TEST_STORE_KEY".into(),
             transport_mode: "local_http_test".into(),
             usage_ledger: temp.path().join("unused-authority.json"),
@@ -1166,4 +1168,71 @@ fn native_directory_junction_and_database_hardlink_reject_without_target_writes(
             fs::remove_dir(&root).unwrap();
         }
     }
+}
+
+#[test]
+fn local_openai_fake_http_smoke() {
+    use std::io::{Read, Write};
+    let mut fixture = Fixture::new(&[("Authored local smoke text.", "text_ready")]);
+    fixture.config.transport_mode = "local_openai".into();
+    fixture.config.credential_mode = Some("none".into());
+    fixture.config.credential_env.clear();
+    fixture.config.model = "authored-local-model".into();
+    fixture.config.usage_ledger = fixture._temp.path().join("local-openai.usage.json");
+    let budget = fixture.authority();
+    drop(budget);
+    let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+    fixture.config.endpoint = format!(
+        "http://{}/v1/chat/completions",
+        listener.local_addr().unwrap()
+    );
+    let server = std::thread::spawn(move || {
+        let (mut socket, _) = listener.accept().unwrap();
+        socket
+            .set_read_timeout(Some(std::time::Duration::from_secs(10)))
+            .unwrap();
+        let mut raw = Vec::new();
+        let (offset, length) = loop {
+            let mut buf = [0; 4096];
+            let n = socket.read(&mut buf).unwrap();
+            assert!(n > 0);
+            raw.extend_from_slice(&buf[..n]);
+            if let Some(i) = raw.windows(4).position(|w| w == b"\r\n\r\n") {
+                let headers = String::from_utf8_lossy(&raw[..i]).to_lowercase();
+                assert!(!headers.contains("authorization:"));
+                let length: usize = headers
+                    .lines()
+                    .find_map(|l| {
+                        l.strip_prefix("content-length:")
+                            .map(|v| v.trim().parse().unwrap())
+                    })
+                    .unwrap();
+                if raw.len() >= i + 4 + length {
+                    break (i + 4, length);
+                }
+            }
+        };
+        let body: Value = serde_json::from_slice(&raw[offset..offset + length]).unwrap();
+        let input: Value =
+            serde_json::from_str(body["messages"][1]["content"].as_str().unwrap()).unwrap();
+        let candidates = json!({"schema_version":1,"request_id":input["request"]["request_id"],"binding":input["request"]["binding"],"concepts":[],"evidence":[],"atoms":[]});
+        let response=json!({"id":"fake-local-response","model":"authored-local-model","object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","content":candidates.to_string()}}],"usage":{"prompt_tokens":12,"completion_tokens":8,"total_tokens":20,"completion_tokens_details":{"reasoning_tokens":3}}}).to_string();
+        write!(socket,"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",response.len(),response).unwrap();
+    });
+    let (_store, run) = fixture.run();
+    super::super::run(
+        &fixture.project,
+        &run,
+        std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false)),
+    )
+    .unwrap();
+    server.join().unwrap();
+    assert_eq!(
+        BudgetAuthority::open(&fixture.config.usage_ledger)
+            .unwrap()
+            .status()
+            .unwrap()
+            .accounted_tokens,
+        120
+    );
 }

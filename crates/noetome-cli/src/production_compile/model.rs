@@ -10,7 +10,12 @@ pub struct CompileConfig {
     pub schema_version: u32,
     pub endpoint: String,
     pub model: String,
+    #[serde(default)]
     pub credential_env: String,
+    #[serde(default)]
+    pub credential_mode: Option<String>,
+    #[serde(default)]
+    pub reasoning_effort: Option<String>,
     pub transport_mode: String,
     pub usage_ledger: PathBuf,
     pub max_chunk_bytes: usize,

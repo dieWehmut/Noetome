@@ -421,3 +421,10 @@ RenderedFile将正文与链接分开定位，保存文件指纹、note_id、sect
 [请求预算 v1](REQUEST_BUDGET_CONTRACT.md)与旧fixture检查点、科学候选和真实累计授权分别保存。Authority固定Schema1、原policy文件及opening；Run固定原配置/输入/编译指纹、根与owner/worker身份、绝对期限和至多四个WorkUnit。attempt以Run/单元/attempt_no/request_id为唯一身份，Prepared/Reserved/MaySend/Unknown/Known/NotSent通过完整有界事件链重建；两个不同attempt即使响应SHA相同也分别结算。
 
 原单请求的request、正文和候选契约保留；只有新hooks路径增加严格`synthetic_api_transport_receipt`，绑定原请求、HTTP framing、网络次数、响应原件、失败及elapsed。Known的TokenUsage与候选结果分开，Unknown的用量和价格均为未知并保留原R。已封存network_attempts=0与从未取得MaySend的持久证明分别支撑NotSent，最终报告自报0不代替传输证明。恢复生成的recovery-validation另存，不改原request/response，不把候选成功提升为知识或科学通过。
+
+### 生产编译可选本地配置（B17）
+
+CompileConfig 增加可选 `credential_mode` 与 `reasoning_effort`；旧字段保持，schema_version=1。
+`transport_mode=local_openai` 必须显式 credential_mode=none，credential_env 为空；live/local_http_test 可省略模式，或显式 env。
+本地 usage_ledger 必须指向独立已有 `local-openai.usage.json`，沿用累计基线 schema1 和独立 SQLite authority；禁止自动初始化额度。reasoning usage 作为 completion_tokens 的子集计入 total_tokens。
+错误码：LOCAL_PROVIDER_ENDPOINT（环回端点/模型）、LOCAL_PROVIDER_CREDENTIAL_MODE（凭据声明）、LOCAL_PROVIDER_LIMIT（本地参数范围）、LOCAL_PROVIDER_LEDGER（独立文件名）、LOCAL_PROVIDER_LEDGER_MISSING（基线不存在）、COMPILE_CREDENTIAL_MODE（云端模式）、COMPILE_REASONING_EFFORT（推理参数）。

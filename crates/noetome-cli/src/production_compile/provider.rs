@@ -32,6 +32,71 @@ pub(super) struct Receipt {
 pub(super) fn validate_config(config: &CompileConfig) -> Result<(), ProjectError> {
     let url = reqwest::Url::parse(&config.endpoint)
         .map_err(|_| error("COMPILE_CONFIG", "模型端点格式无效。"))?;
+    let local = config.transport_mode == "local_openai";
+    if local {
+        if config.credential_mode.as_deref() != Some("none") || !config.credential_env.is_empty() {
+            return Err(error(
+                "LOCAL_PROVIDER_CREDENTIAL_MODE",
+                "本地 provider 必须显式 credential_mode=none 且 credential_env 为空。",
+            ));
+        }
+        if url.scheme() != "http"
+            || !matches!(url.host_str(), Some("127.0.0.1" | "localhost"))
+            || url.port().is_none()
+            || url.path() != "/v1/chat/completions"
+            || url.query().is_some()
+            || url.fragment().is_some()
+            || !url.username().is_empty()
+            || url.password().is_some()
+            || config.model.trim().is_empty()
+        {
+            return Err(error(
+                "LOCAL_PROVIDER_ENDPOINT",
+                "本地端点需 http://127.0.0.1:<port>/v1/chat/completions 或 localhost，同模型名不能为空。",
+            ));
+        }
+        if !(1..=32768).contains(&config.max_output_tokens)
+            || !(1..=300000).contains(&config.request_timeout_ms)
+        {
+            return Err(error(
+                "LOCAL_PROVIDER_LIMIT",
+                "本地 max_output_tokens 范围 1..=32768；request_timeout_ms 范围 1..=300000。",
+            ));
+        }
+        if config.usage_ledger.file_name().and_then(|v| v.to_str())
+            != Some("local-openai.usage.json")
+        {
+            return Err(error(
+                "LOCAL_PROVIDER_LEDGER",
+                "本地独立账本必须命名 local-openai.usage.json。",
+            ));
+        }
+        if !config.usage_ledger.is_file() {
+            return Err(error(
+                "LOCAL_PROVIDER_LEDGER_MISSING",
+                "本地预算基线缺失；请显式提供已有授权账本，禁止创建余额。",
+            ));
+        }
+    } else if config
+        .credential_mode
+        .as_deref()
+        .is_some_and(|v| v != "env")
+    {
+        return Err(error(
+            "COMPILE_CREDENTIAL_MODE",
+            "云端及测试 provider 凭据模式必须为 env。",
+        ));
+    }
+    if config
+        .reasoning_effort
+        .as_deref()
+        .is_some_and(|v| !matches!(v, "none" | "low" | "medium" | "high"))
+    {
+        return Err(error(
+            "COMPILE_REASONING_EFFORT",
+            "reasoning_effort 支持 none/low/medium/high。",
+        ));
+    }
     let test = config.transport_mode == "local_http_test"
         && config.credential_env.starts_with("NOETOME_TEST_")
         && config.model.starts_with("noetome-test-")
@@ -50,12 +115,12 @@ pub(super) fn validate_config(config: &CompileConfig) -> Result<(), ProjectError
         && config.model == "deepseek-flash"
         && config.credential_env == "NOETOME_TANGMAO_API_KEY";
     if config.schema_version != 1
-        || !(test || live)
+        || !(test || live || local)
         || !(256..=24000).contains(&config.max_chunk_bytes)
         || config.max_output_tokens == 0
-        || config.max_output_tokens > 8192
+        || (!local && config.max_output_tokens > 8192)
         || config.request_timeout_ms == 0
-        || config.request_timeout_ms > 60000
+        || (!local && config.request_timeout_ms > 60000)
         || config.usage_ledger.as_os_str().is_empty()
     {
         return Err(error(
@@ -114,12 +179,16 @@ pub(super) fn prepare(
             "source_issues":unit.issue_codes,
             "existing_concepts":context },
     });
-    let body = serde_json::to_vec(&json!({"model":config.model,
+    let mut payload = json!({"model":config.model,
         "messages":[{"role":"system","content":instruction},
             {"role":"user","content":serde_json::to_string(&input).map_err(|_| error("COMPILE_ENCODING","请求编码失败。"))?}],
         "thinking":{"type":"disabled"},"response_format":{"type":"json_object"},
-        "max_tokens":config.max_output_tokens,"stream":false}))
-        .map_err(|_| error("COMPILE_ENCODING", "请求编码失败。"))?;
+        "max_tokens":config.max_output_tokens,"stream":false});
+    if let Some(effort) = &config.reasoning_effort {
+        payload["reasoning_effort"] = json!(effort);
+    }
+    let body =
+        serde_json::to_vec(&payload).map_err(|_| error("COMPILE_ENCODING", "请求编码失败。"))?;
     if body.len() > 256 * 1024 {
         return Err(error(
             "COMPILE_REQUEST_LIMIT",
@@ -179,4 +248,83 @@ pub(super) fn usage(response: &[u8]) -> Option<crate::production_budget::BudgetU
         output_tokens: metadata.usage["output_tokens"].as_u64()?,
         total_tokens: metadata.usage["total_tokens"].as_u64()?,
     })
+}
+
+#[cfg(test)]
+mod local_tests {
+    use super::*;
+    #[test]
+    fn local_config_matrix() {
+        let root = std::env::temp_dir().join(uuid::Uuid::new_v4().to_string());
+        std::fs::create_dir(&root).unwrap();
+        let ledger = root.join("local-openai.usage.json");
+        let mut c = CompileConfig {
+            schema_version: 1,
+            endpoint: "http://localhost:1234/v1/chat/completions".into(),
+            model: "ornith-1.5-9b-2".into(),
+            credential_env: String::new(),
+            credential_mode: Some("none".into()),
+            reasoning_effort: Some("none".into()),
+            transport_mode: "local_openai".into(),
+            usage_ledger: ledger.clone(),
+            max_chunk_bytes: 2048,
+            max_output_tokens: 32768,
+            request_timeout_ms: 300000,
+        };
+        assert_eq!(
+            validate_config(&c).unwrap_err().code(),
+            "LOCAL_PROVIDER_LEDGER_MISSING"
+        );
+        std::fs::write(&ledger, b"existing baseline").unwrap();
+        validate_config(&c).unwrap();
+        for endpoint in [
+            "http://example.com:1234/v1/chat/completions",
+            "https://localhost:1234/v1/chat/completions",
+            "http://localhost/v1/chat/completions",
+            "http://localhost:1234/v1/chat/completions?x=1",
+        ] {
+            c.endpoint = endpoint.into();
+            assert_eq!(
+                validate_config(&c).unwrap_err().code(),
+                "LOCAL_PROVIDER_ENDPOINT"
+            );
+        }
+        c.endpoint = "http://127.0.0.1:1234/v1/chat/completions".into();
+        for n in [0, 300001] {
+            c.request_timeout_ms = n;
+            assert_eq!(
+                validate_config(&c).unwrap_err().code(),
+                "LOCAL_PROVIDER_LIMIT"
+            );
+        }
+        c.request_timeout_ms = 1;
+        for n in [0, 32769] {
+            c.max_output_tokens = n;
+            assert_eq!(
+                validate_config(&c).unwrap_err().code(),
+                "LOCAL_PROVIDER_LIMIT"
+            );
+        }
+        c.max_output_tokens = 1;
+        validate_config(&c).unwrap();
+        c.credential_mode = None;
+        assert_eq!(
+            validate_config(&c).unwrap_err().code(),
+            "LOCAL_PROVIDER_CREDENTIAL_MODE"
+        );
+        c.transport_mode = "live".into();
+        c.endpoint = "https://ai.1343263.xyz/v1/chat/completions".into();
+        c.model = "deepseek-flash".into();
+        c.credential_env = "NOETOME_TANGMAO_API_KEY".into();
+        validate_config(&c).unwrap();
+        c.request_timeout_ms = 60001;
+        assert!(validate_config(&c).is_err());
+        c.request_timeout_ms = 60000;
+        c.max_output_tokens = 8193;
+        assert!(validate_config(&c).is_err());
+        c.max_output_tokens = 8192;
+        validate_config(&c).unwrap();
+        c.model = "other".into();
+        assert!(validate_config(&c).is_err());
+    }
 }
