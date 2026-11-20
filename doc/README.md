@@ -2,7 +2,7 @@
 
 本目录是 Noetome 的需求、技术、设计和执行标准入口。用户已经采纳原需求文档 D01 至 D15 的建议；按已定基线小步执行，不重复询问相同默认策略。
 
-当前开发入口为 [B16 近期步骤](execution/NEXT_STEPS.md)，完整目标和发布节奏见 [Release 路线](execution/RELEASE_ROADMAP.md)，已确认阻断及需求证据状态见 [真实缺口清单](execution/KNOWN_GAPS.md)。
+近期开发、最初 PRD 核验与发布安排见以下入口。[近期步骤](execution/NEXT_STEPS.md) · [B18 核验](validation/B18-T02.md) · [Release 路线](execution/RELEASE_ROADMAP.md) · [真实缺口](execution/KNOWN_GAPS.md)
 
 B16-T02 的真实整书来源、75份预检、32页现成OCR对照和最终同源Windows桌面/恢复结果见[本项验证](validation/B16-T02.md)。来源层与后续真实IR、整书知识编译及0.2安装闭环的边界分别保留，不以来源登记完成推定知识全部核验。
 

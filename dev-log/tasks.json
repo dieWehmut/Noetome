@@ -5549,7 +5549,7 @@
       "id": "B18-T02",
       "title": "按最初采纳 PRD 核验修复后主线与真实产物",
       "batch": "B18",
-      "status": "todo",
+      "status": "done",
       "depends_on": [
         "B18-T01"
       ],
@@ -5559,7 +5559,35 @@
         "核验 B17 真实导出与处理范围，保留 1227 页/1298 单元分母、未核验标记及模型/科学质量限制",
         "区分原始产品目标、当前可运行能力、fixture 证据和已通过真实闭环，给出按风险排列的后续范围且不擅自实现新阶段"
       ],
-      "history": []
+      "history": [
+        {
+          "at": "2026-11-20T07:50:21Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "核验最初采纳 PRD 与 B17 实际产物；只读审计，不运行模型、整书或生产 Vault",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-20T11:19:33Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成四十项功能、十七项非功能与四十个场景的证据核验。原始 PRD 的个人可用版门槛尚待验收。",
+          "validation": [
+            "逐项核对最初采纳 PRD 和当前 Git blob。97 个编号一一匹配。219 个证据链接均指向 61 个可读取的文件及有效行号。",
+            "只读复核 B17 已保存产物。30/30 个清单文件大小和 SHA256 匹配，18/18 个相对链接命中预期文件。1,227 页、1,298 单元、2 确认、19 未核验知识原子。",
+            "CPython 3.12.14 下全量 Python 套件计 1,433 项，1,390 通过，43 跳过，退出 0。git diff --check 通过。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B18-T02.md",
+              "sha256": "1c9f251441dd4f0f975d87bcd4f1488e7430fa38542525fba3ae49359169ae20"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
