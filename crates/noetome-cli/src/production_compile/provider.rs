@@ -30,6 +30,7 @@ pub(super) struct Receipt {
 }
 
 pub(super) fn validate_config(config: &CompileConfig) -> Result<(), ProjectError> {
+    config.strategy_version()?;
     let url = reqwest::Url::parse(&config.endpoint)
         .map_err(|_| error("COMPILE_CONFIG", "模型端点格式无效。"))?;
     let local = config.transport_mode == "local_openai";
@@ -314,6 +315,7 @@ mod local_tests {
             max_chunk_bytes: 2048,
             max_output_tokens: 4096,
             request_timeout_ms: 300000,
+            request_strategy_version: None,
         };
         let local = response_format(&c, &schema);
         assert_eq!(local["type"], "json_schema");
@@ -341,6 +343,7 @@ mod local_tests {
             max_chunk_bytes: 2048,
             max_output_tokens: 32768,
             request_timeout_ms: 300000,
+            request_strategy_version: None,
         };
         assert_eq!(
             validate_config(&c).unwrap_err().code(),

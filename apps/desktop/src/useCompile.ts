@@ -3,7 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 import type { ProjectSummary } from "./workbenchTypes";
 import { localError } from "./workbenchTypes";
 import { compileNeedsRetry } from "./compileTypes";
-import type { CompileControl, CompileEvidence, CompileKind, CompileQuery, CompileRun } from "./compileTypes";
+import type { CompileControl, CompileEvidence, CompileKind, CompileQuery, CompileRun, CompileScope } from "./compileTypes";
 
 const PAGE_SIZE = 20;
 
@@ -102,11 +102,11 @@ export default function useCompile(project: ProjectSummary | null) {
     try { await action(); } catch (cause) { if (current()) setError(localError(cause)); }
     finally { if (operationLock.current === generation) operationLock.current = null; if (current()) setBusy(null); }
   }
-  function create(sourceIds: string[]) {
+  function create(sourceIds: string[], selection: CompileScope | null = null) {
     return operation("create", async () => {
-      const result = await invoke<CompileRun>("compile_create", { project: projectPath, sourceIds });
+      const result = await invoke<CompileRun>("compile_create", { project: projectPath, sourceIds, scope: selection });
       if (!current()) return;
-      acceptRun(result); setSelectedId(result.run_id); setOffset(0); setSearch(""); setNotice("整书任务已保存。开始后会自动分批整理全部物理页，缺失页面仍显示问题。");
+      acceptRun(result); setSelectedId(result.run_id); setOffset(0); setSearch(""); setNotice(selection ? "所选物理页范围已固定保存。点击开始后分批整理；更改范围请建立新任务。" : "整本任务已保存。开始后会分批整理全部物理页，缺失页面仍显示问题。");
     });
   }
   async function start(id: string) {

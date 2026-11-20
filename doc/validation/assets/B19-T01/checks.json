@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "status": "validated_scope_and_ai_reference_human_review_pending",
+  "scope": {
+    "source_sha256": "129405d0b3e7ade5f7da01a91b99dc738e3b1a9e1ed21bdee08265044c43c37b",
+    "physical_pages": 1227,
+    "selected_ranges": [
+      {
+        "start_page": 34,
+        "end_page": 56
+      }
+    ],
+    "selected_pages": 23,
+    "out_of_scope_pages": 1204
+  },
+  "verified": {
+    "production_rust": {
+      "passed": 41,
+      "failed": 0
+    },
+    "chapter_cli_blackbox": {
+      "passed": 5,
+      "failed": 0,
+      "platform": "wsl"
+    },
+    "actual_frontend_parser": {
+      "valid_cases": 4,
+      "invalid_cases": 18,
+      "passed": true
+    },
+    "web_typecheck": true,
+    "web_build": true,
+    "wsl_workspace_check": true,
+    "protected_state": {
+      "unchanged": true,
+      "request_files": 78,
+      "runs": 4,
+      "ir_tables": 12,
+      "budget_events": 234
+    },
+    "native_snapshot": {
+      "working_tree_snapshot": true,
+      "base_commit": "162381c31c5006444b3f2569d831653482919a5f",
+      "files": 19787,
+      "bytes": 3032257683
+    },
+    "native_format": true,
+    "native_workspace_check": true,
+    "native_chapter_blackbox": {
+      "passed": 5,
+      "failed": 0,
+      "platform": "windows"
+    },
+    "native_rust": {
+      "library_retry": {
+        "passed": 810,
+        "failed": 0,
+        "ignored": 1,
+        "exit_code": 0
+      },
+      "other_workspace_targets": {
+        "passed": 615,
+        "failed": 0,
+        "ignored": 0,
+        "targets": 42
+      },
+      "combined": {
+        "passed": 1425,
+        "failed": 0,
+        "ignored": 1
+      },
+      "initial_failed_run_preserved": true
+    },
+    "native_python": {
+      "tests_run": 1460,
+      "passed": 1434,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 26,
+      "exit_code": 0
+    }
+  },
+  "not_passed": {
+    "wsl_python": {
+      "tests_run": 1393,
+      "errors": 4,
+      "skipped": 51,
+      "error": "OSError: [Errno 8] Exec format error: /mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
+    },
+    "wsl_rust": {
+      "exit_code": 101,
+      "full_stream_aggregate_not_retained": true
+    },
+    "native_rust_initial": {
+      "exit_code": 101,
+      "library": {
+        "passed": 794,
+        "failed": 16,
+        "ignored": 1
+      },
+      "cause": "The isolated CARGO_TARGET_DIR omitted the repo target/debug/noetome.exe location expected by existing library subprocess fixtures.",
+      "library_retry": "passed_after_fixture_layout_correction",
+      "remaining_targets_failed": 0
+    }
+  },
+  "reference": {
+    "annotator": "ai",
+    "human_review": "pending",
+    "atoms": 173,
+    "critical": 146,
+    "necessary": 27,
+    "total_support_anchors": 252,
+    "visual_inventory": 40,
+    "numbered_figures": 24,
+    "formula_groups": 36,
+    "unknown_items": 20,
+    "reference_sha256": "d0dfef79ad6bcb164a103db7d424991723975ae7e5e326216787e2c355903442",
+    "manifest_sha256": "1376613eee2a3cf957123ca87b230a62408d2f76a7f4005d7759e0e7d8a8e055",
+    "manifest_files": 139,
+    "independent_review": {
+      "p0": 0,
+      "p1": 0,
+      "p2": 1,
+      "erratum_applied_via_overlay": true,
+      "errata_sha256": "cb4dfdc1ed0aeb4476bdeafef531d47eeb3974cf3076b655d2b4fcda3fd18466",
+      "original_freeze_unchanged": true,
+      "manifest_entries": 139,
+      "support_anchors": 252,
+      "focus_anchors": 233,
+      "render_text_pages": 30,
+      "image_pages_sampled": 15
+    }
+  },
+  "limitations": [
+    "No real model request or scientific accuracy pass in T01.",
+    "Installed GUI and Obsidian chapter acceptance belongs to T03.",
+    "AI chapter reference does not replace formal 200-atom human Gold."
+  ]
+}

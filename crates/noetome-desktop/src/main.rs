@@ -126,10 +126,12 @@ async fn workbench_blocking<T: Send + 'static>(
 async fn compile_create(
     project: String,
     source_ids: Vec<String>,
+    scope: Option<noetome_cli::production_compile::CompileScope>,
     state: tauri::State<'_, workbench::WorkbenchState>,
 ) -> Result<noetome_cli::production_compile::RunSummary, String> {
     let state = state.inner().clone();
-    workbench_blocking(move || state.compile_create(Path::new(&project), &source_ids)).await
+    workbench_blocking(move || state.compile_create_scoped(Path::new(&project), &source_ids, scope))
+        .await
 }
 #[tauri::command]
 async fn compile_run(

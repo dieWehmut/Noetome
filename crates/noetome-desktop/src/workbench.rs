@@ -303,9 +303,22 @@ impl WorkbenchState {
         project: &Path,
         source_ids: &[String],
     ) -> Result<noetome_cli::production_compile::RunSummary, String> {
+        self.compile_create_scoped(project, source_ids, None)
+    }
+    pub fn compile_create_scoped(
+        &self,
+        project: &Path,
+        source_ids: &[String],
+        scope: Option<noetome_cli::production_compile::CompileScope>,
+    ) -> Result<noetome_cli::production_compile::RunSummary, String> {
         let (_, ledger) = profile_paths()?;
-        noetome_cli::production_compile::create(project, source_ids, compile_config(ledger))
-            .map_err(|error| error.to_string())
+        noetome_cli::production_compile::create_scoped(
+            project,
+            source_ids,
+            compile_config(ledger),
+            scope,
+        )
+        .map_err(|error| error.to_string())
     }
     pub fn compile_run(
         &self,
@@ -612,6 +625,7 @@ fn compile_config(ledger: PathBuf) -> noetome_cli::production_compile::CompileCo
         max_chunk_bytes: 6000,
         max_output_tokens: 8192,
         request_timeout_ms: 60000,
+        request_strategy_version: None,
     }
 }
 fn production_model_status(mut status: ModelStatus, ledger: &Path) -> Result<ModelStatus, String> {

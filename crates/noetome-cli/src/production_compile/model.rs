@@ -21,6 +21,41 @@ pub struct CompileConfig {
     pub max_chunk_bytes: usize,
     pub max_output_tokens: u64,
     pub request_timeout_ms: u64,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub request_strategy_version: Option<u32>,
+}
+
+impl CompileConfig {
+    pub(super) fn strategy_version(&self) -> Result<u32, crate::project::ProjectError> {
+        match self.request_strategy_version.unwrap_or(1) {
+            1 => Ok(1),
+            _ => Err(super::error(
+                "COMPILE_REQUEST_STRATEGY",
+                "请求策略版本不受支持；历史缺省配置仅按 v1 解释。",
+            )),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct CompileScope {
+    pub schema_version: u32,
+    pub sources: Vec<SourceSelection>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct SourceSelection {
+    pub source_id: String,
+    pub page_ranges: Vec<PageRange>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(deny_unknown_fields)]
+pub struct PageRange {
+    pub start_page: u32,
+    pub end_page: u32,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -31,6 +66,75 @@ pub struct SourceScope {
     pub display_name: String,
     pub byte_length: u64,
     pub physical_pages: u32,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub scope_schema_version: Option<u32>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub page_ranges: Option<Vec<PageRange>>,
+}
+
+impl SourceScope {
+    pub(super) fn validate_ranges(&self) -> Result<(), crate::project::ProjectError> {
+        let valid = match (self.scope_schema_version, self.page_ranges.as_deref()) {
+            (None, None) => self.physical_pages > 0,
+            (Some(1), Some(ranges)) if !ranges.is_empty() => {
+                let mut previous_end = 0;
+                ranges.iter().all(|range| {
+                    let valid = range.start_page > previous_end
+                        && range.start_page <= range.end_page
+                        && range.end_page <= self.physical_pages;
+                    previous_end = range.end_page;
+                    valid
+                })
+            }
+            _ => false,
+        };
+        if !valid {
+            return Err(super::error(
+                "COMPILE_SCOPE",
+                "范围版本或物理页区间无效；需非空、一基、顺序不重叠且不超过原书页数。",
+            ));
+        }
+        Ok(())
+    }
+
+    pub(super) fn selected_pages(&self) -> u64 {
+        self.page_ranges
+            .as_ref()
+            .map_or(self.physical_pages as u64, |ranges| {
+                ranges
+                    .iter()
+                    .map(|range| u64::from(range.end_page) - u64::from(range.start_page) + 1)
+                    .sum()
+            })
+    }
+
+    pub(super) fn contains_page(&self, number: u32) -> bool {
+        number > 0
+            && number <= self.physical_pages
+            && self.page_ranges.as_ref().is_none_or(|ranges| {
+                ranges
+                    .iter()
+                    .any(|range| (range.start_page..=range.end_page).contains(&number))
+            })
+    }
+
+    // The saved preparation cursor is a count, never an absolute physical page.
+    pub(super) fn page_at(&self, mut ordinal: u32) -> Option<u32> {
+        if let Some(ranges) = &self.page_ranges {
+            for range in ranges {
+                let count = range.end_page - range.start_page + 1;
+                if ordinal < count {
+                    return Some(range.start_page + ordinal);
+                }
+                ordinal -= count;
+            }
+            None
+        } else if ordinal < self.physical_pages {
+            Some(ordinal + 1)
+        } else {
+            None
+        }
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -47,7 +151,14 @@ pub struct RunSummary {
     pub stage: String,
     pub sources: Vec<SourceScope>,
     pub physical_pages: u64,
+    pub selected_pages: u64,
+    pub out_of_scope_pages: u64,
+    pub request_strategy_version: u32,
+    /// 已登记的范围内页，保留旧口径，包含准备失败页。
     pub prepared_pages: u64,
+    pub unprepared_pages: u64,
+    /// 准备失败或含失败单元的去重页数，可与 prepared_pages 重叠。
+    pub failed_pages: u64,
     pub units_total: u64,
     pub units_confirmed: u64,
     pub units_failed: u64,

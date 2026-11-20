@@ -283,9 +283,14 @@ pub fn export(project: &Path, run_id: &str, output: &Path) -> Result<Value, Proj
         .units_total
         .saturating_sub(summary.units_confirmed)
         .saturating_sub(summary.units_failed);
-    save_artifact(&scope_note,format!("# 处理范围\n\n已登记 {} 个物理页，准备 {} 页；确认 {} 个片段，失败 {} 个片段，尚待处理 {} 个片段，待OCR {} 页。\n\n已保存候选原子 {} 个，均未独立核验。累计预算及所有未处理范围以处理范围.json和独立索引为准。原始PDF未随笔记打包。\n",summary.physical_pages,summary.prepared_pages,summary.units_confirmed,summary.units_failed,pending,summary.pending_ocr_pages,summary.atoms).as_bytes())?;
+    save_artifact(&scope_note,format!("# 处理范围\n\n原书共 {} 个物理页；本次选择 {} 页，范围外 {} 页。范围内已尝试准备 {} 页，尚未准备 {} 页，失败 {} 页（失败页可同时计入已尝试准备）。确认 {} 个片段，失败 {} 个片段，尚待处理 {} 个片段，待OCR {} 页。\n\n已保存候选原子 {} 个，均未独立核验。累计预算及所有未处理范围以处理范围.json和独立索引为准。原始PDF未随笔记打包。\n",summary.physical_pages,summary.selected_pages,summary.out_of_scope_pages,summary.prepared_pages,summary.unprepared_pages,summary.failed_pages,summary.units_confirmed,summary.units_failed,pending,summary.pending_ocr_pages,summary.atoms).as_bytes())?;
     manifest.push(json!({"path":"处理范围.md","fingerprint":fingerprint(&scope_note)?}));
-    let report = json!({"schema_version":1,"run_id":run_id,"scope":"all_physical_pages","summary":summary,
+    let scope_kind = if summary.out_of_scope_pages == 0 {
+        "all_physical_pages"
+    } else {
+        "selected_physical_page_ranges"
+    };
+    let report = json!({"schema_version":1,"run_id":run_id,"scope":scope_kind,"scope_schema_version":1,"summary":summary,
         "knowledge_status":summary.knowledge_status,"scientific_quality":summary.scientific_quality,"raw_pdf_included":false,
         "notes_style":"detailed_supported_candidates","manifest":"export-manifest.json","files":manifest});
     let scope_json = output.join("处理范围.json");

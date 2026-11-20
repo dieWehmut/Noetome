@@ -4,9 +4,11 @@ pub mod command;
 mod export;
 mod model;
 mod provider;
+#[cfg(test)]
+mod scope_tests;
 mod store;
 pub use export::export;
-pub use model::{CompileConfig, RunSummary};
+pub use model::{CompileConfig, CompileScope, PageRange, RunSummary, SourceSelection};
 
 use crate::{
     corpus,
@@ -42,7 +44,17 @@ pub fn create(
     source_ids: &[String],
     config: CompileConfig,
 ) -> Result<RunSummary, ProjectError> {
+    create_scoped(project, source_ids, config, None)
+}
+
+pub fn create_scoped(
+    project: &Path,
+    source_ids: &[String],
+    mut config: CompileConfig,
+    scope: Option<CompileScope>,
+) -> Result<RunSummary, ProjectError> {
     provider::validate_config(&config)?;
+    config.request_strategy_version = Some(config.strategy_version()?);
     if source_ids.is_empty()
         || source_ids
             .iter()
@@ -50,26 +62,61 @@ pub fn create(
             .len()
             != source_ids.len()
     {
-        return Err(error(
-            "COMPILE_SELECTION",
-            "请选择不重复的真实来源；范围为所有物理页。",
-        ));
+        return Err(error("COMPILE_SELECTION", "请选择不重复的真实来源。"));
     }
+    let mut selections = if let Some(scope) = scope {
+        if scope.schema_version != 1 || scope.sources.len() != source_ids.len() {
+            return Err(error(
+                "COMPILE_SCOPE",
+                "范围版本无效或来源集合不符合明确选择。",
+            ));
+        }
+        let mut selections = std::collections::BTreeMap::new();
+        for selection in scope.sources {
+            if !source_ids.contains(&selection.source_id)
+                || selections
+                    .insert(selection.source_id, selection.page_ranges)
+                    .is_some()
+            {
+                return Err(error("COMPILE_SCOPE", "范围来源重复或不属于本轮明确选择。"));
+            }
+        }
+        Some(selections)
+    } else {
+        None
+    };
     let mut sources = Vec::new();
     for id in source_ids {
         let source = corpus::verify_source(project, id)?;
-        sources.push(SourceScope {
+        let physical_pages = source
+            .page_count
+            .ok_or_else(|| error("COMPILE_SOURCE", "来源物理页数未知。"))?;
+        let mut page_ranges = if let Some(selections) = &mut selections {
+            selections
+                .remove(id)
+                .ok_or_else(|| error("COMPILE_SCOPE", "范围来源集合不完整。"))?
+        } else {
+            vec![PageRange {
+                start_page: 1,
+                end_page: physical_pages,
+            }]
+        };
+        page_ranges.sort_by_key(|range| (range.start_page, range.end_page));
+        let selected = SourceScope {
             source_id: id.clone(),
             source_sha256: source
                 .content_sha256
                 .ok_or_else(|| error("COMPILE_SOURCE", "来源原件尚未确认。"))?,
             display_name: source.display_name,
             byte_length: source.byte_length,
-            physical_pages: source
-                .page_count
-                .ok_or_else(|| error("COMPILE_SOURCE", "来源物理页数未知。"))?,
-        });
+            physical_pages,
+            scope_schema_version: Some(1),
+            page_ranges: Some(page_ranges),
+        };
+        selected.validate_ranges()?;
+        sources.push(selected);
     }
+    // All selected-source ranges are validated before any budget or compile writes.
     // This is an explicit migration of the existing authority, never a new cap.
     // Missing history, partial migration or modified ownership fails closed.
     let _budget = if project::exists(&crate::production_budget::authority_marker_path(

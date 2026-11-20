@@ -354,8 +354,10 @@ impl Store {
         if config.schema_version != 1 || sources.is_empty() {
             return Err(invalid("运行版本或来源范围为空。"));
         }
+        config.strategy_version()?;
         let mut seen = BTreeSet::new();
         for source in sources {
+            source.validate_ranges()?;
             uuid(&source.source_id)?;
             if !seen.insert(&source.source_id)
                 || !domain::is_sha(&source.source_sha256)
@@ -406,7 +408,9 @@ impl Store {
                 |r| Ok((r.get(0)?, r.get(1)?)),
             )
             .map_err(db)?;
-        pinned(&raw, &hash)
+        let config: CompileConfig = pinned(&raw, &hash)?;
+        config.strategy_version()?;
+        Ok(config)
     }
     fn sources(&self, run_id: &str) -> Result<Vec<SourceScope>, ProjectError> {
         let mut query = self
@@ -420,7 +424,9 @@ impl Store {
             .map_err(db)?
             .map(|row| {
                 let (raw, hash) = row.map_err(db)?;
-                pinned(&raw, &hash)
+                let source: SourceScope = pinned(&raw, &hash)?;
+                source.validate_ranges()?;
+                Ok(source)
             })
             .collect()
     }
@@ -452,7 +458,20 @@ impl Store {
             n.checked_add(s.physical_pages as u64)
                 .ok_or_else(|| invalid("物理页计数溢出。"))
         })?;
+        let selected_pages = sources.iter().try_fold(0u64, |n, source| {
+            n.checked_add(source.selected_pages())
+                .ok_or_else(|| invalid("所选页计数溢出。"))
+        })?;
+        let out_of_scope_pages = physical_pages
+            .checked_sub(selected_pages)
+            .ok_or_else(|| invalid("所选页数超过原书总页数。"))?;
+        let request_strategy_version = self.config(run_id)?.strategy_version()?;
         let prepared_pages = self.count("SELECT count(*) FROM pages WHERE run_id=?1", run_id)?;
+        if prepared_pages > selected_pages {
+            return Err(invalid("已准备页数超过固定范围。"));
+        }
+        let unprepared_pages = selected_pages - prepared_pages;
+        let failed_pages = self.count("SELECT count(*) FROM pages p WHERE p.run_id=?1 AND (p.status='failed' OR EXISTS (SELECT 1 FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status='failed'))", run_id)?;
         if cancelled {
             status = "cancelled".into();
         } else if code.is_some()
@@ -466,9 +485,9 @@ impl Store {
         }
         let atoms = self.count("SELECT count(*) FROM atoms WHERE run_id=?1", run_id)?;
         Ok(RunSummary{schema_version:1,run_id:run_id.into(),status,stage,sources,physical_pages,
-            prepared_pages,
+            selected_pages,out_of_scope_pages,request_strategy_version,prepared_pages,unprepared_pages,failed_pages,
             units_total:self.count("SELECT count(*) FROM units WHERE run_id=?1",run_id)?,units_confirmed:self.count("SELECT count(*) FROM units WHERE run_id=?1 AND status='confirmed'",run_id)?,units_failed:self.count("SELECT count(*) FROM units WHERE run_id=?1 AND status='failed'",run_id)?,
-            pending_ocr_pages:self.count("SELECT count(*) FROM pages WHERE run_id=?1 AND status='needs_ocr'",run_id)?,unresolved_pages:physical_pages.saturating_sub(prepared_pages)+self.count("SELECT count(*) FROM pages p WHERE p.run_id=?1 AND (p.status IN ('pending','needs_ocr','needs_review','failed') OR EXISTS (SELECT 1 FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status!='confirmed'))",run_id)?,
+            pending_ocr_pages:self.count("SELECT count(*) FROM pages WHERE run_id=?1 AND status='needs_ocr'",run_id)?,unresolved_pages:unprepared_pages+self.count("SELECT count(*) FROM pages p WHERE p.run_id=?1 AND (p.status IN ('pending','needs_ocr','needs_review','failed') OR EXISTS (SELECT 1 FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status!='confirmed'))",run_id)?,
             concepts:self.count("SELECT count(*) FROM concepts WHERE run_id=?1",run_id)?,atoms,evidence:self.count("SELECT count(*) FROM evidence WHERE run_id=?1",run_id)?,attempts:self.count("SELECT count(*) FROM attempts WHERE run_id=?1",run_id)?,ir_revision:u64::try_from(revision).map_err(|_|invalid("IR修订号无效。"))?,knowledge_status:if atoms>0 {"unverified"}else{"pending"}.into(),scientific_quality:"not_run".into(),budget:None,error:code.map(|code|Failure{code,message:message.unwrap_or_default()}),created_at})
     }
     pub(super) fn next_unprepared_page(
@@ -494,8 +513,12 @@ impl Store {
         {
             let (raw, hash, prepared) = row.map_err(db)?;
             let source: SourceScope = pinned(&raw, &hash)?;
-            if prepared < source.physical_pages {
-                return Ok(Some((source, prepared + 1)));
+            source.validate_ranges()?;
+            if u64::from(prepared) > source.selected_pages() {
+                return Err(invalid("来源准备游标超过固定页范围。"));
+            }
+            if let Some(number) = source.page_at(prepared) {
+                return Ok(Some((source, number)));
             }
         }
         Ok(None)
@@ -511,7 +534,8 @@ impl Store {
         issues: Vec<Value>,
     ) -> Result<(), ProjectError> {
         self.run_directory(run_id)?;
-        if !domain::is_sha(page_sha) || number == 0 || number > source.physical_pages {
+        source.validate_ranges()?;
+        if !domain::is_sha(page_sha) || !source.contains_page(number) {
             return Err(invalid("页版本摘要或物理页号无效。"));
         }
         let selected = self
@@ -583,8 +607,8 @@ impl Store {
                 |r| r.get(0),
             )
             .map_err(db)?;
-        if number != prepared + 1 {
-            return Err(invalid("拆页须按来源完整物理顺序确认。"));
+        if source.page_at(prepared) != Some(number) {
+            return Err(invalid("拆页须按所选范围内的物理页顺序确认。"));
         }
         tx.execute(
             "INSERT INTO pages VALUES(?1,?2,?3,?4,?5,?6,?7)",
@@ -615,7 +639,7 @@ impl Store {
         }
         tx.execute(
             "UPDATE sources SET prepared_pages=?3 WHERE run_id=?1 AND source_id=?2",
-            params![run_id, source.source_id, number],
+            params![run_id, source.source_id, prepared + 1],
         )
         .map_err(db)?;
         tx.commit().map_err(db)
@@ -638,6 +662,14 @@ impl Store {
         let unit: Unit = decode(&raw)?;
         if unit.unit_id != id {
             return Err(invalid("任务单元身份不符。"));
+        }
+        let source = self
+            .sources(run_id)?
+            .into_iter()
+            .find(|source| source.source_id == unit.source_id)
+            .ok_or_else(|| invalid("任务单元来源不在固定范围中。"))?;
+        if source.source_sha256 != unit.source_sha256 || !source.contains_page(unit.page_number) {
+            return Err(invalid("任务单元位于固定来源范围外。"));
         }
         Ok(unit)
     }
@@ -1449,12 +1481,27 @@ impl Store {
                 skip = 0;
                 for number in first..=source.physical_pages {
                     let saved:Option<(String,String,i64,i64,i64)>=self.connection.query_row("SELECT p.page_sha256,p.status,(SELECT count(*) FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number),(SELECT count(*) FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status='confirmed'),(SELECT count(*) FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status='failed') FROM pages p WHERE p.run_id=?1 AND p.source_id=?2 AND p.page_number=?3",params![run_id,source.source_id,number],|r|Ok((r.get(0)?,r.get(1)?,r.get(2)?,r.get(3)?,r.get(4)?))).optional().map_err(db)?;
+                    let in_scope = source.contains_page(number);
+                    if !in_scope && saved.is_some() {
+                        return Err(invalid("固定范围外出现已准备页。"));
+                    }
                     let (sha, status, units, confirmed, failed) = saved
                         .map(|(sha, status, units, confirmed, failed)| {
                             (Some(sha), status, units, confirmed, failed)
                         })
-                        .unwrap_or((None, "unprepared".into(), 0, 0, 0));
-                    items.push(json!({"source_id":source.source_id,"source_sha256":source.source_sha256,"page_number":number,"page_sha256":sha,"status":status,"units_total":units,"units_confirmed":confirmed,"units_failed":failed}));
+                        .unwrap_or((
+                            None,
+                            if in_scope {
+                                "unprepared"
+                            } else {
+                                "out_of_scope"
+                            }
+                            .into(),
+                            0,
+                            0,
+                            0,
+                        ));
+                    items.push(json!({"source_id":source.source_id,"source_sha256":source.source_sha256,"page_number":number,"page_sha256":sha,"in_scope":in_scope,"status":status,"units_total":units,"units_confirmed":confirmed,"units_failed":failed}));
                     if items.len() == limit as usize {
                         break;
                     }

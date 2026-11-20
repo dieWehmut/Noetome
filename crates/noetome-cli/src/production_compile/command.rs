@@ -1,12 +1,12 @@
 use super::*;
 use std::{ffi::OsString, path::PathBuf};
 
-pub const HELP: &str = "Noetome 真实来源持久编译\n\ncompile create <项目> <来源ID数组.json> <编译配置.json>\ncompile run <项目> <run-id>\ncompile list <项目>\ncompile status <项目> <run-id>\ncompile control <项目> <run-id> <pause|cancel|retry>\ncompile query <项目> <run-id> <concepts|atoms|evidence|issues|pages|units> [offset] [limit] [search]\ncompile evidence <项目> <run-id> <evidence-id>\ncompile export <项目> <run-id> <不存在的新Vault>\ncompile budget <migrate|status> <原累计账本.json>\n\n范围为全部物理页，单请求有界；确认知识为未核验草稿。pages与units范围分页不接受正文搜索。恢复不重置累计预算，来源包和知识笔记分别导出。\n";
+pub const HELP: &str = "Noetome 真实来源持久编译\n\ncompile create <项目> <来源ID数组.json> <编译配置.json> [--scope <物理页范围.json>]\ncompile run <项目> <run-id>\ncompile list <项目>\ncompile status <项目> <run-id>\ncompile control <项目> <run-id> <pause|cancel|retry>\ncompile query <项目> <run-id> <concepts|atoms|evidence|issues|pages|units> [offset] [limit] [search]\ncompile evidence <项目> <run-id> <evidence-id>\ncompile export <项目> <run-id> <不存在的新Vault>\ncompile budget <migrate|status> <原累计账本.json>\n\n省略--scope时选择全部物理页；范围文件schema_version=1，按source_id指定page_ranges的start_page/end_page（一基含端点）。范围创建后固定，单请求有界；确认知识为未核验草稿。pages与units范围分页不接受正文搜索。恢复不重置累计预算，来源包和知识笔记分别导出。\n";
 
 #[derive(Debug, Clone)]
 pub enum Command {
     Help,
-    Create(PathBuf, PathBuf, PathBuf),
+    Create(PathBuf, PathBuf, PathBuf, Option<PathBuf>),
     Run(PathBuf, String),
     List(PathBuf),
     Status(PathBuf, String),
@@ -37,7 +37,13 @@ pub fn parse(args: &[OsString]) -> Result<Command, &'static str> {
             .ok_or(bad)
     };
     match (verb, rest.len()) {
-        ("create", 3) => Ok(Command::Create(path(0)?, path(1)?, path(2)?)),
+        ("create", 3) => Ok(Command::Create(path(0)?, path(1)?, path(2)?, None)),
+        ("create", 5) if rest[3] == "--scope" => Ok(Command::Create(
+            path(0)?,
+            path(1)?,
+            path(2)?,
+            Some(path(4)?),
+        )),
         ("run", 2) => Ok(Command::Run(path(0)?, text(1)?)),
         ("list", 1) => Ok(Command::List(path(0)?)),
         ("status", 2) => Ok(Command::Status(path(0)?, text(1)?)),
@@ -67,13 +73,19 @@ pub fn parse(args: &[OsString]) -> Result<Command, &'static str> {
 pub fn execute(command: Command) -> Result<String, ProjectError> {
     let value = match command {
         Command::Help => return Ok(HELP.into()),
-        Command::Create(project, selection, config) => {
+        Command::Create(project, selection, config, scope) => {
             let sources: Vec<String> =
                 serde_json::from_slice(&read_artifact(&selection, 65536)?)
                     .map_err(|_| error("COMPILE_SELECTION", "来源ID选择不是JSON数组。"))?;
             let config: CompileConfig = serde_json::from_slice(&read_artifact(&config, 65536)?)
                 .map_err(|_| error("COMPILE_CONFIG", "编译配置不可读。"))?;
-            serde_json::to_value(create(&project, &sources, config)?)
+            let scope: Option<CompileScope> = scope
+                .map(|path| {
+                    serde_json::from_slice(&read_artifact(&path, 65536)?)
+                        .map_err(|_| error("COMPILE_SCOPE", "物理页范围不是版本化范围JSON。"))
+                })
+                .transpose()?;
+            serde_json::to_value(create_scoped(&project, &sources, config, scope)?)
         }
         Command::Run(project, id) => {
             serde_json::to_value(run(&project, &id, Arc::new(AtomicBool::new(false)))?)

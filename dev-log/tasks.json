@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B18",
+  "current_batch": "B19",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -183,6 +183,13 @@
       "from_batch": "B17",
       "to_batch": "B18",
       "note": "User authorized mainline adversarial fixes followed by initial PRD audit"
+    },
+    {
+      "at": "2026-11-20T12:07:01Z",
+      "action": "batch",
+      "from_batch": "B18",
+      "to_batch": "B19",
+      "note": "User approved sequential B19 plan and multiple agents"
     }
   ],
   "tasks": [
@@ -5588,6 +5595,125 @@
           ]
         }
       ]
+    },
+    {
+      "id": "B19-T01",
+      "title": "持久章节范围、旧任务兼容与独立参考冻结",
+      "batch": "B19",
+      "status": "done",
+      "depends_on": [
+        "B18-T02"
+      ],
+      "requirements": [
+        "FR-01",
+        "FR-02",
+        "FR-04",
+        "FR-06",
+        "FR-35",
+        "FR-38",
+        "FR-39",
+        "FR-40"
+      ],
+      "acceptance": [
+        "CLI 和桌面支持绑定来源身份的物理页区间；旧 create 入口仍为整本，新范围按一基包含端点校验并持久固定，拒绝空、重复、重叠、越界和错来源",
+        "原书 SHA/物理总页保持，原书、所选、范围外及范围内已准备/失败/待处理分别计数；范围外不产生准备单元或模型请求，改范围必须新建 run",
+        "新建任务显式保存请求策略版本；历史缺省策略沿用 v1，旧 request/config 原字节 SHA、确认 IR、未知预算和累计权威保持",
+        "核准已授权 Berg Biochemistry 固定版本第 1 章正文的物理首尾；模型请求前独立冻结必要/关键原子、条件单位例外及视觉清单，明确 AI 标注待人工审查而非人工 Gold",
+        "补充选章、错范围、重启恢复及旧任务回归；复用现有 22 原子/8 页/25 锚点样本但不替代 200 原子正式科学基准；记录实际检查并独立复审"
+      ],
+      "history": [
+        {
+          "at": "2026-11-20T12:07:02Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "Implement persistent chapter scope and freeze independent reference; no paid model calls",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-20T13:29:37Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "Persistent chapter scope, v1 compatibility, and independent AI chapter reference frozen before model calls; human scientific review remains pending",
+          "validation": [
+            "Windows Rust: original 42 other targets 615 passed; fixture-layout-corrected library 810 passed, 0 failed, 1 ignored. Windows Python: 1460 run, 1434 passed, 26 skipped, exit 0. Scope CLI 5/5, Rust production 41/41, frontend parser 22/22, web check/build and workspace check passed. 78 saved requests, 4 old runs, 12 IR tables and original cumulative budget unchanged. Independent core, entry and reference reviews complete; one P2 handled by immutable errata overlay."
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B19-T01.md",
+              "sha256": "fdd2f92f2835d0a3950da7df8bbbc0403460bf4736f8fb3c2bade3acac70122f"
+            },
+            {
+              "path": "doc/validation/assets/B19-T01/checks.json",
+              "sha256": "bfddd52f537372cfc1efc3afb6734f731c26d6fb4118b57c76667c969f3ab3f0"
+            },
+            {
+              "path": "doc/validation/assets/B19-T01/reference/summary.json",
+              "sha256": "8757426a8ec9a01f6863cc30a06b04c0e7f22e982329fac220780eab92a820ad"
+            },
+            {
+              "path": "doc/validation/assets/B19-T01/reference/errata-summary.json",
+              "sha256": "b75b7a0b9c40177bbd40bdee85dbed8e39c34c13896e13a34e6466fb651e9018"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B19-T02",
+      "title": "逐主张精确证据、章节内容保真与独立评测",
+      "batch": "B19",
+      "status": "todo",
+      "depends_on": [
+        "B19-T01"
+      ],
+      "requirements": [
+        "FR-05",
+        "FR-09",
+        "FR-22",
+        "FR-24",
+        "FR-26",
+        "FR-28",
+        "FR-40"
+      ],
+      "acceptance": [
+        "新请求策略使用逐主张精确来源切片；先验 UTF-8 半开区间与 quote，错误偏移仅在逐字唯一匹配时确定性重定位；歧义、改写、错来源与越界拒绝，不用整单元伪造支持",
+        "支持/限定/反证关系、必要条件、单位、公式符号与逻辑顺序进入 IR 与实际笔记；至少一条 supports，字节正确仍保持 scientific unverified",
+        "使用 T01 冻结参考和原文独立评估真实整章 IR 与实际笔记，给出召回、关键覆盖、事实条件准确、证据和定位的分子分母及具体问题；修复可复现遗漏，不提前扩展多书/正式 StyleProfile",
+        "负测覆盖正确 quote 配错误事实、正文与条件字段同时缺失、符号单位变造；关键视觉项逐项处置，未知保留原区与 issue，关键未解不宣称章节完成",
+        "目标召回至少98%、关键100%、准确至少98%、证据100%、定位零误指及严重零未处置；缺人工审查或样本不足明确保留待审，不伪称正式科学门槛通过；相关回归和独立复审通过"
+      ],
+      "history": []
+    },
+    {
+      "id": "B19-T03",
+      "title": "一致导出、同源安装版章节闭环与阅读验收",
+      "batch": "B19",
+      "status": "todo",
+      "depends_on": [
+        "B19-T02"
+      ],
+      "requirements": [
+        "FR-18",
+        "FR-25",
+        "FR-26",
+        "FR-27",
+        "FR-33",
+        "FR-35",
+        "FR-38",
+        "FR-39",
+        "FR-40"
+      ],
+      "acceptance": [
+        "导出以同一 SQLite 读快照固定 IR/计数；提交 manifest 前实读核对完整文件集合、大小、SHA、映射和链接，外改/删除/替换/未知新增均保留 incomplete 并诊断",
+        "输出仅写新的测试 Vault；故障注入不报 complete，旧确认不重发，累计预算及未知预留不丢",
+        "固定同源源码、Windows CLI/桌面/安装器指纹，实跑选章、真实模型编译、暂停/退出重开/恢复、证据查询与导出，核对输入/策略/预算/程序/产物指纹",
+        "在最低支持及执行时核实的当前稳定 Obsidian 读取本章全部链接与实际使用格式，完成干净用户目录安装、卸载及重装并保存回执；未执行保持未验收",
+        "所有相关检查和独立复审后记录真实交付与剩余门槛，可发布 0.3.0-test.2；不声称全部 P0、200 原子正式科学或 24 小时验收完成"
+      ],
+      "history": []
     }
   ]
 }

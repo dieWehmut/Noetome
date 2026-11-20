@@ -47,6 +47,8 @@ impl Fixture {
             display_name: "authored.pdf".into(),
             byte_length: original.len() as u64,
             physical_pages: texts.len() as u32,
+            scope_schema_version: None,
+            page_ranges: None,
         };
         let db = Connection::open(root.join("corpus.sqlite")).unwrap();
         db.execute_batch("CREATE TABLE metadata(singleton INTEGER PRIMARY KEY,project_id TEXT,schema_version INTEGER); CREATE TABLE sources(source_id TEXT PRIMARY KEY,display_name TEXT,selected_path TEXT,content_sha256 TEXT,byte_length INTEGER,status TEXT,page_count INTEGER,created_at TEXT,pause_requested INTEGER,error_code TEXT,error_message TEXT,preflight_json TEXT); CREATE TABLE pages(source_id TEXT,page_number INTEGER,status TEXT,page_json TEXT,page_sha256 TEXT,PRIMARY KEY(source_id,page_number)); PRAGMA application_id=1313817424; PRAGMA user_version=1;").unwrap();
@@ -77,6 +79,7 @@ impl Fixture {
             max_chunk_bytes: 1024,
             max_output_tokens: 512,
             request_timeout_ms: 1000,
+            request_strategy_version: None,
         };
         Self {
             _temp: temp,
@@ -1133,6 +1136,16 @@ fn scope_queries_include_unprepared_pages_and_count_pending_or_failed_page_once(
     assert_eq!(initial["items"].as_array().unwrap().len(), 2);
     assert_eq!(initial["items"][0]["status"], "unprepared");
     assert!(initial["items"][0]["page_sha256"].is_null());
+    let initial_summary = store.summary(&run).unwrap();
+    assert_eq!(
+        (
+            initial_summary.selected_pages,
+            initial_summary.prepared_pages,
+            initial_summary.unprepared_pages,
+            initial_summary.failed_pages
+        ),
+        (3, 0, 3, 0)
+    );
     let first = fixture.unit(1);
     let mut second = fixture.unit(2);
     second.issue_codes.push("SOURCE_REVIEW".into());
@@ -1184,6 +1197,15 @@ fn scope_queries_include_unprepared_pages_and_count_pending_or_failed_page_once(
         store.summary(&run).unwrap().unresolved_pages,
         1,
         "source review and failed unit describe the same page"
+    );
+    let final_summary = store.summary(&run).unwrap();
+    assert_eq!(
+        (
+            final_summary.prepared_pages,
+            final_summary.unprepared_pages,
+            final_summary.failed_pages
+        ),
+        (3, 0, 1)
     );
     let pages = store.query(&run, "pages", 1, 50, "").unwrap();
     assert_eq!(pages["items"][0]["page_number"], 2);
@@ -1781,6 +1803,90 @@ fn budget_stop_survives_crash_before_run_error_handler() {
             BudgetAttemptState::Sent
         );
     }
+}
+
+#[test]
+fn scope_page_ordinals_support_last_u32_physical_page() {
+    let mut source = SourceScope {
+        source_id: "authored-scope-boundary".into(),
+        source_sha256: "a".repeat(64),
+        display_name: "authored.pdf".into(),
+        byte_length: 1,
+        physical_pages: u32::MAX,
+        scope_schema_version: None,
+        page_ranges: None,
+    };
+    source.validate_ranges().unwrap();
+    assert_eq!(source.selected_pages(), u64::from(u32::MAX));
+    assert_eq!(source.page_at(u32::MAX - 1), Some(u32::MAX));
+    assert_eq!(source.page_at(u32::MAX), None);
+    source.scope_schema_version = Some(1);
+    source.page_ranges = Some(vec![PageRange {
+        start_page: 1,
+        end_page: u32::MAX,
+    }]);
+    source.validate_ranges().unwrap();
+    assert_eq!(source.selected_pages(), u64::from(u32::MAX));
+    assert_eq!(source.page_at(u32::MAX - 1), Some(u32::MAX));
+    assert_eq!(source.page_at(u32::MAX), None);
+    source.page_ranges = Some(vec![
+        PageRange {
+            start_page: 2,
+            end_page: 3,
+        },
+        PageRange {
+            start_page: u32::MAX,
+            end_page: u32::MAX,
+        },
+    ]);
+    source.validate_ranges().unwrap();
+    assert_eq!(source.selected_pages(), 3);
+    assert_eq!(
+        (
+            source.page_at(0),
+            source.page_at(1),
+            source.page_at(2),
+            source.page_at(3)
+        ),
+        (Some(2), Some(3), Some(u32::MAX), None)
+    );
+    for page in [0, 1, 4, u32::MAX - 1] {
+        assert!(!source.contains_page(page));
+    }
+    assert!(source.contains_page(u32::MAX));
+}
+
+#[test]
+fn scope_metadata_rejects_partial_and_unknown_versions() {
+    let legacy = json!({"source_id":"authored-scope-metadata","source_sha256":"a".repeat(64),
+        "display_name":"authored.pdf","byte_length":1,"physical_pages":3});
+    let mut source: SourceScope = serde_json::from_value(legacy.clone()).unwrap();
+    source.validate_ranges().unwrap();
+    assert_eq!(serde_json::to_value(&source).unwrap(), legacy);
+    let range = PageRange {
+        start_page: 2,
+        end_page: 3,
+    };
+    for (version, ranges) in [
+        (Some(1), None),
+        (None, Some(vec![range.clone()])),
+        (Some(2), Some(vec![range])),
+        (Some(1), Some(vec![])),
+    ] {
+        source.scope_schema_version = version;
+        source.page_ranges = ranges;
+        assert_eq!(
+            source.validate_ranges().unwrap_err().code(),
+            "COMPILE_SCOPE"
+        );
+    }
+    source.scope_schema_version = None;
+    source.page_ranges = None;
+    source.physical_pages = 0;
+    assert_eq!(
+        source.validate_ranges().unwrap_err().code(),
+        "COMPILE_SCOPE"
+    );
 }
 
 #[test]
