@@ -398,7 +398,7 @@ fn invalid_public_scopes_reject_before_any_compile_or_budget_migration() {
 #[test]
 fn unsupported_request_strategy_rejects_without_creating_authority_or_run() {
     let fixture = Fixture::new(&[("one", "text_ready"); 3]);
-    for version in [0, 2, u32::MAX] {
+    for version in [0, 99, u32::MAX] {
         let mut config = fixture.config.clone();
         config.request_strategy_version = Some(version);
         assert_eq!(
@@ -436,7 +436,7 @@ fn noncontiguous_physical_pages_keep_original_identity_and_only_selected_units_a
         ),
         (0, 3, 3)
     );
-    assert_eq!(summary.request_strategy_version, 1);
+    assert_eq!(summary.request_strategy_version, 3);
     let scope = &summary.sources[0];
     assert_eq!(scope.scope_schema_version, Some(1));
     assert_eq!(
@@ -456,7 +456,7 @@ fn noncontiguous_physical_pages_keep_original_identity_and_only_selected_units_a
     assert_eq!(scope.physical_pages, 8);
     let run = &summary.run_id;
     let store = required(&fixture.project).unwrap();
-    assert_eq!(store.config(run).unwrap().request_strategy_version, Some(1));
+    assert_eq!(store.config(run).unwrap().request_strategy_version, Some(3));
     for number in [3, 4, 7] {
         assert_eq!(store.next_unprepared_page(run).unwrap().unwrap().1, number);
         let units = fixture.save(&store, run, scope, number);
@@ -786,6 +786,43 @@ fn source_selection_order_and_independent_page_ranges_survive_multiple_sources()
     assert_eq!(page["items"][0]["in_scope"], false);
     assert_eq!(page["items"][1]["page_number"], 2);
     assert_eq!(page["items"][1]["in_scope"], true);
+}
+
+#[test]
+fn new_runs_pin_default_v3_and_explicit_versions_for_scoped_and_whole_book_entries() {
+    for (requested, expected) in [(None, 3), (Some(1), 1), (Some(2), 2), (Some(3), 3)] {
+        for scoped in [false, true] {
+            let fixture = Fixture::new(&[("Authored strategy text", "text_ready"); 3]);
+            let mut config = fixture.config.clone();
+            config.request_strategy_version = requested;
+            let input_bytes = serde_json::to_vec(&config).unwrap();
+            let summary = create_scoped(
+                &fixture.project,
+                &[fixture.source.scope.source_id.clone()],
+                config.clone(),
+                scoped.then(|| fixture.selection(&[(2, 2)])),
+            )
+            .unwrap();
+            assert_eq!(summary.request_strategy_version, expected);
+            assert_eq!(summary.selected_pages, if scoped { 1 } else { 3 });
+            assert_eq!(summary.attempts, 0);
+            assert_eq!(serde_json::to_vec(&config).unwrap(), input_bytes);
+            let store = required(&fixture.project).unwrap();
+            let saved = store.config(&summary.run_id).unwrap();
+            assert_eq!(saved.request_strategy_version, Some(expected));
+            let before = saved_inputs(&store, &summary.run_id);
+            store.pause(&summary.run_id).unwrap();
+            store.resume(&summary.run_id).unwrap();
+            assert_eq!(saved_inputs(&store, &summary.run_id), before);
+            assert_eq!(
+                store
+                    .summary(&summary.run_id)
+                    .unwrap()
+                    .request_strategy_version,
+                expected
+            );
+        }
+    }
 }
 
 #[test]

@@ -1349,6 +1349,22 @@ impl Store {
                 )
                 .map_err(db)?;
             }
+            if matches!(
+                prepared.strategy_version,
+                PRECISE_REQUEST_STRATEGY | ANCHOR_REQUEST_STRATEGY
+            ) && saved
+                .evidence_links
+                .iter()
+                .any(|link| link.relation == domain::EvidenceRelation::Refutes)
+            {
+                add_issue(
+                    &tx,
+                    run_id,
+                    &format!("atom:{}", saved.atom_id),
+                    "ATOM_REFUTATION_UNRESOLVED",
+                    &json!({"atom_id":saved.atom_id,"source_id":unit.source_id,"page_number":unit.page_number,"message":"原子同时有支持和反证依据，须独立核对其条件与结论；不能视为已解决。"}),
+                )?;
+            }
         }
         tx.execute(
             "UPDATE runs SET ir_revision=ir_revision+1 WHERE run_id=?1",
@@ -1425,9 +1441,27 @@ impl Store {
         } else {
             "json,sha256,'null','unused'"
         };
-        let sql = format!(
-            "SELECT {columns} FROM {table} WHERE run_id=?1 AND instr(lower(json),lower(?2))>0 ORDER BY {order} LIMIT ?3 OFFSET ?4"
-        );
+        // Atom rows are append-only. Their rowid preserves candidate order inside
+        // a unit; source/page/unit keys also keep retries from changing the order.
+        // Legacy queries retain their original UUID ordering and stored bytes.
+        let sql = if kind == "atoms"
+            && matches!(
+                self.config(run_id)?.strategy_version()?,
+                PRECISE_REQUEST_STRATEGY | ANCHOR_REQUEST_STRATEGY
+            ) {
+            "SELECT atoms.json,atoms.sha256,atoms.measurement_json,atoms.measurement_sha256
+             FROM atoms
+             JOIN attempts ON atoms.run_id=attempts.run_id AND atoms.request_id=attempts.request_id
+             JOIN units ON attempts.run_id=units.run_id AND attempts.unit_id=units.unit_id
+             JOIN sources ON units.run_id=sources.run_id AND units.source_id=sources.source_id
+             WHERE atoms.run_id=?1 AND instr(lower(atoms.json),lower(?2))>0
+             ORDER BY sources.ordinal,units.page_number,units.ordinal,atoms.rowid LIMIT ?3 OFFSET ?4"
+                .to_string()
+        } else {
+            format!(
+                "SELECT {columns} FROM {table} WHERE run_id=?1 AND instr(lower(json),lower(?2))>0 ORDER BY {order} LIMIT ?3 OFFSET ?4"
+            )
+        };
         let mut query = self.connection.prepare(&sql).map_err(db)?;
         let mut items = vec![];
         for row in query

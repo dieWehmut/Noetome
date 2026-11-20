@@ -202,7 +202,26 @@ impl Fixture {
         .unwrap();
         let mut candidate = self.candidate(store, run, unit, &request, contexts);
         mutate(&mut candidate);
-        let response=serde_json::to_vec(&json!({"id":"chatcmpl-authored","object":"chat.completion","model":self.config.model,"choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","content":encoded(&candidate).unwrap()}}],"usage":{"prompt_tokens":100,"completion_tokens":50,"total_tokens":150}})).unwrap();
+        let content = if prepared.strategy_version == ANCHOR_REQUEST_STRATEGY {
+            // Author the v3 wire response with whole-unit anchors. Keep the
+            // independently authored exact slices for commit_batch to compare.
+            let mut anchored = candidate.clone();
+            for evidence in &mut anchored.evidence {
+                evidence.excerpt_start_byte = unit.start_byte;
+                evidence.excerpt_end_byte = unit.end_byte;
+                evidence.excerpt_sha256.clear();
+            }
+            encoded(&anchored).unwrap()
+        } else {
+            encoded(&candidate).unwrap()
+        };
+        let response = serde_json::to_vec(&json!({
+            "id":"chatcmpl-authored","object":"chat.completion","model":self.config.model,
+            "choices":[{"index":0,"finish_reason":"stop",
+                "message":{"role":"assistant","content":content}}],
+            "usage":{"prompt_tokens":100,"completion_tokens":50,"total_tokens":150}
+        }))
+        .unwrap();
         let mut attempt = store
             .begin_attempt(run, unit, &request, &sha256(&prepared.body))
             .unwrap();
@@ -549,6 +568,706 @@ fn confirmed_batch_maps_ids_atomically_and_reopens_without_duplicates() {
     );
     assert_eq!(reopened.query(&run, "atoms", 0, 50, "").unwrap(), atoms);
     assert_eq!(reopened.summary(&run).unwrap().units_confirmed, 1);
+}
+
+fn authored_excerpt(
+    unit: &Unit,
+    id: &str,
+    quote: &str,
+) -> crate::extraction_model::CandidateEvidence {
+    let start = unit.start_byte + unit.text.find(quote).unwrap();
+    crate::extraction_model::CandidateEvidence {
+        evidence_id: id.into(),
+        unit_id: unit.unit_id.clone(),
+        excerpt_start_byte: start,
+        excerpt_end_byte: start + quote.len(),
+        excerpt_sha256: sha256(quote.as_bytes()),
+        quote: quote.into(),
+    }
+}
+
+// Reassign the UUIDs produced by the real commit, keeping row identity and all
+// other data fixed. This makes the comparison to UUID sorting deterministic.
+fn reverse_atom_uuids(store: &Store, run: &str, receiver_order: &[String]) -> Vec<String> {
+    let tx = store.transaction().unwrap();
+    let atoms: BTreeMap<String, domain::KnowledgeAtom> = {
+        let mut statement = tx
+            .prepare("SELECT json FROM atoms WHERE run_id=?1")
+            .unwrap();
+        let rows = statement
+            .query_map([run], |row| row.get::<_, String>(0))
+            .unwrap();
+        rows.map(|raw| {
+            let atom: domain::KnowledgeAtom = decode(&raw.unwrap()).unwrap();
+            (atom.content.clone(), atom)
+        })
+        .collect()
+    };
+    assert_eq!(atoms.len(), receiver_order.len());
+    let mut ids = atoms
+        .values()
+        .map(|atom| atom.atom_id.clone())
+        .collect::<Vec<_>>();
+    ids.sort_unstable_by(|left, right| right.cmp(left));
+    assert!(ids.windows(2).all(|pair| pair[0] > pair[1]));
+    tx.execute_batch("PRAGMA defer_foreign_keys=ON").unwrap();
+    tx.execute(
+        "UPDATE atoms SET atom_id='fixture:' || atom_id WHERE run_id=?1",
+        [run],
+    )
+    .unwrap();
+    tx.execute(
+        "UPDATE atom_concepts SET atom_id='fixture:' || atom_id WHERE run_id=?1",
+        [run],
+    )
+    .unwrap();
+    for (content, id) in receiver_order.iter().zip(&ids) {
+        let mut atom = atoms[content].clone();
+        let temporary = format!("fixture:{}", atom.atom_id);
+        atom.atom_id = id.clone();
+        let raw = encoded(&atom).unwrap();
+        assert_eq!(
+            tx.execute(
+                "UPDATE atoms SET atom_id=?1,json=?2,sha256=?3 WHERE run_id=?4 AND atom_id=?5",
+                params![id, raw, sha256(raw.as_bytes()), run, temporary],
+            )
+            .unwrap(),
+            1
+        );
+        assert_eq!(
+            tx.execute(
+                "UPDATE atom_concepts SET atom_id=?1 WHERE run_id=?2 AND atom_id=?3",
+                params![id, run, temporary],
+            )
+            .unwrap(),
+            1
+        );
+    }
+    tx.commit().unwrap();
+    ids
+}
+
+fn authored_ordered_batch(
+    fixture: &Fixture,
+    store: &Store,
+    run: &str,
+    unit: &Unit,
+    contexts: &[ConceptContext],
+    contents: &[String],
+) -> (Attempt, AcceptedBatch) {
+    fixture.sealed(store, run, unit, contexts, |candidates| {
+        let template = candidates.atoms[0].clone();
+        candidates.evidence = contents
+            .iter()
+            .enumerate()
+            .map(|(index, content)| {
+                authored_excerpt(unit, &format!("local_excerpt_{index}"), content)
+            })
+            .collect();
+        candidates.atoms = contents
+            .iter()
+            .enumerate()
+            .map(|(index, content)| {
+                let mut candidate = template.clone();
+                candidate.atom.atom_id = format!("local_atom_{:02}", contents.len() - index);
+                candidate.atom.kind = if index % 2 == 0 {
+                    domain::AtomKind::Statement
+                } else {
+                    domain::AtomKind::Definition
+                };
+                candidate.atom.content = content.clone();
+                candidate.atom.evidence_links[0].evidence_id = format!("local_excerpt_{index}");
+                candidate
+            })
+            .collect();
+    })
+}
+
+#[test]
+fn precise_atom_order_survives_retry_reopen_and_paginated_mixed_kind_export() {
+    assert_atom_order_survives_retry_reopen_and_paginated_export(PRECISE_REQUEST_STRATEGY);
+}
+
+#[test]
+fn anchor_atom_order_survives_retry_reopen_and_paginated_mixed_kind_export() {
+    assert_atom_order_survives_retry_reopen_and_paginated_export(ANCHOR_REQUEST_STRATEGY);
+}
+
+fn assert_atom_order_survives_retry_reopen_and_paginated_export(strategy: u32) {
+    // Make the export cross its 50-item boundary and commit the three units
+    // out of physical order, including a second attempt on the first page.
+    let contents = (1..=52)
+        .map(|step| {
+            let tag = if step % 2 == 0 { 'A' } else { 'Z' };
+            format!("Diffusion step {tag}{step:02}.")
+        })
+        .collect::<Vec<_>>();
+    let first_page = contents[..2].concat();
+    let middle_unit = contents[2..49].concat();
+    let last_unit = contents[49..].concat();
+    let second_page = format!("{middle_unit}{last_unit}");
+    let mut fixture = Fixture::new(&[(&first_page, "text_ready"), (&second_page, "text_ready")]);
+    fixture.config.request_strategy_version = Some(strategy);
+    drop(fixture.authority());
+    let (store, run) = fixture.run();
+    let first = fixture.unit(1);
+    let mut middle = fixture.unit(2);
+    middle.text = middle_unit;
+    middle.end_byte = middle.text.len();
+    let mut last = fixture.unit(2);
+    last.start_byte = middle.end_byte;
+    last.text = last_unit;
+    for units in [vec![first.clone()], vec![middle.clone(), last.clone()]] {
+        let unit = &units[0];
+        store
+            .save_page(
+                &run,
+                &fixture.scope,
+                unit.page_number,
+                &unit.page_sha256,
+                "text_ready",
+                units.clone(),
+                vec![],
+            )
+            .unwrap();
+    }
+    store
+        .begin_attempt(&run, &first, &Uuid::new_v4().to_string(), &"a".repeat(64))
+        .unwrap();
+    store
+        .mark_unit_failed(
+            &run,
+            &first.unit_id,
+            "AUTHORED_FAILURE",
+            "fixture request failed",
+        )
+        .unwrap();
+    let (attempt, batch) =
+        authored_ordered_batch(&fixture, &store, &run, &last, &[], &contents[49..]);
+    store.commit_batch(&run, &last, &attempt, batch).unwrap();
+    let contexts = store.context_concepts(&run, "Diffusion", 1).unwrap();
+    assert_eq!(contexts.len(), 1);
+    let concept = &contexts[0].concept.concept_id;
+    let (attempt, batch) =
+        authored_ordered_batch(&fixture, &store, &run, &middle, &contexts, &contents[2..49]);
+    store.commit_batch(&run, &middle, &attempt, batch).unwrap();
+    store.retry_failed(&run).unwrap();
+    let (attempt, batch) =
+        authored_ordered_batch(&fixture, &store, &run, &first, &contexts, &contents[..2]);
+    assert_eq!(attempt.attempt_no, 2);
+    store.commit_batch(&run, &first, &attempt, batch).unwrap();
+    let ids = reverse_atom_uuids(&store, &run, &contents);
+    drop(store);
+
+    let reopened = Store::open(&fixture.project).unwrap().unwrap();
+    let summary = reopened.summary(&run).unwrap();
+    assert_eq!(
+        (
+            summary.request_strategy_version,
+            summary.units_confirmed,
+            summary.atoms
+        ),
+        (strategy, 3, 52)
+    );
+    for (offset, end) in [(0, 50), (50, 52), (52, 52)] {
+        let result = reopened
+            .query(&run, "atoms", offset as u64, 50, concept)
+            .unwrap();
+        assert_eq!(result["total"], 52);
+        let items = result["items"].as_array().unwrap();
+        assert_eq!(items.len(), end - offset);
+        for (row, position) in items.iter().zip(offset..end) {
+            assert_eq!(row["content"], contents[position]);
+            assert_eq!(row["atom_id"], ids[position]);
+        }
+    }
+    drop(reopened);
+
+    let vault = fixture._temp.path().join("ordered-export");
+    super::super::export(&fixture.project, &run, &vault).unwrap();
+    let note = fs::read_to_string(vault.join("知识").join(format!("{concept}.md"))).unwrap();
+    let paragraphs = note
+        .lines()
+        .filter(|line| line.starts_with("Diffusion step "))
+        .collect::<Vec<_>>();
+    assert_eq!(
+        paragraphs,
+        contents.iter().map(String::as_str).collect::<Vec<_>>()
+    );
+    let blocks = fs::read_to_string(vault.join(".noetome-index/note-blocks.ndjson")).unwrap();
+    assert_eq!(blocks.lines().count(), ids.len());
+    for (ordinal, line) in blocks.lines().enumerate() {
+        let block: Value = serde_json::from_str(line).unwrap();
+        assert_eq!(block["atom_id"], ids[ordinal]);
+        assert_eq!(block["block_ordinal"], ordinal);
+    }
+}
+
+#[test]
+fn precise_measurement_and_evidence_relations_survive_ir_and_markdown() {
+    assert_measurement_and_evidence_relations_survive_ir_and_markdown(PRECISE_REQUEST_STRATEGY);
+}
+
+#[test]
+fn anchor_measurement_and_evidence_relations_survive_ir_and_markdown() {
+    assert_measurement_and_evidence_relations_survive_ir_and_markdown(ANCHOR_REQUEST_STRATEGY);
+}
+
+fn assert_measurement_and_evidence_relations_survive_ir_and_markdown(strategy: u32) {
+    const SUPPORT: &str = "在 20 °C、避光时，校准读数 $x_i$ 为 2.5 mmol·L⁻¹。";
+    const QUALIFY: &str = "本量程只适用于透明样品。";
+    const REFUTE: &str = "另一组在相同条件下测得 3.1 mmol·L⁻¹。";
+    let original = format!("合成记录。{SUPPORT}{QUALIFY}{REFUTE}记录完毕。");
+    let mut fixture = Fixture::new(&[
+        ("Other authored page.", "text_ready"),
+        (&original, "text_ready"),
+    ]);
+    fixture.config.request_strategy_version = Some(strategy);
+    drop(fixture.authority());
+    let (store, run) = fixture.run();
+    let units = fixture.prepare_all(&store, &run);
+    let unit = &units[1];
+    let evidence = [
+        ("local_support", "supports", SUPPORT),
+        ("local_limit", "qualifies", QUALIFY),
+        ("local_counter", "refutes", REFUTE),
+    ];
+    let qualifiers = ["mmol·L⁻¹", "20 °C", "避光", "透明样品"];
+    let measurement = json!({"value_status":"known", "value":"2.5", "unit":"mmol·L⁻¹",
+        "conditions":["20 °C", "避光"]});
+    let (attempt, batch) = fixture.sealed(&store, &run, unit, &[], |candidates| {
+        candidates.evidence = evidence
+            .iter()
+            .map(|&(id, _, quote)| authored_excerpt(unit, id, quote))
+            .collect();
+        let candidate = &mut candidates.atoms[0];
+        candidate.atom.kind = domain::AtomKind::ComparisonValue;
+        candidate.atom.value_status = domain::ValueStatus::Known;
+        candidate.atom.content = SUPPORT.into();
+        candidate.atom.qualifiers = qualifiers.iter().map(|value| (*value).into()).collect();
+        candidate.atom.evidence_links = serde_json::from_value(json!(
+            evidence
+                .iter()
+                .map(|&(id, relation, _)| json!({"evidence_id":id,"relation":relation}))
+                .collect::<Vec<_>>()
+        ))
+        .unwrap();
+        candidate.measurement = Some(serde_json::from_value(measurement.clone()).unwrap());
+    });
+    store.commit_batch(&run, unit, &attempt, batch).unwrap();
+    drop(store);
+
+    let reopened = Store::open(&fixture.project).unwrap().unwrap();
+    let atoms = reopened.query(&run, "atoms", 0, 1, "").unwrap();
+    assert_eq!(atoms["total"], 1);
+    let atom = &atoms["items"][0];
+    assert_eq!(atom["content"], SUPPORT);
+    assert_eq!(atom["qualifiers"], json!(qualifiers));
+    assert_eq!(atom["measurement"], measurement);
+    assert_eq!(atom["verification"], "unverified");
+    let links = atom["evidence_links"].as_array().unwrap();
+    assert_eq!(links.len(), evidence.len());
+    let mut ids = BTreeSet::new();
+    for (link, (_, relation, quote)) in links.iter().zip(evidence) {
+        assert_eq!(link["relation"], relation);
+        let id = link["evidence_id"].as_str().unwrap();
+        assert!(ids.insert(id));
+        let row = reopened.evidence(&run, id).unwrap();
+        let start = original.find(quote).unwrap();
+        assert_eq!(row["source_id"], fixture.scope.source_id);
+        assert_eq!(row["page_number"], 2);
+        assert_eq!(row["page_sha256"], unit.page_sha256);
+        assert_eq!(row["start_byte"], start);
+        assert_eq!(row["end_byte"], start + quote.len());
+        assert_eq!(row["quote"], quote);
+        assert_eq!(row["excerpt_sha256"], sha256(quote.as_bytes()));
+    }
+    let issues = reopened
+        .query(&run, "issues", 0, 50, "ATOM_REFUTATION_UNRESOLVED")
+        .unwrap();
+    assert_eq!(issues["total"], 1);
+    let issue = &issues["items"][0];
+    assert_eq!(issue["code"], "ATOM_REFUTATION_UNRESOLVED");
+    assert_eq!(
+        issue["scope"],
+        format!("atom:{}", atom["atom_id"].as_str().unwrap())
+    );
+    assert_eq!(issue["resolution"], "pending");
+    let summary = reopened.summary(&run).unwrap();
+    assert_eq!(summary.request_strategy_version, strategy);
+    assert_eq!(summary.scientific_quality, "not_run");
+    drop(reopened);
+
+    let concept = atom["concept_ids"][0].as_str().unwrap();
+    let vault = fixture._temp.path().join("relations-export");
+    super::super::export(&fixture.project, &run, &vault).unwrap();
+    let note = fs::read_to_string(vault.join("知识").join(format!("{concept}.md"))).unwrap();
+    for expected in [
+        r"在 20 °C、避光时，校准读数 \$x\_i\$ 为 2.5 mmol·L⁻¹。".to_string(),
+        "数值：2.5 mmol·L⁻¹。".into(),
+        "测量条件：20 °C；避光。".into(),
+        format!(r"来源支持（物理页 2）：在 20 °C、避光时，校准读数 \$x\_i\$ 为 2.5 mmol·L⁻¹。"),
+        format!("限定依据（物理页 2）：{QUALIFY}"),
+        format!("反证依据，尚待核对（物理页 2）：{REFUTE}"),
+    ] {
+        assert!(
+            note.lines().any(|line| line == expected),
+            "Missing note line {expected:?}"
+        );
+    }
+    let blocks = fs::read_to_string(vault.join(".noetome-index/note-blocks.ndjson")).unwrap();
+    let block: Value = serde_json::from_str(blocks.trim()).unwrap();
+    assert_eq!(block["atom_id"], atom["atom_id"]);
+    assert_eq!(block["evidence_links"], atom["evidence_links"]);
+}
+
+#[test]
+fn precise_export_keeps_source_and_candidate_markdown_literal() {
+    assert_export_keeps_source_and_candidate_markdown_literal(PRECISE_REQUEST_STRATEGY);
+}
+
+#[test]
+fn anchor_export_keeps_source_and_candidate_markdown_literal() {
+    assert_export_keeps_source_and_candidate_markdown_literal(ANCHOR_REQUEST_STRATEGY);
+}
+
+fn assert_export_keeps_source_and_candidate_markdown_literal(precise_strategy: u32) {
+    const QUOTE: &str = "源%%保留%% &amp; $x_i$\n---\n1. 引文\n# 原页";
+    const TITLE: &str = "标题 &amp;\n---\n+ 续行";
+    const ALIAS: &str = "别名 &amp;\n# 别名续行";
+    const CONTENT: &str = "正文 &amp; $x_i$ (p) | ~条件~\n---\n1. 第一项\n====\n- 第二项\n# 段落\n    四个空格\n\t制表符";
+    const QUALIFIER: &str = "限定 &amp; (原样)\n+ 适用条件\n2) 顺序";
+    let original = format!("页首：{QUOTE}\n页尾。");
+    let mut fixture = Fixture::new(&[(&original, "text_ready")]);
+    drop(fixture.authority());
+
+    for (strategy, directory) in [
+        (Some(precise_strategy), "precise-literal"),
+        (None, "legacy-literal"),
+    ] {
+        fixture.config.request_strategy_version = strategy;
+        let (store, run) = fixture.run();
+        let units = fixture.prepare_all(&store, &run);
+        let unit = &units[0];
+        let precise = strategy.is_some();
+        let (attempt, batch) = fixture.sealed(&store, &run, unit, &[], |candidates| {
+            candidates.concepts[0].canonical_name = TITLE.into();
+            candidates.concepts[0].aliases = vec![ALIAS.into()];
+            candidates.atoms[0].atom.content = CONTENT.into();
+            candidates.atoms[0].atom.qualifiers = vec![QUALIFIER.into()];
+            if precise {
+                candidates.evidence[0] = authored_excerpt(unit, "local_evidence", QUOTE);
+            }
+        });
+        store.commit_batch(&run, unit, &attempt, batch).unwrap();
+        drop(store);
+
+        let output = fixture._temp.path().join(directory);
+        let report = super::super::export(&fixture.project, &run, &output).unwrap();
+        assert_eq!(
+            report["summary"]["request_strategy_version"],
+            strategy.unwrap_or(1)
+        );
+        let read_index = |name: &str| -> Value {
+            let raw = fs::read_to_string(output.join(".noetome-index").join(name)).unwrap();
+            serde_json::from_str(&raw).unwrap()
+        };
+        let entry = read_index("notes.ndjson");
+        let id = entry["note_id"].as_str().unwrap();
+        assert_eq!(entry["title"], TITLE);
+        let atom = read_index("atoms.ndjson");
+        assert_eq!(atom["content"], CONTENT);
+        assert_eq!(atom["qualifiers"], json!([QUALIFIER]));
+        let evidence = read_index("evidence.ndjson");
+        let quote = if precise { QUOTE } else { original.as_str() };
+        assert_eq!(evidence["quote"], quote);
+        assert_eq!(evidence["excerpt_sha256"], sha256(quote.as_bytes()));
+        assert_eq!(evidence["page_sha256"], fixture.pages[0].2);
+
+        let (title, alias, content, qualifier, section, source) = if precise {
+            (
+                "标题 \\&amp;  \n\\---  \n\\+ 续行",
+                "别名 \\&amp;  \n\\# 别名续行",
+                concat!(
+                    "正文 \\&amp; \\$x\\_i\\$ \\(p\\) \\| \\~条件\\~  \n",
+                    "\\---  \n1\\. 第一项  \n\\====  \n\\- 第二项  \n\\# 段落  \n",
+                    "&#32;   四个空格  \n&#9;制表符"
+                ),
+                "限定 \\&amp; \\(原样\\)  \n\\+ 适用条件  \n2\\) 顺序",
+                "知识与过程",
+                concat!(
+                    "来源支持（物理页 1）：源\\%\\%保留\\%\\% \\&amp; \\$x\\_i\\$  \n",
+                    "\\---  \n1\\. 引文  \n\\# 原页\n\n"
+                ),
+            )
+        } else {
+            (
+                TITLE,
+                "别名 &amp;\n\\# 别名续行",
+                concat!(
+                    "正文 &amp; $x\\_i$ (p) | ~条件~\n---\n1. 第一项\n====\n- 第二项\n",
+                    "\\# 段落\n    四个空格\n\t制表符"
+                ),
+                QUALIFIER,
+                "概念与定义",
+                "",
+            )
+        };
+        let note = fs::read_to_string(output.join("知识").join(format!("{id}.md"))).unwrap();
+        assert_eq!(
+            note,
+            format!(
+                "# {title}\n\n相关称谓：{alias}。\n\n## {section}\n\n{content}\n\n适用条件、单位与例外：{qualifier}。\n\n{source}"
+            )
+        );
+        let overview = fs::read_to_string(output.join("学习笔记.md")).unwrap();
+        assert!(overview.ends_with(&format!("- [{title}](知识/{id}.md)\n")));
+    }
+}
+
+#[test]
+fn precise_export_pins_needs_review_page_without_source_issues() {
+    let mut fixture = Fixture::new(&[("", "needs_review")]);
+    fixture.config.request_strategy_version = Some(2);
+    drop(fixture.authority());
+    let (store, run) = fixture.run();
+    assert!(fixture.prepare_all(&store, &run).is_empty());
+    drop(store);
+
+    let output = fixture._temp.path().join("empty-issues-location");
+    super::super::export(&fixture.project, &run, &output).unwrap();
+    let raw = fs::read_to_string(output.join(".noetome-index/source-locations.ndjson")).unwrap();
+    let record: Value = serde_json::from_str(&raw).unwrap();
+    assert_eq!(record["run_id"], run);
+    assert_eq!(record["source_id"], fixture.scope.source_id);
+    assert_eq!(record["source_sha256"], fixture.scope.source_sha256);
+    assert_eq!(record["page_number"], 1);
+    assert_eq!(record["page_sha256"], fixture.pages[0].2);
+    assert_eq!(record["status"], "needs_review");
+    assert_eq!(record["units_failed"], 0);
+    assert_eq!(record["units_pending"], 0);
+    assert_eq!(record["source_issues"], json!([]));
+    assert_eq!(record["regions"], json!([]));
+    assert_eq!(record["localization"], "page_only");
+    assert_eq!(record["issue_region_mapping"], "unresolved");
+
+    let report = fs::read_to_string(output.join("处理范围.md")).unwrap();
+    let (_, page) = report.split_once("\n### 物理页 1\n").unwrap();
+    assert!(page.contains(&fixture.pages[0].2));
+    assert!(page.contains(r"页状态：needs\_review"));
+    assert!(page.contains("未提供逐项问题代码"));
+    assert!(page.contains("只固定到整页"));
+    assert!(!page.contains("SOURCE_REVIEW"));
+    assert!(!page.contains("- 原图区域 "));
+}
+
+#[test]
+fn precise_export_preserves_unresolved_source_locations_and_legacy_output() {
+    assert_export_preserves_unresolved_source_locations_and_legacy_output(PRECISE_REQUEST_STRATEGY);
+}
+
+#[test]
+fn anchor_export_preserves_unresolved_source_locations_and_legacy_output() {
+    assert_export_preserves_unresolved_source_locations_and_legacy_output(ANCHOR_REQUEST_STRATEGY);
+}
+
+fn assert_export_preserves_unresolved_source_locations_and_legacy_output(strategy: u32) {
+    const INDEX: &str = ".noetome-index/source-locations.ndjson";
+    let mut fixture = Fixture::new(&[("", "needs_ocr"); 4]);
+    fixture.scope.scope_schema_version = Some(1);
+    fixture.scope.page_ranges = Some(vec![PageRange {
+        start_page: 2,
+        end_page: 4,
+    }]);
+    fixture.config.request_strategy_version = Some(strategy);
+    let source_id = &fixture.scope.source_id;
+    let geometry = json!({"coordinate_space":"pdf-display-pt","crop_box":[0,0,792,612]});
+    let image = json!({"ordinal":0,"kind":"image","text":"","bbox":[10,20,200,100],"assets":[]});
+    let equation = json!({"ordinal":2,"region_id":"saved-equation-2","kind":"equation",
+        "text":"","bbox":[25,140,380,190],"bbox_scope":"region","assets":[]});
+    let text_region = |ordinal| {
+        json!({"ordinal":ordinal,"kind":"text","text":"",
+        "bbox":[20,110,310,130]})
+    };
+    let source_issues = [
+        json!([{"code":"OUTSIDE-PAGE","message":"范围外的候选图。"}]),
+        json!([{"code":"VISUAL-REVIEW","message":"图义尚待核对。"},
+               {"code":"FORMULA-REVIEW","message":"公式符号尚待核对。"}]),
+        json!([{"code":"PAGE-ONLY","message":"没有可靠的局部坐标。"}]),
+    ];
+    let regions = [
+        json!([image.clone()]),
+        json!([image.clone(), text_region(1), equation.clone()]),
+        json!([text_region(0)]),
+    ];
+    // Author the saved source pages before either compile run pins their hashes.
+    let corpus_db =
+        Connection::open(fixture.project.join(".noetome-corpus/corpus.sqlite")).unwrap();
+    for (index, (regions, issues)) in regions.iter().zip(&source_issues).enumerate() {
+        let number = index + 1;
+        let page = json!({"schema_version":1,"source_id":source_id,"page_number":number,
+            "status":"needs_ocr","text":"","width_pt":612,"height_pt":792,"rotation":90,
+            "geometry":geometry,"regions":regions,"issues":issues});
+        let raw = encoded(&page).unwrap();
+        let sha = sha256(raw.as_bytes());
+        assert_eq!(
+            corpus_db.execute(
+                "UPDATE pages SET page_json=?1,page_sha256=?2 WHERE source_id=?3 AND page_number=?4",
+                params![raw, sha, source_id, number as u32],
+            ).unwrap(),
+            1
+        );
+        fixture.pages[index].2 = sha;
+    }
+    drop(corpus_db);
+
+    drop(fixture.authority());
+    let (store, precise_run) = fixture.run();
+    let mut legacy_config = fixture.config.clone();
+    legacy_config.request_strategy_version = None;
+    let legacy_run = store
+        .create_run(&legacy_config, std::slice::from_ref(&fixture.scope))
+        .unwrap();
+    for run in [&precise_run, &legacy_run] {
+        for number in 2..=3 {
+            store
+                .save_page(
+                    run,
+                    &fixture.scope,
+                    number,
+                    &fixture.pages[number as usize - 1].2,
+                    "needs_ocr",
+                    vec![],
+                    vec![],
+                )
+                .unwrap();
+        }
+    }
+    drop(store);
+
+    let output = fixture._temp.path().join("precise-source-locations");
+    let report = super::super::export(&fixture.project, &precise_run, &output).unwrap();
+    assert_eq!(report["summary"]["request_strategy_version"], strategy);
+    assert_eq!(report["summary"]["selected_pages"], 3);
+    assert_eq!(report["summary"]["out_of_scope_pages"], 1);
+    assert!(
+        report["files"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|entry| entry["path"] == INDEX)
+    );
+    let records = fs::read_to_string(output.join(INDEX))
+        .unwrap()
+        .lines()
+        .map(|line| serde_json::from_str::<Value>(line).unwrap())
+        .collect::<Vec<_>>();
+    assert_eq!(records.len(), 2);
+    let note = fs::read_to_string(output.join("处理范围.md")).unwrap();
+    let (_, unresolved) = note.split_once("\n### 物理页 2\n").unwrap();
+    let (with_candidates, page_only) = unresolved.split_once("\n### 物理页 3\n").unwrap();
+    for (record, (number, markdown)) in records
+        .iter()
+        .zip([(2usize, with_candidates), (3, page_only)])
+    {
+        let sha = &fixture.pages[number - 1].2;
+        assert_eq!(record["schema_version"], 1);
+        assert_eq!(record["run_id"], precise_run);
+        assert_eq!(record["source_id"], *source_id);
+        assert_eq!(record["source_sha256"], fixture.scope.source_sha256);
+        assert_eq!(record["page_number"], number);
+        assert_eq!(record["page_sha256"], *sha);
+        assert_eq!(record["status"], "needs_ocr");
+        assert_eq!(
+            record["geometry"],
+            json!({"width_pt":612,"height_pt":792,"rotation":90,"geometry":geometry})
+        );
+        assert_eq!(record["source_issues"], source_issues[number - 1]);
+        assert_eq!(record["issue_region_mapping"], "unresolved");
+        assert_eq!(record["note_path"], "处理范围.md");
+        for text in [
+            source_id.as_str(),
+            fixture.scope.source_sha256.as_str(),
+            sha.as_str(),
+            "pdf-display-pt",
+        ] {
+            assert!(
+                markdown.contains(text),
+                "Page {number} report missing {text:?}"
+            );
+        }
+    }
+    assert_eq!(records[0]["localization"], "page_with_candidate_regions");
+    assert_eq!(records[0]["regions"], json!([image, equation]));
+    assert!(with_candidates.contains("页级问题尚未逐项对应到区域"));
+    assert!(with_candidates.contains("VISUAL-REVIEW：图义尚待核对。"));
+    assert!(with_candidates.contains("FORMULA-REVIEW：公式符号尚待核对。"));
+    assert!(with_candidates.contains(&format!("{}:r0", fixture.pages[1].2)));
+    assert!(with_candidates.contains("saved-equation-2"));
+    assert!(with_candidates.contains(r"\[25,140,380,190\]"));
+    assert_eq!(records[1]["localization"], "page_only");
+    assert_eq!(records[1]["regions"], json!([]));
+    assert!(page_only.contains("PAGE-ONLY：没有可靠的局部坐标。"));
+    assert!(page_only.contains("该问题目前只固定到整页"));
+    assert!(!page_only.contains("- 原图区域 "));
+    assert!(!note.contains("OUTSIDE-PAGE"));
+    assert!(!note.contains("物理页 1"));
+    assert!(note.contains(&format!("物理页 4（来源 {source_id}）：尚未准备")));
+
+    let output = fixture._temp.path().join("legacy-source-locations");
+    let legacy = super::super::export(&fixture.project, &legacy_run, &output).unwrap();
+    assert_eq!(legacy["summary"]["request_strategy_version"], 1);
+    assert!(!output.join(INDEX).exists());
+    assert!(
+        !legacy["files"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|entry| entry["path"] == INDEX)
+    );
+    let note = fs::read_to_string(output.join("处理范围.md")).unwrap();
+    assert!(!note.contains("尚未解决的页与原图定位"));
+}
+
+#[test]
+fn missing_strategy_still_pages_legacy_atoms_by_uuid() {
+    let contents = [
+        "Diffusion first claim.".to_string(),
+        "Diffusion second claim.".to_string(),
+    ];
+    let original = contents.concat();
+    let fixture = Fixture::new(&[(&original, "text_ready")]);
+    let (store, run) = fixture.run();
+    let unit = fixture.prepare_all(&store, &run).remove(0);
+    let (attempt, batch) = fixture.sealed(&store, &run, &unit, &[], |candidates| {
+        let template = candidates.atoms[0].clone();
+        candidates.atoms = contents
+            .iter()
+            .enumerate()
+            .map(|(index, text)| {
+                let mut candidate = template.clone();
+                candidate.atom.atom_id = format!("local_atom_{index}");
+                candidate.atom.content = text.clone();
+                candidate
+            })
+            .collect();
+    });
+    store.commit_batch(&run, &unit, &attempt, batch).unwrap();
+    let ids = reverse_atom_uuids(&store, &run, &contents);
+    drop(store);
+    let reopened = Store::open(&fixture.project).unwrap().unwrap();
+    assert_eq!(
+        reopened.config(&run).unwrap().request_strategy_version,
+        None
+    );
+    assert_eq!(reopened.summary(&run).unwrap().request_strategy_version, 1);
+    for (offset, original) in [1, 0].into_iter().enumerate() {
+        let result = reopened.query(&run, "atoms", offset as u64, 1, "").unwrap();
+        assert_eq!(result["total"], 2);
+        assert_eq!(result["items"].as_array().unwrap().len(), 1);
+        assert_eq!(result["items"][0]["atom_id"], ids[original]);
+        assert_eq!(result["items"][0]["content"], contents[original]);
+    }
 }
 
 #[test]

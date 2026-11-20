@@ -11,6 +11,298 @@ fn literal(text: &str) -> String {
     }
     result
 }
+// Preserve visible source text without activating comments, entities, math,
+// tables or Markdown blocks. Legacy exports retain their original encoder.
+fn precise_literal(text: &str) -> String {
+    let mut result = String::new();
+    let mut characters = text.chars().peekable();
+    let mut line_start = true;
+    let mut ordered_prefix = false;
+    while let Some(c) = characters.next() {
+        if c == '\r' && characters.peek() == Some(&'\n') {
+            continue;
+        }
+        if matches!(c, '\r' | '\n') {
+            result.push_str("  \n");
+            line_start = true;
+            ordered_prefix = false;
+            continue;
+        }
+        if line_start && matches!(c, ' ' | '\t') {
+            // An entity at the physical line start prevents an indented block.
+            result.push_str(if c == ' ' { "&#32;" } else { "&#9;" });
+            line_start = false;
+            ordered_prefix = false;
+            continue;
+        }
+        let block_marker = line_start && matches!(c, '-' | '+' | '=');
+        let ordered_marker = ordered_prefix
+            && c == '.'
+            && characters
+                .peek()
+                .is_none_or(|next| next.is_ascii_whitespace());
+        if "\\`*_{}[]<>!#$%&|~()".contains(c) || block_marker || ordered_marker {
+            result.push('\\');
+        }
+        result.push(c);
+        ordered_prefix = c.is_ascii_digit() && (line_start || ordered_prefix);
+        line_start = false;
+    }
+    result
+}
+fn write_precise_details(
+    file: &mut File,
+    path: &Path,
+    store: &store::Store,
+    run_id: &str,
+    atom: &Value,
+) -> Result<(), ProjectError> {
+    let measurement = &atom["measurement"];
+    if !measurement.is_null() {
+        let unit = measurement["unit"].as_str().unwrap_or("");
+        let description = match measurement["value_status"].as_str() {
+            Some("known") => format!(
+                "数值：{} {}。",
+                precise_literal(
+                    measurement["value"]
+                        .as_str()
+                        .ok_or_else(|| error("COMPILE_EXPORT", "已知数值缺少值。"))?
+                ),
+                precise_literal(unit)
+            ),
+            Some("unknown") => format!(
+                "数值：未知；单位：{}。",
+                if unit.is_empty() {
+                    "未知".to_string()
+                } else {
+                    precise_literal(unit)
+                }
+            ),
+            Some("not_applicable") => "数值：不适用。".to_string(),
+            _ => return Err(error("COMPILE_EXPORT", "数值状态不可读。")),
+        };
+        writeln!(file, "{description}\n").map_err(|e| ProjectError::io(path, e))?;
+        let conditions = measurement["conditions"]
+            .as_array()
+            .ok_or_else(|| error("COMPILE_EXPORT", "测量条件不可读。"))?;
+        if !conditions.is_empty() {
+            let conditions = conditions
+                .iter()
+                .map(|value| {
+                    value
+                        .as_str()
+                        .map(precise_literal)
+                        .ok_or_else(|| error("COMPILE_EXPORT", "测量条件不是文本。"))
+                })
+                .collect::<Result<Vec<_>, _>>()?;
+            writeln!(file, "测量条件：{}。\n", conditions.join("；"))
+                .map_err(|e| ProjectError::io(path, e))?;
+        }
+    }
+    for link in atom["evidence_links"]
+        .as_array()
+        .ok_or_else(|| error("COMPILE_EXPORT", "原子证据关系不可读。"))?
+    {
+        let id = link["evidence_id"]
+            .as_str()
+            .ok_or_else(|| error("COMPILE_EXPORT", "证据身份缺失。"))?;
+        let evidence = store.evidence(run_id, id)?;
+        let relation = match link["relation"].as_str() {
+            Some("supports") => "来源支持",
+            Some("qualifies") => "限定依据",
+            Some("refutes") => "反证依据，尚待核对",
+            _ => return Err(error("COMPILE_EXPORT", "证据关系不受支持。")),
+        };
+        let number = evidence["page_number"]
+            .as_u64()
+            .ok_or_else(|| error("COMPILE_EXPORT", "证据物理页缺失。"))?;
+        let quote = evidence["quote"]
+            .as_str()
+            .ok_or_else(|| error("COMPILE_EXPORT", "证据引文缺失。"))?;
+        writeln!(
+            file,
+            "{relation}（物理页 {number}）：{}\n",
+            precise_literal(quote)
+        )
+        .map_err(|e| ProjectError::io(path, e))?;
+    }
+    Ok(())
+}
+fn write_visible_issues(
+    file: &mut File,
+    path: &Path,
+    store: &store::Store,
+    project: &Path,
+    run_id: &str,
+) -> Result<Vec<Value>, ProjectError> {
+    let mut locations = Vec::new();
+    writeln!(file, "\n## 尚未解决的页与原图定位\n\n以下位置只固定原件与区域，不代表图、表或公式已经解释。坐标使用保存页的 PDF 显示坐标；原件保留在项目中。\n")
+        .map_err(|e| ProjectError::io(path, e))?;
+    let mut offset = 0;
+    loop {
+        let pages = store.query(run_id, "pages", offset, 50, "")?;
+        let pages = pages["items"]
+            .as_array()
+            .ok_or_else(|| error("COMPILE_EXPORT", "处理页分页不可读。"))?;
+        if pages.is_empty() {
+            break;
+        }
+        for page in pages {
+            if page["in_scope"] != true {
+                continue;
+            }
+            let number = page["page_number"]
+                .as_u64()
+                .and_then(|n| u32::try_from(n).ok())
+                .ok_or_else(|| error("COMPILE_EXPORT", "处理物理页不可读。"))?;
+            let source = page["source_id"]
+                .as_str()
+                .ok_or_else(|| error("COMPILE_EXPORT", "处理来源不可读。"))?;
+            let Some(pin) = page["page_sha256"].as_str() else {
+                writeln!(
+                    file,
+                    "- 物理页 {number}（来源 {}）：尚未准备，原图区域未判断。",
+                    precise_literal(source)
+                )
+                .map_err(|e| ProjectError::io(path, e))?;
+                continue;
+            };
+            let retained = corpus::page_revision(project, source, number, pin)?;
+            let issues = retained["issues"]
+                .as_array()
+                .ok_or_else(|| error("COMPILE_EXPORT", "原页问题清单不可读。"))?;
+            let failed = page["units_failed"].as_u64().unwrap_or(0);
+            let pending = page["units_total"]
+                .as_u64()
+                .unwrap_or(0)
+                .saturating_sub(page["units_confirmed"].as_u64().unwrap_or(0))
+                .saturating_sub(failed);
+            let unresolved_status = matches!(
+                page["status"].as_str(),
+                Some("needs_review" | "needs_ocr" | "failed")
+            );
+            if !unresolved_status && issues.is_empty() && failed == 0 && pending == 0 {
+                continue;
+            }
+            writeln!(file, "\n### 物理页 {number}\n\n来源：{}；原件 SHA-256：{}；页 SHA-256：{}；页状态：{}。失败片段 {failed} 个，尚待处理 {pending} 个。\n", precise_literal(source), page["source_sha256"].as_str().unwrap_or("未知"), pin, precise_literal(page["status"].as_str().unwrap_or("未知"))).map_err(|e| ProjectError::io(path, e))?;
+            let geometry = json!({"width_pt":retained["width_pt"],"height_pt":retained["height_pt"],"rotation":retained["rotation"],"geometry":retained["geometry"]});
+            writeln!(
+                file,
+                "原页尺寸与坐标系：{}。坐标直接沿用保存页，不再次旋转。\n",
+                precise_literal(&geometry.to_string())
+            )
+            .map_err(|e| ProjectError::io(path, e))?;
+            if unresolved_status && issues.is_empty() {
+                writeln!(
+                    file,
+                    "原页状态仍待核对，未提供逐项问题代码；下列位置仅保留原页与可用候选区域。\n"
+                )
+                .map_err(|e| ProjectError::io(path, e))?;
+            }
+            for issue in issues {
+                writeln!(
+                    file,
+                    "- {}：{}",
+                    precise_literal(issue["code"].as_str().unwrap_or("SOURCE_REVIEW")),
+                    precise_literal(issue["message"].as_str().unwrap_or("原页保留待核对问题。"))
+                )
+                .map_err(|e| ProjectError::io(path, e))?;
+            }
+            let regions = retained["regions"]
+                .as_array()
+                .ok_or_else(|| error("COMPILE_EXPORT", "原页保留区域不可读。"))?;
+            writeln!(
+                file,
+                "以下为同页保留的候选图、表或公式区域；页级问题尚未逐项对应到区域。\n"
+            )
+            .map_err(|e| ProjectError::io(path, e))?;
+            let mut region_count = 0;
+            let mut retained_regions = Vec::new();
+            for region in regions {
+                if !matches!(
+                    region["kind"].as_str(),
+                    Some(
+                        "image"
+                            | "vector"
+                            | "image_body"
+                            | "chart_body"
+                            | "table_body"
+                            | "equation"
+                    )
+                ) {
+                    continue;
+                }
+                if !region["bbox"]
+                    .as_array()
+                    .is_some_and(|bbox| bbox.len() == 4 && bbox.iter().all(Value::is_number))
+                {
+                    continue;
+                }
+                let legacy_id = format!("{pin}:r{}", region["ordinal"]);
+                let region_id = region["region_id"]
+                    .as_str()
+                    .filter(|id| !id.is_empty())
+                    .unwrap_or(&legacy_id);
+                writeln!(
+                    file,
+                    "- 原图区域 {}（{}；区域标识 {}）：{}；坐标范围：{}；资产描述：{}",
+                    region["ordinal"],
+                    precise_literal(region["kind"].as_str().unwrap_or("未知")),
+                    precise_literal(region_id),
+                    precise_literal(&region["bbox"].to_string()),
+                    precise_literal(region["bbox_scope"].as_str().unwrap_or("原区域")),
+                    precise_literal(&region["assets"].to_string())
+                )
+                .map_err(|e| ProjectError::io(path, e))?;
+                region_count += 1;
+                retained_regions.push(region.clone());
+            }
+            if region_count == 0 {
+                writeln!(file, "该问题目前只固定到整页，较小的图或公式区域尚未知。\n")
+                    .map_err(|e| ProjectError::io(path, e))?;
+            }
+            locations.push(json!({
+                "schema_version":1,"run_id":run_id,"source_id":source,
+                "source_sha256":page["source_sha256"],"page_number":number,
+                "page_sha256":pin,"status":page["status"],
+                "units_failed":failed,"units_pending":pending,"geometry":geometry,
+                "source_issues":issues,"regions":retained_regions,
+                "localization":if region_count == 0 { "page_only" } else { "page_with_candidate_regions" },
+                "issue_region_mapping":"unresolved","note_path":"处理范围.md"
+            }));
+        }
+        offset += pages.len() as u64;
+    }
+    writeln!(file, "\n## 其他待核对事项\n").map_err(|e| ProjectError::io(path, e))?;
+    let mut offset = 0;
+    loop {
+        let result = store.query(run_id, "issues", offset, 50, "")?;
+        let items = result["items"]
+            .as_array()
+            .ok_or_else(|| error("COMPILE_EXPORT", "待核对事项不可读。"))?;
+        if items.is_empty() {
+            break;
+        }
+        for issue in items {
+            if issue["scope"]
+                .as_str()
+                .is_some_and(|scope| scope.starts_with("page:"))
+            {
+                continue;
+            }
+            writeln!(
+                file,
+                "- {}（{}）：{}",
+                precise_literal(issue["code"].as_str().unwrap_or("SOURCE_REVIEW")),
+                precise_literal(issue["scope"].as_str().unwrap_or("未知范围")),
+                precise_literal(&issue["detail"].to_string())
+            )
+            .map_err(|e| ProjectError::io(path, e))?;
+        }
+        offset += items.len() as u64;
+    }
+    Ok(locations)
+}
 fn new_file(path: &Path) -> Result<File, ProjectError> {
     store::guarded(path, true, false)
 }
@@ -88,6 +380,11 @@ pub fn export(project: &Path, run_id: &str, output: &Path) -> Result<Value, Proj
     let store = required(project)?;
     let _lease = store.lease(run_id)?;
     let summary = status(project, run_id)?;
+    let precise = matches!(
+        summary.request_strategy_version,
+        model::PRECISE_REQUEST_STRATEGY | model::ANCHOR_REQUEST_STRATEGY
+    );
+    let text_literal = if precise { precise_literal } else { literal };
     let output = project::check_components(output)?;
     crate::extraction_preview::ensure_outside_vault(&output)?;
     if output.exists() || within(&output, project)? {
@@ -151,24 +448,30 @@ pub fn export(project: &Path, run_id: &str, output: &Path) -> Result<Value, Proj
             let relative = PathBuf::from("知识").join(format!("{id}.md"));
             let path = output.join(&relative);
             let mut file = new_file(&path)?;
-            writeln!(file, "# {}\n", literal(title)).map_err(|e| ProjectError::io(&path, e))?;
+            writeln!(file, "# {}\n", text_literal(title))
+                .map_err(|e| ProjectError::io(&path, e))?;
             let aliases = concept["aliases"]
                 .as_array()
                 .into_iter()
                 .flatten()
                 .filter_map(Value::as_str)
-                .map(literal)
+                .map(text_literal)
                 .collect::<Vec<_>>();
             if !aliases.is_empty() {
                 writeln!(file, "相关称谓：{}。\n", aliases.join("、"))
                     .map_err(|e| ProjectError::io(&path, e))?;
             }
             let mut ordinal = 0u64;
-            for (kind, heading) in [
-                ("definition", "概念与定义"),
-                ("statement", "机制与事实"),
-                ("comparison_value", "条件与数值"),
-            ] {
+            let sections: &[(&str, &str)] = if precise {
+                &[("", "知识与过程")]
+            } else {
+                &[
+                    ("definition", "概念与定义"),
+                    ("statement", "机制与事实"),
+                    ("comparison_value", "条件与数值"),
+                ]
+            };
+            for &(kind, heading) in sections {
                 let mut atom_offset = 0;
                 let mut heading_written = false;
                 loop {
@@ -180,7 +483,7 @@ pub fn export(project: &Path, run_id: &str, output: &Path) -> Result<Value, Proj
                         break;
                     }
                     for atom in batch {
-                        if atom["kind"] != kind
+                        if (!precise && atom["kind"] != kind)
                             || !atom["concept_ids"]
                                 .as_array()
                                 .is_some_and(|ids| ids.iter().any(|c| c == id))
@@ -195,18 +498,21 @@ pub fn export(project: &Path, run_id: &str, output: &Path) -> Result<Value, Proj
                         let content = atom["content"]
                             .as_str()
                             .ok_or_else(|| error("COMPILE_EXPORT", "原子正文缺失。"))?;
-                        writeln!(file, "{}\n", literal(content))
+                        writeln!(file, "{}\n", text_literal(content))
                             .map_err(|e| ProjectError::io(&path, e))?;
                         let qualifiers = atom["qualifiers"]
                             .as_array()
                             .into_iter()
                             .flatten()
                             .filter_map(Value::as_str)
-                            .map(literal)
+                            .map(text_literal)
                             .collect::<Vec<_>>();
                         if !qualifiers.is_empty() {
                             writeln!(file, "适用条件、单位与例外：{}。\n", qualifiers.join("；"))
                                 .map_err(|e| ProjectError::io(&path, e))?;
+                        }
+                        if precise {
+                            write_precise_details(&mut file, &path, &store, run_id, atom)?;
                         }
                         line(
                             &mut blocks,
@@ -224,7 +530,7 @@ pub fn export(project: &Path, run_id: &str, output: &Path) -> Result<Value, Proj
                 &mut notes_index,
                 &json!({"note_id":id,"revision":concept["revision"],"title":title,"path":relative_path(&path,&output),"blocks":ordinal}),
             )?;
-            writeln!(overview, "- [{}](知识/{id}.md)", literal(title))
+            writeln!(overview, "- [{}](知识/{id}.md)", text_literal(title))
                 .map_err(|e| ProjectError::io(&output, e))?;
         }
         offset += items.len() as u64;
@@ -283,8 +589,38 @@ pub fn export(project: &Path, run_id: &str, output: &Path) -> Result<Value, Proj
         .units_total
         .saturating_sub(summary.units_confirmed)
         .saturating_sub(summary.units_failed);
-    save_artifact(&scope_note,format!("# 处理范围\n\n原书共 {} 个物理页；本次选择 {} 页，范围外 {} 页。范围内已尝试准备 {} 页，尚未准备 {} 页，失败 {} 页（失败页可同时计入已尝试准备）。确认 {} 个片段，失败 {} 个片段，尚待处理 {} 个片段，待OCR {} 页。\n\n已保存候选原子 {} 个，均未独立核验。累计预算及所有未处理范围以处理范围.json和独立索引为准。原始PDF未随笔记打包。\n",summary.physical_pages,summary.selected_pages,summary.out_of_scope_pages,summary.prepared_pages,summary.unprepared_pages,summary.failed_pages,summary.units_confirmed,summary.units_failed,pending,summary.pending_ocr_pages,summary.atoms).as_bytes())?;
-    manifest.push(json!({"path":"处理范围.md","fingerprint":fingerprint(&scope_note)?}));
+    let scope_text = format!(
+        "# 处理范围\n\n原书共 {} 个物理页；本次选择 {} 页，范围外 {} 页。范围内已尝试准备 {} 页，尚未准备 {} 页，失败 {} 页（失败页可同时计入已尝试准备）。确认 {} 个片段，失败 {} 个片段，尚待处理 {} 个片段，待OCR {} 页。\n\n已保存候选原子 {} 个，均未独立核验。累计预算及所有未处理范围以处理范围.json和独立索引为准。原始PDF未随笔记打包。\n",
+        summary.physical_pages,
+        summary.selected_pages,
+        summary.out_of_scope_pages,
+        summary.prepared_pages,
+        summary.unprepared_pages,
+        summary.failed_pages,
+        summary.units_confirmed,
+        summary.units_failed,
+        pending,
+        summary.pending_ocr_pages,
+        summary.atoms
+    );
+    let mut scope_file = new_file(&scope_note)?;
+    scope_file
+        .write_all(scope_text.as_bytes())
+        .map_err(|e| ProjectError::io(&scope_note, e))?;
+    if precise {
+        let locations =
+            write_visible_issues(&mut scope_file, &scope_note, &store, project, run_id)?;
+        let path = index.join("source-locations.ndjson");
+        let mut file = new_file(&path)?;
+        for location in locations {
+            line(&mut file, &location)?;
+        }
+        manifest.push(
+            json!({"path":relative_path(&path,&output),"fingerprint":finish_file(&path,file)?}),
+        );
+    }
+    manifest
+        .push(json!({"path":"处理范围.md","fingerprint":finish_file(&scope_note, scope_file)?}));
     let scope_kind = if summary.out_of_scope_pages == 0 {
         "all_physical_pages"
     } else {

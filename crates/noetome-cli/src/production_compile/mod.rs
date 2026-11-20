@@ -3,6 +3,9 @@
 pub mod command;
 mod export;
 mod model;
+mod precise_evidence;
+#[cfg(test)]
+mod precise_tests;
 mod provider;
 #[cfg(test)]
 mod scope_tests;
@@ -53,8 +56,11 @@ pub fn create_scoped(
     mut config: CompileConfig,
     scope: Option<CompileScope>,
 ) -> Result<RunSummary, ProjectError> {
+    // Only new runs get the new default; saved configurations missing the field are v1.
+    if config.request_strategy_version.is_none() {
+        config.request_strategy_version = Some(ANCHOR_REQUEST_STRATEGY);
+    }
     provider::validate_config(&config)?;
-    config.request_strategy_version = Some(config.strategy_version()?);
     if source_ids.is_empty()
         || source_ids
             .iter()

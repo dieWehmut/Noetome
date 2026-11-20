@@ -143,7 +143,7 @@ class ChapterScopeCliTests(unittest.TestCase):
         self.assertEqual((created["physical_pages"], created["selected_pages"], created["out_of_scope_pages"]), (8, 3, 5))
         self.assertEqual((created["prepared_pages"], created["unprepared_pages"], created["unresolved_pages"]), (0, 3, 3))
         self.assertEqual((created["failed_pages"], created["pending_ocr_pages"], created["units_total"], created["attempts"]), (0, 0, 0, 0))
-        self.assertEqual(created["request_strategy_version"], 1)
+        self.assertEqual(created["request_strategy_version"], 3)
         self.assertEqual(created["sources"][0]["source_sha256"], fixture.source_sha)
         self.assertEqual(created["sources"][0]["physical_pages"], 8)
         self.assertEqual(created["sources"][0]["page_ranges"], [{"start_page": 3, "end_page": 4}, {"start_page": 7, "end_page": 7}])
@@ -151,7 +151,7 @@ class ChapterScopeCliTests(unittest.TestCase):
         self.assertEqual(created["budget"]["history_count"], 1)
         run = created["run_id"]
         saved = fixture.database_inputs(run)
-        self.assertEqual(json.loads(saved[0])["request_strategy_version"], 1)
+        self.assertEqual(json.loads(saved[0])["request_strategy_version"], 3)
         pages = fixture.call("compile", "query", fixture.project, run, "pages", 0, 20)
         self.assertEqual(pages["total"], 8)
         self.assertEqual([page["page_number"] for page in pages["items"] if page["in_scope"]], [3, 4, 7])
@@ -207,7 +207,7 @@ class ChapterScopeCliTests(unittest.TestCase):
                 self.assertNotEqual(fixture.create("--scope", fixture.scope_file, expect_ok=False).returncode, 0)
                 self.assert_no_migration_or_run()
 
-    def test_omitted_scope_keeps_whole_book_entry_and_explicit_v1_for_new_run(self):
+    def test_omitted_scope_keeps_whole_book_entry_and_pins_default_v3_for_new_run(self):
         fixture = self.fixture
         original_config = fixture.config_file.read_bytes()
         created = fixture.create()
@@ -215,17 +215,61 @@ class ChapterScopeCliTests(unittest.TestCase):
         self.assertEqual(created["unprepared_pages"], 8)
         self.assertEqual(created["sources"][0]["scope_schema_version"], 1)
         self.assertEqual(created["sources"][0]["page_ranges"], [{"start_page": 1, "end_page": 8}])
-        self.assertEqual(created["request_strategy_version"], 1)
+        self.assertEqual(created["request_strategy_version"], 3)
         saved_config, config_hash, _, _ = fixture.database_inputs(created["run_id"])
-        self.assertEqual(json.loads(saved_config)["request_strategy_version"], 1)
+        self.assertEqual(json.loads(saved_config)["request_strategy_version"], 3)
         self.assertEqual(hashlib.sha256(saved_config.encode("utf8")).hexdigest(), config_hash)
         self.assertEqual(fixture.config_file.read_bytes(), original_config)
         self.assertEqual(fixture.ledger.read_bytes(), fixture.baseline)
         self.assertEqual(created["attempts"], 0)
 
+    def test_explicit_v1_v2_and_v3_remain_pinned_when_later_input_changes(self):
+        fixture = self.fixture
+        for version in (1, 2, 3):
+            with self.subTest(version=version):
+                save_json(fixture.config_file, {**fixture.config, "request_strategy_version": version})
+                input_bytes = fixture.config_file.read_bytes()
+                created = fixture.create("--scope", fixture.scope_file)
+                self.assertEqual(created["request_strategy_version"], version)
+                self.assertEqual(created["attempts"], 0)
+                saved = fixture.database_inputs(created["run_id"])
+                self.assertEqual(json.loads(saved[0])["request_strategy_version"], version)
+                self.assertEqual(hashlib.sha256(saved[0].encode("utf8")).hexdigest(), saved[1])
+                self.assertEqual(fixture.config_file.read_bytes(), input_bytes)
+                save_json(fixture.config_file, {**fixture.config, "request_strategy_version": 1 if version == 3 else 3})
+                paused = fixture.call("compile", "control", fixture.project, created["run_id"], "pause")
+                restored = fixture.call("compile", "status", fixture.project, created["run_id"])
+                self.assertEqual(paused["request_strategy_version"], version)
+                self.assertEqual(restored["request_strategy_version"], version)
+                self.assertEqual(fixture.database_inputs(created["run_id"]), saved)
+                self.assertEqual(fixture.ledger.read_bytes(), fixture.baseline)
+                self.assertEqual(fixture.original.read_bytes(), fixture.original_bytes)
+
+    def test_default_v3_stays_pinned_after_explicit_v2_input_rewrite(self):
+        fixture = self.fixture
+        created = fixture.create("--scope", fixture.scope_file)
+        self.assertEqual(created["request_strategy_version"], 3)
+        saved = fixture.database_inputs(created["run_id"])
+        self.assertEqual(json.loads(saved[0])["request_strategy_version"], 3)
+        save_json(fixture.config_file, {**fixture.config, "request_strategy_version": 2})
+        save_json(fixture.scope_file, fixture.scope([(1, 8)]))
+        fixture.call("compile", "control", fixture.project, created["run_id"], "pause")
+        restored = fixture.call("compile", "status", fixture.project, created["run_id"])
+        self.assertEqual(restored["request_strategy_version"], 3)
+        self.assertEqual((restored["selected_pages"], restored["out_of_scope_pages"]), (3, 5))
+        self.assertEqual(restored["attempts"], 0)
+        self.assertEqual(fixture.database_inputs(created["run_id"]), saved)
+        changed = fixture.create("--scope", fixture.scope_file)
+        self.assertNotEqual(changed["run_id"], created["run_id"])
+        self.assertEqual(changed["request_strategy_version"], 2)
+        self.assertEqual((changed["selected_pages"], changed["out_of_scope_pages"]), (8, 0))
+        self.assertEqual(fixture.database_inputs(created["run_id"]), saved)
+        self.assertEqual(fixture.ledger.read_bytes(), fixture.baseline)
+        self.assertEqual(fixture.original.read_bytes(), fixture.original_bytes)
+
     def test_unknown_request_strategies_fail_before_budget_migration(self):
         fixture = self.fixture
-        for version in (0, 2, 4294967295):
+        for version in (0, 99, 4294967295):
             with self.subTest(version=version):
                 save_json(fixture.config_file, {**fixture.config, "request_strategy_version": version})
                 rejected = fixture.create("--scope", fixture.scope_file, expect_ok=False)

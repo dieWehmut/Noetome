@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "status": "in_progress_real_small_chunk_and_independent_review_pending",
+  "task_id": "B19-T02",
+  "request_strategy_version": 3,
+  "legacy_missing_strategy_version": 1,
+  "checks": {
+    "native_windows": {
+      "format_exit_code": 0,
+      "cli_build_exit_code": 0,
+      "workspace_check_exit_code": 0,
+      "production": {
+        "passed": 79,
+        "failed": 0
+      },
+      "chapter_blackbox": {
+        "tests_run": 7,
+        "exit_code": 0
+      },
+      "evaluator": {
+        "tests_run": 67,
+        "exit_code": 0
+      },
+      "rust": {
+        "targets": 43,
+        "passed": 1464,
+        "failed": 0,
+        "ignored": 1,
+        "exit_code": 0
+      },
+      "python": {
+        "tests_run": 1529,
+        "passed": 1504,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 25,
+        "exit_code": 0
+      }
+    },
+    "wsl_focused": {
+      "production_passed": 80,
+      "chapter_blackbox_tests": 7,
+      "exit_code": 0
+    },
+    "real_runs": [
+      {
+        "strategy": 2,
+        "max_chunk_bytes": 6000,
+        "attempts": 5,
+        "confirmed_units": 0,
+        "atoms": 0,
+        "status": "failed",
+        "failure_code": "COMPILE_UNIT_FAILURES",
+        "complete_truncated_responses": 2,
+        "timeouts": 3
+      },
+      {
+        "strategy": 3,
+        "max_chunk_bytes": 6000,
+        "attempts": 5,
+        "confirmed_units": 0,
+        "atoms": 0,
+        "status": "failed",
+        "failure_code": "COMPILE_UNIT_FAILURES",
+        "complete_truncated_responses": 4,
+        "timeouts": 1
+      },
+      {
+        "strategy": 3,
+        "max_chunk_bytes": 512,
+        "status": "running",
+        "quality": "not_yet_evaluated"
+      }
+    ],
+    "independent_real_content_review": "pending_real_artifacts",
+    "old_project_4_runs_78_requests_unchanged": true,
+    "failed_v2_11_tables_16_artifacts_unchanged": true
+  },
+  "reference": {
+    "atoms": 173,
+    "critical": 146,
+    "necessary": 27,
+    "visual_items": 40,
+    "formula_groups": 36,
+    "unknown_items": 20,
+    "reference_sha256": "d0dfef79ad6bcb164a103db7d424991723975ae7e5e326216787e2c355903442",
+    "errata_sha256": "cb4dfdc1ed0aeb4476bdeafef531d47eeb3974cf3076b655d2b4fcda3fd18466",
+    "annotator": "ai",
+    "human_review": "pending"
+  },
+  "scope": {
+    "physical_pages": 1227,
+    "selected_pages": 23,
+    "out_of_scope_pages": 1204,
+    "page_ranges": [
+      {
+        "start_page": 34,
+        "end_page": 56
+      }
+    ]
+  },
+  "formal_scientific_claim": false,
+  "chapter_complete_claim": false,
+  "limitations": [
+    "Artificial fixtures do not establish real chapter quality.",
+    "The independent reference is AI-authored and is not the formal human 200-atom benchmark.",
+    "Native installer, consistent export snapshot and Obsidian acceptance belong to B19-T03."
+  ],
+  "budget_after_v3_6000_run": {
+    "approved_total_tokens": 10000000,
+    "accounted_tokens": 312405,
+    "pending_reserved_tokens": 348189,
+    "remaining_tokens": 9339406,
+    "history_count": 10,
+    "unknown_reservations_preserved": true
+  }
+}

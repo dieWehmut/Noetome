@@ -4,6 +4,10 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::path::PathBuf;
 
+pub(super) const LEGACY_REQUEST_STRATEGY: u32 = 1;
+pub(super) const PRECISE_REQUEST_STRATEGY: u32 = 2;
+pub(super) const ANCHOR_REQUEST_STRATEGY: u32 = 3;
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct CompileConfig {
@@ -27,8 +31,13 @@ pub struct CompileConfig {
 
 impl CompileConfig {
     pub(super) fn strategy_version(&self) -> Result<u32, crate::project::ProjectError> {
-        match self.request_strategy_version.unwrap_or(1) {
-            1 => Ok(1),
+        match self
+            .request_strategy_version
+            .unwrap_or(LEGACY_REQUEST_STRATEGY)
+        {
+            version @ (LEGACY_REQUEST_STRATEGY
+            | PRECISE_REQUEST_STRATEGY
+            | ANCHOR_REQUEST_STRATEGY) => Ok(version),
             _ => Err(super::error(
                 "COMPILE_REQUEST_STRATEGY",
                 "请求策略版本不受支持；历史缺省配置仅按 v1 解释。",
