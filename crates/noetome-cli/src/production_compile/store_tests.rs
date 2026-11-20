@@ -235,6 +235,129 @@ impl Fixture {
     }
 }
 
+// Preserve unsealed originals to reproduce a crash after receipt persistence.
+fn rewrite_authored_receipt(
+    store: &Store,
+    attempt: &Attempt,
+    input: u64,
+    output: u64,
+    status: u16,
+    complete: bool,
+    failure: Option<&str>,
+) {
+    let directory = store.root.join(&attempt.directory);
+    let mut response: Value =
+        serde_json::from_slice(&fs::read(directory.join("response.bin")).unwrap()).unwrap();
+    response["usage"] = json!({
+        "prompt_tokens": input,
+        "completion_tokens": output,
+        "total_tokens": input + output,
+    });
+    let bytes = serde_json::to_vec(&response).unwrap();
+    fs::write(directory.join("response.bin"), &bytes).unwrap();
+    let mut receipt: provider::Receipt =
+        serde_json::from_slice(&fs::read(directory.join("receipt.json")).unwrap()).unwrap();
+    receipt.status = Some(status);
+    receipt.complete = complete;
+    receipt.failure_code = failure.map(str::to_string);
+    receipt.response_sha256 = sha256(&bytes);
+    receipt.response_bytes = bytes.len() as u64;
+    fs::write(
+        directory.join("receipt.json"),
+        serde_json::to_vec(&receipt).unwrap(),
+    )
+    .unwrap();
+}
+
+fn saved_recovery_fixture(outcomes: &[&str]) -> (Fixture, String, Vec<Attempt>) {
+    saved_recovery_fixture_with_transport(outcomes, "local_http_test")
+}
+
+fn saved_recovery_fixture_with_transport(
+    outcomes: &[&str],
+    transport_mode: &str,
+) -> (Fixture, String, Vec<Attempt>) {
+    let texts = vec![
+        (
+            "Diffusion retains authored recovery evidence.",
+            "text_ready"
+        );
+        outcomes.len()
+    ];
+    let mut fixture = Fixture::new(&texts);
+    fixture.config.transport_mode = transport_mode.into();
+    if transport_mode == "local_openai" {
+        fixture.config.credential_mode = Some("none".into());
+        fixture.config.credential_env.clear();
+        fixture.config.usage_ledger = fixture
+            .config
+            .usage_ledger
+            .with_file_name("local-openai.usage.json");
+    }
+    let mut budget = fixture.authority();
+    let (store, run) = fixture.run();
+    let mut attempts = Vec::new();
+    for (ordinal, outcome) in outcomes.iter().enumerate() {
+        let number = ordinal as u32 + 1;
+        let mut unit = fixture.unit(number);
+        // Recovery currently orders by unit_id, so the fixture must not depend on random UUID order.
+        unit.unit_id = format!("00000000-0000-4000-8000-{number:012}");
+        store
+            .save_page(
+                &run,
+                &fixture.scope,
+                number,
+                &fixture.pages[ordinal].2,
+                "text_ready",
+                vec![unit.clone()],
+                vec![],
+            )
+            .unwrap();
+        let (attempt, _) = fixture.originals(&store, &run, &unit, &[], false, |candidate| {
+            if *outcome == "candidate_failure" {
+                candidate.atoms[0].atom.required = true;
+            }
+        });
+        match *outcome {
+            "request_failure" => rewrite_authored_receipt(
+                &store,
+                &attempt,
+                100,
+                50,
+                500,
+                true,
+                Some("EXTRACT_API_SERVER"),
+            ),
+            "budget_failure" => {
+                rewrite_authored_receipt(&store, &attempt, 100, 513, 200, true, None)
+            }
+            "paused" => rewrite_authored_receipt(
+                &store,
+                &attempt,
+                100,
+                50,
+                200,
+                false,
+                Some("COMPILE_PAUSED"),
+            ),
+            "changed_receipt" => {
+                fs::write(
+                    store.root.join(&attempt.directory).join("response.bin"),
+                    b"authored response changed after receipt persistence",
+                )
+                .unwrap();
+            }
+            "candidate_failure" | "success" => {}
+            other => panic!("unknown authored recovery outcome: {other}"),
+        }
+        fixture.reserve_sent(&mut budget, &run, &attempt);
+        attempts.push(attempt);
+    }
+    drop(store);
+    drop(budget);
+    (fixture, run, attempts)
+}
+
 #[test]
 fn page_cursor_preserves_fixed_inputs_and_distinguishes_ocr_and_unprepared() {
     let fixture = Fixture::new(&[
@@ -1235,4 +1358,469 @@ fn local_openai_fake_http_smoke() {
             .accounted_tokens,
         120
     );
+}
+
+#[test]
+fn local_http_test_credential_rejects_non_test_values() {
+    let fixture = Fixture::new(&[("Authored credential validation.", "text_ready")]);
+    let config = &fixture.config;
+    super::super::validate_credential(config, "noetome-test-authored-credential").unwrap();
+    for credential in [
+        "sk-authored-non-test-credential",
+        "",
+        "noetome-test-has space",
+        "noetome-test-has\nnewline",
+    ] {
+        let failure = super::super::validate_credential(config, credential).unwrap_err();
+        assert_eq!(failure.code(), "COMPILE_CREDENTIAL", "{credential:?}");
+    }
+    let overlong = format!("noetome-test-{}", "x".repeat(8192));
+    assert_eq!(
+        super::super::validate_credential(config, &overlong)
+            .unwrap_err()
+            .code(),
+        "COMPILE_CREDENTIAL"
+    );
+}
+
+#[test]
+fn finish_rejects_usage_over_request_limits_after_accounting() {
+    for case in [
+        "exact_limits",
+        "input_over_limit",
+        "output_over_limit",
+        "total_over_reservation",
+        "large_output_over_limit",
+    ] {
+        let fixture = Fixture::new(&[("Diffusion has authored budget evidence.", "text_ready")]);
+        let (store, run) = fixture.run();
+        let unit = fixture.prepare_all(&store, &run).remove(0);
+        let (attempt, _) = fixture.originals(&store, &run, &unit, &[], false, |_| {});
+        let input_limit = fs::read(
+            store
+                .root
+                .join(&attempt.directory)
+                .join("request-body.json"),
+        )
+        .unwrap()
+        .len() as u64
+            + 1024;
+        let output_limit = fixture.config.max_output_tokens;
+        let (input, output, reserved) = match case {
+            "exact_limits" => (input_limit, output_limit, input_limit + output_limit),
+            "input_over_limit" => (input_limit + 1, 0, input_limit + output_limit),
+            "output_over_limit" => (12, output_limit + 1, input_limit + output_limit),
+            "total_over_reservation" => (12, 8, 19),
+            "large_output_over_limit" => (12, 100000, input_limit + output_limit),
+            _ => unreachable!(),
+        };
+        rewrite_authored_receipt(&store, &attempt, input, output, 200, true, None);
+        let mut budget = fixture.authority();
+        let key = super::super::key(&run, &attempt);
+        budget
+            .reserve(&BudgetRequest {
+                key: key.clone(),
+                request_sha256: attempt.request_sha256.clone(),
+                reserved_tokens: reserved,
+            })
+            .unwrap();
+        budget.mark_sent(&key).unwrap();
+        let result = super::super::finish(
+            &fixture.project,
+            &run,
+            &store,
+            &fixture.config,
+            &mut budget,
+            &unit,
+            &attempt,
+            "noetome-test-artificial-credential-never-in-source",
+        );
+        if case == "exact_limits" {
+            result.unwrap();
+            assert_eq!(store.summary(&run).unwrap().units_confirmed, 1);
+            assert_eq!(store.summary(&run).unwrap().ir_revision, 1);
+        } else {
+            assert_eq!(result.unwrap_err().code(), "COMPILE_BUDGET_STOP", "{case}");
+            let summary = store.summary(&run).unwrap();
+            assert_eq!(
+                (summary.ir_revision, summary.units_confirmed, summary.atoms),
+                (0, 0, 0),
+                "{case}"
+            );
+        }
+        let paid = budget.status().unwrap();
+        assert_eq!(paid.accounted_tokens, 100 + input + output, "{case}");
+        assert_eq!(paid.pending_reserved_tokens, 0, "{case}");
+        assert_eq!(paid.model_attempts, 2, "{case}");
+        assert!(
+            paid.remaining_tokens > 0,
+            "fixture must not stop through cumulative exhaustion"
+        );
+        assert_eq!(
+            budget.attempt(&key).unwrap().unwrap().state,
+            BudgetAttemptState::Known
+        );
+        if case != "exact_limits" {
+            // A replay after accounting must neither charge twice nor commit forbidden knowledge.
+            assert!(
+                super::super::finish(
+                    &fixture.project,
+                    &run,
+                    &store,
+                    &fixture.config,
+                    &mut budget,
+                    &unit,
+                    &attempt,
+                    "noetome-test-artificial-credential-never-in-source",
+                )
+                .is_err()
+            );
+            assert_eq!(
+                budget.status().unwrap().accounted_tokens,
+                paid.accounted_tokens
+            );
+            assert_eq!(store.summary(&run).unwrap().atoms, 0);
+        }
+    }
+}
+
+#[test]
+fn recovery_continues_after_saved_request_and_candidate_failures() {
+    let (fixture, run, _) =
+        saved_recovery_fixture(&["request_failure", "candidate_failure", "success"]);
+    let store = Store::open(&fixture.project).unwrap().unwrap();
+    let mut budget = BudgetAuthority::open(&fixture.config.usage_ledger).unwrap();
+    let cancel = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+    super::super::execute(
+        &fixture.project,
+        &run,
+        &store,
+        &fixture.config,
+        "noetome-test-artificial-credential-never-in-source",
+        &mut budget,
+        &cancel,
+    )
+    .unwrap();
+    let summary = store.summary(&run).unwrap();
+    assert_eq!(summary.status, "needs_review");
+    assert_eq!(
+        (
+            summary.units_failed,
+            summary.units_confirmed,
+            summary.atoms,
+            summary.ir_revision
+        ),
+        (2, 1, 1, 1)
+    );
+    let paid = budget.status().unwrap();
+    assert_eq!(
+        (
+            paid.accounted_tokens,
+            paid.pending_reserved_tokens,
+            paid.model_attempts
+        ),
+        (550, 0, 4)
+    );
+    assert!(store.attempts_needing_recovery(&run).unwrap().is_empty());
+    drop(store);
+    drop(budget);
+    let store = Store::open(&fixture.project).unwrap().unwrap();
+    let mut budget = BudgetAuthority::open(&fixture.config.usage_ledger).unwrap();
+    super::super::execute(
+        &fixture.project,
+        &run,
+        &store,
+        &fixture.config,
+        "noetome-test-artificial-credential-never-in-source",
+        &mut budget,
+        &cancel,
+    )
+    .unwrap();
+    assert_eq!(
+        encoded(&budget.status().unwrap()).unwrap(),
+        encoded(&paid).unwrap()
+    );
+    assert_eq!(store.summary(&run).unwrap().ir_revision, 1);
+    assert_eq!(store.attempts(&run).unwrap().len(), 3);
+}
+
+#[test]
+fn recovery_stops_at_five_consecutive_saved_failures() {
+    let (fixture, run, attempts) = saved_recovery_fixture(&[
+        "request_failure",
+        "candidate_failure",
+        "request_failure",
+        "candidate_failure",
+        "request_failure",
+        "success",
+    ]);
+    let store = Store::open(&fixture.project).unwrap().unwrap();
+    let mut budget = BudgetAuthority::open(&fixture.config.usage_ledger).unwrap();
+    let cancel = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+    let failure = super::super::execute(
+        &fixture.project,
+        &run,
+        &store,
+        &fixture.config,
+        "noetome-test-artificial-credential-never-in-source",
+        &mut budget,
+        &cancel,
+    )
+    .unwrap_err();
+    assert_eq!(failure.code(), "COMPILE_UNIT_FAILURES");
+    let summary = store.summary(&run).unwrap();
+    assert_eq!(
+        (
+            summary.units_failed,
+            summary.units_confirmed,
+            summary.ir_revision
+        ),
+        (5, 0, 0)
+    );
+    let paid = budget.status().unwrap();
+    assert_eq!(
+        (
+            paid.accounted_tokens,
+            paid.pending_reserved_tokens,
+            paid.model_attempts
+        ),
+        (850, 2000, 7)
+    );
+    assert_eq!(store.attempts_needing_recovery(&run).unwrap().len(), 1);
+    assert_eq!(
+        budget
+            .attempt(&super::super::key(&run, &attempts[5]))
+            .unwrap()
+            .unwrap()
+            .state,
+        BudgetAttemptState::Sent
+    );
+}
+
+#[test]
+fn recovery_success_resets_consecutive_saved_failure_count() {
+    let (fixture, run, _) = saved_recovery_fixture(&[
+        "request_failure",
+        "candidate_failure",
+        "request_failure",
+        "candidate_failure",
+        "success",
+        "request_failure",
+        "candidate_failure",
+        "request_failure",
+        "candidate_failure",
+        "success",
+    ]);
+    let store = Store::open(&fixture.project).unwrap().unwrap();
+    let mut budget = BudgetAuthority::open(&fixture.config.usage_ledger).unwrap();
+    let cancel = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+    super::super::execute(
+        &fixture.project,
+        &run,
+        &store,
+        &fixture.config,
+        "noetome-test-artificial-credential-never-in-source",
+        &mut budget,
+        &cancel,
+    )
+    .unwrap();
+    let summary = store.summary(&run).unwrap();
+    assert_eq!(
+        (
+            summary.units_failed,
+            summary.units_confirmed,
+            summary.atoms,
+            summary.ir_revision
+        ),
+        (8, 2, 2, 2)
+    );
+    assert_eq!(summary.status, "needs_review");
+    let paid = budget.status().unwrap();
+    assert_eq!(
+        (
+            paid.accounted_tokens,
+            paid.pending_reserved_tokens,
+            paid.model_attempts
+        ),
+        (1600, 0, 11)
+    );
+}
+
+#[test]
+fn recovery_budget_failure_stops_before_later_receipt() {
+    let (fixture, run, attempts) = saved_recovery_fixture(&["budget_failure", "success"]);
+    let store = Store::open(&fixture.project).unwrap().unwrap();
+    let mut budget = BudgetAuthority::open(&fixture.config.usage_ledger).unwrap();
+    let cancel = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+    let failure = super::super::execute(
+        &fixture.project,
+        &run,
+        &store,
+        &fixture.config,
+        "noetome-test-artificial-credential-never-in-source",
+        &mut budget,
+        &cancel,
+    )
+    .unwrap_err();
+    assert_eq!(failure.code(), "COMPILE_BUDGET_STOP");
+    let summary = store.summary(&run).unwrap();
+    assert_eq!(
+        (summary.units_confirmed, summary.atoms, summary.ir_revision),
+        (0, 0, 0)
+    );
+    let paid = budget.status().unwrap();
+    assert_eq!(
+        (paid.accounted_tokens, paid.pending_reserved_tokens),
+        (713, 2000)
+    );
+    assert_eq!(
+        budget
+            .attempt(&super::super::key(&run, &attempts[0]))
+            .unwrap()
+            .unwrap()
+            .state,
+        BudgetAttemptState::Known
+    );
+    assert_eq!(
+        budget
+            .attempt(&super::super::key(&run, &attempts[1]))
+            .unwrap()
+            .unwrap()
+            .state,
+        BudgetAttemptState::Sent
+    );
+}
+
+#[test]
+fn budget_stop_survives_crash_before_run_error_handler() {
+    let (fixture, run, attempts) =
+        saved_recovery_fixture_with_transport(&["budget_failure", "success"], "local_openai");
+    let store = Store::open(&fixture.project).unwrap().unwrap();
+    let mut budget = BudgetAuthority::open(&fixture.config.usage_ledger).unwrap();
+    let unit = store.unit(&run, &attempts[0].unit_id).unwrap();
+    // Simulate a crash after finish returns but before run can persist its error.
+    // Both responses already exist, so reopening must not contact any provider.
+    let failure = super::super::finish(
+        &fixture.project,
+        &run,
+        &store,
+        &fixture.config,
+        &mut budget,
+        &unit,
+        &attempts[0],
+        "",
+    )
+    .unwrap_err();
+    assert_eq!(failure.code(), "COMPILE_BUDGET_STOP");
+    let paid = budget.status().unwrap();
+    assert_eq!(
+        (paid.accounted_tokens, paid.pending_reserved_tokens),
+        (713, 2000)
+    );
+    assert!(paid.remaining_tokens > 0);
+    let before_budget = encoded(&paid).unwrap();
+    let crashed = store.summary(&run).unwrap();
+    assert_eq!(crashed.status, "budget_stop");
+    assert_eq!(crashed.error.unwrap().code, "COMPILE_BUDGET_STOP");
+    drop(store);
+    drop(budget);
+
+    // Reopen through the public entry point twice, without manually setting a run error.
+    for _ in 0..2 {
+        let resumed = super::super::run(
+            &fixture.project,
+            &run,
+            std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false)),
+        )
+        .unwrap();
+        assert_eq!(resumed.status, "budget_stop");
+        assert_eq!(resumed.error.unwrap().code, "COMPILE_BUDGET_STOP");
+        assert_eq!(
+            (resumed.units_confirmed, resumed.atoms, resumed.ir_revision),
+            (0, 0, 0)
+        );
+        let reopened = Store::open(&fixture.project).unwrap().unwrap();
+        let persisted = reopened.summary(&run).unwrap();
+        assert_eq!(persisted.status, "budget_stop");
+        assert_eq!(persisted.error.unwrap().code, "COMPILE_BUDGET_STOP");
+        assert_eq!(
+            reopened
+                .attempt(&run, &attempts[1].request_id)
+                .unwrap()
+                .state,
+            "sent"
+        );
+        let attempt_count: i64 = reopened
+            .connection
+            .query_row(
+                "SELECT COUNT(*) FROM attempts WHERE run_id=?1",
+                [&run],
+                |row| row.get(0),
+            )
+            .unwrap();
+        assert_eq!(attempt_count, 2);
+        let mut reopened_budget = BudgetAuthority::open(&fixture.config.usage_ledger).unwrap();
+        assert_eq!(
+            encoded(&reopened_budget.status().unwrap()).unwrap(),
+            before_budget
+        );
+        assert_eq!(
+            reopened_budget
+                .attempt(&super::super::key(&run, &attempts[0]))
+                .unwrap()
+                .unwrap()
+                .state,
+            BudgetAttemptState::Known
+        );
+        assert_eq!(
+            reopened_budget
+                .attempt(&super::super::key(&run, &attempts[1]))
+                .unwrap()
+                .unwrap()
+                .state,
+            BudgetAttemptState::Sent
+        );
+    }
+}
+
+#[test]
+fn recovery_global_failure_stops_before_later_receipt() {
+    for (outcome, expected) in [
+        ("changed_receipt", "COMPILE_RECEIPT"),
+        ("paused", "COMPILE_PAUSED"),
+    ] {
+        let (fixture, run, attempts) = saved_recovery_fixture(&[outcome, "success"]);
+        let store = Store::open(&fixture.project).unwrap().unwrap();
+        let mut budget = BudgetAuthority::open(&fixture.config.usage_ledger).unwrap();
+        let cancel = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+        let failure = super::super::execute(
+            &fixture.project,
+            &run,
+            &store,
+            &fixture.config,
+            "noetome-test-artificial-credential-never-in-source",
+            &mut budget,
+            &cancel,
+        )
+        .unwrap_err();
+        assert_eq!(failure.code(), expected, "{outcome}");
+        let summary = store.summary(&run).unwrap();
+        assert_eq!(
+            (summary.units_confirmed, summary.atoms, summary.ir_revision),
+            (0, 0, 0)
+        );
+        let paid = budget.status().unwrap();
+        assert_eq!(
+            (paid.accounted_tokens, paid.pending_reserved_tokens),
+            (100, 4000)
+        );
+        assert_eq!(
+            budget
+                .attempt(&super::super::key(&run, &attempts[1]))
+                .unwrap()
+                .unwrap()
+                .state,
+            BudgetAttemptState::Sent
+        );
+    }
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_batch": "B17",
+  "current_batch": "B18",
   "history": [
     {
       "at": "2026-10-31T15:29:47Z",
@@ -176,6 +176,13 @@
       "from_batch": "B16",
       "to_batch": "B17",
       "note": "B16收尾后进入B17：修复安装版编译链路缺陷、本地模型可选provider适配、0.3.0重标与安装版整书bounded闭环（用户要求不再使用0.2版本号）"
+    },
+    {
+      "at": "2026-11-20T05:35:05Z",
+      "action": "batch",
+      "from_batch": "B17",
+      "to_batch": "B18",
+      "note": "User authorized mainline adversarial fixes followed by initial PRD audit"
     }
   ],
   "tasks": [
@@ -5486,6 +5493,73 @@
           ]
         }
       ]
+    },
+    {
+      "id": "B18-T01",
+      "title": "主线对抗审查后的生产编译安全与恢复边界修复",
+      "batch": "B18",
+      "status": "done",
+      "depends_on": [],
+      "requirements": [
+        "FR-09",
+        "FR-15",
+        "FR-26",
+        "FR-27",
+        "FR-38"
+      ],
+      "acceptance": [
+        "local_http_test 在任何连接之前拒绝非 noetome-test- 凭据值；live 与无需凭据的 local_openai 行为保留",
+        "每次响应按实际用量结算；input/output/total 超过请求约束时不提交 IR，持久记录 COMPILE_BUDGET_STOP 并停止后续发送",
+        "崩溃回放与正常执行使用相同单元失败分类，单次失败可继续，连续五次失败及全局错误停止；覆盖重启和已结算幂等",
+        "运行相关回归、Rust 格式/编译/测试、Python 检查及 devlog/diff 检查，逐项记录真实结果和环境限制"
+      ],
+      "history": [
+        {
+          "at": "2026-11-20T05:35:05Z",
+          "action": "start",
+          "from_status": "todo",
+          "to_status": "in_progress",
+          "note": "Repair test credential, per-request usage bounds, and crash recovery failure classification; no paid model requests",
+          "validation": [],
+          "artifacts": []
+        },
+        {
+          "at": "2026-11-20T07:45:20Z",
+          "action": "complete",
+          "from_status": "in_progress",
+          "to_status": "done",
+          "note": "完成生产编译凭据、单请求用量、恢复失败分类与预算停止原子持久化修复",
+          "validation": [
+            "有效红绿回归：未修复版本 crash-red-valid.log 在 store_tests.rs:1723 断言 queued != budget_stop；修复后 crash-green.log 1/1。production_compile 定向 28/28；cargo fmt --all --check、cargo check --workspace --locked、git diff --check、devlog check 通过；Python unittest 1409 项、跳过43项且OK。workspace Rust 全量在当前Linux/WSL资源与平台限制下返回101，未修改基线同样失败，详见验证记录。"
+          ],
+          "artifacts": [
+            {
+              "path": "doc/validation/B18-T01.md",
+              "sha256": "5590ce4bc3fcacf3723d2fd8e4b4f3b9ab6e7d41ea546dd05cf7193018b1fba6"
+            },
+            {
+              "path": "doc/technical/PRODUCTION_COMPILE_CONTRACT.md",
+              "sha256": "fc754e5fe4dccca80743394c87ce3f2c77e4cacb8357e63bb2c377dec294cb57"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B18-T02",
+      "title": "按最初采纳 PRD 核验修复后主线与真实产物",
+      "batch": "B18",
+      "status": "todo",
+      "depends_on": [
+        "B18-T01"
+      ],
+      "requirements": [],
+      "acceptance": [
+        "完整列出 FR-01 至 FR-40、NFR-01 至 NFR-17 和 PRD 验收场景的满足程度、证据与缺口",
+        "核验 B17 真实导出与处理范围，保留 1227 页/1298 单元分母、未核验标记及模型/科学质量限制",
+        "区分原始产品目标、当前可运行能力、fixture 证据和已通过真实闭环，给出按风险排列的后续范围且不擅自实现新阶段"
+      ],
+      "history": []
     }
   ]
 }

@@ -20,9 +20,9 @@ B16-T03从已验收的`corpus`消费真实页版本，新增`production_compile`
 
 复用用户已授权的服务、模型、DPAPI引用和累计10M Token。现有外部JSON历史只读固定，生产预算权威显式迁移至同目录SQLite，保存全部旧记录、原字节和摘要。迁移后原账本设为只读，原字节和完整旧历史保持；禁止缺失权威时自动创建新余额；旧真实JSON调度入口在迁移标记或只读属性存在时拒绝，避免同一额度发放两次。
 
-每批先持久保存attempt和实际请求，再原子预留，确认可发送后记录`sent`，最后保存原响应/传输回执、结算有效usage并确认IR。确认用量大于预留时如实记超量并停止新请求；未知保持预留，不因暂停、终止或重开退款。认证、限流、传输或候选协议失败后停止新批次，原件和用量继续保留；普通重开或运行保持failed与原停止理由，显式retry后才重新排队；合法空候选留下未解决片段并继续后续页。价格未知保持null。重复结算只有相同请求身份、回执和用量才幂等。
+每批先持久保存attempt和实际请求，再原子预留，确认可发送后记录`sent`，最后保存原响应/传输回执、结算有效usage并确认IR。输入的保守上限为实际请求体UTF-8字节数加1024，输出上限为本次配置的`max_output_tokens`，总量上限为该attempt原始预留。有效usage超过任一上限时先如实结算，再以`COMPILE_BUDGET_STOP`停止新请求，不把本次候选写入IR；停止理由与单元、attempt失败状态在同一SQLite事务落盘，崩溃重开仍保持停止，已取消终态不被覆盖。未知保持预留，不因暂停、终止或重开退款。单元级失败按下述连续失败规则处理；全局失败的原件和用量继续保留，普通重开或运行保持failed/budget_stop与原停止理由，显式retry后才重新排队。合法空候选留下未解决片段并继续后续页。价格未知保持null。重复结算只有相同请求身份、回执和用量才幂等。
 
-请求限定同一已授权文本端点与模型；人工环回只在明确测试模式使用。模型材料不能改变工具权限，模型没有工具执行能力。凭据只在选定worker内存/环境传递，不进入参数、源码、索引、原响应或日志。单请求有独立期限，不设整本短超时。
+请求限定同一已授权文本端点与模型；人工环回只在明确测试模式使用，`local_http_test`同时要求凭据环境变量名使用`NOETOME_TEST_`前缀、注入值使用`noetome-test-`前缀，值不符以`COMPILE_CREDENTIAL`在连接前拒绝。模型材料不能改变工具权限，模型没有工具执行能力。凭据只在选定worker内存/环境传递，不进入参数、源码、索引、原响应或日志。单请求有独立期限，不设整本短超时。
 
 ## 恢复与输出
 
@@ -43,7 +43,7 @@ B16-T03从已验收的`corpus`消费真实页版本，新增`production_compile`
 本地账本文件名固定 `local-openai.usage.json`，使用独立目录中的已有授权 JSON 基线；派生 `.production.sqlite` 与 authority marker 由现有预算机制创建，绝不创建 JSON 余额。不得把云端历史复制为本地额度。缺失基线报 `LOCAL_PROVIDER_LEDGER_MISSING`，名称不符报 `LOCAL_PROVIDER_LEDGER`，内容损坏仍返回生产预算完整性错误。
 `reasoning_effort` 可选 none/low/medium/high，请求同时保留 thinking disabled。服务是否遵守需实测。标准 completion_tokens 已包含 reasoning_tokens；校验细分不超过 completion 后，按 total_tokens 结算，不重复累加。缺少或不合法 usage 保留未决预留。LM Studio 实测只接受 on/off，其它值回退为开启思考并打 WARN。
 2026-11-18 云端实测：`live` deepseek-flash 对部分页面忽略 `reasoning_effort=none`，把 8192 输出预算全部用于隐藏思考，`finish_reason=length` 后候选 JSON 被截断。故 `live` 请求同时发送 `enable_thinking=false`（实测可稳定关闭思考，单片段约 2k completion tokens）；云端仍保持 8192 tokens / 60000ms 上限。
-单个片段的请求失败（`COMPILE_REQUEST_FAILED`，含超时）或候选解码失败（`COMPILE_CANDIDATE_FAILED`）只标记该片段失败并继续后续片段；连续 5 个片段失败才以 `COMPILE_UNIT_FAILURES` 终止整条任务，暂停、凭据回显、请求原件变化等仍立即终止。
+单个片段的请求失败（`COMPILE_REQUEST_FAILED`，含超时）或候选解码失败（`COMPILE_CANDIDATE_FAILED`）只标记该片段失败并继续后续片段；连续 5 个片段失败才以 `COMPILE_UNIT_FAILURES` 终止整条任务，暂停、凭据回显、请求原件变化、单请求用量越界等仍立即终止。完整回执的崩溃恢复与新请求共用此判定和本轮连续失败计数；成功确认后清零，回放失败不再单独扩大为全局失败。
 
 本地 `response_format` 必须发 strict `json_schema`（名称 `noetome_candidates_v1`）；云端 live 继续 `json_object`。2026-11-18 实测 LM Studio 对 `json_object` 直接返回 HTTP 400，故 `local_openai` 分支单独构造。
 独立诊断 `scripts/measure_local_provider.py` 仅消费显式选定 UTF-8 页文件，输出 JSONL 耗时、quote_exact 与 usage；不操作生产预算或证明生产 schema/科学质量。生产 fake HTTP 回归另行覆盖持久编译结算。

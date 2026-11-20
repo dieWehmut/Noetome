@@ -1000,6 +1000,15 @@ impl Store {
         let tx = self.transaction()?;
         tx.execute("UPDATE units SET status='failed' WHERE run_id=?1 AND unit_id=?2 AND status!='confirmed'",params![run_id,unit_id]).map_err(db)?;
         tx.execute("UPDATE attempts SET state='failed' WHERE run_id=?1 AND unit_id=?2 AND state NOT IN ('accepted','failed','no_request')",params![run_id,unit_id]).map_err(db)?;
+        if code == "COMPILE_BUDGET_STOP" {
+            // Recovery skips failed attempts. Persist their global budget stop in
+            // the same transaction so a crash cannot reopen scheduling.
+            tx.execute(
+                "UPDATE runs SET error_code=?2,error_message=?3,status=CASE WHEN cancel_requested!=0 THEN status ELSE 'budget_stop' END,stage='extracting' WHERE run_id=?1",
+                params![run_id, code, message],
+            )
+            .map_err(db)?;
+        }
         add_issue(
             &tx,
             run_id,

@@ -348,16 +348,7 @@ pub fn run(
         std::env::var(&config.credential_env)
             .map_err(|_| error("COMPILE_CREDENTIAL", "所选凭据未注入，未发送模型请求。"))?
     };
-    if config.transport_mode != "local_openai"
-        && (credential.is_empty()
-            || credential.len() > 8192
-            || !credential.bytes().all(|b| (33..=126).contains(&b)))
-    {
-        return Err(error(
-            "COMPILE_CREDENTIAL",
-            "所选凭据格式无效，未发送模型请求。",
-        ));
-    }
+    validate_credential(&config, &credential)?;
     let mut budget = BudgetAuthority::open(&config.usage_ledger)?;
     store.resume(run_id)?;
     let outcome = execute(
@@ -391,6 +382,22 @@ pub fn run(
     status(project, run_id)
 }
 
+fn validate_credential(config: &CompileConfig, credential: &str) -> Result<(), ProjectError> {
+    if config.transport_mode != "local_openai"
+        && (credential.is_empty()
+            || credential.len() > 8192
+            || !credential.bytes().all(|b| (33..=126).contains(&b))
+            || (config.transport_mode == "local_http_test"
+                && !credential.starts_with("noetome-test-")))
+    {
+        return Err(error(
+            "COMPILE_CREDENTIAL",
+            "所选凭据格式无效或不属于测试凭据，未发送模型请求。",
+        ));
+    }
+    Ok(())
+}
+
 const MAX_CONSECUTIVE_UNIT_FAILURES: usize = 5;
 
 fn unit_scoped_failure(e: &ProjectError) -> bool {
@@ -398,6 +405,26 @@ fn unit_scoped_failure(e: &ProjectError) -> bool {
         e.code(),
         "COMPILE_REQUEST_FAILED" | "COMPILE_CANDIDATE_FAILED"
     )
+}
+
+fn handle_unit_result(
+    result: Result<(), ProjectError>,
+    consecutive_failures: &mut usize,
+) -> Result<(), ProjectError> {
+    match result {
+        Ok(()) => *consecutive_failures = 0,
+        Err(e) if unit_scoped_failure(&e) => {
+            *consecutive_failures += 1;
+            if *consecutive_failures >= MAX_CONSECUTIVE_UNIT_FAILURES {
+                return Err(error(
+                    "COMPILE_UNIT_FAILURES",
+                    format!("连续 {consecutive_failures} 个片段失败，停止新批次：{e}"),
+                ));
+            }
+        }
+        Err(e) => return Err(e),
+    }
+    Ok(())
 }
 
 fn execute(
@@ -447,13 +474,17 @@ fn execute(
         )?;
     }
     store.set_status(run_id, "running", "extracting")?;
+    let mut consecutive_failures = 0usize;
     for attempt in store.attempts_needing_recovery(run_id)? {
         check_stop(store, run_id, cancel)?;
         let unit = store.unit(run_id, &attempt.unit_id)?;
         let directory = store.root.join(&attempt.directory);
         if directory.join("receipt.json").exists() {
-            finish(
-                project, run_id, store, config, budget, &unit, &attempt, credential,
+            handle_unit_result(
+                finish(
+                    project, run_id, store, config, budget, &unit, &attempt, credential,
+                ),
+                &mut consecutive_failures,
             )?;
         } else {
             let state = budget.attempt(&key(run_id, &attempt))?;
@@ -502,7 +533,6 @@ fn execute(
             }
         }
     }
-    let mut consecutive_failures = 0usize;
     while let Some(unit) = store.next_unit(run_id)? {
         check_stop(store, run_id, cancel)?;
         let current_page = corpus::page_revision(
@@ -594,21 +624,12 @@ fn execute(
         attempt.response_sha256 = Some(receipt.response_sha256);
         attempt.receipt_sha256 = Some(sha256(&bytes));
         store.update_attempt(run_id, &attempt)?;
-        match finish(
-            project, run_id, store, config, budget, &unit, &attempt, credential,
-        ) {
-            Ok(()) => consecutive_failures = 0,
-            Err(e) if unit_scoped_failure(&e) => {
-                consecutive_failures += 1;
-                if consecutive_failures >= MAX_CONSECUTIVE_UNIT_FAILURES {
-                    return Err(error(
-                        "COMPILE_UNIT_FAILURES",
-                        format!("连续 {consecutive_failures} 个片段失败，停止新批次：{e}"),
-                    ));
-                }
-            }
-            Err(e) => return Err(e),
-        }
+        handle_unit_result(
+            finish(
+                project, run_id, store, config, budget, &unit, &attempt, credential,
+            ),
+            &mut consecutive_failures,
+        )?;
     }
     let summary = store.summary(run_id)?;
     store.set_status(
@@ -666,7 +687,7 @@ fn finish(
     sealed.response_sha256 = Some(receipt.response_sha256.clone());
     sealed.receipt_sha256 = Some(sha256(&receipt_bytes));
     store.update_attempt(run_id, &sealed)?;
-    budget.settle(
+    let settled = budget.settle(
         &key(run_id, attempt),
         &BudgetSettlement {
             network_attempts: receipt.network_attempts,
@@ -678,6 +699,28 @@ fn finish(
             receipt_sha256: sha256(&receipt_bytes),
         },
     )?;
+    // Settle first: a provider exceeding the request still consumed those tokens.
+    // Stop before decoding or committing any knowledge from that response.
+    if let Some(usage) = settled.settlement.as_ref().and_then(|s| s.usage.as_ref()) {
+        let input_limit = (body.len() as u64)
+            .checked_add(1024)
+            .ok_or_else(|| error("COMPILE_BUDGET_STOP", "请求输入上限溢出。"))?;
+        if usage.input_tokens > input_limit
+            || usage.output_tokens > config.max_output_tokens
+            || usage.total_tokens > settled.request.reserved_tokens
+        {
+            store.mark_unit_failed(
+                run_id,
+                &unit.unit_id,
+                "COMPILE_BUDGET_STOP",
+                "实际用量超过单请求上限；已如实结算，未提交知识并停止后续请求。",
+            )?;
+            return Err(error(
+                "COMPILE_BUDGET_STOP",
+                "实际用量超过单请求上限；已如实结算，未提交知识并停止后续请求。",
+            ));
+        }
+    }
     if !receipt.complete || receipt.failure_code.is_some() || receipt.status != Some(200) {
         store.mark_unit_failed(
             run_id,
