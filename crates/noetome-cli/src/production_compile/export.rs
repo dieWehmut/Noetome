@@ -382,7 +382,9 @@ pub fn export(project: &Path, run_id: &str, output: &Path) -> Result<Value, Proj
     let summary = status(project, run_id)?;
     let precise = matches!(
         summary.request_strategy_version,
-        model::PRECISE_REQUEST_STRATEGY | model::ANCHOR_REQUEST_STRATEGY
+        model::PRECISE_REQUEST_STRATEGY
+            | model::ANCHOR_REQUEST_STRATEGY
+            | model::COMPACT_REQUEST_STRATEGY
     );
     let text_literal = if precise { precise_literal } else { literal };
     let output = project::check_components(output)?;

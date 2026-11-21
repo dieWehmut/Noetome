@@ -356,8 +356,8 @@ def _native_export(reference, candidate, notes_root, notes, candidates):
     require(source_index.get("mapping_directory") == ".noetome-index"
             and scope.get("manifest") == "export-manifest.json", "native export index paths mismatch")
     strategy_version = summary.get("request_strategy_version")
-    require(type(strategy_version) is int and strategy_version in (2, 3),
-            "native export must use precise request strategy 2 or 3")
+    require(type(strategy_version) is int and strategy_version in (2, 3, 4),
+            "native export must use precise request strategy 2, 3 or 4")
     sources = _array(source_index.get("sources"), "native sources")
     require(len(sources) == 1 and canonical_sha256(sources) == canonical_sha256(summary.get("sources")),
             "native source inventory mismatch")

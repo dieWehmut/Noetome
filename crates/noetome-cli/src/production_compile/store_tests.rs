@@ -1536,6 +1536,150 @@ fn stored_configuration_scope_and_measurement_bytes_are_pinned() {
 }
 
 #[test]
+fn compact_saved_response_recovers_once_and_exports_exact_evidence() {
+    const PREFIX: &str = "固定条件。";
+    const QUOTE: &str = "扩散沿浓度梯度发生";
+    let source = format!("{PREFIX}{QUOTE}。另有独立段落。");
+    let mut fixture = Fixture::new(&[(&source, "text_ready")]);
+    fixture.config.request_strategy_version = Some(COMPACT_REQUEST_STRATEGY);
+    let (store, run) = fixture.run();
+    let unit = fixture.prepare_all(&store, &run).remove(0);
+    let request = Uuid::new_v4().to_string();
+    let prepared = provider::prepare(
+        store.project_id(),
+        &run,
+        &request,
+        &unit,
+        &fixture.config,
+        &[],
+    )
+    .unwrap();
+    let content = encoded(&json!({"request_id":request,"atoms":[{
+        "concept":"扩散", "kind":"definition", "content":"扩散沿浓度梯度发生。",
+        "qualifiers":["固定条件"],"evidence":[{"relation":"supports","quote":QUOTE}],
+        "measurement":null
+    }]}))
+    .unwrap();
+    let response = serde_json::to_vec(&json!({
+        "id":"chatcmpl-authored-compact", "object":"chat.completion", "model":fixture.config.model,
+        "choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","content":content}}],
+        "usage":{"prompt_tokens":100,"completion_tokens":50,"total_tokens":150}
+    })).unwrap();
+    let request_pin = sha256(&prepared.body);
+    let mut attempt = store
+        .begin_attempt(&run, &unit, &request, &request_pin)
+        .unwrap();
+    let original_dir = store.root.join(&attempt.directory);
+    let receipt = serde_json::to_vec(&provider::Receipt {
+        schema_version: 1,
+        request_id: request,
+        request_sha256: request_pin,
+        status: Some(200),
+        network_attempts: 1,
+        complete: true,
+        response_sha256: sha256(&response),
+        response_bytes: response.len() as u64,
+        failure_code: None,
+    })
+    .unwrap();
+    fs::write(original_dir.join("request-body.json"), &prepared.body).unwrap();
+    fs::write(original_dir.join("response.bin"), &response).unwrap();
+    fs::write(original_dir.join("receipt.json"), &receipt).unwrap();
+    attempt.state = "sent".into();
+    store.update_attempt(&run, &attempt).unwrap();
+    let mut budget = fixture.authority();
+    fixture.reserve_sent(&mut budget, &run, &attempt);
+    assert_eq!(store.summary(&run).unwrap().ir_revision, 0);
+    assert_eq!(budget.status().unwrap().pending_reserved_tokens, 2000);
+    drop(store);
+    drop(budget);
+
+    let store = Store::open(&fixture.project).unwrap().unwrap();
+    let config = store.config(&run).unwrap();
+    let mut budget = BudgetAuthority::open(&config.usage_ledger).unwrap();
+    assert_eq!(config.strategy_version().unwrap(), COMPACT_REQUEST_STRATEGY);
+    let cancel = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+    for _ in 0..2 {
+        super::super::execute(
+            &fixture.project,
+            &run,
+            &store,
+            &config,
+            "noetome-test-artificial-credential-never-in-source",
+            &mut budget,
+            &cancel,
+        )
+        .unwrap();
+        let summary = store.summary(&run).unwrap();
+        assert_eq!(
+            (
+                summary.ir_revision,
+                summary.units_confirmed,
+                summary.atoms,
+                summary.evidence
+            ),
+            (1, 1, 1, 1)
+        );
+        let status = budget.status().unwrap();
+        assert_eq!(
+            (
+                status.accounted_tokens,
+                status.pending_reserved_tokens,
+                status.model_attempts
+            ),
+            (250, 0, 2)
+        );
+        let attempts = store.attempts(&run).unwrap();
+        assert_eq!(attempts.len(), 1);
+        assert_eq!(attempts[0].state, "accepted");
+        assert!(store.attempts_needing_recovery(&run).unwrap().is_empty());
+    }
+    drop(store);
+    drop(budget);
+    assert_eq!(
+        fs::read(original_dir.join("request-body.json")).unwrap(),
+        prepared.body
+    );
+    assert_eq!(
+        fs::read(original_dir.join("response.bin")).unwrap(),
+        response
+    );
+    assert_eq!(
+        fs::read(original_dir.join("receipt.json")).unwrap(),
+        receipt
+    );
+
+    let output = fixture._temp.path().join("compact-recovered-vault");
+    let exported = super::super::export(&fixture.project, &run, &output).unwrap();
+    assert_eq!(
+        exported["summary"]["request_strategy_version"],
+        COMPACT_REQUEST_STRATEGY
+    );
+    let read_index = |name: &str| -> Value {
+        let raw = fs::read_to_string(output.join(".noetome-index").join(name)).unwrap();
+        serde_json::from_str(&raw).unwrap()
+    };
+    let atom = read_index("atoms.ndjson");
+    let excerpt = read_index("evidence.ndjson");
+    assert_eq!(atom["verification"], "unverified");
+    assert_eq!(
+        atom["evidence_links"],
+        json!([{"evidence_id":excerpt["evidence_id"],"relation":"supports"}])
+    );
+    assert_eq!(excerpt["page_sha256"], unit.page_sha256);
+    assert_eq!(excerpt["start_byte"], PREFIX.len());
+    assert_eq!(excerpt["end_byte"], PREFIX.len() + QUOTE.len());
+    assert_eq!(excerpt["quote"], QUOTE);
+    assert_eq!(excerpt["excerpt_sha256"], sha256(QUOTE.as_bytes()));
+    let note_id = read_index("notes.ndjson")["note_id"]
+        .as_str()
+        .unwrap()
+        .to_owned();
+    let note = fs::read_to_string(output.join("知识").join(format!("{note_id}.md"))).unwrap();
+    assert!(note.contains("来源支持（物理页 1）：扩散沿浓度梯度发生"));
+}
+
+#[test]
 fn completed_receipt_without_saved_pins_recovers_budget_and_one_stable_batch() {
     let fixture = Fixture::new(&[("Diffusion recovered original meaning.", "text_ready")]);
     let (store, run) = fixture.run();

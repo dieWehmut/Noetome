@@ -46,7 +46,7 @@ fn chat_metadata(value: &Value) -> Result<ResponseMetadata, ProjectError> {
     parsed.raw_usage = Some(raw.clone());
     Ok(parsed)
 }
-pub(super) fn decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
+pub(super) fn candidate_value(body: &[u8]) -> Result<(ResponseMetadata, Value), ProjectError> {
     let value = strict_json(body).map_err(|_| error("EXTRACT_API_RESPONSE"))?;
     if !value.is_object() || value["object"] != "chat.completion" {
         return Err(error("EXTRACT_API_RESPONSE"));
@@ -94,6 +94,11 @@ pub(super) fn decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
         .ok_or_else(|| error("EXTRACT_API_OUTPUT"))?;
     let metadata = chat_metadata(&value)?;
     let candidate = strict_json(text.as_bytes()).map_err(|_| error("EXTRACT_API_CANDIDATES"))?;
+    Ok((metadata, candidate))
+}
+
+pub(super) fn decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
+    let (metadata, candidate) = candidate_value(body)?;
     let candidates =
         serde_json::from_value(candidate).map_err(|_| error("EXTRACT_API_CANDIDATES"))?;
     Ok(ParsedResponse {

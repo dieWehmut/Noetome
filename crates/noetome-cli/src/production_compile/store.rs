@@ -1126,9 +1126,14 @@ impl Store {
             .and_then(|m| m["content"].as_str())
             .ok_or_else(|| invalid("原请求缺输入JSON。"))?;
         let input: Value = serde_json::from_str(content).map_err(|e| invalid(e.to_string()))?;
+        let config = self.config(run_id)?;
         let contexts: Vec<ConceptContext> =
-            serde_json::from_value(input["request"]["existing_concepts"].clone())
-                .map_err(|e| invalid(e.to_string()))?;
+            if config.strategy_version()? == COMPACT_REQUEST_STRATEGY {
+                Vec::new()
+            } else {
+                serde_json::from_value(input["request"]["existing_concepts"].clone())
+                    .map_err(|e| invalid(e.to_string()))?
+            };
         let original_allowed = contexts
             .iter()
             .map(|context| &context.concept)
@@ -1141,7 +1146,7 @@ impl Store {
             run_id,
             &attempt.request_id,
             unit,
-            &self.config(run_id)?,
+            &config,
             &contexts,
         )?;
         if prepared.body != request_bytes
@@ -1351,7 +1356,7 @@ impl Store {
             }
             if matches!(
                 prepared.strategy_version,
-                PRECISE_REQUEST_STRATEGY | ANCHOR_REQUEST_STRATEGY
+                PRECISE_REQUEST_STRATEGY | ANCHOR_REQUEST_STRATEGY | COMPACT_REQUEST_STRATEGY
             ) && saved
                 .evidence_links
                 .iter()
@@ -1447,7 +1452,7 @@ impl Store {
         let sql = if kind == "atoms"
             && matches!(
                 self.config(run_id)?.strategy_version()?,
-                PRECISE_REQUEST_STRATEGY | ANCHOR_REQUEST_STRATEGY
+                PRECISE_REQUEST_STRATEGY | ANCHOR_REQUEST_STRATEGY | COMPACT_REQUEST_STRATEGY
             ) {
             "SELECT atoms.json,atoms.sha256,atoms.measurement_json,atoms.measurement_sha256
              FROM atoms

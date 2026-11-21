@@ -52,6 +52,10 @@ pub(crate) fn response_metadata(body: &[u8]) -> Result<ResponseMetadata, Project
     let value = strict_json(body).map_err(|_| error("EXTRACT_API_RESPONSE"))?;
     metadata(&value)
 }
+pub(crate) fn chat_candidate_value(body: &[u8]) -> Result<Value, ProjectError> {
+    chat::candidate_value(body).map(|(_, candidate)| candidate)
+}
+
 #[cfg(test)]
 pub(crate) fn decode(body: &[u8]) -> Result<ParsedResponse, ProjectError> {
     decode_with_strategy(body, RequestStrategy::OpenAiStrict)

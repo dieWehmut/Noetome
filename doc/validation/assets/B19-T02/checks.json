@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "in_progress_real_small_chunk_and_independent_review_pending",
+  "status": "in_progress_real_content_and_fragment_boundary_findings",
   "task_id": "B19-T02",
   "request_strategy_version": 3,
   "legacy_missing_strategy_version": 1,
@@ -68,13 +68,230 @@
       {
         "strategy": 3,
         "max_chunk_bytes": 512,
-        "status": "running",
-        "quality": "not_yet_evaluated"
+        "status": "failed",
+        "failure_code": "COMPILE_UNIT_FAILURES",
+        "run_id": "1ca76c5b-daca-4f03-8575-eccd9922d02d",
+        "prepared_pages": 23,
+        "units_total": 175,
+        "units_confirmed": 7,
+        "units_failed": 19,
+        "units_unattempted": 149,
+        "attempts": 26,
+        "complete_truncated_responses": 16,
+        "timeouts": 1,
+        "stop_responses": 9,
+        "invalid_knowledge_responses": 1,
+        "invalid_evidence_responses": 1,
+        "ir_revision": 7,
+        "atoms": 26,
+        "concepts": 30,
+        "evidence": 28,
+        "exported_files": 42,
+        "run_summary_sha256": "fd1f6a4854e54133b1fbe0b7c64b964acfbfd9464eabbe2e66881c28a76d4ff2",
+        "export_summary_sha256": "3adfbf7b35335488b4e5fb388f1811812cbd82e0f73d441f2127aab3a0c00268",
+        "attempt_snapshot_sha256": "acad9bd97eb4384adcf78e9f6609ed37a874bf44094c2b9a6878d544577c0464",
+        "quality": "pending_independent_review"
+      },
+      {
+        "strategy": 4,
+        "probe_only": true,
+        "run_id": "5a63d4d6-5e39-40ec-88be-b8c6f7c64a65",
+        "physical_pages": 1227,
+        "selected_pages": 1,
+        "out_of_scope_pages": 1226,
+        "page_ranges": [
+          {
+            "start_page": 34,
+            "end_page": 34
+          }
+        ],
+        "max_chunk_bytes": 512,
+        "status": "needs_review",
+        "attempts": 5,
+        "units_total": 5,
+        "units_confirmed": 4,
+        "units_failed": 1,
+        "atoms": 19,
+        "evidence": 25,
+        "stop_responses": 5,
+        "complete_truncated_responses": 0,
+        "timeouts": 0,
+        "invalid_evidence_responses": 1,
+        "actual_content_review": {
+          "status": "independent_ai_review_completed_human_pending",
+          "evidence_byte_pins_matched": 25,
+          "notes_read": 19,
+          "material_semantic_or_readability_findings": 3
+        },
+        "original_source_unit_pins_match_v3": true
+      },
+      {
+        "strategy": 4,
+        "probe_only": true,
+        "run_id": "e9a4d157-962d-40a4-9de3-9ed3a6ebb0c7",
+        "physical_pages": 1227,
+        "selected_pages": 1,
+        "out_of_scope_pages": 1226,
+        "page_ranges": [
+          {
+            "start_page": 34,
+            "end_page": 34
+          }
+        ],
+        "max_chunk_bytes": 1024,
+        "status": "needs_review",
+        "attempts": 3,
+        "units_total": 3,
+        "units_confirmed": 2,
+        "units_failed": 1,
+        "atoms": 9,
+        "evidence": 9,
+        "stop_responses": 2,
+        "complete_truncated_responses": 1,
+        "truncated_reasoning_tokens": 8192,
+        "timeouts": 0,
+        "run_summary_sha256": "1a7afa9fe16d51d996bbdc52134aeb5bd1ac5b8029d1feeaee8008b8f59e76aa",
+        "attempt_snapshot_sha256": "13e4c4a2ef319c09b5b4c7a23b2423bf6d4cd2c7c27dbe6ef38fbb9f50f9693f"
       }
     ],
-    "independent_real_content_review": "pending_real_artifacts",
+    "independent_real_content_review": {
+      "status": "four_ai_reviews_with_independent_mapping_correction",
+      "reference_atoms": 173,
+      "candidate_atoms": 26,
+      "inventory_items": 96,
+      "first_conservative_metrics": {
+        "recall": {
+          "numerator": 3,
+          "denominator": 173
+        },
+        "critical": {
+          "numerator": 1,
+          "denominator": 146
+        },
+        "necessary": {
+          "numerator": 2,
+          "denominator": 27
+        },
+        "accuracy": {
+          "numerator": 16,
+          "denominator": 26
+        },
+        "support": {
+          "numerator": 16,
+          "denominator": 26
+        },
+        "localization": {
+          "numerator": 20,
+          "denominator": 26
+        },
+        "note_presence": {
+          "numerator": 26,
+          "denominator": 26
+        }
+      },
+      "report_sha256": "ca3b87508ad90a075af6f6b6c64831fbb8a08ce4763220a5e9172b9747b88ee1",
+      "review_sha256": "968dd3f0644b0af0d3c9681c2f98a97e6487d2b30312a9b0ad0da2bbeca1727e",
+      "human_review": "pending",
+      "scientific_pass_claim": false,
+      "mapping_scope_audit_pending": false,
+      "corrected_metrics": {
+        "recall": {
+          "numerator": 4,
+          "denominator": 173
+        },
+        "critical": {
+          "numerator": 2,
+          "denominator": 146
+        },
+        "necessary": {
+          "numerator": 2,
+          "denominator": 27
+        },
+        "accuracy": {
+          "numerator": 21,
+          "denominator": 26
+        },
+        "support": {
+          "numerator": 21,
+          "denominator": 26
+        },
+        "localization": {
+          "numerator": 26,
+          "denominator": 26
+        },
+        "note_presence": {
+          "numerator": 26,
+          "denominator": 26
+        }
+      },
+      "mapping_overlay_sha256": "cb1f763471e329d7ee71163541f6cef828eb39ddeaba336478b6e25e36d094dc",
+      "corrected_report_sha256": "38a54d5c29670ba1313b0e7cf9e2b823fb7bf36bf1964cc385d25ff6e673a0b4",
+      "metric_gate_passed": false
+    },
     "old_project_4_runs_78_requests_unchanged": true,
-    "failed_v2_11_tables_16_artifacts_unchanged": true
+    "failed_v2_11_tables_16_artifacts_unchanged": true,
+    "native_windows_compact_v4": {
+      "format_exit_code": 0,
+      "cli_build_exit_code": 0,
+      "production": {
+        "passed": 99,
+        "failed": 0
+      },
+      "chapter_blackbox": {
+        "tests_run": 7,
+        "exit_code": 0
+      },
+      "evaluator": {
+        "tests_run": 67,
+        "exit_code": 0
+      },
+      "workspace_check_exit_code": 0,
+      "full_rust_and_python": "passed",
+      "binary": {
+        "bytes": 44624896,
+        "sha256": "f44fee5cda2baea5194f6043e00cbf3ccdfe4649e48b2a71d7e549d9c7e3483d"
+      },
+      "source_snapshot": {
+        "bytes": 5134536,
+        "sha256": "1b8649fa83d7b8cd66da4bb1f5c08e5a4153bb2831683b2e71f64811c59c8c76"
+      },
+      "working_tree_snapshot_not_commit_build": true,
+      "rust": {
+        "targets": 43,
+        "passed": 1484,
+        "failed": 0,
+        "ignored": 1,
+        "exit_code": 0
+      },
+      "python": {
+        "tests_run": 1529,
+        "passed": 1504,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 25,
+        "exit_code": 0
+      },
+      "stage_receipt_sha256": "7f27d5784350b2ab622ebbf05eca63847fadbde38e694dc2dddb198160b24bc8"
+    },
+    "wsl_focused_compact_v4": {
+      "production_passed": 100,
+      "chapter_blackbox_tests": 7,
+      "exit_code": 0
+    },
+    "compact_probe_history_protection": {
+      "all_three_prior_chapter_runs_identical": true,
+      "source_and_corpus_identical": true,
+      "legacy_budget_and_migration_history_identical": true,
+      "budget_immutable_metadata_and_event_prefix_identical": true,
+      "old_events": 342,
+      "new_events": 357
+    },
+    "compact_probe_1024_history_protection": {
+      "old_events": 357,
+      "new_events": 366,
+      "old_runs_identical": 4,
+      "comparison_sha256": "4b8241281c2a3d2fce0b9f942a321e629713147fcf5234ac5aa3a140c8ef6fc6"
+    }
   },
   "reference": {
     "atoms": 173,
@@ -113,5 +330,36 @@
     "remaining_tokens": 9339406,
     "history_count": 10,
     "unknown_reservations_preserved": true
+  },
+  "budget_at_v3_512_run_terminal": {
+    "approved_total_tokens": 10000000,
+    "accounted_tokens": 550952,
+    "pending_reserved_tokens": 366253,
+    "remaining_tokens": 9082795,
+    "attempt_count": 114,
+    "history_count": 10,
+    "model_attempts": 124,
+    "overrun_tokens": 0
+  },
+  "explicit_experimental_request_strategy_version": 4,
+  "budget_at_v4_single_page_terminal": {
+    "approved_total_tokens": 10000000,
+    "accounted_tokens": 574116,
+    "pending_reserved_tokens": 366253,
+    "remaining_tokens": 9059631,
+    "attempt_count": 119,
+    "history_count": 10,
+    "model_attempts": 129,
+    "overrun_tokens": 0
+  },
+  "budget_at_v4_1024_page_terminal": {
+    "approved_total_tokens": 10000000,
+    "accounted_tokens": 592617,
+    "pending_reserved_tokens": 366253,
+    "remaining_tokens": 9041130,
+    "attempt_count": 122,
+    "history_count": 10,
+    "model_attempts": 132,
+    "overrun_tokens": 0
   }
 }

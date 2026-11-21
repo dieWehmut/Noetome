@@ -1,6 +1,9 @@
 //! Durable compilation of fixed real-source pages. Historical fixture workflows
 //! retain their original contracts; model output never grants scientific review.
 pub mod command;
+mod compact_evidence;
+#[cfg(test)]
+mod compact_tests;
 mod export;
 mod model;
 mod precise_evidence;
@@ -604,7 +607,11 @@ fn execute(
                 "固定来源切片与准备记录不同。",
             ));
         }
-        let context = store.context_concepts(run_id, &unit.text, 16)?;
+        let context = if config.strategy_version()? == COMPACT_REQUEST_STRATEGY {
+            Vec::new()
+        } else {
+            store.context_concepts(run_id, &unit.text, 16)?
+        };
         let request_id = uuid::Uuid::new_v4().to_string();
         let prepared = provider::prepare(
             store.project_id(),
@@ -804,9 +811,12 @@ fn finish(
             .ok_or_else(|| error("COMPILE_REQUEST", "请求上下文缺失。"))?,
     )
     .map_err(|_| error("COMPILE_REQUEST", "请求上下文不可读。"))?;
-    let context: Vec<ConceptContext> =
+    let context: Vec<ConceptContext> = if config.strategy_version()? == COMPACT_REQUEST_STRATEGY {
+        Vec::new()
+    } else {
         serde_json::from_value(input["request"]["existing_concepts"].clone())
-            .map_err(|_| error("COMPILE_REQUEST", "原语义上下文不可读。"))?;
+            .map_err(|_| error("COMPILE_REQUEST", "原语义上下文不可读。"))?
+    };
     let prepared = provider::prepare(
         store.project_id(),
         run_id,
