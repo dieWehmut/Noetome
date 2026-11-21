@@ -180,9 +180,14 @@ pub(super) fn prepare(
         end_byte: unit.end_byte,
         text: unit.text.clone(),
     }];
-    let (instruction, input, response_format) = if strategy_version == COMPACT_REQUEST_STRATEGY {
+    let (instruction, input, response_format) = if uses_compact_wire(strategy_version) {
+        let prompt = if strategy_version == SENTENCE_REQUEST_STRATEGY {
+            compact_evidence::SENTENCE_INSTRUCTION
+        } else {
+            compact_evidence::INSTRUCTION
+        };
         (
-            compact_evidence::INSTRUCTION,
+            prompt,
             json!({"request_id":request_id,"source":unit.text}),
             response_format(config, &compact_evidence::schema()),
         )
@@ -249,7 +254,7 @@ pub(super) fn decode(
     prepared: &Prepared,
     request_id: &str,
 ) -> Result<ApiCandidates, ProjectError> {
-    let mut candidates = if prepared.strategy_version == COMPACT_REQUEST_STRATEGY {
+    let mut candidates = if uses_compact_wire(prepared.strategy_version) {
         compact_evidence::expand(
             extraction_api_wire::chat_candidate_value(response)?,
             &prepared.binding,
@@ -271,7 +276,10 @@ pub(super) fn decode(
     };
     let precise_quotes = match prepared.strategy_version {
         LEGACY_REQUEST_STRATEGY => false,
-        PRECISE_REQUEST_STRATEGY | ANCHOR_REQUEST_STRATEGY | COMPACT_REQUEST_STRATEGY => true,
+        PRECISE_REQUEST_STRATEGY
+        | ANCHOR_REQUEST_STRATEGY
+        | COMPACT_REQUEST_STRATEGY
+        | SENTENCE_REQUEST_STRATEGY => true,
         _ => {
             return Err(error(
                 "COMPILE_REQUEST_STRATEGY",

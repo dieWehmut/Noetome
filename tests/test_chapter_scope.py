@@ -223,9 +223,9 @@ class ChapterScopeCliTests(unittest.TestCase):
         self.assertEqual(fixture.ledger.read_bytes(), fixture.baseline)
         self.assertEqual(created["attempts"], 0)
 
-    def test_explicit_v1_v2_v3_and_v4_remain_pinned_when_later_input_changes(self):
+    def test_explicit_v1_to_v5_remain_pinned_when_later_input_changes(self):
         fixture = self.fixture
-        for version in (1, 2, 3, 4):
+        for version in (1, 2, 3, 4, 5):
             with self.subTest(version=version):
                 save_json(fixture.config_file, {**fixture.config, "request_strategy_version": version})
                 input_bytes = fixture.config_file.read_bytes()

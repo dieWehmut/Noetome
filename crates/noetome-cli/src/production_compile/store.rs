@@ -484,11 +484,58 @@ impl Store {
             status = "interrupted".into();
         }
         let atoms = self.count("SELECT count(*) FROM atoms WHERE run_id=?1", run_id)?;
-        Ok(RunSummary{schema_version:1,run_id:run_id.into(),status,stage,sources,physical_pages,
-            selected_pages,out_of_scope_pages,request_strategy_version,prepared_pages,unprepared_pages,failed_pages,
-            units_total:self.count("SELECT count(*) FROM units WHERE run_id=?1",run_id)?,units_confirmed:self.count("SELECT count(*) FROM units WHERE run_id=?1 AND status='confirmed'",run_id)?,units_failed:self.count("SELECT count(*) FROM units WHERE run_id=?1 AND status='failed'",run_id)?,
-            pending_ocr_pages:self.count("SELECT count(*) FROM pages WHERE run_id=?1 AND status='needs_ocr'",run_id)?,unresolved_pages:unprepared_pages+self.count("SELECT count(*) FROM pages p WHERE p.run_id=?1 AND (p.status IN ('pending','needs_ocr','needs_review','failed') OR EXISTS (SELECT 1 FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status!='confirmed'))",run_id)?,
-            concepts:self.count("SELECT count(*) FROM concepts WHERE run_id=?1",run_id)?,atoms,evidence:self.count("SELECT count(*) FROM evidence WHERE run_id=?1",run_id)?,attempts:self.count("SELECT count(*) FROM attempts WHERE run_id=?1",run_id)?,ir_revision:u64::try_from(revision).map_err(|_|invalid("IR修订号无效。"))?,knowledge_status:if atoms>0 {"unverified"}else{"pending"}.into(),scientific_quality:"not_run".into(),budget:None,error:code.map(|code|Failure{code,message:message.unwrap_or_default()}),created_at})
+        let unresolved_prepared_count: i64 = self.connection.query_row(
+            "SELECT count(*) FROM pages p WHERE p.run_id=?1 AND (
+                p.status IN ('pending','needs_ocr','needs_review','failed')
+                OR EXISTS (SELECT 1 FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status!='confirmed')
+                OR (?2 AND coalesce(json_array_length(p.issues_json, '$.compile_issues'), 0) > 0)
+            )",
+            params![run_id, request_strategy_version == SENTENCE_REQUEST_STRATEGY],
+            |row| row.get(0),
+        ).map_err(db)?;
+        let unresolved_prepared_pages =
+            u64::try_from(unresolved_prepared_count).map_err(|_| invalid("负计数。"))?;
+        Ok(RunSummary {
+            schema_version: 1,
+            run_id: run_id.into(),
+            status,
+            stage,
+            sources,
+            physical_pages,
+            selected_pages,
+            out_of_scope_pages,
+            request_strategy_version,
+            prepared_pages,
+            unprepared_pages,
+            failed_pages,
+            units_total: self.count("SELECT count(*) FROM units WHERE run_id=?1", run_id)?,
+            units_confirmed: self.count(
+                "SELECT count(*) FROM units WHERE run_id=?1 AND status='confirmed'",
+                run_id,
+            )?,
+            units_failed: self.count(
+                "SELECT count(*) FROM units WHERE run_id=?1 AND status='failed'",
+                run_id,
+            )?,
+            pending_ocr_pages: self.count(
+                "SELECT count(*) FROM pages WHERE run_id=?1 AND status='needs_ocr'",
+                run_id,
+            )?,
+            unresolved_pages: unprepared_pages + unresolved_prepared_pages,
+            concepts: self.count("SELECT count(*) FROM concepts WHERE run_id=?1", run_id)?,
+            atoms,
+            evidence: self.count("SELECT count(*) FROM evidence WHERE run_id=?1", run_id)?,
+            attempts: self.count("SELECT count(*) FROM attempts WHERE run_id=?1", run_id)?,
+            ir_revision: u64::try_from(revision).map_err(|_| invalid("IR修订号无效。"))?,
+            knowledge_status: if atoms > 0 { "unverified" } else { "pending" }.into(),
+            scientific_quality: "not_run".into(),
+            budget: None,
+            error: code.map(|code| Failure {
+                code,
+                message: message.unwrap_or_default(),
+            }),
+            created_at,
+        })
     }
     pub(super) fn next_unprepared_page(
         &self,
@@ -523,6 +570,7 @@ impl Store {
         }
         Ok(None)
     }
+    #[cfg(test)]
     pub(super) fn save_page(
         &self,
         run_id: &str,
@@ -532,6 +580,20 @@ impl Store {
         status: &str,
         units: Vec<Unit>,
         issues: Vec<Value>,
+    ) -> Result<(), ProjectError> {
+        self.save_prepared_page(run_id, source, number, page_sha, status, units, issues, &[])
+    }
+
+    pub(super) fn save_prepared_page(
+        &self,
+        run_id: &str,
+        source: &SourceScope,
+        number: u32,
+        page_sha: &str,
+        status: &str,
+        units: Vec<Unit>,
+        issues: Vec<Value>,
+        compile_issues: &[Value],
     ) -> Result<(), ProjectError> {
         self.run_directory(run_id)?;
         source.validate_ranges()?;
@@ -590,8 +652,36 @@ impl Store {
         {
             return Err(invalid("可读页不得遗漏全部正文。"));
         }
+        let sentence_boundaries =
+            self.config(run_id)?.strategy_version()? == SENTENCE_REQUEST_STRATEGY;
+        if !compile_issues.is_empty() {
+            if !sentence_boundaries {
+                return Err(invalid("旧版任务不能写入新版切分问题。"));
+            }
+            let mut boundaries: BTreeSet<_> = units
+                .iter()
+                .take(units.len().saturating_sub(1))
+                .map(|unit| unit.end_byte as u64)
+                .collect();
+            for issue in compile_issues {
+                if issue["code"] != FRAGMENT_BOUNDARY_CODE
+                    || issue["source_id"] != source.source_id
+                    || issue["page_number"] != number
+                    || issue["page_sha256"] != page_sha
+                    || !issue["cut_byte"]
+                        .as_u64()
+                        .is_some_and(|cut| boundaries.remove(&cut))
+                {
+                    return Err(invalid("编译切分问题未绑定固定页的内部片段边界。"));
+                }
+            }
+        }
         let raw_units = encoded(&units)?;
-        let raw_issues = encoded(&issues)?;
+        let raw_issues = if sentence_boundaries {
+            encoded(&json!({"source_issues": issues, "compile_issues": compile_issues}))?
+        } else {
+            encoded(&issues)?
+        };
         let tx = self.transaction()?;
         let prior:Option<(String,String,String,String)>=tx.query_row("SELECT page_sha256,status,units_json,issues_json FROM pages WHERE run_id=?1 AND source_id=?2 AND page_number=?3",params![run_id,source.source_id,number],|r|Ok((r.get(0)?,r.get(1)?,r.get(2)?,r.get(3)?))).optional().map_err(db)?;
         if let Some(prior) = prior {
@@ -634,6 +724,16 @@ impl Store {
                 run_id,
                 &format!("page:{}:{number}:{ordinal}", source.source_id),
                 code,
+                issue,
+            )?;
+        }
+        for issue in compile_issues {
+            let cut = &issue["cut_byte"];
+            add_issue(
+                &tx,
+                run_id,
+                &format!("page:{}:{number}:cut:{cut}", source.source_id),
+                FRAGMENT_BOUNDARY_CODE,
                 issue,
             )?;
         }
@@ -1127,13 +1227,12 @@ impl Store {
             .ok_or_else(|| invalid("原请求缺输入JSON。"))?;
         let input: Value = serde_json::from_str(content).map_err(|e| invalid(e.to_string()))?;
         let config = self.config(run_id)?;
-        let contexts: Vec<ConceptContext> =
-            if config.strategy_version()? == COMPACT_REQUEST_STRATEGY {
-                Vec::new()
-            } else {
-                serde_json::from_value(input["request"]["existing_concepts"].clone())
-                    .map_err(|e| invalid(e.to_string()))?
-            };
+        let contexts: Vec<ConceptContext> = if uses_compact_wire(config.strategy_version()?) {
+            Vec::new()
+        } else {
+            serde_json::from_value(input["request"]["existing_concepts"].clone())
+                .map_err(|e| invalid(e.to_string()))?
+        };
         let original_allowed = contexts
             .iter()
             .map(|context| &context.concept)
@@ -1356,7 +1455,10 @@ impl Store {
             }
             if matches!(
                 prepared.strategy_version,
-                PRECISE_REQUEST_STRATEGY | ANCHOR_REQUEST_STRATEGY | COMPACT_REQUEST_STRATEGY
+                PRECISE_REQUEST_STRATEGY
+                    | ANCHOR_REQUEST_STRATEGY
+                    | COMPACT_REQUEST_STRATEGY
+                    | SENTENCE_REQUEST_STRATEGY
             ) && saved
                 .evidence_links
                 .iter()
@@ -1452,7 +1554,10 @@ impl Store {
         let sql = if kind == "atoms"
             && matches!(
                 self.config(run_id)?.strategy_version()?,
-                PRECISE_REQUEST_STRATEGY | ANCHOR_REQUEST_STRATEGY | COMPACT_REQUEST_STRATEGY
+                PRECISE_REQUEST_STRATEGY
+                    | ANCHOR_REQUEST_STRATEGY
+                    | COMPACT_REQUEST_STRATEGY
+                    | SENTENCE_REQUEST_STRATEGY
             ) {
             "SELECT atoms.json,atoms.sha256,atoms.measurement_json,atoms.measurement_sha256
              FROM atoms
@@ -1504,6 +1609,8 @@ impl Store {
         let mut items = Vec::with_capacity(limit as usize);
         let total;
         if kind == "pages" {
+            let sentence_boundaries =
+                self.config(run_id)?.strategy_version()? == SENTENCE_REQUEST_STRATEGY;
             let sources = self.sources(run_id)?;
             total = sources.iter().try_fold(0u64, |n, source| {
                 n.checked_add(u64::from(source.physical_pages))
@@ -1519,14 +1626,21 @@ impl Store {
                 let first = skip as u32 + 1;
                 skip = 0;
                 for number in first..=source.physical_pages {
-                    let saved:Option<(String,String,i64,i64,i64)>=self.connection.query_row("SELECT p.page_sha256,p.status,(SELECT count(*) FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number),(SELECT count(*) FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status='confirmed'),(SELECT count(*) FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status='failed') FROM pages p WHERE p.run_id=?1 AND p.source_id=?2 AND p.page_number=?3",params![run_id,source.source_id,number],|r|Ok((r.get(0)?,r.get(1)?,r.get(2)?,r.get(3)?,r.get(4)?))).optional().map_err(db)?;
+                    let saved:Option<(String,String,i64,i64,i64,String)>=self.connection.query_row("SELECT p.page_sha256,p.status,(SELECT count(*) FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number),(SELECT count(*) FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status='confirmed'),(SELECT count(*) FROM units u WHERE u.run_id=p.run_id AND u.source_id=p.source_id AND u.page_number=p.page_number AND u.status='failed'),p.issues_json FROM pages p WHERE p.run_id=?1 AND p.source_id=?2 AND p.page_number=?3",params![run_id,source.source_id,number],|r|Ok((r.get(0)?,r.get(1)?,r.get(2)?,r.get(3)?,r.get(4)?,r.get(5)?))).optional().map_err(db)?;
                     let in_scope = source.contains_page(number);
                     if !in_scope && saved.is_some() {
                         return Err(invalid("固定范围外出现已准备页。"));
                     }
-                    let (sha, status, units, confirmed, failed) = saved
-                        .map(|(sha, status, units, confirmed, failed)| {
-                            (Some(sha), status, units, confirmed, failed)
+                    let (sha, status, units, confirmed, failed, saved_issues) = saved
+                        .map(|(sha, status, units, confirmed, failed, saved_issues)| {
+                            (
+                                Some(sha),
+                                status,
+                                units,
+                                confirmed,
+                                failed,
+                                Some(saved_issues),
+                            )
                         })
                         .unwrap_or((
                             None,
@@ -1539,8 +1653,22 @@ impl Store {
                             0,
                             0,
                             0,
+                            None,
                         ));
-                    items.push(json!({"source_id":source.source_id,"source_sha256":source.source_sha256,"page_number":number,"page_sha256":sha,"in_scope":in_scope,"status":status,"units_total":units,"units_confirmed":confirmed,"units_failed":failed}));
+                    let mut item = json!({"source_id":source.source_id,"source_sha256":source.source_sha256,"page_number":number,"page_sha256":sha,"in_scope":in_scope,"status":status,"units_total":units,"units_confirmed":confirmed,"units_failed":failed});
+                    if sentence_boundaries {
+                        item["compile_issues"] = match saved_issues {
+                            Some(raw) => {
+                                let saved: Value = decode(&raw)?;
+                                let issues = saved["compile_issues"]
+                                    .as_array()
+                                    .ok_or_else(|| invalid("固定页缺少编译切分问题清单。"))?;
+                                json!(issues)
+                            }
+                            None => json!([]),
+                        };
+                    }
+                    items.push(item);
                     if items.len() == limit as usize {
                         break;
                     }

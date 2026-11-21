@@ -266,7 +266,7 @@ class ChapterEvaluationTests(unittest.TestCase):
     def test_known_precise_strategy_versions_use_full_native_evaluation(self):
         path = self.notes_root / "处理范围.json"
         self.assertEqual(json.loads(path.read_text(encoding="utf-8"))["summary"]["request_strategy_version"], 2)
-        for version in (2, 3, 4):
+        for version in (2, 3, 4, 5):
             with self.subTest(version=version):
                 self.write_native_export(request_strategy_version=version)
                 scope = json.loads(path.read_text(encoding="utf-8"))
@@ -291,10 +291,10 @@ class ChapterEvaluationTests(unittest.TestCase):
                     self.assertEqual((pin["bytes"], pin["sha256"]), (len(data), evaluation.sha256(data)))
 
     def test_nonprecise_unknown_or_noninteger_native_strategy_versions_are_rejected(self):
-        for version in (1, 0, -1, 5, 99, None, "2", "3", "4", 2.0, 3.0, 4.0, True, False, [], {}):
+        for version in (1, 0, -1, 6, 99, None, "2", "3", "4", "5", 2.0, 3.0, 4.0, 5.0, True, False, [], {}):
             with self.subTest(version=version):
                 self.write_native_export(request_strategy_version=version)
-                with self.assertRaisesRegex(evaluation.EvaluationError, "precise request strategy 2, 3 or 4"):
+                with self.assertRaisesRegex(evaluation.EvaluationError, "precise request strategy 2, 3, 4 or 5"):
                     self.score()
 
     def test_missing_native_strategy_version_is_rejected_after_repinning(self):
@@ -303,7 +303,7 @@ class ChapterEvaluationTests(unittest.TestCase):
         del scope["summary"]["request_strategy_version"]
         path.write_text(json.dumps(scope, ensure_ascii=False), encoding="utf-8")
         self.refresh_native_pins()
-        with self.assertRaisesRegex(evaluation.EvaluationError, "precise request strategy 2, 3 or 4"):
+        with self.assertRaisesRegex(evaluation.EvaluationError, "precise request strategy 2, 3, 4 or 5"):
             self.score()
 
     def test_wrong_fact_with_correct_quote_and_self_report_fails(self):

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "in_progress_real_content_and_fragment_boundary_findings",
+  "status": "in_progress_sentence_v5_chapter_first_pass_launched",
   "task_id": "B19-T02",
   "request_strategy_version": 3,
   "legacy_missing_strategy_version": 1,
@@ -152,8 +152,69 @@
         "timeouts": 0,
         "run_summary_sha256": "1a7afa9fe16d51d996bbdc52134aeb5bd1ac5b8029d1feeaee8008b8f59e76aa",
         "attempt_snapshot_sha256": "13e4c4a2ef319c09b5b4c7a23b2423bf6d4cd2c7c27dbe6ef38fbb9f50f9693f"
+      },
+      {
+        "strategy": 5,
+        "probe_only": true,
+        "run_id": "a6c2a883-b703-41c0-a243-0765fddbf9b9",
+        "physical_pages": 1227,
+        "selected_pages": 1,
+        "out_of_scope_pages": 1226,
+        "page_ranges": [
+          {
+            "end_page": 34,
+            "start_page": 34
+          }
+        ],
+        "max_chunk_bytes": 512,
+        "status": "needs_review",
+        "attempts": 6,
+        "units_total": 6,
+        "units_confirmed": 3,
+        "units_failed": 3,
+        "atoms": 11,
+        "evidence": 11,
+        "stop_responses": 6,
+        "complete_truncated_responses": 0,
+        "timeouts": 0,
+        "invalid_evidence_responses": 2,
+        "empty_candidates": 1,
+        "actual_content_review": {
+          "status": "independent_ai_review_completed_human_pending",
+          "report_sha256": "4f526cf2cfc02a631495615878dfd3a52a737b814e92e25b3f84b82599fa7cd5",
+          "notes_read": 11,
+          "evidence_byte_pins_matched": 11,
+          "evidence_independently_supporting_full_claim": 8,
+          "claims_requiring_unquoted_context": 3,
+          "fully_reviewed_candidate_atoms": 11,
+          "full_chapter_recall_evaluated": false
+        },
+        "independent_rejection_review": {
+          "request_receipt_response_pins_verified": 18,
+          "candidate_quotes": 19,
+          "unique_exact_matches": 16,
+          "zero_matches": 3,
+          "omitted_interleaved_source_text_quotes": 2,
+          "omitted_characters_quotes": 1,
+          "valid_empty_array_on_incomplete_page_end": true
+        }
       }
     ],
+    "sentence_v5_chapter_first_pass_launch": {
+      "run_id": "c559b158-e533-463c-b3a7-ab1779a6ea41",
+      "request_strategy_version": 5,
+      "page_ranges": [{"start_page": 34, "end_page": 56}],
+      "max_chunk_bytes": 768,
+      "first_attempts_ceiling": 125,
+      "automatic_retry": false,
+      "stop_after_consecutive_failed_units": 5,
+      "remaining_tokens_at_create": 9021971,
+      "first_attempt_unknown_reservation_bound": 1466803,
+      "prior_runs_in_read_only_baseline": 6,
+      "budget_events_in_read_only_baseline": 384,
+      "baseline_sha256": "6950380e84dbb149bbacc09983a474ec64dc46a6c3a054acf8ed65426d5c0164",
+      "terminal_result_verified": false
+    },
     "independent_real_content_review": {
       "status": "four_ai_reviews_with_independent_mapping_correction",
       "reference_atoms": 173,
@@ -291,6 +352,144 @@
       "new_events": 366,
       "old_runs_identical": 4,
       "comparison_sha256": "4b8241281c2a3d2fce0b9f942a321e629713147fcf5234ac5aa3a140c8ef6fc6"
+    },
+    "native_windows_sentence_v5": {
+      "format_exit_code": 0,
+      "cli_build_exit_code": 0,
+      "production": {
+        "passed": 118,
+        "failed": 0
+      },
+      "chapter_blackbox": {
+        "tests_run": 7,
+        "exit_code": 0
+      },
+      "evaluator": {
+        "tests_run": 67,
+        "exit_code": 0
+      },
+      "workspace_check_exit_code": 0,
+      "all_eight_stages_exit_code": 0,
+      "stage_receipt_sha256": "2b2d99e88075bef0a351aa095d97883584cba36f61fbcc36cc96f815a829b5af",
+      "all_stage_log_fingerprints_verified": true,
+      "rust": {"targets": 43, "passed": 1503, "failed": 0, "ignored": 1, "exit_code": 0},
+      "python": {"tests_run": 1529, "passed": 1504, "failed": 0, "errors": 0, "skipped": 25, "exit_code": 0},
+      "evaluator_native_isolated": {"tests_run": 67, "passed": 66, "skipped": 1, "skip_reason": "fixed B19 reference artifacts not installed in this checkout", "exit_code": 0},
+      "evaluator_main_worktree_locked_python": {"tests_run": 67, "passed": 67, "skipped": 0, "exit_code": 0},
+      "binary": {
+        "bytes": 44726272,
+        "sha256": "64a0d7e8683b8085c2ef6bf07c06e5cd946f80bb4713653b5c70b82b162aba5d"
+      },
+      "source_snapshot": {
+        "bytes": 5134929,
+        "sha256": "69298df1fdd9b45854c53b387d215e21da8640b4cd76f91d306a405780b880da"
+      },
+      "working_tree_snapshot_not_commit_build": true
+    },
+    "wsl_focused_sentence_v5": {
+      "production_passed": 119,
+      "chapter_blackbox_tests": 7,
+      "exit_code": 0
+    },
+    "offline_sentence_boundary_census": {
+      "selected_pages": 23,
+      "text_bytes": 77563,
+      "model_requests": 0,
+      "summary": {
+        "512": {
+          "pieces": 191,
+          "forced_cuts": 5,
+          "pages_with_forced_cuts": [
+            40,
+            45,
+            46,
+            56
+          ],
+          "minimum_page_pieces": 5,
+          "maximum_page_pieces": 14,
+          "output_and_fixed_reserve_without_request_bytes": 1760256,
+          "serial_request_timeout_minutes_without_overhead": 191
+        },
+        "640": {
+          "pieces": 151,
+          "forced_cuts": 1,
+          "pages_with_forced_cuts": [
+            45
+          ],
+          "minimum_page_pieces": 5,
+          "maximum_page_pieces": 10,
+          "output_and_fixed_reserve_without_request_bytes": 1391616,
+          "serial_request_timeout_minutes_without_overhead": 151
+        },
+        "768": {
+          "pieces": 125,
+          "forced_cuts": 0,
+          "pages_with_forced_cuts": [],
+          "minimum_page_pieces": 3,
+          "maximum_page_pieces": 7,
+          "output_and_fixed_reserve_without_request_bytes": 1152000,
+          "serial_request_timeout_minutes_without_overhead": 125
+        },
+        "1024": {
+          "pieces": 93,
+          "forced_cuts": 0,
+          "pages_with_forced_cuts": [],
+          "minimum_page_pieces": 3,
+          "maximum_page_pieces": 5,
+          "output_and_fixed_reserve_without_request_bytes": 857088,
+          "serial_request_timeout_minutes_without_overhead": 93
+        }
+      },
+      "first_attempt_budget": {
+        "parameters_match_six_saved_requests": true,
+        "excluded": [
+          "retries",
+          "different settings",
+          "transport overhead"
+        ],
+        "sampled_available_tokens_after_probe": 9021971,
+        "windows": {
+          "512": {
+            "first_attempts": 191,
+            "min_request_bytes": 1900,
+            "max_request_bytes": 2503,
+            "request_bytes_total": 437827,
+            "reservation_sum_if_all_first_attempts_unknown": 2198083
+          },
+          "640": {
+            "first_attempts": 151,
+            "min_request_bytes": 1900,
+            "max_request_bytes": 2549,
+            "request_bytes_total": 363267,
+            "reservation_sum_if_all_first_attempts_unknown": 1754883
+          },
+          "768": {
+            "first_attempts": 125,
+            "min_request_bytes": 1993,
+            "max_request_bytes": 2774,
+            "request_bytes_total": 314803,
+            "reservation_sum_if_all_first_attempts_unknown": 1466803
+          },
+          "1024": {
+            "first_attempts": 93,
+            "min_request_bytes": 1890,
+            "max_request_bytes": 3102,
+            "request_bytes_total": 255155,
+            "reservation_sum_if_all_first_attempts_unknown": 1112243
+          }
+        }
+      }
+    },
+    "sentence_v5_probe_history_protection": {
+      "schema_version": 1,
+      "run_id": "a6c2a883-b703-41c0-a243-0765fddbf9b9",
+      "prior_runs_unchanged": 5,
+      "source_and_corpus_unchanged": true,
+      "legacy_budget_and_history_unchanged": true,
+      "immutable_metadata_and_event_prefix_unchanged": true,
+      "before_events": 366,
+      "after_events": 384,
+      "appended_events": 18
     }
   },
   "reference": {
@@ -341,7 +540,7 @@
     "model_attempts": 124,
     "overrun_tokens": 0
   },
-  "explicit_experimental_request_strategy_version": 4,
+  "explicit_experimental_request_strategy_version": 5,
   "budget_at_v4_single_page_terminal": {
     "approved_total_tokens": 10000000,
     "accounted_tokens": 574116,
@@ -361,5 +560,19 @@
     "history_count": 10,
     "model_attempts": 132,
     "overrun_tokens": 0
+  },
+  "budget_at_v5_single_page_terminal": {
+    "accounted_tokens": 611776,
+    "approved_total_tokens": 10000000,
+    "attempt_count": 128,
+    "authority_id": "ec17e931-ab2f-4ccc-8425-d78927b33e79",
+    "baseline_sha256": "ea6b32432cb8bc1c325be48be01ce42f1dde933f2fc35f8c739c9d3fc07d8ffd",
+    "history_count": 10,
+    "model_attempts": 138,
+    "overrun_tokens": 0,
+    "pending_reserved_tokens": 366253,
+    "remaining_tokens": 9021971,
+    "schema_version": 1,
+    "stopped": false
   }
 }

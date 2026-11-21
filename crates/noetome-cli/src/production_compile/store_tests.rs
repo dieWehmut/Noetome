@@ -1680,6 +1680,268 @@ fn compact_saved_response_recovers_once_and_exports_exact_evidence() {
 }
 
 #[test]
+fn same_named_source_issue_does_not_become_a_compile_cut() {
+    let text = format!("{}。另一句。", "甲".repeat(100));
+    let mut fixture = Fixture::new(&[(&text, "text_ready")]);
+    let original_issue =
+        json!({"code":FRAGMENT_BOUNDARY_CODE,"message":"来源作者标记的解析问题。","cut_byte":999});
+    let mut page = corpus::page_revision(
+        &fixture.project,
+        &fixture.scope.source_id,
+        1,
+        &fixture.pages[0].2,
+    )
+    .unwrap();
+    page["issues"] = json!([original_issue]);
+    let raw = encoded(&page).unwrap();
+    let page_sha = sha256(raw.as_bytes());
+    let corpus_db =
+        Connection::open(fixture.project.join(".noetome-corpus/corpus.sqlite")).unwrap();
+    corpus_db
+        .execute(
+            "UPDATE pages SET page_json=?2,page_sha256=?3 WHERE source_id=?1 AND page_number=1",
+            params![fixture.scope.source_id, raw, page_sha],
+        )
+        .unwrap();
+    drop(corpus_db);
+    fixture.pages[0].2 = page_sha.clone();
+    drop(fixture.authority());
+    let store = Store::create(&fixture.project).unwrap();
+    for version in LEGACY_REQUEST_STRATEGY..=SENTENCE_REQUEST_STRATEGY {
+        fixture.config.request_strategy_version = Some(version);
+        fixture.config.max_chunk_bytes = 256;
+        let run = store
+            .create_run(&fixture.config, std::slice::from_ref(&fixture.scope))
+            .unwrap();
+        let (units, cuts) =
+            super::super::chunks(&fixture.scope, &page, &page_sha, 256, version).unwrap();
+        store
+            .save_prepared_page(
+                &run,
+                &fixture.scope,
+                1,
+                &page_sha,
+                "text_ready",
+                units,
+                vec![original_issue.clone()],
+                &cuts,
+            )
+            .unwrap();
+        let stored: String = store
+            .connection
+            .query_row(
+                "SELECT issues_json FROM pages WHERE run_id=?1",
+                [&run],
+                |row| row.get(0),
+            )
+            .unwrap();
+        let rows = store.query(&run, "pages", 0, 50, "").unwrap();
+        let item = &rows["items"][0];
+        let issues = store.query(&run, "issues", 0, 50, "").unwrap();
+        assert_eq!(issues["total"], 1 + cuts.len());
+        if version == SENTENCE_REQUEST_STRATEGY {
+            assert_eq!(cuts.len(), 1);
+            assert_eq!(cuts[0]["cut_byte"], 255);
+            assert_eq!(item["compile_issues"], json!(cuts));
+            assert_eq!(
+                stored,
+                encoded(&json!({"source_issues":[original_issue],"compile_issues":cuts})).unwrap()
+            );
+            let output = fixture._temp.path().join("same-named-source-and-cut-vault");
+            super::super::export(&fixture.project, &run, &output).unwrap();
+            let locations =
+                fs::read_to_string(output.join(".noetome-index/source-locations.ndjson")).unwrap();
+            let location: Value = serde_json::from_str(&locations).unwrap();
+            assert_eq!(location["source_issues"], json!([original_issue]));
+            assert_eq!(location["compile_issues"], json!(cuts));
+            assert!(issues["items"].as_array().unwrap().iter().any(|issue| {
+                issue["scope"]
+                    .as_str()
+                    .is_some_and(|scope| scope.ends_with(":cut:255"))
+                    && issue["detail"] == cuts[0]
+            }));
+        } else {
+            assert!(cuts.is_empty());
+            assert!(item.get("compile_issues").is_none());
+            assert_eq!(stored, encoded(&[&original_issue]).unwrap());
+        }
+    }
+}
+
+#[test]
+fn forced_sentence_cut_remains_visible_after_saved_responses_recover() {
+    let text = format!("{}。另一句。", "甲".repeat(100));
+    let mut fixture = Fixture::new(&[(&text, "text_ready")]);
+    fixture.config.max_chunk_bytes = 256;
+    fixture.config.request_strategy_version = Some(SENTENCE_REQUEST_STRATEGY);
+    let (store, run) = fixture.run();
+    let page_sha = &fixture.pages[0].2;
+    let page =
+        corpus::page_revision(&fixture.project, &fixture.scope.source_id, 1, page_sha).unwrap();
+    let (units, cuts) = super::super::chunks(
+        &fixture.scope,
+        &page,
+        page_sha,
+        fixture.config.max_chunk_bytes,
+        SENTENCE_REQUEST_STRATEGY,
+    )
+    .unwrap();
+    assert_eq!((units.len(), cuts.len()), (2, 1));
+    let cut = units[0].end_byte;
+    assert_eq!(cut, 255);
+    assert_eq!(cuts[0]["cut_byte"], cut);
+    let mut bad_cuts = cuts.clone();
+    bad_cuts[0]["cut_byte"] = json!(cut - 3);
+    assert!(
+        store
+            .save_prepared_page(
+                &run,
+                &fixture.scope,
+                1,
+                page_sha,
+                "text_ready",
+                units.clone(),
+                vec![],
+                &bad_cuts
+            )
+            .is_err()
+    );
+    store
+        .save_prepared_page(
+            &run,
+            &fixture.scope,
+            1,
+            page_sha,
+            "text_ready",
+            units.clone(),
+            vec![],
+            &cuts,
+        )
+        .unwrap();
+
+    let mut budget = fixture.authority();
+    let mut original_artifacts = Vec::new();
+    for unit in &units {
+        let request_id = Uuid::new_v4().to_string();
+        let prepared = provider::prepare(
+            store.project_id(),
+            &run,
+            &request_id,
+            unit,
+            &fixture.config,
+            &[],
+        )
+        .unwrap();
+        let request_pin = sha256(&prepared.body);
+        let content = encoded(&json!({"request_id":request_id,"atoms":[{
+            "concept":"合成测试概念","kind":"statement","content":"合成测试陈述。",
+            "qualifiers":[],"evidence":[{"relation":"supports","quote":unit.text}]
+        }]}))
+        .unwrap();
+        let response = serde_json::to_vec(&json!({
+            "id":"chatcmpl-authored-sentence","object":"chat.completion","model":fixture.config.model,
+            "choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","content":content}}],
+            "usage":{"prompt_tokens":100,"completion_tokens":50,"total_tokens":150}
+        })).unwrap();
+        let receipt = serde_json::to_vec(&provider::Receipt {
+            schema_version: 1,
+            request_id: request_id.clone(),
+            request_sha256: request_pin.clone(),
+            status: Some(200),
+            network_attempts: 1,
+            complete: true,
+            response_sha256: sha256(&response),
+            response_bytes: response.len() as u64,
+            failure_code: None,
+        })
+        .unwrap();
+        let mut attempt = store
+            .begin_attempt(&run, unit, &request_id, &request_pin)
+            .unwrap();
+        let attempt_path = store.root.join(&attempt.directory);
+        for (name, data) in [
+            ("request-body.json", prepared.body),
+            ("response.bin", response),
+            ("receipt.json", receipt),
+        ] {
+            let path = attempt_path.join(name);
+            fs::write(&path, &data).unwrap();
+            original_artifacts.push((path, data));
+        }
+        attempt.state = "sent".into();
+        store.update_attempt(&run, &attempt).unwrap();
+        fixture.reserve_sent(&mut budget, &run, &attempt);
+    }
+    assert_eq!(budget.status().unwrap().pending_reserved_tokens, 4000);
+    drop(budget);
+    drop(store);
+
+    let store = Store::open(&fixture.project).unwrap().unwrap();
+    let config = store.config(&run).unwrap();
+    let mut budget = BudgetAuthority::open(&config.usage_ledger).unwrap();
+    let cancel = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+    assert_eq!(
+        config.strategy_version().unwrap(),
+        SENTENCE_REQUEST_STRATEGY
+    );
+    for _ in 0..2 {
+        super::super::execute(
+            &fixture.project,
+            &run,
+            &store,
+            &config,
+            "noetome-test-artificial-credential-never-in-source",
+            &mut budget,
+            &cancel,
+        )
+        .unwrap();
+        let summary = store.summary(&run).unwrap();
+        assert_eq!(
+            (
+                summary.attempts,
+                summary.units_confirmed,
+                summary.units_failed,
+                summary.atoms,
+                summary.ir_revision
+            ),
+            (2, 2, 0, 2, 2)
+        );
+        assert_eq!(summary.unresolved_pages, 1);
+        assert_eq!(summary.status, "needs_review");
+        let usage = budget.status().unwrap();
+        assert_eq!(
+            (
+                usage.accounted_tokens,
+                usage.pending_reserved_tokens,
+                usage.model_attempts
+            ),
+            (400, 0, 3)
+        );
+    }
+    let result = store.query(&run, "pages", 0, 50, "").unwrap();
+    assert_eq!(result["items"][0]["status"], "text_ready");
+    assert_eq!(result["items"][0]["compile_issues"], json!(cuts));
+    drop(budget);
+    drop(store);
+    for (path, original) in original_artifacts {
+        assert_eq!(fs::read(path).unwrap(), original);
+    }
+
+    let output = fixture._temp.path().join("sentence-recovered-vault");
+    super::super::export(&fixture.project, &run, &output).unwrap();
+    let locations =
+        fs::read_to_string(output.join(".noetome-index/source-locations.ndjson")).unwrap();
+    let location: Value = serde_json::from_str(&locations).unwrap();
+    assert_eq!(location["source_issues"], json!([]));
+    assert_eq!(location["compile_issues"], json!(cuts));
+    assert_eq!(location["page_sha256"], page_sha.as_str());
+    let note = fs::read_to_string(output.join("处理范围.md")).unwrap();
+    assert!(note.contains("### 物理页 1"));
+    assert!(note.contains(page_sha));
+    assert!(note.contains("UTF-8 字节切点 255"));
+}
+
+#[test]
 fn completed_receipt_without_saved_pins_recovers_budget_and_one_stable_batch() {
     let fixture = Fixture::new(&[("Diffusion recovered original meaning.", "text_ready")]);
     let (store, run) = fixture.run();

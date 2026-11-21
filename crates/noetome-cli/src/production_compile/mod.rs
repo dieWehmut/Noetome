@@ -12,6 +12,9 @@ mod precise_tests;
 mod provider;
 #[cfg(test)]
 mod scope_tests;
+mod sentence_segments;
+#[cfg(test)]
+mod sentence_tests;
 mod store;
 pub use export::export;
 pub use model::{CompileConfig, CompileScope, PageRange, RunSummary, SourceSelection};
@@ -276,10 +279,11 @@ fn chunks(
     page: &Value,
     page_sha: &str,
     max: usize,
-) -> Result<Vec<Unit>, ProjectError> {
+    strategy_version: u32,
+) -> Result<(Vec<Unit>, Vec<Value>), ProjectError> {
     let text = page["text"].as_str().unwrap_or("");
     if text.trim().is_empty() {
-        return Ok(Vec::new());
+        return Ok((Vec::new(), Vec::new()));
     }
     let page_number = page["page_number"]
         .as_u64()
@@ -298,6 +302,7 @@ fn chunks(
         .filter_map(|i| i["code"].as_str().map(str::to_owned))
         .collect::<Vec<_>>();
     let mut units = Vec::new();
+    let mut boundary_issues = Vec::new();
     let mut start = 0;
     while start < text.len() {
         let mut end = (start + max).min(text.len());
@@ -308,8 +313,27 @@ fn chunks(
             return Err(error("COMPILE_UTF8", "片段上限不足以容纳一个字符。"));
         }
         if end < text.len() {
-            if let Some(newline) = text[start..end].rfind('\n').filter(|i| *i > max / 2) {
-                end = start + newline + 1;
+            let sentence_end = if strategy_version == SENTENCE_REQUEST_STRATEGY {
+                sentence_segments::preferred_boundary(text, start, end)
+            } else {
+                None
+            };
+            if let Some(sentence_end) = sentence_end {
+                end = sentence_end;
+            } else {
+                if let Some(newline) = text[start..end].rfind('\n').filter(|i| *i > max / 2) {
+                    end = start + newline + 1;
+                }
+                if strategy_version == SENTENCE_REQUEST_STRATEGY {
+                    boundary_issues.push(json!({
+                        "code": FRAGMENT_BOUNDARY_CODE,
+                        "message": "片段长度内没有识别到句末，需结合相邻原文核对边界。",
+                        "source_id": source.source_id,
+                        "page_number": page_number,
+                        "page_sha256": page_sha,
+                        "cut_byte": end,
+                    }));
+                }
             }
         }
         units.push(Unit {
@@ -327,7 +351,7 @@ fn chunks(
         });
         start = end;
     }
-    Ok(units)
+    Ok((units, boundary_issues))
 }
 
 fn check_stop(store: &Store, id: &str, cancel: &AtomicBool) -> Result<(), ProjectError> {
@@ -517,9 +541,15 @@ fn execute(
         let sha = snapshot["page_sha256"]
             .as_str()
             .ok_or_else(|| error("COMPILE_PAGE", "页原字节摘要缺失。"))?;
-        let units = chunks(&source, page, sha, config.max_chunk_bytes)?;
+        let (units, boundary_issues) = chunks(
+            &source,
+            page,
+            sha,
+            config.max_chunk_bytes,
+            config.strategy_version()?,
+        )?;
         let issues = page["issues"].as_array().cloned().unwrap_or_default();
-        store.save_page(
+        store.save_prepared_page(
             run_id,
             &source,
             number,
@@ -527,6 +557,7 @@ fn execute(
             page["status"].as_str().unwrap_or("pending"),
             units,
             issues,
+            &boundary_issues,
         )?;
     }
     store.set_status(run_id, "running", "extracting")?;
@@ -607,7 +638,7 @@ fn execute(
                 "固定来源切片与准备记录不同。",
             ));
         }
-        let context = if config.strategy_version()? == COMPACT_REQUEST_STRATEGY {
+        let context = if uses_compact_wire(config.strategy_version()?) {
             Vec::new()
         } else {
             store.context_concepts(run_id, &unit.text, 16)?
@@ -811,7 +842,7 @@ fn finish(
             .ok_or_else(|| error("COMPILE_REQUEST", "请求上下文缺失。"))?,
     )
     .map_err(|_| error("COMPILE_REQUEST", "请求上下文不可读。"))?;
-    let context: Vec<ConceptContext> = if config.strategy_version()? == COMPACT_REQUEST_STRATEGY {
+    let context: Vec<ConceptContext> = if uses_compact_wire(config.strategy_version()?) {
         Vec::new()
     } else {
         serde_json::from_value(input["request"]["existing_concepts"].clone())

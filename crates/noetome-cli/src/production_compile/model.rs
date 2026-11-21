@@ -8,6 +8,15 @@ pub(super) const LEGACY_REQUEST_STRATEGY: u32 = 1;
 pub(super) const PRECISE_REQUEST_STRATEGY: u32 = 2;
 pub(super) const ANCHOR_REQUEST_STRATEGY: u32 = 3;
 pub(super) const COMPACT_REQUEST_STRATEGY: u32 = 4;
+pub(super) const SENTENCE_REQUEST_STRATEGY: u32 = 5;
+pub(super) const FRAGMENT_BOUNDARY_CODE: &str = "COMPILE_FRAGMENT_BOUNDARY";
+
+pub(super) fn uses_compact_wire(version: u32) -> bool {
+    matches!(
+        version,
+        COMPACT_REQUEST_STRATEGY | SENTENCE_REQUEST_STRATEGY
+    )
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -39,7 +48,8 @@ impl CompileConfig {
             version @ (LEGACY_REQUEST_STRATEGY
             | PRECISE_REQUEST_STRATEGY
             | ANCHOR_REQUEST_STRATEGY
-            | COMPACT_REQUEST_STRATEGY) => Ok(version),
+            | COMPACT_REQUEST_STRATEGY
+            | SENTENCE_REQUEST_STRATEGY) => Ok(version),
             _ => Err(super::error(
                 "COMPILE_REQUEST_STRATEGY",
                 "请求策略版本不受支持；历史缺省配置仅按 v1 解释。",

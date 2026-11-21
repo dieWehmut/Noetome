@@ -181,7 +181,15 @@ fn write_visible_issues(
                 page["status"].as_str(),
                 Some("needs_review" | "needs_ocr" | "failed")
             );
-            if !unresolved_status && issues.is_empty() && failed == 0 && pending == 0 {
+            let compile_issues = page["compile_issues"]
+                .as_array()
+                .map_or(&[][..], Vec::as_slice);
+            if !unresolved_status
+                && issues.is_empty()
+                && compile_issues.is_empty()
+                && failed == 0
+                && pending == 0
+            {
                 continue;
             }
             writeln!(file, "\n### 物理页 {number}\n\n来源：{}；原件 SHA-256：{}；页 SHA-256：{}；页状态：{}。失败片段 {failed} 个，尚待处理 {pending} 个。\n", precise_literal(source), page["source_sha256"].as_str().unwrap_or("未知"), pin, precise_literal(page["status"].as_str().unwrap_or("未知"))).map_err(|e| ProjectError::io(path, e))?;
@@ -205,6 +213,26 @@ fn write_visible_issues(
                     "- {}：{}",
                     precise_literal(issue["code"].as_str().unwrap_or("SOURCE_REVIEW")),
                     precise_literal(issue["message"].as_str().unwrap_or("原页保留待核对问题。"))
+                )
+                .map_err(|e| ProjectError::io(path, e))?;
+            }
+            for issue in compile_issues {
+                let cut = issue["cut_byte"]
+                    .as_u64()
+                    .ok_or_else(|| error("COMPILE_EXPORT", "片段边界缺少字节切点。"))?;
+                writeln!(
+                    file,
+                    "- 编译切分 {}（UTF-8 字节切点 {cut}）：{}",
+                    precise_literal(
+                        issue["code"]
+                            .as_str()
+                            .unwrap_or(model::FRAGMENT_BOUNDARY_CODE)
+                    ),
+                    precise_literal(
+                        issue["message"]
+                            .as_str()
+                            .unwrap_or("需结合相邻原文核对边界。")
+                    ),
                 )
                 .map_err(|e| ProjectError::io(path, e))?;
             }
@@ -261,7 +289,7 @@ fn write_visible_issues(
                 writeln!(file, "该问题目前只固定到整页，较小的图或公式区域尚未知。\n")
                     .map_err(|e| ProjectError::io(path, e))?;
             }
-            locations.push(json!({
+            let mut location = json!({
                 "schema_version":1,"run_id":run_id,"source_id":source,
                 "source_sha256":page["source_sha256"],"page_number":number,
                 "page_sha256":pin,"status":page["status"],
@@ -269,7 +297,11 @@ fn write_visible_issues(
                 "source_issues":issues,"regions":retained_regions,
                 "localization":if region_count == 0 { "page_only" } else { "page_with_candidate_regions" },
                 "issue_region_mapping":"unresolved","note_path":"处理范围.md"
-            }));
+            });
+            if !compile_issues.is_empty() {
+                location["compile_issues"] = json!(compile_issues);
+            }
+            locations.push(location);
         }
         offset += pages.len() as u64;
     }
@@ -385,6 +417,7 @@ pub fn export(project: &Path, run_id: &str, output: &Path) -> Result<Value, Proj
         model::PRECISE_REQUEST_STRATEGY
             | model::ANCHOR_REQUEST_STRATEGY
             | model::COMPACT_REQUEST_STRATEGY
+            | model::SENTENCE_REQUEST_STRATEGY
     );
     let text_literal = if precise { precise_literal } else { literal };
     let output = project::check_components(output)?;

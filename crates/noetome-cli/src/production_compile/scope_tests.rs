@@ -169,7 +169,9 @@ fn save_source_page(
     let (page, hash) = &source.pages[number as usize - 1];
     let status = page["status"].as_str().unwrap();
     let units = if matches!(status, "text_ready" | "ocr_ready") {
-        chunks(scope, page, hash, max).unwrap()
+        chunks(scope, page, hash, max, LEGACY_REQUEST_STRATEGY)
+            .unwrap()
+            .0
     } else {
         vec![]
     };
@@ -669,7 +671,15 @@ fn save_and_attempt_boundaries_refuse_scope_expansion() {
     let store = required(&fixture.project).unwrap();
     let scope = &created.sources[0];
     let (page, hash) = &fixture.source.pages[0];
-    let outside = chunks(scope, page, hash, fixture.config.max_chunk_bytes).unwrap();
+    let outside = chunks(
+        scope,
+        page,
+        hash,
+        fixture.config.max_chunk_bytes,
+        LEGACY_REQUEST_STRATEGY,
+    )
+    .unwrap()
+    .0;
     assert!(
         store
             .save_page(run, scope, 1, hash, "text_ready", outside, vec![])
@@ -689,7 +699,15 @@ fn save_and_attempt_boundaries_refuse_scope_expansion() {
                 3,
                 hash,
                 "text_ready",
-                chunks(&expanded, page, hash, fixture.config.max_chunk_bytes).unwrap(),
+                chunks(
+                    &expanded,
+                    page,
+                    hash,
+                    fixture.config.max_chunk_bytes,
+                    LEGACY_REQUEST_STRATEGY
+                )
+                .unwrap()
+                .0,
                 vec![]
             )
             .is_err()
